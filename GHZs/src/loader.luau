@@ -7,7 +7,7 @@ getgenv().DEV_MODE = true
 local EfHub
 
 if getgenv().DEV_MODE then
-	local BaseUrl = "https://raw.githubusercontent.com/suta007/GHZ/refs/heads/master/src/"
+	local BaseUrl = "https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/GHZs/src/"
 
 	local function GetRemote(path)
 		local url = BaseUrl .. path .. ".luau"
