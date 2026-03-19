@@ -35,7 +35,7 @@ declare function loadstring(source: string, chunkname: string?): ( ...any ) -> (
 declare function require(module: ModuleScript | number): any
 
 --// Custom GHZ Functions
-declare GHZ_REMOTE: (path: string) -> any
+declare EF_REMOTE: (path: string) -> any
 
 --// Custom EfHub Functions
 declare function fLog(message: any): ()

@@ -3,7 +3,7 @@
         "definitions/unc.d.luau"
     ],
     "diagnostics.globals": [
-        "GHZ_REMOTE",
+        "EF_REMOTE",
         "getgenv",
         "gethui",
         "fLog",

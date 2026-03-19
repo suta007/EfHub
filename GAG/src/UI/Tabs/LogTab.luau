@@ -1,5 +1,3 @@
-local getgenv = (getfenv() :: any).getgenv
-local setclipboard = (getfenv() :: any).setclipboard
 local LogTab = {}
 local reg
 local logHistory = ""
