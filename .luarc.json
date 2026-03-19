@@ -1,0 +1,16 @@
+{
+    "workspace.library": [
+        "definitions/unc.d.luau"
+    ],
+    "diagnostics.globals": [
+        "GHZ_REMOTE",
+        "getgenv",
+        "gethui",
+        "fLog",
+        "CoreGui",
+        "CollectionService",
+        "game",
+        "task"
+    ],
+    "languageServer.luau.enabled": true
+}

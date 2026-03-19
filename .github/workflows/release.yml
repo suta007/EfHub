@@ -1,0 +1,107 @@
+name: Release EfHub Scripts
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  # =========================================================
+  # 1. สำหรับเกม Grow a Garden (ทำงานเมื่อ Tag เริ่มด้วย GAG-)
+  # =========================================================
+  build-gag:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.release.tag_name, 'GAG-')
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Darklua
+        run: |
+          wget https://github.com/seaofvoices/darklua/releases/latest/download/darklua-linux-x86_64.zip
+          unzip darklua-linux-x86_64.zip
+          chmod +x darklua
+          sudo mv darklua /usr/local/bin/
+
+      - name: Auto Switch to Release Mode
+        # เข้าไปแก้ DEV_MODE = false ในไฟล์ loader.luau ของโฟลเดอร์ GAG/src/
+        run: sed -i 's/getgenv().DEV_MODE = true/getgenv().DEV_MODE = false/g' GAG/src/loader.luau
+
+      - name: Bundle GAG Code
+        # มัดรวมเริ่มจาก GAG/src/loader.luau แล้วสร้างไฟล์ชื่อ gag.lua
+        run: darklua process GAG/src/loader.luau gag.lua
+
+      - name: Upload gag.lua to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: gag.lua
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # =========================================================
+  # 2. สำหรับเกม Garden Horizons (ทำงานเมื่อ Tag เริ่มด้วย GHZs-)
+  # =========================================================
+  build-ghzs:
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.release.tag_name, 'GHZs-')
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Darklua
+        run: |
+          wget https://github.com/seaofvoices/darklua/releases/latest/download/darklua-linux-x86_64.zip
+          unzip darklua-linux-x86_64.zip
+          chmod +x darklua
+          sudo mv darklua /usr/local/bin/
+
+      - name: Auto Switch to Release Mode
+        # เข้าไปแก้ DEV_MODE = false ในไฟล์ loader.luau ของโฟลเดอร์ GHZs/src/
+        run: sed -i 's/getgenv().DEV_MODE = true/getgenv().DEV_MODE = false/g' GHZs/src/loader.luau
+
+      - name: Bundle GHZs Code
+        # มัดรวมเริ่มจาก GHZs/src/loader.luau แล้วสร้างไฟล์ชื่อ ghzs.lua
+        run: darklua process GHZs/src/loader.luau ghzs.lua
+
+      - name: Upload ghzs.lua to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ghzs.lua
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+  # =========================================================
+  # 3. สำหรับเกมใหม่ (ทำงานเมื่อ Tag เริ่มด้วย BF-)
+  # =========================================================
+  # build-bf:
+  #   runs-on: ubuntu-latest
+  #   if: startsWith(github.event.release.tag_name, 'BF-') # จุดที่ 1: เปลี่ยนชื่อ Tag
+  #   steps:
+  #     - name: Checkout Code
+  #       uses: actions/checkout@v4
+
+  #     - name: Install Darklua
+  #       run: |
+  #         wget https://github.com/seaofvoices/darklua/releases/latest/download/darklua-linux-x86_64.zip
+  #         unzip darklua-linux-x86_64.zip
+  #         chmod +x darklua
+  #         sudo mv darklua /usr/local/bin/
+
+  #     - name: Auto Switch to Release Mode
+  #       # จุดที่ 2: เปลี่ยนชื่อโฟลเดอร์ให้ตรงกับเกมใหม่ (BF/src/loader.luau)
+  #       run: sed -i 's/getgenv().DEV_MODE = true/getgenv().DEV_MODE = false/g' BF/src/loader.luau
+
+  #     - name: Bundle New Game Code
+  #       # จุดที่ 3: เปลี่ยนโฟลเดอร์ต้นทาง และชื่อไฟล์ปลายทาง (bf.lua)
+  #       run: darklua process BF/src/loader.luau bf.lua
+
+  #     - name: Upload to Release
+  #       uses: softprops/action-gh-release@v2
+  #       with:
+  #         # จุดที่ 4: เปลี่ยนชื่อไฟล์ที่จะอัปโหลดให้ตรงกับที่มัดรวมไว้
+  #         files: bf.lua
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
