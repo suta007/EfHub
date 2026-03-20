@@ -7,6 +7,7 @@ function PetsTab.Initialize(registry)
 	local Interface = reg.Interface
 	local Tabs = reg.Tabs
 	local Options = reg.Options
+	_ = Options
 	local QuickSave = reg.Window.QuickSave
 	local sData = reg.sData
 	local EfTasks = reg.EfTasks

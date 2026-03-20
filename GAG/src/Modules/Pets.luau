@@ -11,7 +11,7 @@ function Pets.Initialize(registry)
 end
 
 local function GetPetInventory()
-	local GetData_result = sData.DataService:GetPetData()
+	local GetData_result = sData.DataService:GetData()
 	local Inventory = GetData_result and GetData_result.Success and GetData_result.PetInventory
 	return Inventory
 end
@@ -155,7 +155,7 @@ function Pets.AgeBreak()
 	if not Options.tgAgeBreakEnabled.Value or fVar.isAgeBreaking then
 		return
 	end
-	local GetData_result = sData.DataService:GetPetData()
+	local GetData_result = sData.DataService:GetData()
 	if not GetData_result.Success then
 		return
 	end
