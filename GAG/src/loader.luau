@@ -1,6 +1,4 @@
 --!nocheck
--- Garden Horizons Remote Loader
--- This is the entry point that fetches everything from GitHub
 local getgenv = (getfenv() :: any).getgenv
 getgenv().DEV_MODE = true
 
@@ -19,12 +17,6 @@ if getgenv().DEV_MODE then
 		if not func then error("Compile Error in " .. path .. ": " .. tostring(err)) end
 		return func()
 	end
-
-	-- Inject a global or local require replacement for modules to use
-	-- For modules to be truly remote-friendly, they should use a shared loader.
-	-- We can set a global variable so we don't have to rewrite every require in every file
-	-- if we want them to remain "local-friendly" but for this task,
-	-- I'll define a global _G.GHZ_REQUIRE or similar.
 
 	getgenv().EF_REMOTE = GetRemote
 

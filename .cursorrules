@@ -28,3 +28,13 @@ We use a dual-mode system (`getgenv().DEV_MODE`) in `loader.luau` and `EfHub.lua
 - Always include `--!nocheck` at the top of new files unless specified otherwise.
 - Avoid using `wait()`. Use `task.wait()` instead.
 - Write clean, modular, and well-documented Luau code.
+
+## 6. ARCHITECTURE & MODULE-TAB PAIRING (CRITICAL)
+- **The Pairing Rule:** Files in `src/UI/Tabs/` (e.g., `AutoTab.luau`) and `src/Modules/` (e.g., `Auto.luau`) ALWAYS work in pairs.
+- **Role of `UI/Tabs/` (UI Logic ONLY):** - Define Fluent UI elements (Toggles, Sliders, Buttons).
+  - Contain UI-specific logic (e.g., `OnChanged` events, showing/hiding elements).
+  - You MAY use loops (`task.spawn(function() while...`) in Tabs ONLY for updating UI visuals (like Dashboards or Status texts).
+  - STRICT RULE: DO NOT put heavy Game Logic (like moving the character, firing server remotes, or pathfinding) in Tabs.
+- **Role of `Modules/` (Game Logic):** - Contains the actual game mechanics, automation loops, bypassing, and remote firing.
+- **State Synchronization:** The UI Tab and its corresponding Module communicate via the shared `Registry` table. Variable names and configuration states MUST match perfectly between the paired files.
+- **Execution Flow:** When a UI element changes in a Tab, it should update a value in `Registry.fVar` or call a function in its paired Module to handle the heavy lifting.

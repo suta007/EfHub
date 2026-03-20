@@ -15,44 +15,54 @@ local function LoadModules()
 		Registry.fVar = EF_REMOTE("Core/fVar")
 
 		-- 2. Functional Modules
-		Registry.Utils = EF_REMOTE("Modules/Utils")
-		Registry.Misc = EF_REMOTE("Modules/Misc")
-		Registry.Main = EF_REMOTE("Modules/Main")
-		Registry.Shop = EF_REMOTE("Modules/Shop")
-		Registry.Process = EF_REMOTE("Modules/Process")
-		Registry.Auto = EF_REMOTE("Modules/Auto")
-		Registry.EventDrive = EF_REMOTE("Modules/EventDrive")
+		Registry.EfTasks = EF_REMOTE("Modules/EfTasks")
+		Registry.Pets = EF_REMOTE("Modules/Pets")
+
+		--Registry.Utils = EF_REMOTE("Modules/Utils")
+		--Registry.Misc = EF_REMOTE("Modules/Misc")
+		--Registry.Main = EF_REMOTE("Modules/Main")
+		--Registry.Shop = EF_REMOTE("Modules/Shop")
+		--Registry.Process = EF_REMOTE("Modules/Process")
+		--Registry.Auto = EF_REMOTE("Modules/Auto")
+		--Registry.EventDrive = EF_REMOTE("Modules/EventDrive")
 
 		-- 3. UI Modules
 		Registry.Window = EF_REMOTE("UI/Window")
-		Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
-		Registry.ShopTab = EF_REMOTE("UI/Tabs/ShopTab")
-		Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
-		Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
-		Registry.AutoTab = EF_REMOTE("UI/Tabs/AutoTab")
+		Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
 		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
+
+		-- Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
+		-- Registry.ShopTab = EF_REMOTE("UI/Tabs/ShopTab")
+		-- Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
+		-- Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
+		-- Registry.AutoTab = EF_REMOTE("UI/Tabs/AutoTab")
 	else
 		-- 1. Core
 		Registry.sData = require("./Core/sData.luau")
 		Registry.fVar = require("./Core/fVar.luau")
 
 		-- 2. Functional Modules
-		Registry.Utils = require("./Modules/Utils.luau")
-		Registry.Misc = require("./Modules/Misc.luau")
-		Registry.Main = require("./Modules/Main.luau")
-		Registry.Shop = require("./Modules/Shop.luau")
-		Registry.Process = require("./Modules/Process.luau")
-		Registry.Auto = require("./Modules/Auto.luau")
-		Registry.EventDrive = require("./Modules/EventDrive.luau")
+		Registry.EfTasks = require("./Modules/EfTasks.luau")
+		Registry.Pets = require("./Modules/Pets.luau")
+
+		--Registry.Utils = require("./Modules/Utils.luau")
+		--Registry.Misc = require("./Modules/Misc.luau")
+		--Registry.Main = require("./Modules/Main.luau")
+		--Registry.Shop = require("./Modules/Shop.luau")
+		--Registry.Process = require("./Modules/Process.luau")
+		--Registry.Auto = require("./Modules/Auto.luau")
+		--Registry.EventDrive = require("./Modules/EventDrive.luau")
 
 		-- 3. UI Modules
 		Registry.Window = require("./UI/Window.luau")
-		Registry.MainTab = require("./UI/Tabs/MainTab.luau")
-		Registry.ShopTab = require("./UI/Tabs/ShopTab.luau")
-		Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
-		Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
-		Registry.AutoTab = require("./UI/Tabs/AutoTab.luau")
+		Registry.PetsTab = require("./UI/Tabs/PetsTab.luau")
 		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
+
+		-- Registry.MainTab = require("./UI/Tabs/MainTab.luau")
+		-- Registry.ShopTab = require("./UI/Tabs/ShopTab.luau")
+		-- Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
+		-- Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
+		-- Registry.AutoTab = require("./UI/Tabs/AutoTab.luau")
 	end
 
 	return Registry
@@ -64,33 +74,24 @@ function EfHub.Initialize()
 	Registry.Window.Initialize(Registry)
 
 	-- Initialize Modules (ตอนนี้ Registry.Options มีค่าแล้ว)
-	Registry.Utils.Initialize(Registry)
-	Registry.Misc.Initialize(Registry)
-	Registry.Main.Initialize(Registry)
-	Registry.Shop.Initialize(Registry)
-	Registry.Process.Initialize(Registry)
-	Registry.Auto.Initialize(Registry)
-	Registry.EventDrive.Initialize(Registry)
+	-- Registry.Utils.Initialize(Registry)
+	-- Registry.Misc.Initialize(Registry)
+	-- Registry.Main.Initialize(Registry)
+	-- Registry.Shop.Initialize(Registry)
+	-- Registry.Process.Initialize(Registry)
+	-- Registry.Auto.Initialize(Registry)
+	-- Registry.EventDrive.Initialize(Registry)
 
-	Registry.MainTab.Initialize(Registry)
-	Registry.ShopTab.Initialize(Registry)
-	Registry.AutoTab.Initialize(Registry)
-	Registry.EventsTab.Initialize(Registry)
-	Registry.MiscTab.Initialize(Registry)
+	-- Registry.MainTab.Initialize(Registry)
+	-- Registry.ShopTab.Initialize(Registry)
+	-- Registry.AutoTab.Initialize(Registry)
+	-- Registry.EventsTab.Initialize(Registry)
+	-- Registry.MiscTab.Initialize(Registry)
+	Registry.PetsTab.Initialize(Registry)
 	Registry.LogTab.Initialize(Registry)
 
 	Registry.Window.Finalize()
 	return Registry
-end
-
-function EfHub.RunTask(Registry)
-	local fVar = Registry.fVar
-	local Process = Registry.Process
-	task.spawn(function()
-		while task.wait(0.1) do
-			if #fVar.actionQueue > 0 and not fVar.isProcessing then Process.processQueue() end
-		end
-	end)
 end
 
 return EfHub
