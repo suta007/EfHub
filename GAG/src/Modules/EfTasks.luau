@@ -1,14 +1,15 @@
 local getgenv = (getfenv() :: any).getgenv
 local EfTasks = {}
 local ActiveTasks = {}
---[[ local reg
+local reg
 
 function EfTasks.Initialize(registry)
 	reg = registry
 	--reg.ActiveTasks = ActiveTasks
-end ]]
+end
 
 function EfTasks.ToggleTask(taskName, enabled, funcBody)
+	local Options = reg.Options
 	if enabled then
 		if ActiveTasks[taskName] then
 			return
