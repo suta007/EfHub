@@ -12,9 +12,13 @@ if getgenv().DEV_MODE then
 		local success, content = pcall(function()
 			return game:HttpGet(url)
 		end)
-		if not success or not content then error("Remote Error: Could not fetch " .. path) end
+		if not success or not content then
+			error("Remote Error: Could not fetch " .. path)
+		end
 		local func, err = loadstring(content)
-		if not func then error("Compile Error in " .. path .. ": " .. tostring(err)) end
+		if not func then
+			error("Compile Error in " .. path .. ": " .. tostring(err))
+		end
 		return func()
 	end
 
@@ -25,9 +29,10 @@ else
 	EfHub = require("./EfHub.luau")
 end
 
-local Registry = EfHub.Initialize()
+--local Registry = EfHub.Initialize()
+EfHub.Initialize()
 task.wait(1)
-EfHub.RunTask(Registry)
+--EfHub.RunTask(Registry)
 
 -- Anti AFK
 local LocalPlayer = game:GetService("Players").LocalPlayer
