@@ -17,8 +17,8 @@ function Window.Initialize(Registry)
 	--local Constants = reg.Constants
 
 	Registry.Interface = Fluent:CreateWindow({
-		Title = "Garden Horizons",
-		SubTitle = "2569.03.19-08.00",
+		Title = "Grow a Garden",
+		SubTitle = "2569.03.20-22.21",
 		TabWidth = 100,
 		Size = UDim2.fromOffset(600, 340),
 		Resize = false,
@@ -101,7 +101,9 @@ function Window.Finalize()
 end
 
 function Window.QuickSave()
-	if not reg.IsLoading then reg.SaveManager:Save("Horizons") end
+	if not reg.IsLoading then
+		reg.SaveManager:Save("Horizons")
+	end
 end
 
 return Window
