@@ -12,6 +12,7 @@ function PetsTab.Initialize(registry)
 	local sData = reg.sData
 	local EfTasks = reg.EfTasks
 	local Pets = reg.Pets
+	local fVar = reg.fVar
 
 	Tabs.Pets = Interface:AddTab({ Title = "Pets", Icon = "paw-print" })
 
@@ -21,6 +22,9 @@ function PetsTab.Initialize(registry)
 		Title = "Enable Auto Age Break",
 		Default = false,
 		Callback = function(Value)
+			if not Value then
+				fVar.isAgeBreaking = false
+			end
 			EfTasks.ToggleTask("AgeBreak", Value, function()
 				Pets.AgeBreak()
 				task.wait(2)

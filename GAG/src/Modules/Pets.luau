@@ -233,7 +233,7 @@ function Pets.AgeBreak()
 		AgeBreakUUID = SubmittedPet.UUID
 
 		if MachinePetType ~= PetType or MachinePetLevel >= TargetAge then
-			getgenv().fLog("Cancel")
+			getgenv().fLog("Cancel Pet: " .. tostring(MachinePetType) .. " Level: " .. tostring(MachinePetLevel))
 			sData.GameEvents.PetAgeLimitBreak_Cancel:FireServer()
 			AgeBreakUUID = nil
 			task.wait(1.5)
