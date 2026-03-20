@@ -26,57 +26,45 @@ local function findDupePet(UUID, PetType)
 
 	local Inventory = GetPetInventory()
 	if not Inventory then
-		getgenv().fLog("No inventory")
 		return
 	end
 
 	for _, tData in pairs(Inventory) do
 		if type(tData) ~= "table" then
-			getgenv().fLog("Not table1")
 			continue
 		end
 		for _, pet in pairs(tData) do
 			if type(pet) ~= "table" then
-				getgenv().fLog("Not table2")
 				continue
 			end
 			local petType = pet.PetType
 			if not petType then
-				getgenv().fLog("Not petType")
 				continue
 			end
 			local uuid = pet.UUID
 			local petLevel = Pets.Level(uuid)
 			local petWeight = Pets.Weight(uuid)
 			if uuid == UUID then
-				getgenv().fLog("Same UUID")
 				continue
 			end
 			if petType ~= PetType then
-				getgenv().fLog("Different petType")
 				continue
 			end
 			if AgeValue ~= 0 and AgeCondition == "Below" and petLevel >= AgeValue then
-				getgenv().fLog("Age condition below")
 				continue
 			end
 			if AgeValue ~= 0 and AgeCondition == "Above" and petLevel <= AgeValue then
-				getgenv().fLog("Age condition above")
 				continue
 			end
 			if WeightValue ~= 0 and WeightCondition == "Below" and petWeight >= WeightValue then
-				getgenv().fLog("Weight condition below")
 				continue
 			end
 			if WeightValue ~= 0 and WeightCondition == "Above" and petWeight <= WeightValue then
-				getgenv().fLog("Weight condition above")
 				continue
 			end
-			getgenv().fLog("Found dupe pet")
 			return uuid
 		end
 	end
-	getgenv().fLog("Not found dupe pet")
 	return nil
 end
 
@@ -227,7 +215,6 @@ function Pets.AgeBreak()
 			end
 		end
 	elseif hasPetInMachine and not AgeBreakData.IsRunning then
-		getgenv().fLog("Pet in machine")
 		local MachinePetType = SubmittedPet.PetType
 		local MachinePetLevel = SubmittedPet.PetData.Level
 		AgeBreakUUID = SubmittedPet.UUID
@@ -240,9 +227,7 @@ function Pets.AgeBreak()
 			fVar.isAgeBreaking = false
 			return
 		end
-		getgenv().fLog("Find dupe pet")
 		local dupeUUID = findDupePet(AgeBreakUUID, PetType)
-		getgenv().fLog("Dupe UUID: " .. tostring(dupeUUID))
 		if dupeUUID then
 			sData.GameEvents.PetAgeLimitBreak_Submit:FireServer({ dupeUUID })
 			task.wait(2)
