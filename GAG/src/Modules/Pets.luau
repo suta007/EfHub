@@ -41,8 +41,8 @@ local function findDupePet(UUID, PetType)
 				continue
 			end
 			local uuid = pet.UUID
-			local petLevel = pet.PetData.Level
-			local petWeight = pet.PetData.BaseWeight
+			local petLevel = Pets.Level(uuid)
+			local petWeight = Pets.Weight(uuid)
 			if uuid == UUID then
 				continue
 			end
@@ -125,6 +125,15 @@ function Pets.Favorited(UUID)
 		return data.PetData.IsFavorite or false
 	end
 	return false
+end
+
+function Pets.Weight(UUID)
+	local data = Pets.RawData(UUID)
+
+	if data and data.PetData then
+		return tonumber(data.PetData.BaseWeight) or 1
+	end
+	return 1
 end
 
 function Pets.HeldPet(UUID)
@@ -217,7 +226,7 @@ function Pets.AgeBreak()
 			return
 		end
 
-		local dupeUUID = findDupePet(AgeBreakUUID, MachinePetType)
+		local dupeUUID = findDupePet(AgeBreakUUID, PetType)
 		if dupeUUID then
 			sData.GameEvents.PetAgeLimitBreak_Submit:FireServer({ dupeUUID })
 			task.wait(2)
