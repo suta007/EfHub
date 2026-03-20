@@ -13,7 +13,7 @@ end
 
 local function GetPetInventory()
 	local GetData_result = sData.DataService:GetData()
-	local Inventory = GetData_result and GetData_result.Success and GetData_result.PetInventory
+	local Inventory = GetData_result and GetData_result.PetsData and GetData_result.PetsData.PetInventory
 	return Inventory
 end
 
