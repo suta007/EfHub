@@ -156,7 +156,7 @@ function Pets.AgeBreak()
 		return
 	end
 	local GetData_result = sData.DataService:GetData()
-	if not GetData_result.Success then
+	if not GetData_result then
 		return
 	end
 	local AgeBreakData = GetData_result.PetAgeBreakMachine
