@@ -264,8 +264,9 @@ function Main.ScanCrops2()
 		if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then
 			return
 		end
-		---ใช้ CFrame.new(cpos + Vector3.new(0, 0, 5)) เพื่อให้ห่างจากตัวละคร 5 บล็อก
-		local offsetPos = CFrame.new(cpos + Vector3.new(0, 4, 0))
+		---ใช้ CFrame.new(cpos + Vector3.new(0, 4, 0)) เพื่อให้ห่างจากตัวละคร 4 บล็อก
+		local cposPosition = typeof(cpos) == "CFrame" and cpos.Position or cpos
+		local offsetPos = CFrame.new(cposPosition + Vector3.new(0, 4, 0))
 		SafeTeleport(offsetPos)
 		task.wait(3)
 		local ClientPlants = workspace:FindFirstChild("ClientPlants")

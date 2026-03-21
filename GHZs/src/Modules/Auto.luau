@@ -361,6 +361,10 @@ function Auto.Trowel()
 			local AppliedRotationY = plant:GetAttribute("AppliedRotationY")
 			Utils.SafeTeleport(targetCFrame)
 			task.wait(0.2)
+			local highlight = plant:FindFirstChildWhichIsA("Highlight")
+			if highlight then
+				highlight.Parent = game:GetService("Lighting") -- ย้ายไปพักไว้ที่ Lighting
+			end
 			local args = {
 				{
 					Action = "Pickup",
