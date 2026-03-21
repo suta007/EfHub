@@ -22,21 +22,25 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Claim Quest",
 		Default = false,
 		Callback = function(Value)
-			if Value then RemoteEvents:WaitForChild("RequestQuests"):FireServer() end
+			if Value then
+				RemoteEvents:WaitForChild("RequestQuests"):FireServer()
+			end
 			QuickSave()
 		end,
 	})
 
 	-- [[ Remove Plants Section ]]
-	local RemoveSection = Tabs.Auto:AddCollapsibleSection("Remove Plants", false)
+	local RemoveSection = Tabs.Auto:AddCollapsibleSection("Destroy Plants", false)
 	RemoveSection:AddToggle("tgRemovePlantsEnable", {
-		Title = "Auto Remove Plants",
+		Title = "Enable Destroy Plants",
 		Default = false,
 		Callback = function(Value)
 			if Value then
 				TaskRemovePlants = task.spawn(function()
 					while true do
-						if not fVar.isRemovingPlants then Auto.RemovePlants() end
+						if not fVar.isRemovingPlants then
+							Auto.RemovePlants()
+						end
 						task.wait(0.5)
 					end
 				end)
@@ -57,7 +61,7 @@ function AutoTab.Initialize(registry)
 		end,
 	})
 	RemoveSection:AddDropdown("ddRemovePlants", {
-		Title = "Select Remove Plants",
+		Title = "Select Plants to Destroy",
 		Values = sData.PlantDataTable,
 		Default = {},
 		Multi = true,
@@ -86,15 +90,17 @@ function AutoTab.Initialize(registry)
 	})
 
 	-- [[ Remove Fruit Section ]]
-	local RemoveFruitSection = Tabs.Auto:AddCollapsibleSection("Remove Fruit", false)
+	local RemoveFruitSection = Tabs.Auto:AddCollapsibleSection("Destroy Fruit", false)
 	RemoveFruitSection:AddToggle("tgRemoveFruitEnable", {
-		Title = "Auto Remove Fruit",
+		Title = "Enable Destroy Fruit",
 		Default = false,
 		Callback = function(Value)
 			if Value then
 				TaskRemoveFruit = task.spawn(function()
 					while true do
-						if not fVar.isRemovePlants then Auto.RemoveCrops() end
+						if not fVar.isRemovePlants then
+							Auto.RemoveCrops()
+						end
 						task.wait(0.5)
 					end
 				end)
@@ -112,13 +118,13 @@ function AutoTab.Initialize(registry)
 	RemoveFruitSection:AddDivider()
 
 	RemoveFruitSection:AddButton({
-		Title = "Clear Selected Remove Crops",
+		Title = "Clear Selected Crops",
 		Callback = function()
 			Options.ddRemoveCrops:SetValue({ ALL = true })
 		end,
 	})
 	RemoveFruitSection:AddDropdown("ddRemoveCrops", {
-		Title = "Select Remove Crops",
+		Title = "Select Crops to Destroy",
 		Values = sData.PlantDataTable,
 		Multi = true,
 		Default = { "ALL" },
@@ -133,6 +139,7 @@ function AutoTab.Initialize(registry)
 			Options.ddRemoveBlackCrops:SetValue({ NONE = true })
 		end,
 	})
+
 	RemoveFruitSection:AddDropdown("ddRemoveBlackCrops", {
 		Title = "Blacklist Remove Crops",
 		Values = sData.PlantDataBlackTable,
@@ -308,6 +315,50 @@ function AutoTab.Initialize(registry)
 	OpenPackSection:AddDropdown("ddOpenPackSelect", {
 		Title = "Select Seed Pack",
 		Values = sData.SeedPackTable,
+		Default = { "ALL" },
+		Multi = true,
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	local TrowelSection = Tabs.Auto:AddCollapsibleSection("Trowel", false)
+	TrowelSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			-- set position of trowel
+		end,
+	})
+
+	TrowelSection:AddParagraph("TrowelPosition", {
+		Title = "Trowel Position",
+		Content = "Waiting for set position...",
+	})
+
+	TrowelSection:AddToggle("tgTrowelEnable", {
+		Title = "Auto Trowel",
+		Default = false,
+		Callback = function(Value)
+			if Value then
+				fVar.LockDownControlVar()
+				-- Auto.Trowel()
+				fVar.ResetControlVar()
+			else
+				fVar.ResetControlVar()
+			end
+			QuickSave()
+		end,
+	})
+	TrowelSection:AddButton({
+		Title = "Clear Selected Plant",
+		Callback = function()
+			Options.ddTrowelSelect:SetValue({})
+		end,
+	})
+	TrowelSection:AddDropdown("ddTrowelSelect", {
+		Title = "Select Plant to Move",
+		Values = sData.PlantDataTable,
 		Default = { "ALL" },
 		Multi = true,
 		Searchable = true,
