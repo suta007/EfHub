@@ -21,7 +21,7 @@ sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
 
 sData.GameEvents = sData.ReplicatedStorage:WaitForChild("GameEvents")
-sData.RemoteEvents = sData.ReplicatedStorage:WaitForChild("RemoteEvents")
+--sData.RemoteEvents = sData.ReplicatedStorage:WaitForChild("RemoteEvents")
 
 sData.Backpack = sData.LocalPlayer:WaitForChild("Backpack")
 
