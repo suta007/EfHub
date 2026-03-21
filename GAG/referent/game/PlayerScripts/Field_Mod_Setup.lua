@@ -1,0 +1,1 @@
+require(game.ReplicatedStorage.Field_Of_View_Module).Setup()

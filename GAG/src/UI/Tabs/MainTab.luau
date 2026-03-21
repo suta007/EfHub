@@ -27,7 +27,9 @@ function MainTab.Initialize(reg)
 			if Value then
 				TaskPlantsSeeds = task.spawn(function()
 					while true do
-						if not fVar.isPlanting then Main.AutoPlantsSeeds() end
+						if not fVar.isPlanting then
+							Main.AutoPlantsSeeds()
+						end
 						task.wait(30)
 					end
 				end)
@@ -49,7 +51,7 @@ function MainTab.Initialize(reg)
 	})
 	PlantsSection:AddDropdown("ddPlantsSeeds", {
 		Title = "Select Seeds",
-		Values = sData.PlantDataTable,
+		Values = fVar.SeedDataTable,
 		Multi = true,
 		Default = {},
 		Searchable = true,
@@ -60,7 +62,7 @@ function MainTab.Initialize(reg)
 
 	PlantsSection:AddDropdown("ddPlantsPos", {
 		Title = "Select Plants Position",
-		Values = { "Player", "Random", "Here" },
+		Values = { "Player", "Random" },
 		Default = "Player",
 		Callback = function(Value)
 			QuickSave()
@@ -85,7 +87,9 @@ function MainTab.Initialize(reg)
 								Main.ScanCrops2()
 							end
 						elseif fVar.HarvestPause then
-							if #reg.HarVestCropsList > 0 then table.clear(reg.HarVestCropsList) end
+							if #reg.HarVestCropsList > 0 then
+								table.clear(reg.HarVestCropsList)
+							end
 						end
 					end
 				end)

@@ -1,0 +1,6 @@
+return {
+	["DefaultFuel"] = 0,
+	["BonusXPMultiplier"] = 3,
+	["MaxFuelCapacity"] = 86400,
+	["BoostAmountPerPlayer"] = 1800
+}

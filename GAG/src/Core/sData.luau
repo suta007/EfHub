@@ -3,6 +3,7 @@ local reg = {}
 
 sData.Players = game:GetService("Players")
 sData.LocalPlayer = sData.Players.LocalPlayer
+sData.MyName = sData.LocalPlayer.Name
 
 sData.Character = sData.LocalPlayer.Character or sData.LocalPlayer.CharacterAdded:Wait()
 sData.Humanoid = sData.Character:WaitForChild("Humanoid")
@@ -20,6 +21,7 @@ sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
 
 sData.GameEvents = sData.ReplicatedStorage:WaitForChild("GameEvents")
+sData.RemoteEvents = sData.ReplicatedStorage:WaitForChild("RemoteEvents")
 
 sData.Backpack = sData.LocalPlayer:WaitForChild("Backpack")
 

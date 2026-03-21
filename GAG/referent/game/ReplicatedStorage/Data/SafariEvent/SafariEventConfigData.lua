@@ -1,0 +1,3 @@
+return {
+	["INDIVIDUAL_REWARD_THRESHOLD"] = 500
+}

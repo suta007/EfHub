@@ -1,7 +1,7 @@
 local AutoTab = {}
 local reg
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
+--local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
 local TaskRemovePlants, TaskRemoveFruit
 
 function AutoTab.Initialize(registry)
@@ -22,7 +22,9 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Claim Quest",
 		Default = false,
 		Callback = function(Value)
-			if Value then RemoteEvents:WaitForChild("RequestQuests"):FireServer() end
+			if Value then
+				sData.RemoteEvents:WaitForChild("RequestQuests"):FireServer()
+			end
 			QuickSave()
 		end,
 	})
@@ -36,7 +38,9 @@ function AutoTab.Initialize(registry)
 			if Value then
 				TaskRemovePlants = task.spawn(function()
 					while true do
-						if not fVar.isRemovingPlants then Auto.RemovePlants() end
+						if not fVar.isRemovingPlants then
+							Auto.RemovePlants()
+						end
 						task.wait(0.5)
 					end
 				end)
@@ -94,7 +98,9 @@ function AutoTab.Initialize(registry)
 			if Value then
 				TaskRemoveFruit = task.spawn(function()
 					while true do
-						if not fVar.isRemovePlants then Auto.RemoveCrops() end
+						if not fVar.isRemovePlants then
+							Auto.RemoveCrops()
+						end
 						task.wait(0.5)
 					end
 				end)

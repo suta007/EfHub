@@ -1,8 +1,109 @@
 local Utils = {}
 local reg
+local sData
+local RNG = Random.new()
 
 function Utils.Initialize(registry)
 	reg = registry
+	sData = reg.sData
+end
+
+function Utils.GetMyFarm()
+	local farmFolder = workspace:FindFirstChild("Farm")
+	if not farmFolder then
+		return nil
+	end
+	for _, oFarm in pairs(farmFolder:GetChildren()) do
+		local success, owner = pcall(function()
+			return oFarm.Important.Data.Owner.Value
+		end)
+
+		if success and owner == sData.MyName then
+			return oFarm
+		end
+	end
+	return nil
+end
+
+function Utils.getPlot()
+	local myPlot = {}
+	local plantLocations = Utils.GetMyFarm().Important.Plant_Locations:GetChildren()
+	for _, plate in pairs(plantLocations) do
+		if plate.Name == "Can_Plant" or plate:IsA("Part") then
+			table.insert(myPlot, plate)
+		end
+	end
+	return myPlot
+end
+
+function Utils.getBoundary(Plot)
+	if not Plot then
+		return nil
+	end
+
+	local bCf = Plot.CFrame
+	local size = Plot.Size
+
+	local bMinX, bMaxX = -size.X / 2 + 1, size.X / 2 - 1
+	local bMinZ, bMaxZ = -size.Z / 2 + 1, size.Z / 2 - 1
+	return {
+		cf = bCf,
+		minX = bMinX,
+		maxX = bMaxX,
+		minZ = bMinZ,
+		maxZ = bMaxZ,
+	}
+end
+
+function Utils.GetRandomPlotPos()
+	local MyPlantableParts = Utils.getPlot()
+	if #MyPlantableParts == 0 then
+		return nil
+	end
+	local targetPart = MyPlantableParts[math.random(1, #MyPlantableParts)]
+	local size = targetPart.Size
+	local cframe = targetPart.CFrame
+
+	local randomX = RNG:NextNumber(-size.X / 2, size.X / 2)
+	--local randomY = RNG:NextNumber(-size.Y / 2, size.Y / 2)
+	local randomZ = RNG:NextNumber(-size.Z / 2, size.Z / 2)
+
+	local floatDistance = 1
+
+	local localOffset = CFrame.new(randomX, floatDistance, randomZ)
+	local worldCFrame = cframe * localOffset
+
+	local finalX = worldCFrame.Position.X
+	local finalY = cframe.Position.Y
+	local finalZ = worldCFrame.Position.Z
+
+	return CFrame.new(finalX, finalY, finalZ)
+end
+
+function Utils.GetPosition()
+	local Character = reg.sData.Character
+	local HumanoidRootPart = Character:WaitForChild("HumanoidRootPart")
+	if HumanoidRootPart then
+		local pivot = Character:GetPivot()
+		return pivot.Position
+	end
+	return nil
+end
+
+function Utils.GetSelectedItems(DropdownValue)
+	local Items = {}
+	if type(DropdownValue) == "table" then
+		for Value, State in pairs(DropdownValue) do
+			if State then
+				table.insert(Items, Value)
+			end
+		end
+	end
+	return Items
+end
+
+function Utils.isTableEmpty(t)
+	return type(t) ~= "table" or next(t) == nil
 end
 
 function Utils.HeldItemUUID(UUID)

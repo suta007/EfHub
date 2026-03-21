@@ -1,0 +1,3 @@
+return {
+	["AmountRequiredForPremium"] = 30
+}
