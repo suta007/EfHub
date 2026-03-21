@@ -3,6 +3,7 @@ local getgc = (getfenv() :: any).getgc
 local Auto = {}
 local reg
 local GetSelectedItems
+local rng = Random.new()
 
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -311,7 +312,7 @@ function Auto.OpenPack()
 end
 
 local function getSafeOffset()
-	local offset = 0.1 + (math.random() * 0.4)
+	local offset = rng:NextInteger(5, 20) / 10
 	local sign = math.random(1, 2) == 1 and 1 or -1
 	return offset * sign
 end

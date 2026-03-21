@@ -265,8 +265,8 @@ function Main.ScanCrops2()
 			return
 		end
 		---ใช้ CFrame.new(cpos + Vector3.new(0, 0, 5)) เพื่อให้ห่างจากตัวละคร 5 บล็อก
-		local offsetPos = CFrame.new(cpos * CFrame.new(0, 4, 0))
-		SafeTeleport(offsetPos)
+		--local offsetPos = CFrame.new(cpos * CFrame.new(0, 4, 0))
+		SafeTeleport(cpos)
 		task.wait(3)
 		local ClientPlants = workspace:FindFirstChild("ClientPlants")
 		if ClientPlants then
