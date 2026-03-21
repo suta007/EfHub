@@ -15,12 +15,14 @@ local function LoadModules()
 		Registry.fVar = EF_REMOTE("Core/fVar")
 
 		-- 2. Functional Modules
+		Registry.Utils = EF_REMOTE("Modules/Utils")
 		Registry.EfTasks = EF_REMOTE("Modules/EfTasks")
+		Registry.Main = EF_REMOTE("Modules/Main")
 		Registry.Pets = EF_REMOTE("Modules/Pets")
 
-		--Registry.Utils = EF_REMOTE("Modules/Utils")
+		--
 		--Registry.Misc = EF_REMOTE("Modules/Misc")
-		--Registry.Main = EF_REMOTE("Modules/Main")
+		--
 		--Registry.Shop = EF_REMOTE("Modules/Shop")
 		--Registry.Process = EF_REMOTE("Modules/Process")
 		--Registry.Auto = EF_REMOTE("Modules/Auto")
@@ -28,10 +30,11 @@ local function LoadModules()
 
 		-- 3. UI Modules
 		Registry.Window = EF_REMOTE("UI/Window")
+		Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
 		Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
 		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
 
-		-- Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
+		--
 		-- Registry.ShopTab = EF_REMOTE("UI/Tabs/ShopTab")
 		-- Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
 		-- Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
@@ -42,12 +45,13 @@ local function LoadModules()
 		Registry.fVar = require("./Core/fVar.luau")
 
 		-- 2. Functional Modules
+		Registry.Utils = require("./Modules/Utils.luau")
 		Registry.EfTasks = require("./Modules/EfTasks.luau")
+		Registry.Main = require("./Modules/Main.luau")
 		Registry.Pets = require("./Modules/Pets.luau")
 
-		--Registry.Utils = require("./Modules/Utils.luau")
+		--
 		--Registry.Misc = require("./Modules/Misc.luau")
-		--Registry.Main = require("./Modules/Main.luau")
 		--Registry.Shop = require("./Modules/Shop.luau")
 		--Registry.Process = require("./Modules/Process.luau")
 		--Registry.Auto = require("./Modules/Auto.luau")
@@ -55,10 +59,11 @@ local function LoadModules()
 
 		-- 3. UI Modules
 		Registry.Window = require("./UI/Window.luau")
+		Registry.MainTab = require("./UI/Tabs/MainTab.luau")
 		Registry.PetsTab = require("./UI/Tabs/PetsTab.luau")
 		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
 
-		-- Registry.MainTab = require("./UI/Tabs/MainTab.luau")
+		--
 		-- Registry.ShopTab = require("./UI/Tabs/ShopTab.luau")
 		-- Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
 		-- Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
@@ -74,17 +79,17 @@ function EfHub.Initialize()
 	Registry.Window.Initialize(Registry)
 
 	-- Initialize Modules (ตอนนี้ Registry.Options มีค่าแล้ว)
-	--Registry.EfTasks.Initialize(Registry)
+	Registry.EfTasks.Initialize(Registry)
 	Registry.Pets.Initialize(Registry)
-	-- Registry.Utils.Initialize(Registry)
+	Registry.Utils.Initialize(Registry)
 	-- Registry.Misc.Initialize(Registry)
-	-- Registry.Main.Initialize(Registry)
+	Registry.Main.Initialize(Registry)
 	-- Registry.Shop.Initialize(Registry)
 	-- Registry.Process.Initialize(Registry)
 	-- Registry.Auto.Initialize(Registry)
 	-- Registry.EventDrive.Initialize(Registry)
 
-	-- Registry.MainTab.Initialize(Registry)
+	Registry.MainTab.Initialize(Registry)
 	-- Registry.ShopTab.Initialize(Registry)
 	-- Registry.AutoTab.Initialize(Registry)
 	-- Registry.EventsTab.Initialize(Registry)
