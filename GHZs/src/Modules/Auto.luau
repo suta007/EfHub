@@ -375,7 +375,7 @@ function Auto.Trowel()
 				continue -- ข้ามต้นนี้ไปทำต้นอื่นต่อ
 			end
 
-			task.wait(0.3)
+			task.wait(0.5)
 
 			local JumpCFrame = CFrame.new(fVar.Pos.Trowel + Vector3.new(3, 0, 4))
 			Utils.SafeTeleport(JumpCFrame)
@@ -395,7 +395,7 @@ function Auto.Trowel()
 				},
 			}
 			TrowelAction:InvokeServer(unpack(args2))
-			task.wait(1)
+			task.wait(1.2)
 		end
 	end
 	if Options.tgTrowelEnable.Value then
