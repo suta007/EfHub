@@ -80,7 +80,6 @@ function EfHub.Initialize()
 
 	-- Initialize Modules (ตอนนี้ Registry.Options มีค่าแล้ว)
 	Registry.sData.Initialize(Registry)
-	Registry.EfTasks.Initialize(Registry)
 	Registry.Pets.Initialize(Registry)
 	Registry.Utils.Initialize(Registry)
 	-- Registry.Misc.Initialize(Registry)
