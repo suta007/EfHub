@@ -33,7 +33,9 @@ end
 
 function Main.AutoPlantsSeeds()
 	local Options = reg.Options
-	if not Options.tgPlantsEnable.Value or fVar.isPlanting or fVar.IsBuying() then return end
+	if not Options.tgPlantsEnable.Value or fVar.isPlanting or fVar.IsBuying() then
+		return
+	end
 
 	pcall(function()
 		Humanoid:UnequipTools()
@@ -46,7 +48,9 @@ function Main.AutoPlantsSeeds()
 
 	if Backpack then
 		for _index, item in pairs(Backpack:GetChildren()) do
-			if not Options.tgPlantsEnable.Value or fVar.IsBuying() then break end
+			if not Options.tgPlantsEnable.Value or fVar.IsBuying() then
+				break
+			end
 			if item:GetAttribute("Type") == "Seeds" and (table.find(SeedList, "ALL") or table.find(SeedList, item:GetAttribute("PlantType"))) then
 				fVar.isPlanting = true
 
@@ -63,7 +67,9 @@ function Main.AutoPlantsSeeds()
 						if ddPlantsPos == "Random" then
 							PlantPos = GetRandomPlantPosition()
 						elseif ddPlantsPos == "Here" then
-							if not HerePos then HerePos = Character:GetPivot() end
+							if not HerePos then
+								HerePos = Character:GetPivot()
+							end
 							PlantPos = HerePos
 						end
 						TweenToTarget(CFrame.new(PlantPos.X + 3, PlantPos.Y, PlantPos.Z), 100)
@@ -120,21 +126,37 @@ function Main.CheckCrops(fruit, config)
 	local fruitVariant = fruit:GetAttribute("Variant")
 	local CropsMutants = fruit:GetAttribute("Mutation")
 
-	if not table.find(config.wl.crops, "ALL") and not table.find(config.wl.crops, fruitName) then return false end
-	if fruit:GetAttribute("Favorited") == true then return false end
-	if not table.find(config.wl.ripeness, "ALL") and not table.find(config.wl.ripeness, fruitRipeness) then return false end
+	if not table.find(config.wl.crops, "ALL") and not table.find(config.wl.crops, fruitName) then
+		return false
+	end
+	if fruit:GetAttribute("Favorited") == true then
+		return false
+	end
+	if not table.find(config.wl.ripeness, "ALL") and not table.find(config.wl.ripeness, fruitRipeness) then
+		return false
+	end
 	local fruitRipenessMulti = fruit:GetAttribute("RipenessMultiplier")
-	if config.wl.ripenessMulti ~= 0 and (not fruitRipenessMulti or fruitRipenessMulti < config.wl.ripenessMulti) then return false end
-	if not table.find(config.wl.variant, "ALL") and not table.find(config.wl.variant, fruitVariant) then return false end
+	if config.wl.ripenessMulti ~= 0 and (not fruitRipenessMulti or fruitRipenessMulti < config.wl.ripenessMulti) then
+		return false
+	end
+	if not table.find(config.wl.variant, "ALL") and not table.find(config.wl.variant, fruitVariant) then
+		return false
+	end
 
 	if not table.find(config.wl.mutants, "ALL") then
-		if not CropsMutants or CropsMutants == "" then return false end
+		if not CropsMutants or CropsMutants == "" then
+			return false
+		end
 		local CropsMutantsTable = string.split(CropsMutants, ",")
 		local isMutantMatch = false
 		for _, mutation in ipairs(CropsMutantsTable) do
-			if table.find(config.wl.mutants, mutation) then isMutantMatch = true end
+			if table.find(config.wl.mutants, mutation) then
+				isMutantMatch = true
+			end
 		end
-		if not isMutantMatch then return false end
+		if not isMutantMatch then
+			return false
+		end
 	end
 
 	local rawWeight = fruit:GetAttribute("FruitWeight") or fruit:GetAttribute("PlantWeight")
@@ -144,32 +166,52 @@ function Main.CheckCrops(fruit, config)
 		elseif config.mode == "Remove" then
 			if config.wl.scaleValue ~= 0 then
 				local rawScale = fruit:GetAttribute("HiddenNumber")
-				if not rawScale then return false end
+				if not rawScale then
+					return false
+				end
 				local scale = tonumber(rawScale)
-				if config.wl.scaleCondition == "Below" and scale >= config.wl.scaleValue then return false end
-				if config.wl.scaleCondition == "Above" and scale <= config.wl.scaleValue then return false end
+				if config.wl.scaleCondition == "Below" and scale >= config.wl.scaleValue then
+					return false
+				end
+				if config.wl.scaleCondition == "Above" and scale <= config.wl.scaleValue then
+					return false
+				end
 			end
 		end
 	else
 		if config.wl.weightValue ~= 0 then
 			local weight = tonumber(rawWeight)
-			if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then return false end
-			if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then return false end
+			if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
+				return false
+			end
+			if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
+				return false
+			end
 		end
 	end
 
-	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, fruitName) then return false end
-	if not table.find(config.bl.ripeness, "NONE") and table.find(config.bl.ripeness, fruitRipeness) then return false end
-	if not table.find(config.bl.variant, "NONE") and table.find(config.bl.variant, fruitVariant) then return false end
+	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, fruitName) then
+		return false
+	end
+	if not table.find(config.bl.ripeness, "NONE") and table.find(config.bl.ripeness, fruitRipeness) then
+		return false
+	end
+	if not table.find(config.bl.variant, "NONE") and table.find(config.bl.variant, fruitVariant) then
+		return false
+	end
 
 	if not table.find(config.bl.mutants, "NONE") then
 		if CropsMutants and CropsMutants ~= "" then
 			local CropsMutantsTable = string.split(CropsMutants, ",")
 			local isBlackMutantMatch = false
 			for _, mutation in ipairs(CropsMutantsTable) do
-				if table.find(config.bl.mutants, mutation) then isBlackMutantMatch = true end
+				if table.find(config.bl.mutants, mutation) then
+					isBlackMutantMatch = true
+				end
 			end
-			if isBlackMutantMatch then return false end
+			if isBlackMutantMatch then
+				return false
+			end
 		end
 	end
 
@@ -178,7 +220,9 @@ end
 
 function Main.ScanCrops()
 	local Options = reg.Options
-	if not Options.tgHarvestEnable.Value then return end
+	if not Options.tgHarvestEnable.Value then
+		return
+	end
 	table.clear(HarVestCropsList)
 
 	-- 1. ค้นหาผ่าน Tag ที่ปุ่มกด
@@ -187,7 +231,9 @@ function Main.ScanCrops()
 		if prompt.Enabled then
 			local fruit = prompt.Parent.Parent -- ย้อนกลับไปหา Model หลัก
 
-			if Main.CheckCrops(fruit, dynHarvestConfig) then table.insert(HarVestCropsList, fruit) end
+			if Main.CheckCrops(fruit, dynHarvestConfig) then
+				table.insert(HarVestCropsList, fruit)
+			end
 		end
 	end
 
@@ -203,27 +249,39 @@ function Main.ScanCrops()
 end
 function Main.ScanCrops2()
 	local Options = reg.Options
-	if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then return end
-	if fVar.isHarvesting or not Options.tgHarvestEnable.Value then return end
+	if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then
+		return
+	end
+	if fVar.isHarvesting or not Options.tgHarvestEnable.Value then
+		return
+	end
 
 	table.clear(HarVestCropsList)
 
 	local TargetPos = reg.Utils.GetCenterPlots()
 	table.insert(TargetPos, reg.MySpawnPoint)
 	for _, cpos in TargetPos do
-		if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then return end
-		SafeTeleport(cpos)
+		if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then
+			return
+		end
+		---ใช้ CFrame.new(cpos + Vector3.new(0, 0, 5)) เพื่อให้ห่างจากตัวละคร 5 บล็อก
+		local offsetPos = CFrame.new(cpos * CFrame.new(0, 4, 0))
+		SafeTeleport(offsetPos)
 		task.wait(3)
 		local ClientPlants = workspace:FindFirstChild("ClientPlants")
 		if ClientPlants then
 			for _, plant in ClientPlants:GetChildren() do
-				if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then return end
+				if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then
+					return
+				end
 				local dynHarvestConfig = GetHarvestConfig()
 				local CropsTable = plant:GetAttribute("HarvestablePlant") and { plant } or plant:GetChildren()
 				for _, fruit in ipairs(CropsTable) do
 					local FullyGrown = fruit:GetAttribute("FullyGrown")
 					if FullyGrown then
-						if Main.CheckCrops(fruit, dynHarvestConfig) then table.insert(HarVestCropsList, fruit) end
+						if Main.CheckCrops(fruit, dynHarvestConfig) then
+							table.insert(HarVestCropsList, fruit)
+						end
 					end
 				end
 			end
@@ -237,8 +295,12 @@ function Main.HarvestCrops()
 	local ParseFruitUuid = reg.Utils.ParseFruitUuid
 	local TweenToTarget = reg.Utils.TweenToTarget
 	HarVestCropsList = reg.HarVestCropsList
-	if fVar.isPlanting or fVar.IsBuying() then return end
-	if fVar.HarvestPause or fVar.isProcessing or fVar.isHarvesting or not Options.tgHarvestEnable.Value then return end
+	if fVar.isPlanting or fVar.IsBuying() then
+		return
+	end
+	if fVar.HarvestPause or fVar.isProcessing or fVar.isHarvesting or not Options.tgHarvestEnable.Value then
+		return
+	end
 
 	if #HarVestCropsList > 0 then
 		fVar.isHarvesting = true
@@ -311,43 +373,67 @@ function Main.CheckSellItem(item, config)
 	local itemValue = tonumber(item:GetAttribute("FruitValue")) or 0
 
 	-- 1. Crops (Names)
-	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, itemName) then return false end
+	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, itemName) then
+		return false
+	end
 
 	-- 2. Ripeness
-	if not table.find(config.wl.ripeness, "ALL") and not table.find(config.wl.ripeness, itemRipeness) then return false end
-	if not table.find(config.bl.ripeness, "NONE") and table.find(config.bl.ripeness, itemRipeness) then return false end
+	if not table.find(config.wl.ripeness, "ALL") and not table.find(config.wl.ripeness, itemRipeness) then
+		return false
+	end
+	if not table.find(config.bl.ripeness, "NONE") and table.find(config.bl.ripeness, itemRipeness) then
+		return false
+	end
 
 	-- 3. Mutants
 	if not table.find(config.wl.mutants, "ALL") then
-		if not itemMutants or itemMutants == "" then return false end
+		if not itemMutants or itemMutants == "" then
+			return false
+		end
 		local mutantsTable = string.split(itemMutants, ",")
 		local isMutantMatch = false
 		for _, mutation in ipairs(mutantsTable) do
-			if table.find(config.wl.mutants, mutation) then isMutantMatch = true end
+			if table.find(config.wl.mutants, mutation) then
+				isMutantMatch = true
+			end
 		end
-		if not isMutantMatch then return false end
+		if not isMutantMatch then
+			return false
+		end
 	end
 	if not table.find(config.bl.mutants, "NONE") then
 		if itemMutants and itemMutants ~= "" then
 			local mutantsTable = string.split(itemMutants, ",")
 			local isBlackMutantMatch = false
 			for _, mutation in ipairs(mutantsTable) do
-				if table.find(config.bl.mutants, mutation) then isBlackMutantMatch = true end
+				if table.find(config.bl.mutants, mutation) then
+					isBlackMutantMatch = true
+				end
 			end
-			if isBlackMutantMatch then return false end
+			if isBlackMutantMatch then
+				return false
+			end
 		end
 	end
 
 	-- 4. Weight
 	if config.wl.weightValue ~= 0 then
-		if config.wl.weightCondition == "Below" and itemWeight >= config.wl.weightValue then return false end
-		if config.wl.weightCondition == "Above" and itemWeight <= config.wl.weightValue then return false end
+		if config.wl.weightCondition == "Below" and itemWeight >= config.wl.weightValue then
+			return false
+		end
+		if config.wl.weightCondition == "Above" and itemWeight <= config.wl.weightValue then
+			return false
+		end
 	end
 
 	-- 5. Value (Price)
 	if config.wl.valueValue ~= 0 then
-		if config.wl.valueCondition == "Below" and itemValue >= config.wl.valueValue then return false end
-		if config.wl.valueCondition == "Above" and itemValue <= config.wl.valueValue then return false end
+		if config.wl.valueCondition == "Below" and itemValue >= config.wl.valueValue then
+			return false
+		end
+		if config.wl.valueCondition == "Above" and itemValue <= config.wl.valueValue then
+			return false
+		end
 	end
 
 	return true
@@ -357,10 +443,14 @@ function Main.AutoSellCrops()
 	local Options = reg.Options
 	local EquipItem = reg.Utils.EquipItem
 	local UnequipTools = reg.Utils.UnequipTools
-	if not Options.tgSellCropsEnable.Value or fVar.isSelling then return end
+	if not Options.tgSellCropsEnable.Value or fVar.isSelling then
+		return
+	end
 
 	local Backpack = LocalPlayer.Backpack
-	if not Backpack then return end
+	if not Backpack then
+		return
+	end
 
 	local itemsToSell = {}
 	local config = GetSellConfig()
@@ -369,7 +459,9 @@ function Main.AutoSellCrops()
 	if not Options.tgSellAllCropsEnable.Value then
 		for _, item in ipairs(Backpack:GetChildren()) do
 			if item:IsA("Tool") and item:GetAttribute("IsHarvested") then
-				if Main.CheckSellItem(item, config) then table.insert(itemsToSell, item) end
+				if Main.CheckSellItem(item, config) then
+					table.insert(itemsToSell, item)
+				end
 			end
 		end
 	else
