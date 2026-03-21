@@ -349,6 +349,7 @@ function AutoTab.Initialize(registry)
 		Callback = function(Value)
 			if Value then
 				fVar.LockDownControlVar()
+				fVar.isTroweling = false
 				local Success, Error = pcall(function()
 					Auto.Trowel()
 				end)
@@ -357,7 +358,6 @@ function AutoTab.Initialize(registry)
 				end
 				fVar.ResetControlVar()
 			else
-				fVar.ResetControlVar()
 				fVar.isTroweling = false
 			end
 			QuickSave()
