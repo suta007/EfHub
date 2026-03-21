@@ -32,7 +32,7 @@ local function LoadModules()
 		Registry.Window = EF_REMOTE("UI/Window")
 		--Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
 		--Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
-		--Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
+		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
 
 		--
 		-- Registry.ShopTab = EF_REMOTE("UI/Tabs/ShopTab")
