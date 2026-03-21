@@ -12,6 +12,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
 local ClaimQuest = RemoteEvents:WaitForChild("ClaimQuest") :: RemoteEvent
 local RemovePlant = RemoteEvents:WaitForChild("RemovePlant") :: RemoteEvent
+local TrowelAction = RemoteEvents:WaitForChild("TrowelAction") :: RemoteEvent
 
 local modulePath = ReplicatedStorage:WaitForChild("RNGPacks"):WaitForChild("RNGPackManager") :: any
 require(modulePath)
@@ -306,6 +307,75 @@ function Auto.OpenPack()
 		Options.tgOpenPackEnable:SetValue(false) -- สั่งให้สวิตช์ใน Fluent UI เด้งกลับไปสถานะปิด
 		getgenv().fLog("✅ เปิดซองทั้งหมดเรียบร้อยแล้ว ระบบพักการทำงาน")
 	end
+end
+
+function Auto.Trowel()
+	local Options = reg.Options
+	local fVar = reg.fVar
+	local Utils = reg.Utils
+	local ClientPlants = workspace:FindFirstChild("ClientPlants")
+
+	if not Options.tgTrowelEnable.Value or not fVar.Pos.Trowel or not fVar.isTroweling then
+		return
+	end
+	fVar.isTroweling = true
+	Utils.UnequipTools()
+	task.wait()
+	local Backpack = LocalPlayer.Backpack
+	local Trowel = nil
+
+	for _, Item in pairs(Backpack:GetChildren()) do
+		if Item:GetAttribute("BaseName") == "Trowel" then
+			Trowel = Item
+			break
+		end
+	end
+
+	if not Trowel then
+		getgenv().fLog("🟡 No Trowel")
+		fVar.isTroweling = false
+		return
+	end
+
+	Utils.EquipItem(Trowel)
+	task.wait()
+	local TrowelList = Utils.GetSelectedItems(Options.ddTrowelSelect.Value)
+	for _, plant in pairs(ClientPlants:GetChildren()) do
+		local PlantType = plant:GetAttribute("PlantType")
+		if PlantType and (table.find(TrowelList, "ALL") or table.find(TrowelList, PlantType)) then
+			local targetCFrame = CFrame.new(plant:GetPivot().Position + Vector3.new(3, 0, 4))
+			local Uuid = plant:GetAttribute("Uuid")
+			local AppliedRotationY = plant:GetAttribute("AppliedRotationY")
+			Utils.SafeTeleport(targetCFrame)
+			local args = {
+				{
+					Action = "Pickup",
+					PlantUuid = Uuid,
+				},
+			}
+			TrowelAction:InvokeServer(unpack(args))
+
+			task.wait(0.1)
+
+			local JumpCFrame = CFrame.new(fVar.Pos.Trowel + Vector3.new(3, 0, 4))
+			Utils.SafeTeleport(JumpCFrame)
+			local args2 = {
+				{
+					PlantUuid = Uuid,
+					Position = vector.create(fVar.Pos.Trowel.X, fVar.Pos.Trowel.Y, fVar.Pos.Trowel.Z),
+					Action = "Place",
+					RotationY = AppliedRotationY,
+				},
+			}
+			TrowelAction:InvokeServer(unpack(args2))
+			task.wait()
+		end
+	end
+	if Options.tgTrowelEnable.Value then
+		Options.tgTrowelEnable:SetValue(false) -- สั่งให้สวิตช์ใน Fluent UI เด้งกลับไปสถานะปิด
+		getgenv().fLog("🟢 ย้ายต้นไม้เรียบร้อยแล้ว ระบบพักการทำงาน")
+	end
+	fVar.isTroweling = false
 end
 
 return Auto

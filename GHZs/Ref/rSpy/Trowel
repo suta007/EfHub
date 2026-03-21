@@ -1,0 +1,21 @@
+local args = {
+	{
+		Action = "Pickup",
+		PlantUuid = "2a642006-117c-431b-8ecd-b9b4e7ee6ae8"
+	}
+}
+game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("TrowelAction"):InvokeServer(unpack(args))
+
+
+local args = {
+	{
+		PlantUuid = "2a642006-117c-431b-8ecd-b9b4e7ee6ae8",
+		Position = vector.create(403.5208740234375, 215.09983825683594, 729.065185546875),
+		Action = "Place",
+		RotationY = -18.46868896484375
+	}
+}
+game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("TrowelAction"):InvokeServer(unpack(args))
+
+
+plant:GetAttribute("AppliedRotationY")

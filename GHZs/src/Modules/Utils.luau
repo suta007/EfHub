@@ -219,6 +219,10 @@ function Utils.EquipItem(item)
 	local humanoid = Character:FindFirstChild("Humanoid")
 	if humanoid and item then
 		pcall(function()
+			humanoid:UnequipTools()
+		end)
+		task.wait(0.05)
+		pcall(function()
 			humanoid:EquipTool(item)
 		end)
 	end

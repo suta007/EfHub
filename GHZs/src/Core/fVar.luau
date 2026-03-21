@@ -28,6 +28,7 @@ fVar.isHarvesting = false
 fVar.isQuestClaiming = false
 fVar.isRemovePlants = false
 fVar.isRemoveCrops = false
+fVar.isTroweling = false
 
 function fVar.ResetControlVar()
 	fVar.isPlanting = false
@@ -40,6 +41,7 @@ function fVar.ResetControlVar()
 	fVar.isQuestClaiming = false
 	fVar.isRemovePlants = false
 	fVar.isRemoveCrops = false
+	fVar.isTroweling = false
 
 	table.clear(fVar.actionQueue)
 end
@@ -55,6 +57,7 @@ function fVar.LockDownControlVar()
 	fVar.isQuestClaiming = true
 	fVar.isRemovePlants = true
 	fVar.isRemoveCrops = true
+	fVar.isTroweling = true
 end
 
 function fVar.IsBuying()
