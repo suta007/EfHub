@@ -14,6 +14,7 @@ fVar.Pos = {
 	Sell = CFrame.new(149.40, 205.50, 672.00),
 	Quest = CFrame.new(111.52, 205.50, 635.02),
 	Strange = CFrame.new(168.74, 270.57, 768.77),
+	Trowel = nil,
 }
 
 --Control Variable

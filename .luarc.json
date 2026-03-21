@@ -10,7 +10,8 @@
         "CoreGui",
         "CollectionService",
         "game",
-        "task"
+        "task",
+        "getgc"
     ],
     "languageServer.luau.enabled": true
 }

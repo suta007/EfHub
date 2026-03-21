@@ -15,7 +15,9 @@ local noclipConnection = nil
 
 local function InitializePlotData()
 	local PlotsFolder = workspace:FindFirstChild("Plots")
-	if not PlotsFolder then return false end
+	if not PlotsFolder then
+		return false
+	end
 	for _, plot in ipairs(PlotsFolder:GetChildren()) do
 		local ownerVal = plot:FindFirstChild("Owner")
 		if ownerVal and ownerVal.Value == LocalPlayer.Name then
@@ -26,7 +28,9 @@ local function InitializePlotData()
 			if plantableArea then
 				table.clear(MyPlantableParts)
 				for _, part in ipairs(plantableArea:GetChildren()) do
-					if part:IsA("BasePart") then table.insert(MyPlantableParts, part) end
+					if part:IsA("BasePart") then
+						table.insert(MyPlantableParts, part)
+					end
 				end
 				return true
 			end
@@ -46,7 +50,9 @@ function Utils.GetSelectedItems(DropdownValue)
 	local Items = {}
 	if type(DropdownValue) == "table" then
 		for Value, State in pairs(DropdownValue) do
-			if State then table.insert(Items, Value) end
+			if State then
+				table.insert(Items, Value)
+			end
 		end
 	end
 	return Items
@@ -54,7 +60,9 @@ end
 
 function Utils.GetRandomPlantPosition()
 	if #MyPlantableParts == 0 then
-		if not InitializePlotData() then return nil end
+		if not InitializePlotData() then
+			return nil
+		end
 	end
 	local targetPart = MyPlantableParts[math.random(1, #MyPlantableParts)]
 	local size = targetPart.Size
@@ -77,7 +85,9 @@ end
 
 function Utils.GetCenterPlots()
 	if #MyPlantableParts < 2 then
-		if not InitializePlotData() then return nil, nil end
+		if not InitializePlotData() then
+			return nil, nil
+		end
 	end
 
 	local part1 = MyPlantableParts[1]
@@ -95,7 +105,9 @@ function Utils.SafeTeleport(targetCFrame)
 	local rootPart = Character:FindFirstChild("HumanoidRootPart")
 
 	if humanoid then
-		if humanoid.Sit then humanoid.Sit = false end
+		if humanoid.Sit then
+			humanoid.Sit = false
+		end
 		humanoid.Jump = true
 		task.wait(0.05)
 		humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
@@ -117,7 +129,9 @@ function Utils.SetNoClip(state)
 			noclipConnection = RunService.Stepped:Connect(function()
 				if Character then
 					for _, part in ipairs(Character:GetDescendants()) do
-						if part:IsA("BasePart") and part.CanCollide then part.CanCollide = false end
+						if part:IsA("BasePart") and part.CanCollide then
+							part.CanCollide = false
+						end
 					end
 				end
 			end)
@@ -132,10 +146,14 @@ end
 
 function Utils.TweenToTarget(targetCFrame, speed)
 	local rootPart = Character:FindFirstChild("HumanoidRootPart")
-	if not rootPart then return false end
+	if not rootPart then
+		return false
+	end
 
 	local currentDistance = (rootPart.Position - targetCFrame.Position).Magnitude
-	if currentDistance <= fVar.SutaDistLimit then return true end
+	if currentDistance <= fVar.SutaDistLimit then
+		return true
+	end
 
 	local walkSpeed = speed or 50
 	local height = fVar.SutaYoffset or 3
@@ -191,22 +209,36 @@ function Utils.ParseFruitUuid(rawUuid)
 	local baseUuid = string.split(rawUuid, ":")[1]
 	local numberSuffixStr = string.match(rawUuid, ":(%d+)$")
 	local finalNumber = nil
-	if numberSuffixStr then finalNumber = tonumber(numberSuffixStr) end
+	if numberSuffixStr then
+		finalNumber = tonumber(numberSuffixStr)
+	end
 	return baseUuid, finalNumber
 end
 
 function Utils.EquipItem(item)
 	local humanoid = Character:FindFirstChild("Humanoid")
-	if humanoid and item then pcall(function()
-		humanoid:EquipTool(item)
-	end) end
+	if humanoid and item then
+		pcall(function()
+			humanoid:EquipTool(item)
+		end)
+	end
 end
 
 function Utils.UnequipTools()
 	local humanoid = Character:FindFirstChild("Humanoid")
-	if humanoid then pcall(function()
-		humanoid:UnequipTools()
-	end) end
+	if humanoid then
+		pcall(function()
+			humanoid:UnequipTools()
+		end)
+	end
+end
+
+function Utils.GetPlayerPosition()
+	local rootPart = Character:FindFirstChild("HumanoidRootPart")
+	if not rootPart then
+		return nil
+	end
+	return rootPart.Position
 end
 
 return Utils

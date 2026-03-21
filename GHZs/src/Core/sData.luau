@@ -1,9 +1,9 @@
 local sData = {}
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local ShopData = ReplicatedStorage:WaitForChild("Shop"):WaitForChild("ShopData")
-local PlantData = ReplicatedStorage:WaitForChild("Plants"):WaitForChild("Definitions"):WaitForChild("PlantDataDefinitions")
-local MutationData = ReplicatedStorage:WaitForChild("Plants"):WaitForChild("Definitions"):WaitForChild("MutationDataDefinitions")
-local SeedPackDefinitions = ReplicatedStorage:WaitForChild("RNGPacks"):WaitForChild("SeedPackDefinitions")
+local PlantData = ReplicatedStorage:WaitForChild("Plants"):WaitForChild("Definitions"):WaitForChild("PlantDataDefinitions") :: any
+local MutationData = ReplicatedStorage:WaitForChild("Plants"):WaitForChild("Definitions"):WaitForChild("MutationDataDefinitions") :: any
+local SeedPackDefinitions = ReplicatedStorage:WaitForChild("RNGPacks"):WaitForChild("SeedPackDefinitions") :: any
 
 local function getShopData(path)
 	local names = { "ALL" }

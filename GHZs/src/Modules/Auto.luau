@@ -1,3 +1,5 @@
+local getgenv = (getfenv() :: any).getgenv
+local getgc = (getfenv() :: any).getgc
 local Auto = {}
 local reg
 local GetSelectedItems
@@ -11,7 +13,7 @@ local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
 local ClaimQuest = RemoteEvents:WaitForChild("ClaimQuest") :: RemoteEvent
 local RemovePlant = RemoteEvents:WaitForChild("RemovePlant") :: RemoteEvent
 
-local modulePath = ReplicatedStorage:WaitForChild("RNGPacks"):WaitForChild("RNGPackManager")
+local modulePath = ReplicatedStorage:WaitForChild("RNGPacks"):WaitForChild("RNGPackManager") :: any
 require(modulePath)
 
 local RequestSpin = ReplicatedStorage:WaitForChild("RemoteEvents"):WaitForChild("RequestSpin")
@@ -48,24 +50,32 @@ end
 function Auto.AutoClaimQuest(QuestData)
 	local Options = reg.Options
 	local fVar = reg.fVar
-	if not Options.tgQuestEnable.Value or fVar.isQuestClaiming or not QuestData then return end
+	if not Options.tgQuestEnable.Value or fVar.isQuestClaiming or not QuestData then
+		return
+	end
 
 	fVar.isQuestClaiming = true
 	local Daily = QuestData.Daily.Active
 	for index, qDaily in pairs(Daily) do
-		if qDaily.CompletedAt and not qDaily.Claimed then ClaimQuest:FireServer("Daily", index) end
+		if qDaily.CompletedAt and not qDaily.Claimed then
+			ClaimQuest:FireServer("Daily", index)
+		end
 	end
 
 	local Weekly = QuestData.Weekly.Active
 	for index, qWeekly in pairs(Weekly) do
-		if qWeekly.CompletedAt and not qWeekly.Claimed then ClaimQuest:FireServer("Weekly", index) end
+		if qWeekly.CompletedAt and not qWeekly.Claimed then
+			ClaimQuest:FireServer("Weekly", index)
+		end
 	end
 	fVar.isQuestClaiming = false
 end
 
 local function ProcessRemove(isFruit)
 	local ClientPlants = workspace:FindFirstChild("ClientPlants")
-	if not ClientPlants then return end
+	if not ClientPlants then
+		return
+	end
 
 	local Options = reg.Options
 	local Utils = reg.Utils
@@ -74,7 +84,9 @@ local function ProcessRemove(isFruit)
 
 	local Backpack = LocalPlayer.Backpack
 	local Shovel = Backpack:FindFirstChild("Shovel", true) or Character:FindFirstChild("Shovel", true)
-	if not Shovel then return end
+	if not Shovel then
+		return
+	end
 
 	local RemoveList = isFruit and Utils.GetSelectedItems(Options.ddRemoveCrops.Value) or Utils.GetSelectedItems(Options.ddRemovePlants.Value)
 	local dynRemoveConfig = isFruit and GetRemoveConfig() or nil
@@ -87,9 +99,13 @@ local function ProcessRemove(isFruit)
 	end
 
 	local function CheckPlantsScale(cPlant)
-		if RemovePlantsScaleValue == 0 then return true end
+		if RemovePlantsScaleValue == 0 then
+			return true
+		end
 		local rawScale = cPlant:GetAttribute("HiddenNumber")
-		if not rawScale then return false end
+		if not rawScale then
+			return false
+		end
 		local scale = tonumber(rawScale)
 		if RemovePlantsScale == "Below" then
 			return scale < RemovePlantsScaleValue
@@ -122,18 +138,26 @@ local function ProcessRemove(isFruit)
 
 	for _, plant in pairs(ClientPlants:GetChildren()) do
 		local enableOpt = isFruit and Options.tgRemoveFruitEnable.Value or Options.tgRemovePlantsEnable.Value
-		if not enableOpt then break end
+		if not enableOpt then
+			break
+		end
 
 		local PlantType = plant:GetAttribute("PlantType")
 		if PlantType and (table.find(RemoveList, "ALL") or table.find(RemoveList, PlantType)) then
 			if isFruit then
 				local CropsTable = plant:GetAttribute("HarvestablePlant") and { plant } or plant:GetChildren()
 				for _, crop in pairs(CropsTable) do
-					if not Options.tgRemoveFruitEnable.Value then break end
-					if crop:IsA("Model") and Main.CheckCrops(crop, dynRemoveConfig) then PerformDig(crop) end
+					if not Options.tgRemoveFruitEnable.Value then
+						break
+					end
+					if crop:IsA("Model") and Main.CheckCrops(crop, dynRemoveConfig) then
+						PerformDig(crop)
+					end
 				end
 			else
-				if CheckPlantsScale(plant) then PerformDig(plant) end
+				if CheckPlantsScale(plant) then
+					PerformDig(plant)
+				end
 			end
 		end
 	end
@@ -142,7 +166,9 @@ end
 function Auto.RemovePlants()
 	local Options = reg.Options
 	local fVar = reg.fVar
-	if not Options.tgRemovePlantsEnable.Value or fVar.isRemovePlants then return end
+	if not Options.tgRemovePlantsEnable.Value or fVar.isRemovePlants then
+		return
+	end
 	fVar.isRemovePlants = true
 	ProcessRemove(false)
 	fVar.isRemovePlants = false
@@ -151,7 +177,9 @@ end
 function Auto.RemoveCrops()
 	local Options = reg.Options
 	local fVar = reg.fVar
-	if not Options.tgRemoveFruitEnable.Value or fVar.isRemoveCrops then return end
+	if not Options.tgRemoveFruitEnable.Value or fVar.isRemoveCrops then
+		return
+	end
 	fVar.isRemoveCrops = true
 	ProcessRemove(true)
 	fVar.isRemoveCrops = false
@@ -198,11 +226,13 @@ function Auto.disablePackAnimations()
 	end
 
 	local cut = Auto.BackupFuncs.CutsceneManager
-	if cut then cut.Play = function()
-		return
-	end end
+	if cut then
+		cut.Play = function()
+			return
+		end
+	end
 
-	fLog("🚫 ปิดแอนิเมชันแล้ว")
+	getgenv().fLog("🚫 ปิดแอนิเมชันแล้ว")
 
 	-- ส่วนของการ Force เปิด UI ที่พี่เอฟเขียนไว้ คงไว้เหมือนเดิมได้เลยค่ะ
 end
@@ -220,9 +250,11 @@ function Auto.enablePackAnimations()
 		end
 
 		local cut = Auto.BackupFuncs.CutsceneManager
-		if cut and orig["Play"] then cut.Play = orig["Play"] end
+		if cut and orig["Play"] then
+			cut.Play = orig["Play"]
+		end
 
-		fLog("🎬 เปิดแอนิเมชันกลับมาเหมือนเดิมแล้ว")
+		getgenv().fLog("🎬 เปิดแอนิเมชันกลับมาเหมือนเดิมแล้ว")
 	end
 end
 
@@ -231,20 +263,30 @@ function Auto.OpenPack()
 	local sData = reg.sData
 	local Utils = reg.Utils
 
-	if not Options.tgOpenPackEnable.Value then return end
+	if not Options.tgOpenPackEnable.Value then
+		return
+	end
 	local PackList = GetSelectedItems(Options.ddOpenPackSelect.Value)
-	if table.find(PackList, "ALL") then PackList = sData.SeedPackTable end
+	if table.find(PackList, "ALL") then
+		PackList = sData.SeedPackTable
+	end
 	Utils.UnequipTools()
 	task.wait()
 	local Backpack = LocalPlayer.Backpack
-	if not Backpack then fLog("No Backpack") end
+	if not Backpack then
+		getgenv().fLog("No Backpack")
+	end
 	for _index, item in pairs(Backpack:GetChildren()) do
-		if not Options.tgOpenPackEnable.Value then return end
+		if not Options.tgOpenPackEnable.Value then
+			return
+		end
 		local ItemName = item:GetAttribute("BaseName")
 		if table.find(PackList, ItemName) then
 			local ItemCount = item:GetAttribute("ItemCount") or 0
 			for i = 1, ItemCount do
-				if not Options.tgOpenPackEnable.Value then return end
+				if not Options.tgOpenPackEnable.Value then
+					return
+				end
 				Utils.EquipItem(item)
 				task.wait()
 				local success, result = pcall(function()
@@ -252,9 +294,9 @@ function Auto.OpenPack()
 				end)
 
 				if success and result and result.RewardId then
-					fLog("🌱 ได้รับไอเทมแล้ว: " .. tostring(result.RewardId))
+					getgenv().fLog("🌱 ได้รับไอเทมแล้ว: " .. tostring(result.RewardId))
 				else
-					fLog("❌ เปิดไม่สำเร็จ (อาจจะไม่มีซองในมือ หรือติด Cooldown)")
+					getgenv().fLog("❌ เปิดไม่สำเร็จ (อาจจะไม่มีซองในมือ หรือติด Cooldown)")
 				end
 				task.wait(0.5)
 			end
@@ -262,7 +304,7 @@ function Auto.OpenPack()
 	end
 	if Options.tgOpenPackEnable.Value then
 		Options.tgOpenPackEnable:SetValue(false) -- สั่งให้สวิตช์ใน Fluent UI เด้งกลับไปสถานะปิด
-		fLog("✅ เปิดซองทั้งหมดเรียบร้อยแล้ว ระบบพักการทำงาน")
+		getgenv().fLog("✅ เปิดซองทั้งหมดเรียบร้อยแล้ว ระบบพักการทำงาน")
 	end
 end
 
