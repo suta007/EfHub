@@ -7,6 +7,7 @@ local QuickSave
 local fVar
 local EfTasks
 local Main
+local Utils
 
 function MainTab.Initialize(reg)
 	Interface = reg.Interface
@@ -16,9 +17,19 @@ function MainTab.Initialize(reg)
 	fVar = reg.fVar
 	EfTasks = reg.EfTasks
 	Main = reg.Main
+	Utils = reg.Utils
 
 	Tabs.Main = Interface:AddTab({ Title = "Main", Icon = "dices" })
 	local PlantsSection = Tabs.Main:AddCollapsibleSection("Plants", false)
+
+	PlantsSection:AddButton({
+		Title = "Test Random Position",
+		Callback = function()
+			local pos = Utils.GetRandomPlotPos()
+			getgenv().fLog("Random Position: " .. tostring(pos.Position))
+		end,
+	})
+
 	PlantsSection:AddToggle("tgPlantsEnable", {
 		Title = "Auto Plants",
 		Default = false,
