@@ -343,6 +343,10 @@ function Auto.Trowel()
 	for _, plant in pairs(ClientPlants:GetChildren()) do
 		local PlantType = plant:GetAttribute("PlantType")
 		if PlantType and (table.find(TrowelList, "ALL") or table.find(TrowelList, PlantType)) then
+			local FullyGrown = plant:GetAttribute("FullyGrown")
+			if not FullyGrown then
+				continue
+			end
 			local targetCFrame = CFrame.new(plant:GetPivot().Position + Vector3.new(3, 0, 4))
 			local Uuid = plant:GetAttribute("Uuid")
 			local AppliedRotationY = plant:GetAttribute("AppliedRotationY")
