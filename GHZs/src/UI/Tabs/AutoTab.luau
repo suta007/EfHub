@@ -1,3 +1,4 @@
+local getgenv = (getfenv() :: any).getgenv
 local AutoTab = {}
 local reg
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -348,10 +349,16 @@ function AutoTab.Initialize(registry)
 		Callback = function(Value)
 			if Value then
 				fVar.LockDownControlVar()
-				-- Auto.Trowel()
+				local Success, Error = pcall(function()
+					Auto.Trowel()
+				end)
+				if not Success then
+					getgenv().fLog("❌ " .. tostring(Error))
+				end
 				fVar.ResetControlVar()
 			else
 				fVar.ResetControlVar()
+				fVar.isTroweling = false
 			end
 			QuickSave()
 		end,
