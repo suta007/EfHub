@@ -106,15 +106,19 @@ function Utils.isTableEmpty(t)
 	return type(t) ~= "table" or next(t) == nil
 end
 
-function Utils.HeldItemUUID(UUID)
-	local sData = reg.sData
-	local Backpack = sData.Backpack
-	for _, item in pairs(Backpack:GetChildren()) do
-		--[[ 		if item.UUID == UUID then
-			return item
-		end ]]
-	end
-	return nil
+function Utils.UnequipTool()
+	pcall(function()
+		sData.Humanoid:UnequipTool()
+		task.wait()
+	end)
+end
+
+function Utils.EquipTool(item)
+	local success, _err = pcall(function()
+		sData.Humanoid:EquipTool(item)
+		task.wait()
+	end)
+	return success
 end
 
 return Utils

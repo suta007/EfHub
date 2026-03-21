@@ -9,7 +9,7 @@ end
 local SeedData = require(ReplicatedStorage.Data.SeedData :: any)
 fVar.SeedDataTable = { "ALL" }
 for seedName, seedInfo in pairs(SeedData) do
-	table.insert(fVar.SeedDataTable, seedInfo.SeedName)
+	table.insert(fVar.SeedDataTable, seedName)
 end
 
 fVar.isPlanting = false

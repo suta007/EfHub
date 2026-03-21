@@ -5,7 +5,8 @@ local Tabs
 local Options
 local QuickSave
 local fVar
---local Main
+local EfTasks
+local Main
 
 function MainTab.Initialize(reg)
 	Interface = reg.Interface
@@ -13,6 +14,8 @@ function MainTab.Initialize(reg)
 	Options = reg.Options
 	QuickSave = reg.Window.QuickSave
 	fVar = reg.fVar
+	EfTasks = reg.EfTasks
+	Main = reg.Main
 
 	Tabs.Main = Interface:AddTab({ Title = "Main", Icon = "dices" })
 	local PlantsSection = Tabs.Main:AddCollapsibleSection("Plants", false)
@@ -20,6 +23,13 @@ function MainTab.Initialize(reg)
 		Title = "Auto Plants",
 		Default = false,
 		Callback = function(Value)
+			if not Value then
+				fVar.isPlanting = false
+			end
+			EfTasks.ToggleTask("AutoPlant", Value, function()
+				Main.AutoPlant()
+				task.wait(2)
+			end)
 			QuickSave()
 		end,
 	})

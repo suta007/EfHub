@@ -11,13 +11,13 @@ local function LoadModules()
 	local isDev = getgenv().DEV_MODE
 	if isDev then
 		-- 1. Core
-		--Registry.sData = EF_REMOTE("Core/sData")
+		Registry.sData = EF_REMOTE("Core/sData")
 		Registry.fVar = EF_REMOTE("Core/fVar")
 
 		-- 2. Functional Modules
-		--Registry.Utils = EF_REMOTE("Modules/Utils")
-		--Registry.EfTasks = EF_REMOTE("Modules/EfTasks")
-		--Registry.Main = EF_REMOTE("Modules/Main")
+		Registry.Utils = EF_REMOTE("Modules/Utils")
+		Registry.EfTasks = EF_REMOTE("Modules/EfTasks")
+		Registry.Main = EF_REMOTE("Modules/Main")
 		--Registry.Pets = EF_REMOTE("Modules/Pets")
 
 		--
@@ -41,13 +41,13 @@ local function LoadModules()
 		-- Registry.AutoTab = EF_REMOTE("UI/Tabs/AutoTab")
 	else
 		-- 1. Core
-		--Registry.sData = require("./Core/sData.luau")
+		Registry.sData = require("./Core/sData.luau")
 		Registry.fVar = require("./Core/fVar.luau")
 
 		-- 2. Functional Modules
-		--Registry.Utils = require("./Modules/Utils.luau")
-		--Registry.EfTasks = require("./Modules/EfTasks.luau")
-		--Registry.Main = require("./Modules/Main.luau")
+		Registry.Utils = require("./Modules/Utils.luau")
+		Registry.EfTasks = require("./Modules/EfTasks.luau")
+		Registry.Main = require("./Modules/Main.luau")
 		--Registry.Pets = require("./Modules/Pets.luau")
 
 		--
@@ -81,9 +81,9 @@ function EfHub.Initialize()
 	-- Initialize Modules (ตอนนี้ Registry.Options มีค่าแล้ว)
 	--Registry.sData.Initialize(Registry)
 	--Registry.Pets.Initialize(Registry)
-	--Registry.Utils.Initialize(Registry)
+	Registry.Utils.Initialize(Registry)
 	-- Registry.Misc.Initialize(Registry)
-	--Registry.Main.Initialize(Registry)
+	Registry.Main.Initialize(Registry)
 	-- Registry.Shop.Initialize(Registry)
 	-- Registry.Process.Initialize(Registry)
 	-- Registry.Auto.Initialize(Registry)
