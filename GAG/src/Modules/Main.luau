@@ -34,7 +34,7 @@ function Main.AutoPlant()
 				if Options.ddPlantsPos.Value == "Player" then
 					PlantsPos = Utils.GetPosition()
 				else
-					PlantsPos = Utils.GetRandomPlotPos()
+					PlantsPos = Utils.GetRandomPlotPos().Position
 				end
 				local args = { vector.create(PlantsPos.X, PlantsPos.Y, PlantsPos.Z), SeedName }
 				sData.GameEvents:WaitForChild("Plant_RE"):FireServer(unpack(args))

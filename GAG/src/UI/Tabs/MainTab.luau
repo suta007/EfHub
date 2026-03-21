@@ -26,6 +26,7 @@ function MainTab.Initialize(reg)
 		Title = "Test Random Position",
 		Callback = function()
 			local pos = Utils.GetRandomPlotPos()
+			reg.sData.Character:PivotTo(pos)
 			getgenv().fLog("Random Position: " .. tostring(pos.Position))
 		end,
 	})
