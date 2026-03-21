@@ -20,7 +20,6 @@ function LogTab.Initialize(Registry)
 
 	Tabs.Log:AddButton({
 		Title = "❌ Clear Log",
-		Description = "ล้างประวัติข้อความทั้งหมดบนหน้าจอ",
 		Callback = function()
 			logHistory = ""
 			logCount = 0
@@ -32,7 +31,6 @@ function LogTab.Initialize(Registry)
 
 	Tabs.Log:AddButton({
 		Title = "📑 Copy Log",
-		Description = "คัดลอกประวัติข้อความทั้งหมดไปที่ Clipboard",
 		Callback = function()
 			if logHistory ~= "" then
 				if setclipboard then

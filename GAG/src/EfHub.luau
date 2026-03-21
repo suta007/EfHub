@@ -12,7 +12,7 @@ local function LoadModules()
 	if isDev then
 		-- 1. Core
 		--Registry.sData = EF_REMOTE("Core/sData")
-		--Registry.fVar = EF_REMOTE("Core/fVar")
+		Registry.fVar = EF_REMOTE("Core/fVar")
 
 		-- 2. Functional Modules
 		--Registry.Utils = EF_REMOTE("Modules/Utils")
@@ -30,7 +30,7 @@ local function LoadModules()
 
 		-- 3. UI Modules
 		Registry.Window = EF_REMOTE("UI/Window")
-		--Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
+		Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
 		--Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
 		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
 
@@ -42,7 +42,7 @@ local function LoadModules()
 	else
 		-- 1. Core
 		--Registry.sData = require("./Core/sData.luau")
-		--Registry.fVar = require("./Core/fVar.luau")
+		Registry.fVar = require("./Core/fVar.luau")
 
 		-- 2. Functional Modules
 		--Registry.Utils = require("./Modules/Utils.luau")
@@ -59,7 +59,7 @@ local function LoadModules()
 
 		-- 3. UI Modules
 		Registry.Window = require("./UI/Window.luau")
-		--Registry.MainTab = require("./UI/Tabs/MainTab.luau")
+		Registry.MainTab = require("./UI/Tabs/MainTab.luau")
 		--Registry.PetsTab = require("./UI/Tabs/PetsTab.luau")
 		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
 
@@ -89,7 +89,7 @@ function EfHub.Initialize()
 	-- Registry.Auto.Initialize(Registry)
 	-- Registry.EventDrive.Initialize(Registry)
 
-	--Registry.MainTab.Initialize(Registry)
+	Registry.MainTab.Initialize(Registry)
 	-- Registry.ShopTab.Initialize(Registry)
 	-- Registry.AutoTab.Initialize(Registry)
 	-- Registry.EventsTab.Initialize(Registry)
