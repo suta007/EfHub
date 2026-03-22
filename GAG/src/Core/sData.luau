@@ -40,14 +40,10 @@ end
 sData.SeedDataBlackTable = table.clone(sData.SeedDataTable)
 sData.SeedDataBlackTable[1] = "NONE"
 
-local MutationData = require(sData.PetRegistry:WaitForChild("PetMutationRegistry") :: any)
+local MutationData = sData.DataService:GetData().GardenGuide.MutationData
 sData.MutationDataTable = { "ALL" }
-sData.EnumToNameCache = {}
-for mutantName, mutantInfo in pairs(MutationData["PetMutationRegistry"]) do
-	if type(mutantInfo) == "table" and mutantInfo.EnumId then
-		table.insert(sData.MutationDataTable, mutantName)
-		sData.EnumToNameCache[mutantInfo.EnumId] = mutantName
-	end
+for MutationName, MutationInfo in pairs(MutationData) do
+	table.insert(sData.MutationDataTable, MutationName)
 end
 sData.MutationDataBlackTable = table.clone(sData.MutationDataTable)
 sData.MutationDataBlackTable[1] = "NONE"
@@ -59,5 +55,17 @@ for petName, petInfo in pairs(PetList) do
 	table.insert(sData.PetsDataTable, petName)
 	sData.HungerDataTable[petName] = petInfo["DefaultHunger"]
 end
+
+local PetMutationData = require(sData.PetRegistry:WaitForChild("PetMutationRegistry") :: any)
+sData.PetMutationDataTable = { "ALL" }
+sData.EnumToNameCache = {}
+for mutantName, mutantInfo in pairs(PetMutationData["PetMutationRegistry"]) do
+	if type(mutantInfo) == "table" and mutantInfo.EnumId then
+		table.insert(sData.PetMutationDataTable, mutantName)
+		sData.EnumToNameCache[mutantInfo.EnumId] = mutantName
+	end
+end
+sData.PetMutationDataBlackTable = table.clone(sData.PetMutationDataTable)
+sData.PetMutationDataBlackTable[1] = "NONE"
 
 return sData

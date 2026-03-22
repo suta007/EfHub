@@ -7,7 +7,6 @@ local QuickSave
 local fVar
 local EfTasks
 local Main
-local Utils
 local sData
 
 function MainTab.Initialize(reg)
@@ -18,7 +17,6 @@ function MainTab.Initialize(reg)
 	fVar = reg.fVar
 	EfTasks = reg.EfTasks
 	Main = reg.Main
-	Utils = reg.Utils
 	sData = reg.sData
 
 	Tabs.Main = Interface:AddTab({ Title = "Main", Icon = "dices" })
