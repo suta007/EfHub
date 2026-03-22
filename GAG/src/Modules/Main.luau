@@ -228,9 +228,9 @@ function Main.GetSellVar()
 	}
 end
 function Main.CheckItem(item, config)
-	local ItemName = item:FindFirstChild("Item_String").Value
-	local ItemVariant = item:FindFirstChild("Variant").Value
-	local ItemWeight = item:FindFirstChild("Weight").Value
+	local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value or "NONE"
+	local ItemVariant = item:FindFirstChild("Variant") and item:FindFirstChild("Variant").Value or "NONE"
+	local ItemWeight = item:FindFirstChild("Weight") and item:FindFirstChild("Weight").Value or 0
 
 	if not table.find(config.wl.crops, "ALL") and not table.find(config.wl.crops, ItemName) then
 		return false
