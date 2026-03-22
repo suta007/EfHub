@@ -298,20 +298,10 @@ function Main.SellCrops()
 	end
 	fVar.isSelling = true
 	local config = Main.GetSellVar()
-	local SellAll = false
-
-	local function SellWhiteList()
-		return table.find(config.wl.crops, "ALL") and table.find(config.wl.mutants, "ALL") and table.find(config.wl.variant, "ALL") and (config.wl.weightValue == 0)
-	end
-	local function SellBlackList()
-		return table.find(config.bl.crops, "NONE") and table.find(config.bl.mutants, "NONE") and table.find(config.bl.variant, "NONE")
-	end
-
-	if SellWhiteList() and SellBlackList() then
-		SellAll = true
-	end
 	Utils.ClickButton(Utils.SellButton)
-	if not SellAll then
+	if Options.tgSellAll.Value then
+		sData.GameEvents.Sell_Inventory:FireServer()
+	else
 		local Backpack = sData.LocalPlayer.Backpack
 		for _, item in pairs(Backpack:GetChildren()) do
 			if not Options.tgSellEnable.Value then
@@ -319,15 +309,11 @@ function Main.SellCrops()
 				return
 			end
 			if Main.CheckItem(item, config) then
-				--Utils.UnequipTool()
-				--task.wait(0.1)
 				Utils.EquipTool(item)
 				task.wait(0.1)
 				sData.GameEvents.Sell_Item:FireServer()
 			end
 		end
-	else
-		sData.GameEvents.Sell_Inventory:FireServer()
 	end
 	Utils.ClickButton(Utils.GardenButton)
 	task.wait(1)

@@ -220,6 +220,19 @@ function MainTab.Initialize(reg)
 			QuickSave()
 		end,
 	})
+	SellSection:AddToggle("tgSellAll", {
+		Title = "Sell All",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddButton({
+		Title = "Sell Now",
+		Callback = function()
+			Main.SellCrops()
+		end,
+	})
 	SellSection:AddDivider()
 	SellSection:AddButton({
 		Title = "Clear Selected Crops",
