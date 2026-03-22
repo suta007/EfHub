@@ -83,6 +83,32 @@ function Main.GetAllReadyCrops()
 	end
 end
 
+function Main.GetAllReadyCrops2()
+	table.clear(readyCrops)
+	local Plants_Physical = Utils.GetPlantsFolder()
+	if not Plants_Physical then
+		return
+	end
+	local count = 0
+	for _, plant in ipairs(Plants_Physical:GetChildren()) do
+		local FruitsContainer = plant:FindFirstChild("Fruits")
+		local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
+
+		for _, item in ipairs(itemsToCheck) do
+			if item:IsA("Model") then
+				local Prompt = item:FindFirstChild("ProximityPrompt", true)
+				if Prompt and Prompt.Enabled then
+					table.insert(readyCrops, item)
+				end
+			end
+			count = count + 1
+			if count % 100 == 0 then
+				task.wait()
+			end
+		end
+	end
+end
+
 function Main.CheckCrops(fruit, config)
 	if not fruit or not fruit:IsA("Model") then
 		return false
@@ -158,8 +184,10 @@ function Main.HarvestCrops()
 		return
 	end
 	if #readyCrops == 0 then
-		Main.GetAllReadyCrops()
-		task.wait(0.1)
+		task.spawn(function()
+			Main.GetAllReadyCrops2()
+		end)
+		task.wait(1)
 		if #readyCrops == 0 then
 			return
 		end

@@ -25,6 +25,11 @@ function Utils.GetMyFarm()
 	return nil
 end
 
+function Utils.GetPlantsFolder()
+	local Farm_Important = Utils.GetMyFarm():FindFirstChild("Important")
+	return Farm_Important and Farm_Important:FindFirstChild("Plants_Physical")
+end
+
 function Utils.getPlot()
 	local myPlot = {}
 	local plantLocations = Utils.GetMyFarm().Important.Plant_Locations:GetChildren()
