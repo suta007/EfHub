@@ -52,10 +52,10 @@ function Window.Initialize(Registry)
 
 	ToggleButton.Name = "ToggleButton"
 	ToggleButton.Parent = ToggleGui
-	ToggleButton.BackgroundColor3 = Color3.fromRGB(20, 20, 100)
+	ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 20, 20)
 	ToggleButton.Position = UDim2.new(0, 10, 0.5, 0)
 	ToggleButton.Size = UDim2.new(0, 50, 0, 50)
-	ToggleButton.Text = "EF"
+	ToggleButton.Text = "GAG"
 	ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 	ToggleButton.Draggable = true -- สำหรับ Delta Executor ตัวนี้ยังใช้ได้ดีค่ะ
 	ToggleButton.Active = true
