@@ -189,5 +189,137 @@ function MainTab.Initialize(reg)
 			QuickSave()
 		end,
 	})
+
+	--[[ 
+** Sell Section **
+	- Sell Enable (Toggle)
+	- Sell Crops (Dropdown) + Clear Button
+	- Sell Blacklist Crops (Dropdown) + Clear Button
+	- Sell Mutants (Dropdown) + Clear Button
+	- Sell Blacklist Mutants (Dropdown) + Clear Button
+	- Sell Variant (Dropdown)
+	- Sell Blacklist Variant (Dropdown)
+	- Sell Weight (Dropdown)
+	- Sell Weight Value (Input)
+	]]
+	local SellSection = Tabs.Main:AddCollapsibleSection("Sell", false)
+	SellSection:AddToggle("tgSellEnable", {
+		Title = "Auto Sell",
+		Default = false,
+		Callback = function(Value)
+			--[[ 			if not Value then
+				fVar.isSelling = false
+			end
+			EfTasks.ToggleTask("AutoSell", Value, function()
+				Main.SellCrops()
+				task.wait(0.1)
+			end) ]]
+			QuickSave()
+		end,
+	})
+	SellSection:AddDivider()
+	SellSection:AddButton({
+		Title = "Clear Selected Crops",
+		Callback = function()
+			Options.ddSellCrops:SetValue({ ALL = true })
+		end,
+	})
+	SellSection:AddDropdown("ddSellCrops", {
+		Title = "Select Crops",
+		Values = sData.SeedDataTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddButton({
+		Title = "Clear Backlist Crops",
+		Callback = function()
+			Options.ddSellBlackCrops:SetValue({ NONE = true })
+		end,
+	})
+	SellSection:AddDropdown("ddSellBlackCrops", {
+		Title = "Backlist Crops",
+		Values = sData.SeedDataBlackTable,
+		Multi = true,
+		Default = { "NONE" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddDivider()
+	SellSection:AddButton({
+		Title = "Clear Selected Mutant",
+		Callback = function()
+			Options.ddSellMutants:SetValue({ ALL = true })
+		end,
+	})
+	SellSection:AddDropdown("ddSellMutants", {
+		Title = "Select Mutants",
+		Values = sData.MutationDataTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddButton({
+		Title = "Clear Backlist Mutant",
+		Callback = function()
+			Options.ddSellBlackMutants:SetValue({ NONE = true })
+		end,
+	})
+	SellSection:AddDropdown("ddSellBlackMutants", {
+		Title = "Backlist Mutants",
+		Values = sData.MutationDataBlackTable,
+		Multi = true,
+		Default = { "NONE" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddDivider()
+	SellSection:AddDropdown("ddSellVariant", {
+		Title = "Variant",
+		Values = { "ALL", "Normal", "Rainbow", "Gold", "Silver", "Diamond" },
+		Default = { "ALL" },
+		Multi = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddDropdown("ddSellBlackVariant", {
+		Title = "Backlist Variant",
+		Values = { "NONE", "Normal", "Rainbow", "Gold", "Silver", "Diamond" },
+		Default = { "NONE" },
+		Multi = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddDivider()
+	SellSection:AddDropdown("ddSellWeight", {
+		Title = "Weight",
+		Values = { "Below", "Above" },
+		Default = "Below",
+		Multi = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	SellSection:AddInput("ipSellWeight", {
+		Title = "Weight",
+		Default = 0,
+		Numeric = true,
+		Finished = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
 end
 return MainTab

@@ -96,10 +96,7 @@ function Main.GetAllReadyCrops2()
 
 		for _, item in ipairs(itemsToCheck) do
 			if item:IsA("Model") then
-				local Prompt = item:FindFirstChild("ProximityPrompt", true)
-				if Prompt and Prompt.Enabled then
-					table.insert(readyCrops, item)
-				end
+				table.insert(readyCrops, item)
 			end
 			count = count + 1
 			if count % 100 == 0 then
@@ -109,14 +106,22 @@ function Main.GetAllReadyCrops2()
 	end
 end
 
-function Main.CheckCrops(fruit, config)
+function Main.CheckCrops(fruit, config, HarvestMode)
 	if not fruit or not fruit:IsA("Model") then
 		return false
 	end
+	local Mode = HarvestMode or true
+
 	local fruitName = fruit.Name
 	local fruitVariant = fruit:FindFirstChild("Variant") and fruit:FindFirstChild("Variant").Value
 	local fruitWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value
 	--local CropsMutants = fruit:GetAttribute("Mutation")
+	if Mode then
+		local Prompt = fruit:FindFirstChild("ProximityPrompt", true)
+		if not Prompt or not Prompt.Enabled then
+			return false
+		end
+	end
 	if fruit:GetAttribute("Favorited") == true then
 		return false
 	end
