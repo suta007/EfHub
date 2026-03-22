@@ -2,7 +2,7 @@ local sData = {}
 local reg = {}
 
 sData.Players = game:GetService("Players")
-sData.LocalPlayer = sData.Players:WaitForChild("LocalPlayer")
+sData.LocalPlayer = sData.Players.LocalPlayer
 sData.MyName = sData.LocalPlayer.Name
 sData.Character = sData.LocalPlayer.Character or sData.LocalPlayer.CharacterAdded:Wait()
 sData.Humanoid = sData.Character:WaitForChild("Humanoid")
