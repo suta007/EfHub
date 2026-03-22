@@ -1,15 +1,36 @@
 local Main = {}
-
+local CollectionService = game:GetService("CollectionService")
 local reg
 local sData
 local Utils
 local fVar
+local readyCrops = {}
 
 function Main.Initialize(registry)
 	reg = registry
 	sData = reg.sData
 	Utils = reg.Utils
 	fVar = reg.fVar
+end
+
+function Main.GetHarvestVar()
+	local Options = reg.Options
+	local GetSelectedItems = Utils.GetSelectedItems
+	return {
+		mode = "Harvest",
+		wl = {
+			crops = GetSelectedItems(Options.ddHarvestCrops.Value),
+			mutants = GetSelectedItems(Options.ddHarvestMutants.Value),
+			variant = GetSelectedItems(Options.ddVariant.Value),
+			weightCondition = Options.ddWeight.Value,
+			weightValue = tonumber(Options.ipWeight.Value) or 0,
+		},
+		bl = {
+			crops = GetSelectedItems(Options.ddHarvestBlackCrops.Value),
+			variant = GetSelectedItems(Options.ddBlackVariant.Value),
+			mutants = GetSelectedItems(Options.ddHarvestBlackMutants.Value),
+		},
+	}
 end
 
 function Main.AutoPlant()
@@ -42,6 +63,116 @@ function Main.AutoPlant()
 		end
 	end
 	fVar.isPlanting = false
+end
+
+function Main.ClearReadyCrops()
+	table.clear(readyCrops)
+end
+
+function Main.GetAllReadyCrops()
+	table.clear(readyCrops)
+	local allPrompts = CollectionService:GetTagged("CollectPrompt")
+
+	for _, prompt in ipairs(allPrompts) do
+		if prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
+			local cropModel = prompt.Parent and prompt.Parent.Parent
+			if cropModel then
+				table.insert(readyCrops, cropModel)
+			end
+		end
+	end
+end
+
+function Main.CheckCrops(fruit, config)
+	if not fruit or not fruit:IsA("Model") then
+		return false
+	end
+	local fruitName = fruit.Name
+	local fruitVariant = fruit:FindFirstChild("Variant") and fruit:FindFirstChild("Variant").Value
+	local fruitWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value
+	--local CropsMutants = fruit:GetAttribute("Mutation")
+	if fruit:GetAttribute("Favorited") == true then
+		return false
+	end
+	if not table.find(config.wl.crops, "ALL") and not table.find(config.wl.crops, fruitName) then
+		return false
+	end
+
+	if not table.find(config.wl.variant, "ALL") and not table.find(config.wl.variant, fruitVariant) then
+		return false
+	end
+
+	if not table.find(config.wl.mutants, "ALL") then
+		local isMutantMatch = false
+
+		for _, v in pairs(config.wl.mutants) do
+			if fruit:GetAttribute(v) == true then
+				isMutantMatch = true
+				break
+			end
+		end
+		if not isMutantMatch then
+			return false
+		end
+	end
+
+	if config.wl.weightValue ~= 0 then
+		local weight = tonumber(fruitWeight)
+		if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
+			return false
+		end
+		if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
+			return false
+		end
+	end
+
+	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, fruitName) then
+		return false
+	end
+	if not table.find(config.bl.variant, "NONE") and table.find(config.bl.variant, fruitVariant) then
+		return false
+	end
+
+	if not table.find(config.bl.mutants, "NONE") then
+		local isBlackMutantMatch = false
+		for _, v in pairs(config.bl.mutants) do
+			if fruit:GetAttribute(v) == true then
+				isBlackMutantMatch = true
+				break
+			end
+		end
+		if isBlackMutantMatch then
+			return false
+		end
+	end
+
+	return true
+end
+
+function Main.HarvestCrops()
+	local Options = reg.Options
+	if not Options.tgHarvestEnable.Value or fVar.isHarvesting then
+		return
+	end
+	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+		return
+	end
+	if #readyCrops == 0 then
+		Main.GetAllReadyCrops()
+		task.wait(0.1)
+		if #readyCrops == 0 then
+			return
+		end
+	end
+	fVar.isHarvesting = true
+	if #readyCrops > 0 then
+		local config = Main.GetHarvestVar()
+		local crop = table.remove(readyCrops, 1)
+		if Main.CheckCrops(crop, config) then
+			sData.CollectEvent:FireServer({ crop })
+		end
+	end
+	fVar.isHarvesting = false
 end
 
 return Main

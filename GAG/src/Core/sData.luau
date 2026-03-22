@@ -16,6 +16,9 @@ sData.PetRegistry = sData.Data:WaitForChild("PetRegistry")
 
 sData.Modules = sData.ReplicatedStorage:WaitForChild("Modules") :: any
 sData.DataService = require(sData.Modules.DataService)
+sData.InventoryService = require(sData.Modules.InventoryService)
+
+sData.CollectEvent = sData.GameEvents:WaitForChild("Crops"):WaitForChild("Collect")
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)

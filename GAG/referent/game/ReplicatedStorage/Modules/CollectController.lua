@@ -55,7 +55,7 @@ local v_u_21 = {
 			end
 			game.ReplicatedStorage.GameEvents.PickupEvent:Fire(v20)
 		end
-	end
+	end,
 }
 local v_u_22 = require(game.ReplicatedStorage.Code.Queue)
 local v_u_23 = workspace.Terrain:WaitForChild("PickupParticle")

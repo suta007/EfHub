@@ -67,30 +67,14 @@ function MainTab.Initialize(reg)
 		Title = "Auto Harvest",
 		Default = false,
 		Callback = function(Value)
-			if Value then
-			--[[ 				TaskHarvestCrops = task.spawn(function()
-					while task.wait(0.3) do
-						if not fVar.isHarvesting and not fVar.HarvestPause then
-							if #reg.HarVestCropsList > 0 then
-								Main.HarvestCrops()
-							else
-								Main.ScanCrops2()
-							end
-						elseif fVar.HarvestPause then
-							if #reg.HarVestCropsList > 0 then
-								table.clear(reg.HarVestCropsList)
-							end
-						end
-					end
-				end) ]]
-			else
-				--[[ 				if TaskHarvestCrops then
-					task.cancel(TaskHarvestCrops)
-					TaskHarvestCrops = nil
-					table.clear(reg.HarVestCropsList)
-				end
-				fVar.isHarvesting = false ]]
+			if not Value then
+				fVar.isHarvesting = false
+				Main.ClearReadyCrops()
 			end
+			EfTasks.ToggleTask("AutoHarvest", Value, function()
+				Main.HarvestCrops()
+				task.wait(0.1)
+			end)
 			QuickSave()
 		end,
 	})
