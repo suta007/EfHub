@@ -31,7 +31,7 @@ function Window.Initialize(Registry)
 	SaveManager:SetLibrary(Fluent)
 	InterfaceManager:SetLibrary(Fluent)
 	InterfaceManager:SetFolder("EfHub")
-	SaveManager:SetFolder("EfHub/GHZs")
+	SaveManager:SetFolder("EfHub/GAG")
 
 	Registry.Tabs = {}
 	Registry.Fluent = Fluent
@@ -89,8 +89,8 @@ function Window.Finalize()
 		while not reg.SaveManager.Options.SaveManager_ConfigList do
 			task.wait()
 		end
-		reg.SaveManager.Options.SaveManager_ConfigList:SetValue("Horizons")
-		reg.SaveManager:Load("Horizons")
+		reg.SaveManager.Options.SaveManager_ConfigList:SetValue("GrowAGarden")
+		reg.SaveManager:Load("GrowAGarden")
 		reg.IsLoading = false
 		reg.Fluent:Notify({
 			Title = "EfHub",
@@ -102,7 +102,7 @@ end
 
 function Window.QuickSave()
 	if not reg.IsLoading then
-		reg.SaveManager:Save("Horizons")
+		reg.SaveManager:Save("GrowAGarden")
 	end
 end
 
