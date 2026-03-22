@@ -1,16 +1,4 @@
 local fVar = {}
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
-local SeedShopData = require(ReplicatedStorage.Data.SeedShopData :: any)
-fVar.SeedShopTable = { "ALL" }
-for seedName, seedInfo in pairs(SeedShopData) do
-	table.insert(fVar.SeedShopTable, seedName)
-end
-local SeedData = require(ReplicatedStorage.Data.SeedData :: any)
-fVar.SeedDataTable = { "ALL" }
-for seedName, seedInfo in pairs(SeedData) do
-	table.insert(fVar.SeedDataTable, seedName)
-end
 
 fVar.isPlanting = false
 fVar.isAgeBreaking = false
