@@ -7,6 +7,9 @@ sData.MyName = sData.LocalPlayer.Name
 sData.Character = sData.LocalPlayer.Character or sData.LocalPlayer.CharacterAdded:Wait()
 sData.Humanoid = sData.Character:WaitForChild("Humanoid")
 
+sData.PlayerGui = sData.LocalPlayer:WaitForChild("PlayerGui")
+sData.TeleportFrame = sData.PlayerGui:WaitForChild("Teleport_UI"):WaitForChild("Frame")
+
 sData.VirtualUser = game:GetService("VirtualUser")
 
 sData.ReplicatedStorage = game:GetService("ReplicatedStorage")

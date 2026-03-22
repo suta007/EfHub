@@ -3,6 +3,7 @@ local fVar = {}
 fVar.isPlanting = false
 fVar.isAgeBreaking = false
 fVar.isHarvesting = false
+fVar.isSelling = false
 
 fVar.ShopKey = {
 	Seed = "ROOT/SeedStocks/Shop/Stocks",

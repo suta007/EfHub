@@ -207,13 +207,16 @@ function MainTab.Initialize(reg)
 		Title = "Auto Sell",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			if not Value then
+			if not Value then
 				fVar.isSelling = false
+			else
+				Main.SellCrops()
 			end
-			EfTasks.ToggleTask("AutoSell", Value, function()
+			--[[ 			EfTasks.ToggleTask("AutoSell", Value, function()
 				Main.SellCrops()
 				task.wait(0.1)
 			end) ]]
+
 			QuickSave()
 		end,
 	})

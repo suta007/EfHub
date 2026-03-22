@@ -208,4 +208,124 @@ function Main.HarvestCrops()
 	fVar.isHarvesting = false
 end
 
+function Main.GetSellVar()
+	local Options = reg.Options
+	local GetSelectedItems = Utils.GetSelectedItems
+	return {
+		mode = "Sell",
+		wl = {
+			crops = GetSelectedItems(Options.ddSellCrops.Value),
+			mutants = GetSelectedItems(Options.ddSellMutants.Value),
+			variant = GetSelectedItems(Options.ddSellVariant.Value),
+			weightCondition = Options.ddSellWeight.Value,
+			weightValue = tonumber(Options.ipSellWeight.Value) or 0,
+		},
+		bl = {
+			crops = GetSelectedItems(Options.ddSellBlackCrops.Value),
+			variant = GetSelectedItems(Options.ddSellBlackVariant.Value),
+			mutants = GetSelectedItems(Options.ddSellBlackMutants.Value),
+		},
+	}
+end
+function Main.CheckItem(item, config)
+	local ItemName = item:FindFirstChild("Item_String").Value
+	local ItemVariant = item:FindFirstChild("Variant").Value
+	local ItemWeight = item:FindFirstChild("Weight").Value
+
+	if not table.find(config.wl.crops, "ALL") and not table.find(config.wl.crops, ItemName) then
+		return false
+	end
+
+	if not table.find(config.wl.variant, "ALL") and not table.find(config.wl.variant, ItemVariant) then
+		return false
+	end
+
+	if not table.find(config.wl.mutants, "ALL") then
+		local isMutantMatch = false
+
+		for _, v in pairs(config.wl.mutants) do
+			if item:GetAttribute(v) == true then
+				isMutantMatch = true
+				break
+			end
+		end
+		if not isMutantMatch then
+			return false
+		end
+	end
+
+	if config.wl.weightValue ~= 0 then
+		local weight = tonumber(ItemWeight)
+		if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
+			return false
+		end
+		if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
+			return false
+		end
+	end
+
+	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, ItemName) then
+		return false
+	end
+	if not table.find(config.bl.variant, "NONE") and table.find(config.bl.variant, ItemVariant) then
+		return false
+	end
+
+	if not table.find(config.bl.mutants, "NONE") then
+		local isBlackMutantMatch = false
+		for _, v in pairs(config.bl.mutants) do
+			if item:GetAttribute(v) == true then
+				isBlackMutantMatch = true
+				break
+			end
+		end
+		if isBlackMutantMatch then
+			return false
+		end
+	end
+
+	return true
+end
+
+function Main.SellCrops()
+	local Options = reg.Options
+	if not Options.tgSellEnable.Value or fVar.isSelling then
+		return
+	end
+	fVar.isSelling = true
+	local config = Main.GetSellVar()
+	local SellAll = false
+
+	local function SellWhiteList()
+		return table.find(config.wl.crops, "ALL") and table.find(config.wl.mutants, "ALL") and table.find(config.wl.variant, "ALL") and (config.wl.weightValue == 0)
+	end
+	local function SellBlackList()
+		return table.find(config.bl.crops, "NONE") and table.find(config.bl.mutants, "NONE") and table.find(config.bl.variant, "NONE")
+	end
+
+	if SellWhiteList() and SellBlackList() then
+		SellAll = true
+	end
+	Utils.ClickButton(Utils.SellButton)
+	if not SellAll then
+		local Backpack = sData.LocalPlayer.Backpack
+		for _, item in pairs(Backpack:GetChildren()) do
+			if not Options.tgSellEnable.Value then
+				fVar.isSelling = false
+				return
+			end
+			if Main.CheckItem(item, config) then
+				--Utils.UnequipTool()
+				--task.wait(0.1)
+				Utils.EquipTool(item)
+				task.wait(0.1)
+				sData.GameEvents.Sell_Item:FireServer()
+			end
+		end
+	else
+		sData.GameEvents.Sell_Inventory:FireServer()
+	end
+	fVar.isSelling = false
+end
+
 return Main

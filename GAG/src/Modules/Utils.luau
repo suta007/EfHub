@@ -8,6 +8,25 @@ function Utils.Initialize(registry)
 	sData = reg.sData
 end
 
+Utils.SellButton = sData.TeleportFrame:WaitForChild("Sell")
+Utils.GearButton = sData.TeleportFrame:WaitForChild("Gear")
+Utils.PetsButton = sData.TeleportFrame:WaitForChild("Pets")
+Utils.SeedsButton = sData.TeleportFrame:WaitForChild("Seeds")
+Utils.GardenButton = sData.TeleportFrame:WaitForChild("Garden")
+
+function Utils.ViewButton()
+	Utils.PetsButton.Visible = true
+	Utils.GearButton.Visible = true
+end
+
+function Utils.ClickButton(Button)
+	if getconnections then
+		for _, connection in pairs(getconnections(Button.Activated)) do
+			connection:Fire()
+		end
+	end
+end
+
 function Utils.GetMyFarm()
 	local farmFolder = workspace:FindFirstChild("Farm")
 	if not farmFolder then

@@ -98,6 +98,7 @@ function EfHub.Initialize()
 	Registry.LogTab.Initialize(Registry)
 
 	Registry.Window.Finalize()
+	Registry.Utils.ViewButton()
 	return Registry
 end
 
