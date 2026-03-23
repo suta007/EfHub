@@ -121,7 +121,7 @@ end
 function Misc.HideTracker()
 	local Options = reg.Options
 
-	local Checker = (Options.HidePlant.Value or Options.HideFruit.Value)
+	local Checker = (Options.tgHideFruits.Value or Options.tgHidePlants.Value)
 	if Checker then
 		local PlantFolder = Utils.GetPlantsFolder()
 		if PlantFolder then
