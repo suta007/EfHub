@@ -149,10 +149,14 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 
 	if config.wl.weightValue ~= 0 then
 		local weight = tonumber(fruitWeight)
-		if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
-			return false
-		end
-		if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
+		if weight then
+			if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
+				return false
+			end
+			if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
+				return false
+			end
+		else
 			return false
 		end
 	end
@@ -188,16 +192,16 @@ function Main.HarvestCrops()
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 		return
 	end
+	fVar.isHarvesting = true
 	if #readyCrops == 0 then
-		task.spawn(function()
-			Main.GetAllReadyCrops2()
-		end)
-		task.wait(1)
+		Main.GetAllReadyCrops2()
+
 		if #readyCrops == 0 then
+			fVar.isHarvesting = false
 			return
 		end
 	end
-	fVar.isHarvesting = true
+
 	if #readyCrops > 0 then
 		local config = Main.GetHarvestVar()
 		local crop = table.remove(readyCrops, 1)
@@ -293,31 +297,40 @@ end
 
 function Main.SellCrops()
 	local Options = reg.Options
-	if not Options.tgSellEnable.Value or fVar.isSelling then
-		return
-	end
+
 	fVar.isSelling = true
-	local config = Main.GetSellVar()
+
 	Utils.ClickButton(Utils.SellButton)
+	task.wait(0.5)
+
 	if Options.tgSellAll.Value then
 		sData.GameEvents.Sell_Inventory:FireServer()
+		task.wait(1)
 	else
+		local config = Main.GetSellVar()
 		local Backpack = sData.LocalPlayer.Backpack
 		for _, item in pairs(Backpack:GetChildren()) do
-			if not Options.tgSellEnable.Value then
-				fVar.isSelling = false
-				return
-			end
 			if Main.CheckItem(item, config) then
 				Utils.EquipTool(item)
 				task.wait(0.1)
 				sData.GameEvents.Sell_Item:FireServer()
+				task.wait(0.5)
 			end
 		end
 	end
 	Utils.ClickButton(Utils.GardenButton)
 	task.wait(1)
 	fVar.isSelling = false
+end
+
+function Main.SellIfFull()
+	local Options = reg.Options
+	if Options.tgSellIfFull.Value then
+		if not sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+			return
+		end
+	end
+	Main.SellCrops()
 end
 
 return Main

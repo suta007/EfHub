@@ -14,10 +14,12 @@ function EfTasks.ToggleTask(taskName, enabled, funcBody)
 			return
 		end
 		ActiveTasks[taskName] = task.spawn(function()
+			task.wait()
 			while true do
 				local ok, err = pcall(funcBody)
 				if not ok then
 					getgenv().fLog("🔴 Task '" .. taskName .. "' error: " .. tostring(err))
+					task.wait(1)
 				end
 				task.wait(0.1)
 			end

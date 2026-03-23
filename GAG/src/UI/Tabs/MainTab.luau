@@ -203,23 +203,35 @@ function MainTab.Initialize(reg)
 	- Sell Weight Value (Input)
 	]]
 	local SellSection = Tabs.Main:AddCollapsibleSection("Sell", false)
+	SellSection:AddInput("ipSellDelay", {
+		Title = "Delay",
+		Default = 30,
+		Numeric = true,
+		Finished = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
 	SellSection:AddToggle("tgSellEnable", {
 		Title = "Auto Sell",
 		Default = false,
-		Callback = function(Value)
+		Callback = function(Value) -- ใส่เงื่อนไข กระเป๋าเต็ม , อาจจะเพิ่มเวลา วนลูป
 			if not Value then
 				fVar.isSelling = false
-			else
-				Main.SellCrops()
 			end
-			--[[ 			EfTasks.ToggleTask("AutoSell", Value, function()
-				Main.SellCrops()
-				task.wait(0.1)
-			end) ]]
+			EfTasks.ToggleTask("AutoSell", Value, function()
+				local delay = tonumber(Options.ipSellDelay.Value) or 0.1
+				task.wait(delay)
+				if fVar.isSelling then
+					return
+				end
+				Main.SellIfFull()
+			end)
 
 			QuickSave()
 		end,
 	})
+
 	SellSection:AddToggle("tgSellAll", {
 		Title = "Sell All",
 		Default = false,
@@ -227,10 +239,28 @@ function MainTab.Initialize(reg)
 			QuickSave()
 		end,
 	})
+	-- toggle sell if full
+	SellSection:AddToggle("tgSellIfFull", {
+		Title = "Sell If Full",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	local RunSellTask = nil
 	SellSection:AddButton({
 		Title = "Sell Now",
 		Callback = function()
-			Main.SellCrops()
+			if RunSellTask then
+				task.cancel(RunSellTask)
+				RunSellTask = nil
+			else
+				RunSellTask = task.spawn(function()
+					Main.SellCrops()
+					RunSellTask = nil
+				end)
+			end
 		end,
 	})
 	SellSection:AddDivider()
