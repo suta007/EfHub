@@ -1,6 +1,7 @@
+local getconnections = (getfenv() :: any).getconnections
 local Utils = {}
-local reg
-local sData
+local reg: any
+local sData: any
 local RNG = Random.new()
 
 function Utils.Initialize(registry)

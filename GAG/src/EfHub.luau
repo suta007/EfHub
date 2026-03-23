@@ -21,7 +21,7 @@ local function LoadModules()
 		--Registry.Pets = EF_REMOTE("Modules/Pets")
 
 		--
-		--Registry.Misc = EF_REMOTE("Modules/Misc")
+		Registry.Misc = EF_REMOTE("Modules/Misc")
 		--
 		--Registry.Shop = EF_REMOTE("Modules/Shop")
 		--Registry.Process = EF_REMOTE("Modules/Process")
@@ -32,11 +32,11 @@ local function LoadModules()
 		Registry.Window = EF_REMOTE("UI/Window")
 		Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
 		--Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
+		Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
 		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
 
 		--
 		-- Registry.ShopTab = EF_REMOTE("UI/Tabs/ShopTab")
-		-- Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
 		-- Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
 		-- Registry.AutoTab = EF_REMOTE("UI/Tabs/AutoTab")
 	else
@@ -49,9 +49,9 @@ local function LoadModules()
 		Registry.EfTasks = require("./Modules/EfTasks.luau")
 		Registry.Main = require("./Modules/Main.luau")
 		--Registry.Pets = require("./Modules/Pets.luau")
+		Registry.Misc = require("./Modules/Misc.luau")
 
 		--
-		--Registry.Misc = require("./Modules/Misc.luau")
 		--Registry.Shop = require("./Modules/Shop.luau")
 		--Registry.Process = require("./Modules/Process.luau")
 		--Registry.Auto = require("./Modules/Auto.luau")
@@ -61,11 +61,11 @@ local function LoadModules()
 		Registry.Window = require("./UI/Window.luau")
 		Registry.MainTab = require("./UI/Tabs/MainTab.luau")
 		--Registry.PetsTab = require("./UI/Tabs/PetsTab.luau")
+		Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
 		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
 
 		--
 		-- Registry.ShopTab = require("./UI/Tabs/ShopTab.luau")
-		-- Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
 		-- Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
 		-- Registry.AutoTab = require("./UI/Tabs/AutoTab.luau")
 	end
@@ -93,7 +93,7 @@ function EfHub.Initialize()
 	-- Registry.ShopTab.Initialize(Registry)
 	-- Registry.AutoTab.Initialize(Registry)
 	-- Registry.EventsTab.Initialize(Registry)
-	-- Registry.MiscTab.Initialize(Registry)
+	Registry.MiscTab.Initialize(Registry)
 	--Registry.PetsTab.Initialize(Registry)
 	Registry.LogTab.Initialize(Registry)
 

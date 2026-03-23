@@ -28,6 +28,9 @@ sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
 
 sData.Backpack = sData.LocalPlayer:WaitForChild("Backpack")
 
+sData.Lighting = game:GetService("Lighting")
+sData.Terrain = workspace.Terrain
+
 function sData.Initialize(registry)
 	reg = registry
 end

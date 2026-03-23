@@ -22,38 +22,7 @@ function MiscTab.Initialize(Registry)
 	MiscSection:AddButton({
 		Title = "Reset Control Var",
 		Callback = function()
-			reg.fVar.ResetControlVar()
-		end,
-	})
-	local NewPlayerSection = Tabs.MiscTab:AddCollapsibleSection("New Player", false)
-	NewPlayerSection:AddToggle("tgNewPlayerSell", {
-		Title = "New Playe Auto Sell",
-		Default = false,
-		Callback = function(Value)
-			if Value then
-				AutoSellTask = task.spawn(function()
-					while true do
-						table.insert(actionQueue, { FuncName = MiscTab.NewPlayerAutoSell, Args = {} })
-						local delayTime = (tonumber(Options.ipNewPlayerSell.Value) or 5) * 60
-						task.wait(delayTime)
-					end
-				end)
-			else
-				if AutoSellTask then
-					task.cancel(AutoSellTask)
-					AutoSellTask = nil
-				end
-			end
-			--QuickSave()
-		end,
-	})
-	NewPlayerSection:AddInput("ipNewPlayerSell", {
-		Title = "Auto Sell Delay (Minutes)",
-		Default = 5,
-		Numeric = true,
-		Finished = true,
-		Callback = function(Value)
-			QuickSave()
+			--reg.fVar.ResetControlVar()
 		end,
 	})
 
@@ -62,7 +31,9 @@ function MiscTab.Initialize(Registry)
 		Title = "AntiLag",
 		Default = false,
 		Callback = function(Value)
-			if Value then Misc.AntiLag() end
+			if Value then
+				Misc.AntiLag()
+			end
 			QuickSave()
 		end,
 	})
@@ -71,11 +42,8 @@ function MiscTab.Initialize(Registry)
 		Title = "Hide Fruits",
 		Default = false,
 		Callback = function(Value)
-			if Value then
-				Misc.HideFruit(true)
-			else
-				Misc.HideFruit(false)
-			end
+			Misc.HideFruit(Value)
+			Misc.HideTracker()
 			QuickSave()
 		end,
 	})
@@ -84,15 +52,12 @@ function MiscTab.Initialize(Registry)
 		Title = "Hide Plants",
 		Default = false,
 		Callback = function(Value)
-			if Value then
-				Misc.HidePlant(true)
-			else
-				Misc.HidePlant(false)
-			end
+			Misc.HidePlant(Value)
+			Misc.HideTracker()
 			QuickSave()
 		end,
 	})
-
+	--[[ 
 	local EspSection = Tabs.MiscTab:AddCollapsibleSection("Esp", false)
 	EspSection:AddToggle("tgEspCrops", {
 		Title = "Esp Crops",
@@ -142,28 +107,7 @@ function MiscTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
-end
-
-function MiscTab.NewPlayerAutoSell()
-	local fVar = reg.fVar
-	local SafeTeleport = reg.Utils.SafeTeleport
-	local UnequipTools = reg.Utils.UnequipTools
-
-	fVar.isSelling = true
-	fVar.HarvestPause = true
-	fVar.isPlanting = true
-	UnequipTools() -- Call once before teleporting
-
-	SafeTeleport(fVar.Pos.Sell)
-	task.wait(0.5)
-
-	SellItems:InvokeServer("SellAll")
-	task.wait(2)
-	SafeTeleport(reg.MySpawnPoint)
-	task.wait(0.3)
-	fVar.isSelling = false
-	fVar.HarvestPause = false
-	fVar.isPlanting = false
+		 ]]
 end
 
 return MiscTab
