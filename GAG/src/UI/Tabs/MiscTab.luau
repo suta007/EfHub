@@ -1,21 +1,15 @@
 local MiscTab = {}
 local reg
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
-local SellItems = RemoteEvents:WaitForChild("SellItems") :: RemoteFunction
-
 function MiscTab.Initialize(Registry)
 	reg = Registry
 	local Options = Registry.Options
+	_ = Options
 	local Interface = Registry.Interface
 	local Tabs = Registry.Tabs
 	local QuickSave = Registry.Window.QuickSave
-	local actionQueue = Registry.fVar.actionQueue
 	local Misc = Registry.Misc
 	local sData = Registry.sData
-
-	local AutoSellTask
 
 	Tabs.MiscTab = Interface:AddTab({ Title = "Misc", Icon = "flower" })
 	local MiscSection = Tabs.MiscTab:AddCollapsibleSection("Misc", false)
