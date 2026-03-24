@@ -100,6 +100,41 @@ function Utils.GetCenterPlots()
 	return { center1, center2 }
 end
 
+function Utils.getPlotsIntersections(part)
+	local cframe = part.CFrame
+	local size = part.Size
+	local offsetZ = size.Z / 6
+	local point1_local = Vector3.new(0, 0, -offsetZ)
+	local point2_local = Vector3.new(0, 0, offsetZ)
+
+	local point1_world = cframe * point1_local
+	local point2_world = cframe * point2_local
+
+	local point1_safe = point1_world + Vector3.new(0, 4, 0)
+	local point2_safe = point2_world + Vector3.new(0, 4, 0)
+
+	local resultCFrame1 = CFrame.new(point1_safe)
+	local resultCFrame2 = CFrame.new(point2_safe)
+
+	return resultCFrame1, resultCFrame2
+end
+
+function Utils.GetCheckPos()
+	if #MyPlantableParts < 2 then
+		if not InitializePlotData() then
+			return nil, nil
+		end
+	end
+
+	local part1 = MyPlantableParts[1]
+	local part2 = MyPlantableParts[2]
+
+	local cf1, cf2 = Utils.getPlotsIntersections(part1)
+	local cf3, cf4 = Utils.getPlotsIntersections(part2)
+
+	return { cf1, cf2, cf3, cf4 }
+end
+
 function Utils.SafeTeleport(targetCFrame)
 	local humanoid = Character:FindFirstChild("Humanoid")
 	local rootPart = Character:FindFirstChild("HumanoidRootPart")

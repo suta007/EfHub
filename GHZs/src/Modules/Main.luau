@@ -258,16 +258,16 @@ function Main.ScanCrops2()
 
 	table.clear(HarVestCropsList)
 
-	local TargetPos = reg.Utils.GetCenterPlots()
-	table.insert(TargetPos, reg.MySpawnPoint)
+	local TargetPos = reg.Utils.GetCheckPos()
+	--table.insert(TargetPos, reg.MySpawnPoint)
 	for _, cpos in TargetPos do
 		if fVar.isPlanting or fVar.IsBuying() or fVar.isProcessing or fVar.HarvestPause then
 			return
 		end
 		---ใช้ CFrame.new(cpos + Vector3.new(0, 4, 0)) เพื่อให้ห่างจากตัวละคร 4 บล็อก
-		local cposPosition = typeof(cpos) == "CFrame" and cpos.Position or cpos
-		local offsetPos = CFrame.new(cposPosition + Vector3.new(0, 4, 0))
-		SafeTeleport(offsetPos)
+		--local cposPosition = typeof(cpos) == "CFrame" and cpos.Position or cpos
+		--local offsetPos = CFrame.new(cposPosition + Vector3.new(0, 4, 0))
+		SafeTeleport(cpos)
 		task.wait(3)
 		local ClientPlants = workspace:FindFirstChild("ClientPlants")
 		if ClientPlants then
