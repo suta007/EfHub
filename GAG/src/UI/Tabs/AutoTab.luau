@@ -2,7 +2,7 @@ local AutoTab = {}
 local reg
 --local ReplicatedStorage = game:GetService("ReplicatedStorage")
 --local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
-local TaskRemovePlants, TaskRemoveFruit
+--local TaskRemovePlants, TaskRemoveFruit
 
 function AutoTab.Initialize(registry)
 	reg = registry
@@ -11,23 +11,10 @@ function AutoTab.Initialize(registry)
 	local Options = reg.Options
 	local QuickSave = reg.Window.QuickSave
 	local sData = reg.sData
-	local Auto = reg.Auto
-	local fVar = reg.fVar
+	--local Auto = reg.Auto
+	--local fVar = reg.fVar
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
-
-	-- [[ Quest Section ]]
-	local QuestSection = Tabs.Auto:AddCollapsibleSection("Quest", false)
-	QuestSection:AddToggle("tgQuestEnable", {
-		Title = "Auto Claim Quest",
-		Default = false,
-		Callback = function(Value)
-			if Value then
-				sData.RemoteEvents:WaitForChild("RequestQuests"):FireServer()
-			end
-			QuickSave()
-		end,
-	})
 
 	-- [[ Remove Plants Section ]]
 	local RemoveSection = Tabs.Auto:AddCollapsibleSection("Remove Plants", false)
@@ -35,7 +22,7 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Remove Plants",
 		Default = false,
 		Callback = function(Value)
-			if Value then
+			--[[ 			if Value then
 				TaskRemovePlants = task.spawn(function()
 					while true do
 						if not fVar.isRemovingPlants then
@@ -50,7 +37,7 @@ function AutoTab.Initialize(registry)
 					TaskRemovePlants = nil
 				end
 				fVar.isRemovePlants = false
-			end
+			end ]]
 			QuickSave()
 		end,
 	})
@@ -62,7 +49,7 @@ function AutoTab.Initialize(registry)
 	})
 	RemoveSection:AddDropdown("ddRemovePlants", {
 		Title = "Select Remove Plants",
-		Values = sData.PlantDataTable,
+		Values = sData.SeedDataTable,
 		Default = {},
 		Multi = true,
 		Searchable = true,
@@ -70,8 +57,8 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	RemoveSection:AddDropdown("ddRemovePlantsScale", {
-		Title = "Plants Scale Threshold",
+	RemoveSection:AddDropdown("ddRemovePlantsWeight", {
+		Title = "Plants Weight Threshold",
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
@@ -79,8 +66,8 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	RemoveSection:AddInput("ipRemovePlantsScale", {
-		Title = "Plants Scale",
+	RemoveSection:AddInput("ipRemovePlantsWeight", {
+		Title = "Plants Weight",
 		Default = 0,
 		Numeric = true,
 		Finished = false,
@@ -95,7 +82,7 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Remove Fruit",
 		Default = false,
 		Callback = function(Value)
-			if Value then
+			--[[ 			if Value then
 				TaskRemoveFruit = task.spawn(function()
 					while true do
 						if not fVar.isRemovePlants then
@@ -110,7 +97,7 @@ function AutoTab.Initialize(registry)
 					TaskRemoveFruit = nil
 				end
 				fVar.isRemoveCrops = false
-			end
+			end ]]
 			QuickSave()
 		end,
 	})
@@ -125,7 +112,7 @@ function AutoTab.Initialize(registry)
 	})
 	RemoveFruitSection:AddDropdown("ddRemoveCrops", {
 		Title = "Select Remove Crops",
-		Values = sData.PlantDataTable,
+		Values = sData.SeedDataTable,
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
@@ -141,7 +128,7 @@ function AutoTab.Initialize(registry)
 	})
 	RemoveFruitSection:AddDropdown("ddRemoveBlackCrops", {
 		Title = "Blacklist Remove Crops",
-		Values = sData.PlantDataBlackTable,
+		Values = sData.SeedDataBlackTable,
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
@@ -188,37 +175,6 @@ function AutoTab.Initialize(registry)
 	})
 
 	RemoveFruitSection:AddDivider()
-	RemoveFruitSection:AddDropdown("ddRemoveRipeness", {
-		Title = "Ripeness Stage",
-		Values = { "ALL", "Unripe", "Ripened", "Lush" },
-		Default = { "ALL" },
-		Multi = true,
-		Callback = function(Value)
-			QuickSave()
-		end,
-	})
-
-	RemoveFruitSection:AddInput("ipRemoveRipenessMulti", {
-		Title = "Ripeness Multiplier",
-		Default = 0,
-		Numeric = false,
-		Finished = false,
-		Callback = function(Value)
-			QuickSave()
-		end,
-	})
-
-	RemoveFruitSection:AddDropdown("ddRemoveBlackRipeness", {
-		Title = "Backlist Ripeness Stage",
-		Values = { "NONE", "Unripe", "Ripened", "Lush" },
-		Default = { "NONE" },
-		Multi = true,
-		Callback = function(Value)
-			QuickSave()
-		end,
-	})
-
-	RemoveFruitSection:AddDivider()
 	RemoveFruitSection:AddDropdown("ddRemoveVariant", {
 		Title = "Variant",
 		Values = { "ALL", "Silver", "Gold" },
@@ -257,31 +213,12 @@ function AutoTab.Initialize(registry)
 		end,
 	})
 
-	RemoveFruitSection:AddDivider()
-	RemoveFruitSection:AddDropdown("ddRemoveScale", {
-		Title = "Scale",
-		Values = { "Below", "Above" },
-		Default = "Below",
-		Multi = false,
-		Callback = function(Value)
-			QuickSave()
-		end,
-	})
-	RemoveFruitSection:AddInput("ipRemoveScale", {
-		Title = "Scale",
-		Default = 0,
-		Numeric = true,
-		Finished = true,
-		Callback = function(Value)
-			QuickSave()
-		end,
-	})
 	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
 	OpenPackSection:AddToggle("tgOpenPackAnimation", {
 		Title = "Disable Animation",
 		Default = false,
 		Callback = function(Value)
-			if Value then
+			--[[ 		if Value then
 				pcall(function()
 					Auto.disablePackAnimations()
 				end)
@@ -289,7 +226,7 @@ function AutoTab.Initialize(registry)
 				pcall(function()
 					Auto.enablePackAnimations()
 				end)
-			end
+			end ]]
 			--QuickSave()
 		end,
 	})
@@ -300,20 +237,20 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Open Pack",
 		Default = false,
 		Callback = function(Value)
-			if Value then
+			--[[ 			if Value then
 				fVar.LockDownControlVar()
 				Auto.OpenPack()
 				fVar.ResetControlVar()
 			else
 				fVar.ResetControlVar()
-			end
+			end ]]
 			QuickSave()
 		end,
 	})
 	-- dropdown select seed pack
 	OpenPackSection:AddDropdown("ddOpenPackSelect", {
 		Title = "Select Seed Pack",
-		Values = sData.SeedPackTable,
+		Values = {}, --sData.SeedPackTable,
 		Default = { "ALL" },
 		Multi = true,
 		Searchable = true,

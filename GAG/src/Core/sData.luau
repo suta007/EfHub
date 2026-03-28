@@ -1,5 +1,5 @@
 local sData = {}
-local reg = {}
+--local reg = {}
 
 sData.Players = game:GetService("Players")
 sData.LocalPlayer = sData.Players.LocalPlayer
@@ -31,9 +31,9 @@ sData.Backpack = sData.LocalPlayer:WaitForChild("Backpack")
 sData.Lighting = game:GetService("Lighting")
 sData.Terrain = workspace.Terrain
 
-function sData.Initialize(registry)
-	reg = registry
-end
+--function sData.Initialize(registry)
+--	reg = registry
+--end
 
 local SeedShopData = require(sData.Data:WaitForChild("SeedShopData") :: any)
 sData.SeedShopTable = { "ALL" }
