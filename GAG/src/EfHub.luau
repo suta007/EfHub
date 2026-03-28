@@ -18,6 +18,7 @@ local function LoadModules()
 		Registry.Utils = EF_REMOTE("Modules/Utils")
 		Registry.EfTasks = EF_REMOTE("Modules/EfTasks")
 		Registry.Main = EF_REMOTE("Modules/Main")
+		Registry.Auto = EF_REMOTE("Modules/Auto")
 		--Registry.Pets = EF_REMOTE("Modules/Pets")
 
 		--
@@ -25,7 +26,7 @@ local function LoadModules()
 		--
 		--Registry.Shop = EF_REMOTE("Modules/Shop")
 		--Registry.Process = EF_REMOTE("Modules/Process")
-		--Registry.Auto = EF_REMOTE("Modules/Auto")
+		--
 		--Registry.EventDrive = EF_REMOTE("Modules/EventDrive")
 
 		-- 3. UI Modules
@@ -49,13 +50,14 @@ local function LoadModules()
 		Registry.Utils = require("./Modules/Utils.luau")
 		Registry.EfTasks = require("./Modules/EfTasks.luau")
 		Registry.Main = require("./Modules/Main.luau")
+		Registry.Auto = require("./Modules/Auto.luau")
 		--Registry.Pets = require("./Modules/Pets.luau")
 		Registry.Misc = require("./Modules/Misc.luau")
 
 		--
 		--Registry.Shop = require("./Modules/Shop.luau")
 		--Registry.Process = require("./Modules/Process.luau")
-		--Registry.Auto = require("./Modules/Auto.luau")
+		--
 		--Registry.EventDrive = require("./Modules/EventDrive.luau")
 
 		-- 3. UI Modules
@@ -88,7 +90,7 @@ function EfHub.Initialize()
 	Registry.Main.Initialize(Registry)
 	-- Registry.Shop.Initialize(Registry)
 	-- Registry.Process.Initialize(Registry)
-	-- Registry.Auto.Initialize(Registry)
+	Registry.Auto.Initialize(Registry)
 	-- Registry.EventDrive.Initialize(Registry)
 
 	Registry.MainTab.Initialize(Registry)
