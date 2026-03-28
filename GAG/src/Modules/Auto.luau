@@ -21,9 +21,7 @@ function Auto.RemovePlants()
 	local PlantsWeightThreshold = Options.ddRemovePlantsWeight.Value
 	local PlantsWeightValue = tonumber(Options.ipRemovePlantsWeight.Value) or 0
 
-	local MyFarm = Utils.GetMyFarm()
-	local Farm_Important = MyFarm:FindFirstChild("Important")
-	local Plants_Physical = Farm_Important and Farm_Important:FindFirstChild("Plants_Physical")
+	local Plants_Physical = Utils.GetPlantsFolder()
 	local Backpack = sData.Backpack
 	local Shovel = Backpack:FindFirstChild("Shovel [Destroy Plants]")
 
@@ -31,14 +29,18 @@ function Auto.RemovePlants()
 		local PlantName = object.Name
 		local PlantWeight = object.Weight.Value
 		if table.find(RemovePlantsList, PlantName) then
-			if PlantsWeightThreshold == "Below" then
-				if PlantWeight < PlantsWeightValue then
-					return true
+			if PlantsWeightValue > 0 then
+				if PlantsWeightThreshold == "Below" then
+					if PlantWeight < PlantsWeightValue then
+						return true
+					end
+				elseif PlantsWeightThreshold == "Above" then
+					if PlantWeight > PlantsWeightValue then
+						return true
+					end
 				end
-			elseif PlantsWeightThreshold == "Above" then
-				if PlantWeight > PlantsWeightValue then
-					return true
-				end
+			else
+				return true
 			end
 		end
 		return false
@@ -61,11 +63,55 @@ function Auto.RemovePlants()
 	fVar.isRemovingPlants = false
 end
 
+function Auto.GetRemovePlantsVar()
+	local Options = reg.Options
+	local GetSelectedItems = Utils.GetSelectedItems
+	return {
+		mode = "RemovePlants",
+		wl = {
+			crops = GetSelectedItems(Options.ddRemoveCrops.Value),
+			mutants = GetSelectedItems(Options.ddRemoveMutants.Value),
+			variant = GetSelectedItems(Options.ddRemoveVariant.Value),
+			weightCondition = Options.ddRemoveWeight.Value,
+			weightValue = tonumber(Options.ipRemoveWeight.Value) or 0,
+		},
+		bl = {
+			crops = GetSelectedItems(Options.ddRemoveBlackCrops.Value),
+			variant = GetSelectedItems(Options.ddRemoveBlackVariant.Value),
+			mutants = GetSelectedItems(Options.ddRemoveBlackMutants.Value),
+		},
+	}
+end
+
 function Auto.RemoveCrops()
 	local Options = reg.Options
-	if not Options.tgRemoveFruitEnable:GetValue() then
+	local Main = reg.Main
+	if not Options.tgRemoveFruitEnable.Value and fVar.isRemovingCrops then
 		return
 	end
+	fVar.isRemovingCrops = true
+	local Plants_Physical = Utils.GetPlantsFolder()
+	if not Plants_Physical then
+		return
+	end
+	for _, plant in ipairs(Plants_Physical:GetChildren()) do
+		local FruitsContainer = plant:FindFirstChild("Fruits")
+		local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
+		for _, item in ipairs(itemsToCheck) do
+			if not Options.tgRemoveFruitEnable.Value then
+				fVar.isRemovingCrops = false
+				return
+			end
+			if item:IsA("Model") then
+				local config = Auto.GetRemovePlantsVar()
+				if Main.CheckCrops(item, config, false) then
+					sData.RemoveItemEvent:FireServer(item)
+					task.wait(0.1)
+				end
+			end
+		end
+	end
+	fVar.isRemovingCrops = false
 end
 
 function Auto.OpenPack() end

@@ -74,22 +74,13 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Remove Fruit",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			if Value then
-				TaskRemoveFruit = task.spawn(function()
-					while true do
-						if not fVar.isRemovePlants then
-							Auto.RemoveCrops()
-						end
-						task.wait(0.5)
-					end
-				end)
-			else
-				if TaskRemoveFruit then
-					task.cancel(TaskRemoveFruit)
-					TaskRemoveFruit = nil
-				end
-				fVar.isRemoveCrops = false
-			end ]]
+			if not Value then
+				fVar.isRemovingCrops = false
+			end
+			EfTasks.ToggleTask("AutoRemoveCrops", Value, function()
+				Auto.RemoveCrops()
+				task.wait(0.1)
+			end)
 			QuickSave()
 		end,
 	})
