@@ -23,6 +23,8 @@ sData.InventoryService = require(sData.Modules.InventoryService)
 
 sData.CollectEvent = sData.GameEvents:WaitForChild("Crops"):WaitForChild("Collect")
 
+sData.RemoveItemEvent = sData.GameEvents:WaitForChild("Remove_Item")
+
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
 

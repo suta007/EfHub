@@ -6,6 +6,9 @@ fVar.isHarvesting = false
 fVar.isSelling = false
 fVar.isFruitHidden = false
 fVar.isPlantHidden = false
+fVar.isRemovingPlants = false
+fVar.isRemovingCrops = false
+fVar.isOpeningPack = false
 
 fVar.ShopKey = {
 	Seed = "ROOT/SeedStocks/Shop/Stocks",

@@ -11,8 +11,9 @@ function AutoTab.Initialize(registry)
 	local Options = reg.Options
 	local QuickSave = reg.Window.QuickSave
 	local sData = reg.sData
-	--local Auto = reg.Auto
-	--local fVar = reg.fVar
+	local Auto = reg.Auto
+	local fVar = reg.fVar
+	local EfTasks = reg.EfTasks
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
 
@@ -22,22 +23,13 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Remove Plants",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			if Value then
-				TaskRemovePlants = task.spawn(function()
-					while true do
-						if not fVar.isRemovingPlants then
-							Auto.RemovePlants()
-						end
-						task.wait(0.5)
-					end
-				end)
-			else
-				if TaskRemovePlants then
-					task.cancel(TaskRemovePlants)
-					TaskRemovePlants = nil
-				end
-				fVar.isRemovePlants = false
-			end ]]
+			if not Value then
+				fVar.isRemovingPlants = false
+			end
+			EfTasks.ToggleTask("AutoRemovePlants", Value, function()
+				Auto.RemovePlants()
+				task.wait(0.1)
+			end)
 			QuickSave()
 		end,
 	})
