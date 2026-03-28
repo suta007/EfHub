@@ -94,10 +94,13 @@ function Auto.RemoveCrops()
 	if not Plants_Physical then
 		return
 	end
+	local Backpack = sData.Backpack
+	local Shovel = Backpack:FindFirstChild("Shovel [Destroy Plants]")
 	for _, plant in ipairs(Plants_Physical:GetChildren()) do
 		local FruitsContainer = plant:FindFirstChild("Fruits")
 		local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
 		for _, item in ipairs(itemsToCheck) do
+			Utils.UnequipTool()
 			if not Options.tgRemoveFruitEnable.Value then
 				fVar.isRemovingCrops = false
 				return
@@ -105,6 +108,7 @@ function Auto.RemoveCrops()
 			if item:IsA("Model") then
 				local config = Auto.GetRemovePlantsVar()
 				if Main.CheckCrops(item, config, false) then
+					Utils.EquipTool(Shovel)
 					sData.RemoveItemEvent:FireServer(item)
 					task.wait(0.1)
 				end
