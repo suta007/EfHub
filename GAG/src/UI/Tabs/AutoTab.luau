@@ -15,6 +15,7 @@ function AutoTab.Initialize(registry)
 	local fVar = reg.fVar
 	local EfTasks = reg.EfTasks
 	--local Utils = reg.Utils
+	local TrowelTask
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
 
@@ -219,14 +220,15 @@ function AutoTab.Initialize(registry)
 		Title = "Trowel",
 		Default = false,
 		Callback = function(Value)
-			if not Value then
-				fVar.isTroweling = false
-			--end
+			if Value then
+				TrowelTask = task.spawn(function()
+					Auto.Trowel()
+					--task.wait(0.1)
+				end)
 			else
-				--	EfTasks.ToggleTask("AutoTrowel", Value, function()
-				Auto.Trowel()
-				task.wait(0.1)
-				--	end)
+				task.cancel(TrowelTask)
+				TrowelTask = nil
+				fVar.isTroweling = false
 			end
 			QuickSave()
 		end,
