@@ -25,6 +25,7 @@ function Shop.Initialize(Registry)
 		Signal:Connect(function(Key, StockData)
 			if type(StockData) == "table" then
 				task.spawn(function()
+					task.wait(1)
 					Shop.BuyItem(BasePath, StockData)
 				end)
 			end
