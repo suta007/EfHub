@@ -1,6 +1,7 @@
 local Shop = {}
 local reg
 local BuyList = {}
+local sData
 local GetSelectedItems
 local ShopKey = {
 	Seed = "SeedStocks/Shop/Stocks",
@@ -13,11 +14,25 @@ local ShopKey = {
 }
 function Shop.Initialize(Registry)
 	reg = Registry
+	sData = reg.sData
 	GetSelectedItems = reg.Utils.GetSelectedItems
 end
 
 function Shop.UpdateBuyList()
 	local Options = reg.Options
+	local TravelingItems = {}
+	if Options.tgBuyTravelingAll.Value then
+		TravelingItems = { "ALL" }
+	else
+		for Name, items in pairs(sData.TravelingMerchantTable) do
+			local OptionName = "ddTraveling_" .. Name
+			for Value, State in pairs(Options[OptionName].Value) do
+				if State then
+					table.insert(TravelingItems, Value)
+				end
+			end
+		end
+	end
 	BuyList = {
 		[ShopKey.Seed] = {
 			Enabled = Options.tgBuySeedEnable.Value,
@@ -46,22 +61,20 @@ function Shop.UpdateBuyList()
 		[ShopKey.Traveling] = {
 			Enabled = Options.tgBuyTravelingEnable.Value,
 			BuyAll = Options.tgBuyTravelingAll.Value,
-			Items = GetSelectedItems(Options.ddTraveling_Items.Value),
+			Items = TravelingItems,
 			RemoteName = "BuyTravelingMerchantShopStock",
 			ArgType = "NormalMode",
 		},
 		[ShopKey.Santa] = {
-			Enabled = false,
-			BuyAll = false,
-			Items = {},
+			Enabled = Options.tgBuySantaEnable.Value,
+			Items = GetSelectedItems(Options.ddBuySanta.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "Santa's Stash",
 		},
 		[ShopKey.NewYear] = {
-			Enabled = false,
-			BuyAll = false,
-			Items = {},
+			Enabled = Options.tgBuyNewYearEnable.Value,
+			Items = GetSelectedItems(Options.ddBuyNewYear.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "New Years Shop",

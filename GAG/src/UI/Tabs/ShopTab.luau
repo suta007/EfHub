@@ -9,6 +9,7 @@ function ShopTab.Initialize(Registry)
 	_ = Options
 	local QuickSave = reg.Window.QuickSave
 	local sData = reg.sData
+	local Shop = reg.Shop
 
 	Tabs.Shop = Interface:AddTab({ Title = "Buy", Icon = "shopping-cart" })
 
@@ -37,6 +38,7 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy Seeds",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -48,6 +50,7 @@ function ShopTab.Initialize(Registry)
 		Default = { "ALL" },
 		Searchable = true,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -58,6 +61,7 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy Daily Seed",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -70,6 +74,7 @@ function ShopTab.Initialize(Registry)
 		Default = { "ALL" },
 		Searchable = true,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -80,6 +85,7 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy Gear",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -91,6 +97,7 @@ function ShopTab.Initialize(Registry)
 		Default = { "ALL" },
 		Searchable = true,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -101,6 +108,7 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy Pet Eggs",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -113,6 +121,7 @@ function ShopTab.Initialize(Registry)
 		Default = { "ALL" },
 		Searchable = true,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -123,6 +132,15 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy Traveling Merchant Items",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
+			QuickSave()
+		end,
+	})
+	BuyTravelingSection:AddToggle("tgBuyTravelingAll", {
+		Title = "Buy All",
+		Default = false,
+		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -136,6 +154,7 @@ function ShopTab.Initialize(Registry)
 			Default = {},
 			Searchable = true,
 			Callback = function(Value)
+				Shop.UpdateBuyList()
 				QuickSave()
 			end,
 		})
@@ -147,6 +166,7 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy Santa's Stash Items",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -158,6 +178,7 @@ function ShopTab.Initialize(Registry)
 		Default = { "ALL" },
 		Searchable = true,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -168,6 +189,7 @@ function ShopTab.Initialize(Registry)
 		Title = "Buy New Years Shop Items",
 		Default = false,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
@@ -179,6 +201,7 @@ function ShopTab.Initialize(Registry)
 		Default = { "ALL" },
 		Searchable = true,
 		Callback = function(Value)
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
