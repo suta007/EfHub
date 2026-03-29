@@ -79,7 +79,7 @@ function Auto.Trowel()
 	local Backpack = sData.Backpack
 	local Trowel = nil
 	for _, item in pairs(Backpack:GetChildren()) do
-		if item:IsA("Tool") and string.find(item.Name, "^Trowel") then
+		if item:IsA("Tool") and item.Name:match("Trowel") then
 			Trowel = item
 			break
 		end

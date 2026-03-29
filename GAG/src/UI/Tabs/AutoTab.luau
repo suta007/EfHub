@@ -218,7 +218,16 @@ function AutoTab.Initialize(registry)
 	TrowelSection:AddToggle("tgTrowelEnable", {
 		Title = "Trowel",
 		Default = false,
-		Callback = function(Value) end,
+		Callback = function(Value)
+			if not Value then
+				fVar.isTroweling = false
+			end
+			EfTasks.ToggleTask("AutoTrowel", Value, function()
+				Auto.Trowel()
+				task.wait(0.1)
+			end)
+			QuickSave()
+		end,
 	})
 	TrowelSection:AddButton({
 		Title = "Clear Selected Trowel",
