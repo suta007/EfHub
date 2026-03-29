@@ -11,6 +11,7 @@ function ShopTab.Initialize(Registry)
 	local sData = reg.sData
 	local Shop = reg.Shop
 	local fVar = reg.fVar
+	local Utils = reg.Utils
 	fVar.UIShopLoaded = false
 
 	Tabs.Shop = Interface:AddTab({ Title = "Buy", Icon = "shopping-cart" })
@@ -42,6 +43,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local SeedStocks = GetData_result.SeedStocks.Shop.Stocks
+				if not Utils.isTableEmpty(SeedStocks) then
+					Shop.BuyItem(Shop.ShopKey.Seed, SeedStocks)
+				end
+			end
 		end,
 	})
 	BuySeedSection:AddDropdown("ddBuySeeds", {
@@ -65,6 +73,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local DailyStocks = GetData_result.SeedStocks["Daily Deals"].Stocks
+				if not Utils.isTableEmpty(DailyStocks) then
+					Shop.BuyItem(Shop.ShopKey.Daily, DailyStocks)
+				end
+			end
 		end,
 	})
 
@@ -89,6 +104,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local GearStocks = GetData_result.GearStock.Stocks
+				if not Utils.isTableEmpty(GearStocks) then
+					Shop.BuyItem(Shop.ShopKey.Gear, GearStocks)
+				end
+			end
 		end,
 	})
 	BuyGearSection:AddDropdown("ddBuyGear", {
@@ -112,6 +134,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local EggStocks = GetData_result.PetEggStock.Stocks
+				if not Utils.isTableEmpty(EggStocks) then
+					Shop.BuyItem(Shop.ShopKey.Egg, EggStocks)
+				end
+			end
 		end,
 	})
 
@@ -136,6 +165,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local TravelingStocks = GetData_result.TravelingMerchantShopStock.Stocks
+				if not Utils.isTableEmpty(TravelingStocks) then
+					Shop.BuyItem(Shop.ShopKey.Traveling, TravelingStocks)
+				end
+			end
 		end,
 	})
 	BuyTravelingSection:AddToggle("tgBuyTravelingAll", {
@@ -170,6 +206,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local SantaStocks = GetData_result.EventShopStock["Santa's Stash"].Stocks
+				if not Utils.isTableEmpty(SantaStocks) then
+					Shop.BuyItem(Shop.ShopKey.Santa, SantaStocks)
+				end
+			end
 		end,
 	})
 	BuySantaSection:AddDropdown("ddBuySanta", {
@@ -193,6 +236,13 @@ function ShopTab.Initialize(Registry)
 		Callback = function(Value)
 			Shop.UpdateBuyList()
 			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local NewYearStocks = GetData_result.EventShopStock["New Years Shop"].Stocks
+				if not Utils.isTableEmpty(NewYearStocks) then
+					Shop.BuyItem(Shop.ShopKey.NewYear, NewYearStocks)
+				end
+			end
 		end,
 	})
 	BuyNewYearSection:AddDropdown("ddBuyNewYear", {
