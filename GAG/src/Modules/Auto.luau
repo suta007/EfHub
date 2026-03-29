@@ -21,7 +21,7 @@ function Auto.RemovePlants()
 	local RemovePlantsList = GetSelectedItems(Options.ddRemovePlants.Value)
 	local PlantsWeightThreshold = Options.ddRemovePlantsWeight.Value
 	local PlantsWeightValue = tonumber(Options.ipRemovePlantsWeight.Value) or 0
-
+	Utils.UnequipTool()
 	local Plants_Physical = Utils.GetPlantsFolder()
 	local Backpack = sData.Backpack
 	local Shovel = Backpack:FindFirstChild("Shovel [Destroy Plants]")
@@ -53,91 +53,15 @@ function Auto.RemovePlants()
 				fVar.isRemovingPlants = false
 				return
 			end
-			Utils.UnequipTool()
 			if checkPlants(plant) then
 				Utils.EquipTool(Shovel)
 				sData.RemoveItemEvent:FireServer(plant)
 				task.wait(0.1)
 			end
+			Utils.UnequipTool()
 		end
 	end
 	fVar.isRemovingPlants = false
-end
-
-function Auto.Trowel()
-	local Options = reg.Options
-	if not Options.tgTrowelEnable.Value or fVar.isTroweling then
-		return
-	end
-	fVar.isTroweling = true
-	local GetSelectedItems = Utils.GetSelectedItems
-	local TrowelPlantsList = GetSelectedItems(Options.ddTrowelPlants.Value)
-	local PlantsWeightThreshold = Options.ddTrowelPlantsWeight.Value
-	local PlantsWeightValue = tonumber(Options.ipTrowelPlantsWeight.Value) or 0
-
-	Utils.UnequipTool()
-	local Plants_Physical = Utils.GetPlantsFolder()
-	local Backpack = sData.Backpack
-	local Trowel = nil
-	for _, item in pairs(Backpack:GetChildren()) do
-		if item:IsA("Tool") and item.Name:match("Trowel") then
-			Trowel = item
-			break
-		end
-	end
-	if not Trowel then
-		getgenv().fLog("🟡 No Trowel")
-		fVar.isTroweling = false
-		return
-	end
-	local function checkPlants(object)
-		local PlantName = object.Name
-		local PlantWeight = object.Weight.Value
-		if table.find(TrowelPlantsList, PlantName) then
-			if PlantsWeightValue > 0 then
-				if PlantsWeightThreshold == "Below" then
-					if PlantWeight < PlantsWeightValue then
-						return true
-					end
-				elseif PlantsWeightThreshold == "Above" then
-					if PlantWeight > PlantsWeightValue then
-						return true
-					end
-				end
-			else
-				return true
-			end
-		end
-		return false
-	end
-	-- local TargetCFrame = CFrame.new(fVar.Pos.Trowel)
-	-- local Character = reg.sData.Character
-	-- local TargetCFrame = Character:GetPivot()
-	if Plants_Physical then
-		for _, plant in pairs(Plants_Physical:GetChildren()) do
-			if not Options.tgTrowelEnable.Value then
-				fVar.isTroweling = false
-				return
-			end
-			--Utils.UnequipTool()
-			if checkPlants(plant) then
-				Utils.EquipTool(Trowel)
-				local success, response = pcall(function()
-					return sData.TrowelEvent:InvokeServer("Pickup", Trowel, plant)
-				end)
-				if success then
-					sData.TrowelEvent:InvokeServer("Place", Trowel, plant, fVar.Pos.Trowel)
-					task.wait(0.5)
-				else
-					getgenv().fLog("❌ Place failed: " .. tostring(response))
-				end
-			end
-		end
-	end
-	fVar.isTroweling = false
-	if Options.tgTrowelEnable.Value then
-		Options.tgTrowelEnable:SetValue(false)
-	end
 end
 
 function Auto.GetRemovePlantsVar()
@@ -193,6 +117,138 @@ function Auto.RemoveCrops()
 		end
 	end
 	fVar.isRemovingCrops = false
+end
+
+function Auto.Trowel()
+	local Options = reg.Options
+	if not Options.tgTrowelEnable.Value or fVar.isTroweling then
+		return
+	end
+	fVar.isTroweling = true
+	local GetSelectedItems = Utils.GetSelectedItems
+	local TrowelPlantsList = GetSelectedItems(Options.ddTrowelPlants.Value)
+	local PlantsWeightThreshold = Options.ddTrowelPlantsWeight.Value
+	local PlantsWeightValue = tonumber(Options.ipTrowelPlantsWeight.Value) or 0
+
+	Utils.UnequipTool()
+	local Plants_Physical = Utils.GetPlantsFolder()
+	local Backpack = sData.Backpack
+	local Trowel = nil
+	for _, item in pairs(Backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match("Trowel") then
+			Trowel = item
+			break
+		end
+	end
+	if not Trowel then
+		getgenv().fLog("🟡 No Trowel")
+		fVar.isTroweling = false
+		return
+	end
+	local function checkPlants(object)
+		local PlantName = object.Name
+		local PlantWeight = object.Weight.Value
+		if table.find(TrowelPlantsList, PlantName) then
+			if PlantsWeightValue > 0 then
+				if PlantsWeightThreshold == "Below" then
+					if PlantWeight < PlantsWeightValue then
+						return true
+					end
+				elseif PlantsWeightThreshold == "Above" then
+					if PlantWeight > PlantsWeightValue then
+						return true
+					end
+				end
+			else
+				return true
+			end
+		end
+		return false
+	end
+	if Plants_Physical then
+		for _, plant in pairs(Plants_Physical:GetChildren()) do
+			if not Options.tgTrowelEnable.Value then
+				fVar.isTroweling = false
+				return
+			end
+			if checkPlants(plant) then
+				Utils.EquipTool(Trowel)
+				local success, response = pcall(function()
+					return sData.TrowelEvent:InvokeServer("Pickup", Trowel, plant)
+				end)
+				if success then
+					sData.TrowelEvent:InvokeServer("Place", Trowel, plant, fVar.Pos.Trowel)
+					task.wait(0.5)
+				else
+					getgenv().fLog("❌ Place failed: " .. tostring(response))
+				end
+			end
+			Utils.UnequipTool()
+		end
+	end
+	fVar.isTroweling = false
+	if Options.tgTrowelEnable.Value then
+		Options.tgTrowelEnable:SetValue(false)
+	end
+end
+
+function Auto.Reclaim()
+	local Options = reg.Options
+	local GetSelectedItems = Utils.GetSelectedItems
+	local ReclaimPlantsList = GetSelectedItems(Options.ddReclaimPlants.Value)
+	local PlantsWeightThreshold = Options.ddReclaimPlantsWeight.Value
+	local PlantsWeightValue = tonumber(Options.ipReclaimPlantsWeight.Value) or 0
+	local Plants_Physical = Utils.GetPlantsFolder()
+	local Backpack = sData.Backpack
+	local Reclaimer = nil
+	for _, item in pairs(Backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match("Reclaimer") then
+			Reclaimer = item
+			break
+		end
+	end
+	if not Reclaimer then
+		getgenv().fLog("🟡 No Reclaimer")
+		fVar.isReclaiming = false
+		return
+	end
+	local function checkPlants(object)
+		local PlantName = object.Name
+		local PlantWeight = object.Weight.Value
+		if table.find(ReclaimPlantsList, PlantName) then
+			if PlantsWeightValue > 0 then
+				if PlantsWeightThreshold == "Below" then
+					if PlantWeight < PlantsWeightValue then
+						return true
+					end
+				elseif PlantsWeightThreshold == "Above" then
+					if PlantWeight > PlantsWeightValue then
+						return true
+					end
+				end
+			else
+				return true
+			end
+		end
+		return false
+	end
+	if Plants_Physical then
+		for _, plant in pairs(Plants_Physical:GetChildren()) do
+			if not Options.tgReclaimEnable.Value then
+				fVar.isReclaiming = false
+				return
+			end
+			if checkPlants(plant) then
+				Utils.EquipTool(Reclaimer)
+				sData.ReclaimerEvent:FireServer("TryReclaim", plant)
+			end
+			Utils.UnequipTool()
+		end
+	end
+	fVar.isReclaiming = false
+	if Options.tgReclaimEnable.Value then
+		Options.tgReclaimEnable:SetValue(false)
+	end
 end
 
 function Auto.OpenPack() end

@@ -15,7 +15,8 @@ function AutoTab.Initialize(registry)
 	local fVar = reg.fVar
 	local EfTasks = reg.EfTasks
 	--local Utils = reg.Utils
-	local TrowelTask
+	local TrowelTask = nil
+	local ReclaimTask = nil
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
 
@@ -226,8 +227,10 @@ function AutoTab.Initialize(registry)
 					--task.wait(0.1)
 				end)
 			else
-				task.cancel(TrowelTask)
-				TrowelTask = nil
+				if TrowelTask then
+					task.cancel(TrowelTask)
+					TrowelTask = nil
+				end
 				fVar.isTroweling = false
 			end
 			QuickSave()
@@ -259,6 +262,64 @@ function AutoTab.Initialize(registry)
 		end,
 	})
 	TrowelSection:AddInput("ipTrowelPlantsWeight", {
+		Title = "Plants Weight",
+		Default = 0,
+		Numeric = true,
+		Finished = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	local ReclaimSection = Tabs.Auto:AddCollapsibleSection("Reclaim", false)
+	ReclaimSection:AddToggle("tgReclaimEnable", {
+		Title = "Reclaim",
+		Default = false,
+		Callback = function(Value)
+			if Value then
+				ReclaimTask = task.spawn(function()
+					Auto.Reclaim()
+					--task.wait(0.1)
+				end)
+			else
+				if ReclaimTask then
+					task.cancel(ReclaimTask)
+					ReclaimTask = nil
+				end
+				fVar.isReclaiming = false
+			end
+			QuickSave()
+		end,
+	})
+
+	ReclaimSection:AddButton({
+		Title = "Clear Selected Reclaim",
+		Callback = function()
+			Options.ddReclaimPlants:SetValue({})
+		end,
+	})
+
+	ReclaimSection:AddDropdown("ddReclaimPlants", {
+		Title = "Reclaim Type",
+		Values = sData.SeedDataTable,
+		Multi = true,
+		Default = {},
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	ReclaimSection:AddDropdown("ddReclaimPlantsWeight", {
+		Title = "Plants Weight Threshold",
+		Values = { "Below", "Above" },
+		Default = "Below",
+		Multi = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	ReclaimSection:AddInput("ipReclaimPlantsWeight", {
 		Title = "Plants Weight",
 		Default = 0,
 		Numeric = true,

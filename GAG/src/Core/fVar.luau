@@ -9,6 +9,7 @@ fVar.isPlantHidden = false
 fVar.isRemovingPlants = false
 fVar.isRemovingCrops = false
 fVar.isTroweling = false
+fVar.isReclaiming = false
 fVar.isOpeningPack = false
 
 fVar.Pos = {
