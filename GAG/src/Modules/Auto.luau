@@ -131,6 +131,9 @@ function Auto.Trowel()
 		end
 	end
 	fVar.isTroweling = false
+	if Options.tgTrowelEnable.Value then
+		Options.tgTrowelEnable:SetValue(false)
+	end
 end
 
 function Auto.GetRemovePlantsVar()
