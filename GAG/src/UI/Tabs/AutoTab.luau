@@ -14,6 +14,7 @@ function AutoTab.Initialize(registry)
 	local Auto = reg.Auto
 	local fVar = reg.fVar
 	local EfTasks = reg.EfTasks
+	local Utils = reg.Utils
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
 
@@ -191,6 +192,64 @@ function AutoTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	local TrowelSection = Tabs.Auto:AddCollapsibleSection("Trowel", false)
+	TrowelSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			-- set position of trowel
+			fVar.Pos.Trowel = Utils.GetPlayerPosition()
+			Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel))
+		end,
+	})
+
+	TrowelSection:AddParagraph("TrowelPosition", {
+		Title = "Trowel Position",
+		Content = "Waiting for set position...",
+	})
+	if fVar.Pos.Trowel ~= nil then
+		Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel))
+	end
+	TrowelSection:AddDivider()
+	TrowelSection:AddToggle("tgTrowelEnable", {
+		Title = "Trowel",
+		Default = false,
+		Callback = function(Value) end,
+	})
+	TrowelSection:AddButton({
+		Title = "Clear Selected Trowel",
+		Callback = function()
+			Options.ddTrowelPlants:SetValue({})
+		end,
+	})
+	TrowelSection:AddDropdown("ddTrowelPlants", {
+		Title = "Trowel Type",
+		Values = sData.SeedDataTable,
+		Multi = true,
+		Default = {},
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	TrowelSection:AddDropdown("ddTrowelPlantsWeight", {
+		Title = "Plants Weight Threshold",
+		Values = { "Below", "Above" },
+		Default = "Below",
+		Multi = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	TrowelSection:AddInput("ipTrowelPlantsWeight", {
+		Title = "Plants Weight",
+		Default = 0,
+		Numeric = true,
+		Finished = false,
 		Callback = function(Value)
 			QuickSave()
 		end,

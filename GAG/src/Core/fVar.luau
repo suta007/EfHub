@@ -8,7 +8,12 @@ fVar.isFruitHidden = false
 fVar.isPlantHidden = false
 fVar.isRemovingPlants = false
 fVar.isRemovingCrops = false
+fVar.isTroweling = false
 fVar.isOpeningPack = false
+
+fVar.Pos = {
+	Trowel = nil,
+}
 
 fVar.ShopKey = {
 	Seed = "ROOT/SeedStocks/Shop/Stocks",

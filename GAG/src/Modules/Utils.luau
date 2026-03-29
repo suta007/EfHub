@@ -145,4 +145,11 @@ function Utils.EquipTool(item)
 	return success
 end
 
+function Utils.GetPlayerPosition()
+	local rootPart = sData.Character:FindFirstChild("HumanoidRootPart")
+	if not rootPart then
+		return nil
+	end
+	return rootPart.Position
+end
 return Utils

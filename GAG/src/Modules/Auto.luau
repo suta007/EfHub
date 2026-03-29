@@ -1,3 +1,4 @@
+local getgenv = (getfenv() :: any).getgenv
 local Auto = {}
 local reg
 local fVar
@@ -61,6 +62,75 @@ function Auto.RemovePlants()
 		end
 	end
 	fVar.isRemovingPlants = false
+end
+
+function Auto.Trowel()
+	local Options = reg.Options
+	if not Options.tgTrowelEnable.Value or fVar.isTroweling then
+		return
+	end
+	fVar.isTroweling = true
+	local GetSelectedItems = Utils.GetSelectedItems
+	local TrowelPlantsList = GetSelectedItems(Options.ddTrowelPlants.Value)
+	local PlantsWeightThreshold = Options.ddTrowelPlantsWeight.Value
+	local PlantsWeightValue = tonumber(Options.ipTrowelPlantsWeight.Value) or 0
+
+	local Plants_Physical = Utils.GetPlantsFolder()
+	local Backpack = sData.Backpack
+	local Trowel = nil
+	for _, item in pairs(Backpack:GetChildren()) do
+		if item:IsA("Tool") and string.find(item.Name, "^Trowel") then
+			Trowel = item
+			break
+		end
+	end
+	if not Trowel then
+		getgenv().fLog("🟡 No Trowel")
+		fVar.isTroweling = false
+		return
+	end
+	local function checkPlants(object)
+		local PlantName = object.Name
+		local PlantWeight = object.Weight.Value
+		if table.find(TrowelPlantsList, PlantName) then
+			if PlantsWeightValue > 0 then
+				if PlantsWeightThreshold == "Below" then
+					if PlantWeight < PlantsWeightValue then
+						return true
+					end
+				elseif PlantsWeightThreshold == "Above" then
+					if PlantWeight > PlantsWeightValue then
+						return true
+					end
+				end
+			else
+				return true
+			end
+		end
+		return false
+	end
+	local TargetCFrame = CFrame.new(fVar.Pos.Trowel)
+	if Plants_Physical then
+		for _, plant in pairs(Plants_Physical:GetChildren()) do
+			if not Options.tgTrowelEnable.Value then
+				fVar.isTroweling = false
+				return
+			end
+			Utils.UnequipTool()
+			if checkPlants(plant) then
+				Utils.EquipTool(Trowel)
+				local args = {
+					"Place",
+					Trowel,
+					plant,
+					TargetCFrame,
+				}
+				sData.TrowelEvent:InvokeServer(unpack(args))
+				task.wait(0.1)
+			end
+		end
+	end
+	fVar.isTroweling = false
 end
 
 function Auto.GetRemovePlantsVar()
