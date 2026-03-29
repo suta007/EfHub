@@ -84,7 +84,6 @@ function AutoTab.Initialize(registry)
 				Auto.RemoveCrops()
 				task.wait(0.1)
 			end)
-			QuickSave()
 		end,
 	})
 
@@ -224,7 +223,6 @@ function AutoTab.Initialize(registry)
 			if Value then
 				TrowelTask = task.spawn(function()
 					Auto.Trowel()
-					--task.wait(0.1)
 				end)
 			else
 				if TrowelTask then
@@ -233,7 +231,6 @@ function AutoTab.Initialize(registry)
 				end
 				fVar.isTroweling = false
 			end
-			QuickSave()
 		end,
 	})
 	TrowelSection:AddButton({
@@ -279,7 +276,6 @@ function AutoTab.Initialize(registry)
 			if Value then
 				ReclaimTask = task.spawn(function()
 					Auto.Reclaim()
-					--task.wait(0.1)
 				end)
 			else
 				if ReclaimTask then
@@ -288,7 +284,6 @@ function AutoTab.Initialize(registry)
 				end
 				fVar.isReclaiming = false
 			end
-			QuickSave()
 		end,
 	})
 

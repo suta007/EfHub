@@ -1,63 +1,48 @@
 local ShopTab = {}
 local reg
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
-local GetShopData = RemoteEvents:WaitForChild("GetShopData") :: RemoteFunction
 function ShopTab.Initialize(Registry)
 	reg = Registry
-	local Options = reg.Options
 	local Interface = reg.Interface
 	local Tabs = reg.Tabs
+	local Options = reg.Options
+	_ = Options
 	local QuickSave = reg.Window.QuickSave
-	local actionQueue = reg.fVar.actionQueue
 	local sData = reg.sData
 
-	Tabs.Shop = Interface:AddTab({ Title = "Shop", Icon = "shopping-cart" })
-	local BuySeedSection = Tabs.Shop:AddCollapsibleSection("Buy Seed", false)
+	Tabs.Shop = Interface:AddTab({ Title = "Buy", Icon = "shopping-cart" })
 
-	--[[ 	local function tempBuySeed()
-		local SeedShop = GetShopData:InvokeServer("SeedShop")
-		if not SeedShop then return end
-		table.insert(actionQueue, {
-			FuncName = reg.Shop.AutoBuySeed,
-			args = SeedShop.Items,
-		})
-	end ]]
-
-	local function tempBuy(ShopName)
-		local Shop = GetShopData:InvokeServer(ShopName)
-		if not Shop then return end
-		local ShopFunc
-		if ShopName == "SeedShop" then
-			ShopFunc = reg.Shop.AutoBuySeed
-		elseif ShopName == "GearShop" then
-			ShopFunc = reg.Shop.AutoBuyGear
-		end
-		table.insert(actionQueue, {
-			FuncName = ShopFunc,
-			args = Shop.Items,
-		})
-	end
-
-	BuySeedSection:AddToggle("tgBuySeedEnable", {
-		Title = "Auto Buy Seed",
+	-- [[ Auto Buy Hardcore ]]
+	local HardCoreSection = Tabs.Shop:AddCollapsibleSection("Auto Buy Hardcore", false)
+	HardCoreSection:AddToggle("tgBuyHardCoreEnable", {
+		Title = "Buy Hardcore",
 		Default = false,
 		Callback = function(Value)
-			if Value then
-				if tempBuy then tempBuy("SeedShop") end
-			end
 			QuickSave()
 		end,
 	})
-	BuySeedSection:AddButton({
-		Title = "Clear Selected Seeds",
-		Callback = function()
-			Options.ddBuySeeds:SetValue({ ALL = true })
+	HardCoreSection:AddInput("ipBuyHardCoreDelay", {
+		Title = "Delay (Seconds)",
+		Default = 0.3,
+		Numeric = true,
+		Finished = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	-- [[ Auto Buy Seeds ]]
+	local BuySeedSection = Tabs.Shop:AddCollapsibleSection("Seed Shop", false)
+	BuySeedSection:AddToggle("tgBuySeedEnable", {
+		Title = "Buy Seeds",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
 		end,
 	})
 	BuySeedSection:AddDropdown("ddBuySeeds", {
-		Title = "Select Seed",
+		Title = "Seeds",
+		Description = "Select seeds to buy",
 		Values = sData.SeedShopTable,
 		Multi = true,
 		Default = { "ALL" },
@@ -67,26 +52,129 @@ function ShopTab.Initialize(Registry)
 		end,
 	})
 
-	local BuyGearSection = Tabs.Shop:AddCollapsibleSection("Buy Gear", false)
-	BuyGearSection:AddToggle("tgBuyGearEnable", {
-		Title = "Auto Buy Gear",
+	-- [[ Auto Buy Daily Seed ]]
+	local BuyDailySection = Tabs.Shop:AddCollapsibleSection("Daily Seed Shop", false)
+	BuyDailySection:AddToggle("tgBuyDailyEnable", {
+		Title = "Buy Daily Seed",
 		Default = false,
 		Callback = function(Value)
-			if Value then
-				if tempBuy then tempBuy("GearShop") end
-			end
 			QuickSave()
 		end,
 	})
-	BuyGearSection:AddButton({
-		Title = "Clear Selected Gear",
-		Callback = function()
-			Options.ddBuyGear:SetValue({ ALL = true })
+
+	BuyDailySection:AddDropdown("ddBuyDaily", {
+		Title = "Daily Seeds",
+		Description = "Select daily seeds to buy",
+		Values = sData.DailySeedShopTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	-- [[ Auto Buy Gear ]]
+	local BuyGearSection = Tabs.Shop:AddCollapsibleSection("Gear Shop", false)
+	BuyGearSection:AddToggle("tgBuyGearEnable", {
+		Title = "Buy Gear",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
 		end,
 	})
 	BuyGearSection:AddDropdown("ddBuyGear", {
-		Title = "Select Gear",
+		Title = "Gear",
+		Description = "Select gear to buy",
 		Values = sData.GearShopTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	-- [[ Auto Buy Pet Eggs ]]
+	local BuyEggSection = Tabs.Shop:AddCollapsibleSection("Pet Eggs Shop", false)
+	BuyEggSection:AddToggle("tgBuyEggEnable", {
+		Title = "Buy Pet Eggs",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	BuyEggSection:AddDropdown("ddBuyEggs", {
+		Title = "Pet Eggs",
+		Description = "Select pet eggs to buy",
+		Values = sData.EggShopTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	-- [[ Auto Buy Traveling Merchant Items ]]
+	local BuyTravelingSection = Tabs.Shop:AddCollapsibleSection("Traveling Merchant Shop", false)
+	BuyTravelingSection:AddToggle("tgBuyTravelingEnable", {
+		Title = "Buy Traveling Merchant Items",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	for Name, items in pairs(sData.TravelingMerchantTable) do
+		BuyTravelingSection:AddDropdown("ddTraveling_" .. Name, {
+			Title = Name .. " Items",
+			Description = "Select items to buy",
+			Values = items,
+			Multi = true,
+			Default = {},
+			Searchable = true,
+			Callback = function(Value)
+				QuickSave()
+			end,
+		})
+	end
+
+	-- [[ Auto Buy Santa's Stash Items ]]
+	local BuySantaSection = Tabs.Shop:AddCollapsibleSection("Santa's Stash Shop", false)
+	BuySantaSection:AddToggle("tgBuySantaEnable", {
+		Title = "Buy Santa's Stash Items",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	BuySantaSection:AddDropdown("ddBuySanta", {
+		Title = "Santa's Stash Items",
+		Description = "Select items to buy",
+		Values = sData.SantaShopTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+
+	-- [[ Auto Buy New Years Shop Items ]]
+	local BuyNewYearSection = Tabs.Shop:AddCollapsibleSection("New Years Shop", false)
+	BuyNewYearSection:AddToggle("tgBuyNewYearEnable", {
+		Title = "Buy New Years Shop Items",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+		end,
+	})
+	BuyNewYearSection:AddDropdown("ddBuyNewYear", {
+		Title = "New Years Shop Items",
+		Description = "Select items to buy",
+		Values = sData.NewYearShopTable,
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,

@@ -117,6 +117,7 @@ function Auto.RemoveCrops()
 		end
 	end
 	fVar.isRemovingCrops = false
+	task.wait(0.5)
 end
 
 function Auto.Trowel()
@@ -189,7 +190,9 @@ function Auto.Trowel()
 	fVar.isTroweling = false
 	if Options.tgTrowelEnable.Value then
 		Options.tgTrowelEnable:SetValue(false)
+		task.wait(0.5)
 	end
+	task.wait(0.5)
 end
 
 function Auto.Reclaim()
@@ -248,7 +251,9 @@ function Auto.Reclaim()
 	fVar.isReclaiming = false
 	if Options.tgReclaimEnable.Value then
 		Options.tgReclaimEnable:SetValue(false)
+		task.wait(0.5)
 	end
+	task.wait(0.5)
 end
 
 function Auto.OpenPack() end

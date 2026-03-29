@@ -44,6 +44,12 @@ for seedName, seedInfo in pairs(SeedShopData) do
 	table.insert(sData.SeedShopTable, seedName)
 end
 
+local DailySeedShopData = require(sData.Data:WaitForChild("DailySeedShopData") :: any)
+sData.DailySeedShopTable = { "ALL" }
+for seedName, seedInfo in pairs(DailySeedShopData) do
+	table.insert(sData.DailySeedShopTable, seedName)
+end
+
 local SeedData = require(sData.Data:WaitForChild("SeedData") :: any)
 sData.SeedDataTable = { "ALL" }
 for seedName, seedInfo in pairs(SeedData) do
@@ -79,5 +85,39 @@ for mutantName, mutantInfo in pairs(PetMutationData["PetMutationRegistry"]) do
 end
 sData.PetMutationDataBlackTable = table.clone(sData.PetMutationDataTable)
 sData.PetMutationDataBlackTable[1] = "NONE"
+
+local GearData = require(sData.Data:WaitForChild("GearShopData") :: any)
+sData.GearShopTable = { "ALL" }
+for gearName, gearInfo in pairs(GearData["Gear"]) do
+	table.insert(sData.GearShopTable, gearName)
+end
+
+local EggData = require(sData.Data:WaitForChild("PetEggData") :: any)
+sData.EggShopTable = { "ALL" }
+for eggName, eggInfo in pairs(EggData) do
+	table.insert(sData.EggShopTable, eggName)
+end
+
+local TravelingData = require(sData.Data:WaitForChild("TravelingMerchant"):WaitForChild("TravelingMerchantData") :: any)
+sData.TravelingMerchantTable = {}
+for Name, data in pairs(TravelingData) do
+	if type(data.ShopData) == "table" then
+		sData.TravelingMerchantTable[Name] = {}
+		for itemName, itemInfo in pairs(data.ShopData) do
+			table.insert(sData.TravelingMerchantTable[Name], itemName)
+		end
+	end
+end
+
+local EventData = require(sData.Data:WaitForChild("EventShopData") :: any)
+sData.SantaShopTable = { "ALL" }
+for itemName, itemInfo in pairs(EventData["Santa's Stash"]) do
+	table.insert(sData.SantaShopTable, itemName)
+end
+
+sData.NewYearShopTable = { "ALL" }
+for itemName, itemInfo in pairs(EventData["New Years Shop"]) do
+	table.insert(sData.NewYearShopTable, itemName)
+end
 
 return sData
