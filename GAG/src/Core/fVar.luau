@@ -12,6 +12,8 @@ fVar.isTroweling = false
 fVar.isReclaiming = false
 fVar.isOpeningPack = false
 
+fVar.UIShopLoaded = false
+
 fVar.Pos = {
 	Trowel = nil,
 }

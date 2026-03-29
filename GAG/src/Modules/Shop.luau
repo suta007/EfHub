@@ -19,6 +19,9 @@ function Shop.Initialize(Registry)
 end
 
 function Shop.UpdateBuyList()
+	if not reg.fVar.UIShopLoaded then
+		return
+	end
 	local Options = reg.Options
 	local TravelingItems = {}
 	if Options.tgBuyTravelingAll.Value then

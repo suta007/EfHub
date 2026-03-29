@@ -10,6 +10,8 @@ function ShopTab.Initialize(Registry)
 	local QuickSave = reg.Window.QuickSave
 	local sData = reg.sData
 	local Shop = reg.Shop
+	local fVar = reg.fVar
+	fVar.UIShopLoaded = false
 
 	Tabs.Shop = Interface:AddTab({ Title = "Buy", Icon = "shopping-cart" })
 
@@ -205,6 +207,8 @@ function ShopTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
+
+	fVar.UIShopLoaded = true
 end
 
 return ShopTab
