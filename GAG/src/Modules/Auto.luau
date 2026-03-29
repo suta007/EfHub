@@ -75,6 +75,7 @@ function Auto.Trowel()
 	local PlantsWeightThreshold = Options.ddTrowelPlantsWeight.Value
 	local PlantsWeightValue = tonumber(Options.ipTrowelPlantsWeight.Value) or 0
 
+	Utils.UnequipTool()
 	local Plants_Physical = Utils.GetPlantsFolder()
 	local Backpack = sData.Backpack
 	local Trowel = nil
@@ -118,17 +119,18 @@ function Auto.Trowel()
 				fVar.isTroweling = false
 				return
 			end
-			Utils.UnequipTool()
+			--Utils.UnequipTool()
 			if checkPlants(plant) then
 				Utils.EquipTool(Trowel)
-				local args = {
-					"Place",
-					Trowel,
-					plant,
-					TargetCFrame,
-				}
-				sData.TrowelEvent:InvokeServer(unpack(args))
-				task.wait(0.1)
+				local success, response = pcall(function()
+					return sData.TrowelEvent:InvokeServer("Pickup", Trowel, plant)
+				end)
+				if success then
+					sData.TrowelEvent:InvokeServer("Place", Trowel, plant, TargetCFrame)
+					task.wait(0.1)
+				else
+					getgenv().fLog("❌ Place failed: " .. tostring(response))
+				end
 			end
 		end
 	end
