@@ -221,11 +221,13 @@ function AutoTab.Initialize(registry)
 		Callback = function(Value)
 			if not Value then
 				fVar.isTroweling = false
-			end
-			EfTasks.ToggleTask("AutoTrowel", Value, function()
+			--end
+			else
+				--	EfTasks.ToggleTask("AutoTrowel", Value, function()
 				Auto.Trowel()
 				task.wait(0.1)
-			end)
+				--	end)
+			end
 			QuickSave()
 		end,
 	})

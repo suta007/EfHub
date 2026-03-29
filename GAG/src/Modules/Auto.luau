@@ -109,7 +109,9 @@ function Auto.Trowel()
 		end
 		return false
 	end
-	local TargetCFrame = CFrame.new(fVar.Pos.Trowel)
+	--local TargetCFrame = CFrame.new(fVar.Pos.Trowel)
+	local Character = reg.sData.Character
+	local TargetCFrame = Character:GetPivot()
 	if Plants_Physical then
 		for _, plant in pairs(Plants_Physical:GetChildren()) do
 			if not Options.tgTrowelEnable.Value then
