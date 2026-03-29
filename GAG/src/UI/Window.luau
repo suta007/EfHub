@@ -18,7 +18,7 @@ function Window.Initialize(Registry)
 
 	Registry.Interface = Fluent:CreateWindow({
 		Title = "Grow a Garden",
-		SubTitle = "2569.03.29-19.00",
+		SubTitle = "2569.03.29-20.45",
 		TabWidth = 100,
 		Size = UDim2.fromOffset(600, 340),
 		Resize = false,

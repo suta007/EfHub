@@ -12,10 +12,25 @@ local ShopKey = {
 	NewYear = "EventShopStock/New Years Shop/Stocks",
 	Traveling = "TravelingMerchantShopStock/Stocks",
 }
+--local AutoBuyConnections = {}
 function Shop.Initialize(Registry)
 	reg = Registry
 	sData = reg.sData
 	GetSelectedItems = reg.Utils.GetSelectedItems
+
+	--table.clear(AutoBuyConnections)
+	for ShopName, BasePath in pairs(ShopKey) do
+		local Signal = sData.DataService:GetPathSignal(BasePath .. "/@")
+		--local Connection = Signal:Connect(function(Key, StockData)
+		Signal:Connect(function(Key, StockData)
+			if type(StockData) == "table" then
+				task.spawn(function()
+					Shop.BuyItem(BasePath, StockData)
+				end)
+			end
+		end)
+		--table.insert(AutoBuyConnections, Connection)
+	end
 end
 
 function Shop.UpdateBuyList()
@@ -83,6 +98,45 @@ function Shop.UpdateBuyList()
 			EventArg = "New Years Shop",
 		},
 	}
+end
+local RemoteCache = {}
+
+function Shop.BuyItem(ShopKey, StockData)
+	local Setting = BuyList[ShopKey]
+	if not Setting or not Setting.Enabled then
+		return
+	end
+	local Remote = RemoteCache[Setting.RemoteName]
+	if not Remote then
+		Remote = sData.GameEvents:FindFirstChild(Setting.RemoteName)
+		if Remote then
+			RemoteCache[Setting.RemoteName] = Remote
+		end
+	end
+
+	for itemId, itemInfo in pairs(StockData) do
+		local ItemName = itemInfo.EggName or itemId
+		local StockAmount = tonumber(itemInfo.Stock) or 0
+
+		if not table.find(Setting.Items, "ALL") and not table.find(Setting.Items, ItemName) then
+			continue
+		end
+
+		if StockAmount > 0 then
+			for i = 1, StockAmount do
+				local Args = {}
+				if Setting.ArgType == "SeedMode" then
+					Args = { "Shop", ItemName }
+				elseif Setting.ArgType == "EventMode" then
+					Args = { "Shop", Setting.EventArg, ItemName }
+				else
+					Args = { "Shop", ItemName }
+				end
+				Remote:FireServer(unpack(Args))
+				task.wait(0.25)
+			end
+		end
+	end
 end
 
 return Shop
