@@ -63,20 +63,58 @@ end
 local function SetVisibility(obj, isHidden)
 	if obj:IsA("BasePart") or obj:IsA("MeshPart") or obj:IsA("Decal") or obj:IsA("Texture") then
 		if isHidden then
-			-- ใช้คีย์เวิร์ดเดิม OriginalTrans
+			-- 1. ล่องหน (จัดการเรื่องภาพ)
 			if not obj:GetAttribute("OriginalTrans") then
 				obj:SetAttribute("OriginalTrans", obj.Transparency)
 			end
 			obj.Transparency = 1
+
+			-- 2. ปิดการชนและการสัมผัสทุกรูปแบบ (เฉพาะที่เป็นก้อนโมเดล)
+			if obj:IsA("BasePart") then
+				-- บันทึกค่าดั้งเดิมเก็บไว้
+				if obj:GetAttribute("OriginalCanCollide") == nil then
+					obj:SetAttribute("OriginalCanCollide", obj.CanCollide)
+				end
+				if obj:GetAttribute("OriginalCanTouch") == nil then
+					obj:SetAttribute("OriginalCanTouch", obj.CanTouch)
+				end
+				if obj:GetAttribute("OriginalCanQuery") == nil then
+					obj:SetAttribute("OriginalCanQuery", obj.CanQuery)
+				end
+
+				-- ปิดให้หมด! (เดินทะลุ, ไม่โดนกับดัก, ไม่ขวางเมาส์คลิก)
+				obj.CanCollide = false
+				obj.CanTouch = false
+				obj.CanQuery = false
+			end
 		else
-			local orig = obj:GetAttribute("OriginalTrans")
-			if orig then
-				obj.Transparency = orig
+			-- 3. คืนค่าการมองเห็น
+			local origTrans = obj:GetAttribute("OriginalTrans")
+			if origTrans then
+				obj.Transparency = origTrans
+			end
+
+			-- 4. คืนค่าการชนและการสัมผัสกลับเป็นปกติ
+			if obj:IsA("BasePart") then
+				local origCollide = obj:GetAttribute("OriginalCanCollide")
+				local origTouch = obj:GetAttribute("OriginalCanTouch")
+				local origQuery = obj:GetAttribute("OriginalCanQuery")
+
+				-- กฎของ Roblox: ต้องตั้ง CanCollide ก่อน CanQuery เสมอ ไม่งั้นจะ Error
+				if origCollide ~= nil then
+					obj.CanCollide = origCollide
+				end
+				if origQuery ~= nil then
+					obj.CanQuery = origQuery
+				end
+				if origTouch ~= nil then
+					obj.CanTouch = origTouch
+				end
 			end
 		end
 	elseif obj:IsA("ParticleEmitter") or obj:IsA("Sparkles") or obj:IsA("Fire") or obj:IsA("Trail") then
+		-- 5. จัดการพวกเอฟเฟกต์แสงสีต่างๆ ให้ดับลง
 		if isHidden then
-			-- ใช้คีย์เวิร์ดเดิม OriginalEnabled
 			if obj:GetAttribute("OriginalEnabled") == nil then
 				obj:SetAttribute("OriginalEnabled", obj.Enabled)
 			end
