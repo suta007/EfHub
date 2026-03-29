@@ -110,9 +110,9 @@ function Auto.Trowel()
 		end
 		return false
 	end
-	--local TargetCFrame = CFrame.new(fVar.Pos.Trowel)
-	local Character = reg.sData.Character
-	local TargetCFrame = Character:GetPivot()
+	-- local TargetCFrame = CFrame.new(fVar.Pos.Trowel)
+	-- local Character = reg.sData.Character
+	-- local TargetCFrame = Character:GetPivot()
 	if Plants_Physical then
 		for _, plant in pairs(Plants_Physical:GetChildren()) do
 			if not Options.tgTrowelEnable.Value then
@@ -126,8 +126,8 @@ function Auto.Trowel()
 					return sData.TrowelEvent:InvokeServer("Pickup", Trowel, plant)
 				end)
 				if success then
-					sData.TrowelEvent:InvokeServer("Place", Trowel, plant, TargetCFrame)
-					task.wait(0.1)
+					sData.TrowelEvent:InvokeServer("Place", Trowel, plant, fVar.Pos.Trowel)
+					task.wait(0.5)
 				else
 					getgenv().fLog("❌ Place failed: " .. tostring(response))
 				end

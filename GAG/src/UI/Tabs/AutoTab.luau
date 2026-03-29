@@ -14,7 +14,7 @@ function AutoTab.Initialize(registry)
 	local Auto = reg.Auto
 	local fVar = reg.fVar
 	local EfTasks = reg.EfTasks
-	local Utils = reg.Utils
+	--local Utils = reg.Utils
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
 
@@ -202,8 +202,8 @@ function AutoTab.Initialize(registry)
 		Title = "Set Position",
 		Callback = function()
 			-- set position of trowel
-			fVar.Pos.Trowel = Utils.GetPlayerPosition()
-			Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel))
+			fVar.Pos.Trowel = sData.Character:GetPivot()
+			Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel.Position))
 		end,
 	})
 
@@ -212,7 +212,7 @@ function AutoTab.Initialize(registry)
 		Content = "Waiting for set position...",
 	})
 	if fVar.Pos.Trowel ~= nil then
-		Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel))
+		Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel.Position))
 	end
 	TrowelSection:AddDivider()
 	TrowelSection:AddToggle("tgTrowelEnable", {
