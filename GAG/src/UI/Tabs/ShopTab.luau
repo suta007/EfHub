@@ -21,7 +21,7 @@ function ShopTab.Initialize(Registry)
 	HardCoreSection:AddToggle("tgBuyHardCoreEnable", {
 		Title = "Buy Hardcore",
 		Default = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -30,7 +30,7 @@ function ShopTab.Initialize(Registry)
 		Default = 0.3,
 		Numeric = true,
 		Finished = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -59,7 +59,7 @@ function ShopTab.Initialize(Registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,
@@ -90,7 +90,7 @@ function ShopTab.Initialize(Registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,
@@ -120,7 +120,7 @@ function ShopTab.Initialize(Registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,
@@ -151,7 +151,7 @@ function ShopTab.Initialize(Registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,
@@ -177,7 +177,7 @@ function ShopTab.Initialize(Registry)
 	BuyTravelingSection:AddToggle("tgBuyTravelingAll", {
 		Title = "Buy All",
 		Default = false,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,
@@ -191,7 +191,7 @@ function ShopTab.Initialize(Registry)
 			Multi = true,
 			Default = {},
 			Searchable = true,
-			Callback = function(Value)
+			Callback = function()
 				Shop.UpdateBuyList()
 				QuickSave()
 			end,
@@ -222,7 +222,7 @@ function ShopTab.Initialize(Registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,
@@ -252,7 +252,7 @@ function ShopTab.Initialize(Registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			Shop.UpdateBuyList()
 			QuickSave()
 		end,

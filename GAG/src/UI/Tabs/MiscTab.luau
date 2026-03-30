@@ -51,7 +51,7 @@ function MiscTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
-	--[[ 
+
 	local EspSection = Tabs.MiscTab:AddCollapsibleSection("Esp", false)
 	EspSection:AddToggle("tgEspCrops", {
 		Title = "Esp Crops",
@@ -69,19 +69,21 @@ function MiscTab.Initialize(Registry)
 	})
 	EspSection:AddDropdown("ddEspCrops", {
 		Title = "Select Crops",
-		Values = sData.PlantDataBlackTable,
+		Values = sData.SeedDataBlackTable,
 		Default = { "NONE" },
 		Multi = true,
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
+	EspSection:AddDivider()
+
 	EspSection:AddToggle("tgEspPlants", {
 		Title = "Esp Plants",
 		Default = false,
 		Callback = function(Value)
-			Misc.EspPlants(Value)
+			--Misc.EspPlants(Value)
 			QuickSave()
 		end,
 	})
@@ -93,15 +95,14 @@ function MiscTab.Initialize(Registry)
 	})
 	EspSection:AddDropdown("ddEspPlants", {
 		Title = "Select Plants",
-		Values = sData.PlantDataBlackTable,
+		Values = sData.SeedDataBlackTable,
 		Default = { "NONE" },
 		Multi = true,
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
-		 ]]
 end
 
 return MiscTab

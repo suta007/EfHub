@@ -26,7 +26,7 @@ function Misc.AntiLag()
 	-- Lighting
 	Lighting.GlobalShadows = false
 	Lighting.FogEnd = 9e9
-	Lighting.Brightness = 2
+	Lighting.Brightness = 1
 	Lighting.EnvironmentDiffuseScale = 0
 	Lighting.EnvironmentSpecularScale = 0
 	Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
@@ -66,7 +66,9 @@ function Misc.AntiLag()
 		if folder then
 			-- Scan current
 			for i, v in ipairs(folder:GetDescendants()) do
-				if i % 200 == 0 then task.wait() end
+				if i % 200 == 0 then
+					task.wait()
+				end
 				ApplyToPart(v)
 			end
 
@@ -74,7 +76,9 @@ function Misc.AntiLag()
 			table.insert(
 				AntiLagConnections,
 				folder.DescendantAdded:Connect(function(v)
-					if isAntiLag then ApplyToPart(v) end
+					if isAntiLag then
+						ApplyToPart(v)
+					end
 				end)
 			)
 		end
@@ -89,42 +93,58 @@ end
 local function SetVisibility(obj, isHidden)
 	if obj:IsA("BasePart") or obj:IsA("Decal") or obj:IsA("Texture") then
 		if isHidden then
-			if not obj:GetAttribute("OriginalTrans") then obj:SetAttribute("OriginalTrans", obj.Transparency) end
+			if not obj:GetAttribute("OriginalTrans") then
+				obj:SetAttribute("OriginalTrans", obj.Transparency)
+			end
 			obj.Transparency = 1
 
 			if obj:IsA("BasePart") then
-				if obj:GetAttribute("OriginalCollide") == nil then obj:SetAttribute("OriginalCollide", obj.CanCollide) end
+				if obj:GetAttribute("OriginalCollide") == nil then
+					obj:SetAttribute("OriginalCollide", obj.CanCollide)
+				end
 				obj.CanCollide = false
 			end
 		else
 			local origTrans = obj:GetAttribute("OriginalTrans")
-			if origTrans then obj.Transparency = origTrans end
+			if origTrans then
+				obj.Transparency = origTrans
+			end
 
 			if obj:IsA("BasePart") then
 				local origCollide = obj:GetAttribute("OriginalCollide")
-				if origCollide ~= nil then obj.CanCollide = origCollide end
+				if origCollide ~= nil then
+					obj.CanCollide = origCollide
+				end
 			end
 		end
 	elseif obj:IsA("ParticleEmitter") or obj:IsA("Sparkles") or obj:IsA("Fire") or obj:IsA("Trail") then
 		if isHidden then
-			if obj:GetAttribute("OriginalEnabled") == nil then obj:SetAttribute("OriginalEnabled", obj.Enabled) end
+			if obj:GetAttribute("OriginalEnabled") == nil then
+				obj:SetAttribute("OriginalEnabled", obj.Enabled)
+			end
 			obj.Enabled = false
 		else
 			local origEnabled = obj:GetAttribute("OriginalEnabled")
-			if origEnabled ~= nil then obj.Enabled = origEnabled end
+			if origEnabled ~= nil then
+				obj.Enabled = origEnabled
+			end
 		end
 	end
 end
 
 local function UpdateVisibilityFromAnchor(anchorName, state, isPlantCheck)
 	local ClientPlants = workspace:FindFirstChild("ClientPlants")
-	if not ClientPlants then return end
+	if not ClientPlants then
+		return
+	end
 
 	for _, obj in ipairs(ClientPlants:GetDescendants()) do
 		if obj.Name == anchorName then
 			local parent = obj.Parent
 			if parent then
-				if isPlantCheck and parent:FindFirstChild("FruitAnchor") then continue end
+				if isPlantCheck and parent:FindFirstChild("FruitAnchor") then
+					continue
+				end
 				for _, sibling in ipairs(parent:GetChildren()) do
 					SetVisibility(sibling, state)
 				end
@@ -142,7 +162,9 @@ function Misc.HideFruit(state)
 end
 
 local function CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
-	if not (espfolder and obj and uuid and txt1) then return end
+	if not (espfolder and obj and uuid and txt1) then
+		return
+	end
 	local priority = arg or 0
 	if bGuiSession[uuid] then
 		bGuiSession[uuid]:Destroy()
@@ -191,18 +213,26 @@ end
 
 function Misc.SetEspPlant(obj)
 	local Options = reg.Options
-	if not Options.tgEspPlants.Value then return end
+	if not Options.tgEspPlants.Value then
+		return
+	end
 
 	local plant = (obj:IsA("Model") and obj) or obj:FindFirstAncestorOfClass("Model")
-	if not plant then return end
+	if not plant then
+		return
+	end
 	local plantName = plant:GetAttribute("PlantType")
-	if not plantName then return end
+	if not plantName then
+		return
+	end
 
 	local TargetFolder = gethui and gethui() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
 	local espPlantsList = GetSelectedItems(Options.ddEspPlants.Value)
 
-	if table.find(espPlantsList, "NONE") then return end
+	if table.find(espPlantsList, "NONE") then
+		return
+	end
 
 	if table.find(espPlantsList, plantName) then
 		local uuid = plant:GetAttribute("Uuid") or plant.Name
@@ -230,11 +260,17 @@ function Misc.EspPlants(State)
 	local TargetFolder = gethui and gethui() or CoreGui
 
 	local oldFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
-	if oldFolder then oldFolder:Destroy() end
+	if oldFolder then
+		oldFolder:Destroy()
+	end
 
-	if State ~= true then return end
+	if State ~= true then
+		return
+	end
 	local espPlantsList = GetSelectedItems(Options.ddEspPlants.Value)
-	if table.find(espPlantsList, "NONE") then return end
+	if table.find(espPlantsList, "NONE") then
+		return
+	end
 
 	local ESPFolder = Instance.new("Folder")
 	ESPFolder.Name = PlantsESPFolderName
@@ -250,19 +286,27 @@ end
 
 function Misc.SetEspCrops(obj)
 	local Options = reg.Options
-	if not Options.tgEspCrops.Value then return end
+	if not Options.tgEspCrops.Value then
+		return
+	end
 
 	local fruit = (obj:IsA("Model") and obj) or obj:FindFirstAncestorOfClass("Model")
-	if not fruit then return end
+	if not fruit then
+		return
+	end
 
 	local fruitName = fruit:GetAttribute("PlantType") or (fruit.Parent and fruit.Parent:GetAttribute("PlantType"))
-	if not fruitName then return end
+	if not fruitName then
+		return
+	end
 
 	local TargetFolder = gethui and gethui() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
 	local espFruitList = GetSelectedItems(Options.ddEspCrops.Value)
 
-	if table.find(espFruitList, "NONE") then return end
+	if table.find(espFruitList, "NONE") then
+		return
+	end
 
 	if table.find(espFruitList, fruitName) then
 		local uuid = fruit:GetAttribute("Uuid") or fruitName
@@ -270,7 +314,9 @@ function Misc.SetEspCrops(obj)
 		for i = 1, 3 do
 			Weight = fruit:GetAttribute("FruitWeight") or fruit:GetAttribute("PlantWeight") or 0
 
-			if Weight > 0 then break end
+			if Weight > 0 then
+				break
+			end
 
 			task.wait(1)
 		end
@@ -298,15 +344,21 @@ function Misc.EspCrops(State)
 	local TargetFolder = gethui and gethui() or CoreGui
 
 	local oldFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
-	if oldFolder then oldFolder:Destroy() end
+	if oldFolder then
+		oldFolder:Destroy()
+	end
 	if ESPFruitConnection then
 		ESPFruitConnection:Disconnect()
 		ESPFruitConnection = nil
 	end
-	if State ~= true then return end
+	if State ~= true then
+		return
+	end
 
 	local espFruitList = GetSelectedItems(Options.ddEspCrops.Value)
-	if table.find(espFruitList, "NONE") then return end
+	if table.find(espFruitList, "NONE") then
+		return
+	end
 
 	local ESPFolder = Instance.new("Folder")
 	ESPFolder.Name = FruitESPFolderName
@@ -324,7 +376,9 @@ end
 function Misc.SetupTracker()
 	local ClientPlants = workspace:FindFirstChild("ClientPlants")
 
-	if not ClientPlants then return end
+	if not ClientPlants then
+		return
+	end
 
 	ClientPlants.DescendantAdded:Connect(function(newPlant)
 		local Options = reg.Options
@@ -357,7 +411,9 @@ function Misc.SetupTracker()
 				end
 			elseif obj.Name == "FruitAnchor" then
 				local parent = obj.Parent
-				if Options.tgEspCrops.Value then Misc.SetEspCrops(obj) end
+				if Options.tgEspCrops.Value then
+					Misc.SetEspCrops(obj)
+				end
 				if Options.tgHideFruits.Value then
 					for _, sibling in ipairs(parent:GetChildren()) do
 						SetVisibility(sibling, true)

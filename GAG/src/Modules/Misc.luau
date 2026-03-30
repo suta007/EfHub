@@ -4,12 +4,27 @@ local sData
 local Utils
 local fVar
 local HideConnection = nil
+local PlantsESPFolderName = "PlantsESP"
+local FruitESPFolderName = "FruitESP"
+local ESPFruitConnection
+local bGuiSession = {}
+local CoreGui = game:GetService("CoreGui")
+local getgenv = (getfenv() :: any).getgenv
+local gethui = if getgenv then getgenv().gethui else nil
+if not gethui then
+	gethui = function()
+		return CoreGui
+	end
+end
+
+local GetSelectedItems
 
 function Misc.Initialize(registry)
 	reg = registry
 	sData = reg.sData
 	Utils = reg.Utils
 	fVar = reg.fVar
+	GetSelectedItems = reg.Utils.GetSelectedItems
 end
 
 function Misc.AntiLag()
@@ -152,6 +167,136 @@ function Misc.HideFruit(state)
 	for _, obj in ipairs(PlantFolder:GetDescendants()) do
 		if IsFruit(obj) then
 			SetVisibility(obj, state)
+		end
+	end
+end
+function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
+	if not (espfolder and obj and txt1) then
+		return
+	end
+	local priority = arg or 0
+	if bGuiSession[uuid] then
+		bGuiSession[uuid]:Destroy()
+		bGuiSession[uuid] = nil
+	end
+
+	local bgui = Instance.new("BillboardGui")
+	bgui.Name = "ESP_" .. uuid
+	bgui.Adornee = obj
+	bgui.Size = UDim2.fromOffset(200, 80)
+	bgui.StudsOffset = Vector3.new(0, 3.5, 0)
+	bgui.AlwaysOnTop = true
+	bgui.LightInfluence = 0
+	bgui.Parent = espfolder
+
+	local textLabel = Instance.new("TextLabel")
+	textLabel.Parent = bgui
+	textLabel.Size = UDim2.fromScale(1, 0)
+	textLabel.AutomaticSize = Enum.AutomaticSize.XY
+	textLabel.BackgroundTransparency = 1
+	textLabel.TextWrapped = false
+	if txt2 and txt2 ~= "" then
+		textLabel.Text = string.format("%s\n%s", tostring(txt1), tostring(txt2))
+	else
+		textLabel.Text = tostring(txt1)
+	end
+
+	if priority == 3 then
+		textLabel.TextColor3 = Color3.fromRGB(200, 200, 10)
+	elseif priority == 2 then
+		textLabel.TextColor3 = Color3.fromRGB(200, 50, 10)
+	elseif priority == 1 then
+		textLabel.TextColor3 = Color3.fromRGB(10, 200, 10)
+	else
+		textLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+	end
+
+	textLabel.TextStrokeTransparency = 0
+	textLabel.TextSize = 16
+	textLabel.Font = Enum.Font.FredokaOne
+
+	textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+	textLabel.Position = UDim2.fromScale(0.5, 0.5)
+	bGuiSession[uuid] = bgui
+end
+
+function Misc.setEspCrop(fruit)
+	local Options = reg.Options
+	if not Options.tgEspCrops.Value then
+		return
+	end
+	local TargetFolder = gethui and gethui() or CoreGui
+	local ESPFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
+	if not ESPFolder then
+		return
+	end
+
+	local fruitName = fruit.Name
+	local fruitVariant = fruit:FindFirstChild("Variant") and fruit:FindFirstChild("Variant").Value
+	local fruitWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value
+	local Item_Seed = fruit:FindFirstChild("Item_Seed") and fruit:FindFirstChild("Item_Seed").Value
+	local uuid = Item_Seed
+
+	local txt1 = fruitName
+	if fruitVariant then
+		txt1 = string.format("%s (%s)", fruitName, fruitVariant)
+	end
+
+	local txt2 = ""
+	if fruitWeight then
+		txt2 = string.format("Weight: %.2f", fruitWeight)
+	end
+
+	local scale = fruit:GetAttribute("WeightMuti") or 0
+	local arg = 0
+	if scale >= 50 then
+		arg = 3
+	elseif scale >= 25 then
+		arg = 2
+	elseif scale >= 10 then
+		arg = 1
+	end
+
+	Misc.CreatESP(ESPFolder, fruit, uuid, txt1, txt2, arg)
+end
+
+function Misc.EspCrops(State)
+	local Options = reg.Options
+	local TargetFolder = gethui and gethui() or CoreGui
+	local oldFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
+	if oldFolder then
+		oldFolder:Destroy()
+	end
+	if ESPFruitConnection then
+		ESPFruitConnection:Disconnect()
+		ESPFruitConnection = nil
+	end
+	if State ~= true then
+		return
+	end
+	local espCropsList = GetSelectedItems(Options.ddEspCrops.Value)
+	if table.find(espCropsList, "NONE") then
+		return
+	end
+
+	local ESPFolder = Instance.new("Folder")
+	ESPFolder.Name = FruitESPFolderName
+	ESPFolder.Parent = TargetFolder
+
+	local Plants_Physical = Utils.GetPlantsFolder()
+	if not Plants_Physical then
+		return
+	end
+
+	for _, plant in ipairs(Plants_Physical:GetChildren()) do
+		local FruitsContainer = plant:FindFirstChild("Fruits")
+		local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
+		for _, item in ipairs(itemsToCheck) do
+			if item:IsA("Model") then
+				if table.find(espCropsList, item.Name) then
+					Misc.setEspCrop(item)
+				end
+			end
 		end
 	end
 end

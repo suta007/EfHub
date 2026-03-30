@@ -41,5 +41,6 @@ declare EF_REMOTE: (path: string) -> any
 declare function fLog(message: any): ()
 
 --// Global Services (Exploit Environment)
+declare game: any
 declare CoreGui: Instance
 declare CollectionService: any
