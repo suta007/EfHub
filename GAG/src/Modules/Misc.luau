@@ -237,21 +237,21 @@ function Misc.setEspCrop(fruit)
 	local Item_Seed = fruit:FindFirstChild("Item_Seed") and fruit:FindFirstChild("Item_Seed").Value
 	local uuid = Item_Seed
 
-	local txt1 = fruitName
-	if fruitVariant then
-		txt1 = string.format("%s (%s)", fruitName, fruitVariant)
-	end
+	--local txt1 = fruitName
+	--if fruitWeight then
+	local txt1 = string.format("%s (%.2f) kg", fruitName, fruitWeight)
+	--end
 
 	local txt2 = ""
-	if fruitWeight then
-		txt2 = string.format("Weight: %.2f", fruitWeight)
+	if fruitVariant and fruitVariant ~= "Normal" then
+		txt2 = string.format("<font color='#00FF00'>%s</font>", fruitVariant)
 	end
 
-	local scale = fruit:GetAttribute("WeightMuti") or 0
+	local scale = fruit:GetAttribute("WeightMulti") or 0
 	local arg = 0
-	if scale >= 50 then
+	if scale >= 30 then
 		arg = 3
-	elseif scale >= 25 then
+	elseif scale >= 20 then
 		arg = 2
 	elseif scale >= 10 then
 		arg = 1
