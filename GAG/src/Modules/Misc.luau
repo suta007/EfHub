@@ -1,8 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Item_Module = require(ReplicatedStorage:WaitForChild("Item_Module"))
-local MutationHandler = require(ReplicatedStorage.Modules:WaitForChild("MutationHandler"))
-local InventoryEnums = require(ReplicatedStorage.Data.EnumRegistry:WaitForChild("InventoryServiceEnums"))
-local VariantColors = require(ReplicatedStorage.Data:WaitForChild("VariantColors"))
+local Item_Module = require(ReplicatedStorage:WaitForChild("Item_Module") :: any)
+local MutationHandler = require(ReplicatedStorage.Modules:WaitForChild("MutationHandler") :: any)
+local InventoryEnums = require(ReplicatedStorage.Data.EnumRegistry:WaitForChild("InventoryServiceEnums") :: any)
+local VariantColors = require(ReplicatedStorage.Data:WaitForChild("VariantColors") :: any)
 
 local AllMutations = MutationHandler:GetMutations()
 
