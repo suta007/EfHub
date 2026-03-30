@@ -17,7 +17,7 @@ function ShopTab.Initialize(Registry)
 	Tabs.Shop = Interface:AddTab({ Title = "Buy", Icon = "shopping-cart" })
 
 	-- [[ Auto Buy Hardcore ]]
-	local HardCoreSection = Tabs.Shop:AddCollapsibleSection("Auto Buy Hardcore", false)
+	--[[ 	local HardCoreSection = Tabs.Shop:AddCollapsibleSection("Auto Buy Hardcore", false)
 	HardCoreSection:AddToggle("tgBuyHardCoreEnable", {
 		Title = "Buy Hardcore",
 		Default = false,
@@ -33,7 +33,7 @@ function ShopTab.Initialize(Registry)
 		Callback = function()
 			QuickSave()
 		end,
-	})
+	}) ]]
 
 	-- [[ Auto Buy Seeds ]]
 	local BuySeedSection = Tabs.Shop:AddCollapsibleSection("Seed Shop", false)
