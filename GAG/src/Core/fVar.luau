@@ -16,6 +16,7 @@ fVar.UIShopLoaded = false
 
 fVar.Pos = {
 	Trowel = nil,
+	Sprinkler = nil,
 }
 
 fVar.ShopKey = {

@@ -256,6 +256,111 @@ function Auto.Reclaim()
 	task.wait(0.5)
 end
 
+function Auto.Sprinkler()
+	local Options = reg.Options
+	if not Options.tgSprinklerEnable.Value or fVar.isSprinkling then
+		return
+	end
+	fVar.isSprinkling = true
+	local Backpack = sData.Backpack
+	local BasicSPK = nil
+	local AdvancedSPK = nil
+	local GodlySPK = nil
+	local MasterSPK = nil
+	local GrandmasterSPK = nil
+	local OtherSPK = nil
+	local ddOtherSPK = Options.ddOtherSPK.Value
+	for _, item in pairs(Backpack:GetChildren()) do
+		if item:IsA("Tool") then
+			if item.Name:match("Basic Sprinkler") then
+				BasicSPK = item
+			elseif item.Name:match("Advanced Sprinkler") then
+				AdvancedSPK = item
+			elseif item.Name:match("Godly Sprinkler") then
+				GodlySPK = item
+			elseif item.Name:match("Master Sprinkler") then
+				MasterSPK = item
+			elseif item.Name:match("Grandmaster Sprinkler") then
+				GrandmasterSPK = item
+			end
+			if item.Name:match(ddOtherSPK) then
+				OtherSPK = item
+			end
+		end
+	end
+	Utils.UnequipTool()
+	local PositionCF = fVar.Pos.Sprinkler
+	if typeof(PositionCF) ~= "CFrame" then
+		return
+	end
+	if BasicSPK then
+		local ipBasicSPK = tonumber(Options.ipBasicSPK.Value) or 0
+		local qBasicSPK = tonumber(BasicSPK:GetAttribute("e")) or 0
+		local MinBasicSPK = math.min(ipBasicSPK, qBasicSPK)
+		for i = 1, MinBasicSPK do
+			Utils.EquipTool(BasicSPK)
+			sData.SprinklerEvent:FireServer("Create", PositionCF)
+			task.wait(0.2)
+		end
+	end
+	if AdvancedSPK then
+		local ipAdvancedSPK = tonumber(Options.ipAdvancedSPK.Value) or 0
+		local qAdvancedSPK = tonumber(AdvancedSPK:GetAttribute("e")) or 0
+		local MinAdvancedSPK = math.min(ipAdvancedSPK, qAdvancedSPK)
+		for i = 1, MinAdvancedSPK do
+			Utils.EquipTool(AdvancedSPK)
+			sData.SprinklerEvent:FireServer("Create", PositionCF)
+			task.wait(0.2)
+		end
+	end
+	if GodlySPK then
+		local ipGodlySPK = tonumber(Options.ipGodlySPK.Value) or 0
+		local qGodlySPK = tonumber(GodlySPK:GetAttribute("e")) or 0
+		local MinGodlySPK = math.min(ipGodlySPK, qGodlySPK)
+		for i = 1, MinGodlySPK do
+			Utils.EquipTool(GodlySPK)
+			sData.SprinklerEvent:FireServer("Create", PositionCF)
+			task.wait(0.2)
+		end
+	end
+	if MasterSPK then
+		local ipMasterSPK = tonumber(Options.ipMasterSPK.Value) or 0
+		local qMasterSPK = tonumber(MasterSPK:GetAttribute("e")) or 0
+		local MinMasterSPK = math.min(ipMasterSPK, qMasterSPK)
+		for i = 1, MinMasterSPK do
+			Utils.EquipTool(MasterSPK)
+			sData.SprinklerEvent:FireServer("Create", PositionCF)
+			task.wait(0.2)
+		end
+	end
+	if GrandmasterSPK then
+		local ipGrandmasterSPK = tonumber(Options.ipGrandmasterSPK.Value) or 0
+		local qGrandmasterSPK = tonumber(GrandmasterSPK:GetAttribute("e")) or 0
+		local MinGrandmasterSPK = math.min(ipGrandmasterSPK, qGrandmasterSPK)
+		for i = 1, MinGrandmasterSPK do
+			Utils.EquipTool(GrandmasterSPK)
+			sData.SprinklerEvent:FireServer("Create", PositionCF)
+			task.wait(0.2)
+		end
+	end
+	if OtherSPK then
+		local ipOtherSPK = tonumber(Options.ipOtherSPK.Value) or 0
+		local qOtherSPK = tonumber(OtherSPK:GetAttribute("e")) or 0
+		local MinOtherSPK = math.min(ipOtherSPK, qOtherSPK)
+		for i = 1, MinOtherSPK do
+			Utils.EquipTool(OtherSPK)
+			sData.SprinklerEvent:FireServer("Create", PositionCF)
+			task.wait(0.2)
+		end
+	end
+	fVar.isSprinkling = false
+	if Options.tgSprinklerEnable.Value then
+		Options.tgSprinklerEnable:SetValue(false)
+		task.wait(0.5)
+	end
+	task.wait(0.5)
+end
+
 function Auto.OpenPack() end
 
 return Auto

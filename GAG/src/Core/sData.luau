@@ -25,6 +25,7 @@ sData.CollectEvent = sData.GameEvents:WaitForChild("Crops"):WaitForChild("Collec
 sData.RemoveItemEvent = sData.GameEvents:WaitForChild("Remove_Item")
 sData.TrowelEvent = sData.GameEvents:WaitForChild("TrowelRemote")
 sData.ReclaimerEvent = sData.GameEvents:WaitForChild("ReclaimerService_RE")
+sData.SprinklerEvent = sData.GameEvents:WaitForChild("SprinklerService")
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
@@ -122,4 +123,9 @@ for itemName, _itemInfo in pairs(EventData["New Years Shop"]) do
 	table.insert(sData.NewYearShopTable, itemName)
 end
 
+sData.SprinklerData = require(sData.Data:WaitForChild("SprinklerData") :: any)
+sData.SprinklerDataTable = { "NONE" }
+for itemName, _itemInfo in pairs(sData.SprinklerData["SprinklerBoxSizes"]) do
+	table.insert(sData.SprinklerDataTable, itemName)
+end
 return sData

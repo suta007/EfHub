@@ -3,7 +3,9 @@ local reg
 --local ReplicatedStorage = game:GetService("ReplicatedStorage")
 --local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
 --local TaskRemovePlants, TaskRemoveFruit
-
+local SprinklerTask = nil
+local TrowelTask = nil
+local ReclaimTask = nil
 function AutoTab.Initialize(registry)
 	reg = registry
 	local Interface = reg.Interface
@@ -15,8 +17,6 @@ function AutoTab.Initialize(registry)
 	local fVar = reg.fVar
 	local EfTasks = reg.EfTasks
 	--local Utils = reg.Utils
-	local TrowelTask = nil
-	local ReclaimTask = nil
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
 
@@ -48,7 +48,7 @@ function AutoTab.Initialize(registry)
 		Default = {},
 		Multi = true,
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -57,7 +57,7 @@ function AutoTab.Initialize(registry)
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -66,7 +66,7 @@ function AutoTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -101,7 +101,7 @@ function AutoTab.Initialize(registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -117,7 +117,7 @@ function AutoTab.Initialize(registry)
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -136,7 +136,7 @@ function AutoTab.Initialize(registry)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -154,7 +154,7 @@ function AutoTab.Initialize(registry)
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -165,7 +165,7 @@ function AutoTab.Initialize(registry)
 		Values = { "ALL", "Silver", "Gold" },
 		Default = { "ALL" },
 		Multi = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -174,7 +174,7 @@ function AutoTab.Initialize(registry)
 		Values = { "NONE", "Silver", "Gold" },
 		Default = { "NONE" },
 		Multi = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -184,7 +184,7 @@ function AutoTab.Initialize(registry)
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -193,7 +193,7 @@ function AutoTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -245,7 +245,7 @@ function AutoTab.Initialize(registry)
 		Multi = true,
 		Default = {},
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -254,7 +254,7 @@ function AutoTab.Initialize(registry)
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -263,7 +263,7 @@ function AutoTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -300,7 +300,7 @@ function AutoTab.Initialize(registry)
 		Multi = true,
 		Default = {},
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -310,7 +310,7 @@ function AutoTab.Initialize(registry)
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})
@@ -319,17 +319,116 @@ function AutoTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	local SprinklerSection = Tabs.Auto:AddCollapsibleSection("Sprinkler", false)
+	SprinklerSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			-- set position of sprinkler
+			fVar.Pos.Sprinkler = sData.Character:GetPivot()
+			Options.SprinklerPosition:SetValue("Position: " .. tostring(fVar.Pos.Sprinkler.Position))
+		end,
+	})
+
+	SprinklerSection:AddParagraph("SprinklerPosition", {
+		Title = "Sprinkler Position",
+		Content = "Waiting for set position...",
+	})
+	if fVar.Pos.Sprinkler ~= nil then
+		Options.SprinklerPosition:SetValue("Position: " .. tostring(fVar.Pos.Sprinkler.Position))
+	end
+	SprinklerSection:AddDivider()
+	SprinklerSection:AddToggle("tgSprinklerEnable", {
+		Title = "Sprinkler",
+		Default = false,
 		Callback = function(Value)
+			if Value then
+				SprinklerTask = task.spawn(function()
+					Auto.Sprinkler()
+				end)
+			else
+				if SprinklerTask then
+					task.cancel(SprinklerTask)
+					SprinklerTask = nil
+				end
+				fVar.isSprinkling = false
+			end
+		end,
+	})
+	SprinklerSection:AddInput("ipBasicSPK", {
+		Title = "Number of Basic Sprinkler",
+		Default = 5,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	SprinklerSection:AddInput("ipAdvancedSPK", {
+		Title = "Number of Advanced Sprinkler",
+		Default = 3,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	SprinklerSection:AddInput("ipGodlySPK", {
+		Title = "Number of Godly Sprinkler",
+		Default = 2,
+		Numeric = true,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	SprinklerSection:AddInput("ipMasterSPK", {
+		Title = "Number of Master Sprinkler",
+		Default = 1,
+		Numeric = true,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	SprinklerSection:AddInput("ipGrandmasterSPK", {
+		Title = "Number of Grandmaster Sprinkler",
+		Default = 1,
+		Numeric = true,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	SprinklerSection:AddDropdown("ddOtherSPK", {
+		Title = "Select Other Sprinkler",
+		Values = sData.SprinklerDataTable,
+		Default = { "NONE" },
+		Multi = false,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	SprinklerSection:AddInput("ipOtherSPK", {
+		Title = "Number of Other Sprinkler",
+		Default = 0,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
 			QuickSave()
 		end,
 	})
 
-	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
+	--[[	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
 	OpenPackSection:AddToggle("tgOpenPackAnimation", {
 		Title = "Disable Animation",
 		Default = false,
 		Callback = function(Value)
-			--[[ 		if Value then
+			if Value then
 				pcall(function()
 					Auto.disablePackAnimations()
 				end)
@@ -337,29 +436,29 @@ function AutoTab.Initialize(registry)
 				pcall(function()
 					Auto.enablePackAnimations()
 				end)
-			end ]]
+			end
 			--QuickSave()
 		end,
-	})
+	}) ]]
 
-	Options.tgOpenPackAnimation:SetValue(false)
+	--[[ 	Options.tgOpenPackAnimation:SetValue(false)
 	-- toggle enable
 	OpenPackSection:AddToggle("tgOpenPackEnable", {
 		Title = "Auto Open Pack",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			if Value then
+			if Value then
 				fVar.LockDownControlVar()
 				Auto.OpenPack()
 				fVar.ResetControlVar()
 			else
 				fVar.ResetControlVar()
-			end ]]
+			end 
 			QuickSave()
 		end,
-	})
+	}) ]]
 	-- dropdown select seed pack
-	OpenPackSection:AddDropdown("ddOpenPackSelect", {
+	--[[ 	OpenPackSection:AddDropdown("ddOpenPackSelect", {
 		Title = "Select Seed Pack",
 		Values = {}, --sData.SeedPackTable,
 		Default = { "ALL" },
@@ -368,7 +467,7 @@ function AutoTab.Initialize(registry)
 		Callback = function(Value)
 			QuickSave()
 		end,
-	})
+	}) ]]
 end
 
 return AutoTab
