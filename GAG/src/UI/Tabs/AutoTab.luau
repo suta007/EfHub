@@ -227,7 +227,7 @@ function AutoTab.Initialize(registry)
 				end)
 			else
 				if TrowelTask then
-					task.cancel(TrowelTask)
+					pcall(task.cancel, TrowelTask)
 					TrowelTask = nil
 				end
 				fVar.isTroweling = false
@@ -280,7 +280,7 @@ function AutoTab.Initialize(registry)
 				end)
 			else
 				if ReclaimTask then
-					task.cancel(ReclaimTask)
+					pcall(task.cancel, ReclaimTask)
 					ReclaimTask = nil
 				end
 				fVar.isReclaiming = false
@@ -352,7 +352,7 @@ function AutoTab.Initialize(registry)
 				end)
 			else
 				if SprinklerTask then
-					task.cancel(SprinklerTask)
+					pcall(task.cancel, SprinklerTask)
 					SprinklerTask = nil
 				end
 				fVar.isSprinkling = false
@@ -434,7 +434,7 @@ function AutoTab.Initialize(registry)
 				end)
 			else
 				if CatLeadTask then
-					task.cancel(CatLeadTask)
+					pcall(task.cancel, CatLeadTask)
 					CatLeadTask = nil
 				end
 				fVar.isCatLeading = false
