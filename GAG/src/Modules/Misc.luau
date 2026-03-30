@@ -180,43 +180,75 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		bGuiSession[uuid] = nil
 	end
 
+	-- --- [ส่วนที่ 1: เตรียม BillboardGui และ Layout] ---
 	local bgui = Instance.new("BillboardGui")
 	bgui.Name = "ESP_" .. uuid
 	bgui.Adornee = obj
-	bgui.Size = UDim2.fromOffset(200, 80)
-	bgui.StudsOffset = Vector3.new(0, 3.5, 0)
+	-- ปรับความสูงลงมาเหลือ 120 พิกเซล (ครอบคลุม 3-4 บรรทัดแบบพอดีๆ)
+	bgui.Size = UDim2.fromOffset(600, 120)
+	bgui.StudsOffset = Vector3.new(0, 4, 0)
 	bgui.AlwaysOnTop = true
 	bgui.LightInfluence = 0
+	bgui.Active = false -- ป้องกันการบังคลิกเมาส์
 	bgui.Parent = espfolder
 
-	local textLabel = Instance.new("TextLabel")
-	textLabel.Parent = bgui
-	textLabel.Size = UDim2.fromScale(1, 0)
-	textLabel.AutomaticSize = Enum.AutomaticSize.XY
-	textLabel.BackgroundTransparency = 1
-	textLabel.TextWrapped = false
-	if txt2 and txt2 ~= "" then
-		textLabel.Text = string.format("%s\n%s", tostring(txt1), tostring(txt2))
-	else
-		textLabel.Text = tostring(txt1)
-	end
+	local listLayout = Instance.new("UIListLayout")
+	listLayout.Parent = bgui
+	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	listLayout.Padding = UDim.new(0, 2)
+	listLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	-- *** เปลี่ยนการจัดตำแหน่งแนวตั้งให้ชิดด้านบน (Top) ***
+	listLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 
+	-- --- [ส่วนที่ 2: สร้าง TextLabel ชุดที่ 1 (บรรทัดบน)] ---
+	local textLabel1 = Instance.new("TextLabel")
+	textLabel1.Name = "InfoLabel"
+	textLabel1.Parent = bgui
+	textLabel1.LayoutOrder = 1
+	textLabel1.Size = UDim2.fromScale(1, 0) -- ให้กว้างเต็ม 100% ของ BillboardGui (ซึ่งก็คือครึ่งจอ)
+	textLabel1.AutomaticSize = Enum.AutomaticSize.XY
+	textLabel1.BackgroundTransparency = 1
+	textLabel1.TextWrapped = false
+	textLabel1.Active = false -- *** ป้องกันการบังคลิกเมาส์ ***
+	textLabel1.RichText = true
+	textLabel1.TextSize = 16
+
+	-- ตัวอย่างข้อความ (พี่เอฟแทนที่ด้วยตัวแปรจริงได้เลยค่ะ)
+	--textLabel1.Text = '<b>Shiny Apple</b> (<font color="#FF4500">12.5kg</font>, $120.5M)'
+
+	-- --- [ส่วนที่ 3: สร้าง TextLabel ชุดที่ 2 (บรรทัดล่าง: Mutation)] ---
+	local textLabel2 = Instance.new("TextLabel")
+	textLabel2.Name = "MutationLabel"
+	textLabel2.Parent = bgui
+	textLabel2.LayoutOrder = 2
+	textLabel2.Size = UDim2.fromScale(1, 0) -- ให้กว้างเต็ม 100% ของ BillboardGui เช่นกัน
+	textLabel2.AutomaticSize = Enum.AutomaticSize.Y
+	textLabel2.BackgroundTransparency = 1
+	textLabel2.TextWrapped = true -- *** เปิดการตัดคำ (Wrap) ***
+	textLabel2.Active = false -- *** ป้องกันการบังคลิกเมาส์ ***
+	textLabel2.RichText = true
+	textLabel2.TextSize = 14
+
+	-- ตัวอย่างข้อความยาวๆ ที่ใส่สีมาแล้ว
+	--textLabel2.Text = '<font color="#ADFF2F">Giant</font>, <font color="#ADFF2F">Golden</font>, <font color="#ADFF2F">Swift</font>, <font color="#ADFF2F">Rare</font>, <font color="#ADFF2F">Shiny</font>'
+
+	---if txt2 and txt2 ~= "" then
+	---textLabel.Text = string.format("%s\n%s", tostring(txt1), tostring(txt2))
+	---else
+	---textLabel.Text = tostring(txt1)
+	---end
+	textLabel1.Text = txt1
+	textLabel2.Text = txt2
 	if priority == 3 then
-		textLabel.TextColor3 = Color3.fromRGB(200, 200, 10)
+		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 10)
 	elseif priority == 2 then
-		textLabel.TextColor3 = Color3.fromRGB(200, 50, 10)
+		textLabel1.TextColor3 = Color3.fromRGB(200, 50, 10)
 	elseif priority == 1 then
-		textLabel.TextColor3 = Color3.fromRGB(10, 200, 10)
+		textLabel1.TextColor3 = Color3.fromRGB(10, 200, 10)
 	else
-		textLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200)
 	end
 
-	textLabel.TextStrokeTransparency = 0
-	textLabel.TextSize = 16
-	textLabel.Font = Enum.Font.FredokaOne
-
-	textLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-	textLabel.Position = UDim2.fromScale(0.5, 0.5)
 	bGuiSession[uuid] = bgui
 end
 
