@@ -99,10 +99,19 @@ local function SetVisibility(obj, isHidden)
 			obj.Transparency = 1
 
 			if obj:IsA("BasePart") then
-				if obj:GetAttribute("OriginalCollide") == nil then
-					obj:SetAttribute("OriginalCollide", obj.CanCollide)
+				if obj:GetAttribute("OriginalCanCollide") == nil then
+					obj:SetAttribute("OriginalCanCollide", obj.CanCollide)
 				end
+				if obj:GetAttribute("OriginalCanTouch") == nil then
+					obj:SetAttribute("OriginalCanTouch", obj.CanTouch)
+				end
+				if obj:GetAttribute("OriginalCanQuery") == nil then
+					obj:SetAttribute("OriginalCanQuery", obj.CanQuery)
+				end
+
 				obj.CanCollide = false
+				obj.CanTouch = false
+				obj.CanQuery = false
 			end
 		else
 			local origTrans = obj:GetAttribute("OriginalTrans")
@@ -111,9 +120,18 @@ local function SetVisibility(obj, isHidden)
 			end
 
 			if obj:IsA("BasePart") then
-				local origCollide = obj:GetAttribute("OriginalCollide")
+				local origCollide = obj:GetAttribute("OriginalCanCollide")
+				local origTouch = obj:GetAttribute("OriginalCanTouch")
+				local origQuery = obj:GetAttribute("OriginalCanQuery")
+
 				if origCollide ~= nil then
 					obj.CanCollide = origCollide
+				end
+				if origQuery ~= nil then
+					obj.CanQuery = origQuery
+				end
+				if origTouch ~= nil then
+					obj.CanTouch = origTouch
 				end
 			end
 		end
