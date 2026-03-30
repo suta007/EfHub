@@ -1,12 +1,19 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Item_Module = require(ReplicatedStorage:WaitForChild("Item_Module"))
+local MutationHandler = require(ReplicatedStorage.Modules:WaitForChild("MutationHandler"))
+local InventoryEnums = require(ReplicatedStorage.Data.EnumRegistry:WaitForChild("InventoryServiceEnums"))
+local VariantColors = require(ReplicatedStorage.Data:WaitForChild("VariantColors"))
+
+local AllMutations = MutationHandler:GetMutations()
+
 local Misc = {}
 local reg
 local sData
 local Utils
 local fVar
-local HideConnection = nil
+local SharedPlantConnection = nil -- เปลี่ยนชื่อให้ครอบคลุมการใช้งานร่วมกัน
 local PlantsESPFolderName = "PlantsESP"
 local FruitESPFolderName = "FruitESP"
-local ESPFruitConnection
 local bGuiSession = {}
 local CoreGui = game:GetService("CoreGui")
 local getgenv = (getfenv() :: any).getgenv
@@ -19,6 +26,146 @@ end
 
 local GetSelectedItems
 
+-- ==========================================
+-- [ระบบจัดฟอร์แมตตัวเลข และ คำนวณราคาผลไม้]
+-- ==========================================
+local function FormatComma(amount)
+	local formatted = tostring(amount)
+	repeat
+		local k
+		formatted, k = string.gsub(formatted, "^(-?%d+)(%d%d%d)", "%1,%2")
+	until k == 0
+	return formatted
+end
+
+local Suffixes = { "CENT", "VIG", "NOV", "OCT", "SEP", "SXD", "QUI", "QUA", "TR", "DU", "UN", "DE", "NO", "OC", "SP", "SX", "QI", "QA", "T", "B", "M", "K" }
+local SuffixData = {}
+local power = #Suffixes - 1
+
+for _, symbol in ipairs(Suffixes) do
+	table.insert(SuffixData, {
+		Number = math.pow(1000, power) * 1000,
+		Symbol = symbol,
+	})
+	power = power - 1
+end
+
+local function FormatCompactPrice(amount, decimals)
+	amount = tonumber(amount) or 0
+	if amount < 1000 then
+		return FormatComma(math.floor(amount))
+	end
+	for _, data in ipairs(SuffixData) do
+		if data.Number <= amount then
+			local shortVal = amount / data.Number
+			local formattedStr = string.format("%." .. (decimals or "3") .. "f", shortVal) -- บังคับ 3 ตำแหน่ง
+			formattedStr = string.gsub(formattedStr, "0+$", "")
+			formattedStr = string.gsub(formattedStr, "%.$", "")
+			return formattedStr .. data.Symbol
+		end
+	end
+	return FormatComma(math.floor(amount))
+end
+
+local FinalTaxBrackets = {
+	{ X = 0, Y = 0 },
+	{ X = 1e12, Y = 1e12 },
+	{ X = 20e12, Y = 10e12 },
+	{ X = 50e12, Y = 25e12 },
+	{ X = 100e12, Y = 40e12 },
+	{ X = 750e12, Y = 280e12 },
+}
+
+local function ApplyMarketTax(rawPrice)
+	for i = 2, #FinalTaxBrackets do
+		local prevPoint = FinalTaxBrackets[i - 1]
+		local nextPoint = FinalTaxBrackets[i]
+		if prevPoint.X <= rawPrice and rawPrice <= nextPoint.X then
+			return (nextPoint.Y - prevPoint.Y) / (nextPoint.X - prevPoint.X) * (rawPrice - prevPoint.X) + prevPoint.Y
+		end
+	end
+	local last1 = FinalTaxBrackets[#FinalTaxBrackets - 1]
+	local last2 = FinalTaxBrackets[#FinalTaxBrackets]
+	return (last2.Y - last1.Y) / (last2.X - last1.X) * (rawPrice - last2.X) + last2.Y
+end
+
+local function GetFormattedFruitPrice(fruit)
+	if not fruit or typeof(fruit) ~= "Instance" then
+		return "0"
+	end
+	local itemStringObj = fruit:FindFirstChild("Item_String")
+	local fruitName = itemStringObj and itemStringObj.Value or fruit.Name
+	local variantObj = fruit:FindFirstChild("Variant")
+	local weightObj = fruit:FindFirstChild("Weight")
+	if not variantObj or not weightObj then
+		return "0"
+	end
+
+	local actualWeight = weightObj.Value
+	local fruitVersion = fruit:GetAttribute("FruitVersion") or fruit:GetAttribute(InventoryEnums.FruitVersion) or 0
+	local mutationMulti = MutationHandler:CalcValueMulti(fruit)
+	local variantMulti = Item_Module.Return_Variant_Multiplier(variantObj.Value)
+	local itemData = Item_Module.Return_Data(fruitName)
+
+	if not itemData or #itemData < 3 then
+		return "0"
+	end
+	local targetWeight = itemData[2]
+	local basePrice = itemData[3]
+
+	local rawBaseCalculation = basePrice * mutationMulti * variantMulti
+	local weightRatio = actualWeight / targetWeight
+	local clampedRatio = math.clamp(weightRatio, 0.95, 100000000)
+	local finalPrice = rawBaseCalculation * (clampedRatio * clampedRatio)
+
+	if fruitVersion >= 1 then
+		local taxedValue = ApplyMarketTax(finalPrice)
+		finalPrice = math.max(taxedValue, 0)
+	end
+
+	return FormatCompactPrice(math.round(finalPrice), "3")
+end
+
+-- ==========================================
+-- [ระบบดึงชื่อและสี Mutation & Variant]
+-- ==========================================
+local function GetFormattedMutations(fruit)
+	if not fruit or typeof(fruit) ~= "Instance" then
+		return ""
+	end
+	local textList = {}
+
+	local variantObj = fruit:FindFirstChild("Variant")
+	if variantObj and variantObj:IsA("StringValue") then
+		local variantName = variantObj.Value
+		if variantName ~= "" and variantName ~= "Normal" then
+			if variantName == "Rainbow" then
+				table.insert(textList, "🌈 Rainbow")
+			else
+				local variantColor = VariantColors:GetHex(variantName)
+				local prefix = string.sub(variantColor, 1, 1) == "#" and "" or "#"
+				table.insert(textList, string.format('<font color="%s%s">%s</font>', prefix, variantColor, variantName))
+			end
+		end
+	end
+
+	for mutName, mutData in pairs(AllMutations) do
+		if fruit:GetAttribute(mutName) then
+			local hexColor = mutData.Color and mutData.Color:ToHex() or "FFFFFF"
+			table.insert(textList, string.format('<font color="#%s">%s</font>', hexColor, mutName))
+		end
+	end
+
+	if #textList > 0 then
+		return table.concat(textList, ", ")
+	else
+		return ""
+	end
+end
+
+-- ==========================================
+-- [ฟังก์ชันหลักของโมดูล Misc]
+-- ==========================================
 function Misc.Initialize(registry)
 	reg = registry
 	sData = reg.sData
@@ -28,7 +175,6 @@ function Misc.Initialize(registry)
 end
 
 function Misc.AntiLag()
-	-- Lighting
 	sData.Lighting.GlobalShadows = false
 	sData.Lighting.FogEnd = 9e9
 	sData.Lighting.Brightness = 1
@@ -36,13 +182,11 @@ function Misc.AntiLag()
 	sData.Lighting.EnvironmentSpecularScale = 0
 	sData.Lighting.OutdoorAmbient = Color3.new(0, 0, 0)
 
-	-- Terrain Water
 	sData.Terrain.WaterWaveSize = 0
 	sData.Terrain.WaterWaveSpeed = 0
 	sData.Terrain.WaterReflectance = 0
 	sData.Terrain.WaterTransparency = 1
 
-	-- Workspace optimize
 	for i, v in ipairs(workspace:GetDescendants()) do
 		if i % 200 == 0 then
 			task.wait()
@@ -58,13 +202,33 @@ function Misc.AntiLag()
 		end
 	end
 
-	-- Rendering quality (safe)
 	pcall(function()
 		settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 	end)
 end
 
 local function IsFruit(obj)
+	-- ป้องกันบั๊กกรณีส่งค่าที่ไม่ใช่ Object เข้ามา
+	if typeof(obj) ~= "Instance" then
+		return false
+	end
+
+	-- 1. เช็คว่าตัว object เองมี Tag ไหม (กรณีเป็น Model ผลไม้)
+	if obj:HasTag("Harvestable") or obj:HasTag("FruitTool") then
+		return true
+	end
+
+	-- 2. กรณี obj เป็นชิ้นส่วนย่อย (เช่น MeshPart, Texture)
+	-- ให้ดึง Model หรือ Tool ที่ครอบมันอยู่ออกมาเช็ค Tag
+	local parentModel = obj:FindFirstAncestorWhichIsA("Model") or obj:FindFirstAncestorWhichIsA("Tool")
+	if parentModel and (parentModel:HasTag("Harvestable") or parentModel:HasTag("FruitTool")) then
+		return true
+	end
+
+	return false
+end
+
+local function _IsFruit(obj)
 	local current = obj
 	while current and current ~= workspace do
 		if current.Name == "Fruits" then
@@ -78,15 +242,12 @@ end
 local function SetVisibility(obj, isHidden)
 	if obj:IsA("BasePart") or obj:IsA("MeshPart") or obj:IsA("Decal") or obj:IsA("Texture") then
 		if isHidden then
-			-- 1. ล่องหน (จัดการเรื่องภาพ)
 			if not obj:GetAttribute("OriginalTrans") then
 				obj:SetAttribute("OriginalTrans", obj.Transparency)
 			end
 			obj.Transparency = 1
 
-			-- 2. ปิดการชนและการสัมผัสทุกรูปแบบ (เฉพาะที่เป็นก้อนโมเดล)
 			if obj:IsA("BasePart") then
-				-- บันทึกค่าดั้งเดิมเก็บไว้
 				if obj:GetAttribute("OriginalCanCollide") == nil then
 					obj:SetAttribute("OriginalCanCollide", obj.CanCollide)
 				end
@@ -97,25 +258,21 @@ local function SetVisibility(obj, isHidden)
 					obj:SetAttribute("OriginalCanQuery", obj.CanQuery)
 				end
 
-				-- ปิดให้หมด! (เดินทะลุ, ไม่โดนกับดัก, ไม่ขวางเมาส์คลิก)
 				obj.CanCollide = false
 				obj.CanTouch = false
 				obj.CanQuery = false
 			end
 		else
-			-- 3. คืนค่าการมองเห็น
 			local origTrans = obj:GetAttribute("OriginalTrans")
 			if origTrans then
 				obj.Transparency = origTrans
 			end
 
-			-- 4. คืนค่าการชนและการสัมผัสกลับเป็นปกติ
 			if obj:IsA("BasePart") then
 				local origCollide = obj:GetAttribute("OriginalCanCollide")
 				local origTouch = obj:GetAttribute("OriginalCanTouch")
 				local origQuery = obj:GetAttribute("OriginalCanQuery")
 
-				-- กฎของ Roblox: ต้องตั้ง CanCollide ก่อน CanQuery เสมอ ไม่งั้นจะ Error
 				if origCollide ~= nil then
 					obj.CanCollide = origCollide
 				end
@@ -128,7 +285,6 @@ local function SetVisibility(obj, isHidden)
 			end
 		end
 	elseif obj:IsA("ParticleEmitter") or obj:IsA("Sparkles") or obj:IsA("Fire") or obj:IsA("Trail") then
-		-- 5. จัดการพวกเอฟเฟกต์แสงสีต่างๆ ให้ดับลง
 		if isHidden then
 			if obj:GetAttribute("OriginalEnabled") == nil then
 				obj:SetAttribute("OriginalEnabled", obj.Enabled)
@@ -155,6 +311,7 @@ function Misc.HidePlant(state)
 			SetVisibility(obj, state)
 		end
 	end
+	Misc.UpdatePlantTracker()
 end
 
 function Misc.HideFruit(state)
@@ -169,7 +326,9 @@ function Misc.HideFruit(state)
 			SetVisibility(obj, state)
 		end
 	end
+	Misc.UpdatePlantTracker()
 end
+
 function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	if not (espfolder and obj and txt1) then
 		return
@@ -180,16 +339,14 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		bGuiSession[uuid] = nil
 	end
 
-	-- --- [ส่วนที่ 1: เตรียม BillboardGui และ Layout] ---
 	local bgui = Instance.new("BillboardGui")
 	bgui.Name = "ESP_" .. uuid
 	bgui.Adornee = obj
-	-- ปรับความสูงลงมาเหลือ 120 พิกเซล (ครอบคลุม 3-4 บรรทัดแบบพอดีๆ)
 	bgui.Size = UDim2.fromOffset(600, 120)
 	bgui.StudsOffset = Vector3.new(0, 4, 0)
 	bgui.AlwaysOnTop = true
 	bgui.LightInfluence = 0
-	bgui.Active = false -- ป้องกันการบังคลิกเมาส์
+	bgui.Active = false
 	bgui.Parent = espfolder
 
 	local listLayout = Instance.new("UIListLayout")
@@ -197,48 +354,35 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	listLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	listLayout.Padding = UDim.new(0, 2)
 	listLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-	-- *** เปลี่ยนการจัดตำแหน่งแนวตั้งให้ชิดด้านบน (Top) ***
 	listLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 
-	-- --- [ส่วนที่ 2: สร้าง TextLabel ชุดที่ 1 (บรรทัดบน)] ---
 	local textLabel1 = Instance.new("TextLabel")
 	textLabel1.Name = "InfoLabel"
 	textLabel1.Parent = bgui
 	textLabel1.LayoutOrder = 1
-	textLabel1.Size = UDim2.fromScale(1, 0) -- ให้กว้างเต็ม 100% ของ BillboardGui (ซึ่งก็คือครึ่งจอ)
+	textLabel1.Size = UDim2.fromScale(1, 0)
 	textLabel1.AutomaticSize = Enum.AutomaticSize.XY
 	textLabel1.BackgroundTransparency = 1
 	textLabel1.TextWrapped = false
-	textLabel1.Active = false -- *** ป้องกันการบังคลิกเมาส์ ***
+	textLabel1.Active = false
 	textLabel1.RichText = true
 	textLabel1.TextSize = 16
 
-	-- ตัวอย่างข้อความ (พี่เอฟแทนที่ด้วยตัวแปรจริงได้เลยค่ะ)
-	--textLabel1.Text = '<b>Shiny Apple</b> (<font color="#FF4500">12.5kg</font>, $120.5M)'
-
-	-- --- [ส่วนที่ 3: สร้าง TextLabel ชุดที่ 2 (บรรทัดล่าง: Mutation)] ---
 	local textLabel2 = Instance.new("TextLabel")
 	textLabel2.Name = "MutationLabel"
 	textLabel2.Parent = bgui
 	textLabel2.LayoutOrder = 2
-	textLabel2.Size = UDim2.fromScale(1, 0) -- ให้กว้างเต็ม 100% ของ BillboardGui เช่นกัน
+	textLabel2.Size = UDim2.fromScale(1, 0)
 	textLabel2.AutomaticSize = Enum.AutomaticSize.Y
 	textLabel2.BackgroundTransparency = 1
-	textLabel2.TextWrapped = true -- *** เปิดการตัดคำ (Wrap) ***
-	textLabel2.Active = false -- *** ป้องกันการบังคลิกเมาส์ ***
+	textLabel2.TextWrapped = true
+	textLabel2.Active = false
 	textLabel2.RichText = true
 	textLabel2.TextSize = 14
 
-	-- ตัวอย่างข้อความยาวๆ ที่ใส่สีมาแล้ว
-	--textLabel2.Text = '<font color="#ADFF2F">Giant</font>, <font color="#ADFF2F">Golden</font>, <font color="#ADFF2F">Swift</font>, <font color="#ADFF2F">Rare</font>, <font color="#ADFF2F">Shiny</font>'
-
-	---if txt2 and txt2 ~= "" then
-	---textLabel.Text = string.format("%s\n%s", tostring(txt1), tostring(txt2))
-	---else
-	---textLabel.Text = tostring(txt1)
-	---end
 	textLabel1.Text = txt1
 	textLabel2.Text = txt2
+
 	if priority == 3 then
 		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 10)
 	elseif priority == 2 then
@@ -249,6 +393,9 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200)
 	end
 
+	-- สีพื้นฐานของบรรทัด Mutation (ส่งผลต่อลูกน้ำที่ไม่ได้ติด Tag)
+	textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
+
 	bGuiSession[uuid] = bgui
 end
 
@@ -257,6 +404,7 @@ function Misc.setEspCrop(fruit)
 	if not Options.tgEspCrops.Value then
 		return
 	end
+
 	local TargetFolder = gethui and gethui() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
 	if not ESPFolder then
@@ -264,20 +412,17 @@ function Misc.setEspCrop(fruit)
 	end
 
 	local fruitName = fruit.Name
-	local fruitVariant = fruit:FindFirstChild("Variant") and fruit:FindFirstChild("Variant").Value
-	local fruitWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value
-	local Item_Seed = fruit:FindFirstChild("Item_Seed") and fruit:FindFirstChild("Item_Seed").Value
+	local fruitWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value or 0
+	local Item_Seed = fruit:FindFirstChild("Item_Seed") and fruit:FindFirstChild("Item_Seed").Value or fruitName
 	local uuid = Item_Seed
 
-	--local txt1 = fruitName
-	--if fruitWeight then
-	local txt1 = string.format("%s (%.2f) kg", fruitName, fruitWeight)
-	--end
+	local priceText = GetFormattedFruitPrice(fruit)
 
-	local txt2 = ""
-	if fruitVariant and fruitVariant ~= "Normal" then
-		txt2 = string.format("<font color='#00FF00'>%s</font>", fruitVariant)
-	end
+	-- จัดรูปแบบข้อมูลบรรทัดแรก: ชื่อ (น้ำหนักkg, $ราคา)
+	local txt1 = string.format('<b>%s</b> (%.2fkg, <font color="#FFD700">$%s</font>)', fruitName, fruitWeight, priceText)
+
+	-- ดึงข้อมูลบรรทัดที่สอง: Mutation พร้อมสี
+	local txt2 = GetFormattedMutations(fruit)
 
 	local scale = fruit:GetAttribute("WeightMulti") or 0
 	local arg = 0
@@ -292,20 +437,73 @@ function Misc.setEspCrop(fruit)
 	Misc.CreatESP(ESPFolder, fruit, uuid, txt1, txt2, arg)
 end
 
+-- ==========================================
+-- [ตัวจัดการ Event ส่วนกลาง (Centralized State Manager)]
+-- ==========================================
+function Misc.UpdatePlantTracker()
+	local Options = reg.Options
+
+	local isHideActive = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
+	local espCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
+	local isEspActive = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(espCropsList, "NONE")
+
+	if isHideActive or isEspActive then
+		local PlantFolder = Utils.GetPlantsFolder()
+		if PlantFolder and not SharedPlantConnection then
+			SharedPlantConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
+				task.wait()
+
+				local currentHide = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
+				local currentEspList = GetSelectedItems(Options.ddEspCrops.Value)
+				local currentEsp = Options.tgEspCrops.Value and not table.find(currentEspList, "NONE")
+
+				-- ระบบ Hide
+				if currentHide then
+					if IsFruit(newObj) then
+						if fVar.isFruitHidden then
+							SetVisibility(newObj, true)
+						end
+					else
+						if fVar.isPlantHidden then
+							SetVisibility(newObj, true)
+						end
+					end
+				end
+
+				-- ระบบ ESP
+				if currentEsp then
+					if IsFruit(newObj) and newObj:IsA("Model") then
+						if table.find(currentEspList, newObj.Name) then
+							Misc.setEspCrop(newObj)
+						end
+					end
+				end
+			end)
+		end
+	else
+		if SharedPlantConnection then
+			SharedPlantConnection:Disconnect()
+			SharedPlantConnection = nil
+		end
+	end
+end
+
+-- ==========================================
+-- [ผูกระบบ ESP เข้ากับ State Manager]
+-- ==========================================
 function Misc.EspCrops(State)
 	local Options = reg.Options
 	local TargetFolder = gethui and gethui() or CoreGui
 	local oldFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
+
 	if oldFolder then
 		oldFolder:Destroy()
 	end
-	if ESPFruitConnection then
-		ESPFruitConnection:Disconnect()
-		ESPFruitConnection = nil
-	end
 	if State ~= true then
+		Misc.UpdatePlantTracker() -- อัปเดตเพื่อเคลียร์ Connection ถ้ากดปิด
 		return
 	end
+
 	local espCropsList = GetSelectedItems(Options.ddEspCrops.Value)
 	if table.find(espCropsList, "NONE") then
 		return
@@ -315,59 +513,31 @@ function Misc.EspCrops(State)
 	ESPFolder.Name = FruitESPFolderName
 	ESPFolder.Parent = TargetFolder
 
+	-- สแกนผลไม้ที่เกิดอยู่ก่อนแล้ว
 	local Plants_Physical = Utils.GetPlantsFolder()
-	if not Plants_Physical then
-		return
-	end
-
-	for _, plant in ipairs(Plants_Physical:GetChildren()) do
-		local FruitsContainer = plant:FindFirstChild("Fruits")
-		local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
-		for _, item in ipairs(itemsToCheck) do
-			if item:IsA("Model") then
-				if table.find(espCropsList, item.Name) then
-					Misc.setEspCrop(item)
+	if Plants_Physical then
+		for _, plant in ipairs(Plants_Physical:GetChildren()) do
+			local FruitsContainer = plant:FindFirstChild("Fruits")
+			local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
+			for _, item in ipairs(itemsToCheck) do
+				if item:IsA("Model") then
+					if table.find(espCropsList, item.Name) then
+						Misc.setEspCrop(item)
+					end
 				end
 			end
 		end
 	end
+
+	-- อัปเดตตัวดักจับผลไม้เกิดใหม่
+	Misc.UpdatePlantTracker()
 end
 
+-- ==========================================
+-- [ผูกระบบ Hide เข้ากับ State Manager]
+-- ==========================================
 function Misc.HideTracker()
-	local Options = reg.Options
-	local tgHideFruits = Options.tgHideFruits
-	local tgHidePlants = Options.tgHidePlants
-	if not tgHideFruits or not tgHidePlants then
-		return
-	end
-
-	local Checker = (tgHideFruits.Value or tgHidePlants.Value)
-	if Checker then
-		local PlantFolder = Utils.GetPlantsFolder()
-		if PlantFolder then
-			if HideConnection then
-				HideConnection:Disconnect()
-				HideConnection = nil
-			end
-			HideConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
-				task.wait()
-				if IsFruit(newObj) then
-					if fVar.isFruitHidden then
-						SetVisibility(newObj, true)
-					end
-				else
-					if fVar.isPlantHidden then
-						SetVisibility(newObj, true)
-					end
-				end
-			end)
-		end
-	else
-		if HideConnection then
-			HideConnection:Disconnect()
-			HideConnection = nil
-		end
-	end
+	Misc.UpdatePlantTracker()
 end
 
 return Misc

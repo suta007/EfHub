@@ -37,7 +37,6 @@ function MiscTab.Initialize(Registry)
 		Default = false,
 		Callback = function(Value)
 			Misc.HideFruit(Value)
-			Misc.HideTracker()
 			QuickSave()
 		end,
 	})
@@ -47,7 +46,6 @@ function MiscTab.Initialize(Registry)
 		Default = false,
 		Callback = function(Value)
 			Misc.HidePlant(Value)
-			Misc.HideTracker()
 			QuickSave()
 		end,
 	})
