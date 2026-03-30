@@ -6,6 +6,7 @@ local reg
 local SprinklerTask = nil
 local TrowelTask = nil
 local ReclaimTask = nil
+local CatLeadTask = nil
 function AutoTab.Initialize(registry)
 	reg = registry
 	local Interface = reg.Interface
@@ -420,6 +421,24 @@ function AutoTab.Initialize(registry)
 		Finished = true,
 		Callback = function()
 			QuickSave()
+		end,
+	})
+	SprinklerSection:AddDivider()
+	SprinklerSection:AddToggle("tgCatLead", {
+		Title = "Cat Lead",
+		Default = false,
+		Callback = function(Value)
+			if Value then
+				CatLeadTask = task.spawn(function()
+					Auto.CatLead()
+				end)
+			else
+				if CatLeadTask then
+					task.cancel(CatLeadTask)
+					CatLeadTask = nil
+				end
+				fVar.isCatLeading = false
+			end
 		end,
 	})
 

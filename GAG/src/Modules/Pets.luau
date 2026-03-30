@@ -110,6 +110,14 @@ function Pets.RawData(UUID)
 	return nil
 end
 
+function Pets.GetPetType(UUID)
+	local data = Pets.RawData(UUID)
+	if data then
+		return data.PetType or "Unknown"
+	end
+	return "Unknown"
+end
+
 function Pets.Level(UUID)
 	local data = Pets.RawData(UUID)
 

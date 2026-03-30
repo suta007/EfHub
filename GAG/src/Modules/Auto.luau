@@ -361,6 +361,66 @@ function Auto.Sprinkler()
 	task.wait(0.5)
 end
 
+function Auto.CatLead()
+	local Options = reg.Options
+	if not Options.tgCatLead.Value or fVar.isCatLeading then
+		return
+	end
+	local PositionCF = fVar.Pos.Sprinkler
+	if typeof(PositionCF) ~= "CFrame" then
+		getgenv().fLog("🟡 Cat Lead Position Must Set Spinkle Position")
+		return
+	end
+	local catType = { "Orange Tabby", "Cat", "Moon Cat", "Glass Cat", "Calico" }
+	fVar.isCatLeading = true
+	local Backpack = sData.Backpack
+	local PetLead = nil
+	for _, item in pairs(Backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match("Pet Lead") then
+			PetLead = item
+			break
+		end
+	end
+	if not PetLead then
+		getgenv().fLog("🟡 No Pet Lead")
+		fVar.isCatLeading = false
+		return
+	end
+
+	local Pets = reg.Pets
+	local PetsPhysical = game:GetService("Workspace"):WaitForChild("PetsPhysical")
+	if not PetsPhysical then
+		getgenv().fLog("🟡 No PetsPhysical")
+		fVar.isCatLeading = false
+		return
+	end
+
+	for _, pet in pairs(PetsPhysical:GetChildren()) do
+		local uuid = pet:GetAttribute("UUID")
+		if uuid then
+			local petType = Pets.GetPetType(uuid)
+			if table.find(catType, petType) then
+				local cat = pet:FindFirstChild(uuid)
+				if cat then
+					local magnitude = (cat:GetPivot().Position - PositionCF.Position).Magnitude
+					if magnitude > 15 then
+						sData.Character:PivotTo(PositionCF)
+						Utils.EquipTool(PetLead)
+						sData.GameEvents:WaitForChild("PetLeadService_RE"):FireServer(cat)
+						task.wait(0.2)
+					end
+				end
+			end
+		end
+	end
+	fVar.isCatLeading = false
+	if Options.tgCatLead.Value then
+		Options.tgCatLead:SetValue(false)
+		task.wait(0.5)
+	end
+	task.wait(0.5)
+end
+
 function Auto.OpenPack() end
 
 return Auto

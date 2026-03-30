@@ -11,6 +11,7 @@ fVar.isRemovingCrops = false
 fVar.isTroweling = false
 fVar.isReclaiming = false
 fVar.isOpeningPack = false
+fVar.isCatLeading = false
 
 fVar.UIShopLoaded = false
 
