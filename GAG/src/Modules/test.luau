@@ -1,3 +1,4 @@
+local getgenv = (getfenv() :: any).getgenv
 local var = {}
 
 function var.init(registry)

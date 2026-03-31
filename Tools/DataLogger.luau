@@ -159,20 +159,26 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local SeedShop1 = DataService:GetPathSignal("SeedStocks/Shop/Stocks")
-SeedShop1:Connect(function(Key, NewData)
-	InfoLog("SeedShop1 : ===================== ")
-	ErrorLog("Key : ")
-	ShowData(Key)
-	WarnLog("NewData : ")
-	ShowData(NewData)
-end)
+local PetUtils = require(game:GetService("ReplicatedStorage").Modules.PetServices.PetUtilities)
+local Player = game.Players.LocalPlayer
 
-local SeedShop2 = DataService:GetPathSignal("SeedStocks/Shop/Stocks/@")
-SeedShop2:Connect(function(FolderName, FolderData)
-	InfoLog("SeedShop2 : ===================== ")
-	ErrorLog("FolderName : ")
-	ShowData(FolderName)
-	WarnLog("FolderData : ")
-	ShowData(FolderData)
-end)
+-- การใช้งาน: (Player, 0, true, true)
+-- 0 = ลำดับปกติ, true = เอาเลเวลสูงขึ้นก่อน, true = เอาเฉพาะตัวที่ใส่อยู่
+
+local AllPets = PetUtils:GetPetsSortedByAge(Player, 0, true, false)
+
+if AllPets then
+	for i, pet in ipairs(AllPets) do
+		ShowData(string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID))
+	end
+end
+
+AddLog("========================================")
+
+local equippedPets = PetUtils:GetPetsSortedByAge(Player, 0, true, true)
+
+if equippedPets then
+	for i, pet in ipairs(equippedPets) do
+		ShowData(string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID))
+	end
+end
