@@ -48,6 +48,7 @@ function Auto.RemovePlants()
 			if matchesPlantFilter(plant, removePlantsList, plantsWeightThreshold, plantsWeightValue) then
 				Utils.EquipTool(shovel)
 				sData.RemoveItemEvent:FireServer(plant)
+				task.wait(0.1)
 				Utils.UnequipTool()
 				task.wait(0.1)
 			end
@@ -105,6 +106,7 @@ function Auto.RemoveCrops()
 					if main.CheckCrops(item, config, false) then
 						Utils.EquipTool(shovel)
 						sData.RemoveItemEvent:FireServer(item)
+						task.wait(0.1)
 						Utils.UnequipTool()
 						task.wait(0.1)
 					end
@@ -152,7 +154,9 @@ function Auto.Trowel()
 					else
 						getgenv().fLog("❌ Place failed: " .. tostring(response))
 					end
+					task.wait(0.1)
 					Utils.UnequipTool()
+					task.wait(0.1)
 				end
 			end
 		end
@@ -195,10 +199,12 @@ function Auto.Reclaim()
 				end
 			end
 		end
+
 		if options.tgReclaimEnable.Value then
 			options.tgReclaimEnable:SetValue(false)
 			task.wait(0.5)
 		end
+		Utils.UnequipTool()
 		task.wait(0.5)
 	end)
 end
@@ -246,7 +252,9 @@ function Auto.Sprinkler()
 					for _ = 1, minAmount do
 						Utils.EquipTool(data.tool)
 						sData.SprinklerEvent:FireServer("Create", positionCF)
-						task.wait(0.2)
+						task.wait(0.1)
+						Utils.UnequipTool()
+						task.wait(0.1)
 					end
 				end
 			end
@@ -302,7 +310,9 @@ function Auto.CatLead()
 							sData.Character:PivotTo(positionCF)
 							Utils.EquipTool(petLead)
 							sData.GameEvents:WaitForChild("PetLeadService_RE"):FireServer(cat)
-							task.wait(0.2)
+							task.wait(0.1)
+							Utils.UnequipTool()
+							task.wait(0.1)
 						end
 					end
 				end

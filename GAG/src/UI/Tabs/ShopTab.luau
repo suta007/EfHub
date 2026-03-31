@@ -14,7 +14,7 @@ function ShopTab.Initialize(Registry)
 	local Utils = reg.Utils
 	fVar.UIShopLoaded = false
 
-	Tabs.Shop = Interface:AddTab({ Title = "Buy", Icon = "shopping-cart" })
+	Tabs.Shop = Interface:AddTab({ Title = "Shop", Icon = "shopping-cart" })
 
 	-- [[ Auto Buy Hardcore ]]
 	--[[ 	local HardCoreSection = Tabs.Shop:AddCollapsibleSection("Auto Buy Hardcore", false)
