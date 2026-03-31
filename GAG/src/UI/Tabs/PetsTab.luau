@@ -103,7 +103,9 @@ function PetsTab.Initialize(registry)
 		Title = "Enable Auto Mutation",
 		Default = false,
 		Callback = function(Value)
-			if not Value then
+			if Value then
+				Pets.FarmLevel()
+			else
 				fVar.isMutating = false
 			end
 			--[[ 			EfTasks.ToggleTask("Mutant", Value, function()
@@ -176,7 +178,7 @@ function PetsTab.Initialize(registry)
 		end,
 	})
 
-	MutantSection:AddInput("inpDelay", {
+	MutantSection:AddInput("LoadOutDelay", {
 		Title = "Delay",
 		Default = 10,
 		Numeric = true,
