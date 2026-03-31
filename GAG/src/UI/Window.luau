@@ -54,7 +54,7 @@ function Window.Initialize(Registry)
 	ToggleButton.Name = "ToggleButton"
 	ToggleButton.Parent = ToggleGui
 	ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 20, 20)
-	ToggleButton.Position = UDim2.new(0, 10, 0.13 0)
+	ToggleButton.Position = UDim2.new(0, 10, 0.13, 0)
 	ToggleButton.Size = UDim2.fromOffset(50, 50)
 	ToggleButton.Text = "GAG"
 	ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
