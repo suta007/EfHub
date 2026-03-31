@@ -26,9 +26,11 @@ sData.RemoveItemEvent = sData.GameEvents:WaitForChild("Remove_Item")
 sData.TrowelEvent = sData.GameEvents:WaitForChild("TrowelRemote")
 sData.ReclaimerEvent = sData.GameEvents:WaitForChild("ReclaimerService_RE")
 sData.SprinklerEvent = sData.GameEvents:WaitForChild("SprinklerService")
+sData.RefreshActivePetsUI = sData.GameEvents:WaitForChild("RefreshActivePetsUI")
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
+sData.PetUtils = require(sData.PetServices.PetUtilities)
 
 sData.Backpack = sData.LocalPlayer:WaitForChild("Backpack")
 
@@ -78,7 +80,7 @@ for petName, petInfo in pairs(PetList) do
 end
 
 local PetMutationData = require(sData.PetRegistry:WaitForChild("PetMutationRegistry") :: any)
-sData.PetMutationDataTable = { "ALL" }
+sData.PetMutationDataTable = { "NONE" }
 sData.EnumToNameCache = {}
 for mutantName, mutantInfo in pairs(PetMutationData["PetMutationRegistry"]) do
 	if type(mutantInfo) == "table" and mutantInfo.EnumId then

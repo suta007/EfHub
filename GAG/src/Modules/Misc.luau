@@ -448,7 +448,8 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	textLabel1.TextWrapped = false
 	textLabel1.Active = false
 	textLabel1.RichText = true
-	textLabel1.TextSize = 14
+	textLabel1.TextSize = 12
+	textLabel1.Font = Enum.Font.FredokaOne
 
 	textLabel1.Text = txt1
 	if hasTxt2 then
@@ -462,8 +463,9 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		textLabel2.TextWrapped = true
 		textLabel2.Active = false
 		textLabel2.RichText = true
-		textLabel2.TextSize = 12
+		textLabel2.TextSize = 10
 		textLabel2.Text = txt2
+		textLabel2.Font = Enum.Font.FredokaOne
 
 		-- สีพื้นฐานของบรรทัด Mutation (ส่งผลต่อลูกน้ำที่ไม่ได้ติด Tag)
 		textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)

@@ -12,7 +12,8 @@ fVar.isTroweling = false
 fVar.isReclaiming = false
 fVar.isSprinkling = false
 fVar.isCatLeading = false
-fVar.isOpeningPack = false
+--fVar.isOpeningPack = false
+fVar.isMutating = false
 
 fVar.UIShopLoaded = false
 

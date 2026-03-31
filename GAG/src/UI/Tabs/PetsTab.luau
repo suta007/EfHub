@@ -96,6 +96,122 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+
+	local MutantSection = Tabs.Pets:AddCollapsibleSection("Mutation", false)
+
+	MutantSection:AddToggle("tgMutantEnabled", {
+		Title = "Enable Auto Mutation",
+		Default = false,
+		Callback = function(Value)
+			if not Value then
+				fVar.isMutating = false
+			end
+			--[[ 			EfTasks.ToggleTask("Mutant", Value, function()
+				Pets.Mutant()
+				task.wait(2)
+			end) ]]
+			QuickSave()
+		end,
+	})
+	MutantSection:AddDropdown("ddMutantMethod", {
+		Title = "Select Mutant Method",
+		Values = { "None", "Nightmare", "Mutation", "Level", "Venom" },
+		Default = "None",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	MutantSection:AddToggle("tgFavoritePet", {
+		Title = "Favorite Pet",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	MutantSection:AddButton({
+		Title = "Clear Selected Mutant Pet Type",
+		Callback = function()
+			Options.ddMutantPetType:SetValue({})
+		end,
+	})
+
+	MutantSection:AddDropdown("ddMutantPetType", {
+		Title = "Select Mutant Pet Type",
+		Values = sData.PetsDataTable or {},
+		Default = "",
+		Multi = false,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MutantSection:AddInput("inpMutantTargetAge", {
+		Title = "Target Mutant Age",
+		Default = 50,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MutantSection:AddDivider()
+
+	MutantSection:AddButton({
+		Title = "Clear Selected Mutant",
+		Callback = function()
+			Options.ddTargetMutant:SetValue({ NONE = true })
+		end,
+	})
+
+	MutantSection:AddDropdown("ddTargetMutant", {
+		Title = "Target Mutant",
+		Values = sData.PetMutationDataTable or {},
+		Default = { "NONE" },
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MutantSection:AddInput("inpDelay", {
+		Title = "Delay",
+		Default = 10,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MutantSection:AddDropdown("ddLevelLoadout", {
+		Title = "Farm Level Loadout",
+		Values = { 0, 1, 2, 3, 4, 5, 6 },
+		Default = 1,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MutantSection:AddDropdown("ddTimeLoadout", {
+		Title = "Reduce Time Loadout",
+		Values = { 0, 1, 2, 3, 4, 5, 6 },
+		Default = 2,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MutantSection:AddDropdown("ddClaimLoadout", {
+		Title = "Claim Loadout",
+		Values = { 0, 1, 2, 3, 4, 5, 6 },
+		Default = 3,
+		Callback = function()
+			QuickSave()
+		end,
+	})
 end
 
 return PetsTab

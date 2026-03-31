@@ -9,6 +9,26 @@ function Pets.Initialize(registry)
 	reg = registry
 	fVar = reg.fVar
 	sData = reg.sData
+	--[[ 	sData.RefreshActivePetsUI.OnClientEvent:Connect(function()
+		---
+	end) ]]
+
+	--[[ 	local allPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, false)
+	if allPets then
+		for i, pet in ipairs(allPets) do
+			local txt = string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID)
+			getgenv().fLog(txt)
+		end
+	end
+
+	local equippedPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
+
+	if equippedPets then
+		for i, pet in ipairs(equippedPets) do
+			local txt2 = string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID)
+			getgenv().fLog(txt2)
+		end
+	end ]]
 end
 
 local function GetPetInventory()
@@ -100,14 +120,7 @@ local function findMainPet()
 end
 
 function Pets.RawData(UUID)
-	local success, result = pcall(function()
-		return sData.ActivePetsService:GetPetData(sData.LocalPlayer.Name, UUID)
-	end)
-
-	if success and result then
-		return result
-	end
-	return nil
+	return sData.PetUtils:GetPetByUUID(sData.LocalPlayer, UUID)
 end
 
 function Pets.GetPetType(UUID)
@@ -242,5 +255,12 @@ function Pets.AgeBreak()
 		end
 	end
 end
+
+-- GetData_result.PetMutationMachine.PetReady=false
+-- GetData_result.PetMutationMachine.TimeLeft=0
+-- GetData_result.PetMutationMachine.IsRunning=false
+function Pets.FarmLevel() end
+
+function Pets.findFarmPet() end
 
 return Pets
