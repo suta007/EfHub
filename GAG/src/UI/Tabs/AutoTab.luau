@@ -78,6 +78,7 @@ function AutoTab.Initialize(registry)
 				Auto.RemoveCrops()
 				task.wait(0.1)
 			end)
+			QuickSave()
 		end,
 	})
 

@@ -218,13 +218,13 @@ local function IsFruit(obj)
 		return true
 	end
 
-	-- 2. กรณี obj เป็นชิ้นส่วนย่อย (เช่น MeshPart, Texture)
-	-- ให้ดึง Model หรือ Tool ที่ครอบมันอยู่ออกมาเช็ค Tag
+	-- 2. กรณี obj เป็นชิ้นส่วนย่อย ดึง Model หรือ Tool ที่ครอบมันอยู่ออกมาเช็ค Tag
 	local parentModel = obj:FindFirstAncestorWhichIsA("Model") or obj:FindFirstAncestorWhichIsA("Tool")
 	if parentModel and (parentModel:HasTag("Harvestable") or parentModel:HasTag("FruitTool")) then
 		return true
 	end
 
+	-- 3. เช็คจากชื่อ Folder ที่ครอบอยู่ (เผื่อ Tag ยังโหลดไม่ทัน)
 	local current = obj
 	while current and current ~= workspace do
 		if current.Name == "Fruits" then
@@ -322,6 +322,71 @@ function Misc.HidePlant(state)
 	Misc.UpdatePlantTracker()
 end
 
+function Misc.UpdatePlantTracker()
+	local Options = reg.Options
+
+	local isHideActive = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
+	local espCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
+	local isEspCropsActive = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(espCropsList, "NONE")
+	local espPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+	local isEspPlantsActive = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(espPlantsList, "NONE")
+
+	if isHideActive or isEspCropsActive or isEspPlantsActive then
+		local PlantFolder = Utils.GetPlantsFolder()
+		if PlantFolder and not SharedPlantConnection then
+			SharedPlantConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
+				-- [แก้จุดที่ 1] เพิ่มเวลา Wait เป็น 0.1 หรือ 0.2 วินาที เพื่อรอให้ Tags และโครงสร้างโหลดครบ 100%
+				task.wait(0.1)
+
+				-- [แก้จุดที่ 2] ดักจับ Error กรณีชิ้นส่วนเกิดมาแล้วโดนลบทันทีระหว่างรอ Wait
+				if not newObj or not newObj.Parent then
+					return
+				end
+
+				-- [แก้จุดที่ 3] คัดกรองให้ทำงานเฉพาะ Object ที่มองเห็นได้ ลดภาระเครื่องไม่ให้ไปซ่อนพวก Script, Weld, Attachment
+				if not (newObj:IsA("BasePart") or newObj:IsA("Model") or newObj:IsA("Decal") or newObj:IsA("Texture") or newObj:IsA("MeshPart")) then
+					return
+				end
+
+				local currentHide = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
+				local currentEspCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
+				local currentEspCrops = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(currentEspCropsList, "NONE")
+				local currentEspPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+				local currentEspPlants = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(currentEspPlantsList, "NONE")
+
+				-- [แก้จุดที่ 4] เรียกใช้ IsFruit แค่ครั้งเดียวแล้วเก็บตัวแปรไว้ ประหยัดการคำนวณ
+				local isThisFruit = IsFruit(newObj)
+
+				-- ระบบ Hide
+				if currentHide then
+					if isThisFruit then
+						if fVar.isFruitHidden then
+							SetVisibility(newObj, true)
+						end
+					else
+						if fVar.isPlantHidden then
+							SetVisibility(newObj, true)
+						end
+					end
+				end
+
+				-- ระบบ ESP (ทำเฉพาะ Model ตัวแม่เท่านั้น ไม่ทำชิ้นส่วนย่อย)
+				if newObj:IsA("Model") then
+					if isThisFruit and currentEspCrops and table.find(currentEspCropsList, newObj.Name) then
+						Misc.setEspCrop(newObj)
+					elseif not isThisFruit and currentEspPlants and table.find(currentEspPlantsList, newObj.Name) then
+						Misc.setEspPlant(newObj)
+					end
+				end
+			end)
+		end
+	else
+		if SharedPlantConnection then
+			SharedPlantConnection:Disconnect()
+			SharedPlantConnection = nil
+		end
+	end
+end
 function Misc.HideFruit(state)
 	fVar.isFruitHidden = state
 	local PlantFolder = Utils.GetPlantsFolder()
@@ -477,65 +542,6 @@ function Misc.setEspPlant(plant)
 end
 
 -- ==========================================
--- [ตัวจัดการ Event ส่วนกลาง (Centralized State Manager)]
--- ==========================================
-function Misc.UpdatePlantTracker()
-	local Options = reg.Options
-
-	local isHideActive = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
-	local espCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
-	local isEspCropsActive = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(espCropsList, "NONE")
-	local espPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
-	local isEspPlantsActive = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(espPlantsList, "NONE")
-
-	if isHideActive or isEspCropsActive or isEspPlantsActive then
-		local PlantFolder = Utils.GetPlantsFolder()
-		if PlantFolder and not SharedPlantConnection then
-			SharedPlantConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
-				task.wait()
-
-				local currentHide = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
-				local currentEspCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
-				local currentEspCrops = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(currentEspCropsList, "NONE")
-				local currentEspPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
-				local currentEspPlants = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(currentEspPlantsList, "NONE")
-
-				-- ระบบ Hide
-				if currentHide then
-					if IsFruit(newObj) then
-						if fVar.isFruitHidden then
-							SetVisibility(newObj, true)
-						end
-					else
-						if fVar.isPlantHidden then
-							SetVisibility(newObj, true)
-						end
-					end
-				end
-
-				-- ระบบ ESP
-				if currentEspCrops then
-					if IsFruit(newObj) and newObj:IsA("Model") and table.find(currentEspCropsList, newObj.Name) then
-						Misc.setEspCrop(newObj)
-					end
-				end
-
-				if currentEspPlants then
-					if newObj:IsA("Model") and not IsFruit(newObj) and table.find(currentEspPlantsList, newObj.Name) then
-						Misc.setEspPlant(newObj)
-					end
-				end
-			end)
-		end
-	else
-		if SharedPlantConnection then
-			SharedPlantConnection:Disconnect()
-			SharedPlantConnection = nil
-		end
-	end
-end
-
--- ==========================================
 -- [ผูกระบบ ESP เข้ากับ State Manager]
 -- ==========================================
 function Misc.EspCrops(State)
@@ -625,4 +631,98 @@ function Misc.HideTracker()
 	Misc.UpdatePlantTracker()
 end
 
+local function IsFruit(obj)
+	-- ป้องกันบั๊กกรณีส่งค่าที่ไม่ใช่ Object เข้ามา
+	if typeof(obj) ~= "Instance" then
+		return false
+	end
+
+	-- 1. เช็คว่าตัว object เองมี Tag ไหม (กรณีเป็น Model ผลไม้)
+	if obj:HasTag("Harvestable") or obj:HasTag("FruitTool") then
+		return true
+	end
+
+	-- 2. กรณี obj เป็นชิ้นส่วนย่อย ดึง Model หรือ Tool ที่ครอบมันอยู่ออกมาเช็ค Tag
+	local parentModel = obj:FindFirstAncestorWhichIsA("Model") or obj:FindFirstAncestorWhichIsA("Tool")
+	if parentModel and (parentModel:HasTag("Harvestable") or parentModel:HasTag("FruitTool")) then
+		return true
+	end
+
+	-- 3. เช็คจากชื่อ Folder ที่ครอบอยู่ (เผื่อ Tag ยังโหลดไม่ทัน)
+	local current = obj
+	while current and current ~= workspace do
+		if current.Name == "Fruits" then
+			return true
+		end
+		current = current.Parent
+	end
+
+	return false
+end
+
+function Misc.UpdatePlantTracker()
+	local Options = reg.Options
+
+	local isHideActive = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
+	local espCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
+	local isEspCropsActive = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(espCropsList, "NONE")
+	local espPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+	local isEspPlantsActive = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(espPlantsList, "NONE")
+
+	if isHideActive or isEspCropsActive or isEspPlantsActive then
+		local PlantFolder = Utils.GetPlantsFolder()
+		if PlantFolder and not SharedPlantConnection then
+			SharedPlantConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
+				-- [แก้จุดที่ 1] เพิ่มเวลา Wait เป็น 0.1 หรือ 0.2 วินาที เพื่อรอให้ Tags และโครงสร้างโหลดครบ 100%
+				task.wait(0.1)
+
+				-- [แก้จุดที่ 2] ดักจับ Error กรณีชิ้นส่วนเกิดมาแล้วโดนลบทันทีระหว่างรอ Wait
+				if not newObj or not newObj.Parent then
+					return
+				end
+
+				-- [แก้จุดที่ 3] คัดกรองให้ทำงานเฉพาะ Object ที่มองเห็นได้ ลดภาระเครื่องไม่ให้ไปซ่อนพวก Script, Weld, Attachment
+				if not (newObj:IsA("BasePart") or newObj:IsA("Model") or newObj:IsA("Decal") or newObj:IsA("Texture") or newObj:IsA("MeshPart")) then
+					return
+				end
+
+				local currentHide = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
+				local currentEspCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
+				local currentEspCrops = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(currentEspCropsList, "NONE")
+				local currentEspPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+				local currentEspPlants = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(currentEspPlantsList, "NONE")
+
+				-- [แก้จุดที่ 4] เรียกใช้ IsFruit แค่ครั้งเดียวแล้วเก็บตัวแปรไว้ ประหยัดการคำนวณ
+				local isThisFruit = IsFruit(newObj)
+
+				-- ระบบ Hide
+				if currentHide then
+					if isThisFruit then
+						if fVar.isFruitHidden then
+							SetVisibility(newObj, true)
+						end
+					else
+						if fVar.isPlantHidden then
+							SetVisibility(newObj, true)
+						end
+					end
+				end
+
+				-- ระบบ ESP (ทำเฉพาะ Model ตัวแม่เท่านั้น ไม่ทำชิ้นส่วนย่อย)
+				if newObj:IsA("Model") then
+					if isThisFruit and currentEspCrops and table.find(currentEspCropsList, newObj.Name) then
+						Misc.setEspCrop(newObj)
+					elseif not isThisFruit and currentEspPlants and table.find(currentEspPlantsList, newObj.Name) then
+						Misc.setEspPlant(newObj)
+					end
+				end
+			end)
+		end
+	else
+		if SharedPlantConnection then
+			SharedPlantConnection:Disconnect()
+			SharedPlantConnection = nil
+		end
+	end
+end
 return Misc
