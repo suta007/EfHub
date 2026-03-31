@@ -339,10 +339,11 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		bGuiSession[uuid] = nil
 	end
 
+	local hasTxt2 = txt2 ~= nil and txt2 ~= ""
 	local bgui = Instance.new("BillboardGui")
 	bgui.Name = "ESP_" .. uuid
 	bgui.Adornee = obj
-	bgui.Size = UDim2.fromOffset(600, 120)
+	bgui.Size = UDim2.fromOffset(600, hasTxt2 and 120 or 65)
 	bgui.StudsOffset = Vector3.new(0, 4, 0)
 	bgui.AlwaysOnTop = true
 	bgui.LightInfluence = 0
@@ -368,20 +369,24 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	textLabel1.RichText = true
 	textLabel1.TextSize = 16
 
-	local textLabel2 = Instance.new("TextLabel")
-	textLabel2.Name = "MutationLabel"
-	textLabel2.Parent = bgui
-	textLabel2.LayoutOrder = 2
-	textLabel2.Size = UDim2.fromScale(1, 0)
-	textLabel2.AutomaticSize = Enum.AutomaticSize.Y
-	textLabel2.BackgroundTransparency = 1
-	textLabel2.TextWrapped = true
-	textLabel2.Active = false
-	textLabel2.RichText = true
-	textLabel2.TextSize = 14
-
 	textLabel1.Text = txt1
-	textLabel2.Text = txt2
+	if hasTxt2 then
+		local textLabel2 = Instance.new("TextLabel")
+		textLabel2.Name = "MutationLabel"
+		textLabel2.Parent = bgui
+		textLabel2.LayoutOrder = 2
+		textLabel2.Size = UDim2.fromScale(1, 0)
+		textLabel2.AutomaticSize = Enum.AutomaticSize.Y
+		textLabel2.BackgroundTransparency = 1
+		textLabel2.TextWrapped = true
+		textLabel2.Active = false
+		textLabel2.RichText = true
+		textLabel2.TextSize = 14
+		textLabel2.Text = txt2
+
+		-- สีพื้นฐานของบรรทัด Mutation (ส่งผลต่อลูกน้ำที่ไม่ได้ติด Tag)
+		textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
+	end
 
 	if priority == 3 then
 		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 10)
@@ -392,9 +397,6 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	else
 		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200)
 	end
-
-	-- สีพื้นฐานของบรรทัด Mutation (ส่งผลต่อลูกน้ำที่ไม่ได้ติด Tag)
-	textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
 
 	bGuiSession[uuid] = bgui
 end
@@ -437,6 +439,35 @@ function Misc.setEspCrop(fruit)
 	Misc.CreatESP(ESPFolder, fruit, uuid, txt1, txt2, arg)
 end
 
+function Misc.setEspPlant(plant)
+	local Options = reg.Options
+	if not (Options and Options.tgEspPlants and Options.tgEspPlants.Value) then
+		return
+	end
+	if not (plant and plant:IsA("Model")) then
+		return
+	end
+
+	local espPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+	if not table.find(espPlantsList, plant.Name) then
+		return
+	end
+
+	local TargetFolder = gethui and gethui() or CoreGui
+	local ESPFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
+	if not ESPFolder then
+		return
+	end
+
+	local plantName = plant.Name
+	local plantWeightValue = plant:FindFirstChild("Weight") and plant:FindFirstChild("Weight").Value or 0
+	local uuid = tostring(plant:GetAttribute("UUID") or plant:GetDebugId())
+
+	-- ESP Plants: แสดงแค่ชื่อและน้ำหนัก
+	local txt1 = string.format('<b>%s</b> (%.2fkg)', plantName, tonumber(plantWeightValue) or 0)
+	Misc.CreatESP(ESPFolder, plant, uuid, txt1, "", 0)
+end
+
 -- ==========================================
 -- [ตัวจัดการ Event ส่วนกลาง (Centralized State Manager)]
 -- ==========================================
@@ -445,17 +476,21 @@ function Misc.UpdatePlantTracker()
 
 	local isHideActive = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
 	local espCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
-	local isEspActive = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(espCropsList, "NONE")
+	local isEspCropsActive = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(espCropsList, "NONE")
+	local espPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+	local isEspPlantsActive = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(espPlantsList, "NONE")
 
-	if isHideActive or isEspActive then
+	if isHideActive or isEspCropsActive or isEspPlantsActive then
 		local PlantFolder = Utils.GetPlantsFolder()
 		if PlantFolder and not SharedPlantConnection then
 			SharedPlantConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
 				task.wait()
 
 				local currentHide = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
-				local currentEspList = GetSelectedItems(Options.ddEspCrops.Value)
-				local currentEsp = Options.tgEspCrops.Value and not table.find(currentEspList, "NONE")
+				local currentEspCropsList = Options.ddEspCrops and GetSelectedItems(Options.ddEspCrops.Value) or {}
+				local currentEspCrops = Options.tgEspCrops and Options.tgEspCrops.Value and not table.find(currentEspCropsList, "NONE")
+				local currentEspPlantsList = Options.ddEspPlants and GetSelectedItems(Options.ddEspPlants.Value) or {}
+				local currentEspPlants = Options.tgEspPlants and Options.tgEspPlants.Value and not table.find(currentEspPlantsList, "NONE")
 
 				-- ระบบ Hide
 				if currentHide then
@@ -471,11 +506,15 @@ function Misc.UpdatePlantTracker()
 				end
 
 				-- ระบบ ESP
-				if currentEsp then
-					if IsFruit(newObj) and newObj:IsA("Model") then
-						if table.find(currentEspList, newObj.Name) then
+				if currentEspCrops then
+					if IsFruit(newObj) and newObj:IsA("Model") and table.find(currentEspCropsList, newObj.Name) then
 							Misc.setEspCrop(newObj)
-						end
+					end
+				end
+
+				if currentEspPlants then
+					if newObj:IsA("Model") and not IsFruit(newObj) and table.find(currentEspPlantsList, newObj.Name) then
+						Misc.setEspPlant(newObj)
 					end
 				end
 			end)
@@ -530,6 +569,44 @@ function Misc.EspCrops(State)
 	end
 
 	-- อัปเดตตัวดักจับผลไม้เกิดใหม่
+	Misc.UpdatePlantTracker()
+end
+
+-- ==========================================
+-- [ผูกระบบ ESP เข้ากับ State Manager: Plants]
+-- ==========================================
+function Misc.EspPlants(State)
+	local Options = reg.Options
+	local TargetFolder = gethui and gethui() or CoreGui
+	local oldFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
+
+	if oldFolder then
+		oldFolder:Destroy()
+	end
+	if State ~= true then
+		Misc.UpdatePlantTracker()
+		return
+	end
+
+	local espPlantsList = GetSelectedItems(Options.ddEspPlants.Value)
+	if table.find(espPlantsList, "NONE") then
+		Misc.UpdatePlantTracker()
+		return
+	end
+
+	local ESPFolder = Instance.new("Folder")
+	ESPFolder.Name = PlantsESPFolderName
+	ESPFolder.Parent = TargetFolder
+
+	local Plants_Physical = Utils.GetPlantsFolder()
+	if Plants_Physical then
+		for _, plant in ipairs(Plants_Physical:GetChildren()) do
+			if plant:IsA("Model") and table.find(espPlantsList, plant.Name) then
+				Misc.setEspPlant(plant)
+			end
+		end
+	end
+
 	Misc.UpdatePlantTracker()
 end
 

@@ -1,10 +1,9 @@
 local MiscTab = {}
-local reg
+local _reg
 
 function MiscTab.Initialize(Registry)
-	reg = Registry
+	_reg = Registry
 	local Options = Registry.Options
-	_ = Options
 	local Interface = Registry.Interface
 	local Tabs = Registry.Tabs
 	local QuickSave = Registry.Window.QuickSave
@@ -81,7 +80,7 @@ function MiscTab.Initialize(Registry)
 		Title = "Esp Plants",
 		Default = false,
 		Callback = function(Value)
-			--Misc.EspPlants(Value)
+			Misc.EspPlants(Value)
 			QuickSave()
 		end,
 	})
@@ -89,6 +88,10 @@ function MiscTab.Initialize(Registry)
 		Title = "Clear Selected Plants",
 		Callback = function()
 			Options.ddEspPlants:SetValue({ NONE = true })
+			if Options.tgEspPlants.Value then
+				Misc.EspPlants(true)
+			end
+			QuickSave()
 		end,
 	})
 	EspSection:AddDropdown("ddEspPlants", {
@@ -98,6 +101,9 @@ function MiscTab.Initialize(Registry)
 		Multi = true,
 		Searchable = true,
 		Callback = function()
+			if Options.tgEspPlants.Value then
+				Misc.EspPlants(true)
+			end
 			QuickSave()
 		end,
 	})

@@ -1,12 +1,5 @@
 local AutoTab = {}
 local reg
---local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local RemoteEvents = ReplicatedStorage:WaitForChild("RemoteEvents")
---local TaskRemovePlants, TaskRemoveFruit
-local SprinklerTask = nil
-local TrowelTask = nil
-local ReclaimTask = nil
-local CatLeadTask = nil
 function AutoTab.Initialize(registry)
 	reg = registry
 	local Interface = reg.Interface
@@ -222,14 +215,8 @@ function AutoTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if Value then
-				TrowelTask = task.spawn(function()
-					Auto.Trowel()
-				end)
+				task.spawn(Auto.Trowel)
 			else
-				if TrowelTask then
-					pcall(task.cancel, TrowelTask)
-					TrowelTask = nil
-				end
 				fVar.isTroweling = false
 			end
 		end,
@@ -275,14 +262,8 @@ function AutoTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if Value then
-				ReclaimTask = task.spawn(function()
-					Auto.Reclaim()
-				end)
+				task.spawn(Auto.Reclaim)
 			else
-				if ReclaimTask then
-					pcall(task.cancel, ReclaimTask)
-					ReclaimTask = nil
-				end
 				fVar.isReclaiming = false
 			end
 		end,
@@ -347,14 +328,8 @@ function AutoTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if Value then
-				SprinklerTask = task.spawn(function()
-					Auto.Sprinkler()
-				end)
+				task.spawn(Auto.Sprinkler)
 			else
-				if SprinklerTask then
-					pcall(task.cancel, SprinklerTask)
-					SprinklerTask = nil
-				end
 				fVar.isSprinkling = false
 			end
 		end,
@@ -429,14 +404,8 @@ function AutoTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if Value then
-				CatLeadTask = task.spawn(function()
-					Auto.CatLead()
-				end)
+				task.spawn(Auto.CatLead)
 			else
-				if CatLeadTask then
-					pcall(task.cancel, CatLeadTask)
-					CatLeadTask = nil
-				end
 				fVar.isCatLeading = false
 			end
 		end,

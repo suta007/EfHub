@@ -10,8 +10,9 @@ fVar.isRemovingPlants = false
 fVar.isRemovingCrops = false
 fVar.isTroweling = false
 fVar.isReclaiming = false
-fVar.isOpeningPack = false
+fVar.isSprinkling = false
 fVar.isCatLeading = false
+fVar.isOpeningPack = false
 
 fVar.UIShopLoaded = false
 

@@ -1,4 +1,5 @@
 local getconnections = (getfenv() :: any).getconnections
+local getgenv = (getfenv() :: any).getgenv
 local Utils = {}
 local reg: any
 local sData: any
@@ -128,6 +129,56 @@ function Utils.GetSelectedItems(DropdownValue)
 		end
 	end
 	return Items
+end
+
+function Utils.handleRuntimeError(modeName, err)
+	getgenv().fLog(string.format("❌ %s error: %s", modeName, tostring(err)))
+end
+
+function Utils.runWithFlag(flagName, modeName, fn)
+	local fVar = reg and reg.fVar
+	if not fVar then
+		return false
+	end
+	fVar[flagName] = true
+	local ok, err = xpcall(fn, debug.traceback)
+	fVar[flagName] = false
+	if not ok then
+		Utils.handleRuntimeError(modeName, err)
+	end
+	return ok
+end
+
+function Utils.findToolByName(backpack, toolName)
+	if not backpack then
+		return nil
+	end
+	return backpack:FindFirstChild(toolName)
+end
+
+function Utils.findToolByPattern(backpack, namePattern)
+	if not backpack then
+		return nil
+	end
+	for _, item in ipairs(backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match(namePattern) then
+			return item
+		end
+	end
+	return nil
+end
+
+function Utils.matchesWeight(weight, condition, value)
+	if value <= 0 then
+		return true
+	end
+	if condition == "Below" then
+		return weight < value
+	end
+	if condition == "Above" then
+		return weight > value
+	end
+	return false
 end
 
 function Utils.isTableEmpty(t)

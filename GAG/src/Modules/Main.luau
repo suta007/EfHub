@@ -6,6 +6,30 @@ local Utils
 local fVar
 local readyCrops = {}
 
+local function shouldMatchMutants(target, mutantList)
+	if table.find(mutantList, "ALL") then
+		return true
+	end
+	for _, mutantName in ipairs(mutantList) do
+		if target:GetAttribute(mutantName) == true then
+			return true
+		end
+	end
+	return false
+end
+
+local function isBlockedByBlackMutants(target, mutantList)
+	if table.find(mutantList, "NONE") then
+		return false
+	end
+	for _, mutantName in ipairs(mutantList) do
+		if target:GetAttribute(mutantName) == true then
+			return true
+		end
+	end
+	return false
+end
+
 function Main.Initialize(registry)
 	reg = registry
 	sData = reg.sData
@@ -38,31 +62,39 @@ function Main.AutoPlant()
 	if not Options.tgPlantsEnable.Value or fVar.isPlanting then
 		return
 	end
-	fVar.isPlanting = true
-	local tSeed = Utils.GetSelectedItems(Options.ddPlantsSeeds.Value)
-	local Backpack = sData.LocalPlayer.Backpack
-
-	for _, item in pairs(Backpack:GetChildren()) do
-		local SeedName = item:GetAttribute("Seed")
-		if SeedName and (table.find(tSeed, "ALL") or table.find(tSeed, SeedName)) then
-			local Quantity = item:GetAttribute("Quantity")
-			for i = 1, Quantity do
-				Utils.UnequipTool()
-				task.wait(0.1)
-				Utils.EquipTool(item)
-				task.wait(0.1)
-				local PlantsPos
-				if Options.ddPlantsPos.Value == "Player" then
-					PlantsPos = Utils.GetPosition()
-				else
-					PlantsPos = Utils.GetRandomPlotPos().Position
+	Utils.runWithFlag("isPlanting", "AutoPlant", function()
+		local tSeed = Utils.GetSelectedItems(Options.ddPlantsSeeds.Value)
+		local Backpack = sData.LocalPlayer.Backpack
+		for _, item in ipairs(Backpack:GetChildren()) do
+			if not Options.tgPlantsEnable.Value then
+				return
+			end
+			local SeedName = item:GetAttribute("Seed")
+			if SeedName and (table.find(tSeed, "ALL") or table.find(tSeed, SeedName)) then
+				local Quantity = tonumber(item:GetAttribute("Quantity")) or 0
+				for _ = 1, Quantity do
+					if not Options.tgPlantsEnable.Value then
+						return
+					end
+					Utils.UnequipTool()
+					task.wait(0.1)
+					Utils.EquipTool(item)
+					task.wait(0.1)
+					local PlantsPos
+					if Options.ddPlantsPos.Value == "Player" then
+						PlantsPos = Utils.GetPosition()
+					else
+						local randomPlot = Utils.GetRandomPlotPos()
+						PlantsPos = randomPlot and randomPlot.Position
+					end
+					if PlantsPos then
+						local args = { vector.create(PlantsPos.X, PlantsPos.Y, PlantsPos.Z), SeedName }
+						sData.GameEvents:WaitForChild("Plant_RE"):FireServer(unpack(args))
+					end
 				end
-				local args = { vector.create(PlantsPos.X, PlantsPos.Y, PlantsPos.Z), SeedName }
-				sData.GameEvents:WaitForChild("Plant_RE"):FireServer(unpack(args))
 			end
 		end
-	end
-	fVar.isPlanting = false
+	end)
 end
 
 function Main.ClearReadyCrops()
@@ -72,11 +104,13 @@ end
 function Main.GetAllReadyCrops()
 	table.clear(readyCrops)
 	local allPrompts = CollectionService:GetTagged("CollectPrompt")
+	local seen = {}
 
 	for _, prompt in ipairs(allPrompts) do
 		if prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
 			local cropModel = prompt.Parent and prompt.Parent.Parent
-			if cropModel then
+			if cropModel and not seen[cropModel] then
+				seen[cropModel] = true
 				table.insert(readyCrops, cropModel)
 			end
 		end
@@ -95,11 +129,11 @@ function Main.GetAllReadyCrops2()
 		local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
 
 		for _, item in ipairs(itemsToCheck) do
-			if item:IsA("Model") then
+			if item:IsA("Model") and item:FindFirstChild("Weight") and item:FindFirstChild("Variant") then
 				table.insert(readyCrops, item)
 			end
 			count = count + 1
-			if count % 100 == 0 then
+			if count % 250 == 0 then
 				task.wait()
 			end
 		end
@@ -110,7 +144,7 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 	if not fruit or not fruit:IsA("Model") then
 		return false
 	end
-	local Mode = HarvestMode or true
+	local Mode = HarvestMode ~= false
 
 	local fruitName = fruit.Name
 	local fruitVariant = fruit:FindFirstChild("Variant") and fruit:FindFirstChild("Variant").Value
@@ -134,29 +168,14 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 	end
 
 	if not table.find(config.wl.mutants, "ALL") then
-		local isMutantMatch = false
-
-		for _, v in pairs(config.wl.mutants) do
-			if fruit:GetAttribute(v) == true then
-				isMutantMatch = true
-				break
-			end
-		end
-		if not isMutantMatch then
+		if not shouldMatchMutants(fruit, config.wl.mutants) then
 			return false
 		end
 	end
 
 	if config.wl.weightValue ~= 0 then
 		local weight = tonumber(fruitWeight)
-		if weight then
-			if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
-				return false
-			end
-			if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
-				return false
-			end
-		else
+		if not weight or not Utils.matchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
 			return false
 		end
 	end
@@ -168,17 +187,8 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 		return false
 	end
 
-	if not table.find(config.bl.mutants, "NONE") then
-		local isBlackMutantMatch = false
-		for _, v in pairs(config.bl.mutants) do
-			if fruit:GetAttribute(v) == true then
-				isBlackMutantMatch = true
-				break
-			end
-		end
-		if isBlackMutantMatch then
-			return false
-		end
+	if isBlockedByBlackMutants(fruit, config.bl.mutants) then
+		return false
 	end
 
 	return true
@@ -192,24 +202,20 @@ function Main.HarvestCrops()
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 		return
 	end
-	fVar.isHarvesting = true
-	if #readyCrops == 0 then
-		Main.GetAllReadyCrops2()
-
-		if #readyCrops == 0 then
-			fVar.isHarvesting = false
-			return
+	Utils.runWithFlag("isHarvesting", "HarvestCrops", function()
+		if Utils.isTableEmpty(readyCrops) then
+			Main.GetAllReadyCrops2()
+			if Utils.isTableEmpty(readyCrops) then
+				return
+			end
 		end
-	end
 
-	if #readyCrops > 0 then
 		local config = Main.GetHarvestVar()
 		local crop = table.remove(readyCrops, 1)
-		if Main.CheckCrops(crop, config) then
+		if crop and Main.CheckCrops(crop, config) then
 			sData.CollectEvent:FireServer({ crop })
 		end
-	end
-	fVar.isHarvesting = false
+	end)
 end
 
 function Main.GetSellVar()
@@ -249,25 +255,14 @@ function Main.CheckItem(item, config)
 	end
 
 	if not table.find(config.wl.mutants, "ALL") then
-		local isMutantMatch = false
-
-		for _, v in pairs(config.wl.mutants) do
-			if item:GetAttribute(v) == true then
-				isMutantMatch = true
-				break
-			end
-		end
-		if not isMutantMatch then
+		if not shouldMatchMutants(item, config.wl.mutants) then
 			return false
 		end
 	end
 
 	if config.wl.weightValue ~= 0 then
 		local weight = tonumber(ItemWeight)
-		if config.wl.weightCondition == "Below" and weight >= config.wl.weightValue then
-			return false
-		end
-		if config.wl.weightCondition == "Above" and weight <= config.wl.weightValue then
+		if not weight or not Utils.matchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
 			return false
 		end
 	end
@@ -279,17 +274,8 @@ function Main.CheckItem(item, config)
 		return false
 	end
 
-	if not table.find(config.bl.mutants, "NONE") then
-		local isBlackMutantMatch = false
-		for _, v in pairs(config.bl.mutants) do
-			if item:GetAttribute(v) == true then
-				isBlackMutantMatch = true
-				break
-			end
-		end
-		if isBlackMutantMatch then
-			return false
-		end
+	if isBlockedByBlackMutants(item, config.bl.mutants) then
+		return false
 	end
 
 	return true
@@ -297,30 +283,30 @@ end
 
 function Main.SellCrops()
 	local Options = reg.Options
-
-	fVar.isSelling = true
-
-	Utils.ClickButton(Utils.SellButton)
-	task.wait(0.5)
-
-	if Options.tgSellAll.Value then
-		sData.GameEvents.Sell_Inventory:FireServer()
-		task.wait(1)
-	else
-		local config = Main.GetSellVar()
-		local Backpack = sData.LocalPlayer.Backpack
-		for _, item in pairs(Backpack:GetChildren()) do
-			if Main.CheckItem(item, config) then
-				Utils.EquipTool(item)
-				task.wait(0.1)
-				sData.GameEvents.Sell_Item:FireServer()
-				task.wait(0.5)
+	if fVar.isSelling then
+		return
+	end
+	Utils.runWithFlag("isSelling", "SellCrops", function()
+		Utils.ClickButton(Utils.SellButton)
+		task.wait(0.5)
+		if Options.tgSellAll.Value then
+			sData.GameEvents.Sell_Inventory:FireServer()
+			task.wait(1)
+		else
+			local config = Main.GetSellVar()
+			local Backpack = sData.LocalPlayer.Backpack
+			for _, item in ipairs(Backpack:GetChildren()) do
+				if Main.CheckItem(item, config) then
+					Utils.EquipTool(item)
+					task.wait(0.1)
+					sData.GameEvents.Sell_Item:FireServer()
+					task.wait(0.5)
+				end
 			end
 		end
-	end
-	Utils.ClickButton(Utils.GardenButton)
-	task.wait(1)
-	fVar.isSelling = false
+		Utils.ClickButton(Utils.GardenButton)
+		task.wait(1)
+	end)
 end
 
 function Main.SellIfFull()
