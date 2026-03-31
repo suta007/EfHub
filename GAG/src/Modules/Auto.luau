@@ -273,9 +273,11 @@ function Auto.CatLead()
 	if not options.tgCatLead.Value or fVar.isCatLeading then
 		return
 	end
+	fVar.isCatLeading = true
 	local positionCF = fVar.Pos.Sprinkler
 	if typeof(positionCF) ~= "CFrame" then
 		getgenv().fLog("🟡 Cat Lead Position Must Set Spinkle Position")
+		fVar.isCatLeading = false
 		return
 	end
 
@@ -285,6 +287,7 @@ function Auto.CatLead()
 		local petLead = Utils.findToolByPattern(backpack, "Pet Lead")
 		if not petLead then
 			getgenv().fLog("🟡 No Pet Lead")
+			fVar.isCatLeading = false
 			return
 		end
 
@@ -292,11 +295,13 @@ function Auto.CatLead()
 		local petsPhysical = game:GetService("Workspace"):WaitForChild("PetsPhysical")
 		if not petsPhysical then
 			getgenv().fLog("🟡 No PetsPhysical")
+			fVar.isCatLeading = false
 			return
 		end
 
 		for _, pet in ipairs(petsPhysical:GetChildren()) do
 			if not options.tgCatLead.Value then
+				fVar.isCatLeading = false
 				return
 			end
 			local uuid = pet:GetAttribute("UUID")
@@ -318,6 +323,7 @@ function Auto.CatLead()
 				end
 			end
 		end
+		fVar.isCatLeading = false
 		Utils.UnequipTool()
 		if options.tgCatLead.Value then
 			options.tgCatLead:SetValue(false)

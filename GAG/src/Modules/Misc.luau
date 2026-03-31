@@ -248,50 +248,58 @@ local function _IsFruit(obj)
 end
 
 local function SetVisibility(obj, isHidden)
-	if obj:IsA("BasePart") or obj:IsA("MeshPart") or obj:IsA("Decal") or obj:IsA("Texture") then
+	-- กลุ่มที่ 1: BasePart (รวมถึง MeshPart ด้วยเพราะสืบทอดคลาสมา)
+	if obj:IsA("BasePart") then
+		if isHidden then
+			-- ใช้ LocalTransparencyModifier ซ้อนทับแอนิเมชันของเกม จะได้ไม่โดนงัดค่ากลับ
+			obj.LocalTransparencyModifier = 1
+
+			-- เก็บค่าดั้งเดิมของฟิสิกส์
+			if obj:GetAttribute("OriginalCanCollide") == nil then
+				obj:SetAttribute("OriginalCanCollide", obj.CanCollide)
+				obj:SetAttribute("OriginalCanTouch", obj.CanTouch)
+				obj:SetAttribute("OriginalCanQuery", obj.CanQuery)
+			end
+
+			-- ปิดการคำนวณฟิสิกส์และ Hitbox ทั้งหมด
+			obj.CanCollide = false
+			obj.CanTouch = false
+			obj.CanQuery = false
+		else
+			-- คืนค่าการมองเห็น (คืนค่าเป็น 0 เพื่อให้โปร่งใสตามค่า Transparency หลักของเกม)
+			obj.LocalTransparencyModifier = 0
+
+			-- คืนค่าฟิสิกส์จากที่ Backup ไว้
+			local origCollide = obj:GetAttribute("OriginalCanCollide")
+			local origTouch = obj:GetAttribute("OriginalCanTouch")
+			local origQuery = obj:GetAttribute("OriginalCanQuery")
+
+			if origCollide ~= nil then
+				obj.CanCollide = origCollide
+			end
+			if origTouch ~= nil then
+				obj.CanTouch = origTouch
+			end
+			if origQuery ~= nil then
+				obj.CanQuery = origQuery
+			end
+		end
+
+	-- กลุ่มที่ 2: Decal และ Texture (พวกนี้ใช้ Modifier ไม่ได้ ต้องแก้ที่ Transparency ตรงๆ)
+	elseif obj:IsA("Decal") or obj:IsA("Texture") then
 		if isHidden then
 			if not obj:GetAttribute("OriginalTrans") then
 				obj:SetAttribute("OriginalTrans", obj.Transparency)
 			end
 			obj.Transparency = 1
-
-			if obj:IsA("BasePart") then
-				if obj:GetAttribute("OriginalCanCollide") == nil then
-					obj:SetAttribute("OriginalCanCollide", obj.CanCollide)
-				end
-				if obj:GetAttribute("OriginalCanTouch") == nil then
-					obj:SetAttribute("OriginalCanTouch", obj.CanTouch)
-				end
-				if obj:GetAttribute("OriginalCanQuery") == nil then
-					obj:SetAttribute("OriginalCanQuery", obj.CanQuery)
-				end
-
-				obj.CanCollide = false
-				obj.CanTouch = false
-				obj.CanQuery = false
-			end
 		else
 			local origTrans = obj:GetAttribute("OriginalTrans")
 			if origTrans then
 				obj.Transparency = origTrans
 			end
-
-			if obj:IsA("BasePart") then
-				local origCollide = obj:GetAttribute("OriginalCanCollide")
-				local origTouch = obj:GetAttribute("OriginalCanTouch")
-				local origQuery = obj:GetAttribute("OriginalCanQuery")
-
-				if origCollide ~= nil then
-					obj.CanCollide = origCollide
-				end
-				if origQuery ~= nil then
-					obj.CanQuery = origQuery
-				end
-				if origTouch ~= nil then
-					obj.CanTouch = origTouch
-				end
-			end
 		end
+
+	-- กลุ่มที่ 3: เอฟเฟกต์ต่างๆ (เก็บของเดิมพี่เอฟไว้เลยค่ะ เขียนมาเป๊ะมาก)
 	elseif obj:IsA("ParticleEmitter") or obj:IsA("Sparkles") or obj:IsA("Fire") or obj:IsA("Trail") then
 		if isHidden then
 			if obj:GetAttribute("OriginalEnabled") == nil then
