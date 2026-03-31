@@ -115,7 +115,7 @@ function PetsTab.Initialize(registry)
 	})
 	MutantSection:AddDropdown("ddMutantMethod", {
 		Title = "Select Mutant Method",
-		Values = { "None", "Nightmare", "Mutation", "Level", "Venom" },
+		Values = { "None", "Nightmare", "Mutation", "Level", "Elephant", "Venom" },
 		Default = "None",
 		Callback = function()
 			QuickSave()
@@ -138,8 +138,8 @@ function PetsTab.Initialize(registry)
 	MutantSection:AddDropdown("ddMutantPetType", {
 		Title = "Select Mutant Pet Type",
 		Values = sData.PetsDataTable or {},
-		Default = "",
-		Multi = false,
+		Default = {},
+		Multi = true,
 		Searchable = true,
 		Callback = function()
 			QuickSave()

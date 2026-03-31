@@ -146,3 +146,16 @@
 ลำดับที่ 6: Tiger | Level: 54 | UUID: {170f9283-0230-49e8-9ea0-f2c5026bee20}
 ลำดับที่ 7: Tiger | Level: 54 | UUID: {d579b394-f3f8-4eec-9133-5872a102ae7f}
 ลำดับที่ 8: Topaz Snail | Level: 42 | UUID: {18b8d20f-e06c-43bc-b76a-a43eb5f7e2a4}
+
+  [{830069ed-e58a-4d3e-b36a-423e57d22910}] : (Table)
+    [UUID] : {830069ed-e58a-4d3e-b36a-423e57d22910}
+    [PetData] : (Table)
+      [HatchedFrom] : New Year's Egg
+      [LevelProgress] : 301.0552054151663
+      [Name] : Zephy
+      [Level] : 35
+      [BaseWeight] : 8.30260876656268
+      [Boosts] : (Table)
+      [Hunger] : 1972.5844875836
+      [MutationType] : i
+    [PetType] : Celebration Puppy

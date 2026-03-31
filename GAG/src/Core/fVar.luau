@@ -12,6 +12,7 @@ fVar.isTroweling = false
 fVar.isReclaiming = false
 fVar.isSprinkling = false
 fVar.isCatLeading = false
+fVar.isFarmingLevel = false
 --fVar.isOpeningPack = false
 fVar.isMutating = false
 

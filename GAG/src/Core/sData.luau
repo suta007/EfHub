@@ -27,6 +27,7 @@ sData.TrowelEvent = sData.GameEvents:WaitForChild("TrowelRemote")
 sData.ReclaimerEvent = sData.GameEvents:WaitForChild("ReclaimerService_RE")
 sData.SprinklerEvent = sData.GameEvents:WaitForChild("SprinklerService")
 sData.RefreshActivePetsUI = sData.GameEvents:WaitForChild("RefreshActivePetsUI")
+sData.PetsServiceEvent = sData.GameEvents:WaitForChild("PetsService")
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
