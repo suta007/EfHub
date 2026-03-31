@@ -150,7 +150,7 @@
   [{830069ed-e58a-4d3e-b36a-423e57d22910}] : (Table)
     [UUID] : {830069ed-e58a-4d3e-b36a-423e57d22910}
     [PetData] : (Table)
-      [HatchedFrom] : New Year's Egg
+      [HatchedFrom] : New Year Egg
       [LevelProgress] : 301.0552054151663
       [Name] : Zephy
       [Level] : 35
@@ -159,3 +159,17 @@
       [Hunger] : 1972.5844875836
       [MutationType] : i
     [PetType] : Celebration Puppy
+
+  [{3ec593d5-2a7b-42c9-99c2-d9afc023e261}] : (Table)
+    [UUID] : {3ec593d5-2a7b-42c9-99c2-d9afc023e261}
+    [PetData] : (Table)
+      [HatchedFrom] : Paradise Egg
+      [IsFavorite] : false
+      [Boosts] : (Table)
+      [Name] : Rya
+      [LevelProgress] : 0
+      [BaseWeight] : 5.587182377177483
+      [Level] : 115
+      [Hunger] : 20382.209607141198
+      [MutationType] : P
+    [PetType] : Mimic Octopus

@@ -164,7 +164,7 @@ function Pets.Weight(UUID)
 end
 
 function Pets.HeldPet(UUID)
-	local sData = reg.sData
+	--local sData = reg.sData
 	local Backpack = sData.Backpack
 	pcall(function()
 		sData.Humanoid:UnequipTool()
@@ -268,6 +268,14 @@ function Pets.UnequipPet(uuid)
 	sData.PetsServiceEvent:FireServer("UnequipPet", uuid)
 end
 
+function Pets.SwapPetLoadout(Loadout)
+	if Loadout == 2 then
+		Loadout = 3
+	elseif Loadout == 3 then
+		Loadout = 2
+	end
+	sData.PetsServiceEvent:FireServer("SwapPetLoadout", Loadout)
+end
 -- GetData_result.PetMutationMachine.PetReady=false
 -- GetData_result.PetMutationMachine.TimeLeft=0
 -- GetData_result.PetMutationMachine.IsRunning=false
@@ -276,6 +284,9 @@ function Pets.FarmLevel()
 	if not Options.tgMutantEnabled.Value or fVar.isFarmingLevel then
 		return
 	end
+	local Loadout = tonumber(Options.ddLevelLoadout.Value)
+	Pets.SwapPetLoadout(Loadout)
+
 	fVar.isFarmingLevel = true
 	local PetType
 	MutantUUID, PetType = Pets.findFarmPet()
@@ -284,6 +295,7 @@ function Pets.FarmLevel()
 		fVar.isFarmingLevel = false
 		return
 	end
+	task.wait(tonumber(Options.LoadOutDelay.Value) or 8)
 	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
 	if EquipPets and #EquipPets >= 8 then
 		getgenv().fLog("🔴 FarmLevel: Equip pet full")
