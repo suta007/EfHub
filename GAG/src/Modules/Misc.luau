@@ -225,6 +225,14 @@ local function IsFruit(obj)
 		return true
 	end
 
+	local current = obj
+	while current and current ~= workspace do
+		if current.Name == "Fruits" then
+			return true
+		end
+		current = current.Parent
+	end
+
 	return false
 end
 
@@ -367,7 +375,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	textLabel1.TextWrapped = false
 	textLabel1.Active = false
 	textLabel1.RichText = true
-	textLabel1.TextSize = 16
+	textLabel1.TextSize = 14
 
 	textLabel1.Text = txt1
 	if hasTxt2 then
@@ -381,7 +389,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		textLabel2.TextWrapped = true
 		textLabel2.Active = false
 		textLabel2.RichText = true
-		textLabel2.TextSize = 14
+		textLabel2.TextSize = 12
 		textLabel2.Text = txt2
 
 		-- สีพื้นฐานของบรรทัด Mutation (ส่งผลต่อลูกน้ำที่ไม่ได้ติด Tag)
@@ -464,7 +472,7 @@ function Misc.setEspPlant(plant)
 	local uuid = tostring(plant:GetAttribute("UUID") or plant:GetDebugId())
 
 	-- ESP Plants: แสดงแค่ชื่อและน้ำหนัก
-	local txt1 = string.format('<b>%s</b> (%.2fkg)', plantName, tonumber(plantWeightValue) or 0)
+	local txt1 = string.format("<b>%s</b> (%.2fkg)", plantName, tonumber(plantWeightValue) or 0)
 	Misc.CreatESP(ESPFolder, plant, uuid, txt1, "", 0)
 end
 
@@ -508,7 +516,7 @@ function Misc.UpdatePlantTracker()
 				-- ระบบ ESP
 				if currentEspCrops then
 					if IsFruit(newObj) and newObj:IsA("Model") and table.find(currentEspCropsList, newObj.Name) then
-							Misc.setEspCrop(newObj)
+						Misc.setEspCrop(newObj)
 					end
 				end
 
