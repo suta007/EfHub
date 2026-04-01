@@ -55,8 +55,8 @@ local function findDupePet(UUID, PetType)
 				continue
 			end
 			local uuid = pet.UUID
-			local petLevel = Pets.Level(uuid)
-			local petWeight = Pets.Weight(uuid)
+			local petLevel = tonumber(pet.PetData.Level)
+			local petWeight = tonumber(pet.PetData.BaseWeight)
 			if uuid == UUID then
 				continue
 			end
@@ -103,8 +103,8 @@ local function findMainPet()
 				continue
 			end
 			local uuid = pet.UUID
-			local petLevel = Pets.Level(uuid)
-			if petType == PetType and (petLevel >= 100 and petLevel < TargetAge) and not Pets.Favorited(uuid) then
+			local petLevel = tonumber(pet.PetData.Level)
+			if petType == PetType and (petLevel >= 100 and petLevel < TargetAge) and pet.PetData.IsFavorite ~= true then
 				return uuid
 			end
 		end
@@ -405,6 +405,12 @@ function Pets.TargetPetLevelCheck()
 	end
 	local TargetAge = tonumber(Options.inpMutantTargetAge.Value) or 100
 	local TargetPet = Pets.RawData(MutantUUID)
+	if not TargetPet or not TargetPet.PetData then
+		-- หากดึงไม่เจอ ให้รีเซ็ตแล้วไปหาใหม่
+		MutantUUID = nil
+		Pets.FarmLevel()
+		return
+	end
 	local Method = Options.ddMutantMethod.Value :: string
 
 	if Method == "Nightmare" then
