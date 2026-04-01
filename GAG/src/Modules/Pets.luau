@@ -7,33 +7,21 @@ local Utils
 local GetSelectedItems
 local AgeBreakUUID = nil
 local MutantUUID = nil
+local MutationMachineConnection = nil
 
 function Pets.Initialize(registry)
 	reg = registry
 	fVar = reg.fVar
 	sData = reg.sData
 	Utils = reg.Utils
+
 	GetSelectedItems = Utils.GetSelectedItems
-	--[[ 	sData.RefreshActivePetsUI.OnClientEvent:Connect(function()
-		---
-	end) ]]
-
-	--[[ 	local allPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, false)
-	if allPets then
-		for i, pet in ipairs(allPets) do
-			local txt = string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID)
-			getgenv().fLog(txt)
+	sData.RefreshActivePetsUI.OnClientEvent:Connect(function()
+		local Options = reg.Options
+		if Options.tgMutantEnabled.Value then
+			Pets.TargetPetLevelCheck()
 		end
-	end
-
-	local equippedPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
-
-	if equippedPets then
-		for i, pet in ipairs(equippedPets) do
-			local txt2 = string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID)
-			getgenv().fLog(txt2)
-		end
-	end ]]
+	end)
 end
 
 local function GetPetInventory()
@@ -288,13 +276,49 @@ function Pets.FarmLevel()
 	Pets.SwapPetLoadout(Loadout)
 
 	fVar.isFarmingLevel = true
-	local PetType
-	MutantUUID, PetType = Pets.findFarmPet()
+	local PetType, Equiped
+
+	local Method = Options.ddMutantMethod.Value :: string
+
+	if Method == "Mutation" then
+		local serviceData = sData.DataService:GetData()
+		local machineData = serviceData.PetMutationMachine
+		if machineData then
+			if machineData.SubmittedPet and not machineData.IsRunning then
+				MutantUUID = machineData.SubmittedPet.UUID
+				sData.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
+				task.wait(1)
+				fVar.isFarmingLevel = false
+				Pets.MutatePet()
+				return
+			end
+			if machineData.PetReady then
+				fVar.isFarmingLevel = false
+				Pets.ClaimMutationPet()
+				return
+			end
+		end
+	end
+
+	if MutantUUID then
+		local TargetPet = Pets.RawData(MutantUUID)
+		PetType = TargetPet.PetType
+		Equiped = false
+	else
+		MutantUUID, PetType, Equiped = Pets.findFarmPet()
+	end
 	if not MutantUUID then
 		getgenv().fLog("🔴 FarmLevel: No Pet Found")
 		fVar.isFarmingLevel = false
 		return
 	end
+
+	if Equiped then
+		getgenv().fLog("🔵 FarmLevel: " .. tostring(PetType) .. " is already equipped")
+		fVar.isFarmingLevel = false
+		return
+	end
+
 	task.wait(tonumber(Options.LoadOutDelay.Value) or 8)
 	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
 	if EquipPets and #EquipPets >= 8 then
@@ -302,6 +326,7 @@ function Pets.FarmLevel()
 		fVar.isFarmingLevel = false
 		return
 	end
+
 	Pets.EquipPet(MutantUUID)
 	task.wait(0.1)
 	getgenv().fLog("🔵 FarmLevel: Found Pet " .. tostring(MutantUUID) .. " Type: " .. tostring(PetType))
@@ -314,7 +339,8 @@ function Pets.findFarmPet()
 	local useFavorite = Options.tgFavoritePet.Value :: boolean
 	local petType = GetSelectedItems(Options.ddMutantPetType.Value) --table
 	local targetMutant = GetSelectedItems(Options.ddTargetMutant.Value) --table
-
+	local Loadout = tonumber(Options.ddLevelLoadout.Value)
+	Pets.SwapPetLoadout(Loadout)
 	local blacklistMutant = {}
 	if Method == "Nightmare" then
 		blacklistMutant = { "Nightmare" }
@@ -326,32 +352,180 @@ function Pets.findFarmPet()
 		blacklistMutant = { "Venom" }
 	end
 
+	local function checkPet(petData)
+		for _, pet in ipairs(petData) do
+			if not table.find(petType, pet.PetType) then
+				continue
+			end
+			local isFavorite = pet.PetData.IsFavorite or false
+			if useFavorite ~= isFavorite then
+				continue
+			end
+			local petMutant = sData.EnumToNameCache[pet.PetData.MutationType] or "Normal"
+			if table.find(blacklistMutant, petMutant) then
+				continue
+			end
+			if Method == "Elephant" and tonumber(pet.PetData.BaseWeight) >= 3.5 and tonumber(pet.PetData.Level) >= 100 then
+				continue
+			end
+			if Method == "Level" and tonumber(pet.PetData.Level) >= 100 then
+				continue
+			end
+			return pet.UUID, pet.PetType
+		end
+		return nil, nil
+	end
+	task.wait(tonumber(Options.LoadOutDelay.Value) or 8)
+	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
+	if EquipPets then
+		local eUUID, ePetType = checkPet(EquipPets)
+		if eUUID then
+			return eUUID, ePetType, true
+		end
+	end
 	local AllPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, false)
-	if not AllPets then
+	if AllPets then
+		local aUUID, aPetType = checkPet(AllPets)
+		if aUUID then
+			return aUUID, aPetType, false
+		end
+	end
+	return nil, nil, nil
+end
+
+function Pets.TargetPetLevelCheck()
+	local Options = reg.Options
+	if not Options.tgMutantEnabled.Value or fVar.isFarmingLevel then
 		return
 	end
-
-	for _, pet in ipairs(AllPets) do
-		if not table.find(petType, pet.PetType) then
-			continue
-		end
-		local isFavorite = pet.PetData.IsFavorite or false
-		if useFavorite ~= isFavorite then
-			continue
-		end
-		local petMutant = sData.EnumToNameCache[pet.PetData.MutationType] or "Normal"
-		if table.find(blacklistMutant, petMutant) then
-			continue
-		end
-		if Method == "Elephant" and tonumber(pet.PetData.BaseWeight) >= 3.5 and tonumber(pet.PetData.Level) >= 100 then
-			continue
-		end
-		if Method == "Level" and tonumber(pet.PetData.Level) >= 100 then
-			continue
-		end
-		return pet.UUID, pet.PetType
+	if not MutantUUID then
+		getgenv().fLog("🟠 CheckLevel: No UUID Run FarmLevel()")
+		Pets.FarmLevel()
+		return
 	end
-	return nil
+	local TargetAge = tonumber(Options.inpMutantTargetAge.Value) or 100
+	local TargetPet = Pets.RawData(MutantUUID)
+	local Method = Options.ddMutantMethod.Value :: string
+
+	if Method == "Nightmare" then
+		if sData.EnumToNameCache[TargetPet.PetData.MutationType] == "Nightmare" then
+			Pets.UnequipPet(MutantUUID)
+			task.wait(0.5)
+			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Nightmare")
+			getgenv().fLog("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			MutantUUID = nil
+			Pets.FarmLevel()
+			return
+		end
+	elseif Method == "Venom" then
+		if sData.EnumToNameCache[TargetPet.PetData.MutationType] == "Venom" then
+			Pets.UnequipPet(MutantUUID)
+			task.wait(0.5)
+			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Venom")
+			getgenv().fLog("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			MutantUUID = nil
+			Pets.FarmLevel()
+			return
+		end
+	elseif Method == "Level" or Method == "Elephant" then
+		if TargetPet.PetData.Level >= TargetAge then
+			Pets.UnequipPet(MutantUUID)
+			task.wait(0.5)
+			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Level")
+			getgenv().fLog("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			MutantUUID = nil
+			Pets.FarmLevel()
+			return
+		end
+	elseif Method == "Mutation" then
+		if TargetPet.PetData.Level >= TargetAge then
+			Pets.UnequipPet(MutantUUID)
+			task.wait(0.5)
+			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " go to mutation machine")
+			Pets.MutatePet()
+			return
+		end
+	end
+end
+
+function Pets.MutatePet()
+	local Options = reg.Options
+	if not Options.tgMutantEnabled.Value or fVar.isMutating then
+		return
+	end
+	local Method = Options.ddMutantMethod.Value :: string
+	if Method ~= "Mutation" then
+		getgenv().fLog("🟠 MutatePet: Method is not Mutation")
+		Pets.FarmLevel()
+		return
+	end
+	if not MutantUUID then
+		getgenv().fLog("🟠 MutatePet: No UUID Run FarmLevel()")
+		Pets.FarmLevel()
+		return
+	end
+	local Loadout = tonumber(Options.ddTimeLoadout.Value)
+	Pets.SwapPetLoadout(Loadout)
+	task.wait(tonumber(Options.LoadOutDelay.Value) or 8)
+	pcall(Pets.UnequipPet, MutantUUID)
+	sData.Character:PivotTo(CFrame.new(-236.17, 4.50, 14.36))
+	task.wait(0.2)
+
+	if Pets.HeldPet(MutantUUID) then
+		task.wait(0.5)
+		sData.GameEvents.PetMutationMachineService_RE:FireServer("SubmitHeldPet")
+		task.wait(0.5)
+		sData.GameEvents.ReplicationChannel:FireServer("PetAssets", Pets.GetPetType(MutantUUID))
+		task.wait(1)
+		sData.GameEvents.PetMutationMachineService_RE:FireServer("StartMachine")
+		MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
+			if MutationMachineConnection then
+				MutationMachineConnection:Disconnect()
+				MutationMachineConnection = nil
+			end
+			Pets.ClaimMutationPet()
+		end)
+	end
+end
+
+function Pets.ClaimMutationPet()
+	local Options = reg.Options
+	if not Options.tgMutantEnabled.Value or fVar.isMutating then
+		return
+	end
+	local Loadout = tonumber(Options.ddClaimLoadout.Value)
+	Pets.SwapPetLoadout(Loadout)
+	if not MutantUUID then
+		local serviceData = sData.DataService:GetData()
+		local machineData = serviceData.PetMutationMachine
+		local submittedPet = machineData.SubmittedPet
+		if submittedPet then
+			MutantUUID = submittedPet.UUID
+		else
+			getgenv().fLog("🟠 ClaimMutationPet: No UUID Run FarmLevel() and MutatePet() first")
+			MutantUUID = nil
+			Pets.FarmLevel()
+			return
+		end
+	end
+	task.wait(tonumber(Options.LoadOutDelay.Value) or 8)
+	sData.GameEvents.PetMutationMachineService_RE:FireServer("ClaimMutatedPet")
+	task.wait(1)
+	local TargetPet = Pets.RawData(MutantUUID)
+	local targetMutant = GetSelectedItems(Options.ddTargetMutant.Value)
+	local petMutant = sData.EnumToNameCache[TargetPet.PetData.MutationType]
+	if table.find(targetMutant, petMutant) then
+		getgenv().fLog("🟢 ClaimMutationPet: " .. tostring(MutantUUID) .. " finished Mutation : " .. tostring(petMutant))
+		getgenv().fLog("🟣 ClaimMutationPet: Run FarmLevel() to get new Pet")
+		MutantUUID = nil
+		Pets.FarmLevel()
+		return
+	else
+		getgenv().fLog("🔴 ClaimMutationPet: " .. tostring(MutantUUID) .. " finished Mutation : " .. tostring(petMutant))
+		getgenv().fLog("🟣 ClaimMutationPet: Rerun FarmLevel() UUID : " .. tostring(MutantUUID))
+		Pets.FarmLevel()
+		return
+	end
 end
 
 return Pets

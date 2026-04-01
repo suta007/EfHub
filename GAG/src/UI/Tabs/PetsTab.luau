@@ -190,8 +190,8 @@ function PetsTab.Initialize(registry)
 
 	MutantSection:AddDropdown("ddLevelLoadout", {
 		Title = "Farm Level Loadout",
-		Values = { 0, 1, 2, 3, 4, 5, 6 },
-		Default = 1,
+		Values = { "0", "1", "2", "3", "4", "5", "6" },
+		Default = "1",
 		Callback = function()
 			QuickSave()
 		end,
@@ -199,8 +199,8 @@ function PetsTab.Initialize(registry)
 
 	MutantSection:AddDropdown("ddTimeLoadout", {
 		Title = "Reduce Time Loadout",
-		Values = { 0, 1, 2, 3, 4, 5, 6 },
-		Default = 2,
+		Values = { "0", "1", "2", "3", "4", "5", "6" },
+		Default = "2",
 		Callback = function()
 			QuickSave()
 		end,
@@ -208,8 +208,8 @@ function PetsTab.Initialize(registry)
 
 	MutantSection:AddDropdown("ddClaimLoadout", {
 		Title = "Claim Loadout",
-		Values = { 0, 1, 2, 3, 4, 5, 6 },
-		Default = 3,
+		Values = { "0", "1", "2", "3", "4", "5", "6" },
+		Default = "3",
 		Callback = function()
 			QuickSave()
 		end,
