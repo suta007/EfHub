@@ -569,10 +569,13 @@ function Pets.MutatePet()
 end
 
 function Pets.ClaimMutationPet()
-	if type(TaskMutantReady) == "thread" then
-		task.cancel(TaskMutantReady)
-		TaskMutantReady = nil
-	end
+	pcall(function()
+		if type(TaskMutantReady) == "thread" then
+			task.cancel(TaskMutantReady)
+			TaskMutantReady = nil
+		end
+	end)
+
 	local Options = reg.Options
 	if not Options.tgMutantEnabled.Value or fVar.isMutating then
 		return
