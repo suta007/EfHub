@@ -633,7 +633,7 @@ function Pets.CheckMutantReady()
 	getgenv().fLog("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
 	if machineData.PetReady then
 		MutantUUID = machineData.SubmittedPet.UUID
-		Pets.ClaimMutationPet()
+		task.spawn(Pets.ClaimMutationPet)
 		return
 	end
 end
