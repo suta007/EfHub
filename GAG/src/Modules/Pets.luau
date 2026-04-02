@@ -461,9 +461,10 @@ function Pets.TargetPetLevelCheck()
 	end
 	getgenv().fLog("🔵 CheckLevel: " .. tostring(TargetPet.PetType) .. " Level: " .. tostring(TargetPet.PetData.Level))
 	local Method = Options.ddMutantMethod.Value :: string
+	local petMutant = sData.EnumToNameCache[TargetPet.PetData.MutationType] or "Normal"
 
 	if Method == "Nightmare" then
-		if sData.EnumToNameCache[TargetPet.PetData.MutationType] == "Nightmare" then
+		if petMutant == "Nightmare" then
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Nightmare")
@@ -472,9 +473,13 @@ function Pets.TargetPetLevelCheck()
 			fVar.isMutating = false
 			Pets.FarmLevel()
 			return
+		elseif petMutant ~= "Normal" and petMutant ~= "Nightmare" then
+			Pets.PetShard("Cleansing Pet Shard")
+			fVar.isMutating = false
+			return
 		end
 	elseif Method == "Venom" then
-		if sData.EnumToNameCache[TargetPet.PetData.MutationType] == "Venom" then
+		if petMutant == "Venom" then
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Venom")
@@ -547,13 +552,7 @@ function Pets.MutatePet()
 		sData.GameEvents.ReplicationChannel:FireServer("PetAssets", Pets.GetPetType(MutantUUID))
 		task.wait(1)
 		sData.GameEvents.PetMutationMachineService_RE:FireServer("StartMachine")
-		--[[ 		MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
-			if MutationMachineConnection then
-				MutationMachineConnection:Disconnect()
-				MutationMachineConnection = nil
-			end
-			Pets.ClaimMutationPet()
-		end) ]]
+
 		if type(TaskMutantReady) == "thread" then
 			task.cancel(TaskMutantReady)
 			TaskMutantReady = nil
@@ -644,6 +643,28 @@ function Pets.CheckMutantReady()
 			Pets.ClaimMutationPet()
 		end)
 		return
+	end
+end
+
+function Pets.PetShard(shardName)
+	local backpack = sData.Backpack
+	local shard = Utils.findToolByPattern(backpack, shardName)
+	if shard then
+		local targetPet
+		local petsPhysical = game.Workspace:WaitForChild("PetsPhysical")
+		for _, pet in ipairs(petsPhysical:GetChildren()) do
+			if pet:FindFirstChild(MutantUUID) then
+				targetPet = pet
+				break
+			end
+		end
+		if targetPet then
+			Utils.EquipTool(shard)
+			task.wait(0.5)
+			sData.GameEvents.PetShardService_RE:FireServer("ApplyShard", targetPet)
+			fVar.isMutating = false
+			return
+		end
 	end
 end
 
