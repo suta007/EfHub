@@ -1,6 +1,7 @@
 local PetsTab = {}
 
 local reg
+local CheckLevelTask = nil
 
 function PetsTab.Initialize(registry)
 	reg = registry
@@ -105,14 +106,19 @@ function PetsTab.Initialize(registry)
 		Callback = function(Value)
 			if Value then
 				Pets.FarmLevel()
-				task.wait(5)
-				Pets.TargetPetLevelCheck()
+				task.wait(2)
+				pcall(Pets.TargetPetLevelCheck)
+				CheckLevelTask = task.spawn(function()
+					while task.wait(60) do
+						pcall(Pets.TargetPetLevelCheck)
+					end
+				end)
 			else
 				fVar.isMutating = false
-				--[[ 				if fVar.CheckLevelConnection then
-					fVar.CheckLevelConnection:Disconnect()
-					fVar.CheckLevelConnection = nil
-				end ]]
+				if CheckLevelTask then
+					task.cancel(CheckLevelTask)
+					CheckLevelTask = nil
+				end
 			end
 			QuickSave()
 		end,
