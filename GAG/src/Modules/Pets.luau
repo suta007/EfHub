@@ -23,12 +23,12 @@ function Pets.Initialize(registry)
 		end
 	end) ]]
 
-	sData.DataService:GetPathSignal("GardenGuide/PetData"):Connect(function()
+	--[[ 	sData.DataService:GetPathSignal("GardenGuide/PetData"):Connect(function()
 		local Options = reg.Options
 		if Options.tgMutantEnabled.Value then
 			Pets.TargetPetLevelCheck()
 		end
-	end)
+	end) ]]
 end
 
 local function GetPetInventory()
@@ -279,6 +279,23 @@ function Pets.FarmLevel()
 	if not Options.tgMutantEnabled.Value or fVar.isMutating then
 		return
 	end
+
+	if fVar.CheckLevelConnection then
+		fVar.CheckLevelConnection:Disconnect()
+		fVar.CheckLevelConnection = nil
+	end
+	--[[ 	if fVar.CheckLevelConnection2 then
+		fVar.CheckLevelConnection2:Disconnect()
+		fVar.CheckLevelConnection2 = nil
+	end ]]
+	fVar.CheckLevelConnection = sData.DataService:GetPathSignal("GardenGuide/PetData"):Connect(function()
+		Pets.TargetPetLevelCheck()
+	end)
+	--[[ 	fVar.CheckLevelConnection2 = sData.DataService:GetPathSignal("BadgeData/PetMaster"):Connect(function()
+		Pets.TargetPetLevelCheck()
+	end) ]]
+	--
+
 	Utils.ClickButton(Utils.GardenButton)
 	task.wait(0.5)
 	local Loadout = tonumber(Options.ddLevelLoadout.Value)

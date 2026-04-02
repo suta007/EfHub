@@ -107,11 +107,11 @@ function PetsTab.Initialize(registry)
 				Pets.FarmLevel()
 			else
 				fVar.isMutating = false
+				if fVar.CheckLevelConnection then
+					fVar.CheckLevelConnection:Disconnect()
+					fVar.CheckLevelConnection = nil
+				end
 			end
-			--[[ 			EfTasks.ToggleTask("Mutant", Value, function()
-				Pets.Mutant()
-				task.wait(2)
-			end) ]]
 			QuickSave()
 		end,
 	})

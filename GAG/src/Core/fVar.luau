@@ -18,6 +18,9 @@ fVar.isMutating = false
 
 fVar.UIShopLoaded = false
 
+fVar.CheckLevelConnection = nil
+fVar.CheckLevelConnection2 = nil
+
 fVar.Pos = {
 	Trowel = nil,
 	Sprinkler = nil,
