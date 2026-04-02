@@ -580,6 +580,7 @@ function Pets.ClaimMutationPet()
 			TaskMutantReady = nil
 		end
 	end) ]]
+	getgenv().fLog("🟢 ClaimMutationPet: Run ClaimMutationPet")
 
 	local Loadout = tonumber(Options.ddClaimLoadout.Value)
 	Pets.SwapPetLoadout(Loadout)
@@ -636,7 +637,10 @@ function Pets.CheckMutantReady()
 	getgenv().fLog("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
 	if machineData.PetReady then
 		MutantUUID = machineData.SubmittedPet.UUID
-		task.spawn(Pets.ClaimMutationPet)
+		getgenv().fLog("🟢 CheckMutantReady: Run ClaimMutationPet")
+		task.spawn(function()
+			Pets.ClaimMutationPet()
+		end)
 		return
 	end
 end
