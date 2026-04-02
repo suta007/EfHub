@@ -280,18 +280,28 @@ function Pets.FarmLevel()
 		return
 	end
 
-	if fVar.CheckLevelConnection then
+	--[[ 	if fVar.CheckLevelConnection then
 		fVar.CheckLevelConnection:Disconnect()
 		fVar.CheckLevelConnection = nil
 	end
 	if fVar.CheckLevelConnection2 then
 		fVar.CheckLevelConnection2:Disconnect()
 		fVar.CheckLevelConnection2 = nil
-	end
-	fVar.CheckLevelConnection = sData.DataService:GetPathSignal("GardenGuide/PetData/@"):Connect(function()
+	end ]]
+	sData.DataService:GetPathSignal("GardenGuide/PetData/@"):Connect(function(...)
+		getgenv().fLog("GardenGuide/PetData/@")
 		Pets.TargetPetLevelCheck()
 	end)
-	fVar.CheckLevelConnection2 = sData.DataService:GetPathSignal("BadgeData/PetMaster/@"):Connect(function()
+	sData.DataService:GetPathSignal("GardenGuide/PetData"):Connect(function(...)
+		getgenv().fLog("GardenGuide/PetData")
+		Pets.TargetPetLevelCheck()
+	end)
+	sData.DataService:GetPathSignal("BadgeData/PetMaster/@"):Connect(function(...)
+		getgenv().fLog("BadgeData/PetMaster/@")
+		Pets.TargetPetLevelCheck()
+	end)
+	sData.DataService:GetPathSignal("BadgeData/PetMaster"):Connect(function(...)
+		getgenv().fLog("BadgeData/PetMaster")
 		Pets.TargetPetLevelCheck()
 	end)
 	--
