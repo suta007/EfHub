@@ -8,6 +8,7 @@ local GetSelectedItems
 local AgeBreakUUID = nil
 local MutantUUID = nil
 local MutationMachineConnection = nil
+local TaskMutantReady = nil
 
 function Pets.Initialize(registry)
 	reg = registry
@@ -302,12 +303,18 @@ function Pets.FarmLevel()
 				getgenv().fLog("เจอ IsRunning")
 				MutantUUID = machineData.SubmittedPet.UUID
 
-				MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
+				--[[ 				MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
 					if MutationMachineConnection then
 						MutationMachineConnection:Disconnect()
 						MutationMachineConnection = nil
 					end
 					Pets.ClaimMutationPet()
+				end) ]]
+
+				TaskMutantReady = task.spawn(function()
+					while task.wait(60) do
+						Pets.CheckMutantReady()
+					end
 				end)
 				fVar.isMutating = false
 				return
@@ -537,12 +544,18 @@ function Pets.MutatePet()
 		sData.GameEvents.ReplicationChannel:FireServer("PetAssets", Pets.GetPetType(MutantUUID))
 		task.wait(1)
 		sData.GameEvents.PetMutationMachineService_RE:FireServer("StartMachine")
-		MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
+		--[[ 		MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
 			if MutationMachineConnection then
 				MutationMachineConnection:Disconnect()
 				MutationMachineConnection = nil
 			end
 			Pets.ClaimMutationPet()
+		end) ]]
+
+		TaskMutantReady = task.spawn(function()
+			while task.wait(60) do
+				Pets.CheckMutantReady()
+			end
 		end)
 		return
 	end
@@ -550,6 +563,10 @@ function Pets.MutatePet()
 end
 
 function Pets.ClaimMutationPet()
+	if type(TaskMutantReady) == "thread" then
+		task.cancel(TaskMutantReady)
+		TaskMutantReady = nil
+	end
 	local Options = reg.Options
 	if not Options.tgMutantEnabled.Value or fVar.isMutating then
 		return
@@ -600,6 +617,17 @@ function Pets.ClaimMutationPet()
 		getgenv().fLog("🟣 ClaimMutationPet: Rerun FarmLevel() UUID : " .. tostring(MutantUUID))
 		fVar.isMutating = false
 		Pets.FarmLevel()
+		return
+	end
+end
+
+function Pets.CheckMutantReady()
+	local serviceData = sData.DataService:GetData()
+	local machineData = serviceData.PetMutationMachine
+	if machineData.PetReady then
+		MutantUUID = machineData.SubmittedPet.UUID
+		fVar.isMutating = false
+		Pets.ClaimMutationPet()
 		return
 	end
 end
