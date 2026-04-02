@@ -16,7 +16,14 @@ function Pets.Initialize(registry)
 	Utils = reg.Utils
 
 	GetSelectedItems = Utils.GetSelectedItems
-	sData.RefreshActivePetsUI.OnClientEvent:Connect(function()
+	--[[ 	sData.RefreshActivePetsUI.OnClientEvent:Connect(function()
+		local Options = reg.Options
+		if Options.tgMutantEnabled.Value then
+			Pets.TargetPetLevelCheck()
+		end
+	end) ]]
+
+	sData.DataService:GetPathSignal("GardenGuide/PetData"):Connect(function()
 		local Options = reg.Options
 		if Options.tgMutantEnabled.Value then
 			Pets.TargetPetLevelCheck()
@@ -269,7 +276,7 @@ end
 -- GetData_result.PetMutationMachine.IsRunning=false
 function Pets.FarmLevel()
 	local Options = reg.Options
-	if not Options.tgMutantEnabled.Value or fVar.isFarmingLevel then
+	if not Options.tgMutantEnabled.Value or fVar.isMutating then
 		return
 	end
 	Utils.ClickButton(Utils.GardenButton)
@@ -277,7 +284,7 @@ function Pets.FarmLevel()
 	local Loadout = tonumber(Options.ddLevelLoadout.Value)
 	Pets.SwapPetLoadout(Loadout)
 
-	fVar.isFarmingLevel = true
+	fVar.isMutating = true
 	local PetType, Equiped
 
 	local Method = Options.ddMutantMethod.Value :: string
@@ -290,12 +297,12 @@ function Pets.FarmLevel()
 				MutantUUID = machineData.SubmittedPet.UUID
 				sData.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
 				task.wait(1)
-				fVar.isFarmingLevel = false
+				fVar.isMutating = false
 				Pets.MutatePet()
 				return
 			end
 			if machineData.PetReady then
-				fVar.isFarmingLevel = false
+				fVar.isMutating = false
 				Pets.ClaimMutationPet()
 				return
 			end
@@ -320,13 +327,13 @@ function Pets.FarmLevel()
 	end
 	if not MutantUUID then
 		getgenv().fLog("🔴 FarmLevel: No Pet Found")
-		fVar.isFarmingLevel = false
+		fVar.isMutating = false
 		return
 	end
 
 	if Equiped then
 		getgenv().fLog("🔵 FarmLevel: " .. tostring(PetType) .. " is already equipped")
-		fVar.isFarmingLevel = false
+		fVar.isMutating = false
 		return
 	end
 
@@ -334,14 +341,14 @@ function Pets.FarmLevel()
 	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
 	if EquipPets and #EquipPets >= 8 then
 		getgenv().fLog("🔴 FarmLevel: Equip pet full")
-		fVar.isFarmingLevel = false
+		fVar.isMutating = false
 		return
 	end
 
 	Pets.EquipPet(MutantUUID)
 	task.wait(0.1)
 	getgenv().fLog("🔵 FarmLevel: Found Pet " .. tostring(MutantUUID) .. " Type: " .. tostring(PetType))
-	fVar.isFarmingLevel = false
+	fVar.isMutating = false
 end
 
 function Pets.findFarmPet()
@@ -406,13 +413,13 @@ end
 
 function Pets.TargetPetLevelCheck()
 	local Options = reg.Options
-	if not Options.tgMutantEnabled.Value or fVar.isFarmingLevel then
+	if not Options.tgMutantEnabled.Value or fVar.isMutating then
 		return
 	end
-	fVar.isFarmingLevel = true
+	fVar.isMutating = true
 	if not MutantUUID then
 		getgenv().fLog("🟠 CheckLevel: No UUID Run FarmLevel()")
-		fVar.isFarmingLevel = false
+		fVar.isMutating = false
 		Pets.FarmLevel()
 		return
 	end
@@ -435,7 +442,7 @@ function Pets.TargetPetLevelCheck()
 			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Nightmare")
 			getgenv().fLog("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 			MutantUUID = nil
-			fVar.isFarmingLevel = false
+			fVar.isMutating = false
 			Pets.FarmLevel()
 			return
 		end
@@ -446,7 +453,7 @@ function Pets.TargetPetLevelCheck()
 			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Venom")
 			getgenv().fLog("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 			MutantUUID = nil
-			fVar.isFarmingLevel = false
+			fVar.isMutating = false
 			Pets.FarmLevel()
 			return
 		end
@@ -457,7 +464,7 @@ function Pets.TargetPetLevelCheck()
 			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Level")
 			getgenv().fLog("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 			MutantUUID = nil
-			fVar.isFarmingLevel = false
+			fVar.isMutating = false
 			Pets.FarmLevel()
 			return
 		end
@@ -465,18 +472,18 @@ function Pets.TargetPetLevelCheck()
 		local serviceData = sData.DataService:GetData()
 		local machineData = serviceData.PetMutationMachine
 		if machineData and (machineData.SubmittedPet or machineData.IsRunning or machineData.PetReady) then
-			fVar.isFarmingLevel = false
+			fVar.isMutating = false
 			return
 		end
 		if TargetPet.PetData.Level >= TargetAge then
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			getgenv().fLog("🟢 CheckLevel: " .. tostring(MutantUUID) .. " go to mutation machine")
-			fVar.isFarmingLevel = false
+			fVar.isMutating = false
 			Pets.MutatePet()
 			return
 		end
-		fVar.isFarmingLevel = false
+		fVar.isMutating = false
 	end
 end
 
