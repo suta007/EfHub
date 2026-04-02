@@ -286,8 +286,11 @@ function Pets.FarmLevel()
 	if Method == "Mutation" then
 		local serviceData = sData.DataService:GetData()
 		local machineData = serviceData.PetMutationMachine
+		getgenv().fLog("machineData")
 		if machineData then
+			getgenv().fLog("เจอ machineData")
 			if machineData.SubmittedPet and not machineData.IsRunning then
+				getgenv().fLog("เจอ SubmittedPet")
 				MutantUUID = machineData.SubmittedPet.UUID
 				sData.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
 				task.wait(1)
@@ -296,12 +299,14 @@ function Pets.FarmLevel()
 				return
 			end
 			if machineData.PetReady then
+				getgenv().fLog("เจอ PetReady")
 				MutantUUID = machineData.SubmittedPet.UUID
 				fVar.isMutating = false
 				Pets.ClaimMutationPet()
 				return
 			end
 			if machineData.IsRunning then
+				getgenv().fLog("เจอ IsRunning")
 				MutantUUID = machineData.SubmittedPet.UUID
 
 				MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()

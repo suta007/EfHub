@@ -139,7 +139,8 @@ task.wait(0.5)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
---local GetData_result = DataService:GetData()
+local GetData_result = DataService:GetData()
+local machineData = GetData_result.PetMutationMachine
 
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
@@ -159,26 +160,4 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local PetUtils = require(game:GetService("ReplicatedStorage").Modules.PetServices.PetUtilities)
-local Player = game.Players.LocalPlayer
-
--- การใช้งาน: (Player, 0, true, true)
--- 0 = ลำดับปกติ, true = เอาเลเวลสูงขึ้นก่อน, true = เอาเฉพาะตัวที่ใส่อยู่
-
-local AllPets = PetUtils:GetPetsSortedByAge(Player, 0, true, false)
-
-if AllPets then
-	for i, pet in ipairs(AllPets) do
-		ShowData(string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID))
-	end
-end
-
-AddLog("========================================")
-
-local equippedPets = PetUtils:GetPetsSortedByAge(Player, 0, true, true)
-
-if equippedPets then
-	for i, pet in ipairs(equippedPets) do
-		ShowData(string.format("ลำดับที่ %d: %s | Level: %d | UUID: %s", i, pet.PetType, pet.PetData.Level, pet.UUID))
-	end
-end
+ShowData(machineData)
