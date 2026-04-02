@@ -569,18 +569,18 @@ function Pets.MutatePet()
 end
 
 function Pets.ClaimMutationPet()
-	pcall(function()
-		if type(TaskMutantReady) == "thread" then
-			task.cancel(TaskMutantReady)
-			TaskMutantReady = nil
-		end
-	end)
-
 	local Options = reg.Options
 	if not Options.tgMutantEnabled.Value or fVar.isMutating then
 		return
 	end
 	fVar.isMutating = true
+	--[[ 	pcall(function()
+		if type(TaskMutantReady) == "thread" then
+			task.cancel(TaskMutantReady)
+			TaskMutantReady = nil
+		end
+	end) ]]
+
 	local Loadout = tonumber(Options.ddClaimLoadout.Value)
 	Pets.SwapPetLoadout(Loadout)
 	if not MutantUUID then
