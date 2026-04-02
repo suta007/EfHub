@@ -310,7 +310,10 @@ function Pets.FarmLevel()
 					end
 					Pets.ClaimMutationPet()
 				end) ]]
-
+				if type(TaskMutantReady) == "thread" then
+					task.cancel(TaskMutantReady)
+					TaskMutantReady = nil
+				end
 				TaskMutantReady = task.spawn(function()
 					while task.wait(60) do
 						Pets.CheckMutantReady()
@@ -551,7 +554,10 @@ function Pets.MutatePet()
 			end
 			Pets.ClaimMutationPet()
 		end) ]]
-
+		if type(TaskMutantReady) == "thread" then
+			task.cancel(TaskMutantReady)
+			TaskMutantReady = nil
+		end
 		TaskMutantReady = task.spawn(function()
 			while task.wait(60) do
 				Pets.CheckMutantReady()
