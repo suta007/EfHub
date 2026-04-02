@@ -296,8 +296,22 @@ function Pets.FarmLevel()
 				return
 			end
 			if machineData.PetReady then
+				MutantUUID = machineData.SubmittedPet.UUID
 				fVar.isMutating = false
 				Pets.ClaimMutationPet()
+				return
+			end
+			if machineData.IsRunning then
+				MutantUUID = machineData.SubmittedPet.UUID
+
+				MutationMachineConnection = sData.DataService:GetPathSignal("PetMutationMachine/PetReady"):Connect(function()
+					if MutationMachineConnection then
+						MutationMachineConnection:Disconnect()
+						MutationMachineConnection = nil
+					end
+					Pets.ClaimMutationPet()
+				end)
+				fVar.isMutating = false
 				return
 			end
 		end
@@ -336,6 +350,7 @@ function Pets.FarmLevel()
 	if EquipPets and #EquipPets >= 8 then
 		getgenv().fLog("🔴 FarmLevel: Equip pet full")
 		fVar.isMutating = false
+
 		return
 	end
 
@@ -521,6 +536,7 @@ function Pets.MutatePet()
 			end
 			Pets.ClaimMutationPet()
 		end)
+		return
 	end
 	fVar.isMutating = false
 end
@@ -549,8 +565,19 @@ function Pets.ClaimMutationPet()
 	end
 	task.wait(tonumber(Options.LoadOutDelay.Value) or 8)
 	sData.GameEvents.PetMutationMachineService_RE:FireServer("ClaimMutatedPet")
-	task.wait(1)
+	task.wait(1.5)
 	local TargetPet = Pets.RawData(MutantUUID)
+	if not TargetPet or not TargetPet.PetData then
+		getgenv().fLog("🟠 ClaimMutationPet: รอข้อมูล Pet จาก Server...")
+		task.wait(1)
+		TargetPet = Pets.RawData(MutantUUID)
+		if not TargetPet or not TargetPet.PetData then
+			getgenv().fLog("🔴 ClaimMutationPet: โหลดข้อมูลล้มเหลว รัน FarmLevel ใหม่")
+			fVar.isMutating = false
+			Pets.FarmLevel()
+			return
+		end
+	end
 	local targetMutant = GetSelectedItems(Options.ddTargetMutant.Value)
 	local petMutant = sData.EnumToNameCache[TargetPet.PetData.MutationType]
 	if table.find(targetMutant, petMutant) then
