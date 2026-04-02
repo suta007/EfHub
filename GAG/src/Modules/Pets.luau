@@ -289,15 +289,7 @@ function Pets.FarmLevel()
 		getgenv().fLog("machineData")
 		if machineData then
 			getgenv().fLog("เจอ machineData")
-			if machineData.SubmittedPet and not machineData.IsRunning then
-				getgenv().fLog("เจอ SubmittedPet")
-				MutantUUID = machineData.SubmittedPet.UUID
-				sData.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
-				task.wait(1)
-				fVar.isMutating = false
-				Pets.MutatePet()
-				return
-			end
+
 			if machineData.PetReady then
 				getgenv().fLog("เจอ PetReady")
 				MutantUUID = machineData.SubmittedPet.UUID
@@ -305,6 +297,7 @@ function Pets.FarmLevel()
 				Pets.ClaimMutationPet()
 				return
 			end
+
 			if machineData.IsRunning then
 				getgenv().fLog("เจอ IsRunning")
 				MutantUUID = machineData.SubmittedPet.UUID
@@ -317,6 +310,16 @@ function Pets.FarmLevel()
 					Pets.ClaimMutationPet()
 				end)
 				fVar.isMutating = false
+				return
+			end
+
+			if machineData.SubmittedPet and not machineData.IsRunning then
+				getgenv().fLog("เจอ SubmittedPet")
+				MutantUUID = machineData.SubmittedPet.UUID
+				sData.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
+				task.wait(1)
+				fVar.isMutating = false
+				Pets.MutatePet()
 				return
 			end
 		end
