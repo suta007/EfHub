@@ -630,9 +630,9 @@ end
 function Pets.CheckMutantReady()
 	local serviceData = sData.DataService:GetData()
 	local machineData = serviceData.PetMutationMachine
+	getgenv().fLog("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
 	if machineData.PetReady then
 		MutantUUID = machineData.SubmittedPet.UUID
-		fVar.isMutating = false
 		Pets.ClaimMutationPet()
 		return
 	end
