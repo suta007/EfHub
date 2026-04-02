@@ -288,10 +288,10 @@ function Pets.FarmLevel()
 		fVar.CheckLevelConnection2:Disconnect()
 		fVar.CheckLevelConnection2 = nil
 	end
-	fVar.CheckLevelConnection = sData.DataService:GetPathSignal("GardenGuide/PetData"):Connect(function()
+	fVar.CheckLevelConnection = sData.DataService:GetPathSignal("GardenGuide/PetData/@"):Connect(function()
 		Pets.TargetPetLevelCheck()
 	end)
-	fVar.CheckLevelConnection2 = sData.DataService:GetPathSignal("BadgeData/PetMaster"):Connect(function()
+	fVar.CheckLevelConnection2 = sData.DataService:GetPathSignal("BadgeData/PetMaster/@"):Connect(function()
 		Pets.TargetPetLevelCheck()
 	end)
 	--
