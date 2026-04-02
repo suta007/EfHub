@@ -563,6 +563,7 @@ function Pets.MutatePet()
 				Pets.CheckMutantReady()
 			end
 		end)
+		fVar.isMutating = false
 		return
 	end
 	fVar.isMutating = false
@@ -574,12 +575,12 @@ function Pets.ClaimMutationPet()
 		return
 	end
 	fVar.isMutating = true
-	--[[ 	pcall(function()
+	pcall(function()
 		if type(TaskMutantReady) == "thread" then
 			task.cancel(TaskMutantReady)
 			TaskMutantReady = nil
 		end
-	end) ]]
+	end)
 	getgenv().fLog("🟢 ClaimMutationPet: Run ClaimMutationPet")
 
 	local Loadout = tonumber(Options.ddClaimLoadout.Value)
