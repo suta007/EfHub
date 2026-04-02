@@ -105,12 +105,14 @@ function PetsTab.Initialize(registry)
 		Callback = function(Value)
 			if Value then
 				Pets.FarmLevel()
+				task.wait(5)
+				Pets.TargetPetLevelCheck()
 			else
 				fVar.isMutating = false
-				if fVar.CheckLevelConnection then
+				--[[ 				if fVar.CheckLevelConnection then
 					fVar.CheckLevelConnection:Disconnect()
 					fVar.CheckLevelConnection = nil
-				end
+				end ]]
 			end
 			QuickSave()
 		end,
