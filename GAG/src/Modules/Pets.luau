@@ -638,6 +638,7 @@ function Pets.CheckMutantReady()
 	getgenv().fLog("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
 	if machineData.PetReady then
 		MutantUUID = machineData.SubmittedPet.UUID
+		fVar.isMutating = false
 		getgenv().fLog("🟢 CheckMutantReady: Run ClaimMutationPet")
 		task.spawn(function()
 			Pets.ClaimMutationPet()
