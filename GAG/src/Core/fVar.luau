@@ -1,20 +1,20 @@
 local fVar = {}
 
-fVar.isPlanting = false
-fVar.isAgeBreaking = false
-fVar.isHarvesting = false
-fVar.isSelling = false
-fVar.isFruitHidden = false
-fVar.isPlantHidden = false
-fVar.isRemovingPlants = false
-fVar.isRemovingCrops = false
-fVar.isTroweling = false
-fVar.isReclaiming = false
-fVar.isSprinkling = false
-fVar.isCatLeading = false
-fVar.isFarmingLevel = false
---fVar.isOpeningPack = false
-fVar.isMutating = false
+fVar.IsPlanting = false
+fVar.IsAgeBreaking = false
+fVar.IsHarvesting = false
+fVar.IsSelling = false
+fVar.IsFruitHidden = false
+fVar.IsPlantHidden = false
+fVar.IsRemovingPlants = false
+fVar.IsRemovingCrops = false
+fVar.IsTroweling = false
+fVar.IsReclaiming = false
+fVar.IsSprinkling = false
+fVar.IsCatLeading = false
+fVar.IsFarmingLevel = false
+--fVar.IsOpeningPack = false
+fVar.IsMutating = false
 
 fVar.UIShopLoaded = false
 

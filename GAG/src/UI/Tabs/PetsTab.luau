@@ -24,7 +24,7 @@ function PetsTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if not Value then
-				fVar.isAgeBreaking = false
+				fVar.IsAgeBreaking = false
 			end
 			EfTasks.ToggleTask("AgeBreak", Value, function()
 				Pets.AgeBreak()
@@ -40,7 +40,7 @@ function PetsTab.Initialize(registry)
 		Default = "",
 		Multi = false,
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -51,7 +51,7 @@ function PetsTab.Initialize(registry)
 		Default = 125,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -62,7 +62,7 @@ function PetsTab.Initialize(registry)
 		Title = "Age Condition",
 		Values = { "Below", "Above" },
 		Default = "Below",
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -72,7 +72,7 @@ function PetsTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -83,7 +83,7 @@ function PetsTab.Initialize(registry)
 		Title = "Weight Condition",
 		Values = { "Below", "Above" },
 		Default = "Below",
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -93,7 +93,7 @@ function PetsTab.Initialize(registry)
 		Default = 0,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -114,7 +114,7 @@ function PetsTab.Initialize(registry)
 					end
 				end)
 			else
-				fVar.isMutating = false
+				fVar.IsMutating = false
 				if CheckLevelTask then
 					task.cancel(CheckLevelTask)
 					CheckLevelTask = nil

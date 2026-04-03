@@ -1,5 +1,5 @@
 local getconnections = (getfenv() :: any).getconnections
-local getgenv = (getfenv() :: any).getgenv
+
 local Utils = {}
 local reg: any
 local sData: any
@@ -50,7 +50,7 @@ function Utils.GetPlantsFolder()
 	return Farm_Important and Farm_Important:FindFirstChild("Plants_Physical")
 end
 
-function Utils.getPlot()
+function Utils.GetPlot()
 	local myPlot = {}
 	local plantLocations = Utils.GetMyFarm().Important.Plant_Locations:GetChildren()
 	for _, plate in pairs(plantLocations) do
@@ -61,7 +61,7 @@ function Utils.getPlot()
 	return myPlot
 end
 
-function Utils.getBoundary(Plot)
+function Utils.GetBoundary(Plot)
 	if not Plot then
 		return nil
 	end
@@ -81,7 +81,7 @@ function Utils.getBoundary(Plot)
 end
 
 function Utils.GetRandomPlotPos()
-	local MyPlantableParts = Utils.getPlot()
+	local MyPlantableParts = Utils.GetPlot()
 	if #MyPlantableParts == 0 then
 		return nil
 	end
@@ -131,11 +131,11 @@ function Utils.GetSelectedItems(DropdownValue)
 	return Items
 end
 
-function Utils.handleRuntimeError(modeName, err)
-	getgenv().fLog(string.format("❌ %s error: %s", modeName, tostring(err)))
+function Utils.HandleRuntimeError(modeName, err)
+	reg.Log(string.format("❌ %s error: %s", modeName, tostring(err)))
 end
 
-function Utils.runWithFlag(flagName, modeName, fn)
+function Utils.RunWithFlag(flagName, modeName, fn)
 	local fVar = reg and reg.fVar
 	if not fVar then
 		return false
@@ -144,19 +144,19 @@ function Utils.runWithFlag(flagName, modeName, fn)
 	local ok, err = xpcall(fn, debug.traceback)
 	fVar[flagName] = false
 	if not ok then
-		Utils.handleRuntimeError(modeName, err)
+		Utils.HandleRuntimeError(modeName, err)
 	end
 	return ok
 end
 
-function Utils.findToolByName(backpack, toolName)
+function Utils.FindToolByName(backpack, toolName)
 	if not backpack then
 		return nil
 	end
 	return backpack:FindFirstChild(toolName)
 end
 
-function Utils.findToolByPattern(backpack, namePattern)
+function Utils.FindToolByPattern(backpack, namePattern)
 	if not backpack then
 		return nil
 	end
@@ -168,7 +168,7 @@ function Utils.findToolByPattern(backpack, namePattern)
 	return nil
 end
 
-function Utils.matchesWeight(weight, condition, value)
+function Utils.MatchesWeight(weight, condition, value)
 	if value <= 0 then
 		return true
 	end
@@ -181,7 +181,7 @@ function Utils.matchesWeight(weight, condition, value)
 	return false
 end
 
-function Utils.isTableEmpty(t)
+function Utils.IsTableEmpty(t)
 	return type(t) ~= "table" or next(t) == nil
 end
 

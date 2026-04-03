@@ -21,7 +21,7 @@ function AutoTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if not Value then
-				fVar.isRemovingPlants = false
+				fVar.IsRemovingPlants = false
 			end
 			EfTasks.ToggleTask("AutoRemovePlants", Value, function()
 				Auto.RemovePlants()
@@ -72,7 +72,7 @@ function AutoTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if not Value then
-				fVar.isRemovingCrops = false
+				fVar.IsRemovingCrops = false
 			end
 			EfTasks.ToggleTask("AutoRemoveCrops", Value, function()
 				Auto.RemoveCrops()
@@ -218,7 +218,7 @@ function AutoTab.Initialize(registry)
 			if Value then
 				task.spawn(Auto.Trowel)
 			else
-				fVar.isTroweling = false
+				fVar.IsTroweling = false
 			end
 		end,
 	})
@@ -265,7 +265,7 @@ function AutoTab.Initialize(registry)
 			if Value then
 				task.spawn(Auto.Reclaim)
 			else
-				fVar.isReclaiming = false
+				fVar.IsReclaiming = false
 			end
 		end,
 	})
@@ -331,7 +331,7 @@ function AutoTab.Initialize(registry)
 			if Value then
 				task.spawn(Auto.Sprinkler)
 			else
-				fVar.isSprinkling = false
+				fVar.IsSprinkling = false
 			end
 		end,
 	})
@@ -407,7 +407,7 @@ function AutoTab.Initialize(registry)
 			if Value then
 				task.spawn(Auto.CatLead)
 			else
-				fVar.isCatLeading = false
+				fVar.IsCatLeading = false
 			end
 		end,
 	})

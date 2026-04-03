@@ -5,26 +5,27 @@ getgenv().DEV_MODE = true
 local EfHub
 
 if getgenv().DEV_MODE then
-	local BaseUrl = "https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/GAG/src/"
+	local BASE_URL = "https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/GAG/src/"
 
-	local function GetRemote(path)
-		local url = BaseUrl .. path .. ".luau"
-		local success, content = pcall(function()
-			return game:HttpGet(url)
-		end)
-		if not success or not content then
-			error("Remote Error: Could not fetch " .. path)
-		end
-		local func, err = loadstring(content)
-		if not func then
-			error("Compile Error in " .. path .. ": " .. tostring(err))
-		end
-		return func()
+	-- 1. โหลด Loader Service มาก่อนเป็นตัวแรกสุด
+	local success, content = pcall(function()
+		return (game :: any):HttpGet(BASE_URL .. "Core/Loader.luau")
+	end)
+	if not success or not content then
+		error("Bootloader Error: Could not fetch Core/Loader")
 	end
 
-	getgenv().EF_REMOTE = GetRemote
+	local loaderFunc, err = loadstring(content)
+	if not loaderFunc then
+		error("Bootloader Compile Error: Core/Loader: " .. tostring(err))
+	end
+	local Loader = loaderFunc()
 
-	EfHub = GetRemote("EfHub")
+	-- 2. เชื่อมต่อระบบการโหลด Remote ให้กับทั้งระบบ
+	getgenv().EF_REMOTE = Loader.Require
+
+	-- 3. โหลด EfHub ผ่าน Loader
+	EfHub = Loader.Require("EfHub")
 else
 	EfHub = require("./EfHub.luau")
 end

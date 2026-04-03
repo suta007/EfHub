@@ -9,77 +9,44 @@ local EfHub = {}
 local function LoadModules()
 	local Registry = {}
 	local isDev = getgenv().DEV_MODE
+	local LoaderPath = "Core/Loader"
+	local Loader
+
 	if isDev then
-		-- 1. Core
-		Registry.sData = EF_REMOTE("Core/sData")
-		Registry.fVar = EF_REMOTE("Core/fVar")
-
-		-- 2. Functional Modules
-		Registry.Utils = EF_REMOTE("Modules/Utils")
-		Registry.EfTasks = EF_REMOTE("Modules/EfTasks")
-		Registry.Main = EF_REMOTE("Modules/Main")
-		Registry.Shop = EF_REMOTE("Modules/Shop")
-		Registry.Auto = EF_REMOTE("Modules/Auto")
-		Registry.Pets = EF_REMOTE("Modules/Pets")
-
-		--
-		Registry.Misc = EF_REMOTE("Modules/Misc")
-		--
-		--
-		--Registry.Process = EF_REMOTE("Modules/Process")
-		--
-		--Registry.EventDrive = EF_REMOTE("Modules/EventDrive")
-
-		-- 3. UI Modules
-		Registry.Window = EF_REMOTE("UI/Window")
-		Registry.MainTab = EF_REMOTE("UI/Tabs/MainTab")
-		Registry.ShopTab = EF_REMOTE("UI/Tabs/ShopTab")
-		Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
-		Registry.AutoTab = EF_REMOTE("UI/Tabs/AutoTab")
-		Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
-		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
-
-		--Registry.test = EF_REMOTE("Modules/test")
-
-		--
-		--
-		-- Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
-		--
+		Loader = EF_REMOTE(LoaderPath)
 	else
-		-- 1. Core
-		Registry.sData = require("./Core/sData.luau")
-		Registry.fVar = require("./Core/fVar.luau")
-
-		-- 2. Functional Modules
-		Registry.Utils = require("./Modules/Utils.luau")
-		Registry.EfTasks = require("./Modules/EfTasks.luau")
-		Registry.Main = require("./Modules/Main.luau")
-		Registry.Shop = require("./Modules/Shop.luau")
-		Registry.Auto = require("./Modules/Auto.luau")
-		Registry.Pets = require("./Modules/Pets.luau")
-		Registry.Misc = require("./Modules/Misc.luau")
-
-		--
-		--
-		--Registry.Process = require("./Modules/Process.luau")
-		--
-		--Registry.EventDrive = require("./Modules/EventDrive.luau")
-
-		-- 3. UI Modules
-		Registry.Window = require("./UI/Window.luau")
-		Registry.MainTab = require("./UI/Tabs/MainTab.luau")
-		Registry.ShopTab = require("./UI/Tabs/ShopTab.luau")
-		Registry.PetsTab = require("./UI/Tabs/PetsTab.luau")
-		Registry.AutoTab = require("./UI/Tabs/AutoTab.luau")
-		Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
-		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
-
-		--
-		--Registry.test = require("./Modules/test.luau")
-		--
-		-- Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
-		--
+		Loader = require("./" .. LoaderPath .. ".luau")
 	end
+
+	Registry.Loader = Loader
+	Registry.Log = getgenv().Log
+
+	local function Require(path)
+		return Loader.Require(path)
+	end
+
+	-- 1. Core
+	Registry.sData = Require("Core/sData")
+	Registry.fVar = Require("Core/fVar")
+
+	-- 2. Functional Modules
+	Registry.Utils = Require("Modules/Utils")
+	Registry.EfTasks = Require("Modules/EfTasks")
+
+	Registry.Main = Require("Modules/Main")
+	Registry.Shop = Require("Modules/Shop")
+	Registry.Auto = Require("Modules/Auto")
+	Registry.Pets = Require("Modules/Pets")
+	Registry.Misc = Require("Modules/Misc")
+
+	-- 3. UI Modules
+	Registry.Window = Require("UI/Window")
+	Registry.MainTab = Require("UI/Tabs/MainTab")
+	Registry.ShopTab = Require("UI/Tabs/ShopTab")
+	Registry.PetsTab = Require("UI/Tabs/PetsTab")
+	Registry.AutoTab = Require("UI/Tabs/AutoTab")
+	Registry.MiscTab = Require("UI/Tabs/MiscTab")
+	Registry.LogTab = Require("UI/Tabs/LogTab")
 
 	return Registry
 end

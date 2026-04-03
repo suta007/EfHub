@@ -27,7 +27,7 @@ function MainTab.Initialize(reg)
 		Default = false,
 		Callback = function(Value)
 			if not Value then
-				fVar.isPlanting = false
+				fVar.IsPlanting = false
 			end
 			EfTasks.ToggleTask("AutoPlant", Value, function()
 				Main.AutoPlant()
@@ -48,7 +48,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = {},
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -57,7 +57,7 @@ function MainTab.Initialize(reg)
 		Title = "Select Plants Position",
 		Values = { "Player", "Random" },
 		Default = "Player",
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -68,7 +68,7 @@ function MainTab.Initialize(reg)
 		Default = false,
 		Callback = function(Value)
 			if not Value then
-				fVar.isHarvesting = false
+				fVar.IsHarvesting = false
 				Main.ClearReadyCrops()
 			end
 			EfTasks.ToggleTask("AutoHarvest", Value, function()
@@ -93,7 +93,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -109,7 +109,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -128,7 +128,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -146,7 +146,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -157,7 +157,7 @@ function MainTab.Initialize(reg)
 		Values = { "ALL", "Normal", "Rainbow", "Gold", "Silver", "Diamond" },
 		Default = { "ALL" },
 		Multi = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -166,7 +166,7 @@ function MainTab.Initialize(reg)
 		Values = { "NONE", "Normal", "Rainbow", "Gold", "Silver", "Diamond" },
 		Default = { "NONE" },
 		Multi = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -176,7 +176,7 @@ function MainTab.Initialize(reg)
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -185,7 +185,7 @@ function MainTab.Initialize(reg)
 		Default = 0,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -208,7 +208,7 @@ function MainTab.Initialize(reg)
 		Default = 30,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -217,12 +217,12 @@ function MainTab.Initialize(reg)
 		Default = false,
 		Callback = function(Value) -- ใส่เงื่อนไข กระเป๋าเต็ม , อาจจะเพิ่มเวลา วนลูป
 			if not Value then
-				fVar.isSelling = false
+				fVar.IsSelling = false
 			end
 			EfTasks.ToggleTask("AutoSell", Value, function()
 				local delay = tonumber(Options.ipSellDelay.Value) or 0.1
 				task.wait(delay)
-				if fVar.isSelling then
+				if fVar.IsSelling then
 					return
 				end
 				Main.SellIfFull()
@@ -235,7 +235,7 @@ function MainTab.Initialize(reg)
 	SellSection:AddToggle("tgSellAll", {
 		Title = "Sell All",
 		Default = false,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -243,7 +243,7 @@ function MainTab.Initialize(reg)
 	SellSection:AddToggle("tgSellIfFull", {
 		Title = "Sell If Full",
 		Default = false,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -276,7 +276,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -292,7 +292,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -309,7 +309,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -325,7 +325,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "NONE" },
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -335,7 +335,7 @@ function MainTab.Initialize(reg)
 		Values = { "ALL", "Normal", "Rainbow", "Gold", "Silver", "Diamond" },
 		Default = { "ALL" },
 		Multi = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -344,7 +344,7 @@ function MainTab.Initialize(reg)
 		Values = { "NONE", "Normal", "Rainbow", "Gold", "Silver", "Diamond" },
 		Default = { "NONE" },
 		Multi = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -354,7 +354,7 @@ function MainTab.Initialize(reg)
 		Values = { "Below", "Above" },
 		Default = "Below",
 		Multi = false,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -363,7 +363,7 @@ function MainTab.Initialize(reg)
 		Default = 0,
 		Numeric = true,
 		Finished = true,
-		Callback = function(Value)
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})

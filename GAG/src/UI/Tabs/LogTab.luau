@@ -56,9 +56,16 @@ function LogTab.Initialize(Registry)
 		Content = "Waiting for system to start...\n",
 	})
 end
-getgenv().fLog = function(message)
+getgenv().Log = function(message, level)
+	level = level or "INFO"
 	local timeString = os.date("%H:%M:%S")
-	local newLog = "[" .. timeString .. "] " .. tostring(message) .. "\n"
+	local prefix = "🟢 "
+	if level == "WARN" then
+		prefix = "🟡 "
+	elseif level == "ERROR" then
+		prefix = "🔴 "
+	end
+	local newLog = prefix .. "[" .. timeString .. "] " .. tostring(message) .. "\n"
 
 	logHistory = newLog .. logHistory
 	logCount = logCount + 1

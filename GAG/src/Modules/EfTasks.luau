@@ -1,13 +1,12 @@
-local getgenv = (getfenv() :: any).getgenv
 local EfTasks = {}
 local ActiveTasks = {}
---[[ local reg
+local reg
 
 function EfTasks.Initialize(registry)
 	reg = registry
 	--reg.ActiveTasks = ActiveTasks
 end
- ]]
+
 function EfTasks.ToggleTask(taskName, enabled, funcBody)
 	if enabled then
 		if ActiveTasks[taskName] then
@@ -18,7 +17,7 @@ function EfTasks.ToggleTask(taskName, enabled, funcBody)
 			while true do
 				local ok, err = pcall(funcBody)
 				if not ok then
-					getgenv().fLog("🔴 Task '" .. taskName .. "' error: " .. tostring(err))
+					reg.Log("🔴 Task '" .. taskName .. "' error: " .. tostring(err))
 					task.wait(1)
 				end
 				task.wait(0.1)

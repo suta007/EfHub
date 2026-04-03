@@ -44,46 +44,46 @@ sData.CoreGui = game:GetService("CoreGui")
 --	reg = registry
 --end
 
-local SeedShopData = require(sData.Data:WaitForChild("SeedShopData") :: any)
+local SEED_SHOP_DATA = require(sData.Data:WaitForChild("SeedShopData") :: any)
 sData.SeedShopTable = { "ALL" }
-for seedName, _seedInfo in pairs(SeedShopData) do
+for seedName, _seedInfo in pairs(SEED_SHOP_DATA) do
 	table.insert(sData.SeedShopTable, seedName)
 end
 
-local DailySeedShopData = require(sData.Data:WaitForChild("DailySeedShopData") :: any)
+local DAILY_SEED_SHOP_DATA = require(sData.Data:WaitForChild("DailySeedShopData") :: any)
 sData.DailySeedShopTable = { "ALL" }
-for seedName, _seedInfo in pairs(DailySeedShopData) do
+for seedName, _seedInfo in pairs(DAILY_SEED_SHOP_DATA) do
 	table.insert(sData.DailySeedShopTable, seedName)
 end
 
-local SeedData = require(sData.Data:WaitForChild("SeedData") :: any)
+local SEED_DATA = require(sData.Data:WaitForChild("SeedData") :: any)
 sData.SeedDataTable = { "ALL" }
-for seedName, _seedInfo in pairs(SeedData) do
+for seedName, _seedInfo in pairs(SEED_DATA) do
 	table.insert(sData.SeedDataTable, seedName)
 end
 sData.SeedDataBlackTable = table.clone(sData.SeedDataTable)
 sData.SeedDataBlackTable[1] = "NONE"
 
-local MutationData = sData.DataService:GetData().GardenGuide.MutationData
+local MUTATION_DATA = sData.DataService:GetData().GardenGuide.MutationData
 sData.MutationDataTable = { "ALL" }
-for MutationName, _MutationInfo in pairs(MutationData) do
+for MutationName, _MutationInfo in pairs(MUTATION_DATA) do
 	table.insert(sData.MutationDataTable, MutationName)
 end
 sData.MutationDataBlackTable = table.clone(sData.MutationDataTable)
 sData.MutationDataBlackTable[1] = "NONE"
 
-local PetList = require(sData.PetRegistry:WaitForChild("PetList") :: any)
+local PET_LIST = require(sData.PetRegistry:WaitForChild("PetList") :: any)
 sData.PetsDataTable = {}
 sData.HungerDataTable = {}
-for petName, petInfo in pairs(PetList) do
+for petName, petInfo in pairs(PET_LIST) do
 	table.insert(sData.PetsDataTable, petName)
 	sData.HungerDataTable[petName] = petInfo["DefaultHunger"]
 end
 
-local PetMutationData = require(sData.PetRegistry:WaitForChild("PetMutationRegistry") :: any)
+local PET_MUTATION_DATA = require(sData.PetRegistry:WaitForChild("PetMutationRegistry") :: any)
 sData.PetMutationDataTable = { "NONE" }
 sData.EnumToNameCache = {}
-for mutantName, mutantInfo in pairs(PetMutationData["PetMutationRegistry"]) do
+for mutantName, mutantInfo in pairs(PET_MUTATION_DATA["PetMutationRegistry"]) do
 	if type(mutantInfo) == "table" and mutantInfo.EnumId then
 		table.insert(sData.PetMutationDataTable, mutantName)
 		sData.EnumToNameCache[mutantInfo.EnumId] = mutantName
@@ -92,21 +92,21 @@ end
 sData.PetMutationDataBlackTable = table.clone(sData.PetMutationDataTable)
 sData.PetMutationDataBlackTable[1] = "NONE"
 
-local GearData = require(sData.Data:WaitForChild("GearShopData") :: any)
+local GEAR_DATA = require(sData.Data:WaitForChild("GearShopData") :: any)
 sData.GearShopTable = { "ALL" }
-for gearName, _gearInfo in pairs(GearData["Gear"]) do
+for gearName, _gearInfo in pairs(GEAR_DATA["Gear"]) do
 	table.insert(sData.GearShopTable, gearName)
 end
 
-local EggData = require(sData.Data:WaitForChild("PetEggData") :: any)
+local EGG_DATA = require(sData.Data:WaitForChild("PetEggData") :: any)
 sData.EggShopTable = { "ALL" }
-for eggName, _eggInfo in pairs(EggData) do
+for eggName, _eggInfo in pairs(EGG_DATA) do
 	table.insert(sData.EggShopTable, eggName)
 end
 
-local TravelingData = require(sData.Data:WaitForChild("TravelingMerchant"):WaitForChild("TravelingMerchantData") :: any)
+local TRAVELING_DATA = require(sData.Data:WaitForChild("TravelingMerchant"):WaitForChild("TravelingMerchantData") :: any)
 sData.TravelingMerchantTable = {}
-for Name, data in pairs(TravelingData) do
+for Name, data in pairs(TRAVELING_DATA) do
 	if type(data.ShopData) == "table" then
 		sData.TravelingMerchantTable[Name] = {}
 		for itemName, _itemInfo in pairs(data.ShopData) do
@@ -115,14 +115,14 @@ for Name, data in pairs(TravelingData) do
 	end
 end
 
-local EventData = require(sData.Data:WaitForChild("EventShopData") :: any)
+local EVENT_DATA = require(sData.Data:WaitForChild("EventShopData") :: any)
 sData.SantaShopTable = { "ALL" }
-for itemName, _itemInfo in pairs(EventData["Santa's Stash"]) do
+for itemName, _itemInfo in pairs(EVENT_DATA["Santa's Stash"]) do
 	table.insert(sData.SantaShopTable, itemName)
 end
 
 sData.NewYearShopTable = { "ALL" }
-for itemName, _itemInfo in pairs(EventData["New Years Shop"]) do
+for itemName, _itemInfo in pairs(EVENT_DATA["New Years Shop"]) do
 	table.insert(sData.NewYearShopTable, itemName)
 end
 

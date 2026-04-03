@@ -59,10 +59,10 @@ end
 
 function Main.AutoPlant()
 	local Options = reg.Options
-	if not Options.tgPlantsEnable.Value or fVar.isPlanting then
+	if not Options.tgPlantsEnable.Value or fVar.IsPlanting then
 		return
 	end
-	Utils.runWithFlag("isPlanting", "AutoPlant", function()
+	Utils.RunWithFlag("IsPlanting", "AutoPlant", function()
 		local tSeed = Utils.GetSelectedItems(Options.ddPlantsSeeds.Value)
 		local Backpack = sData.LocalPlayer.Backpack
 		for _, item in ipairs(Backpack:GetChildren()) do
@@ -175,7 +175,7 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 
 	if config.wl.weightValue ~= 0 then
 		local weight = tonumber(fruitWeight)
-		if not weight or not Utils.matchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
+		if not weight or not Utils.MatchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
 			return false
 		end
 	end
@@ -196,16 +196,16 @@ end
 
 function Main.HarvestCrops()
 	local Options = reg.Options
-	if not Options.tgHarvestEnable.Value or fVar.isHarvesting then
+	if not Options.tgHarvestEnable.Value or fVar.IsHarvesting then
 		return
 	end
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 		return
 	end
-	Utils.runWithFlag("isHarvesting", "HarvestCrops", function()
-		if Utils.isTableEmpty(readyCrops) then
+	Utils.RunWithFlag("IsHarvesting", "HarvestCrops", function()
+		if Utils.IsTableEmpty(readyCrops) then
 			Main.GetAllReadyCrops2()
-			if Utils.isTableEmpty(readyCrops) then
+			if Utils.IsTableEmpty(readyCrops) then
 				return
 			end
 		end
@@ -262,7 +262,7 @@ function Main.CheckItem(item, config)
 
 	if config.wl.weightValue ~= 0 then
 		local weight = tonumber(ItemWeight)
-		if not weight or not Utils.matchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
+		if not weight or not Utils.MatchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
 			return false
 		end
 	end
@@ -283,10 +283,10 @@ end
 
 function Main.SellCrops()
 	local Options = reg.Options
-	if fVar.isSelling then
+	if fVar.IsSelling then
 		return
 	end
-	Utils.runWithFlag("isSelling", "SellCrops", function()
+	Utils.RunWithFlag("IsSelling", "SellCrops", function()
 		Utils.ClickButton(Utils.SellButton)
 		task.wait(0.5)
 		if Options.tgSellAll.Value then

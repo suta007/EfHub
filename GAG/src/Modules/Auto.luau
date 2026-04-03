@@ -1,4 +1,4 @@
-local getgenv = (getfenv() :: any).getgenv
+
 local Auto = {}
 local reg
 local fVar
@@ -13,7 +13,7 @@ local function matchesPlantFilter(plant, selectedList, weightCondition, weightVa
 	if not weightValueObj or type(weightValueObj.Value) ~= "number" then
 		return false
 	end
-	return Utils.matchesWeight(weightValueObj.Value, weightCondition, weightValue)
+	return Utils.MatchesWeight(weightValueObj.Value, weightCondition, weightValue)
 end
 
 function Auto.Initialize(registry)
@@ -25,17 +25,17 @@ end
 
 function Auto.RemovePlants()
 	local options = reg.Options
-	if not options.tgRemovePlantsEnable.Value or fVar.isRemovingPlants then
+	if not options.tgRemovePlantsEnable.Value or fVar.IsRemovingPlants then
 		return
 	end
-	Utils.runWithFlag("isRemovingPlants", "RemovePlants", function()
+	Utils.RunWithFlag("IsRemovingPlants", "RemovePlants", function()
 		local getSelectedItems = Utils.GetSelectedItems
 		local removePlantsList = getSelectedItems(options.ddRemovePlants.Value)
 		local plantsWeightThreshold = options.ddRemovePlantsWeight.Value
 		local plantsWeightValue = tonumber(options.ipRemovePlantsWeight.Value) or 0
 		local plantsPhysical = Utils.GetPlantsFolder()
 		local backpack = sData.Backpack
-		local shovel = Utils.findToolByName(backpack, "Shovel [Destroy Plants]")
+		local shovel = Utils.FindToolByName(backpack, "Shovel [Destroy Plants]")
 		if not plantsPhysical or not shovel then
 			return
 		end
@@ -79,16 +79,16 @@ end
 function Auto.RemoveCrops()
 	local options = reg.Options
 	local main = reg.Main
-	if not options.tgRemoveFruitEnable.Value or fVar.isRemovingCrops then
+	if not options.tgRemoveFruitEnable.Value or fVar.IsRemovingCrops then
 		return
 	end
-	Utils.runWithFlag("isRemovingCrops", "RemoveCrops", function()
+	Utils.RunWithFlag("IsRemovingCrops", "RemoveCrops", function()
 		local plantsPhysical = Utils.GetPlantsFolder()
 		if not plantsPhysical then
 			return
 		end
 		local backpack = sData.Backpack
-		local shovel = Utils.findToolByName(backpack, "Shovel [Destroy Plants]")
+		local shovel = Utils.FindToolByName(backpack, "Shovel [Destroy Plants]")
 		if not shovel then
 			return
 		end
@@ -121,19 +121,19 @@ end
 
 function Auto.Trowel()
 	local options = reg.Options
-	if not options.tgTrowelEnable.Value or fVar.isTroweling then
+	if not options.tgTrowelEnable.Value or fVar.IsTroweling then
 		return
 	end
-	Utils.runWithFlag("isTroweling", "Trowel", function()
+	Utils.RunWithFlag("IsTroweling", "Trowel", function()
 		local getSelectedItems = Utils.GetSelectedItems
 		local trowelPlantsList = getSelectedItems(options.ddTrowelPlants.Value)
 		local plantsWeightThreshold = options.ddTrowelPlantsWeight.Value
 		local plantsWeightValue = tonumber(options.ipTrowelPlantsWeight.Value) or 0
 		local plantsPhysical = Utils.GetPlantsFolder()
 		local backpack = sData.Backpack
-		local trowel = Utils.findToolByPattern(backpack, "Trowel")
+		local trowel = Utils.FindToolByPattern(backpack, "Trowel")
 		if not trowel then
-			getgenv().fLog("🟡 No Trowel")
+			reg.Log("🟡 No Trowel")
 			return
 		end
 
@@ -152,7 +152,7 @@ function Auto.Trowel()
 						sData.TrowelEvent:InvokeServer("Place", trowel, plant, fVar.Pos.Trowel)
 						task.wait(0.5)
 					else
-						getgenv().fLog("❌ Place failed: " .. tostring(response))
+						reg.Log("❌ Place failed: " .. tostring(response))
 					end
 					task.wait(0.1)
 					Utils.UnequipTool()
@@ -170,19 +170,19 @@ end
 
 function Auto.Reclaim()
 	local options = reg.Options
-	if not options.tgReclaimEnable.Value or fVar.isReclaiming then
+	if not options.tgReclaimEnable.Value or fVar.IsReclaiming then
 		return
 	end
-	Utils.runWithFlag("isReclaiming", "Reclaim", function()
+	Utils.RunWithFlag("IsReclaiming", "Reclaim", function()
 		local getSelectedItems = Utils.GetSelectedItems
 		local reclaimPlantsList = getSelectedItems(options.ddReclaimPlants.Value)
 		local plantsWeightThreshold = options.ddReclaimPlantsWeight.Value
 		local plantsWeightValue = tonumber(options.ipReclaimPlantsWeight.Value) or 0
 		local plantsPhysical = Utils.GetPlantsFolder()
 		local backpack = sData.Backpack
-		local reclaimer = Utils.findToolByPattern(backpack, "Reclaimer")
+		local reclaimer = Utils.FindToolByPattern(backpack, "Reclaimer")
 		if not reclaimer then
-			getgenv().fLog("🟡 No Reclaimer")
+			reg.Log("🟡 No Reclaimer")
 			return
 		end
 
@@ -211,11 +211,11 @@ end
 
 function Auto.Sprinkler()
 	local options = reg.Options
-	if not options.tgSprinklerEnable.Value or fVar.isSprinkling then
+	if not options.tgSprinklerEnable.Value or fVar.IsSprinkling then
 		return
 	end
 
-	Utils.runWithFlag("isSprinkling", "Sprinkler", function()
+	Utils.RunWithFlag("IsSprinkling", "Sprinkler", function()
 		local backpack = sData.Backpack
 		local sprinklerData = {
 			{ matchName = "Basic Sprinkler", optionKey = "ipBasicSPK" },
@@ -270,38 +270,38 @@ end
 
 function Auto.CatLead()
 	local options = reg.Options
-	if not options.tgCatLead.Value or fVar.isCatLeading then
+	if not options.tgCatLead.Value or fVar.IsCatLeading then
 		return
 	end
-	fVar.isCatLeading = true
+	fVar.IsCatLeading = true
 	local positionCF = fVar.Pos.Sprinkler
 	if typeof(positionCF) ~= "CFrame" then
-		getgenv().fLog("🟡 Cat Lead Position Must Set Spinkle Position")
-		fVar.isCatLeading = false
+		reg.Log("🟡 Cat Lead Position Must Set Spinkle Position")
+		fVar.IsCatLeading = false
 		return
 	end
 
-	Utils.runWithFlag("isCatLeading", "CatLead", function()
+	Utils.RunWithFlag("IsCatLeading", "CatLead", function()
 		local catTypes = { "Orange Tabby", "Cat", "Moon Cat", "Glass Cat", "Calico" }
 		local backpack = sData.Backpack
-		local petLead = Utils.findToolByPattern(backpack, "Pet Lead")
+		local petLead = Utils.FindToolByPattern(backpack, "Pet Lead")
 		if not petLead then
-			getgenv().fLog("🟡 No Pet Lead")
-			fVar.isCatLeading = false
+			reg.Log("🟡 No Pet Lead")
+			fVar.IsCatLeading = false
 			return
 		end
 
 		local pets = reg.Pets
 		local petsPhysical = game:GetService("Workspace"):WaitForChild("PetsPhysical")
 		if not petsPhysical then
-			getgenv().fLog("🟡 No PetsPhysical")
-			fVar.isCatLeading = false
+			reg.Log("🟡 No PetsPhysical")
+			fVar.IsCatLeading = false
 			return
 		end
 
 		for _, pet in ipairs(petsPhysical:GetChildren()) do
 			if not options.tgCatLead.Value then
-				fVar.isCatLeading = false
+				fVar.IsCatLeading = false
 				return
 			end
 			local uuid = pet:GetAttribute("UUID")
@@ -323,7 +323,7 @@ function Auto.CatLead()
 				end
 			end
 		end
-		fVar.isCatLeading = false
+		fVar.IsCatLeading = false
 		Utils.UnequipTool()
 		if options.tgCatLead.Value then
 			options.tgCatLead:SetValue(false)
