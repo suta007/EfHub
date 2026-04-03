@@ -14,12 +14,12 @@ local fVar
 local SharedPlantConnection = nil
 local PlantsESPFolderName = "PlantsESP"
 local FruitESPFolderName = "FruitESP"
-local bGuiSession = {}
+local BGuiSession = {}
 local CoreGui = game:GetService("CoreGui")
 local getgenv = (getfenv() :: any).getgenv
-local gethui = if getgenv then getgenv().gethui else nil
-if not gethui then
-	gethui = function()
+local GetHUI = if getgenv then getgenv().GetHUI else nil
+if not GetHUI then
+	GetHUI = function()
 		return CoreGui
 	end
 end
@@ -306,9 +306,9 @@ function Misc.UpdatePlantTracker()
 
 				if newObj:IsA("Model") then
 					if isThisFruit and isEspCropsActive and table.find(espCropsList, newObj.Name) then
-						Misc.setEspCrop(newObj)
+						Misc.SetEspCrop(newObj)
 					elseif not isThisFruit and isEspPlantsActive and table.find(espPlantsList, newObj.Name) then
-						Misc.setEspPlant(newObj)
+						Misc.SetEspPlant(newObj)
 					end
 				end
 			end)
@@ -324,9 +324,9 @@ end
 function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	if not (espfolder and obj and txt1) then return end
 	local priority = arg or 0
-	if bGuiSession[uuid] then
-		bGuiSession[uuid]:Destroy()
-		bGuiSession[uuid] = nil
+	if BGuiSession[uuid] then
+		BGuiSession[uuid]:Destroy()
+		BGuiSession[uuid] = nil
 	end
 
 	local hasTxt2 = txt2 ~= nil and txt2 ~= ""
@@ -383,14 +383,14 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	elseif priority == 1 then textLabel1.TextColor3 = Color3.fromRGB(10, 200, 10)
 	else textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200) end
 
-	bGuiSession[uuid] = bgui
+	BGuiSession[uuid] = bgui
 end
 
-function Misc.setEspCrop(fruit)
+function Misc.SetEspCrop(fruit)
 	local Options = reg.Options
 	if not Options.tgEspCrops.Value then return end
 
-	local TargetFolder = gethui and gethui() or CoreGui
+	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
 	if not ESPFolder then return end
 
@@ -412,7 +412,7 @@ function Misc.setEspCrop(fruit)
 	Misc.CreatESP(ESPFolder, fruit, uuid, txt1, txt2, arg)
 end
 
-function Misc.setEspPlant(plant)
+function Misc.SetEspPlant(plant)
 	local Options = reg.Options
 	if not (Options and Options.tgEspPlants and Options.tgEspPlants.Value) then return end
 	if not (plant and plant:IsA("Model")) then return end
@@ -420,7 +420,7 @@ function Misc.setEspPlant(plant)
 	local espPlantsList = GetSelectedItems(Options.ddEspPlants.Value)
 	if not table.find(espPlantsList, plant.Name) then return end
 
-	local TargetFolder = gethui and gethui() or CoreGui
+	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
 	if not ESPFolder then return end
 
@@ -434,7 +434,7 @@ end
 
 function Misc.EspCrops(State)
 	local Options = reg.Options
-	local TargetFolder = gethui and gethui() or CoreGui
+	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local oldFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
 	if oldFolder then oldFolder:Destroy() end
 	if State ~= true then
@@ -456,7 +456,7 @@ function Misc.EspCrops(State)
 			local itemsToCheck = FruitsContainer and FruitsContainer:GetChildren() or { plant }
 			for _, item in ipairs(itemsToCheck) do
 				if item:IsA("Model") and table.find(espCropsList, item.Name) then
-					Misc.setEspCrop(item)
+					Misc.SetEspCrop(item)
 				end
 			end
 		end
@@ -466,7 +466,7 @@ end
 
 function Misc.EspPlants(State)
 	local Options = reg.Options
-	local TargetFolder = gethui and gethui() or CoreGui
+	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local oldFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
 	if oldFolder then oldFolder:Destroy() end
 	if State ~= true then
@@ -488,7 +488,7 @@ function Misc.EspPlants(State)
 	if Plants_Physical then
 		for _, plant in ipairs(Plants_Physical:GetChildren()) do
 			if plant:IsA("Model") and table.find(espPlantsList, plant.Name) then
-				Misc.setEspPlant(plant)
+				Misc.SetEspPlant(plant)
 			end
 		end
 	end

@@ -4,9 +4,9 @@ local reg
 local sData
 local Utils
 local fVar
-local readyCrops = {}
+local ReadyCrops = {}
 
-local function shouldMatchMutants(target, mutantList)
+local function ShouldMatchMutants(target, mutantList)
 	if table.find(mutantList, "ALL") then
 		return true
 	end
@@ -18,7 +18,7 @@ local function shouldMatchMutants(target, mutantList)
 	return false
 end
 
-local function isBlockedByBlackMutants(target, mutantList)
+local function IsBlockedByBlackMutants(target, mutantList)
 	if table.find(mutantList, "NONE") then
 		return false
 	end
@@ -98,11 +98,11 @@ function Main.AutoPlant()
 end
 
 function Main.ClearReadyCrops()
-	table.clear(readyCrops)
+	table.clear(ReadyCrops)
 end
 
 function Main.GetAllReadyCrops()
-	table.clear(readyCrops)
+	table.clear(ReadyCrops)
 	local allPrompts = CollectionService:GetTagged("CollectPrompt")
 	local seen = {}
 
@@ -111,14 +111,14 @@ function Main.GetAllReadyCrops()
 			local cropModel = prompt.Parent and prompt.Parent.Parent
 			if cropModel and not seen[cropModel] then
 				seen[cropModel] = true
-				table.insert(readyCrops, cropModel)
+				table.insert(ReadyCrops, cropModel)
 			end
 		end
 	end
 end
 
 function Main.GetAllReadyCrops2()
-	table.clear(readyCrops)
+	table.clear(ReadyCrops)
 	local Plants_Physical = Utils.GetPlantsFolder()
 	if not Plants_Physical then
 		return
@@ -130,7 +130,7 @@ function Main.GetAllReadyCrops2()
 
 		for _, item in ipairs(itemsToCheck) do
 			if item:IsA("Model") and item:FindFirstChild("Weight") and item:FindFirstChild("Variant") then
-				table.insert(readyCrops, item)
+				table.insert(ReadyCrops, item)
 			end
 			count = count + 1
 			if count % 250 == 0 then
@@ -168,7 +168,7 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 	end
 
 	if not table.find(config.wl.mutants, "ALL") then
-		if not shouldMatchMutants(fruit, config.wl.mutants) then
+		if not ShouldMatchMutants(fruit, config.wl.mutants) then
 			return false
 		end
 	end
@@ -187,7 +187,7 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 		return false
 	end
 
-	if isBlockedByBlackMutants(fruit, config.bl.mutants) then
+	if IsBlockedByBlackMutants(fruit, config.bl.mutants) then
 		return false
 	end
 
@@ -203,15 +203,15 @@ function Main.HarvestCrops()
 		return
 	end
 	Utils.RunWithFlag("IsHarvesting", "HarvestCrops", function()
-		if Utils.IsTableEmpty(readyCrops) then
+		if Utils.IsTableEmpty(ReadyCrops) then
 			Main.GetAllReadyCrops2()
-			if Utils.IsTableEmpty(readyCrops) then
+			if Utils.IsTableEmpty(ReadyCrops) then
 				return
 			end
 		end
 
 		local config = Main.GetHarvestVar()
-		local crop = table.remove(readyCrops, 1)
+		local crop = table.remove(ReadyCrops, 1)
 		if crop and Main.CheckCrops(crop, config) then
 			sData.CollectEvent:FireServer({ crop })
 		end
@@ -255,7 +255,7 @@ function Main.CheckItem(item, config)
 	end
 
 	if not table.find(config.wl.mutants, "ALL") then
-		if not shouldMatchMutants(item, config.wl.mutants) then
+		if not ShouldMatchMutants(item, config.wl.mutants) then
 			return false
 		end
 	end
@@ -274,7 +274,7 @@ function Main.CheckItem(item, config)
 		return false
 	end
 
-	if isBlockedByBlackMutants(item, config.bl.mutants) then
+	if IsBlockedByBlackMutants(item, config.bl.mutants) then
 		return false
 	end
 

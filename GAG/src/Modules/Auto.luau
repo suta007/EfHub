@@ -5,7 +5,7 @@ local fVar
 local sData
 local Utils
 
-local function matchesPlantFilter(plant, selectedList, weightCondition, weightValue)
+local function MatchesPlantFilter(plant, selectedList, weightCondition, weightValue)
 	if not plant or not table.find(selectedList, plant.Name) then
 		return false
 	end
@@ -45,7 +45,7 @@ function Auto.RemovePlants()
 			if not options.tgRemovePlantsEnable.Value then
 				return
 			end
-			if matchesPlantFilter(plant, removePlantsList, plantsWeightThreshold, plantsWeightValue) then
+			if MatchesPlantFilter(plant, removePlantsList, plantsWeightThreshold, plantsWeightValue) then
 				Utils.EquipTool(shovel)
 				sData.RemoveItemEvent:FireServer(plant)
 				task.wait(0.1)
@@ -143,7 +143,7 @@ function Auto.Trowel()
 				if not options.tgTrowelEnable.Value then
 					return
 				end
-				if matchesPlantFilter(plant, trowelPlantsList, plantsWeightThreshold, plantsWeightValue) then
+				if MatchesPlantFilter(plant, trowelPlantsList, plantsWeightThreshold, plantsWeightValue) then
 					Utils.EquipTool(trowel)
 					local success, response = pcall(function()
 						return sData.TrowelEvent:InvokeServer("Pickup", trowel, plant)
@@ -192,7 +192,7 @@ function Auto.Reclaim()
 				if not options.tgReclaimEnable.Value then
 					return
 				end
-				if matchesPlantFilter(plant, reclaimPlantsList, plantsWeightThreshold, plantsWeightValue) then
+				if MatchesPlantFilter(plant, reclaimPlantsList, plantsWeightThreshold, plantsWeightValue) then
 					Utils.EquipTool(reclaimer)
 					sData.ReclaimerEvent:FireServer("TryReclaim", plant)
 					Utils.UnequipTool()

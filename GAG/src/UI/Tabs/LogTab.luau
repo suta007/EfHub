@@ -5,8 +5,8 @@
 local setclipboard = (getfenv() :: any).setclipboard or (getfenv() :: any).toclipboard
 local LogTab = {}
 local reg
-local logHistory = ""
-local logCount = 0
+local LogHistory = ""
+local LogCount = 0
 function LogTab.Log(message, level)
 	level = level or "INFO"
 	local timeString = os.date("%H:%M:%S")
@@ -18,19 +18,19 @@ function LogTab.Log(message, level)
 	end
 	local newLog = prefix .. "[" .. timeString .. "] " .. tostring(message) .. "\n"
 
-	logHistory = newLog .. logHistory
-	logCount = logCount + 1
+	LogHistory = newLog .. LogHistory
+	LogCount = LogCount + 1
 
-	if logCount > 100 then
-		local cutoff = string.find(logHistory, "\n", -2)
+	if LogCount > 100 then
+		local cutoff = string.find(LogHistory, "\n", -2)
 		if cutoff then
-			logHistory = string.sub(logHistory, 1, cutoff)
+			LogHistory = string.sub(LogHistory, 1, cutoff)
 		end
-		logCount = 100
+		LogCount = 100
 	end
 
 	if reg and reg.fDisplay then
-		reg.fDisplay:SetValue(logHistory)
+		reg.fDisplay:SetValue(LogHistory)
 	end
 end
 
@@ -50,8 +50,8 @@ function LogTab.Initialize(Registry)
 	Tabs.Log:AddButton({
 		Title = "❌ Clear Log",
 		Callback = function()
-			logHistory = ""
-			logCount = 0
+			LogHistory = ""
+			LogCount = 0
 			if reg and reg.fDisplay then
 				reg.fDisplay:SetValue("Waiting for new activity...\n")
 			end
@@ -61,9 +61,9 @@ function LogTab.Initialize(Registry)
 	Tabs.Log:AddButton({
 		Title = "📑 Copy Log",
 		Callback = function()
-			if logHistory ~= "" then
+			if LogHistory ~= "" then
 				if setclipboard then
-					setclipboard(logHistory)
+					setclipboard(LogHistory)
 					Fluent:Notify({
 						Title = "EfHub System",
 						Content = "✅ คัดลอก Log แล้ว",

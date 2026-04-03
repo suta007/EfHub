@@ -30,7 +30,7 @@ local function GetPetInventory()
 	return Inventory
 end
 
-local function findDupePet(UUID, PetType)
+local function FindDupePet(UUID, PetType)
 	local Options = reg.Options
 	local AgeCondition = Options.ddAgeBreakAgeCond.Value
 	local AgeValue = tonumber(Options.inpAgeBreakAgeVal.Value) or 50
@@ -81,7 +81,7 @@ local function findDupePet(UUID, PetType)
 	return nil
 end
 
-local function findMainPet()
+local function FindMainPet()
 	local Options = reg.Options
 	local PetType = Options.ddAgeBreakPetType.Value
 	local TargetAge = tonumber(Options.inpAgeBreakTargetAge.Value) or 115
@@ -218,7 +218,7 @@ function Pets.AgeBreak()
 		end
 
 		if not AgeBreakUUID then
-			AgeBreakUUID = findMainPet()
+			AgeBreakUUID = FindMainPet()
 		end
 
 		if AgeBreakUUID then
@@ -241,7 +241,7 @@ function Pets.AgeBreak()
 			fVar.IsAgeBreaking = false
 			return
 		end
-		local dupeUUID = findDupePet(AgeBreakUUID, PetType)
+		local dupeUUID = FindDupePet(AgeBreakUUID, PetType)
 		if dupeUUID then
 			sData.GameEvents.PetAgeLimitBreak_Submit:FireServer({ dupeUUID })
 			task.wait(2)
@@ -341,7 +341,7 @@ function Pets.FarmLevel()
 			end
 		end
 	else
-		MutantUUID, PetType, Equiped = Pets.findFarmPet()
+		MutantUUID, PetType, Equiped = Pets.FindFarmPet()
 	end
 	if not MutantUUID then
 		reg.Log("🔴 FarmLevel: No Pet Found")
@@ -370,7 +370,7 @@ function Pets.FarmLevel()
 	fVar.IsMutating = false
 end
 
-function Pets.findFarmPet()
+function Pets.FindFarmPet()
 	local Options = reg.Options
 	local Method = Options.ddMutantMethod.Value :: string
 	local useFavorite = Options.tgFavoritePet.Value :: boolean
