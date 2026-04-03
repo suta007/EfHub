@@ -40,6 +40,9 @@ sData.Terrain = workspace.Terrain
 
 sData.CoreGui = game:GetService("CoreGui")
 
+sData.PetShardService_RE = sData.GameEvents:WaitForChild("PetShardService_RE")
+sData.Workspace = game:GetService("Workspace")
+
 --function sData.Initialize(registry)
 --	reg = registry
 --end
