@@ -731,7 +731,7 @@ function Pets.FeedPets()
 			local petUUID = pet.UUID
 			local maxHunger = sData.HungerDataTable[petType] or 10000
 			local currentHunger = 100 * (pet.PetData.Hunger / maxHunger)
-			if currentHunger >= TargetHunger then
+			if currentHunger <= TargetHunger then
 				for _, item in ipairs(Backpack:GetChildren()) do
 					local itemType = item:GetAttribute("b")
 					if itemType == "j" or itemType == "u" then
