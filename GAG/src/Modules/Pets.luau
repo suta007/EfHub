@@ -642,17 +642,12 @@ function Pets.PetShard(shardName)
 	local shard = Utils.FindToolByPattern(backpack, shardName)
 	if shard then
 		local petsPhysical = sData.Workspace:WaitForChild("PetsPhysical")
-		for _, pet in ipairs(petsPhysical:GetChildren()) do
-			if pet:FindFirstChild(MutantUUID) then
+		for _, Mover in ipairs(petsPhysical:GetChildren()) do
+			local pet = Mover:FindFirstChild(MutantUUID)
+			if pet then
 				Utils.EquipTool(shard)
 				task.wait(0.5)
-				print(tostring(pet))
-				local success, err = pcall(function()
-					sData.PetShardService_RE:FireServer("ApplyShard", pet)
-				end)
-				if not success then
-					print("ApplyShard failed: " .. tostring(err))
-				end
+				sData.PetShardService_RE:FireServer("ApplyShard", pet)
 				task.wait(1)
 				Utils.UnequipTool()
 				fVar.IsMutating = false
