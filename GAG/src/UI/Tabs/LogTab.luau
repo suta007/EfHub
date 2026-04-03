@@ -2,12 +2,38 @@
 --!native
 --!optimize 2
 
-local getgenv = (getfenv() :: any).getgenv
 local setclipboard = (getfenv() :: any).setclipboard or (getfenv() :: any).toclipboard
 local LogTab = {}
 local reg
 local logHistory = ""
 local logCount = 0
+function LogTab.Log(message, level)
+	level = level or "INFO"
+	local timeString = os.date("%H:%M:%S")
+	local prefix = "🟢 "
+	if level == "WARN" then
+		prefix = "🟡 "
+	elseif level == "ERROR" then
+		prefix = "🔴 "
+	end
+	local newLog = prefix .. "[" .. timeString .. "] " .. tostring(message) .. "\n"
+
+	logHistory = newLog .. logHistory
+	logCount = logCount + 1
+
+	if logCount > 100 then
+		local cutoff = string.find(logHistory, "\n", -2)
+		if cutoff then
+			logHistory = string.sub(logHistory, 1, cutoff)
+		end
+		logCount = 100
+	end
+
+	if reg and reg.fDisplay then
+		reg.fDisplay:SetValue(logHistory)
+	end
+end
+
 function LogTab.Initialize(Registry)
 	reg = Registry
 	local Options = Registry.Options
@@ -15,6 +41,9 @@ function LogTab.Initialize(Registry)
 	local Interface = Registry.Interface
 	local Tabs = Registry.Tabs
 	local Fluent = Registry.Fluent
+
+	-- Register Log function to registry
+	Registry.Log = LogTab.Log
 
 	Tabs.Log = Interface:AddTab({ Title = "Log", Icon = "scroll" })
 
@@ -55,32 +84,6 @@ function LogTab.Initialize(Registry)
 		Title = "📃 Activity Logs",
 		Content = "Waiting for system to start...\n",
 	})
-end
-getgenv().Log = function(message, level)
-	level = level or "INFO"
-	local timeString = os.date("%H:%M:%S")
-	local prefix = "🟢 "
-	if level == "WARN" then
-		prefix = "🟡 "
-	elseif level == "ERROR" then
-		prefix = "🔴 "
-	end
-	local newLog = prefix .. "[" .. timeString .. "] " .. tostring(message) .. "\n"
-
-	logHistory = newLog .. logHistory
-	logCount = logCount + 1
-
-	if logCount > 100 then
-		local cutoff = string.find(logHistory, "\n", -2)
-		if cutoff then
-			logHistory = string.sub(logHistory, 1, cutoff)
-		end
-		logCount = 100
-	end
-
-	if reg and reg.fDisplay then
-		reg.fDisplay:SetValue(logHistory)
-	end
 end
 
 return LogTab

@@ -19,7 +19,7 @@ local function LoadModules()
 	end
 
 	Registry.Loader = Loader
-	Registry.Log = getgenv().Log
+
 
 	local function Require(path)
 		return Loader.Require(path)
