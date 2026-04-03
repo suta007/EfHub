@@ -746,7 +746,7 @@ function Pets.FeedPets()
 							if not success then
 								reg.Log("FeedPet failed: " .. tostring(err))
 							end
-							task.wait(0.3)
+							task.wait(1)
 							break
 						end
 					end
