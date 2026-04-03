@@ -647,7 +647,12 @@ function Pets.PetShard(shardName)
 			if pet then
 				Utils.EquipTool(shard)
 				task.wait(0.5)
-				sData.PetShardService_RE:FireServer("ApplyShard", pet)
+				local success, err = pcall(function()
+					sData.PetShardService_RE:FireServer("ApplyShard", pet)
+				end)
+				if not success then
+					print("ApplyShard failed: " .. tostring(err))
+				end
 				task.wait(1)
 				Utils.UnequipTool()
 				fVar.IsMutating = false
