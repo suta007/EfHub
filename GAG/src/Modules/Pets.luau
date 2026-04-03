@@ -141,6 +141,44 @@ function Pets.Favorited(UUID)
 	return false
 end
 
+function Pets.MakePetFavorite(uuid)
+	local favoriteEvent = sData.GameEvents:WaitForChild("Favorite_Item")
+	if not Pets.Favorited(uuid) then
+		local timeout = 5
+		local startTime = tick()
+		task.spawn(function()
+			while tick() - startTime < timeout do
+				local targetItem = nil
+
+				for _, item in ipairs(sData.Backpack:GetChildren()) do
+					if item:GetAttribute("ItemType") == "Pet" and item:GetAttribute("PET_UUID") == uuid then
+						targetItem = item
+						break
+					end
+				end
+
+				if not targetItem and sData.LocalPlayer.Character then
+					for _, item in ipairs(sData.LocalPlayer.Character:GetChildren()) do
+						if item:GetAttribute("ItemType") == "Pet" and item:GetAttribute("PET_UUID") == uuid then
+							targetItem = item
+							break
+						end
+					end
+				end
+
+				if targetItem then
+					favoriteEvent:FireServer(targetItem)
+					task.wait(0.3)
+					return true
+				end
+				task.wait(0.3)
+			end
+			return false
+		end)
+	end
+	return false
+end
+
 function Pets.Weight(UUID)
 	local data = Pets.RawData(UUID)
 
@@ -461,6 +499,7 @@ function Pets.TargetPetLevelCheck()
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Nightmare")
 			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			Pets.MakePetFavorite(MutantUUID)
 			MutantUUID = nil
 			fVar.IsMutating = false
 			Pets.FarmLevel()
@@ -476,6 +515,7 @@ function Pets.TargetPetLevelCheck()
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Venom")
 			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			Pets.MakePetFavorite(MutantUUID)
 			MutantUUID = nil
 			fVar.IsMutating = false
 			Pets.FarmLevel()
@@ -487,6 +527,7 @@ function Pets.TargetPetLevelCheck()
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Level")
 			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			Pets.MakePetFavorite(MutantUUID)
 			MutantUUID = nil
 			fVar.IsMutating = false
 			Pets.FarmLevel()
@@ -503,6 +544,7 @@ function Pets.TargetPetLevelCheck()
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " go to mutation machine")
+			Pets.MakePetFavorite(MutantUUID)
 			fVar.IsMutating = false
 			Pets.MutatePet()
 			return
@@ -671,6 +713,48 @@ function Pets.PetShard(shardName)
 			end
 		end
 	end
+end
+
+function Pets.FeedPets()
+	local Options = reg.Options
+	if not Options.tgFeedPetsEnabled.Value or fVar.IsFeeding then
+		return
+	end
+	fVar.IsFeeding = true
+	local TargetHunger = tonumber(Options.inpFeedPetsHunger.Value) or 50
+	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
+	local Backpack = sData.Backpack
+	local TargetCrops = GetSelectedItems(Options.ddFeedCropsType.Value)
+	if EquipPets and #EquipPets > 0 then
+		for _, pet in ipairs(EquipPets) do
+			local petType = pet.PetType
+			local petUUID = pet.UUID
+			local maxHunger = sData.HungerDataTable[petType] or 10000
+			local currentHunger = 100 * (pet.PetData.Hunger / maxHunger)
+			if currentHunger >= TargetHunger then
+				for _, item in ipairs(Backpack:GetChildren()) do
+					local itemType = item:GetAttribute("b")
+					if itemType == "j" or itemType == "u" then
+						local itemName = item:GetAttribute("f")
+						local isFavorite = item:GetAttribute("d")
+						if itemName and (table.find(TargetCrops, "ALL") or table.find(TargetCrops, itemName)) and not isFavorite then
+							Utils.EquipTool(item)
+							task.wait(0.5)
+							local success, err = pcall(function()
+								sData.GameEvents:WaitForChild("ActivePetService"):FireServer("Feed", petUUID)
+							end)
+							if not success then
+								reg.Log("FeedPet failed: " .. tostring(err))
+							end
+							task.wait(0.3)
+							break
+						end
+					end
+				end
+			end
+		end
+	end
+	fVar.IsFeeding = false
 end
 
 return Pets

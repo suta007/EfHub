@@ -236,6 +236,47 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+
+	local FeedPetsSection = Tabs.Pets:AddCollapsibleSection("Feed Pets", false)
+
+	FeedPetsSection:AddToggle("tgFeedPetsEnabled", {
+		Title = "Enable Auto Feed Pets",
+		Default = false,
+		Callback = function(Value)
+			EfTasks.ToggleTask("FeedPets", Value, function()
+				Pets.FeedPets()
+				task.wait(30)
+			end)
+			QuickSave()
+		end,
+	})
+
+	FeedPetsSection:AddButton({
+		Title = "Clear Selected Feed Crops Type",
+		Callback = function()
+			Options.ddFeedCropsType:SetValue({ ALL = true })
+		end,
+	})
+
+	FeedPetsSection:AddDropdown("ddFeedCropsType", {
+		Title = "Select Crops Type",
+		Values = sData.SeedDataTable,
+		Default = { "ALL" },
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	FeedPetsSection:AddInput("inpFeedPetsHunger", {
+		Title = "Hunger",
+		Default = 50,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
 end
 
 return PetsTab

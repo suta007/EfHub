@@ -15,6 +15,7 @@ fVar.IsCatLeading = false
 fVar.IsFarmingLevel = false
 --fVar.IsOpeningPack = false
 fVar.IsMutating = false
+fVar.IsFeeding = false
 
 fVar.UIShopLoaded = false
 
