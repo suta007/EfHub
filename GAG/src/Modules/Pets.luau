@@ -1,4 +1,3 @@
-
 local Pets = {}
 local reg
 local fVar
@@ -642,20 +641,17 @@ function Pets.PetShard(shardName)
 	local backpack = sData.Backpack
 	local shard = Utils.FindToolByPattern(backpack, shardName)
 	if shard then
-		local targetPet
 		local petsPhysical = game.Workspace:WaitForChild("PetsPhysical")
 		for _, pet in ipairs(petsPhysical:GetChildren()) do
 			if pet:FindFirstChild(MutantUUID) then
-				targetPet = pet
-				break
+				Utils.EquipTool(shard)
+				task.wait(0.5)
+				sData.GameEvents:WaitForChild("PetShardService_RE"):FireServer("ApplyShard", pet)
+				task.wait(1)
+				Utils.UnequipTool()
+				fVar.IsMutating = false
+				return
 			end
-		end
-		if targetPet then
-			Utils.EquipTool(shard)
-			task.wait(0.5)
-			sData.GameEvents.PetShardService_RE:FireServer("ApplyShard", targetPet)
-			fVar.IsMutating = false
-			return
 		end
 	end
 end
