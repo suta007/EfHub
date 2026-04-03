@@ -19,7 +19,7 @@ function Window.Initialize(Registry)
 
 	Registry.Interface = Fluent:CreateWindow({
 		Title = "Grow a Garden",
-		SubTitle = "2569.04.03-16.02",
+		SubTitle = "2569.04.03-18.32",
 		TabWidth = 100,
 		Size = UDim2.fromOffset(600, 340),
 		Resize = false,
@@ -54,7 +54,7 @@ function Window.Initialize(Registry)
 	ToggleButton.Name = "ToggleButton"
 	ToggleButton.Parent = ToggleGui
 	ToggleButton.BackgroundColor3 = Color3.fromRGB(100, 20, 20)
-	ToggleButton.Position = UDim2.new(0, 10, 0.12, 0)
+	ToggleButton.Position = UDim2.new(0, 10, 0.10, 0)
 	ToggleButton.Size = UDim2.fromOffset(50, 50)
 	ToggleButton.Text = "GAG"
 	ToggleButton.TextColor3 = Color3.fromRGB(255, 255, 255)

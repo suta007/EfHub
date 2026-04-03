@@ -187,7 +187,7 @@ end
 
 function Utils.UnequipTool()
 	pcall(function()
-		sData.Humanoid:UnequipTool()
+		sData.Humanoid:UnequipTools()
 		task.wait()
 	end)
 end

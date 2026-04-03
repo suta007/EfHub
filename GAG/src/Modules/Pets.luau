@@ -447,6 +447,7 @@ function Pets.TargetPetLevelCheck()
 	if not TargetPet or not TargetPet.PetData then
 		-- หากดึงไม่เจอ ให้รีเซ็ตแล้วไปหาใหม่
 		MutantUUID = nil
+		fVar.IsMutating = false
 		Pets.FarmLevel()
 		return
 	end
@@ -508,6 +509,7 @@ function Pets.TargetPetLevelCheck()
 		end
 		fVar.IsMutating = false
 	end
+	fVar.IsMutating = false
 end
 
 function Pets.MutatePet()
@@ -589,8 +591,8 @@ function Pets.ClaimMutationPet()
 		else
 			reg.Log("🟠 ClaimMutationPet: No UUID Run FarmLevel() and MutatePet() first")
 			MutantUUID = nil
-			Pets.FarmLevel()
 			fVar.IsMutating = false
+			Pets.FarmLevel()
 			return
 		end
 	end
@@ -665,7 +667,6 @@ function Pets.PetShard(shardName)
 				end
 				task.wait(1)
 				Utils.UnequipTool()
-				fVar.IsMutating = false
 				return
 			end
 		end
