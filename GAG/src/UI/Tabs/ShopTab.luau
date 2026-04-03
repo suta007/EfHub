@@ -199,8 +199,8 @@ function ShopTab.Initialize(Registry)
 	end
 
 	-- [[ Auto Buy Santa's Stash Items ]]
-	local BuySantaSection = Tabs.Shop:AddCollapsibleSection("Santa's Stash Shop", false)
-	BuySantaSection:AddToggle("tgBuySantaEnable", {
+	local BuyEventSection = Tabs.Shop:AddCollapsibleSection("Events Shop", false)
+	BuyEventSection:AddToggle("tgBuySantaEnable", {
 		Title = "Buy Santa's Stash Items",
 		Default = false,
 		Callback = function(Value)
@@ -215,7 +215,7 @@ function ShopTab.Initialize(Registry)
 			end
 		end,
 	})
-	BuySantaSection:AddDropdown("ddBuySanta", {
+	BuyEventSection:AddDropdown("ddBuySanta", {
 		Title = "Santa's Stash Items",
 		Description = "Select items to buy",
 		Values = sData.SantaShopTable,
@@ -227,10 +227,9 @@ function ShopTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
-
+	BuyEventSection:AddDivider()
 	-- [[ Auto Buy New Years Shop Items ]]
-	local BuyNewYearSection = Tabs.Shop:AddCollapsibleSection("New Years Shop", false)
-	BuyNewYearSection:AddToggle("tgBuyNewYearEnable", {
+	BuyEventSection:AddToggle("tgBuyNewYearEnable", {
 		Title = "Buy New Years Shop Items",
 		Default = false,
 		Callback = function(Value)
@@ -245,10 +244,39 @@ function ShopTab.Initialize(Registry)
 			end
 		end,
 	})
-	BuyNewYearSection:AddDropdown("ddBuyNewYear", {
+	BuyEventSection:AddDropdown("ddBuyNewYear", {
 		Title = "New Years Shop Items",
 		Description = "Select items to buy",
 		Values = sData.NewYearShopTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function()
+			Shop.UpdateBuyList()
+			QuickSave()
+		end,
+	})
+	BuyEventSection:AddDivider()
+	-- [[ Auto Buy Easter Shop Items ]]
+	BuyEventSection:AddToggle("tgBuyEasterEnable", {
+		Title = "Buy Easter Shop Items",
+		Default = false,
+		Callback = function(Value)
+			Shop.UpdateBuyList()
+			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local EasterStocks = GetData_result.EventShopStock["Easter Shop"].Stocks
+				if not Utils.IsTableEmpty(EasterStocks) then
+					Shop.BuyItem(Shop.ShopKey.Easter, EasterStocks)
+				end
+			end
+		end,
+	})
+	BuyEventSection:AddDropdown("ddBuyEaster", {
+		Title = "Easter Shop Items",
+		Description = "Select items to buy",
+		Values = sData.EasterShopTable,
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,

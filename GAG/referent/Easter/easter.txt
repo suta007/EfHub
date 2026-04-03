@@ -1,0 +1,17 @@
+game:GetService("ReplicatedStorage").GameEvents.Easter2026.EasterSignRemote
+game:GetService("ReplicatedStorage").GameEvents.EasterEvent.EasterSellHeldRE
+game:GetService("ReplicatedStorage").GameEvents.EasterEvent.EasterSellInventoryRE
+game:GetService("ReplicatedStorage").GameEvents.SaveSlotService.OptInToEasterSlot
+game:GetService("ReplicatedStorage").GameEvents.BuyEasterStock
+
+
+game:GetService("Players").LocalPlayer.PlayerGui.EventShop_UI
+game:GetService("ReplicatedStorage").Data.EventShopData
+
+
+game:GetService("ReplicatedStorage").GameEvents.EasterEvent
+
+game:GetService("ReplicatedStorage").GameEvents.LeprechaunEvent.ForceEvent
+
+game:GetService("ReplicatedStorage").GameEvents.BuyEventShopRestock
+game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock

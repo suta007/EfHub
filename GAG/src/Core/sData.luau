@@ -118,6 +118,12 @@ for Name, data in pairs(TRAVELING_DATA) do
 	end
 end
 
+sData.SprinklerData = require(sData.Data:WaitForChild("SprinklerData") :: any)
+sData.SprinklerDataTable = { "NONE" }
+for itemName, _itemInfo in pairs(sData.SprinklerData["SprinklerBoxSizes"]) do
+	table.insert(sData.SprinklerDataTable, itemName)
+end
+
 local EVENT_DATA = require(sData.Data:WaitForChild("EventShopData") :: any)
 sData.SantaShopTable = { "ALL" }
 for itemName, _itemInfo in pairs(EVENT_DATA["Santa's Stash"]) do
@@ -129,9 +135,9 @@ for itemName, _itemInfo in pairs(EVENT_DATA["New Years Shop"]) do
 	table.insert(sData.NewYearShopTable, itemName)
 end
 
-sData.SprinklerData = require(sData.Data:WaitForChild("SprinklerData") :: any)
-sData.SprinklerDataTable = { "NONE" }
-for itemName, _itemInfo in pairs(sData.SprinklerData["SprinklerBoxSizes"]) do
-	table.insert(sData.SprinklerDataTable, itemName)
+sData.EasterShopTable = { "ALL" }
+for itemName, _itemInfo in pairs(EVENT_DATA["Easter Shop"]) do
+	table.insert(sData.EasterShopTable, itemName)
 end
+
 return sData

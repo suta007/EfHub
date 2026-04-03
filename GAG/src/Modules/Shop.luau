@@ -8,9 +8,10 @@ Shop.ShopKey = {
 	Daily = "SeedStocks/Daily Deals/Stocks",
 	Gear = "GearStock/Stocks",
 	Egg = "PetEggStock/Stocks",
+	Traveling = "TravelingMerchantShopStock/Stocks",
 	Santa = "EventShopStock/Santa's Stash/Stocks",
 	NewYear = "EventShopStock/New Years Shop/Stocks",
-	Traveling = "TravelingMerchantShopStock/Stocks",
+	Easter = "EventShopStock/Easter Shop/Stocks",
 }
 --local AutoBuyConnections = {}
 function Shop.Initialize(Registry)
@@ -97,6 +98,13 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "New Years Shop",
+		},
+		[Shop.ShopKey.Easter] = {
+			Enabled = Options.tgBuyEasterEnable.Value,
+			Items = GetSelectedItems(Options.ddBuyEaster.Value),
+			RemoteName = "BuyEventShopStock",
+			ArgType = "EventMode",
+			EventArg = "Easter Shop",
 		},
 	}
 end
