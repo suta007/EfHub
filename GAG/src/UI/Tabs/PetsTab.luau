@@ -107,10 +107,20 @@ function PetsTab.Initialize(registry)
 			if Value then
 				Pets.FarmLevel()
 				task.wait(2)
-				pcall(Pets.TargetPetLevelCheck)
+				local success, err = pcall(function()
+					Pets.TargetPetLevelCheck()
+				end)
+				if not success then
+					reg.Log("TargetPetLevelCheck failed: " .. tostring(err))
+				end
 				CheckLevelTask = task.spawn(function()
 					while task.wait(60) do
-						pcall(Pets.TargetPetLevelCheck)
+						local success2, err2 = pcall(function()
+							Pets.TargetPetLevelCheck()
+						end)
+						if not success2 then
+							reg.Log("TargetPetLevelCheck failed: " .. tostring(err2))
+						end
 					end
 				end)
 			else

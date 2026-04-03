@@ -550,7 +550,12 @@ function Pets.MutatePet()
 		end
 		TaskMutantReady = task.spawn(function()
 			while task.wait(60) do
-				Pets.CheckMutantReady()
+				local success, err = pcall(function()
+					Pets.CheckMutantReady()
+				end)
+				if not success then
+					reg.Log("CheckMutantReady failed: " .. tostring(err))
+				end
 			end
 		end)
 		fVar.IsMutating = false
@@ -631,7 +636,12 @@ function Pets.CheckMutantReady()
 		fVar.IsMutating = false
 		reg.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
 		task.spawn(function()
-			Pets.ClaimMutationPet()
+			local success, err = pcall(function()
+				Pets.ClaimMutationPet()
+			end)
+			if not success then
+				reg.Log("ClaimMutationPet failed: " .. tostring(err))
+			end
 		end)
 		return
 	end
@@ -651,7 +661,7 @@ function Pets.PetShard(shardName)
 					sData.PetShardService_RE:FireServer("ApplyShard", pet)
 				end)
 				if not success then
-					print("ApplyShard failed: " .. tostring(err))
+					reg.Log("ApplyShard failed: " .. tostring(err))
 				end
 				task.wait(1)
 				Utils.UnequipTool()
