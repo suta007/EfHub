@@ -21,8 +21,6 @@ local function LoadModules()
 		Registry.Shop = EF_REMOTE("Modules/Shop")
 		Registry.Auto = EF_REMOTE("Modules/Auto")
 		Registry.Pets = EF_REMOTE("Modules/Pets")
-
-		--
 		Registry.Misc = EF_REMOTE("Modules/Misc")
 		--
 		--
@@ -37,13 +35,14 @@ local function LoadModules()
 		Registry.PetsTab = EF_REMOTE("UI/Tabs/PetsTab")
 		Registry.AutoTab = EF_REMOTE("UI/Tabs/AutoTab")
 		Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
+		Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
 		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
 
 		--Registry.test = EF_REMOTE("Modules/test")
 
 		--
 		--
-		-- Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
+		--
 		--
 	else
 		-- 1. Core
@@ -72,12 +71,13 @@ local function LoadModules()
 		Registry.PetsTab = require("./UI/Tabs/PetsTab.luau")
 		Registry.AutoTab = require("./UI/Tabs/AutoTab.luau")
 		Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
+		Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
 		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
 
 		--
 		--Registry.test = require("./Modules/test.luau")
 		--
-		-- Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
+		--
 		--
 	end
 
@@ -103,9 +103,10 @@ function EfHub.Initialize()
 	Registry.MainTab.Initialize(Registry)
 	Registry.ShopTab.Initialize(Registry)
 	Registry.AutoTab.Initialize(Registry)
-	-- Registry.EventsTab.Initialize(Registry)
-	Registry.MiscTab.Initialize(Registry)
 	Registry.PetsTab.Initialize(Registry)
+	Registry.EventsTab.Initialize(Registry)
+	Registry.MiscTab.Initialize(Registry)
+
 	Registry.LogTab.Initialize(Registry)
 
 	Registry.Window.Finalize()
