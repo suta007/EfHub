@@ -14,13 +14,13 @@ function Egghunt.Initialize(registry, tab)
 	QuickSave = reg.Window.QuickSave
 	EfTasks = reg.EfTasks
 	EventsTab = tab
-	reg.Log("Egghunt")
 
 	local EgghuntSection = EventsTab:AddCollapsibleSection("Egghunt", false)
 	EgghuntSection:AddToggle("tgEgghuntEnable", {
 		Title = "Egghunt Event Enable",
 		Default = false,
 		Callback = function(Value)
+			reg.Log("Egghunt Toggle")
 			EfTasks.ToggleTask("AutoEggHunt", Value, function()
 				Egghunt.autoEggHunt()
 				task.wait(60)
