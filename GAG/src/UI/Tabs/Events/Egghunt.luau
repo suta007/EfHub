@@ -20,7 +20,6 @@ function Egghunt.Initialize(registry, tab)
 		Title = "Egghunt Event Enable",
 		Default = false,
 		Callback = function(Value)
-			reg.Log("Egghunt Toggle")
 			EfTasks.ToggleTask("AutoEggHunt", Value, function()
 				Egghunt.autoEggHunt()
 				task.wait(60)

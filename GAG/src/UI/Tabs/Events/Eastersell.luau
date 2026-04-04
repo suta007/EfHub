@@ -43,6 +43,7 @@ function Eastersell.Initialize(registry, tab)
 			Options.ddEasterHarvestPlant:SetValue({ ALL = true })
 		end,
 	})
+
 	EastersellSection:AddDropdown("ddEasterHarvestPlant", {
 		Title = "Easter Harvest Plant",
 		Values = EasterSlot,
