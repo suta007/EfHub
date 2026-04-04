@@ -37,7 +37,7 @@ function Eastersell.Initialize(registry, tab)
 			QuickSave()
 		end,
 	})
-	EastersellSection:AddButton("btnEasterHarvestAll", {
+	EastersellSection:AddButton({
 		Title = "Clear Selected Plants",
 		Callback = function()
 			Options.ddEasterHarvestPlant:SetValue({ ALL = true })
