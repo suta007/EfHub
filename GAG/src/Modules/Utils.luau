@@ -8,11 +8,12 @@ local RNG = Random.new()
 function Utils.Initialize(registry)
 	reg = registry
 	sData = reg.sData
-	Utils.SellButton = sData.TeleportFrame:WaitForChild("Sell") or sData.TeleportFrame:WaitForChild("Sell")
-	Utils.GearButton = sData.TeleportFrame:WaitForChild("Gear")
+
+	Utils.SellButton = sData.TeleportFrame:WaitForChild("Easter_Sell") or sData.TeleportFrame:WaitForChild("Sell")
+	Utils.GardenButton = sData.TeleportFrame:WaitForChild("Easter_Garden") or sData.TeleportFrame:WaitForChild("Garden")
+	Utils.SeedsButton = sData.TeleportFrame:WaitForChild("Easter_Seeds") or sData.TeleportFrame:WaitForChild("Seeds")
 	Utils.PetsButton = sData.TeleportFrame:WaitForChild("Pets")
-	Utils.SeedsButton = sData.TeleportFrame:WaitForChild("Seeds")
-	Utils.GardenButton = sData.TeleportFrame:WaitForChild("Garden")
+	Utils.GearButton = sData.TeleportFrame:WaitForChild("Gear")
 end
 
 function Utils.ViewButton()

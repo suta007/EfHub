@@ -1,0 +1,246 @@
+--game:GetService("ReplicatedStorage").Modules.EasterUIController
+
+local v1 = game:GetService("Players")
+local v2 = game:GetService("ReplicatedStorage")
+game:GetService("ServerScriptService")
+local v_u_3 = game:GetService("MarketplaceService")
+local v_u_4 = game:GetService("PolicyService")
+local v_u_5 = game:GetService("RunService")
+local v_u_6 = v2:WaitForChild("GameEvents"):WaitForChild("SeedPackGiverEvent")
+local v_u_7 = require(v2.Data.EASTER_SeedGiverQuestProgression)
+local v_u_8 = require(v2.Modules.MarketController)
+local v_u_9 = require(v2.Modules.GiftController)
+local v_u_10 = require(v2.Modules.GuiController)
+local v_u_11 = require(v2.Modules.DataService)
+local v_u_12 = require(v2.Data.SeedPackData)
+local v_u_13 = require(v2.Modules.RetryPcall)
+local v_u_14 = require(v2.Comma_Module)
+local v_u_15 = require(v2.Data.SeedData)
+local v_u_16 = require(v2.Data.DevProductIds)
+local v_u_17 = require(v2.Modules.SeedPackOddsController)
+local v_u_18 = v1.LocalPlayer
+assert(v_u_18, "LocalPlayer not found!")
+local v_u_19 = v_u_18.PlayerGui:WaitForChild("EasterReward_UI")
+local v_u_20 = v_u_19.Frame
+local v_u_21 = v_u_20.Btns
+local v_u_22 = false
+local v_u_57 = {
+	["DisplayExoticSackUI"] = function(_)
+		-- upvalues: (ref) v_u_22, (copy) v_u_57, (copy) v_u_10, (copy) v_u_19, (copy) v_u_20
+		if v_u_22 then
+			v_u_57:UpdateProgression()
+			v_u_10:Open(v_u_19)
+			v_u_20.BasicVer.Visible = false
+			v_u_20.ExoticVer.Visible = true
+		else
+			v_u_57:DisplayBasicSackUI()
+		end
+	end,
+	["DisplayBasicSackUI"] = function(_)
+		-- upvalues: (copy) v_u_57, (copy) v_u_10, (copy) v_u_19, (copy) v_u_20
+		v_u_57:UpdateProgression()
+		v_u_10:Open(v_u_19)
+		v_u_20.BasicVer.Visible = true
+		v_u_20.ExoticVer.Visible = false
+	end,
+	["UpdateProgression"] = function(_)
+		-- upvalues: (copy) v_u_11, (copy) v_u_18, (copy) v_u_20, (copy) v_u_7
+		local v23 = v_u_11:GetData()
+		if v23 then
+			local v24 = v23.EasterEventData
+			local v25 = v_u_20.BasicVer.Prog
+			local v26 = (v23.EasterEventData.Progression - 1) / #v_u_7
+			v_u_20.BasicVer.Prog.Fill.Size = UDim2.new(v26, 0, 1, 0)
+			if v23.EasterEventData.Progression > #v_u_7 then
+				v25.Progress.Text = "Plant is fully fed! Claim your Exotic Seed Pack!"
+				v_u_20.BasicVer.ClaimButton.Visible = true
+			else
+				v25.Progress.Text = ("%*/%*"):format(v24.Progression - 1, #v_u_7)
+				v_u_20.BasicVer.ClaimButton.Visible = false
+			end
+		else
+			warn((("No player data for %*!"):format(v_u_18)))
+			return
+		end
+	end,
+	["Start"] = function(_)
+		-- upvalues: (copy) v_u_10, (copy) v_u_19, (copy) v_u_21, (copy) v_u_57, (copy) v_u_20, (copy) v_u_6, (copy) v_u_12, (copy) v_u_15, (copy) v_u_17, (copy) v_u_5, (copy) v_u_8, (copy) v_u_16, (copy) v_u_13, (copy) v_u_3, (copy) v_u_14, (copy) v_u_9, (copy) v_u_4, (copy) v_u_18, (ref) v_u_22
+		local v_u_27 = v_u_10:GetStateForGui(v_u_19)
+		v_u_10:UsePopupAnims(v_u_19)
+		v_u_21.Basic.Activated:Connect(function()
+			-- upvalues: (ref) v_u_57
+			v_u_57:DisplayBasicSackUI()
+		end)
+		v_u_21.Exotic.Activated:Connect(function()
+			-- upvalues: (ref) v_u_57
+			v_u_57:DisplayExoticSackUI()
+		end)
+		v_u_20.ExitButton.Activated:Connect(function()
+			-- upvalues: (ref) v_u_10, (ref) v_u_19
+			v_u_10:Close(v_u_19)
+		end)
+		v_u_20.BasicVer.ClaimButton.Claim.Activated:Connect(function()
+			-- upvalues: (ref) v_u_6, (ref) v_u_20
+			v_u_6:FireServer("ClaimPremiumPack")
+			v_u_20.BasicVer.Prog.Progress.Text = "Well done! Exotic Seed Pack Claimed!"
+			v_u_20.BasicVer.ClaimButton.Visible = false
+		end)
+		local function v51(p_u_28, p29)
+			-- upvalues: (ref) v_u_12, (ref) v_u_15, (ref) v_u_17, (ref) v_u_19, (copy) v_u_27, (ref) v_u_5
+			local v30 = table.clone(p29.Items)
+			table.sort(v30, function(p31, p32)
+				return (p31.Chance or (1 / 0)) < (p32.Chance or (1 / 0))
+			end)
+			local v33 = {}
+			local v34 = {}
+			for v35, v36 in v30 do
+				if v35 <= 2 then
+					v33[v36] = true
+				elseif v35 <= 4 then
+					v34[v36] = true
+				end
+			end
+			for v37, v_u_38 in p29.Items do
+				local v39 = v33[v_u_38] == true
+				local v40 = not v39
+				if v40 then
+					v40 = v34[v_u_38] == true
+				end
+				local v41
+				if v39 then
+					v41 = p_u_28.UIListLayout.TemplateRainbow
+				elseif v40 then
+					v41 = p_u_28.UIListLayout.TemplateBigger
+				else
+					v41 = p_u_28.UIListLayout.TemplateSmaller
+				end
+				local v_u_42 = v41:Clone()
+				v_u_42.LayoutOrder = v37
+				local v43 = v_u_42.Odds
+				local v44
+				if v_u_38.RemoveChance then
+					v44 = ""
+				elseif v_u_38.HideChance then
+					v44 = "???"
+				else
+					local v45 = v_u_38.Chance * 100
+					v44 = ("%*%%"):format(math.floor(v45) / 100)
+				end
+				v43.Text = v44
+				v_u_42.Title.Text = v_u_12:GetTextDisplayForItem(v_u_38)
+				if v_u_38.Icon then
+					v_u_42.Vector.Image = v_u_38.Icon
+				else
+					local v46 = v_u_15[v_u_38.RewardId]
+					if v46 and v46.Asset then
+						v_u_42.Vector.Image = v46.Asset
+					end
+				end
+				if v_u_42:FindFirstChild("OddsButton") then
+					if v_u_38.Type == "Pack" then
+						v_u_42.OddsButton.Visible = true
+						v_u_42.OddsButton.Activated:Connect(function()
+							-- upvalues: (ref) v_u_17, (copy) v_u_38, (ref) v_u_19
+							v_u_17:Open(v_u_38.RewardId, v_u_19)
+						end)
+					else
+						v_u_42.OddsButton.Visible = false
+					end
+				end
+				if v39 then
+					local v_u_47 = nil
+					v_u_27.Visible:Listen(function(p48)
+						-- upvalues: (ref) v_u_47, (ref) v_u_5, (copy) v_u_42
+						if p48 then
+							if not v_u_47 then
+								v_u_47 = v_u_5.PostSimulation:Connect(function()
+									-- upvalues: (ref) v_u_42
+									local v49 = Color3.fromHSV(os.clock() % 5 / 5, 1, 1)
+									v_u_42.Odds.TextColor3 = v49
+									v_u_42.Title.TextColor3 = v49
+								end)
+								return
+							end
+						elseif v_u_47 then
+							v_u_47:Disconnect()
+							v_u_47 = nil
+						end
+					end)
+				elseif v40 then
+					local v50 = Color3.fromRGB(85, 170, 255)
+					v_u_42.Odds.TextColor3 = v50
+					v_u_42.Title.TextColor3 = v50
+				end
+				v_u_42.Parent = p_u_28
+				task.delay(0.01, function()
+					-- upvalues: (copy) p_u_28
+					if p_u_28.AbsoluteCanvasSize.X >= p_u_28.AbsoluteWindowSize.X then
+						p_u_28.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+					else
+						p_u_28.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
+					end
+				end)
+			end
+		end
+		v51(v_u_20.BasicVer.Items.ScrollingFrame, v_u_12.Packs["Easter Seed Pack"])
+		v51(v_u_20.ExoticVer.Items.ScrollingFrame, v_u_12.Packs["Exotic Easter Seed Pack"])
+		v_u_8:SetPriceLabel(v_u_20.ExoticVer.Frame.Buy1.Cost, v_u_16.EasterPackExoticBuy1.PurchaseID)
+		v_u_20.ExoticVer.Frame.Buy1.Activated:Connect(function()
+			-- upvalues: (ref) v_u_8, (ref) v_u_16
+			v_u_8:PromptPurchase(v_u_16.EasterPackExoticBuy1.PurchaseID, Enum.InfoType.Product)
+		end)
+		v_u_8:SetPriceLabel(v_u_20.ExoticVer.Frame.Buy3.Cost, v_u_16.EasterPackExoticBuy3.PurchaseID)
+		v_u_20.ExoticVer.Frame.Buy3.Activated:Connect(function()
+			-- upvalues: (ref) v_u_8, (ref) v_u_16
+			v_u_8:PromptPurchase(v_u_16.EasterPackExoticBuy3.PurchaseID, Enum.InfoType.Product)
+		end)
+		v_u_8:SetPriceLabel(v_u_20.ExoticVer.Frame.Buy10.Cost, v_u_16.EasterPackExoticBuy10.PurchaseID)
+		v_u_20.ExoticVer.Frame.Buy10.Activated:Connect(function()
+			-- upvalues: (ref) v_u_8, (ref) v_u_16
+			v_u_8:PromptPurchase(v_u_16.EasterPackExoticBuy10.PurchaseID, Enum.InfoType.Product)
+		end)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_20, (ref) v_u_13, (ref) v_u_3, (ref) v_u_16, (ref) v_u_14
+			v_u_20.ExoticVer.Frame.Buy10.Tag.Visible = false
+			local v52, v53 = v_u_13(30, 6, function()
+				-- upvalues: (ref) v_u_3, (ref) v_u_16
+				return v_u_3:GetProductInfo(v_u_16.EasterPackExoticBuy1.PurchaseID, Enum.InfoType.Product)
+			end)
+			if v52 then
+				v_u_20.ExoticVer.Frame.Buy10.Tag.Text = v_u_14.Comma(v53.PriceInRobux * 10)
+				v_u_20.ExoticVer.Frame.Buy10.Tag.Visible = true
+			end
+		end)
+		v_u_20.ExoticVer.Frame.Gift.Activated:Connect(function()
+			-- upvalues: (ref) v_u_9
+			v_u_9:PromptGift("10 Exotic Easter Seed Packs")
+		end)
+		v_u_57:UpdateProgression()
+		task.spawn(function()
+			-- upvalues: (ref) v_u_21, (ref) v_u_20, (ref) v_u_13, (ref) v_u_4, (ref) v_u_18, (ref) v_u_22
+			v_u_21.Exotic.Visible = false
+			local v54 = v_u_20.ExoticVer:GetPropertyChangedSignal("Visible"):Connect(function()
+				-- upvalues: (ref) v_u_20
+				if v_u_20.ExoticVer.Visible then
+					v_u_20.ExoticVer.Visible = false
+					v_u_20.BasicVer.Visible = true
+				end
+			end)
+			local v55, v56 = v_u_13(10, 5, function()
+				-- upvalues: (ref) v_u_4, (ref) v_u_18
+				return v_u_4:GetPolicyInfoForPlayerAsync(v_u_18)
+			end)
+			if v55 then
+				if not v56.ArePaidRandomItemsRestricted then
+					v_u_22 = true
+					v_u_21.Exotic.Visible = true
+					v54:Disconnect()
+				end
+			else
+				return
+			end
+		end)
+	end,
+}
+task.spawn(v_u_57.Start, v_u_57)
+return v_u_57

@@ -1,0 +1,89 @@
+--game:GetService("ReplicatedStorage").Modules.EasterEvent.EasterGoldenEggController
+
+local v1 = game:GetService("Players")
+local v2 = game:GetService("ReplicatedStorage")
+local v_u_3 = require(v2.Modules.EasterEvent.EasterHelper)
+local v_u_4 = require(v2.Modules.GuiController)
+local v_u_5 = require(v2.Modules.TimeHelper)
+local v_u_6 = require(v2.Modules.DataService)
+local v_u_7 = require(v2.Modules.NumberUtil)
+local v_u_8 = require(v2.Modules.MarketController)
+local v_u_9 = require(v2.Data.DevProductIds)
+local v_u_10 = require(v2.Modules.PetEggOddsController)
+local v11 = v2:WaitForChild("GameEvents")
+local v_u_12 = v11.EasterEvent.TryBuyGoldenEggRE
+local v_u_13 = v11.EasterEvent.ToggleGoldenEggUIBE
+local v14 = v1.LocalPlayer
+assert(v14, "LocalPlayer not found")
+local v_u_15 = v14.PlayerGui.EasterGoldenEgg_UI
+local v16 = v_u_15.Golden_Egg_Shop
+local v17 = v16.Header
+local v_u_18 = v17.CloseButton
+local v19 = v16.Main.Shop
+local v20 = v19.Buy_Buttons.Buy_Button_Robux
+local v_u_21 = v20.SENSOR
+local v_u_22 = v20.TextLabel
+local v23 = v19.Buy_Buttons.Buy_Button
+local v_u_24 = v23.SENSOR
+local v_u_25 = v23.Content.PriceLabel
+local v_u_26 = v19.Item.InfoButton
+local v_u_27 = v19.Item.Multiplier.Multiplier
+local v_u_28 = v17.RestocksIn.Timer
+local function v_u_34()
+	-- upvalues: (copy) v_u_15, (copy) v_u_6, (copy) v_u_3, (copy) v_u_25, (copy) v_u_7, (copy) v_u_27
+	local v29 = v_u_15.Enabled
+	local v30 = workspace:FindFirstChild("Interaction.UpdateItems.Easter2026.GoldenEggShop.MrBunnyBling.HumanoidRootPart.ProximityPrompt", true)
+	if v30 then
+		v30.Enabled = not v29
+	end
+	if v29 then
+		local v31 = v_u_6:GetData()
+		if v31 then
+			local v32 = v31.EasterEventData.GoldenEgg.BuyAmount
+			local v33 = v_u_3:GetNextGoldenEggPrice(v32)
+			v_u_25.Text = v_u_7.FormatCompactPrice(v33)
+			v_u_27.Text = ("Bought: %*"):format(v32)
+		end
+	else
+		return
+	end
+end
+task.spawn(function()
+	-- upvalues: (copy) v_u_4, (copy) v_u_15, (copy) v_u_8, (copy) v_u_22, (copy) v_u_9, (copy) v_u_18, (copy) v_u_21, (copy) v_u_24, (copy) v_u_12, (copy) v_u_26, (copy) v_u_10, (copy) v_u_13, (copy) v_u_34, (copy) v_u_6, (copy) v_u_3, (copy) v_u_28, (copy) v_u_5
+	v_u_4:UsePopupAnims(v_u_15)
+	v_u_8:SetPriceLabel(v_u_22, v_u_9.BuyGoldenEgg.PurchaseID)
+	v_u_18.Activated:Connect(function()
+		-- upvalues: (ref) v_u_4, (ref) v_u_15
+		v_u_4:Close(v_u_15)
+	end)
+	v_u_21.Activated:Connect(function()
+		-- upvalues: (ref) v_u_8, (ref) v_u_9
+		v_u_8:PromptPurchaseRobux(v_u_9.BuyGoldenEgg.PurchaseID, Enum.InfoType.Product)
+	end)
+	v_u_24.Activated:Connect(function()
+		-- upvalues: (ref) v_u_12
+		v_u_12:FireServer()
+	end)
+	v_u_26.Activated:Connect(function()
+		-- upvalues: (ref) v_u_10, (ref) v_u_15
+		v_u_10:Open("Golden Egg", v_u_15)
+	end)
+	v_u_13.Event:Connect(function()
+		-- upvalues: (ref) v_u_4, (ref) v_u_15
+		v_u_4:Toggle(v_u_15)
+	end)
+	v_u_15:GetPropertyChangedSignal("Enabled"):Connect(v_u_34)
+	local v35 = v_u_6:GetPathSignal("SpecialCurrency/ChocCoins/@")
+	if v35 then
+		v35:Connect(v_u_34)
+	end
+	local v36 = v_u_6:GetPathSignal("EasterEventData/GoldenEgg/@")
+	if v36 then
+		v36:Connect(v_u_34)
+	end
+	while true do
+		v_u_28.Text = ("Resets in: %*"):format((v_u_5:GenerateColonFormatFromTime(v_u_3:GetGoldenEggResetTimes().TimeUntilNextReset)))
+		task.wait(0.5)
+	end
+end)
+return {}

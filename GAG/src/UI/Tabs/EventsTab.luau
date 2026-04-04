@@ -9,9 +9,9 @@ local Tabs
 local function LoadEvents()
 	local Events = {}
 	if getgenv().DEV_MODE then
-		Events.Strange = EF_REMOTE("UI/Tabs/Events/Strange")
+		Events.Egghunt = EF_REMOTE("UI/Tabs/Events/Egghunt")
 	else
-		Events.Strange = require("./Events/Strange.luau")
+		Events.Egghunt = require("./Events/Egghunt.luau")
 	end
 	return Events
 end
@@ -26,7 +26,7 @@ function EventsTab.Initialize(registry)
 	Tabs.Events = Interface:AddTab({ Title = "Events", Icon = "calendar" })
 
 	local Events = LoadEvents()
-	Events.Strange.Initialize(reg, Tabs.Events)
+	Events.Egghunt.Initialize(reg, Tabs.Events)
 
 	--return Events
 end
