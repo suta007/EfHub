@@ -11,7 +11,6 @@ if getgenv().DEV_MODE then
 		local url = BaseUrl .. path .. ".luau"
 		local success, content = pcall(function()
 			return game:HttpGet(url)
-			--return game:GetService("HttpService"):GetAsync(url)
 		end)
 		if not success or not content then
 			error("Remote Error: Could not fetch " .. path)

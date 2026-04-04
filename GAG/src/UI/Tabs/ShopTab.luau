@@ -200,6 +200,7 @@ function ShopTab.Initialize(Registry)
 
 	-- [[ Auto Buy Santa's Stash Items ]]
 	local BuyEventSection = Tabs.Shop:AddCollapsibleSection("Events Shop", false)
+	--[[ 	{
 	BuyEventSection:AddToggle("tgBuySantaEnable", {
 		Title = "Buy Santa's Stash Items",
 		Default = false,
@@ -228,7 +229,7 @@ function ShopTab.Initialize(Registry)
 		end,
 	})
 	BuyEventSection:AddDivider()
-	-- [[ Auto Buy New Years Shop Items ]]
+
 	BuyEventSection:AddToggle("tgBuyNewYearEnable", {
 		Title = "Buy New Years Shop Items",
 		Default = false,
@@ -257,6 +258,7 @@ function ShopTab.Initialize(Registry)
 		end,
 	})
 	BuyEventSection:AddDivider()
+} ]]
 	-- [[ Auto Buy Easter Shop Items ]]
 	BuyEventSection:AddToggle("tgBuyEasterEnable", {
 		Title = "Buy Easter Shop Items",
