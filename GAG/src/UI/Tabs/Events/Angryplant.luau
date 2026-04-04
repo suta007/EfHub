@@ -1,10 +1,38 @@
--- [[ GAG: Jim's Quest (Angry Plant) Manager - Enhanced Version ]] --
-
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
 local ProgressionTable = require(ReplicatedStorage.Data.EASTER_SeedGiverQuestProgression)
 local SeedEvent = ReplicatedStorage.GameEvents.SeedPackGiverEvent
 
+local Angryplant = {}
+local reg
+local EfTasks
+local QuickSave
+local EventsTab
+
+function Angryplant.Initialize(registry, tab)
+	reg = registry
+	local Options = reg.Options
+	_ = Options
+	QuickSave = reg.Window.QuickSave
+	EfTasks = reg.EfTasks
+	EventsTab = tab
+
+	local AngryplantSection = EventsTab:AddCollapsibleSection("Angryplant", false)
+	AngryplantSection:AddToggle("tgAngryplantEnable", {
+		Title = "Angryplant Enable",
+		Default = false,
+		Callback = function(Value)
+			reg.Log("Angryplant Toggle")
+			EfTasks.ToggleTask("AutoAngryplant", Value, function()
+				Angryplant.autoAngryplant()
+				task.wait(60)
+			end)
+			QuickSave()
+		end,
+	end)
+end
+
+return Angryplant
 -- ฟังก์ชันดึงและแสดงข้อมูลด่านปัจจุบัน (แสดงครบ 4 เงื่อนไข)
 local function getQuestInfo()
 	local data = DataService:GetData().EasterEventData

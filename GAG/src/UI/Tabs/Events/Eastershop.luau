@@ -1,6 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
 local BuyEventRemote = ReplicatedStorage.GameEvents.BuyEventShopStock
+---78.08405303955078, 4.790825843811035, -14.454557418823242
 
 local function autoBuyEasterShop(itemName)
 	local data = DataService:GetData()
@@ -35,3 +36,5 @@ local function autoBuyEasterShop(itemName)
 end
 
 -- เรียกใช้: autoBuyEasterShop("Carrot")
+
+---78.08405303955078, 4.790825843811035, -14.454557418823242

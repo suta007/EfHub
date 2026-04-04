@@ -104,7 +104,7 @@ function Shop.UpdateBuyList()
 			Items = GetSelectedItems(Options.ddBuyEaster.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
-			EventArg = "Easter Shop",
+			EventArg = "Easter Seed Shop",
 		},
 	}
 end
