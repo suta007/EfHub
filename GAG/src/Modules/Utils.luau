@@ -8,7 +8,7 @@ local RNG = Random.new()
 function Utils.Initialize(registry)
 	reg = registry
 	sData = reg.sData
-	Utils.SellButton = sData.TeleportFrame:WaitForChild("Sell")
+	Utils.SellButton = sData.TeleportFrame:WaitForChild("Sell") or sData.TeleportFrame:WaitForChild("Sell")
 	Utils.GearButton = sData.TeleportFrame:WaitForChild("Gear")
 	Utils.PetsButton = sData.TeleportFrame:WaitForChild("Pets")
 	Utils.SeedsButton = sData.TeleportFrame:WaitForChild("Seeds")

@@ -7,7 +7,7 @@ function Loader.Require(path)
 	if getgenv().DEV_MODE then
 		local url = BASE_URL .. path .. ".luau"
 		local success, content = pcall(function()
-			return game:GetService("HttpService"):GetAsync(url)
+			return (game :: any):HttpGet(url)
 		end)
 		if not success or not content then
 			error("Remote Error: Could not fetch " .. path)

@@ -85,7 +85,7 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyTravelingMerchantShopStock",
 			ArgType = "NormalMode",
 		},
-		[Shop.ShopKey.Santa] = {
+		--[[ 		[Shop.ShopKey.Santa] = {
 			Enabled = Options.tgBuySantaEnable.Value,
 			Items = GetSelectedItems(Options.ddBuySanta.Value),
 			RemoteName = "BuyEventShopStock",
@@ -98,7 +98,7 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "New Years Shop",
-		},
+		}, ]]
 		[Shop.ShopKey.Easter] = {
 			Enabled = Options.tgBuyEasterEnable.Value,
 			Items = GetSelectedItems(Options.ddBuyEaster.Value),
