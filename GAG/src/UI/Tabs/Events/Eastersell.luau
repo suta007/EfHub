@@ -10,6 +10,7 @@ local EasterSlot = table.clone(PlantTraitsData.Traits["EasterSlot"])
 table.insert(EasterSlot, 1, "ALL")
 local Main
 local Utils
+local IsEasterHarvesting = false
 
 function Eastersell.Initialize(registry, tab)
 	reg = registry
@@ -30,7 +31,7 @@ function Eastersell.Initialize(registry, tab)
 		Callback = function(Value)
 			reg.Log("Easter Harvest Toggle")
 			EfTasks.ToggleTask("AutoEasterHarvest", Value, function()
-				--Eastersell.autoEastersell()
+				Eastersell.HarvestCrops()
 				task.wait(1)
 			end)
 			QuickSave()
@@ -86,23 +87,33 @@ end
 
 function Eastersell.HarvestCrops()
 	local Options = reg.Options
-	if not Options.tgEasterHarvestEnable.Value or fVar.IsEasterHarvesting then
+	if not Options.tgEasterHarvestEnable.Value or IsEasterHarvesting then
 		return
 	end
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 		return
 	end
+	IsEasterHarvesting = true
 	local Plants_Physical = Utils.GetPlantsFolder()
 	if not Plants_Physical then
+		IsEasterHarvesting = false
 		return
 	end
+	local easterPlantlist = Utils.GetSelectedItems(Options.ddEasterHarvestPlant.Value)
+
 	for _, plant in ipairs(Plants_Physical:GetChildren()) do
+		if not Options.tgEasterHarvestEnable.Value then
+			IsEasterHarvesting = false
+			return
+		end
 		local FruitsContainer = plant:FindFirstChild("Fruits")
 		local Fruits = FruitsContainer and FruitsContainer:GetChildren() or { plant }
 
 		for _, fruit in ipairs(Fruits) do
-			if fruit:IsA("Model") and fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Variant") then
-				--
+			local fruitName = fruit:GetAttribute("f")
+			if fruit:IsA("Model") and fruitName and (table.find(easterPlantlist, "ALL") or table.find(easterPlantlist, fruitName)) then
+				sData.CollectEvent:FireServer({ fruit })
+				task.wait(0.1)
 			end
 		end
 	end

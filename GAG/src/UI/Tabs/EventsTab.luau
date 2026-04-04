@@ -10,8 +10,10 @@ local function LoadEvents()
 	local Events = {}
 	if getgenv().DEV_MODE then
 		Events.Egghunt = EF_REMOTE("UI/Tabs/Events/Egghunt")
+		Events.Eastersell = EF_REMOTE("UI/Tabs/Events/Eastersell")
 	else
 		Events.Egghunt = require("./Events/Egghunt.luau")
+		Events.Eastersell = require("./Events/Eastersell.luau")
 	end
 	return Events
 end
@@ -27,6 +29,7 @@ function EventsTab.Initialize(registry)
 
 	local Events = LoadEvents()
 	Events.Egghunt.Initialize(reg, Tabs.Events)
+	Events.Eastersell.Initialize(reg, Tabs.Events)
 
 	--return Events
 end
