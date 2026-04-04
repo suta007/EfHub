@@ -63,6 +63,9 @@ function Eastersell.Initialize(registry, tab)
 				task.wait(1)
 			end)
 			QuickSave()
+			if not Value then
+				IsEasterHarvesting = false
+			end
 		end,
 	})
 	EastersellSection:AddToggle("tgEasterSellFull", {
@@ -110,11 +113,13 @@ function Eastersell.HarvestCrops()
 
 		for _, fruit in ipairs(Fruits) do
 			if fruit:IsA("Model") and (table.find(easterPlantlist, "ALL") or table.find(easterPlantlist, fruit.Name)) then
-				sData.CollectEvent:FireServer({ fruit })
+				--sData.CollectEvent:FireServer({ fruit })
+				game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
 				task.wait(0.1)
 			end
 		end
 	end
+	IsEasterHarvesting = false
 	--sData.CollectEvent:FireServer({ crop })
 end
 
