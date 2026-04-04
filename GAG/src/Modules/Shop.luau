@@ -9,9 +9,9 @@ Shop.ShopKey = {
 	Gear = "GearStock/Stocks",
 	Egg = "PetEggStock/Stocks",
 	Traveling = "TravelingMerchantShopStock/Stocks",
-	Santa = "EventShopStock/Santa's Stash/Stocks",
-	NewYear = "EventShopStock/New Years Shop/Stocks",
-	Easter = "EventShopStock/Easter Shop/Stocks",
+	--Santa = "EventShopStock/Santa's Stash/Stocks",
+	--NewYear = "EventShopStock/New Years Shop/Stocks",
+	Easter = "EventShopStock/Easter Seed Shop/Stocks",
 }
 --local AutoBuyConnections = {}
 function Shop.Initialize(Registry)
@@ -124,7 +124,7 @@ function Shop.BuyItem(ShopKey, StockData)
 	end
 
 	for itemId, itemInfo in pairs(StockData) do
-		local ItemName = itemInfo.EggName or itemId
+		local ItemName = if itemInfo.EggName then itemInfo.EggName else itemId
 		local StockAmount = tonumber(itemInfo.Stock) or 0
 
 		if not table.find(Setting.Items, "ALL") and not table.find(Setting.Items, ItemName) then

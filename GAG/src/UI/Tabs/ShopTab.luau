@@ -268,7 +268,7 @@ function ShopTab.Initialize(Registry)
 			QuickSave()
 			if Value then
 				local GetData_result = sData.DataService:GetData()
-				local EasterStocks = GetData_result.EventShopStock["Easter Shop"].Stocks
+				local EasterStocks = GetData_result.EventShopStock["Easter Seed Shop"].Stocks
 				if not Utils.IsTableEmpty(EasterStocks) then
 					Shop.BuyItem(Shop.ShopKey.Easter, EasterStocks)
 				end
