@@ -29,7 +29,6 @@ function Eastersell.Initialize(registry, tab)
 		Title = "Easter Harvest Enable",
 		Default = false,
 		Callback = function(Value)
-			reg.Log("Easter Harvest Toggle")
 			EfTasks.ToggleTask("AutoEasterHarvest", Value, function()
 				Eastersell.HarvestCrops()
 				task.wait(1)
@@ -59,7 +58,6 @@ function Eastersell.Initialize(registry, tab)
 		Title = "Easter Sell Enable",
 		Default = false,
 		Callback = function(Value)
-			reg.Log("Easter Sell Toggle")
 			EfTasks.ToggleTask("AutoEasterSell", Value, function()
 				--Eastersell.autoEastersell()
 				task.wait(1)
@@ -111,8 +109,7 @@ function Eastersell.HarvestCrops()
 		local Fruits = FruitsContainer and FruitsContainer:GetChildren() or { plant }
 
 		for _, fruit in ipairs(Fruits) do
-			local fruitName = fruit:GetAttribute("f")
-			if fruit:IsA("Model") and fruitName and (table.find(easterPlantlist, "ALL") or table.find(easterPlantlist, fruitName)) then
+			if fruit:IsA("Model") and (table.find(easterPlantlist, "ALL") or table.find(easterPlantlist, fruit.Name)) then
 				sData.CollectEvent:FireServer({ fruit })
 				task.wait(0.1)
 			end
