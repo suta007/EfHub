@@ -125,18 +125,18 @@ table.insert(b.SprinklerDataTable,l)
 end
 
 local l=require(b.Data:WaitForChild("EventShopData")::any)
-b.SantaShopTable={"ALL"}
-for m,n in pairs(l["Santa's Stash"])do
-table.insert(b.SantaShopTable,m)
-end
 
-b.NewYearShopTable={"ALL"}
-for m,n in pairs(l["New Years Shop"])do
-table.insert(b.NewYearShopTable,m)
-end
+
+
+
+
+
+
+
+
 
 b.EasterShopTable={"ALL"}
-for m,n in pairs(l["Easter Shop"])do
+for m,n in pairs(l["Easter Seed Shop"])do
 table.insert(b.EasterShopTable,m)
 end
 
@@ -171,70 +171,6 @@ Trowel=nil,
 Sprinkler=nil,
 }
 
-b.ShopKey={
-Seed="ROOT/SeedStocks/Shop/Stocks",
-Daily="ROOT/SeedStocks/Daily Deals/Stocks",
-Gear="ROOT/GearStock/Stocks",
-Egg="ROOT/PetEggStock/Stocks",
-Santa="ROOT/EventShopStock/Santa's Stash/Stocks",
-NewYear="ROOT/EventShopStock/New Years Shop/Stocks",
-Traveling="ROOT/TravelingMerchantShopStock/Stocks",
-}
-
-b.BuyList={
-[b.ShopKey.Seed]={
-Enabled=false,
-BuyAll=false,
-Items={},
-RemoteName="BuySeedStock",
-ArgType="SeedMode",
-},
-[b.ShopKey.Daily]={
-Enabled=true,
-BuyAll=true,
-Items={},
-RemoteName="BuyDailySeedShopStock",
-ArgType="NormalMode",
-},
-[b.ShopKey.Gear]={
-Enabled=false,
-BuyAll=false,
-Items={},
-RemoteName="BuyGearStock",
-ArgType="NormalMode",
-},
-[b.ShopKey.Egg]={
-Enabled=false,
-BuyAll=false,
-Items={},
-RemoteName="BuyPetEgg",
-ArgType="NormalMode",
-},
-[b.ShopKey.Traveling]={
-Enabled=false,
-BuyAll=false,
-Items={},
-RemoteName="BuyTravelingMerchantShopStock",
-ArgType="NormalMode",
-},
-[b.ShopKey.Santa]={
-Enabled=false,
-BuyAll=false,
-Items={},
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="Santa's Stash",
-},
-[b.ShopKey.NewYear]={
-Enabled=false,
-BuyAll=false,
-Items={},
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="New Years Shop",
-},
-}
-
 return b end function a.b():typeof(__modImpl())local b=a.cache.b if not b then b={c=__modImpl()}a.cache.b=b end return b.c end end do local function __modImpl()
 
 local b=(getfenv()::any).getconnections
@@ -247,11 +183,12 @@ local f=Random.new()
 function c.Initialize(g)
 d=g
 e=d.sData
-c.SellButton=e.TeleportFrame:WaitForChild("Sell")
-c.GearButton=e.TeleportFrame:WaitForChild("Gear")
+
+c.SellButton=e.TeleportFrame:WaitForChild("Easter_Sell")or e.TeleportFrame:WaitForChild("Sell")
+c.GardenButton=e.TeleportFrame:WaitForChild("Easter_Garden")or e.TeleportFrame:WaitForChild("Garden")
+c.SeedsButton=e.TeleportFrame:WaitForChild("Easter_Seeds")or e.TeleportFrame:WaitForChild("Seeds")
 c.PetsButton=e.TeleportFrame:WaitForChild("Pets")
-c.SeedsButton=e.TeleportFrame:WaitForChild("Seeds")
-c.GardenButton=e.TeleportFrame:WaitForChild("Garden")
+c.GearButton=e.TeleportFrame:WaitForChild("Gear")
 end
 
 function c.ViewButton()
@@ -810,9 +747,9 @@ Daily="SeedStocks/Daily Deals/Stocks",
 Gear="GearStock/Stocks",
 Egg="PetEggStock/Stocks",
 Traveling="TravelingMerchantShopStock/Stocks",
-Santa="EventShopStock/Santa's Stash/Stocks",
-NewYear="EventShopStock/New Years Shop/Stocks",
-Easter="EventShopStock/Easter Shop/Stocks",
+
+
+Easter="EventShopStock/Easter Seed Shop/Stocks",
 }
 
 function b.Initialize(g)
@@ -886,26 +823,26 @@ Items=h,
 RemoteName="BuyTravelingMerchantShopStock",
 ArgType="NormalMode",
 },
-[b.ShopKey.Santa]={
-Enabled=g.tgBuySantaEnable.Value,
-Items=f(g.ddBuySanta.Value),
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="Santa's Stash",
-},
-[b.ShopKey.NewYear]={
-Enabled=g.tgBuyNewYearEnable.Value,
-Items=f(g.ddBuyNewYear.Value),
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="New Years Shop",
-},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [b.ShopKey.Easter]={
 Enabled=g.tgBuyEasterEnable.Value,
 Items=f(g.ddBuyEaster.Value),
 RemoteName="BuyEventShopStock",
 ArgType="EventMode",
-EventArg="Easter Shop",
+EventArg="Easter Seed Shop",
 },
 }
 end
@@ -925,7 +862,7 @@ end
 end
 
 for l,m in pairs(i)do
-local n=m.EggName or l
+local n=if m.EggName then m.EggName else l
 local o=tonumber(m.Stock)or 0
 
 if not table.find(j.Items,"ALL")and not table.find(j.Items,n)then
@@ -943,7 +880,7 @@ else
 q={n}
 end
 k:FireServer(unpack(q))
-task.wait(0.1)
+task.wait(0.25)
 end
 end
 end
@@ -2575,7 +2512,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.03-20.07",
+SubTitle="2569.04.05-15.00",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -3239,63 +3176,65 @@ end
 
 
 local r=f.Shop:AddCollapsibleSection("Events Shop",false)
-r:AddToggle("tgBuySantaEnable",{
-Title="Buy Santa's Stash Items",
-Default=false,
-Callback=function(s)
-j.UpdateBuyList()
-h()
-if s then
-local t=i.DataService:GetData()
-local u=t.EventShopStock["Santa's Stash"].Stocks
-if not l.IsTableEmpty(u)then
-j.BuyItem(j.ShopKey.Santa,u)
-end
-end
-end,
-})
-r:AddDropdown("ddBuySanta",{
-Title="Santa's Stash Items",
-Description="Select items to buy",
-Values=i.SantaShopTable,
-Multi=true,
-Default={"ALL"},
-Searchable=true,
-Callback=function()
-j.UpdateBuyList()
-h()
-end,
-})
-r:AddDivider()
 
-r:AddToggle("tgBuyNewYearEnable",{
-Title="Buy New Years Shop Items",
-Default=false,
-Callback=function(s)
-j.UpdateBuyList()
-h()
-if s then
-local t=i.DataService:GetData()
-local u=t.EventShopStock["New Years Shop"].Stocks
-if not l.IsTableEmpty(u)then
-j.BuyItem(j.ShopKey.NewYear,u)
-end
-end
-end,
-})
-r:AddDropdown("ddBuyNewYear",{
-Title="New Years Shop Items",
-Description="Select items to buy",
-Values=i.NewYearShopTable,
-Multi=true,
-Default={"ALL"},
-Searchable=true,
-Callback=function()
-j.UpdateBuyList()
-h()
-end,
-})
-r:AddDivider()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 r:AddToggle("tgBuyEasterEnable",{
 Title="Buy Easter Shop Items",
@@ -3305,7 +3244,7 @@ j.UpdateBuyList()
 h()
 if s then
 local t=i.DataService:GetData()
-local u=t.EventShopStock["Easter Shop"].Stocks
+local u=t.EventShopStock["Easter Seed Shop"].Stocks
 if not l.IsTableEmpty(u)then
 j.BuyItem(j.ShopKey.Easter,u)
 end
@@ -4189,6 +4128,511 @@ end
 
 return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b={c=__modImpl()}a.cache.o=b end return b.c end end do local function __modImpl()
 
+local b=game:GetService("ReplicatedStorage")
+
+local c={}
+local d
+local e
+local f
+local g
+
+local h=game:GetService("Players")
+local i=h.LocalPlayer
+local j=i.Character or i.CharacterAdded:Wait()
+
+local k=b:WaitForChild("GameEvents"):WaitForChild("Easter2026")
+
+function c.Initialize(l,m)
+d=l
+local n=d.Options
+_=n
+f=d.Window.QuickSave
+e=d.EfTasks
+g=m
+
+local o=g:AddCollapsibleSection("Egghunt",false)
+o:AddToggle("tgEgghuntEnable",{
+Title="Egghunt Event Enable",
+Default=false,
+Callback=function(p)
+e.ToggleTask("AutoEggHunt",p,function()
+c.autoEggHunt()
+task.wait(60)
+end)
+f()
+if not p then
+d.IsEasterHarvesting=false
+end
+end,
+})
+end
+
+function c.autoEggHunt()
+local l=i:GetAttribute("EasterEggHuntCooldownRemaining")
+if l and l>0 then
+d.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: ",math.floor(l)," วินาที")
+return
+end
+d.IsEasterHarvesting=true
+d.Log("🚀 กำลังส่งคำสั่งเริ่ม Egg Hunt ไปที่เซิร์ฟเวอร์...")
+
+
+local m,n=k.EasterEventStartEggHunt:InvokeServer()
+
+
+if n and type(n)=="table"then
+local o=0
+
+
+for p,q in pairs(n)do
+
+if j:FindFirstChild("HumanoidRootPart")then
+j:PivotTo(CFrame.new(q))
+
+task.wait(0.2)
+end
+
+
+local r=k.CollectEasterEgg:InvokeServer(p)
+
+if r then
+o+=1
+d.Log("✨ เก็บไข่ใบที่ "..o.." สำเร็จ! (ID: "..tostring(p)..")")
+end
+
+
+task.wait(0.1)
+end
+d.Log("🎉 ฟาร์มไข่เสร็จสิ้นทั้งหมด "..o.." ฟอง!")
+d.Utils.ClickButton(d.Utils.GardenButton)
+task.wait(1)
+else
+d.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: ",tostring(m))
+end
+d.IsEasterHarvesting=false
+end
+
+return c end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+
+local b=game:GetService("ReplicatedStorage")
+
+local c=require(b.Modules.PlantTraitsData::any)
+local d={}
+local e
+local f
+local g
+local h
+local i
+local j=table.clone(c.Traits["EasterSlot"])
+table.insert(j,1,"ALL")
+
+local k
+local l=game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
+
+function d.Initialize(m,n)
+e=m
+local o=e.Options
+_=o
+f=e.Window.QuickSave
+g=e.EfTasks
+h=n
+i=e.sData
+fVar=e.fVar
+Main=e.Main
+k=e.Utils
+
+local p=h:AddCollapsibleSection("Eastersell",false)
+p:AddToggle("tgEasterHarvestEnable",{
+Title="Easter Harvest Enable",
+Default=false,
+Callback=function(q)
+g.ToggleTask("AutoEasterHarvest",q,function()
+d.HarvestCrops()
+task.wait(1)
+end)
+f()
+end,
+})
+p:AddButton({
+Title="Clear Selected Plants",
+Callback=function()
+o.ddEasterHarvestPlant:SetValue({ALL=true})
+end,
+})
+
+p:AddDropdown("ddEasterHarvestPlant",{
+Title="Easter Harvest Plant",
+Values=j,
+Multi=true,
+Default={"ALL"},
+Searchable=true,
+Callback=function()
+f()
+end,
+})
+p:AddDivider()
+p:AddToggle("tgEasterSellEnable",{
+Title="Easter Sell Enable",
+Default=false,
+Callback=function(q)
+d.runSell(q)
+f()
+if not q then
+e.IsEasterHarvesting=false
+end
+end,
+})
+p:AddToggle("tgEasterSellFull",{
+Title="Easter Sell Full",
+Default=false,
+Callback=function()
+f()
+end,
+})
+
+p:AddInput("ipEasterSellDelay",{
+Title="Easter Sell Delay",
+Default=600,
+Numeric=true,
+Finished=true,
+Callback=function()
+f()
+end,
+})
+end
+
+function d.HarvestCrops()
+local m=e.Options
+if not m.tgEasterHarvestEnable.Value or e.IsEasterHarvesting then
+return
+end
+if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
+return
+end
+e.IsEasterHarvesting=true
+local n=k.GetPlantsFolder()
+if not n then
+e.IsEasterHarvesting=false
+return
+end
+local o=k.GetSelectedItems(m.ddEasterHarvestPlant.Value)
+local p
+if table.find(o,"ALL")then
+p=j
+else
+p=o
+end
+for q,r in ipairs(n:GetChildren())do
+if not m.tgEasterHarvestEnable.Value then
+e.IsEasterHarvesting=false
+return
+end
+local s=r:FindFirstChild("Fruits")
+local t=s and s:GetChildren()or{r}
+
+for u,v in ipairs(t)do
+if v:IsA("Model")and table.find(p,v.Name)then
+
+l:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({v})
+task.wait(0.1)
+end
+end
+end
+e.IsEasterHarvesting=false
+
+end
+
+function d.AutoEasterSell()
+local m=e.Options
+if not m.tgEasterSellEnable.Value then
+return
+end
+e.IsEasterHarvesting=true
+k.ClickButton(k.SellButton)
+task.wait(0.5)
+l:WaitForChild("EasterEvent"):WaitForChild("EasterSellInventoryRE"):FireServer()
+task.wait(1)
+k.ClickButton(k.GardenButton)
+task.wait(1)
+e.IsEasterHarvesting=false
+end
+function d.runSell(m)
+local n=e.Options
+local o=n.ipEasterSellDelay and tonumber(n.ipEasterSellDelay.Value)or 600
+local p=n.tgEasterSellFull.Value
+local q=p and 1 or o
+g.ToggleTask("AutoEasterSell",m,function()
+if p then
+if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
+d.AutoEasterSell()
+end
+else
+d.AutoEasterSell()
+end
+task.wait(q)
+end)
+end
+
+return d end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
+
+local b=game:GetService("ReplicatedStorage")
+local c=require(b.Modules.DataService)
+local d=require(b.Data.EASTER_SeedGiverQuestProgression)
+local e=b.GameEvents.SeedPackGiverEvent
+
+local f={}
+local g
+local h
+local i
+local j
+local k=CFrame.new(-100.68,7.91,-9.52)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function f.Initialize(l,m)
+g=l
+local n=g.Options
+_=n
+i=g.Window.QuickSave
+h=g.EfTasks
+j=m
+
+local o=j:AddCollapsibleSection("Angryplant",false)
+o:AddToggle("tgAngryplantEnable",{
+Title="Angryplant Enable",
+Default=false,
+Callback=function(p)
+h.ToggleTask("AutoAngryplant",p,function()
+f.autoAngryplant()
+task.wait(10)
+end)
+i()
+end,
+})
+end
+local function QuestValue()
+local l=c:GetData().EasterEventData
+local m=l.Progression or 1
+local n=m>#d
+if not n then
+local o=d[m]
+local p=o.PLANT_NAME or nil
+local q=o.WEIGHT or 0
+local r=o.MUTATION or"ALL"
+local s=o.VARIANT or"ALL"
+return p,q,r,s
+end
+return nil,nil,nil,nil
+end
+
+local function CheckQuest(l)
+local m,n,o,p=QuestValue()
+if not m then
+return
+end
+local q=l:FindFirstChild("Item_String")and l:FindFirstChild("Item_String").Value
+local r=l:FindFirstChild("Variant")and l:FindFirstChild("Variant").Value
+local s=l:FindFirstChild("Weight")and l:FindFirstChild("Weight").Value
+
+if q~=m then
+return
+end
+if s<n then
+return
+end
+if o~="ALL"and l:GetAttribute(o)~=true then
+return
+end
+if p~="ALL"and r~=p then
+return
+end
+return true
+end
+
+function f.autoAngryplant()
+local l=g.Options
+if not l.tgAngryplantEnable.Value or g.IsEasterHarvesting then
+return
+end
+g.IsEasterHarvesting=true
+local m=g.sData.Backpack
+for n,o in ipairs(m:GetChildren())do
+if CheckQuest(o)then
+g.sData.Character:PivotTo(k)
+task.wait(0.5)
+g.Utils.EquipTool(o)
+local p=o:FindFirstChild("Item_String")and o:FindFirstChild("Item_String").Value
+g.Log("Submit "..p)
+task.wait(0.5)
+e:FireServer("SubmitHeldPlant")
+task.wait(0.5)
+g.Utils.ClickButton(g.Utils.GardenButton)
+task.wait(1)
+g.IsEasterHarvesting=false
+return
+end
+end
+g.IsEasterHarvesting=false
+end
+
+return f end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+
+local b={}
+local c
+
+local d=game:GetService("ReplicatedStorage")
+local e=d:WaitForChild("GameEvents")
+local f=e.EasterEvent.TryBuyGoldenEggRE
+local g=require(d.Modules.DataService)
+local h=require(d.Modules.EasterEvent.EasterHelper)
+local i={}
+for j=0,15 do
+local k=h:GetNextGoldenEggPrice(j)
+table.insert(i,k)
+end
+
+local j=CFrame.new(-55.38,5.6,-14.77)
+
+local k=game:GetService("Players")
+local l=k.LocalPlayer
+local m=l.Character or l.CharacterAdded:Wait()
+
+local n={}
+
+local function BuyGoldenEgg()
+local o=c.Options
+if not o.tgGoldeneggEnable.Value then
+return
+end
+c.IsEasterHarvesting=true
+local p=tonumber(o.ddGoldeneggMaxPrice.Value)or 25000
+local q=g:GetData()
+local r=tonumber(q.SpecialCurrency.ChocCoins)
+local s=tonumber(q.EasterEventData.GoldenEgg.BuyAmount)
+local t=tonumber(h:GetNextGoldenEggPrice(s))
+if r>=(t*2)and t<=p then
+m:PivotTo(j)
+task.wait(0.5)
+f:FireServer()
+task.wait(1)
+c.Utils.ClickButton(c.Utils.GardenButton)
+task.wait(1)
+c.IsEasterHarvesting=false
+return
+end
+c.IsEasterHarvesting=false
+end
+
+local function EventDrive(o:boolean)
+for p,q in pairs(n)do
+q:Disconnect()
+end
+table.clear(n)
+
+if o then
+local p=g:GetPathSignal("SpecialCurrency/ChocCoins/@")
+if p then
+table.insert(n,p:Connect(BuyGoldenEgg))
+end
+local q=g:GetPathSignal("EasterEventData/GoldenEgg/@")
+if q then
+table.insert(n,q:Connect(BuyGoldenEgg))
+end
+end
+end
+
+function b.Initialize(o,p)
+c=o
+local q=c.Options
+_=q
+local r=c.Window.QuickSave
+local s=p
+local t=s:AddCollapsibleSection("Golden Egg",false)
+t:AddToggle("tgGoldeneggEnable",{
+Title="Buy Golden Egg Enable",
+Default=false,
+Callback=function(u)
+EventDrive(u)
+r()
+end,
+})
+t:AddDropdown("ddGoldeneggMaxPrice",{
+Title="Max Buy Golden Egg",
+Values=i,
+Default=6,
+Multi=false,
+Searchable=true,
+Callback=function()
+r()
+end,
+})
+end
+
+return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+
+
+
+local b=(getfenv()::any).getgenv
+local c=b().EF_REMOTE
+local d={}
+local e
+local f
+
+local function LoadEvents()
+local g={}
+if b().DEV_MODE then
+g.Egghunt=c("UI/Tabs/Events/Egghunt")
+g.Eastersell=c("UI/Tabs/Events/Eastersell")
+g.Angryplant=c("UI/Tabs/Events/Angryplant")
+g.Goldenegg=c("UI/Tabs/Events/Goldenegg")
+else
+g.Egghunt=a.p()
+g.Eastersell=a.q()
+g.Angryplant=a.r()
+g.Goldenegg=a.s()
+end
+return g
+end
+
+function d.Initialize(g)
+e=g
+local h=e.Interface
+f=e.Tabs
+
+
+e.IsEasterHarvesting=false
+f.Events=h:AddTab({Title="Events",Icon="calendar"})
+
+local i=LoadEvents()
+i.Egghunt.Initialize(e,f.Events)
+i.Eastersell.Initialize(e,f.Events)
+i.Angryplant.Initialize(e,f.Events)
+i.Goldenegg.Initialize(e,f.Events)
+
+
+end
+
+return d end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+
 
 
 
@@ -4277,7 +4721,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+return c end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
 
 
 
@@ -4302,8 +4746,6 @@ e.Main=c("Modules/Main")
 e.Shop=c("Modules/Shop")
 e.Auto=c("Modules/Auto")
 e.Pets=c("Modules/Pets")
-
-
 e.Misc=c("Modules/Misc")
 
 
@@ -4318,6 +4760,7 @@ e.ShopTab=c("UI/Tabs/ShopTab")
 e.PetsTab=c("UI/Tabs/PetsTab")
 e.AutoTab=c("UI/Tabs/AutoTab")
 e.MiscTab=c("UI/Tabs/MiscTab")
+e.EventsTab=c("UI/Tabs/EventsTab")
 e.LogTab=c("UI/Tabs/LogTab")
 
 
@@ -4353,7 +4796,8 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.LogTab=a.p()
+e.EventsTab=a.t()
+e.LogTab=a.u()
 
 
 
@@ -4384,9 +4828,10 @@ e.Auto.Initialize(e)
 e.MainTab.Initialize(e)
 e.ShopTab.Initialize(e)
 e.AutoTab.Initialize(e)
-
-e.MiscTab.Initialize(e)
 e.PetsTab.Initialize(e)
+e.EventsTab.Initialize(e)
+e.MiscTab.Initialize(e)
+
 e.LogTab.Initialize(e)
 
 e.Window.Finalize()
@@ -4396,7 +4841,7 @@ e.Utils.ViewButton()
 return e
 end
 
-return d end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end end
+return d end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -4408,7 +4853,7 @@ if b().DEV_MODE then
 local d="https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/GAG/src/"
 
 local function GetRemote(e)
-local f=d..e..".luau"
+local f=d..e..".luau?t="..tostring(tick())
 local g,h=pcall(function()
 return game:HttpGet(f)
 end)
@@ -4426,7 +4871,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.q()
+c=a.v()
 end
 
 
