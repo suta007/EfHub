@@ -1,3 +1,6 @@
+local Goldenegg = {}
+local reg
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
 local TryBuyGoldenEggRE = GameEvents.EasterEvent.TryBuyGoldenEggRE
@@ -15,10 +18,6 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 
-local Goldenegg = {}
-local reg
-local QuickSave
-local EventsTab
 local GoldeneggConnections = {}
 
 local function BuyGoldenEgg()
@@ -67,8 +66,8 @@ function Goldenegg:Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
 	_ = Options
-	QuickSave = reg.Window.QuickSave
-	EventsTab = tab
+	local QuickSave = reg.Window.QuickSave
+	local EventsTab = tab
 	local GoldeneggSection = EventsTab:AddCollapsibleSection("Golden Egg", false)
 	GoldeneggSection:AddToggle("tgGoldeneggEnable", {
 		Title = "Buy Golden Egg Enable",
