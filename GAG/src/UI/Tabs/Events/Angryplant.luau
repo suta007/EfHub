@@ -44,7 +44,6 @@ function Angryplant.Initialize(registry, tab)
 		Title = "Angryplant Enable",
 		Default = false,
 		Callback = function(Value)
-			reg.Log("Angryplant Toggle")
 			EfTasks.ToggleTask("AutoAngryplant", Value, function()
 				Angryplant.autoAngryplant()
 				task.wait(10)
@@ -94,9 +93,10 @@ end
 
 function Angryplant.autoAngryplant()
 	local Options = reg.Options
-	if not Options.tgAngryplantEnable.Value then
+	if not Options.tgAngryplantEnable.Value or reg.IsEasterHarvesting then
 		return
 	end
+	reg.IsEasterHarvesting = true
 	local Backpack = reg.sData.Backpack
 	for _, item in ipairs(Backpack:GetChildren()) do
 		if CheckQuest(item) then
@@ -110,9 +110,11 @@ function Angryplant.autoAngryplant()
 			task.wait(0.5)
 			reg.Utils.ClickButton(reg.Utils.GardenButton)
 			task.wait(1)
+			reg.IsEasterHarvesting = false
 			return
 		end
 	end
+	reg.IsEasterHarvesting = false
 end
 
 return Angryplant

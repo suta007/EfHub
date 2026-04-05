@@ -12,10 +12,12 @@ local function LoadEvents()
 		Events.Egghunt = EF_REMOTE("UI/Tabs/Events/Egghunt")
 		Events.Eastersell = EF_REMOTE("UI/Tabs/Events/Eastersell")
 		Events.Angryplant = EF_REMOTE("UI/Tabs/Events/Angryplant")
+		Events.Goldenegg = EF_REMOTE("UI/Tabs/Events/Goldenegg")
 	else
 		Events.Egghunt = require("./Events/Egghunt.luau")
 		Events.Eastersell = require("./Events/Eastersell.luau")
 		Events.Angryplant = require("./Events/Angryplant.luau")
+		Events.Goldenegg = require("./Events/Goldenegg.luau")
 	end
 	return Events
 end
@@ -26,13 +28,14 @@ function EventsTab.Initialize(registry)
 	Tabs = reg.Tabs
 	--local Options = reg.Options
 	--local QuickSave = reg.Window.QuickSave
-
+	reg.IsEasterHarvesting = false
 	Tabs.Events = Interface:AddTab({ Title = "Events", Icon = "calendar" })
 
 	local Events = LoadEvents()
 	Events.Egghunt.Initialize(reg, Tabs.Events)
 	Events.Eastersell.Initialize(reg, Tabs.Events)
 	Events.Angryplant.Initialize(reg, Tabs.Events)
+	Events.Goldenegg.Initialize(reg, Tabs.Events)
 
 	--return Events
 end

@@ -9,7 +9,6 @@ local EasterSlot = table.clone(PlantTraitsData.Traits["EasterSlot"])
 table.insert(EasterSlot, 1, "ALL")
 
 local Utils
-local IsEasterHarvesting = false
 local GameEvents = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
 
 function Eastersell.Initialize(registry, tab)
@@ -61,7 +60,7 @@ function Eastersell.Initialize(registry, tab)
 			Eastersell.runSell(Value)
 			QuickSave()
 			if not Value then
-				IsEasterHarvesting = false
+				reg.IsEasterHarvesting = false
 			end
 		end,
 	})
@@ -86,16 +85,16 @@ end
 
 function Eastersell.HarvestCrops()
 	local Options = reg.Options
-	if not Options.tgEasterHarvestEnable.Value or IsEasterHarvesting then
+	if not Options.tgEasterHarvestEnable.Value or reg.IsEasterHarvesting then
 		return
 	end
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 		return
 	end
-	IsEasterHarvesting = true
+	reg.IsEasterHarvesting = true
 	local Plants_Physical = Utils.GetPlantsFolder()
 	if not Plants_Physical then
-		IsEasterHarvesting = false
+		reg.IsEasterHarvesting = false
 		return
 	end
 	local easterPlantlist = Utils.GetSelectedItems(Options.ddEasterHarvestPlant.Value)
@@ -107,7 +106,7 @@ function Eastersell.HarvestCrops()
 	end
 	for _, plant in ipairs(Plants_Physical:GetChildren()) do
 		if not Options.tgEasterHarvestEnable.Value then
-			IsEasterHarvesting = false
+			reg.IsEasterHarvesting = false
 			return
 		end
 		local FruitsContainer = plant:FindFirstChild("Fruits")
@@ -121,7 +120,7 @@ function Eastersell.HarvestCrops()
 			end
 		end
 	end
-	IsEasterHarvesting = false
+	reg.IsEasterHarvesting = false
 	--sData.CollectEvent:FireServer({ crop })
 end
 
@@ -130,14 +129,14 @@ function Eastersell.AutoEasterSell()
 	if not Options.tgEasterSellEnable.Value then
 		return
 	end
-	IsEasterHarvesting = true
+	reg.IsEasterHarvesting = true
 	Utils.ClickButton(Utils.SellButton)
 	task.wait(0.5)
 	GameEvents:WaitForChild("EasterEvent"):WaitForChild("EasterSellInventoryRE"):FireServer()
 	task.wait(1)
 	Utils.ClickButton(Utils.GardenButton)
 	task.wait(1)
-	IsEasterHarvesting = false
+	reg.IsEasterHarvesting = false
 end
 function Eastersell.runSell(state)
 	local Options = reg.Options
