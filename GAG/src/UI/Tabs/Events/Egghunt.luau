@@ -40,7 +40,7 @@ end
 function Egghunt.autoEggHunt()
 	local cooldown = LocalPlayer:GetAttribute("EasterEggHuntCooldownRemaining")
 	if cooldown and cooldown > 0 then
-		reg.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: ", math.floor(cooldown), " วินาที")
+		reg.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: " .. math.floor(cooldown) .. " วินาที")
 		return
 	end
 	reg.IsEasterHarvesting = true
@@ -77,7 +77,7 @@ function Egghunt.autoEggHunt()
 		reg.Utils.ClickButton(reg.Utils.GardenButton)
 		task.wait(1)
 	else
-		reg.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: ", tostring(message))
+		reg.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: " .. tostring(message))
 	end
 	reg.IsEasterHarvesting = false
 end
