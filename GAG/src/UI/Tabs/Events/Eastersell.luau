@@ -140,7 +140,7 @@ function Eastersell.AutoEasterSell()
 end
 function Eastersell.runSell(state)
 	local Options = reg.Options
-	local SellDelay = tonumber(Options.ipEasterSellDelay.Value) or 600
+	local SellDelay = Options.ipEasterSellDelay and tonumber(Options.ipEasterSellDelay.Value) or 600
 	local SellFull = Options.tgEasterSellFull.Value
 	local SellWait = SellFull and 1 or SellDelay
 	EfTasks.ToggleTask("AutoEasterSell", state, function()
