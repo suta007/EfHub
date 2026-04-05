@@ -142,7 +142,7 @@ function Shop.BuyItem(ShopKey, StockData)
 					Args = { ItemName }
 				end
 				Remote:FireServer(unpack(Args))
-				task.wait(0.1)
+				task.wait(0.25)
 			end
 		end
 	end

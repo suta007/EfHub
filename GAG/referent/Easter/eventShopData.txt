@@ -118,16 +118,17 @@ local easterData = GetData_result.EventShopStock
 for k,v in pairs(easterData) do
     if k then
     
-        local remote = tostring(k)
-        print(remote)
+        local event = tostring(k)
+        print(event)
         if type(v["Stocks"]) == "table" then
             for k2,v2 in pairs(v["Stocks"]) do
                 local item = tostring(k2)
                 local stock = v2["Stock"]
-                local Args = { item, remote }
+                local Args = { item, event }
                 for _i = 1, stock do
-                print("- Buying"..item)
+                    print("- Buying "..item)
                     game:GetService("ReplicatedStorage").GameEvents.BuyEventShopStock:FireServer(unpack(Args))
+                    task.wait(0.1)
                 end
             end            
         end
