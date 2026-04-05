@@ -1,0 +1,33 @@
+--game:GetService("ReplicatedStorage").Modules.UpdateService.Easter2026.SellStuff:GetChildren()[11].Alan.HumanoidRootPart.ProximityPrompt.EasterEventSaleNPC
+
+local v1 = game:GetService("ReplicatedStorage")
+local v2 = require(v1.Modules.NPCDialogueController)
+local v3 = v1:WaitForChild("GameEvents"):WaitForChild("EasterEvent")
+local v_u_4 = v3:WaitForChild("EasterSellInventoryRE")
+local v_u_5 = v3:WaitForChild("EasterSellHeldRE")
+local v6 = script.Parent
+local v7 = { "I want to sell all Easter plants", "I want to sell this Easter plant", "Nevermind" }
+v2:Start({
+	["ProximityPrompt"] = v6,
+	["SpeakingNPC"] = v6.Parent.Parent,
+	["PromptList"] = v7,
+	["OperationMap"] = {
+		[v7[1]] = function()
+			-- upvalues: (copy) v_u_4
+			v_u_4:FireServer()
+		end,
+		[v7[2]] = function()
+			-- upvalues: (copy) v_u_5
+			v_u_5:FireServer()
+		end,
+		[v7[3]] = function()
+			task.wait(0.5)
+		end,
+	},
+	["IntroLines"] = { (("Bring me %* and I'll trade them for %*."):format('<font color="#FF98DC">Easter plants</font>', '<font color="#7B4A2A">Choc Coins</font>')) },
+	["ExitLine"] = ("Come back with more %*."):format('<font color="#FF98DC">Easter crops</font>'),
+	["RootPart"] = v6.Parent,
+	["DeactivationDistance"] = 20,
+	["OnDialogueEnded"] = function() end,
+	["OnDialogueStarted"] = function() end,
+})

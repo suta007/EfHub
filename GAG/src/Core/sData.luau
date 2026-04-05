@@ -125,7 +125,7 @@ for itemName, _itemInfo in pairs(sData.SprinklerData["SprinklerBoxSizes"]) do
 end
 
 local EVENT_DATA = require(sData.Data:WaitForChild("EventShopData") :: any)
-sData.SantaShopTable = { "ALL" }
+--[[ sData.SantaShopTable = { "ALL" }
 for itemName, _itemInfo in pairs(EVENT_DATA["Santa's Stash"]) do
 	table.insert(sData.SantaShopTable, itemName)
 end
@@ -133,10 +133,10 @@ end
 sData.NewYearShopTable = { "ALL" }
 for itemName, _itemInfo in pairs(EVENT_DATA["New Years Shop"]) do
 	table.insert(sData.NewYearShopTable, itemName)
-end
+end ]]
 
 sData.EasterShopTable = { "ALL" }
-for itemName, _itemInfo in pairs(EVENT_DATA["Easter Shop"]) do
+for itemName, _itemInfo in pairs(EVENT_DATA["Easter Seed Shop"]) do
 	table.insert(sData.EasterShopTable, itemName)
 end
 

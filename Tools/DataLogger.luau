@@ -137,16 +137,17 @@ end
 InfoLog("Script initialized successfully.")
 task.wait(0.5)
 
---local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local DataService = require(ReplicatedStorage.Modules.DataService)
---local GetData_result = DataService:GetData()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
+local GetData_result = DataService:GetData()
+local data = GetData_result.EasterEventData
 --local machineData = GetData_result.PetMutationMachine
 --local easterData = GetData_result.EventShopStock
 -- "EventShopStock/New Years Shop/Stocks",
 
 --game:GetService("ReplicatedStorage"):WaitForChild("Data")
 
-local EVENT_DATA = require(game:GetService("ReplicatedStorage"):WaitForChild("Data"):WaitForChild("EventShopData") :: any)
+--local EVENT_DATA = require(game:GetService("ReplicatedStorage"):WaitForChild("Data"):WaitForChild("EventShopData") :: any)
 
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
@@ -166,4 +167,4 @@ local function ShowData(tbl, indent)
 	end
 end
 
-ShowData(EVENT_DATA)
+ShowData(data)

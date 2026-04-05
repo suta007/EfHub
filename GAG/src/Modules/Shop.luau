@@ -9,9 +9,9 @@ Shop.ShopKey = {
 	Gear = "GearStock/Stocks",
 	Egg = "PetEggStock/Stocks",
 	Traveling = "TravelingMerchantShopStock/Stocks",
-	Santa = "EventShopStock/Santa's Stash/Stocks",
-	NewYear = "EventShopStock/New Years Shop/Stocks",
-	Easter = "EventShopStock/Easter Shop/Stocks",
+	--Santa = "EventShopStock/Santa's Stash/Stocks",
+	--NewYear = "EventShopStock/New Years Shop/Stocks",
+	Easter = "EventShopStock/Easter Seed Shop/Stocks",
 }
 --local AutoBuyConnections = {}
 function Shop.Initialize(Registry)
@@ -85,7 +85,7 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyTravelingMerchantShopStock",
 			ArgType = "NormalMode",
 		},
-		[Shop.ShopKey.Santa] = {
+		--[[ 		[Shop.ShopKey.Santa] = {
 			Enabled = Options.tgBuySantaEnable.Value,
 			Items = GetSelectedItems(Options.ddBuySanta.Value),
 			RemoteName = "BuyEventShopStock",
@@ -98,13 +98,13 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "New Years Shop",
-		},
+		}, ]]
 		[Shop.ShopKey.Easter] = {
 			Enabled = Options.tgBuyEasterEnable.Value,
 			Items = GetSelectedItems(Options.ddBuyEaster.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
-			EventArg = "Easter Shop",
+			EventArg = "Easter Seed Shop",
 		},
 	}
 end
@@ -124,7 +124,7 @@ function Shop.BuyItem(ShopKey, StockData)
 	end
 
 	for itemId, itemInfo in pairs(StockData) do
-		local ItemName = itemInfo.EggName or itemId
+		local ItemName = if itemInfo.EggName then itemInfo.EggName else itemId
 		local StockAmount = tonumber(itemInfo.Stock) or 0
 
 		if not table.find(Setting.Items, "ALL") and not table.find(Setting.Items, ItemName) then
