@@ -99,7 +99,12 @@ function Eastersell.HarvestCrops()
 		return
 	end
 	local easterPlantlist = Utils.GetSelectedItems(Options.ddEasterHarvestPlant.Value)
-
+	local HarvestList
+	if table.find(easterPlantlist, "ALL") then
+		HarvestList = EasterSlot
+	else
+		HarvestList = easterPlantlist
+	end
 	for _, plant in ipairs(Plants_Physical:GetChildren()) do
 		if not Options.tgEasterHarvestEnable.Value then
 			IsEasterHarvesting = false
@@ -109,7 +114,7 @@ function Eastersell.HarvestCrops()
 		local Fruits = FruitsContainer and FruitsContainer:GetChildren() or { plant }
 
 		for _, fruit in ipairs(Fruits) do
-			if fruit:IsA("Model") and (table.find(easterPlantlist, "ALL") or table.find(easterPlantlist, fruit.Name)) then
+			if fruit:IsA("Model") and table.find(HarvestList, fruit.Name) then
 				--sData.CollectEvent:FireServer({ fruit })
 				GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
 				task.wait(0.1)
@@ -136,7 +141,7 @@ function Eastersell.AutoEasterSell()
 end
 function Eastersell.runSell(state)
 	local Options = reg.Options
-	local SellDelay = Options.ipEasterSellDelay.Value
+	local SellDelay = tonumber(Options.ipEasterSellDelay.Value) or 600
 	local SellFull = Options.tgEasterSellFull.Value
 	local SellWait = SellFull and 1 or SellDelay
 	EfTasks.ToggleTask("AutoEasterSell", state, function()
