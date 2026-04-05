@@ -63,7 +63,7 @@ local function EventDrive(state: boolean)
 	end
 end
 
-function Goldenegg:initialize(registry, tab)
+function Goldenegg:Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
 	_ = Options
@@ -82,6 +82,8 @@ function Goldenegg:initialize(registry, tab)
 		Title = "Max Buy Golden Egg",
 		Values = EggRates,
 		Default = 6,
+		Multi = false,
+		Searchable = true,
 		Callback = function()
 			QuickSave()
 		end,
