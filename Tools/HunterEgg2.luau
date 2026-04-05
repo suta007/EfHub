@@ -1,150 +1,52 @@
-local Workspace = game:GetService("Workspace")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Players = game:GetService("Players")
-local Player = Players.LocalPlayer
-local PlayerGui = Player:WaitForChild("PlayerGui")
-local Character = Player.Character or Player.CharacterAdded:Wait()
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 
--- ดึงฟังก์ชันของ Executor
-local fireproximityprompt = (getfenv() :: any).fireproximityprompt
-local getconnections = (getfenv() :: any).getconnections
+local EasterEvents = ReplicatedStorage:WaitForChild("GameEvents"):WaitForChild("Easter2026")
 
--- ==========================================
--- ฟังก์ชันช่วย: กดปุ่ม UI
--- ==========================================
-local function ClickButton(Button)
-	if getconnections then
-		local connections = getconnections(Button.MouseButton1Click)
-		if #connections == 0 then
-			connections = getconnections(Button.Activated)
-		end
-
-		for _, connection in pairs(connections) do
-			if typeof(connection.Function) == "function" then
-				connection.Function()
-			elseif typeof(connection.Fire) == "function" then
-				connection:Fire()
-			end
-		end
-	end
-end
-
--- ==========================================
--- ฟังก์ชันช่วย: วนลูปเก็บไข่
--- ==========================================
-local function CollectAllEggs()
-	print("🥚 เริ่มต้นค้นหาและเก็บไข่...")
-	local collectedCount = 0
-
-	for _, obj in ipairs(Workspace:GetChildren()) do
-		if obj.Name == "Model" or obj:IsA("Model") then
-			local prompt = obj:FindFirstChildWhichIsA("ProximityPrompt", true)
-
-			if prompt and prompt.ActionText == "Collect" then
-				local targetPos = (obj.PrimaryPart or obj:FindFirstChildWhichIsA("BasePart") or obj):GetPivot().Position
-
-				-- ขยับระยะออกมานิดหน่อย และหันหน้าเข้าหาไข่ (กันตัวละครไถลล้ม/จมดิน)
-				local offsetPos = targetPos + Vector3.new(3, 3, 3)
-				Character:PivotTo(CFrame.lookAt(offsetPos, targetPos))
-
-				-- เคลียร์แรงเฉื่อยของตัวละครให้หยุดนิ่งสนิท
-				local rootPart = Character:FindFirstChild("HumanoidRootPart")
-				if rootPart then
-					rootPart.Velocity = Vector3.new(0, 0, 0)
-					rootPart.RotVelocity = Vector3.new(0, 0, 0)
-				end
-
-				-- รอให้ Client อัปเดตตำแหน่งกับ Server
-				task.wait(0.2)
-
-				-- สั่งกดเก็บไข่
-				if typeof(fireproximityprompt) == "function" then
-					fireproximityprompt(prompt)
-				else
-					prompt:InputHoldBegin()
-					task.wait(prompt.HoldDuration + 0.1)
-					prompt:InputHoldEnd()
-				end
-
-				collectedCount += 1
-				print("✨ เก็บไข่ใบที่ " .. collectedCount)
-				task.wait(0.5) -- หน่วงเวลาก่อนไปใบต่อไป
-			end
-		end
-	end
-	print("🎉 เก็บไข่เสร็จสิ้นทั้งหมด " .. collectedCount .. " ฟอง!")
-end
-
--- ==========================================
--- ระบบการทำงานหลัก (Main Flow)
--- ==========================================
-task.spawn(function()
-	print("💬 1. กำลังไปคุยกับ NPC...")
-
-	-- ค้นหา NPC ตามโครงสร้างของเกม
-	local interaction = Workspace:FindFirstChild("Interaction")
-	local npc = interaction
-		and interaction:FindFirstChild("UpdateItems")
-		and interaction.UpdateItems:FindFirstChild("Easter2026")
-		and interaction.UpdateItems.Easter2026:FindFirstChild("EggHuntPlatform")
-		and interaction.UpdateItems.Easter2026.EggHuntPlatform:FindFirstChild("EasterEggHuntNPC")
-
-	if not npc then
-		print("❌ หาตัว NPC (Boppy) ไม่เจอ")
+local function AutoFarmEggs()
+	-- 1. เช็คคูลดาวน์ก่อนเริ่ม (ระบบเกมเก็บค่าคูลดาวน์ไว้ที่ Attribute ของ LocalPlayer) [cite: 2, 3, 6, 7]
+	local cooldown = LocalPlayer:GetAttribute("EasterEggHuntCooldownRemaining")
+	if cooldown and cooldown > 0 then
+		print("⏳ กิจกรรมติดคูลดาวน์ รออีก: ", math.floor(cooldown), " วินาที")
 		return
 	end
 
-	local npcPrompt = npc:WaitForChild("RootPart"):FindFirstChildOfClass("ProximityPrompt")
-	if npcPrompt then
-		-- วาร์ปไปใกล้ๆ NPC นิดนึงให้ชัวร์ว่าคุยถึง
-		Character:PivotTo(npc:GetPivot() + Vector3.new(0, 3, 4))
-		task.wait(0.5)
+	print("🚀 กำลังส่งคำสั่งเริ่ม Egg Hunt ไปที่เซิร์ฟเวอร์...")
 
-		if typeof(fireproximityprompt) == "function" then
-			fireproximityprompt(npcPrompt)
-		else
-			npcPrompt:InputHoldBegin()
-			task.wait(npcPrompt.HoldDuration + 0.1)
-			npcPrompt:InputHoldEnd()
-		end
-	end
+	-- 2. ข้าม UI ไปยิง Remote เริ่มกิจกรรมตรงๆ
+	local message, eggData = EasterEvents.EasterEventStartEggHunt:InvokeServer()
 
-	print("⏳ 2. กำลังรอหน้าต่าง UI เริ่มกิจกรรม...")
-	local billboardObjects = PlayerGui:WaitForChild("Billboard_UI"):WaitForChild("Objects")
-	local startTime = os.clock()
-	local targetButton = nil
+	-- เช็คว่า Server ยอมให้เริ่ม และส่งข้อมูลตารางไข่กลับมาไหม
+	if eggData and type(eggData) == "table" then
+		local count = 0
 
-	-- รอจนกว่า UI จะถูกสร้างขึ้นมา (ให้เวลาค้นหาสูงสุด 5 วินาที)
-	while os.clock() - startTime < 5 do
-		for _, obj in ipairs(billboardObjects:GetChildren()) do
-			local frame = obj:FindFirstChild("Frame")
-			local textElem = frame and frame:FindFirstChild("Frame") and frame.Frame:FindFirstChild("Text_Element")
-
-			if textElem then
-				local textAttr = textElem:GetAttribute("Text")
-				if textAttr == "Start Egg Hunt" then
-					targetButton = textElem.Parent.Parent:FindFirstChildWhichIsA("ImageButton")
-					break
-				end
+		-- 3. วนลูปดึง ID (eggId) และ ตำแหน่ง (position) จากที่ Server ส่งมา
+		for eggId, position in pairs(eggData) do
+			-- วาร์ปไปที่ตำแหน่งไข่ (เผื่อสคริปต์ฝั่ง Server มีระบบตรวจจับระยะทางของคนเก็บ)
+			if Character:FindFirstChild("HumanoidRootPart") then
+				Character:PivotTo(CFrame.new(position))
+				-- หน่วงเวลาให้ Server อัปเดตพิกัดตัวละครเราก่อนสั่งเก็บ
+				task.wait(0.2)
 			end
+
+			-- 4. ส่งคำสั่งเก็บไข่ด้วย ID กลับไปที่ Server ทันที
+			local success = EasterEvents.CollectEasterEgg:InvokeServer(eggId)
+
+			if success then
+				count += 1
+				print("✨ เก็บไข่ใบที่ " .. count .. " สำเร็จ! (ID: " .. tostring(eggId) .. ")")
+			end
+
+			-- หน่วงเวลาเล็กน้อยป้องกันเซิร์ฟเวอร์เตะฐานยิง Remote รัวเกินไป
+			task.wait(0.1)
 		end
-		if targetButton then
-			break
-		end
-		task.wait(0.2)
-	end
-
-	-- ขั้นตอนที่ 3: กดปุ่ม และเก็บไข่
-	if targetButton and targetButton.Active then
-		ClickButton(targetButton)
-		print("✅ กดปุ่ม Start Egg Hunt เรียบร้อย!")
-
-		-- รอเซิร์ฟเวอร์เสกไข่ลงมาในแมพ (ประมาณ 3-4 วินาที)
-		print("⏳ 3. กำลังรอโมเดลไข่เกิด...")
-		task.wait(4)
-
-		-- เรียกใช้ฟังก์ชันเก็บไข่
-		CollectAllEggs()
+		print("🎉 ฟาร์มไข่เสร็จสิ้นทั้งหมด " .. count .. " ฟอง!")
 	else
-		print("❌ ปุ่ม Start Egg Hunt ไม่พร้อมใช้งาน (อาจจะติดคูลดาวน์ 10 นาที หรือโหลด UI ไม่สำเร็จ)")
+		print("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: ", tostring(message))
 	end
-end)
+end
+
+-- สั่งรันฟังก์ชัน
+AutoFarmEggs()
