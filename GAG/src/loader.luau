@@ -8,7 +8,7 @@ if getgenv().DEV_MODE then
 	local BaseUrl = "https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/GAG/src/"
 
 	local function GetRemote(path)
-		local url = BaseUrl .. path .. ".luau"
+		local url = BaseUrl .. path .. ".luau?t=" .. tostring(tick())
 		local success, content = pcall(function()
 			return game:HttpGet(url)
 		end)
