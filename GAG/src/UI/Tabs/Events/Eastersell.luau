@@ -1,16 +1,16 @@
 local PlantTraitsData = require(game:GetService("ReplicatedStorage").Modules.PlantTraitsData)
 local Eastersell = {}
 local reg
-local fVar
 local QuickSave
 local EfTasks
 local EventsTab
 local sData
 local EasterSlot = table.clone(PlantTraitsData.Traits["EasterSlot"])
 table.insert(EasterSlot, 1, "ALL")
-local Main
+
 local Utils
 local IsEasterHarvesting = false
+local GameEvents = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
 
 function Eastersell.Initialize(registry, tab)
 	reg = registry
@@ -58,10 +58,7 @@ function Eastersell.Initialize(registry, tab)
 		Title = "Easter Sell Enable",
 		Default = false,
 		Callback = function(Value)
-			EfTasks.ToggleTask("AutoEasterSell", Value, function()
-				--Eastersell.autoEastersell()
-				task.wait(1)
-			end)
+			Eastersell.runSell(Value)
 			QuickSave()
 			if not Value then
 				IsEasterHarvesting = false
@@ -78,7 +75,7 @@ function Eastersell.Initialize(registry, tab)
 
 	EastersellSection:AddInput("ipEasterSellDelay", {
 		Title = "Easter Sell Delay",
-		Default = 30,
+		Default = 600,
 		Numeric = true,
 		Finished = true,
 		Callback = function()
@@ -114,13 +111,44 @@ function Eastersell.HarvestCrops()
 		for _, fruit in ipairs(Fruits) do
 			if fruit:IsA("Model") and (table.find(easterPlantlist, "ALL") or table.find(easterPlantlist, fruit.Name)) then
 				--sData.CollectEvent:FireServer({ fruit })
-				game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
+				GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
 				task.wait(0.1)
 			end
 		end
 	end
 	IsEasterHarvesting = false
 	--sData.CollectEvent:FireServer({ crop })
+end
+
+function Eastersell.AutoEasterSell()
+	local Options = reg.Options
+	if not Options.tgEasterSellEnable.Value then
+		return
+	end
+	IsEasterHarvesting = true
+	Utils.ClickButton(Utils.SellButton)
+	task.wait(0.5)
+	GameEvents:WaitForChild("EasterEvent"):WaitForChild("EasterSellInventoryRE"):FireServer()
+	task.wait(1)
+	Utils.ClickButton(Utils.GardenButton)
+	task.wait(1)
+	IsEasterHarvesting = false
+end
+function Eastersell.runSell(state)
+	local Options = reg.Options
+	local SellDelay = Options.ipEasterSellDelay.Value
+	local SellFull = Options.tgEasterSellFull.Value
+	local SellWait = SellFull and 1 or SellDelay
+	EfTasks.ToggleTask("AutoEasterSell", state, function()
+		if SellFull then
+			if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+				Eastersell.AutoEasterSell()
+			end
+		else
+			Eastersell.AutoEasterSell()
+		end
+		task.wait(SellWait)
+	end)
 end
 
 return Eastersell
