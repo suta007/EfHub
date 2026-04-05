@@ -62,7 +62,7 @@ local function EventDrive(state: boolean)
 	end
 end
 
-function Goldenegg:Initialize(registry, tab)
+function Goldenegg.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
 	_ = Options
