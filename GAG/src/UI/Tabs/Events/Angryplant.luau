@@ -8,6 +8,7 @@ local reg
 local EfTasks
 local QuickSave
 local EventsTab
+local questPos = CFrame.new(-100.68, 7.91, -9.52) ---100.68,7.91,-9.52
 --[[
 
 📋 Script initialized successfully.
@@ -99,10 +100,16 @@ function Angryplant.autoAngryplant()
 	local Backpack = reg.sData.Backpack
 	for _, item in ipairs(Backpack:GetChildren()) do
 		if CheckQuest(item) then
+			reg.sData.Character:PivotTo(questPos)
+			task.wait(0.5)
 			reg.Utils.EquipTool(item)
+			local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
+			reg.Log("Submit " .. ItemName)
 			task.wait(0.5)
 			SeedEvent:FireServer("SubmitHeldPlant")
 			task.wait(0.5)
+			reg.Utils.ClickButton(reg.Utils.GardenButton)
+			task.wait(1)
 			return
 		end
 	end
