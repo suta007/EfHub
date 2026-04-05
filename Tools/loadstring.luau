@@ -15,3 +15,6 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/suta007/EfHub/refs/he
 
 -- https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/EfRelease/ghzs.lua
 loadstring(game:HttpGet("https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/EfRelease/ghzs.lua"))()
+
+--https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/Tools/HunterEgg2.luau
+loadstring(game:HttpGet("https://raw.githubusercontent.com/suta007/EfHub/refs/heads/master/Tools/HunterEgg2.luau"))()

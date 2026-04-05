@@ -1,4 +1,6 @@
-local PlantTraitsData = require(game:GetService("ReplicatedStorage").Modules.PlantTraitsData)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+
+local PlantTraitsData = require(ReplicatedStorage.Modules.PlantTraitsData :: any)
 local Eastersell = {}
 local reg
 local QuickSave
