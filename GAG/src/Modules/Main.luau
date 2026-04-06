@@ -68,6 +68,7 @@ function Main.AutoPlant()
 		local Backpack = sData.LocalPlayer.Backpack
 		for _, item in ipairs(Backpack:GetChildren()) do
 			if not Options.tgPlantsEnable.Value then
+				fVar.IsPlanting = false
 				return
 			end
 			local SeedName = item:GetAttribute("Seed")
