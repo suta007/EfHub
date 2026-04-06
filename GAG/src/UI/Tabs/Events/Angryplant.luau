@@ -117,7 +117,7 @@ local function QuestValue()
 		local mutation = current.MUTATION or "ALL"
 		local variant = current.VARIANT or "ALL"
 		local NextQuest = ProgressionTable[currentIdx + 1]
-		local questText = string.format("Name: %s /n Weight: %d /n Mutation: %s /n Variant: %s", NextQuest.PLANT_NAME, NextQuest.WEIGHT, NextQuest.MUTATION, NextQuest.VARIANT)
+		local questText = string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s", NextQuest.PLANT_NAME, NextQuest.WEIGHT, NextQuest.MUTATION, NextQuest.VARIANT)
 		return name, weight, mutation, variant, questText
 	end
 	Options.NextQuest:SetValue("Completed")
