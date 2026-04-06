@@ -121,7 +121,22 @@ local function QuestValue()
 		local mutation = current.MUTATION or "ALL"
 		local variant = current.VARIANT or "ALL"
 		local NextQuest = ProgressionTable[currentIdx + 1]
-		local questText = string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s", NextQuest.PLANT_NAME, NextQuest.WEIGHT, NextQuest.MUTATION, NextQuest.VARIANT)
+		local questText = ""
+
+		-- ตรวจสอบก่อนว่ามีเควสต์ถัดไปอยู่จริงไหม
+		if NextQuest then
+			-- ดึงข้อมูลมาแปลงและใส่ค่า Default ป้องกัน nil ทำสคริปต์พัง
+			local nName = tostring(NextQuest.PLANT_NAME or "Unknown")
+			local nWeight = tonumber(NextQuest.WEIGHT) or 0 -- บังคับให้เป็นตัวเลข เพื่อใช้กับ %.2f
+			local nMut = tostring(NextQuest.MUTATION or "ALL")
+			local nVar = tostring(NextQuest.VARIANT or "ALL")
+
+			-- ตอนนี้ปลอดภัยแล้ว นำไปเข้า string.format ได้เลย
+			questText = string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s", nName, nWeight, nMut, nVar)
+		else
+			-- กรณีเป็นเควสต์สุดท้าย จะไม่มี NextQuest
+			questText = "Next Quest: None"
+		end
 		return name, weight, mutation, variant, questText
 	end
 	Options.NextQuest:SetValue("Completed")
