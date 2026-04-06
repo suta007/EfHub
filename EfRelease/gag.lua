@@ -4678,7 +4678,13 @@ end
 end
 if not w then
 if u.tgAngryPlants.Value then
+if q=="Choc"then
+if h.ChkBackpack("Chocolate Sprinkler")then
 h.autoPlants()
+end
+else
+h.autoPlants()
+end
 end
 end
 i.IsHuntEgg=false
@@ -4784,6 +4790,16 @@ return
 end
 for x,y in ipairs(w:GetChildren())do
 if y:IsA("Model")and y.Name:match(u)then
+return true
+end
+end
+return false
+end
+
+function h.ChkBackpack(u)
+local v=m.Backpack
+for w,x in ipairs(v:GetChildren())do
+if x:IsA("Tool")and x.Name:match(u)then
 return true
 end
 end
