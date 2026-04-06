@@ -201,4 +201,21 @@ function Utils.EquipTool(item)
 	return success
 end
 
+function Utils.ParseVector3(str)
+	-- ป้องกัน Error กรณีค่า str เป็น nil
+	if type(str) ~= "string" then
+		return nil
+	end
+
+	-- string.match จะดึงค่าในวงเล็บ () ออกมาให้เป็นตัวแปร x, y, z ทันที!
+	local x, y, z = string.match(str, "^%s*(-?[0-9.]+),%s*(-?[0-9.]+),%s*(-?[0-9.]+)%s*$")
+
+	-- ถ้าดึงค่าสำเร็จ (ไม่เป็น nil) ก็แปลงเป็นตัวเลขแล้วสร้าง Vector3
+	if x and y and z then
+		return Vector3.new(tonumber(x), tonumber(y), tonumber(z))
+	end
+
+	return nil -- คืนค่า nil หากข้อความผิดรูปแบบ
+end
+
 return Utils

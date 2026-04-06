@@ -1,4 +1,3 @@
-
 local Auto = {}
 local reg
 local fVar
@@ -120,27 +119,42 @@ function Auto.RemoveCrops()
 end
 
 function Auto.Trowel()
-	local options = reg.Options
-	if not options.tgTrowelEnable.Value or fVar.IsTroweling then
+	local Options = reg.Options
+	if not Options.tgTrowelEnable.Value or fVar.IsTroweling then
 		return
 	end
+	local posStr = Options.ipTrowelPosition.Value
+	local parsedPos = Utils.ParseVector3(posStr)
+	if not parsedPos then
+		reg.Log("❌ Invalid position format. Use 'X, Y, Z'", "ERROR")
+		if Options.tgTrowelEnable.Value then
+			Options.tgTrowelEnable:SetValue(false)
+			task.wait(0.5)
+		end
+		return
+	end
+	local TrowelPos = CFrame.new(parsedPos)
 	Utils.RunWithFlag("IsTroweling", "Trowel", function()
 		local getSelectedItems = Utils.GetSelectedItems
-		local trowelPlantsList = getSelectedItems(options.ddTrowelPlants.Value)
-		local plantsWeightThreshold = options.ddTrowelPlantsWeight.Value
-		local plantsWeightValue = tonumber(options.ipTrowelPlantsWeight.Value) or 0
+		local trowelPlantsList = getSelectedItems(Options.ddTrowelPlants.Value)
+		local plantsWeightThreshold = Options.ddTrowelPlantsWeight.Value
+		local plantsWeightValue = tonumber(Options.ipTrowelPlantsWeight.Value) or 0
 		local plantsPhysical = Utils.GetPlantsFolder()
 		local backpack = sData.Backpack
 		local trowel = Utils.FindToolByPattern(backpack, "Trowel")
 		if not trowel then
-			reg.Log("🟡 No Trowel")
+			reg.Log("🟡 No Trowel", "WARN")
+			if Options.tgTrowelEnable.Value then
+				Options.tgTrowelEnable:SetValue(false)
+				task.wait(0.5)
+			end
 			return
 		end
 
 		Utils.UnequipTool()
 		if plantsPhysical then
 			for _, plant in ipairs(plantsPhysical:GetChildren()) do
-				if not options.tgTrowelEnable.Value then
+				if not Options.tgTrowelEnable.Value then
 					return
 				end
 				if MatchesPlantFilter(plant, trowelPlantsList, plantsWeightThreshold, plantsWeightValue) then
@@ -149,7 +163,7 @@ function Auto.Trowel()
 						return sData.TrowelEvent:InvokeServer("Pickup", trowel, plant)
 					end)
 					if success then
-						sData.TrowelEvent:InvokeServer("Place", trowel, plant, fVar.Pos.Trowel)
+						sData.TrowelEvent:InvokeServer("Place", trowel, plant, TrowelPos)
 						task.wait(0.5)
 					else
 						reg.Log("❌ Place failed: " .. tostring(response))
@@ -160,8 +174,8 @@ function Auto.Trowel()
 				end
 			end
 		end
-		if options.tgTrowelEnable.Value then
-			options.tgTrowelEnable:SetValue(false)
+		if Options.tgTrowelEnable.Value then
+			Options.tgTrowelEnable:SetValue(false)
 			task.wait(0.5)
 		end
 		task.wait(0.5)
@@ -210,11 +224,21 @@ function Auto.Reclaim()
 end
 
 function Auto.Sprinkler()
-	local options = reg.Options
-	if not options.tgSprinklerEnable.Value or fVar.IsSprinkling then
+	local Options = reg.Options
+	if not Options.tgSprinklerEnable.Value or fVar.IsSprinkling then
 		return
 	end
-
+	local posStr = Options.ipSprinklerPosition.Value
+	local parsedPos = Utils.ParseVector3(posStr)
+	if not parsedPos then
+		reg.Log("❌ Invalid position format. Use 'X, Y, Z'", "ERROR")
+		if Options.tgSprinklerEnable.Value then
+			Options.tgSprinklerEnable:SetValue(false)
+			task.wait(0.5)
+		end
+		return
+	end
+	local SprinklerPos = CFrame.new(parsedPos)
 	Utils.RunWithFlag("IsSprinkling", "Sprinkler", function()
 		local backpack = sData.Backpack
 		local sprinklerData = {
@@ -223,11 +247,11 @@ function Auto.Sprinkler()
 			{ matchName = "Godly Sprinkler", optionKey = "ipGodlySPK" },
 			{ matchName = "Master Sprinkler", optionKey = "ipMasterSPK" },
 			{ matchName = "Grandmaster Sprinkler", optionKey = "ipGrandmasterSPK" },
-			{ matchName = options.ddOtherSPK.Value, optionKey = "ipOtherSPK" },
+			{ matchName = Options.ddOtherSPK.Value, optionKey = "ipOtherSPK" },
 		}
 
 		for _, item in ipairs(backpack:GetChildren()) do
-			if not options.tgSprinklerEnable.Value then
+			if not Options.tgSprinklerEnable.Value then
 				return
 			end
 			if item:IsA("Tool") then
@@ -239,29 +263,28 @@ function Auto.Sprinkler()
 			end
 		end
 		Utils.UnequipTool()
-		local positionCF = fVar.Pos.Sprinkler
-		if typeof(positionCF) == "CFrame" then
-			for _, data in ipairs(sprinklerData) do
-				if not options.tgSprinklerEnable.Value then
-					return
-				end
-				if data.tool then
-					local ipAmount = tonumber(options[data.optionKey].Value) or 0
-					local qAmount = tonumber(data.tool:GetAttribute("e")) or 0
-					local minAmount = math.min(ipAmount, qAmount)
-					for _ = 1, minAmount do
-						Utils.EquipTool(data.tool)
-						sData.SprinklerEvent:FireServer("Create", positionCF)
-						task.wait(0.1)
-						Utils.UnequipTool()
-						task.wait(0.1)
-					end
+
+		for _, data in ipairs(sprinklerData) do
+			if not Options.tgSprinklerEnable.Value then
+				return
+			end
+			if data.tool then
+				local ipAmount = tonumber(Options[data.optionKey].Value) or 0
+				local qAmount = tonumber(data.tool:GetAttribute("e")) or 0
+				local minAmount = math.min(ipAmount, qAmount)
+				for _ = 1, minAmount do
+					Utils.EquipTool(data.tool)
+					sData.SprinklerEvent:FireServer("Create", SprinklerPos)
+					task.wait(0.1)
+					Utils.UnequipTool()
+					task.wait(0.1)
 				end
 			end
 		end
+
 		Utils.UnequipTool()
-		if options.tgSprinklerEnable.Value then
-			options.tgSprinklerEnable:SetValue(false)
+		if Options.tgSprinklerEnable.Value then
+			Options.tgSprinklerEnable:SetValue(false)
 			task.wait(0.5)
 		end
 		task.wait(0.5)

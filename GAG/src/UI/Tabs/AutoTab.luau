@@ -199,18 +199,25 @@ function AutoTab.Initialize(registry)
 		Title = "Set Position",
 		Callback = function()
 			-- set position of trowel
-			fVar.Pos.Trowel = sData.Character:GetPivot()
-			Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel.Position))
+			--fVar.Pos.Trowel = sData.Character:GetPivot()
+			local Pos = sData.Character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipTrowelPosition:SetValue(formattedPos)
+			QuickSave()
 		end,
 	})
 
-	TrowelSection:AddParagraph("TrowelPosition", {
+	TrowelSection:AddInput("ipTrowelPosition", {
 		Title = "Trowel Position",
-		Content = "Waiting for set position...",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
 	})
-	if fVar.Pos.Trowel ~= nil then
-		Options.TrowelPosition:SetValue("Position: " .. tostring(fVar.Pos.Trowel.Position))
-	end
+
 	TrowelSection:AddDivider()
 	TrowelSection:AddToggle("tgTrowelEnable", {
 		Title = "Trowel",
@@ -311,19 +318,24 @@ function AutoTab.Initialize(registry)
 	SprinklerSection:AddButton({
 		Title = "Set Position",
 		Callback = function()
-			-- set position of sprinkler
-			fVar.Pos.Sprinkler = sData.Character:GetPivot()
-			Options.SprinklerPosition:SetValue("Position: " .. tostring(fVar.Pos.Sprinkler.Position))
+			local Pos = sData.Character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipSprinklerPosition:SetValue(formattedPos)
+			QuickSave()
 		end,
 	})
 
-	SprinklerSection:AddParagraph("SprinklerPosition", {
+	SprinklerSection:AddInput("ipSprinklerPosition", {
 		Title = "Sprinkler Position",
-		Content = "Waiting for set position...",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
 	})
-	if fVar.Pos.Sprinkler ~= nil then
-		Options.SprinklerPosition:SetValue("Position: " .. tostring(fVar.Pos.Sprinkler.Position))
-	end
+
 	SprinklerSection:AddDivider()
 	SprinklerSection:AddToggle("tgSprinklerEnable", {
 		Title = "Sprinkler",
