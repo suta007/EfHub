@@ -4,8 +4,8 @@ local reg
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
 local TryBuyGoldenEggRE = GameEvents.EasterEvent.TryBuyGoldenEggRE
-local DataService = require(ReplicatedStorage.Modules.DataService)
-local EasterHelper = require(ReplicatedStorage.Modules.EasterEvent.EasterHelper)
+local DataService = require(ReplicatedStorage.Modules.DataService :: any)
+local EasterHelper = require(ReplicatedStorage.Modules.EasterEvent.EasterHelper :: any)
 local EggRates = {}
 for i = 0, 15 do
 	local v33 = EasterHelper:GetNextGoldenEggPrice(i)

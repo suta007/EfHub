@@ -17,7 +17,7 @@ function EfTasks.ToggleTask(taskName, enabled, funcBody)
 			while true do
 				local ok, err = pcall(funcBody)
 				if not ok then
-					reg.Log("🔴 Task '" .. taskName .. "' error: " .. tostring(err))
+					reg.Log("🔴 Task " .. taskName .. " error: " .. tostring(err))
 					task.wait(1)
 				end
 				task.wait(0.1)

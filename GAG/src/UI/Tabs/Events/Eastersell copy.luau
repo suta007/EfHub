@@ -1,6 +1,6 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-
 local PlantTraitsData = require(ReplicatedStorage.Modules.PlantTraitsData :: any)
+
 local Eastersell = {}
 local reg
 local QuickSave
@@ -12,6 +12,10 @@ table.insert(EasterSlot, 1, "ALL")
 
 local Utils
 local GameEvents = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
+
+-- =====================================================================
+-- 1. ย้ายฟังก์ชันการทำงานมาไว้ด้านบน เพื่อให้พร้อมใช้งานก่อนโหลด UI
+-- =====================================================================
 
 function Eastersell.HarvestCrops()
 	local Options = reg.Options
@@ -44,14 +48,12 @@ function Eastersell.HarvestCrops()
 
 		for _, fruit in ipairs(Fruits) do
 			if fruit:IsA("Model") and table.find(HarvestList, fruit.Name) then
-				--sData.CollectEvent:FireServer({ fruit })
 				GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
 				task.wait(0.1)
 			end
 		end
 	end
 	reg.IsEasterHarvesting = false
-	--sData.CollectEvent:FireServer({ crop })
 end
 
 function Eastersell.AutoEasterSell()
@@ -68,6 +70,7 @@ function Eastersell.AutoEasterSell()
 	task.wait(1)
 	reg.IsEasterHarvesting = false
 end
+
 function Eastersell.runSell(state)
 	local Options = reg.Options
 	local SellDelay = Options.ipEasterSellDelay and tonumber(Options.ipEasterSellDelay.Value) or 600
@@ -85,20 +88,22 @@ function Eastersell.runSell(state)
 	end)
 end
 
+-- =====================================================================
+-- 2. ฟังก์ชัน Initialize สร้าง UI (จัดลำดับ Settings ก่อนตัวสั่งการ)
+-- =====================================================================
+
 function Eastersell.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
-	--_ = Options
 	QuickSave = reg.Window.QuickSave
 	EfTasks = reg.EfTasks
 	EventsTab = tab
 	sData = reg.sData
-	--fVar = reg.fVar
-	--Main = reg.Main
 	Utils = reg.Utils
 
 	local EastersellSection = EventsTab:AddCollapsibleSection("Eastersell", false)
 
+	-- [หมวด Harvest] สร้างหน้าต่างตั้งค่าก่อน
 	EastersellSection:AddButton({
 		Title = "Clear Selected Plants",
 		Callback = function()
@@ -117,19 +122,32 @@ function Eastersell.Initialize(registry, tab)
 		end,
 	})
 
+	-- [หมวด Harvest] สร้าง Master Toggle สั่งการ
 	EastersellSection:AddToggle("tgEasterHarvestEnable", {
 		Title = "Easter Harvest Enable",
 		Default = false,
 		Callback = function(Value)
+			-- ใช้ task.defer เพื่อรอให้ UI ทุกตัวโหลดเสร็จก่อนทำงาน
+			--task.defer(function()
 			EfTasks.ToggleTask("AutoEasterHarvest", Value, function()
 				Eastersell.HarvestCrops()
 				task.wait(1)
 			end)
+			--end)
 			QuickSave()
 		end,
 	})
 
 	EastersellSection:AddDivider()
+
+	-- [หมวด Sell] สร้างหน้าต่างตั้งค่าก่อน
+	EastersellSection:AddToggle("tgEasterSellFull", {
+		Title = "Easter Sell Full",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
 
 	EastersellSection:AddInput("ipEasterSellDelay", {
 		Title = "Easter Sell Delay",
@@ -141,22 +159,20 @@ function Eastersell.Initialize(registry, tab)
 		end,
 	})
 
-	EastersellSection:AddToggle("tgEasterSellFull", {
-		Title = "Easter Sell Full",
-		Default = false,
-		Callback = function()
-			QuickSave()
-		end,
-	})
-
+	-- [หมวด Sell] สร้าง Master Toggle สั่งการ
 	EastersellSection:AddToggle("tgEasterSellEnable", {
 		Title = "Easter Sell Enable",
 		Default = false,
 		Callback = function(Value)
+			-- ใช้ task.defer เพื่อป้องกันบั๊กหา Options.ipEasterSellDelay ไม่เจอ
+			--task.defer(function()
 			if Eastersell.runSell then
 				Eastersell.runSell(Value)
 			end
+			--end)
+
 			QuickSave()
+
 			if not Value then
 				reg.IsEasterHarvesting = false
 			end
