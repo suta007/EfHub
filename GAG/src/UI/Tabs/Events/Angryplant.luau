@@ -200,7 +200,13 @@ function Angryplant.autoAngryplant()
 	end
 	if not angryPass then
 		if Options.tgAngryPlants.Value then
-			Angryplant.autoPlants()
+			if chkMutation == "Choc" then
+				if Angryplant.ChkBackpack("Chocolate Sprinkler") then
+					Angryplant.autoPlants()
+				end
+			else
+				Angryplant.autoPlants()
+			end
 		end
 	end
 	reg.IsHuntEgg = false
@@ -306,6 +312,16 @@ function Angryplant.ChkSprinkle(sprinkle)
 	end
 	for _, obj in ipairs(Objects_Physical:GetChildren()) do
 		if obj:IsA("Model") and obj.Name:match(sprinkle) then
+			return true
+		end
+	end
+	return false
+end
+
+function Angryplant.ChkBackpack(itemName)
+	local backpack = sData.Backpack
+	for _, item in ipairs(backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match(itemName) then
 			return true
 		end
 	end
