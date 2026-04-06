@@ -1,13 +1,17 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(ReplicatedStorage.Modules.DataService)
-local ProgressionTable = require(ReplicatedStorage.Data.EASTER_SeedGiverQuestProgression)
+local DataService = require(ReplicatedStorage.Modules.DataService :: any)
+local ProgressionTable = require(ReplicatedStorage.Data.EASTER_SeedGiverQuestProgression :: any)
 local SeedEvent = ReplicatedStorage.GameEvents.SeedPackGiverEvent
+local PlantTraitsData = require(ReplicatedStorage.Modules.PlantTraitsData :: any)
+local EasterSlot = table.clone(PlantTraitsData.Traits["EasterSlot"])
+table.insert(EasterSlot, 1, "ALL")
 
 local Angryplant = {}
 local reg
 local EfTasks
 local QuickSave
 local EventsTab
+local sData
 local questPos = CFrame.new(-100.68, 7.91, -9.52) ---100.68,7.91,-9.52
 --[[
 
@@ -31,6 +35,10 @@ local questPos = CFrame.new(-100.68, 7.91, -9.52) ---100.68,7.91,-9.52
 [HasBeenGivenStarterPack] : true
 
 ]]
+
+local chkName, chkWeight, chkMutation, chkVariant
+local Utils
+
 function Angryplant.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
@@ -38,6 +46,8 @@ function Angryplant.Initialize(registry, tab)
 	QuickSave = reg.Window.QuickSave
 	EfTasks = reg.EfTasks
 	EventsTab = tab
+	sData = reg.sData
+	Utils = reg.Utils
 
 	local AngryplantSection = EventsTab:AddCollapsibleSection("Angryplant", false)
 	AngryplantSection:AddToggle("tgAngryplantEnable", {
@@ -48,6 +58,44 @@ function Angryplant.Initialize(registry, tab)
 				Angryplant.autoAngryplant()
 				task.wait(10)
 			end)
+			QuickSave()
+		end,
+	})
+
+	AngryplantSection:AddToggle("tgAngryPlants", {
+		Title = "Plants Quest Seed Enable",
+		Default = false,
+		Callback = function(_Value)
+			QuickSave()
+		end,
+	})
+
+	AngryplantSection:AddDropdown("ddFocusPlant", {
+		Title = "Focus Plant",
+		Values = EasterSlot,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	AngryplantSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			local Pos = sData.Character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipAngryplantPos:SetValue(formattedPos)
+			QuickSave()
+		end,
+	})
+	AngryplantSection:AddInput("ipAngryplantPos", {
+		Title = "Position",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
@@ -68,24 +116,24 @@ local function QuestValue()
 end
 
 local function CheckQuest(fruit)
-	local name, weight, mutation, variant = QuestValue()
-	if not name then
+	chkName, chkWeight, chkMutation, chkVariant = QuestValue()
+	if not chkName then
 		return
 	end
-	local ItemName = fruit:FindFirstChild("Item_String") and fruit:FindFirstChild("Item_String").Value
+	local ItemName = fruit:FindFirstChild("Item_String") and fruit:FindFirstChild("Item_String").Value or fruit.Name
 	local ItemVariant = fruit:FindFirstChild("Variant") and fruit:FindFirstChild("Variant").Value
 	local ItemWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value
 
-	if ItemName ~= name then
+	if ItemName ~= chkName then
 		return
 	end
-	if ItemWeight < weight then
+	if ItemWeight < chkWeight then
 		return
 	end
-	if mutation ~= "ALL" and fruit:GetAttribute(mutation) ~= true then
+	if chkMutation ~= "ALL" and fruit:GetAttribute(chkMutation) ~= true then
 		return
 	end
-	if variant ~= "ALL" and ItemVariant ~= variant then
+	if chkVariant ~= "ALL" and ItemVariant ~= chkVariant then
 		return
 	end
 	return true
@@ -93,11 +141,14 @@ end
 
 function Angryplant.autoAngryplant()
 	local Options = reg.Options
-	if not Options.tgAngryplantEnable.Value or reg.IsEasterHarvesting then
+	if not Options.tgAngryplantEnable.Value or reg.IsEasterHarvesting or reg.IsHuntEgg then
 		return
 	end
+	reg.IsHuntEgg = true
 	reg.IsEasterHarvesting = true
+	task.wait(1)
 	local Backpack = reg.sData.Backpack
+	local angryPass = false
 	for _, item in ipairs(Backpack:GetChildren()) do
 		if CheckQuest(item) then
 			reg.sData.Character:PivotTo(questPos)
@@ -110,11 +161,103 @@ function Angryplant.autoAngryplant()
 			task.wait(0.5)
 			reg.Utils.ClickButton(reg.Utils.GardenButton)
 			task.wait(1)
-			reg.IsEasterHarvesting = false
-			return
+			angryPass = true
+			break
 		end
 	end
+	if not angryPass then
+		if Options.tgAngryPlants.Value then
+			Angryplant.autoPlants()
+		end
+	end
+	reg.IsHuntEgg = false
 	reg.IsEasterHarvesting = false
+end
+
+function Angryplant.autoPlants()
+	local Options = reg.Options
+	local focusPlant = Utils.GetSelectedItems(Options.ddFocusPlant.Value)
+	if not table.find(focusPlant, chkName) then
+		if chkMutation == "Choc" then
+			local posStr = Options.ipSprinklerPosition.Value
+			local parsedPos = Utils.ParseVector3(posStr)
+			if parsedPos then
+				Angryplant.autoChoco(parsedPos)
+				task.wait(5)
+				Angryplant.autoGrand(parsedPos)
+			end
+		end
+		return
+	end
+	local gardenPass = false
+	local Plants_Physical = Utils.GetPlantsFolder()
+	for _, plant in ipairs(Plants_Physical:GetChildren()) do
+		local FruitsContainer = plant:FindFirstChild("Fruits")
+		local Fruits = FruitsContainer and FruitsContainer:GetChildren() or { plant }
+
+		for _, fruit in ipairs(Fruits) do
+			if fruit:IsA("Model") and CheckQuest(fruit) then
+				gardenPass = true
+				break
+			end
+		end
+		if gardenPass then
+			break
+		end
+	end
+	if gardenPass then
+		return
+	end
+
+	local Backpack = sData.Backpack
+	for _, item in ipairs(Backpack:GetChildren()) do
+		local SeedName = item:GetAttribute("Seed")
+		if SeedName and SeedName == chkName then
+			local PlantsPos = Utils.ParseVector3(Options.ipAngryplantPos.Value)
+			if PlantsPos then
+				Utils.UnequipTool()
+				task.wait(0.1)
+				Utils.EquipTool(item)
+				task.wait(0.1)
+				sData.GameEvents:WaitForChild("Plant_RE"):FireServer(vector.create(PlantsPos.X, PlantsPos.Y, PlantsPos.Z), SeedName)
+				task.wait(0.2)
+				Utils.UnequipTool()
+				task.wait(0.1)
+				if chkMutation == "Choc" then
+					Angryplant.autoChoco(PlantsPos)
+				end
+				break
+			end
+		end
+	end
+end
+
+function Angryplant.autoChoco(pos)
+	local backpack = sData.Backpack
+	for _, item in ipairs(backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match("Chocolate Sprinkler") then
+			local SprinklerPos = CFrame.new(pos)
+			Utils.EquipTool(item)
+			sData.SprinklerEvent:FireServer("Create", SprinklerPos)
+			task.wait(0.1)
+			Utils.UnequipTool()
+			task.wait(0.1)
+		end
+	end
+end
+
+function Angryplant.autoGrand(pos)
+	local backpack = sData.Backpack
+	for _, item in ipairs(backpack:GetChildren()) do
+		if item:IsA("Tool") and item.Name:match("Grandmaster Sprinkler") then
+			local SprinklerPos = CFrame.new(pos)
+			Utils.EquipTool(item)
+			sData.SprinklerEvent:FireServer("Create", SprinklerPos)
+			task.wait(0.1)
+			Utils.UnequipTool()
+			task.wait(0.1)
+		end
+	end
 end
 
 return Angryplant
