@@ -31,6 +31,7 @@ function Egghunt.Initialize(registry, tab)
 			end)
 			QuickSave()
 			if not Value then
+				reg.IsHuntEgg = false
 				reg.IsEasterHarvesting = false
 			end
 		end,

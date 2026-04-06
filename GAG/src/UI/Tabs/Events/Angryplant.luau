@@ -58,6 +58,10 @@ function Angryplant.Initialize(registry, tab)
 				Angryplant.autoAngryplant()
 				task.wait(10)
 			end)
+			if not Value then
+				reg.IsHuntEgg = false
+				reg.IsEasterHarvesting = false
+			end
 			QuickSave()
 		end,
 	})
