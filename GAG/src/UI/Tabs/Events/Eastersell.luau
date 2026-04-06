@@ -153,9 +153,9 @@ function Eastersell.Initialize(registry, tab)
 		Title = "Easter Sell Enable",
 		Default = false,
 		Callback = function(Value)
-			if Eastersell.runSell then
-				Eastersell.runSell(Value)
-			end
+			--if Eastersell.runSell then
+			Eastersell.runSell(Value)
+			--end
 			QuickSave()
 			if not Value then
 				reg.IsEasterHarvesting = false
