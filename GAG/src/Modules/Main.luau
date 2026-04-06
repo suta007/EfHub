@@ -64,6 +64,7 @@ function Main.AutoPlant()
 	end
 	Utils.RunWithFlag("IsPlanting", "AutoPlant", function()
 		local tSeed = Utils.GetSelectedItems(Options.ddPlantsSeeds.Value)
+		local seedAmount = tonumber(Options.ipPlantsAmount.Value) or 0
 		local Backpack = sData.LocalPlayer.Backpack
 		for _, item in ipairs(Backpack:GetChildren()) do
 			if not Options.tgPlantsEnable.Value then
@@ -71,7 +72,13 @@ function Main.AutoPlant()
 			end
 			local SeedName = item:GetAttribute("Seed")
 			if SeedName and (table.find(tSeed, "ALL") or table.find(tSeed, SeedName)) then
-				local Quantity = tonumber(item:GetAttribute("Quantity")) or 0
+				local Quantity = 0
+				local hasAmount = tonumber(item:GetAttribute("Quantity")) or 0
+				if seedAmount == 0 then
+					Quantity = hasAmount
+				else
+					Quantity = math.min(seedAmount, hasAmount)
+				end
 				for _ = 1, Quantity do
 					if not Options.tgPlantsEnable.Value then
 						return
@@ -83,6 +90,11 @@ function Main.AutoPlant()
 					local PlantsPos
 					if Options.ddPlantsPos.Value == "Player" then
 						PlantsPos = Utils.GetPosition()
+					elseif Options.ddPlantsPos.Value == "Set" then
+						PlantsPos = Utils.ParseVector3(Options.ipPlantsPos.Value)
+						if not PlantsPos then
+							PlantsPos = Utils.GetPosition()
+						end
 					else
 						local randomPlot = Utils.GetRandomPlotPos()
 						PlantsPos = randomPlot and randomPlot.Position
@@ -90,6 +102,7 @@ function Main.AutoPlant()
 					if PlantsPos then
 						local args = { vector.create(PlantsPos.X, PlantsPos.Y, PlantsPos.Z), SeedName }
 						sData.GameEvents:WaitForChild("Plant_RE"):FireServer(unpack(args))
+						task.wait(0.2)
 					end
 				end
 			end

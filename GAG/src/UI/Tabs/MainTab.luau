@@ -52,11 +52,39 @@ function MainTab.Initialize(reg)
 			QuickSave()
 		end,
 	})
+	PlantsSection:AddInput("ipPlantsAmount", {
+		Title = "Amount",
+		Default = 0,
+		Numeric = true,
+		Finished = true,
+		Callback = function(_Value)
+			QuickSave()
+		end,
+	})
 
 	PlantsSection:AddDropdown("ddPlantsPos", {
 		Title = "Select Plants Position",
-		Values = { "Player", "Random" },
+		Values = { "Player", "Random", "Set" },
 		Default = "Player",
+		Callback = function(_Value)
+			QuickSave()
+		end,
+	})
+	PlantsSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			local Pos = sData.Character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipPlantsPos:SetValue(formattedPos)
+			QuickSave()
+		end,
+	})
+	PlantsSection:AddInput("ipPlantsPos", {
+		Title = "Position",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
 		Callback = function(_Value)
 			QuickSave()
 		end,
@@ -190,18 +218,6 @@ function MainTab.Initialize(reg)
 		end,
 	})
 
-	--[[ 
-** Sell Section **
-	- Sell Enable (Toggle)
-	- Sell Crops (Dropdown) + Clear Button
-	- Sell Blacklist Crops (Dropdown) + Clear Button
-	- Sell Mutants (Dropdown) + Clear Button
-	- Sell Blacklist Mutants (Dropdown) + Clear Button
-	- Sell Variant (Dropdown)
-	- Sell Blacklist Variant (Dropdown)
-	- Sell Weight (Dropdown)
-	- Sell Weight Value (Input)
-	]]
 	local SellSection = Tabs.Main:AddCollapsibleSection("Sell", false)
 	SellSection:AddInput("ipSellDelay", {
 		Title = "Delay",
