@@ -36,7 +36,7 @@ local questPos = CFrame.new(-100.68, 7.91, -9.52) ---100.68,7.91,-9.52
 
 ]]
 
-local chkName, chkWeight, chkMutation, chkVariant
+local chkName, chkWeight, chkMutation, chkVariant, chkNextQuest
 local Utils
 
 function Angryplant.Initialize(registry, tab)
@@ -99,8 +99,14 @@ function Angryplant.Initialize(registry, tab)
 			QuickSave()
 		end,
 	})
+
+	AngryplantSection:AddParagraph("NextQuest", {
+		Title = "Next Quest Time",
+		Content = "Wait for update...",
+	})
 end
 local function QuestValue()
+	local Options = reg.Options
 	local data = DataService:GetData().EasterEventData
 	local currentIdx = data.Progression or 1
 	local isCompleted = currentIdx > #ProgressionTable
@@ -110,13 +116,17 @@ local function QuestValue()
 		local weight = current.WEIGHT or 0
 		local mutation = current.MUTATION or "ALL"
 		local variant = current.VARIANT or "ALL"
-		return name, weight, mutation, variant
+		local NextQuest = ProgressionTable[currentIdx + 1]
+		local questText = string.format("Name: %s /n Weight: %d /n Mutation: %s /n Variant: %s", NextQuest.PLANT_NAME, NextQuest.WEIGHT, NextQuest.MUTATION, NextQuest.VARIANT)
+		return name, weight, mutation, variant, questText
 	end
+	Options.NextQuest:SetValue("Completed")
 	return nil, nil, nil, nil
 end
 
 local function CheckQuest(fruit)
-	chkName, chkWeight, chkMutation, chkVariant = QuestValue()
+	local Options = reg.Options
+	chkName, chkWeight, chkMutation, chkVariant, chkNextQuest = QuestValue()
 	if not chkName then
 		return
 	end
@@ -135,6 +145,9 @@ local function CheckQuest(fruit)
 	end
 	if chkVariant ~= "ALL" and ItemVariant ~= chkVariant then
 		return
+	end
+	if chkNextQuest then
+		Options.NextQuest:SetValue(chkNextQuest)
 	end
 	return true
 end
