@@ -128,12 +128,12 @@ function Eastersell.Initialize(registry, tab)
 		Default = false,
 		Callback = function(Value)
 			-- ใช้ task.defer เพื่อรอให้ UI ทุกตัวโหลดเสร็จก่อนทำงาน
-			task.defer(function()
-				EfTasks.ToggleTask("AutoEasterHarvest", Value, function()
-					Eastersell.HarvestCrops()
-					task.wait(1)
-				end)
+			--task.defer(function()
+			EfTasks.ToggleTask("AutoEasterHarvest", Value, function()
+				Eastersell.HarvestCrops()
+				task.wait(1)
 			end)
+			--end)
 			QuickSave()
 		end,
 	})
@@ -165,11 +165,11 @@ function Eastersell.Initialize(registry, tab)
 		Default = false,
 		Callback = function(Value)
 			-- ใช้ task.defer เพื่อป้องกันบั๊กหา Options.ipEasterSellDelay ไม่เจอ
-			task.defer(function()
-				if Eastersell.runSell then
-					Eastersell.runSell(Value)
-				end
-			end)
+			--task.defer(function()
+			if Eastersell.runSell then
+				Eastersell.runSell(Value)
+			end
+			--end)
 
 			QuickSave()
 
