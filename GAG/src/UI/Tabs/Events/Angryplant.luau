@@ -141,12 +141,13 @@ end
 
 function Angryplant.autoAngryplant()
 	local Options = reg.Options
-	if not Options.tgAngryplantEnable.Value or reg.IsEasterHarvesting or reg.IsHuntEgg then
+	if not Options.tgAngryplantEnable.Value or reg.IsHuntEgg then
 		return
 	end
 	reg.IsHuntEgg = true
-	reg.IsEasterHarvesting = true
 	task.wait(1)
+	reg.IsEasterHarvesting = true
+
 	local Backpack = reg.sData.Backpack
 	local angryPass = false
 	for _, item in ipairs(Backpack:GetChildren()) do
