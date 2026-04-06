@@ -376,6 +376,23 @@ end)
 return h
 end
 
+function c.ParseVector3(g)
+
+if type(g)~="string"then
+return nil
+end
+
+
+local h,i,j=string.match(g,"^%s*(-?[0-9.]+),%s*(-?[0-9.]+),%s*(-?[0-9.]+)%s*$")
+
+
+if h and i and j then
+return Vector3.new(tonumber(h),tonumber(i),tonumber(j))
+end
+
+return nil
+end
+
 return c end function a.c():typeof(__modImpl())local b=a.cache.c if not b then b={c=__modImpl()}a.cache.c=b end return b.c end end do local function __modImpl()
 
 local b={}
@@ -397,7 +414,7 @@ task.wait()
 while true do
 local h,i=pcall(g)
 if not h then
-d.Log("🔴 Task '"..e.."' error: "..tostring(i))
+d.Log("🔴 Task "..e.." error: "..tostring(i))
 task.wait(1)
 end
 task.wait(0.1)
@@ -479,32 +496,46 @@ return
 end
 f.RunWithFlag("IsPlanting","AutoPlant",function()
 local j=f.GetSelectedItems(i.ddPlantsSeeds.Value)
-local k=e.LocalPlayer.Backpack
-for l,m in ipairs(k:GetChildren())do
+local k=tonumber(i.ipPlantsAmount.Value)or 0
+local l=e.LocalPlayer.Backpack
+for m,n in ipairs(l:GetChildren())do
 if not i.tgPlantsEnable.Value then
+g.IsPlanting=false
 return
 end
-local n=m:GetAttribute("Seed")
-if n and(table.find(j,"ALL")or table.find(j,n))then
-local o=tonumber(m:GetAttribute("Quantity"))or 0
-for p=1,o do
+local o=n:GetAttribute("Seed")
+if o and(table.find(j,"ALL")or table.find(j,o))then
+local p=0
+local q=tonumber(n:GetAttribute("Quantity"))or 0
+if k==0 then
+p=q
+else
+p=math.min(k,q)
+end
+for r=1,p do
 if not i.tgPlantsEnable.Value then
 return
 end
 f.UnequipTool()
 task.wait(0.1)
-f.EquipTool(m)
+f.EquipTool(n)
 task.wait(0.1)
-local q
+local s
 if i.ddPlantsPos.Value=="Player"then
-q=f.GetPosition()
-else
-local r=f.GetRandomPlotPos()
-q=r and r.Position
+s=f.GetPosition()
+elseif i.ddPlantsPos.Value=="Set"then
+s=f.ParseVector3(i.ipPlantsPos.Value)
+if not s then
+s=f.GetPosition()
 end
-if q then
-local r={vector.create(q.X,q.Y,q.Z),n}
-e.GameEvents:WaitForChild("Plant_RE"):FireServer(unpack(r))
+else
+local t=f.GetRandomPlotPos()
+s=t and t.Position
+end
+if s then
+local t={vector.create(s.X,s.Y,s.Z),o}
+e.GameEvents:WaitForChild("Plant_RE"):FireServer(unpack(t))
+task.wait(0.2)
 end
 end
 end
@@ -888,7 +919,6 @@ end
 
 return b end function a.f():typeof(__modImpl())local b=a.cache.f if not b then b={c=__modImpl()}a.cache.f=b end return b.c end end do local function __modImpl()
 
-
 local b={}
 local c
 local d
@@ -1014,35 +1044,50 @@ local g=c.Options
 if not g.tgTrowelEnable.Value or d.IsTroweling then
 return
 end
+local h=g.ipTrowelPosition.Value
+local i=f.ParseVector3(h)
+if not i then
+c.Log("❌ Invalid position format. Use 'X, Y, Z'","ERROR")
+if g.tgTrowelEnable.Value then
+g.tgTrowelEnable:SetValue(false)
+task.wait(0.5)
+end
+return
+end
+local j=CFrame.new(i)
 f.RunWithFlag("IsTroweling","Trowel",function()
-local h=f.GetSelectedItems
-local i=h(g.ddTrowelPlants.Value)
-local j=g.ddTrowelPlantsWeight.Value
-local k=tonumber(g.ipTrowelPlantsWeight.Value)or 0
-local l=f.GetPlantsFolder()
-local m=e.Backpack
-local n=f.FindToolByPattern(m,"Trowel")
-if not n then
-c.Log("🟡 No Trowel")
+local k=f.GetSelectedItems
+local l=k(g.ddTrowelPlants.Value)
+local m=g.ddTrowelPlantsWeight.Value
+local n=tonumber(g.ipTrowelPlantsWeight.Value)or 0
+local o=f.GetPlantsFolder()
+local p=e.Backpack
+local q=f.FindToolByPattern(p,"Trowel")
+if not q then
+c.Log("🟡 No Trowel","WARN")
+if g.tgTrowelEnable.Value then
+g.tgTrowelEnable:SetValue(false)
+task.wait(0.5)
+end
 return
 end
 
 f.UnequipTool()
-if l then
-for o,p in ipairs(l:GetChildren())do
+if o then
+for r,s in ipairs(o:GetChildren())do
 if not g.tgTrowelEnable.Value then
 return
 end
-if MatchesPlantFilter(p,i,j,k)then
-f.EquipTool(n)
-local q,r=pcall(function()
-return e.TrowelEvent:InvokeServer("Pickup",n,p)
+if MatchesPlantFilter(s,l,m,n)then
+f.EquipTool(q)
+local t,u=pcall(function()
+return e.TrowelEvent:InvokeServer("Pickup",q,s)
 end)
-if q then
-e.TrowelEvent:InvokeServer("Place",n,p,d.Pos.Trowel)
+if t then
+e.TrowelEvent:InvokeServer("Place",q,s,j)
 task.wait(0.5)
 else
-c.Log("❌ Place failed: "..tostring(r))
+c.Log("❌ Place failed: "..tostring(u))
 end
 task.wait(0.1)
 f.UnequipTool()
@@ -1104,10 +1149,20 @@ local g=c.Options
 if not g.tgSprinklerEnable.Value or d.IsSprinkling then
 return
 end
-
+local h=g.ipSprinklerPosition.Value
+local i=f.ParseVector3(h)
+if not i then
+c.Log("❌ Invalid position format. Use 'X, Y, Z'","ERROR")
+if g.tgSprinklerEnable.Value then
+g.tgSprinklerEnable:SetValue(false)
+task.wait(0.5)
+end
+return
+end
+local j=CFrame.new(i)
 f.RunWithFlag("IsSprinkling","Sprinkler",function()
-local h=e.Backpack
-local i={
+local k=e.Backpack
+local l={
 {matchName="Basic Sprinkler",optionKey="ipBasicSPK"},
 {matchName="Advanced Sprinkler",optionKey="ipAdvancedSPK"},
 {matchName="Godly Sprinkler",optionKey="ipGodlySPK"},
@@ -1116,31 +1171,30 @@ local i={
 {matchName=g.ddOtherSPK.Value,optionKey="ipOtherSPK"},
 }
 
-for j,k in ipairs(h:GetChildren())do
+for m,n in ipairs(k:GetChildren())do
 if not g.tgSprinklerEnable.Value then
 return
 end
-if k:IsA("Tool")then
-for l,m in ipairs(i)do
-if m.matchName and m.matchName~=""and k.Name:match(m.matchName)then
-m.tool=k
+if n:IsA("Tool")then
+for o,p in ipairs(l)do
+if p.matchName and p.matchName~=""and n.Name:match(p.matchName)then
+p.tool=n
 end
 end
 end
 end
 f.UnequipTool()
-local j=d.Pos.Sprinkler
-if typeof(j)=="CFrame"then
-for k,l in ipairs(i)do
+
+for m,n in ipairs(l)do
 if not g.tgSprinklerEnable.Value then
 return
 end
-if l.tool then
-local m=tonumber(g[l.optionKey].Value)or 0
-local n=tonumber(l.tool:GetAttribute("e"))or 0
-local o=math.min(m,n)
-for p=1,o do
-f.EquipTool(l.tool)
+if n.tool then
+local o=tonumber(g[n.optionKey].Value)or 0
+local p=tonumber(n.tool:GetAttribute("e"))or 0
+local q=math.min(o,p)
+for r=1,q do
+f.EquipTool(n.tool)
 e.SprinklerEvent:FireServer("Create",j)
 task.wait(0.1)
 f.UnequipTool()
@@ -1148,7 +1202,7 @@ task.wait(0.1)
 end
 end
 end
-end
+
 f.UnequipTool()
 if g.tgSprinklerEnable.Value then
 g.tgSprinklerEnable:SetValue(false)
@@ -2512,7 +2566,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.05-15.00",
+SubTitle="2569.04.07-00.00",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -2656,11 +2710,39 @@ Callback=function(m)
 f()
 end,
 })
+l:AddInput("ipPlantsAmount",{
+Title="Amount",
+Default=0,
+Numeric=true,
+Finished=true,
+Callback=function(m)
+f()
+end,
+})
 
 l:AddDropdown("ddPlantsPos",{
 Title="Select Plants Position",
-Values={"Player","Random"},
+Values={"Player","Random","Set"},
 Default="Player",
+Callback=function(m)
+f()
+end,
+})
+l:AddButton({
+Title="Set Position",
+Callback=function()
+local m=j.Character:GetPivot().Position
+local n=string.format("%.3f, %.3f, %.3f",m.X,m.Y,m.Z)
+e.ipPlantsPos:SetValue(n)
+f()
+end,
+})
+l:AddInput("ipPlantsPos",{
+Title="Position",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
 Callback=function(m)
 f()
 end,
@@ -2793,18 +2875,6 @@ Callback=function(n)
 f()
 end,
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 local n=d.Main:AddCollapsibleSection("Sell",false)
 n:AddInput("ipSellDelay",{
@@ -3753,18 +3823,25 @@ o:AddButton({
 Title="Set Position",
 Callback=function()
 
-k.Pos.Trowel=i.Character:GetPivot()
-g.TrowelPosition:SetValue("Position: "..tostring(k.Pos.Trowel.Position))
+
+local p=i.Character:GetPivot().Position
+local q=string.format("%.3f, %.3f, %.3f",p.X,p.Y,p.Z)
+g.ipTrowelPosition:SetValue(q)
+h()
 end,
 })
 
-o:AddParagraph("TrowelPosition",{
+o:AddInput("ipTrowelPosition",{
 Title="Trowel Position",
-Content="Waiting for set position...",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function()
+h()
+end,
 })
-if k.Pos.Trowel~=nil then
-g.TrowelPosition:SetValue("Position: "..tostring(k.Pos.Trowel.Position))
-end
+
 o:AddDivider()
 o:AddToggle("tgTrowelEnable",{
 Title="Trowel",
@@ -3865,19 +3942,24 @@ local q=f.Auto:AddCollapsibleSection("Sprinkler",false)
 q:AddButton({
 Title="Set Position",
 Callback=function()
-
-k.Pos.Sprinkler=i.Character:GetPivot()
-g.SprinklerPosition:SetValue("Position: "..tostring(k.Pos.Sprinkler.Position))
+local r=i.Character:GetPivot().Position
+local s=string.format("%.3f, %.3f, %.3f",r.X,r.Y,r.Z)
+g.ipSprinklerPosition:SetValue(s)
+h()
 end,
 })
 
-q:AddParagraph("SprinklerPosition",{
+q:AddInput("ipSprinklerPosition",{
 Title="Sprinkler Position",
-Content="Waiting for set position...",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function()
+h()
+end,
 })
-if k.Pos.Sprinkler~=nil then
-g.SprinklerPosition:SetValue("Position: "..tostring(k.Pos.Sprinkler.Position))
-end
+
 q:AddDivider()
 q:AddToggle("tgSprinklerEnable",{
 Title="Sprinkler",
@@ -4162,6 +4244,7 @@ task.wait(60)
 end)
 f()
 if not p then
+d.IsHuntEgg=false
 d.IsEasterHarvesting=false
 end
 end,
@@ -4240,80 +4323,6 @@ table.insert(j,1,"ALL")
 local k
 local l=game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
 
-function d.Initialize(m,n)
-e=m
-local o=e.Options
-
-f=e.Window.QuickSave
-g=e.EfTasks
-h=n
-i=e.sData
-
-
-k=e.Utils
-
-local p=h:AddCollapsibleSection("Eastersell",false)
-p:AddToggle("tgEasterHarvestEnable",{
-Title="Easter Harvest Enable",
-Default=false,
-Callback=function(q)
-g.ToggleTask("AutoEasterHarvest",q,function()
-d.HarvestCrops()
-task.wait(1)
-end)
-f()
-end,
-})
-p:AddButton({
-Title="Clear Selected Plants",
-Callback=function()
-o.ddEasterHarvestPlant:SetValue({ALL=true})
-end,
-})
-
-p:AddDropdown("ddEasterHarvestPlant",{
-Title="Easter Harvest Plant",
-Values=j,
-Multi=true,
-Default={"ALL"},
-Searchable=true,
-Callback=function()
-f()
-end,
-})
-p:AddDivider()
-p:AddToggle("tgEasterSellEnable",{
-Title="Easter Sell Enable",
-Default=false,
-Callback=function(q)
-if d.runSell then
-d.runSell(q)
-end
-f()
-if not q then
-e.IsEasterHarvesting=false
-end
-end,
-})
-p:AddToggle("tgEasterSellFull",{
-Title="Easter Sell Full",
-Default=false,
-Callback=function()
-f()
-end,
-})
-
-p:AddInput("ipEasterSellDelay",{
-Title="Easter Sell Delay",
-Default=600,
-Numeric=true,
-Finished=true,
-Callback=function()
-f()
-end,
-})
-end
-
 function d.HarvestCrops()
 local m=e.Options
 if not m.tgEasterHarvestEnable or not m.tgEasterHarvestEnable.Value or e.IsEasterHarvesting then
@@ -4386,128 +4395,402 @@ task.wait(q)
 end)
 end
 
-return d end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
+function d.Initialize(m,n)
+e=m
+local o=e.Options
 
-local b=game:GetService("ReplicatedStorage")
-local c=require(b.Modules.DataService)
-local d=require(b.Data.EASTER_SeedGiverQuestProgression)
-local e=b.GameEvents.SeedPackGiverEvent
-
-local f={}
-local g
-local h
-local i
-local j
-local k=CFrame.new(-100.68,7.91,-9.52)
+f=e.Window.QuickSave
+g=e.EfTasks
+h=n
+i=e.sData
 
 
+k=e.Utils
 
+local p=h:AddCollapsibleSection("Eastersell",false)
 
+p:AddButton({
+Title="Clear Selected Plants",
+Callback=function()
+o.ddEasterHarvestPlant:SetValue({ALL=true})
+end,
+})
 
+p:AddDropdown("ddEasterHarvestPlant",{
+Title="Easter Harvest Plant",
+Values=j,
+Multi=true,
+Default={"ALL"},
+Searchable=true,
+Callback=function()
+f()
+end,
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function f.Initialize(l,m)
-g=l
-local n=g.Options
-_=n
-i=g.Window.QuickSave
-h=g.EfTasks
-j=m
-
-local o=j:AddCollapsibleSection("Angryplant",false)
-o:AddToggle("tgAngryplantEnable",{
-Title="Angryplant Enable",
+p:AddToggle("tgEasterHarvestEnable",{
+Title="Easter Harvest Enable",
 Default=false,
-Callback=function(p)
-h.ToggleTask("AutoAngryplant",p,function()
-f.autoAngryplant()
-task.wait(10)
+Callback=function(q)
+g.ToggleTask("AutoEasterHarvest",q,function()
+d.HarvestCrops()
+task.wait(1)
 end)
-i()
+f()
+end,
+})
+
+p:AddDivider()
+
+p:AddInput("ipEasterSellDelay",{
+Title="Easter Sell Delay",
+Default=600,
+Numeric=true,
+Finished=true,
+Callback=function()
+f()
+end,
+})
+
+p:AddToggle("tgEasterSellFull",{
+Title="Easter Sell Full",
+Default=false,
+Callback=function()
+f()
+end,
+})
+
+p:AddToggle("tgEasterSellEnable",{
+Title="Easter Sell Enable",
+Default=false,
+Callback=function(q)
+
+d.runSell(q)
+
+f()
+if not q then
+e.IsEasterHarvesting=false
+end
 end,
 })
 end
-local function QuestValue()
-local l=c:GetData().EasterEventData
-local m=l.Progression or 1
-local n=m>#d
-if not n then
-local o=d[m]
-local p=o.PLANT_NAME or nil
-local q=o.WEIGHT or 0
-local r=o.MUTATION or"ALL"
-local s=o.VARIANT or"ALL"
-return p,q,r,s
+
+return d end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
+
+local b=game:GetService("ReplicatedStorage")
+local c=require(b.Modules.DataService::any)
+local d=require(b.Data.EASTER_SeedGiverQuestProgression::any)
+local e=b.GameEvents.SeedPackGiverEvent
+local f=require(b.Modules.PlantTraitsData::any)
+local g=table.clone(f.Traits["EasterSlot"])
+table.insert(g,1,"ALL")
+
+local h={}
+local i
+local j
+local k
+local l
+local m
+local n=CFrame.new(-100.68,7.91,-9.52)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local o,p,q,r,s
+local t
+
+function h.Initialize(u,v)
+i=u
+local w=i.Options
+_=w
+k=i.Window.QuickSave
+j=i.EfTasks
+l=v
+m=i.sData
+t=i.Utils
+
+local x=l:AddCollapsibleSection("Angryplant",false)
+x:AddToggle("tgAngryplantEnable",{
+Title="Angryplant Enable",
+Default=false,
+Callback=function(y)
+j.ToggleTask("AutoAngryplant",y,function()
+h.autoAngryplant()
+task.wait(10)
+end)
+if not y then
+i.IsHuntEgg=false
+i.IsEasterHarvesting=false
 end
+k()
+end,
+})
+
+x:AddToggle("tgAngryPlants",{
+Title="Plants Quest Seed Enable",
+Default=false,
+Callback=function(y)
+k()
+end,
+})
+
+x:AddDropdown("ddFocusPlant",{
+Title="Focus Plant",
+Values=g,
+Multi=true,
+Default={"ALL"},
+Searchable=true,
+Callback=function()
+k()
+end,
+})
+x:AddButton({
+Title="Set Position",
+Callback=function()
+local y=m.Character:GetPivot().Position
+local z=string.format("%.3f, %.3f, %.3f",y.X,y.Y,y.Z)
+w.ipAngryplantPos:SetValue(z)
+k()
+end,
+})
+x:AddInput("ipAngryplantPos",{
+Title="Position",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function(y)
+k()
+end,
+})
+
+x:AddParagraph("NextQuest",{
+Title="Next Quest Time",
+Content="Wait for update...",
+})
+end
+local function QuestValue()
+local u=i.Options
+local v=c:GetData().EasterEventData
+local w=v.Progression or 1
+local x=w>#d
+if not x then
+local y=d[w]
+local z=y.PLANT_NAME or nil
+local A=y.WEIGHT or 0
+local B=y.MUTATION or"ALL"
+local C=y.VARIANT or"ALL"
+local D=d[w+1]
+local E=""
+
+
+if D then
+
+local F=tostring(D.PLANT_NAME or"Unknown")
+local G=tonumber(D.WEIGHT)or 0
+local H=tostring(D.MUTATION or"ALL")
+local I=tostring(D.VARIANT or"ALL")
+
+
+E=string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s",F,G,H,I)
+else
+
+E="Next Quest: None"
+end
+return z,A,B,C,E
+end
+u.NextQuest:SetValue("Completed")
 return nil,nil,nil,nil
 end
 
-local function CheckQuest(l)
-local m,n,o,p=QuestValue()
-if not m then
+local function CheckQuest(u)
+local v=i.Options
+o,p,q,r,s=QuestValue()
+if not o then
 return
 end
-local q=l:FindFirstChild("Item_String")and l:FindFirstChild("Item_String").Value
-local r=l:FindFirstChild("Variant")and l:FindFirstChild("Variant").Value
-local s=l:FindFirstChild("Weight")and l:FindFirstChild("Weight").Value
+local w=u:FindFirstChild("Item_String")and u:FindFirstChild("Item_String").Value or u.Name
+local x=u:FindFirstChild("Variant")and u:FindFirstChild("Variant").Value
+local y=u:FindFirstChild("Weight")and u:FindFirstChild("Weight").Value
 
-if q~=m then
+if w~=o then
 return
 end
-if s<n then
+if y<p then
 return
 end
-if o~="ALL"and l:GetAttribute(o)~=true then
+if q~="ALL"and u:GetAttribute(q)~=true then
 return
 end
-if p~="ALL"and r~=p then
+if r~="ALL"and x~=r then
 return
+end
+if s then
+v.NextQuest:SetValue(s)
 end
 return true
 end
 
-function f.autoAngryplant()
-local l=g.Options
-if not l.tgAngryplantEnable.Value or g.IsEasterHarvesting then
+function h.autoAngryplant()
+local u=i.Options
+if not u.tgAngryplantEnable.Value or i.IsHuntEgg then
 return
 end
-g.IsEasterHarvesting=true
-local m=g.sData.Backpack
-for n,o in ipairs(m:GetChildren())do
-if CheckQuest(o)then
-g.sData.Character:PivotTo(k)
+i.IsHuntEgg=true
+task.wait(1)
+i.IsEasterHarvesting=true
+
+local v=i.sData.Backpack
+local w=false
+for x,y in ipairs(v:GetChildren())do
+if CheckQuest(y)then
+i.sData.Character:PivotTo(n)
 task.wait(0.5)
-g.Utils.EquipTool(o)
-local p=o:FindFirstChild("Item_String")and o:FindFirstChild("Item_String").Value
-g.Log("Submit "..p)
+i.Utils.EquipTool(y)
+local z=y:FindFirstChild("Item_String")and y:FindFirstChild("Item_String").Value
+i.Log("Submit "..z)
 task.wait(0.5)
 e:FireServer("SubmitHeldPlant")
 task.wait(0.5)
-g.Utils.ClickButton(g.Utils.GardenButton)
+i.Utils.ClickButton(i.Utils.GardenButton)
 task.wait(1)
-g.IsEasterHarvesting=false
-return
+w=true
+break
 end
 end
-g.IsEasterHarvesting=false
+if not w then
+if u.tgAngryPlants.Value then
+h.autoPlants()
+end
+end
+i.IsHuntEgg=false
+i.IsEasterHarvesting=false
 end
 
-return f end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+function h.autoPlants()
+local u=i.Options
+local v=t.GetSelectedItems(u.ddFocusPlant.Value)
+if not table.find(v,o)then
+if q=="Choc"then
+local w=u.ipSprinklerPosition.Value
+local x=t.ParseVector3(w)
+if x then
+h.autoChoco(x)
+end
+end
+return
+end
+local w=false
+local x=t.GetPlantsFolder()
+for y,z in ipairs(x:GetChildren())do
+local A=z:FindFirstChild("Fruits")
+local B=A and A:GetChildren()or{z}
+
+for C,D in ipairs(B)do
+if D:IsA("Model")and CheckQuest(D)then
+w=true
+break
+end
+end
+if w then
+break
+end
+end
+if w then
+return
+end
+
+local y=m.Backpack
+for z,A in ipairs(y:GetChildren())do
+local B=A:GetAttribute("Seed")
+if B and B==o then
+local C=t.ParseVector3(u.ipAngryplantPos.Value)
+if C then
+t.UnequipTool()
+task.wait(0.1)
+t.EquipTool(A)
+task.wait(0.1)
+m.GameEvents:WaitForChild("Plant_RE"):FireServer(vector.create(C.X,C.Y,C.Z),B)
+task.wait(0.2)
+t.UnequipTool()
+task.wait(0.1)
+if q=="Choc"then
+h.autoChoco(C)
+end
+break
+end
+end
+end
+end
+
+function h.autoChoco(u)
+if h.ChkSprinkle("Chocolate Sprinkler")then
+return
+end
+local v=m.Backpack
+for w,x in ipairs(v:GetChildren())do
+if x:IsA("Tool")and x.Name:match("Chocolate Sprinkler")then
+local y=CFrame.new(u)
+t.EquipTool(x)
+m.SprinklerEvent:FireServer("Create",y)
+task.wait(0.1)
+t.UnequipTool()
+task.wait(5)
+h.autoGrand(u)
+end
+end
+end
+
+function h.autoGrand(u)
+if h.ChkSprinkle("Grandmaster Sprinkler")then
+return
+end
+local v=m.Backpack
+for w,x in ipairs(v:GetChildren())do
+if x:IsA("Tool")and x.Name:match("Grandmaster Sprinkler")then
+local y=CFrame.new(u)
+t.EquipTool(x)
+m.SprinklerEvent:FireServer("Create",y)
+task.wait(0.1)
+t.UnequipTool()
+task.wait(0.1)
+end
+end
+end
+
+function h.ChkSprinkle(u)
+local v=t.GetMyFarm():FindFirstChild("Important")
+local w=v:FindFirstChild("Objects_Physical")
+if not w then
+return
+end
+for x,y in ipairs(w:GetChildren())do
+if y:IsA("Model")and y.Name:match(u)then
+return true
+end
+end
+return false
+end
+
+return h end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -4515,8 +4798,8 @@ local c
 local d=game:GetService("ReplicatedStorage")
 local e=d:WaitForChild("GameEvents")
 local f=e.EasterEvent.TryBuyGoldenEggRE
-local g=require(d.Modules.DataService)
-local h=require(d.Modules.EasterEvent.EasterHelper)
+local g=require(d.Modules.DataService::any)
+local h=require(d.Modules.EasterEvent.EasterHelper::any)
 local i={}
 for j=0,15 do
 local k=h:GetNextGoldenEggPrice(j)
@@ -4832,6 +5115,7 @@ e.Window.Initialize(e)
 
 e.Pets.Initialize(e)
 e.Utils.Initialize(e)
+e.EfTasks.Initialize(e)
 e.Misc.Initialize(e)
 e.Main.Initialize(e)
 e.Shop.Initialize(e)
