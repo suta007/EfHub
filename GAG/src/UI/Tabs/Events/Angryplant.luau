@@ -216,8 +216,6 @@ function Angryplant.autoPlants()
 			local parsedPos = Utils.ParseVector3(posStr)
 			if parsedPos then
 				Angryplant.autoChoco(parsedPos)
-				task.wait(5)
-				Angryplant.autoGrand(parsedPos)
 			end
 		end
 		return
@@ -266,6 +264,9 @@ function Angryplant.autoPlants()
 end
 
 function Angryplant.autoChoco(pos)
+	if Angryplant.ChkSprinkle("Chocolate Sprinkler") then
+		return
+	end
 	local backpack = sData.Backpack
 	for _, item in ipairs(backpack:GetChildren()) do
 		if item:IsA("Tool") and item.Name:match("Chocolate Sprinkler") then
@@ -274,12 +275,16 @@ function Angryplant.autoChoco(pos)
 			sData.SprinklerEvent:FireServer("Create", SprinklerPos)
 			task.wait(0.1)
 			Utils.UnequipTool()
-			task.wait(0.1)
+			task.wait(5)
+			Angryplant.autoGrand(pos)
 		end
 	end
 end
 
 function Angryplant.autoGrand(pos)
+	if Angryplant.ChkSprinkle("Grandmaster Sprinkler") then
+		return
+	end
 	local backpack = sData.Backpack
 	for _, item in ipairs(backpack:GetChildren()) do
 		if item:IsA("Tool") and item.Name:match("Grandmaster Sprinkler") then
@@ -291,6 +296,20 @@ function Angryplant.autoGrand(pos)
 			task.wait(0.1)
 		end
 	end
+end
+
+function Angryplant.ChkSprinkle(sprinkle)
+	local Farm_Important = Utils.GetMyFarm():FindFirstChild("Important")
+	local Objects_Physical = Farm_Important:FindFirstChild("Objects_Physical")
+	if not Objects_Physical then
+		return
+	end
+	for _, obj in ipairs(Objects_Physical:GetChildren()) do
+		if obj:IsA("Model") and obj.Name:match(sprinkle) then
+			return true
+		end
+	end
+	return false
 end
 
 return Angryplant
