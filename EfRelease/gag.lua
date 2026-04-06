@@ -3566,6 +3566,7 @@ local k=c.fVar
 local l=c.EfTasks
 
 
+
 f.Auto=e:AddTab({Title="Automatic",Icon="bot"})
 
 
@@ -4168,47 +4169,57 @@ end,
 end
 
 function c.autoEggHunt()
-local l=i:GetAttribute("EasterEggHuntCooldownRemaining")
-if l and l>0 then
-d.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: "..math.floor(l).." วินาที")
+local l=d.Options
+if not l.tgEgghuntEnable.Value or d.IsHuntEgg then
 return
 end
+
+local m=i:GetAttribute("EasterEggHuntCooldownRemaining")
+if m and m>0 then
+d.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: "..math.floor(m).." วินาที")
+return
+end
+d.IsHuntEgg=true
 d.IsEasterHarvesting=true
 d.Log("🚀 กำลังส่งคำสั่งเริ่ม Egg Hunt ไปที่เซิร์ฟเวอร์...")
+task.wait(1)
+
+local n,o=k.EasterEventStartEggHunt:InvokeServer()
 
 
-local m,n=k.EasterEventStartEggHunt:InvokeServer()
+if o and type(o)=="table"then
+local p=0
 
 
-if n and type(n)=="table"then
-local o=0
-
-
-for p,q in pairs(n)do
+for q,r in pairs(o)do
 
 if j:FindFirstChild("HumanoidRootPart")then
-j:PivotTo(CFrame.new(q))
+j:PivotTo(CFrame.new(r))
 
-task.wait(0.2)
+task.wait(0.5)
 end
 
 
-local r=k.CollectEasterEgg:InvokeServer(p)
+local s=k.CollectEasterEgg:InvokeServer(q)
 
-if r then
-o+=1
-d.Log("✨ เก็บไข่ใบที่ "..o.." สำเร็จ! (ID: "..tostring(p)..")")
+if s then
+p+=1
+d.Log("✨ เก็บไข่ใบที่ "..p.." สำเร็จ! (ID: "..tostring(q)..")")
+else
+task.wait(1)
+k.CollectEasterEgg:InvokeServer(q)
 end
 
 
-task.wait(0.1)
+task.wait(1)
 end
-d.Log("🎉 ฟาร์มไข่เสร็จสิ้นทั้งหมด "..o.." ฟอง!")
+d.Log("🎉 ฟาร์มไข่เสร็จสิ้นทั้งหมด "..p.." ฟอง!")
 d.Utils.ClickButton(d.Utils.GardenButton)
 task.wait(1)
 else
-d.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: "..tostring(m))
+d.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: "..tostring(n))
 end
+d.IsHuntEgg=false
 d.IsEasterHarvesting=false
 end
 
@@ -4232,13 +4243,13 @@ local l=game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
 function d.Initialize(m,n)
 e=m
 local o=e.Options
-_=o
+
 f=e.Window.QuickSave
 g=e.EfTasks
 h=n
 i=e.sData
-fVar=e.fVar
-Main=e.Main
+
+
 k=e.Utils
 
 local p=h:AddCollapsibleSection("Eastersell",false)
@@ -4275,7 +4286,9 @@ p:AddToggle("tgEasterSellEnable",{
 Title="Easter Sell Enable",
 Default=false,
 Callback=function(q)
+if d.runSell then
 d.runSell(q)
+end
 f()
 if not q then
 e.IsEasterHarvesting=false
@@ -4303,7 +4316,7 @@ end
 
 function d.HarvestCrops()
 local m=e.Options
-if not m.tgEasterHarvestEnable.Value or e.IsEasterHarvesting then
+if not m.tgEasterHarvestEnable or not m.tgEasterHarvestEnable.Value or e.IsEasterHarvesting then
 return
 end
 if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
@@ -4323,7 +4336,7 @@ else
 p=o
 end
 for q,r in ipairs(n:GetChildren())do
-if not m.tgEasterHarvestEnable.Value then
+if not m.tgEasterHarvestEnable.Value or e.IsHuntEgg then
 e.IsEasterHarvesting=false
 return
 end
@@ -4344,7 +4357,7 @@ end
 
 function d.AutoEasterSell()
 local m=e.Options
-if not m.tgEasterSellEnable.Value then
+if not m.tgEasterSellEnable or not m.tgEasterSellEnable.Value then
 return
 end
 e.IsEasterHarvesting=true
@@ -4359,7 +4372,7 @@ end
 function d.runSell(m)
 local n=e.Options
 local o=n.ipEasterSellDelay and tonumber(n.ipEasterSellDelay.Value)or 600
-local p=n.tgEasterSellFull.Value
+local p=n.tgEasterSellFull and n.tgEasterSellFull.Value or false
 local q=p and 1 or o
 g.ToggleTask("AutoEasterSell",m,function()
 if p then
@@ -4620,6 +4633,7 @@ f=e.Tabs
 
 
 e.IsEasterHarvesting=false
+e.IsHuntEgg=false
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
 
 local i=LoadEvents()
