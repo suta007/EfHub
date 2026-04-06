@@ -38,14 +38,20 @@ function Egghunt.Initialize(registry, tab)
 end
 
 function Egghunt.autoEggHunt()
+	local Options = reg.Options
+	if not Options.tgEgghuntEnable.Value or reg.IsHuntEgg then
+		return
+	end
+
 	local cooldown = LocalPlayer:GetAttribute("EasterEggHuntCooldownRemaining")
 	if cooldown and cooldown > 0 then
 		reg.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: " .. math.floor(cooldown) .. " วินาที")
 		return
 	end
+	reg.IsHuntEgg = true
 	reg.IsEasterHarvesting = true
 	reg.Log("🚀 กำลังส่งคำสั่งเริ่ม Egg Hunt ไปที่เซิร์ฟเวอร์...")
-
+	task.wait(1)
 	-- 2. ข้าม UI ไปยิง Remote เริ่มกิจกรรมตรงๆ
 	local message, eggData = EasterEvents.EasterEventStartEggHunt:InvokeServer()
 
@@ -59,7 +65,7 @@ function Egghunt.autoEggHunt()
 			if Character:FindFirstChild("HumanoidRootPart") then
 				Character:PivotTo(CFrame.new(position))
 				-- หน่วงเวลาให้ Server อัปเดตพิกัดตัวละครเราก่อนสั่งเก็บ
-				task.wait(0.2)
+				task.wait(0.5)
 			end
 
 			-- 4. ส่งคำสั่งเก็บไข่ด้วย ID กลับไปที่ Server ทันที
@@ -68,10 +74,13 @@ function Egghunt.autoEggHunt()
 			if success then
 				count += 1
 				reg.Log("✨ เก็บไข่ใบที่ " .. count .. " สำเร็จ! (ID: " .. tostring(eggId) .. ")")
+			else
+				task.wait(1)
+				EasterEvents.CollectEasterEgg:InvokeServer(eggId)
 			end
 
 			-- หน่วงเวลาเล็กน้อยป้องกันเซิร์ฟเวอร์เตะฐานยิง Remote รัวเกินไป
-			task.wait(0.1)
+			task.wait(1)
 		end
 		reg.Log("🎉 ฟาร์มไข่เสร็จสิ้นทั้งหมด " .. count .. " ฟอง!")
 		reg.Utils.ClickButton(reg.Utils.GardenButton)
@@ -79,6 +88,7 @@ function Egghunt.autoEggHunt()
 	else
 		reg.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: " .. tostring(message))
 	end
+	reg.IsHuntEgg = false
 	reg.IsEasterHarvesting = false
 end
 

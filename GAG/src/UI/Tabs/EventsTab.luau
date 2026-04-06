@@ -29,6 +29,7 @@ function EventsTab.Initialize(registry)
 	--local Options = reg.Options
 	--local QuickSave = reg.Window.QuickSave
 	reg.IsEasterHarvesting = false
+	reg.IsHuntEgg = false
 	Tabs.Events = Interface:AddTab({ Title = "Events", Icon = "calendar" })
 
 	local Events = LoadEvents()

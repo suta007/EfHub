@@ -16,13 +16,13 @@ local GameEvents = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents
 function Eastersell.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
-	_ = Options
+	--_ = Options
 	QuickSave = reg.Window.QuickSave
 	EfTasks = reg.EfTasks
 	EventsTab = tab
 	sData = reg.sData
-	fVar = reg.fVar
-	Main = reg.Main
+	--fVar = reg.fVar
+	--Main = reg.Main
 	Utils = reg.Utils
 
 	local EastersellSection = EventsTab:AddCollapsibleSection("Eastersell", false)
@@ -59,7 +59,9 @@ function Eastersell.Initialize(registry, tab)
 		Title = "Easter Sell Enable",
 		Default = false,
 		Callback = function(Value)
-			Eastersell.runSell(Value)
+			if Eastersell.runSell then
+				Eastersell.runSell(Value)
+			end
 			QuickSave()
 			if not Value then
 				reg.IsEasterHarvesting = false
@@ -87,7 +89,7 @@ end
 
 function Eastersell.HarvestCrops()
 	local Options = reg.Options
-	if not Options.tgEasterHarvestEnable.Value or reg.IsEasterHarvesting then
+	if not Options.tgEasterHarvestEnable or not Options.tgEasterHarvestEnable.Value or reg.IsEasterHarvesting then
 		return
 	end
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
@@ -107,7 +109,7 @@ function Eastersell.HarvestCrops()
 		HarvestList = easterPlantlist
 	end
 	for _, plant in ipairs(Plants_Physical:GetChildren()) do
-		if not Options.tgEasterHarvestEnable.Value then
+		if not Options.tgEasterHarvestEnable.Value or reg.IsHuntEgg then
 			reg.IsEasterHarvesting = false
 			return
 		end
@@ -128,7 +130,7 @@ end
 
 function Eastersell.AutoEasterSell()
 	local Options = reg.Options
-	if not Options.tgEasterSellEnable.Value then
+	if not Options.tgEasterSellEnable or not Options.tgEasterSellEnable.Value then
 		return
 	end
 	reg.IsEasterHarvesting = true
@@ -143,7 +145,7 @@ end
 function Eastersell.runSell(state)
 	local Options = reg.Options
 	local SellDelay = Options.ipEasterSellDelay and tonumber(Options.ipEasterSellDelay.Value) or 600
-	local SellFull = Options.tgEasterSellFull.Value
+	local SellFull = Options.tgEasterSellFull and Options.tgEasterSellFull.Value or false
 	local SellWait = SellFull and 1 or SellDelay
 	EfTasks.ToggleTask("AutoEasterSell", state, function()
 		if SellFull then

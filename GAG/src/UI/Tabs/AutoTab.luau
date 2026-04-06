@@ -10,6 +10,7 @@ function AutoTab.Initialize(registry)
 	local Auto = reg.Auto
 	local fVar = reg.fVar
 	local EfTasks = reg.EfTasks
+
 	--local Utils = reg.Utils
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
