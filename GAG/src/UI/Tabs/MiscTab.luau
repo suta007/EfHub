@@ -132,25 +132,6 @@ function MiscTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
-	SeasonPassSection:AddToggle("tgSeasonPassShop", {
-		Title = "Season Pass Shop",
-		Default = false,
-		Callback = function(Value)
-			--Misc.SeasonPassShop(Value)
-			QuickSave()
-		end,
-	})
-	SeasonPassSection:AddDropdown("ddSeasonPassBuylist", {
-		Title = "Season Pass Buylist",
-		Values = sData.SeasonPassShopTable,
-		Default = { "ALL" },
-		Multi = true,
-		Searchable = true,
-		Callback = function()
-			--Misc.SeasonPassBuylist(Value)
-			QuickSave()
-		end,
-	})
 end
 
 return MiscTab

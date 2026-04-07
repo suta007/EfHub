@@ -288,6 +288,35 @@ function ShopTab.Initialize(Registry)
 		end,
 	})
 
+	local SeasonPassSection = Tabs.Shop:AddCollapsibleSection("Season Pass", false)
+	SeasonPassSection:AddToggle("tgBuySeasonPassEnable", {
+		Title = "Buy Season Pass",
+		Default = false,
+		Callback = function(Value)
+			Shop.UpdateBuyList()
+			QuickSave()
+			if Value then
+				local GetData_result = sData.DataService:GetData()
+				local SeasonPassStocks = GetData_result.SeasonPass[sData.SeasonPassData.CurrentSeason].Stocks
+				if not Utils.IsTableEmpty(SeasonPassStocks) then
+					Shop.BuyItem(Shop.ShopKey.SeasonPass, SeasonPassStocks)
+				end
+			end
+		end,
+	})
+	SeasonPassSection:AddDropdown("ddBuySeasonPass", {
+		Title = "Season Pass",
+		Description = "Select items to buy",
+		Values = sData.SeasonPassShopTable,
+		Multi = true,
+		Default = { "ALL" },
+		Searchable = true,
+		Callback = function()
+			Shop.UpdateBuyList()
+			QuickSave()
+		end,
+	})
+
 	fVar.UIShopLoaded = true
 end
 

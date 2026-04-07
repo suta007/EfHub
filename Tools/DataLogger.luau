@@ -108,36 +108,10 @@ local function AddLog(message)
 	end
 end
 ------------------------------------------------------
--- 5. [NEW] ฟังก์ชันเสริม (Wrapper Functions) ที่พี่เอฟต้องการ
-------------------------------------------------------
-local function InfoLog(message)
-	AddLog("📋 " .. message)
-end
-
-local function WarnLog(message)
-	AddLog("⚠️ " .. message)
-end
-
-local function ErrorLog(message)
-	AddLog("❌ " .. message)
-end
-
-local function SuccessLog(message)
-	AddLog("✅ " .. message)
-end
-
-local function TimeLog(message)
-	local timestamp = os.date("%X")
-	local entry = string.format("[%s] %s", timestamp, message)
-	AddLog(entry)
-end
-------------------------------------------------------
 -- 6. Test Loop (ทดสอบดูความสวยงาม)
 ------------------------------------------------------
-InfoLog("Script initialized successfully.")
+AddLog("Script initialized successfully.")
 task.wait(0.5)
-
-
 
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
@@ -156,20 +130,10 @@ local function ShowData(tbl, indent)
 		AddLog(spacing .. tostring(tbl))
 	end
 end
--- GAG\referent\game\ReplicatedStorage\Data\SeasonPass\SeasonPassData.lua
+
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(ReplicatedStorage.Modules.DataService)
+local DataService = require(ReplicatedStorage.Modules.DataService :: any)
 local GetData_result = DataService:GetData()
---local seasonInfo = GetData_result.SeasonPass
+local SeasonPass = GetData_result.SeasonPass["Season 4"].Stocks
 
-local Data = ReplicatedStorage:WaitForChild("Data")
-local SeasonPassData = require(Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
-
-local SeasonPassUtils = require(ReplicatedStorage.Modules.SeasonPass.SeasonPassUtils)
-
---local SeasonPassStaticData = Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData")
-local currentSeason = SeasonPassData.CurrentSeason
-local seasonInfo = GetData_result.SeasonPass[currentSeason]
-
-local currentLevel = SeasonPassUtils.CalculateLevel(seasonInfo.TotalExperience)
-ShowData(currentLevel)
+ShowData(SeasonPass)

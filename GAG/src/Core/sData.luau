@@ -31,14 +31,14 @@ sData.PetsServiceEvent = sData.GameEvents:WaitForChild("PetsService")
 sData.SeedPackEvent = sData.GameEvents:WaitForChild("SeedPack")
 
 sData.ClaimSeasonPassRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
-sData.ClaimSeasonPassInfRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward") 
+sData.ClaimSeasonPassInfRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward")
+
 sData.ClaimSeasonPassQuestRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassQuest")
 sData.BuySeasonPassStockRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("BuySeasonPassStock")
 
 sData.SeasonPassData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
 sData.SeasonPassUtils = require(sData.Modules:WaitForChild("SeasonPass"):WaitForChild("SeasonPassUtils") :: any)
 sData.SeasonPassStaticData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData") :: any)
-
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)

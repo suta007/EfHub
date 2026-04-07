@@ -582,11 +582,11 @@ function Misc.SeasonPassQuests()
 
 	local currentSeason = sData.SeasonPassData.CurrentSeason
 	local seasonInfo = GetData_result.SeasonPass[currentSeason]
-	local QuestsController = require(sData.Modules.QuestsController)
 
 	-- เช็คข้อมูล Container ของเควสรายวัน
-	if GetData_result.DailyQuests and GetData_result.DailyQuests.ContainerId then
-		local container = QuestsController:GetContainerFromId(GetData_result.DailyQuests.ContainerId)
+	local ContainerId = GetData_result.DailyQuests and GetData_result.DailyQuests.ContainerId
+	if ContainerId then
+		local container = GetData_result.QuestContainers[ContainerId]
 
 		if container then
 			local allCompleted = true
@@ -596,7 +596,9 @@ function Misc.SeasonPassQuests()
 				if quest.Completed then
 					local isClaimed = table.find(seasonInfo.QuestsClaimed, quest.Id)
 					if not isClaimed then
+						reg.Log("Claiming Season Pass Quest: " .. tostring(quest.Id))
 						sData.ClaimSeasonPassQuestRemote:FireServer(quest.Id)
+						task.wait(0.5)
 					end
 				else
 					allCompleted = false
@@ -628,13 +630,17 @@ function Misc.SeasonPassRewards()
 		-- เช็คการรับรางวัลฝั่งฟรี
 		local claimedFree = table.find(seasonInfo.ClaimedLevelFreeRewards, tier)
 		if not claimedFree then
+			reg.Log("Claiming Season Pass Reward: " .. tostring(tier))
 			sData.ClaimSeasonPassRewardRemote:FireServer(tier, false)
+			task.wait(0.3)
 		end
 
 		-- เช็คการรับรางวัลฝั่งพรีเมียม (ตรวจสอบด้วยว่ามีสถานะพรีเมียมหรือไม่)
 		local claimedPremium = table.find(seasonInfo.ClaimedLevelPremiumRewards, tier)
 		if seasonInfo.IsPremium and not claimedPremium then
+			reg.Log("Claiming Premium Season Pass Reward: " .. tostring(tier))
 			sData.ClaimSeasonPassRewardRemote:FireServer(tier, true)
+			task.wait(0.3)
 		end
 	end
 
@@ -654,10 +660,11 @@ function Misc.SeasonPassRewards()
 		if totalInfEarned > totalInfClaimed then
 			local claimsToMake = totalInfEarned - totalInfClaimed
 			for i = 1, claimsToMake do
+				reg.Log("Claiming Season Pass Point : " .. tostring(i))
 				sData.ClaimSeasonPassInfRewardRemote:FireServer()
 				task.wait(0.3) -- ดีเลย์เล็กน้อยกันการส่งข้อมูลถี่เกินไป
 			end
-			reg.Log("✨ รับ Infinite Rewards สำเร็จ: " .. tostring(claimsToMake) .. " กล่อง")
+			--reg.Log("✨ รับ Infinite Rewards สำเร็จ: " .. tostring(claimsToMake) .. " กล่อง")
 		end
 	end
 end

@@ -3,21 +3,25 @@ local reg
 local BuyList = {}
 local sData
 local GetSelectedItems
-Shop.ShopKey = {
-	Seed = "SeedStocks/Shop/Stocks",
-	Daily = "SeedStocks/Daily Deals/Stocks",
-	Gear = "GearStock/Stocks",
-	Egg = "PetEggStock/Stocks",
-	Traveling = "TravelingMerchantShopStock/Stocks",
-	--Santa = "EventShopStock/Santa's Stash/Stocks",
-	--NewYear = "EventShopStock/New Years Shop/Stocks",
-	Easter = "EventShopStock/Easter Seed Shop/Stocks",
-}
+Shop.ShopKey = {}
 --local AutoBuyConnections = {}
 function Shop.Initialize(Registry)
 	reg = Registry
 	sData = reg.sData
 	GetSelectedItems = reg.Utils.GetSelectedItems
+
+	local CurrentSeason = sData.SeasonPassData.CurrentSeason or "Season 4"
+	Shop.ShopKey = {
+		Seed = "SeedStocks/Shop/Stocks",
+		Daily = "SeedStocks/Daily Deals/Stocks",
+		Gear = "GearStock/Stocks",
+		Egg = "PetEggStock/Stocks",
+		Traveling = "TravelingMerchantShopStock/Stocks",
+		--Santa = "EventShopStock/Santa's Stash/Stocks",
+		--NewYear = "EventShopStock/New Years Shop/Stocks",
+		Easter = "EventShopStock/Easter Seed Shop/Stocks",
+		SeasonPass = "SeasonPass/" .. CurrentSeason .. "/Stocks",
+	}
 
 	--table.clear(AutoBuyConnections)
 	for _, BasePath in pairs(Shop.ShopKey) do
@@ -106,8 +110,28 @@ function Shop.UpdateBuyList()
 			ArgType = "EventMode",
 			EventArg = "Easter Seed Shop",
 		},
+		[Shop.ShopKey.SeasonPass] = {
+			Enabled = Options.tgBuySeasonPassEnable.Value,
+			Items = GetSelectedItems(Options.ddBuySeasonPass.Value),
+			RemoteName = "SeasonPass.BuySeasonPassStock",
+			ArgType = "NormalMode",
+		},
 	}
 end
+
+local function FindObjectFromPath(parent, path)
+	local currentObject = parent
+	-- หั่นข้อความด้วยจุด แล้ววนลูปหาทีละชั้น
+	for _, name in ipairs(string.split(path, ".")) do
+		if currentObject then
+			currentObject = currentObject:FindFirstChild(name)
+		else
+			return nil -- ถ้าหาโฟลเดอร์ระหว่างทางไม่เจอ ให้ตัดจบส่ง nil กลับไปเลย
+		end
+	end
+	return currentObject
+end
+
 local RemoteCache = {}
 
 function Shop.BuyItem(ShopKey, StockData)
@@ -117,7 +141,8 @@ function Shop.BuyItem(ShopKey, StockData)
 	end
 	local Remote = RemoteCache[Setting.RemoteName]
 	if not Remote then
-		Remote = sData.GameEvents:FindFirstChild(Setting.RemoteName)
+		--Remote = sData.GameEvents:FindFirstChild(Setting.RemoteName)
+		Remote = FindObjectFromPath(sData.GameEvents, Setting.RemoteName)
 		if Remote then
 			RemoteCache[Setting.RemoteName] = Remote
 		end
