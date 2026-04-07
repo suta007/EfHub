@@ -242,8 +242,10 @@ function Angryplant.chkGarden()
 				if Prompt and Prompt.Enabled then
 					gardenPass = true
 					targetFruit = fruit
-					break
+				else
+					task.wait(10)
 				end
+				break
 			end
 		end
 		if gardenPass then
