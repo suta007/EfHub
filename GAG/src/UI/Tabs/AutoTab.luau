@@ -426,23 +426,6 @@ function AutoTab.Initialize(registry)
 	})
 
 	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
-	--[[
-	OpenPackSection:AddToggle("tgOpenPackAnimation", {
-		Title = "Disable Animation",
-		Default = false,
-		Callback = function(Value)
-			if Value then
-				pcall(function()
-					Auto.disablePackAnimations()
-				end)
-			else
-				pcall(function()
-					Auto.enablePackAnimations()
-				end)
-			end
-			--QuickSave()
-		end,
-	}) ]]
 
 	Options.tgOpenPackAnimation:SetValue(false)
 	-- toggle enable
@@ -461,7 +444,7 @@ function AutoTab.Initialize(registry)
 		end,
 	})
 	-- dropdown select seed pack
-	OpenPackSection:AddDropdown("ddOpenPackSelect", {
+	OpenPackSection:AddDropdown("ddOpenPack", {
 		Title = "Select Seed Pack",
 		Values = sData.SeedPackTable,
 		Default = { "ALL" },

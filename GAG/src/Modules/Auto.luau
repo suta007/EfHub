@@ -362,7 +362,7 @@ function Auto.OpenSeedPack()
 		return
 	end
 	local getSelectedItems = Utils.GetSelectedItems
-	local seedPacks = getSelectedItems(Options.ddOpenPackSelect.Value)
+	local seedPacks = getSelectedItems(Options.ddOpenPack.Value)
 	if #seedPacks == 0 then
 		reg.Log("🟡 No Seed Pack Selected")
 		return
