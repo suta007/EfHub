@@ -39,6 +39,8 @@ local questPos = CFrame.new(-100.68, 7.91, -9.52) ---100.68,7.91,-9.52
 local chkName, chkWeight, chkMutation, chkVariant, chkNextQuest
 local Utils
 
+local GameEvents = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
+
 function Angryplant.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
@@ -199,18 +201,52 @@ function Angryplant.autoAngryplant()
 		end
 	end
 	if not angryPass then
-		if Options.tgAngryPlants.Value then
-			if chkMutation == "Choc" then
-				if Angryplant.ChkBackpack("Chocolate Sprinkler") then
-					Angryplant.autoPlants()
-				end
-			else
-				Angryplant.autoPlants()
-			end
-		end
+		task.spawn(function()
+			Angryplant.chkGarden()
+		end)
 	end
 	reg.IsHuntEgg = false
 	reg.IsEasterHarvesting = false
+end
+
+function Angryplant.chkGarden()
+	local Options = reg.Options
+	local gardenPass = false
+	local Plants_Physical = Utils.GetPlantsFolder()
+	local targetFruit = nil
+	for _, plant in ipairs(Plants_Physical:GetChildren()) do
+		local FruitsContainer = plant:FindFirstChild("Fruits")
+		local Fruits = FruitsContainer and FruitsContainer:GetChildren() or { plant }
+
+		for _, fruit in ipairs(Fruits) do
+			if fruit:IsA("Model") and CheckQuest(fruit) then
+				gardenPass = true
+				targetFruit = fruit
+				break
+			end
+		end
+		if gardenPass then
+			GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ targetFruit })
+			task.wait(1)
+			task.spawn(function()
+				Angryplant.autoAngryplant()
+			end)
+		else
+			if Options.tgAngryPlants.Value then
+				if chkMutation == "Choc" then
+					if Angryplant.ChkBackpack("Chocolate Sprinkler") then
+						task.spawn(function()
+							Angryplant.autoPlants()
+						end)
+					end
+				else
+					task.spawn(function()
+						Angryplant.autoPlants()
+					end)
+				end
+			end
+		end
+	end
 end
 
 function Angryplant.autoPlants()
@@ -224,25 +260,6 @@ function Angryplant.autoPlants()
 				Angryplant.autoChoco(parsedPos)
 			end
 		end
-		return
-	end
-	local gardenPass = false
-	local Plants_Physical = Utils.GetPlantsFolder()
-	for _, plant in ipairs(Plants_Physical:GetChildren()) do
-		local FruitsContainer = plant:FindFirstChild("Fruits")
-		local Fruits = FruitsContainer and FruitsContainer:GetChildren() or { plant }
-
-		for _, fruit in ipairs(Fruits) do
-			if fruit:IsA("Model") and CheckQuest(fruit) then
-				gardenPass = true
-				break
-			end
-		end
-		if gardenPass then
-			break
-		end
-	end
-	if gardenPass then
 		return
 	end
 
