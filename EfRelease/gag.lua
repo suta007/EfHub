@@ -28,6 +28,17 @@ b.ReclaimerEvent=b.GameEvents:WaitForChild("ReclaimerService_RE")
 b.SprinklerEvent=b.GameEvents:WaitForChild("SprinklerService")
 b.RefreshActivePetsUI=b.GameEvents:WaitForChild("RefreshActivePetsUI")
 b.PetsServiceEvent=b.GameEvents:WaitForChild("PetsService")
+b.SeedPackEvent=b.GameEvents:WaitForChild("SeedPack")
+
+b.ClaimSeasonPassRewardRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
+b.ClaimSeasonPassInfRewardRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward")
+
+b.ClaimSeasonPassQuestRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassQuest")
+b.BuySeasonPassStockRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("BuySeasonPassStock")
+
+b.SeasonPassData=require(b.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData")::any)
+b.SeasonPassUtils=require(b.Modules:WaitForChild("SeasonPass"):WaitForChild("SeasonPassUtils")::any)
+b.SeasonPassStaticData=require(b.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData")::any)
 
 b.PetServices=b.Modules:WaitForChild("PetServices")::any
 b.ActivePetsService=require(b.PetServices.ActivePetsService)
@@ -140,6 +151,24 @@ for m,n in pairs(l["Easter Seed Shop"])do
 table.insert(b.EasterShopTable,m)
 end
 
+local m=require(b.Data:WaitForChild("SeedPackData")::any)
+b.SeedPackTable={"ALL"}
+for n,o in pairs(m.Packs)do
+if o.DisplayName then
+table.insert(b.SeedPackTable,o.DisplayName)
+end
+end
+
+
+
+local n=b.SeasonPassData.ShopItems
+b.SeasonPassShopTable={"ALL"}
+b.SeasonPassPriceTable={}
+for o,p in pairs(n)do
+table.insert(b.SeasonPassShopTable,o)
+b.SeasonPassPriceTable[o]=p.Price
+end
+
 return b end function a.a():typeof(__modImpl())local b=a.cache.a if not b then b={c=__modImpl()}a.cache.a=b end return b.c end end do local function __modImpl()
 
 local b={}
@@ -162,6 +191,8 @@ b.IsMutating=false
 b.IsFeeding=false
 
 b.UIShopLoaded=false
+
+b.IsOpeningSeedPack=false
 
 b.CheckLevelConnection=nil
 b.CheckLevelConnection2=nil
@@ -772,6 +803,14 @@ local c
 local d={}
 local e
 local f
+b.ShopKey={}
+
+function b.Initialize(g)
+c=g
+e=c.sData
+f=c.Utils.GetSelectedItems
+
+local h=e.SeasonPassData.CurrentSeason or"Season 4"
 b.ShopKey={
 Seed="SeedStocks/Shop/Stocks",
 Daily="SeedStocks/Daily Deals/Stocks",
@@ -781,22 +820,18 @@ Traveling="TravelingMerchantShopStock/Stocks",
 
 
 Easter="EventShopStock/Easter Seed Shop/Stocks",
+SeasonPass="SeasonPass/"..h.."/Stocks",
 }
 
-function b.Initialize(g)
-c=g
-e=c.sData
-f=c.Utils.GetSelectedItems
 
+for i,j in pairs(b.ShopKey)do
+local k=e.DataService:GetPathSignal(j.."/@")
 
-for h,i in pairs(b.ShopKey)do
-local j=e.DataService:GetPathSignal(i.."/@")
-
-j:Connect(function(k,l)
-if type(l)=="table"then
+k:Connect(function(l,m)
+if type(m)=="table"then
 task.spawn(function()
 task.wait(0.5)
-b.BuyItem(i,l)
+b.BuyItem(j,m)
 end)
 end
 end)
@@ -875,8 +910,28 @@ RemoteName="BuyEventShopStock",
 ArgType="EventMode",
 EventArg="Easter Seed Shop",
 },
+[b.ShopKey.SeasonPass]={
+Enabled=g.tgBuySeasonPassEnable.Value,
+Items=f(g.ddBuySeasonPass.Value),
+RemoteName="SeasonPass.BuySeasonPassStock",
+ArgType="NormalMode",
+},
 }
 end
+
+local function FindObjectFromPath(g,h)
+local i=g
+
+for j,k in ipairs(string.split(h,"."))do
+if i then
+i=i:FindFirstChild(k)
+else
+return nil
+end
+end
+return i
+end
+
 local g={}
 
 function b.BuyItem(h,i)
@@ -886,7 +941,8 @@ return
 end
 local k=g[j.RemoteName]
 if not k then
-k=e.GameEvents:FindFirstChild(j.RemoteName)
+
+k=FindObjectFromPath(e.GameEvents,j.RemoteName)
 if k then
 g[j.RemoteName]=k
 end
@@ -1277,7 +1333,48 @@ task.wait(0.5)
 end)
 end
 
-function b.OpenPack()end
+function b.OpenSeedPack()
+local g=c.Options
+if not g.tgOpenPackEnable.Value or d.IsOpeningSeedPack then
+return
+end
+local h=f.GetSelectedItems
+local i=h(g.ddOpenPack.Value)
+if#i==0 then
+c.Log("🟡 No Seed Pack Selected")
+return
+end
+local j={}
+if table.find(i,"ALL")then
+j=e.SeedPackTable
+else
+j=i
+end
+f.RunWithFlag("IsOpeningSeedPack","OpenSeedPack",function()
+local k=e.Backpack
+
+for l,m in ipairs(k:GetChildren())do
+if not g.tgOpenPackEnable.Value then
+return
+end
+local n=tonumber(g.ipOpenPackDelay.Value)or 0
+local o=m:GetAttribute("n")
+if m:IsA("Tool")and table.find(j,o)then
+local p=tonumber(m:GetAttribute("e"))or 0
+for q=1,p do
+e.SeedPackEvent.Open:FireServer(o)
+task.wait(n)
+end
+end
+end
+
+if g.tgOpenPackEnable.Value then
+g.tgOpenPackEnable:SetValue(false)
+task.wait(0.5)
+end
+task.wait(0.5)
+end)
+end
 
 return b end function a.g():typeof(__modImpl())local b=a.cache.g if not b then b={c=__modImpl()}a.cache.g=b end return b.c end end do local function __modImpl()
 
@@ -2208,13 +2305,21 @@ end
 
 
 local function IsFruit(y)
-if typeof(y)~="Instance"then return false end
-if y:HasTag("Harvestable")or y:HasTag("FruitTool")then return true end
+if typeof(y)~="Instance"then
+return false
+end
+if y:HasTag("Harvestable")or y:HasTag("FruitTool")then
+return true
+end
 local z=y:FindFirstAncestorWhichIsA("Model")or y:FindFirstAncestorWhichIsA("Tool")
-if z and(z:HasTag("Harvestable")or z:HasTag("FruitTool"))then return true end
+if z and(z:HasTag("Harvestable")or z:HasTag("FruitTool"))then
+return true
+end
 local A=y
 while A and A~=workspace do
-if A.Name=="Fruits"then return true end
+if A.Name=="Fruits"then
+return true
+end
 A=A.Parent
 end
 return false
@@ -2236,25 +2341,39 @@ else
 local A=y:GetAttribute("OriginalCanCollide")
 local B=y:GetAttribute("OriginalCanTouch")
 local C=y:GetAttribute("OriginalCanQuery")
-if A~=nil then y.CanCollide=A end
-if B~=nil then y.CanTouch=B end
-if C~=nil then y.CanQuery=C end
+if A~=nil then
+y.CanCollide=A
+end
+if B~=nil then
+y.CanTouch=B
+end
+if C~=nil then
+y.CanQuery=C
+end
 end
 elseif y:IsA("Decal")or y:IsA("Texture")then
 if z then
-if not y:GetAttribute("OriginalTrans")then y:SetAttribute("OriginalTrans",y.Transparency)end
+if not y:GetAttribute("OriginalTrans")then
+y:SetAttribute("OriginalTrans",y.Transparency)
+end
 y.Transparency=1
 else
 local A=y:GetAttribute("OriginalTrans")
-if A then y.Transparency=A end
+if A then
+y.Transparency=A
+end
 end
 elseif y:IsA("ParticleEmitter")or y:IsA("Sparkles")or y:IsA("Fire")or y:IsA("Trail")then
 if z then
-if y:GetAttribute("OriginalEnabled")==nil then y:SetAttribute("OriginalEnabled",y.Enabled)end
+if y:GetAttribute("OriginalEnabled")==nil then
+y:SetAttribute("OriginalEnabled",y.Enabled)
+end
 y.Enabled=false
 else
 local A=y:GetAttribute("OriginalEnabled")
-if A~=nil then y.Enabled=A end
+if A~=nil then
+y.Enabled=A
+end
 end
 end
 end
@@ -2284,7 +2403,9 @@ j.Terrain.WaterReflectance=0
 j.Terrain.WaterTransparency=1
 
 for y,z in ipairs(workspace:GetDescendants())do
-if y%200==0 then task.wait()end
+if y%200==0 then
+task.wait()
+end
 if z:IsA("BasePart")then
 z.Material=Enum.Material.SmoothPlastic
 z.Reflectance=0
@@ -2294,13 +2415,17 @@ elseif z:IsA("Decal")or z:IsA("Texture")then
 z.Transparency=1
 end
 end
-pcall(function()settings().Rendering.QualityLevel=Enum.QualityLevel.Level01 end)
+pcall(function()
+settings().Rendering.QualityLevel=Enum.QualityLevel.Level01
+end)
 end
 
 function h.HidePlant(y)
 l.IsPlantHidden=y
 local z=k.GetPlantsFolder()
-if not z then return end
+if not z then
+return
+end
 
 for A,B in ipairs(z:GetDescendants())do
 if not IsFruit(B)then
@@ -2313,7 +2438,9 @@ end
 function h.HideFruit(y)
 l.IsFruitHidden=y
 local z=k.GetPlantsFolder()
-if not z then return end
+if not z then
+return
+end
 
 for A,B in ipairs(z:GetDescendants())do
 if IsFruit(B)then
@@ -2336,15 +2463,23 @@ local E=k.GetPlantsFolder()
 if E and not m then
 m=E.DescendantAdded:Connect(function(F)
 task.wait(0.1)
-if not F or not F.Parent then return end
-if not(F:IsA("BasePart")or F:IsA("Model")or F:IsA("Decal")or F:IsA("Texture")or F:IsA("MeshPart"))then return end
+if not F or not F.Parent then
+return
+end
+if not(F:IsA("BasePart")or F:IsA("Model")or F:IsA("Decal")or F:IsA("Texture")or F:IsA("MeshPart"))then
+return
+end
 
 local G=IsFruit(F)
 if z then
 if G then
-if l.IsFruitHidden then SetVisibility(F,true)end
+if l.IsFruitHidden then
+SetVisibility(F,true)
+end
 else
-if l.IsPlantHidden then SetVisibility(F,true)end
+if l.IsPlantHidden then
+SetVisibility(F,true)
+end
 end
 end
 
@@ -2366,7 +2501,9 @@ end
 end
 
 function h.CreatESP(y,z,A,B,C,D)
-if not(y and z and B)then return end
+if not(y and z and B)then
+return
+end
 local E=D or 0
 if p[A]then
 p[A]:Destroy()
@@ -2422,21 +2559,30 @@ J.Font=Enum.Font.FredokaOne
 J.TextColor3=Color3.fromRGB(200,200,200)
 end
 
-if E==3 then I.TextColor3=Color3.fromRGB(200,200,10)
-elseif E==2 then I.TextColor3=Color3.fromRGB(200,50,10)
-elseif E==1 then I.TextColor3=Color3.fromRGB(10,200,10)
-else I.TextColor3=Color3.fromRGB(200,200,200)end
+if E==3 then
+I.TextColor3=Color3.fromRGB(200,200,10)
+elseif E==2 then
+I.TextColor3=Color3.fromRGB(200,50,10)
+elseif E==1 then
+I.TextColor3=Color3.fromRGB(10,200,10)
+else
+I.TextColor3=Color3.fromRGB(200,200,200)
+end
 
 p[A]=G
 end
 
 function h.SetEspCrop(y)
 local z=i.Options
-if not z.tgEspCrops.Value then return end
+if not z.tgEspCrops.Value then
+return
+end
 
 local A=s and s()or q
 local B=A:FindFirstChild(o)
-if not B then return end
+if not B then
+return
+end
 
 local C=y.Name
 local D=y:FindFirstChild("Weight")and y:FindFirstChild("Weight").Value or 0
@@ -2449,24 +2595,36 @@ local I=GetFormattedMutations(y)
 
 local J=y:GetAttribute("WeightMulti")or 0
 local K=0
-if J>=30 then K=3
-elseif J>=20 then K=2
-elseif J>=10 then K=1 end
+if J>=30 then
+K=3
+elseif J>=20 then
+K=2
+elseif J>=10 then
+K=1
+end
 
 h.CreatESP(B,y,F,H,I,K)
 end
 
 function h.SetEspPlant(y)
 local z=i.Options
-if not(z and z.tgEspPlants and z.tgEspPlants.Value)then return end
-if not(y and y:IsA("Model"))then return end
+if not(z and z.tgEspPlants and z.tgEspPlants.Value)then
+return
+end
+if not(y and y:IsA("Model"))then
+return
+end
 
 local A=t(z.ddEspPlants.Value)
-if not table.find(A,y.Name)then return end
+if not table.find(A,y.Name)then
+return
+end
 
 local B=s and s()or q
 local C=B:FindFirstChild(n)
-if not C then return end
+if not C then
+return
+end
 
 local D=y.Name
 local E=y:FindFirstChild("Weight")and y:FindFirstChild("Weight").Value or 0
@@ -2480,14 +2638,18 @@ function h.EspCrops(y)
 local z=i.Options
 local A=s and s()or q
 local B=A:FindFirstChild(o)
-if B then B:Destroy()end
+if B then
+B:Destroy()
+end
 if y~=true then
 h.UpdatePlantTracker()
 return
 end
 
 local C=t(z.ddEspCrops.Value)
-if table.find(C,"NONE")then return end
+if table.find(C,"NONE")then
+return
+end
 
 local D=Instance.new("Folder")
 D.Name=o
@@ -2512,7 +2674,9 @@ function h.EspPlants(y)
 local z=i.Options
 local A=s and s()or q
 local B=A:FindFirstChild(n)
-if B then B:Destroy()end
+if B then
+B:Destroy()
+end
 if y~=true then
 h.UpdatePlantTracker()
 return
@@ -2543,6 +2707,108 @@ function h.HideTracker()
 h.UpdatePlantTracker()
 end
 
+function h.SeasonPassShop()
+local y=i.Options
+if not y.tgSeasonPassShop or not y.tgSeasonPassShop.Value then
+return
+end
+end
+
+function h.SeasonPassQuests()
+local y=i.Options
+if not y.tgSeasonPassQuests or not y.tgSeasonPassQuests.Value then
+return
+end
+local z=j.DataService:GetData()
+
+local A=j.SeasonPassData.CurrentSeason
+local B=z.SeasonPass[A]
+
+
+local C=z.DailyQuests and z.DailyQuests.ContainerId
+if C then
+local D=z.QuestContainers[C]
+
+if D then
+local E=true
+
+for F,G in pairs(D.Quests)do
+
+if G.Completed then
+local H=table.find(B.QuestsClaimed,G.Id)
+if not H then
+i.Log("Claiming Season Pass Quest: "..tostring(G.Id))
+j.ClaimSeasonPassQuestRemote:FireServer(G.Id)
+task.wait(0.5)
+end
+else
+E=false
+end
+end
+
+
+if E and not B.QuestRewardClaimed then
+j.SeedPackEvent.Open:FireServer("Season Pass Quests")
+end
+end
+end
+end
+
+function h.SeasonPassRewards()
+local y=i.Options
+if not y.tgSeasonPassRewards or not y.tgSeasonPassRewards.Value then
+return
+end
+local z=j.DataService:GetData()
+
+local A=j.SeasonPassData.CurrentSeason
+local B=z.SeasonPass[A]
+local C=j.SeasonPassUtils.CalculateLevel(B.TotalExperience)
+local D=j.SeasonPassStaticData.MAX_LEVEL or 50
+
+local E=math.min(C,D)
+for F=1,E do
+
+local G=table.find(B.ClaimedLevelFreeRewards,F)
+if not G then
+i.Log("Claiming Season Pass Reward: "..tostring(F))
+j.ClaimSeasonPassRewardRemote:FireServer(F,false)
+task.wait(0.3)
+end
+
+
+local H=table.find(B.ClaimedLevelPremiumRewards,F)
+if B.IsPremium and not H then
+i.Log("Claiming Premium Season Pass Reward: "..tostring(F))
+j.ClaimSeasonPassRewardRemote:FireServer(F,true)
+task.wait(0.3)
+end
+end
+
+if C>=D then
+
+local F=j.SeasonPassUtils.CalculateXPForLevel(D)
+local G=B.TotalExperience-F
+
+
+
+local H=j.SeasonPassStaticData.INF_REWARD_XP or 10000
+
+local I=math.floor(G/H)
+local J=B.InfiniteRewardsClaimed or 0
+
+
+if I>J then
+local K=I-J
+for L=1,K do
+i.Log("Claiming Season Pass Point : "..tostring(L))
+j.ClaimSeasonPassInfRewardRemote:FireServer()
+task.wait(0.3)
+end
+
+end
+end
+end
 return h end function a.i():typeof(__modImpl())local b=a.cache.i if not b then b={c=__modImpl()}a.cache.i=b end return b.c end end do local function __modImpl()
 
 
@@ -2566,7 +2832,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.07-10.00",
+SubTitle="2569.04.07-23.00",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -3334,6 +3600,35 @@ h()
 end,
 })
 
+local s=f.Shop:AddCollapsibleSection("Season Pass",false)
+s:AddToggle("tgBuySeasonPassEnable",{
+Title="Buy Season Pass",
+Default=false,
+Callback=function(t)
+j.UpdateBuyList()
+h()
+if t then
+local u=i.DataService:GetData()
+local v=u.SeasonPass[i.SeasonPassData.CurrentSeason].Stocks
+if not l.IsTableEmpty(v)then
+j.BuyItem(j.ShopKey.SeasonPass,v)
+end
+end
+end,
+})
+s:AddDropdown("ddBuySeasonPass",{
+Title="Season Pass",
+Description="Select items to buy",
+Values=i.SeasonPassShopTable,
+Multi=true,
+Default={"ALL"},
+Searchable=true,
+Callback=function()
+j.UpdateBuyList()
+h()
+end,
+})
+
 k.UIShopLoaded=true
 end
 
@@ -4049,51 +4344,44 @@ end
 end,
 })
 
+local r=f.Auto:AddCollapsibleSection("Open Pack",false)
 
 
+r:AddToggle("tgOpenPackEnable",{
+Title="Auto Open Pack",
+Default=false,
+Callback=function(s)
+if s then
+task.spawn(function()
+pcall(j.OpenSeedPack)
+end)
+else
+k.IsOpeningPack=false
+end
+h()
+end,
+})
 
+r:AddDropdown("ddOpenPack",{
+Title="Select Seed Pack",
+Values=i.SeedPackTable,
+Default={"ALL"},
+Multi=true,
+Searchable=true,
+Callback=function()
+h()
+end,
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+r:AddInput("ipOpenPackDelay",{
+Title="Delay",
+Default=10,
+Numeric=true,
+Finished=true,
+Callback=function()
+h()
+end,
+})
 end
 
 return b end function a.n():typeof(__modImpl())local b=a.cache.n if not b then b={c=__modImpl()}a.cache.n=b end return b.c end end do local function __modImpl()
@@ -4109,62 +4397,63 @@ local g=d.Tabs
 local h=d.Window.QuickSave
 local i=d.Misc
 local j=d.sData
+local k=c.EfTasks
 
 g.MiscTab=f:AddTab({Title="Misc",Icon="flower"})
-local k=g.MiscTab:AddCollapsibleSection("Misc",false)
-k:AddButton({
+local l=g.MiscTab:AddCollapsibleSection("Misc",false)
+l:AddButton({
 Title="Reset Control Var",
 Callback=function()
 
 end,
 })
 
-local l=g.MiscTab:AddCollapsibleSection("AntiLag",false)
-l:AddToggle("tgAntiLag",{
+local m=g.MiscTab:AddCollapsibleSection("AntiLag",false)
+m:AddToggle("tgAntiLag",{
 Title="AntiLag",
 Default=false,
-Callback=function(m)
-if m then
+Callback=function(n)
+if n then
 i.AntiLag()
 end
 h()
 end,
 })
 
-l:AddToggle("tgHideFruits",{
+m:AddToggle("tgHideFruits",{
 Title="Hide Fruits",
 Default=false,
-Callback=function(m)
-i.HideFruit(m)
+Callback=function(n)
+i.HideFruit(n)
 h()
 end,
 })
 
-l:AddToggle("tgHidePlants",{
+m:AddToggle("tgHidePlants",{
 Title="Hide Plants",
 Default=false,
-Callback=function(m)
-i.HidePlant(m)
+Callback=function(n)
+i.HidePlant(n)
 h()
 end,
 })
 
-local m=g.MiscTab:AddCollapsibleSection("Esp",false)
-m:AddToggle("tgEspCrops",{
+local n=g.MiscTab:AddCollapsibleSection("Esp",false)
+n:AddToggle("tgEspCrops",{
 Title="Esp Crops",
 Default=false,
-Callback=function(n)
-i.EspCrops(n)
+Callback=function(o)
+i.EspCrops(o)
 h()
 end,
 })
-m:AddButton({
+n:AddButton({
 Title="Clear Selected Crops",
 Callback=function()
 e.ddEspCrops:SetValue({NONE=true})
 end,
 })
-m:AddDropdown("ddEspCrops",{
+n:AddDropdown("ddEspCrops",{
 Title="Select Crops",
 Values=j.SeedDataBlackTable,
 Default={"NONE"},
@@ -4174,17 +4463,17 @@ Callback=function()
 h()
 end,
 })
-m:AddDivider()
+n:AddDivider()
 
-m:AddToggle("tgEspPlants",{
+n:AddToggle("tgEspPlants",{
 Title="Esp Plants",
 Default=false,
-Callback=function(n)
-i.EspPlants(n)
+Callback=function(o)
+i.EspPlants(o)
 h()
 end,
 })
-m:AddButton({
+n:AddButton({
 Title="Clear Selected Plants",
 Callback=function()
 e.ddEspPlants:SetValue({NONE=true})
@@ -4194,7 +4483,7 @@ end
 h()
 end,
 })
-m:AddDropdown("ddEspPlants",{
+n:AddDropdown("ddEspPlants",{
 Title="Select Plants",
 Values=j.SeedDataBlackTable,
 Default={"NONE"},
@@ -4204,6 +4493,30 @@ Callback=function()
 if e.tgEspPlants.Value then
 i.EspPlants(true)
 end
+h()
+end,
+})
+
+local o=g.MiscTab:AddCollapsibleSection("Season Pass",false)
+o:AddToggle("tgSeasonPassQuests",{
+Title="Season Pass Quests",
+Default=false,
+Callback=function(p)
+k.ToggleTask("AutoSeasonPassQuests",p,function()
+i.SeasonPassQuests()
+task.wait(60)
+end)
+h()
+end,
+})
+o:AddToggle("tgSeasonPassRewards",{
+Title="Season Pass Rewards",
+Default=false,
+Callback=function(p)
+k.ToggleTask("AutoSeasonPassRewards",p,function()
+i.SeasonPassRewards()
+task.wait(60)
+end)
 h()
 end,
 })
@@ -4689,7 +5002,9 @@ i.sData.Character:PivotTo(n)
 task.wait(0.5)
 i.Utils.EquipTool(A)
 local B=A:FindFirstChild("Item_String")and A:FindFirstChild("Item_String").Value
-i.Log("Submit "..B)
+if B then
+i.Log("Submit "..tostring(B))
+end
 task.wait(0.5)
 e:FireServer("SubmitHeldPlant")
 task.wait(0.5)
