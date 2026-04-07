@@ -191,6 +191,9 @@ function Angryplant.autoAngryplant()
 		task.wait(1.5)
 		reg.Utils.ClickButton(reg.Utils.GardenButton)
 		task.wait(1)
+		reg.IsHuntEgg = false
+		reg.IsEasterHarvesting = false
+		return
 	end
 
 	reg.IsHuntEgg = true
