@@ -427,7 +427,6 @@ function AutoTab.Initialize(registry)
 
 	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
 
-	Options.tgOpenPackAnimation:SetValue(false)
 	-- toggle enable
 	OpenPackSection:AddToggle("tgOpenPackEnable", {
 		Title = "Auto Open Pack",
