@@ -113,7 +113,7 @@ function MiscTab.Initialize(Registry)
 		Title = "Season Pass Quests",
 		Default = false,
 		Callback = function(Value)
-			Misc.SeasonPassQuests(Value)
+			--Misc.SeasonPassQuests(Value)
 			QuickSave()
 		end,
 	})
@@ -129,7 +129,7 @@ function MiscTab.Initialize(Registry)
 		Title = "Season Pass Shop",
 		Default = false,
 		Callback = function(Value)
-			Misc.SeasonPassShop(Value)
+			--Misc.SeasonPassShop(Value)
 			QuickSave()
 		end,
 	})

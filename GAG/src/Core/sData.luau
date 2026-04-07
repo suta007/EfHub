@@ -37,6 +37,8 @@ sData.BuySeasonPassStockRemote = sData.GameEvents:WaitForChild("SeasonPass"):Wai
 
 sData.SeasonPassData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
 sData.SeasonPassUtils = require(sData.Modules:WaitForChild("SeasonPass"):WaitForChild("SeasonPassUtils") :: any)
+sData.SeasonPassStaticData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData") :: any)
+
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
