@@ -178,6 +178,21 @@ function Angryplant.autoAngryplant()
 	if not Options.tgAngryplantEnable.Value or reg.IsHuntEgg then
 		return
 	end
+
+	local data = DataService:GetData().EasterEventData
+	if data.Progression > #ProgressionTable then
+		reg.Log("Auto Claim: Exotic Seed Pack ready!")
+		reg.IsHuntEgg = true
+		task.wait(1)
+		reg.IsEasterHarvesting = true
+		reg.sData.Character:PivotTo(questPos)
+		task.wait(0.5)
+		SeedEvent:FireServer("ClaimPremiumPack")
+		task.wait(1.5)
+		reg.Utils.ClickButton(reg.Utils.GardenButton)
+		task.wait(1)
+	end
+
 	reg.IsHuntEgg = true
 	task.wait(1)
 	reg.IsEasterHarvesting = true
