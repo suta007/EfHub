@@ -541,7 +541,7 @@ function Misc.SeasonPassRewards()
         
         -- ดึงค่า XP ที่ต้องใช้ต่อ 1 Infinite Reward
         -- (พี่เอฟลองเช็คชื่อตัวแปร InfRewardXP ใน SeasonPassStaticData อีกทีนะคะว่าชื่อตรงไหม)
-        local infLevelPerXP = sData.SeasonPassStaticData.InfRewardXP or 1000 
+        local infLevelPerXP = sData.SeasonPassStaticData.INF_REWARD_XP or 10000 
         
         local totalInfEarned = math.floor(excessXP / infLevelPerXP)
         local totalInfClaimed = seasonInfo.InfiniteRewardsClaimed or 0
