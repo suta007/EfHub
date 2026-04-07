@@ -137,18 +137,7 @@ end
 InfoLog("Script initialized successfully.")
 task.wait(0.5)
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(ReplicatedStorage.Modules.DataService)
-local GetData_result = DataService:GetData()
-local data = GetData_result.EasterEventData
---local machineData = GetData_result.PetMutationMachine
---local easterData = GetData_result.EventShopStock
--- "EventShopStock/New Years Shop/Stocks",
 
---game:GetService("ReplicatedStorage"):WaitForChild("Data")
-
---local EVENT_DATA = require(game:GetService("ReplicatedStorage"):WaitForChild("Data"):WaitForChild("EventShopData") :: any)
-local SEASON_PASS_SHOP_DATA = require(ReplicatedStorage:WaitForChild("Data"):WaitForChild("SeasonPass"):WaitForChild("SeasonPassShopData") :: any).ShopItems
 
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
@@ -167,5 +156,20 @@ local function ShowData(tbl, indent)
 		AddLog(spacing .. tostring(tbl))
 	end
 end
+-- GAG\referent\game\ReplicatedStorage\Data\SeasonPass\SeasonPassData.lua
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
+local GetData_result = DataService:GetData()
+--local seasonInfo = GetData_result.SeasonPass
 
-ShowData(SEASON_PASS_SHOP_DATA)
+local Data = ReplicatedStorage:WaitForChild("Data")
+local SeasonPassData = require(Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
+
+local SeasonPassUtils = require(ReplicatedStorage.Modules.SeasonPass.SeasonPassUtils)
+
+--local SeasonPassStaticData = Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData")
+local currentSeason = SeasonPassData.CurrentSeason
+local seasonInfo = GetData_result.SeasonPass[currentSeason]
+
+local currentLevel = SeasonPassUtils.CalculateLevel(seasonInfo.TotalExperience)
+ShowData(currentLevel)

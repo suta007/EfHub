@@ -1,6 +1,3 @@
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(ReplicatedStorage.Modules.DataService)
-
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
 	local spacing = string.rep("  ", lclIndent)
@@ -18,6 +15,18 @@ local function ShowData(tbl, indent)
 		print(spacing .. tostring(tbl))
 	end
 end
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
+local GetData_result = DataService:GetData()
+local seasonInfo = GetData_result.SeasonPass
+
+ShowData(seasonInfo)
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
 
 local SeedShop1 = DataService:GetPathSignal("SeedStocks/@")
 SeedShop1:Connect(function(Key, NewData)

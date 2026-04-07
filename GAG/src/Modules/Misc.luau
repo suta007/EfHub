@@ -164,13 +164,21 @@ end
 -- [Helper Functions]
 -- ==========================================
 local function IsFruit(obj)
-	if typeof(obj) ~= "Instance" then return false end
-	if obj:HasTag("Harvestable") or obj:HasTag("FruitTool") then return true end
+	if typeof(obj) ~= "Instance" then
+		return false
+	end
+	if obj:HasTag("Harvestable") or obj:HasTag("FruitTool") then
+		return true
+	end
 	local parentModel = obj:FindFirstAncestorWhichIsA("Model") or obj:FindFirstAncestorWhichIsA("Tool")
-	if parentModel and (parentModel:HasTag("Harvestable") or parentModel:HasTag("FruitTool")) then return true end
+	if parentModel and (parentModel:HasTag("Harvestable") or parentModel:HasTag("FruitTool")) then
+		return true
+	end
 	local current = obj
 	while current and current ~= workspace do
-		if current.Name == "Fruits" then return true end
+		if current.Name == "Fruits" then
+			return true
+		end
 		current = current.Parent
 	end
 	return false
@@ -192,25 +200,39 @@ local function SetVisibility(obj, isHidden)
 			local origCollide = obj:GetAttribute("OriginalCanCollide")
 			local origTouch = obj:GetAttribute("OriginalCanTouch")
 			local origQuery = obj:GetAttribute("OriginalCanQuery")
-			if origCollide ~= nil then obj.CanCollide = origCollide end
-			if origTouch ~= nil then obj.CanTouch = origTouch end
-			if origQuery ~= nil then obj.CanQuery = origQuery end
+			if origCollide ~= nil then
+				obj.CanCollide = origCollide
+			end
+			if origTouch ~= nil then
+				obj.CanTouch = origTouch
+			end
+			if origQuery ~= nil then
+				obj.CanQuery = origQuery
+			end
 		end
 	elseif obj:IsA("Decal") or obj:IsA("Texture") then
 		if isHidden then
-			if not obj:GetAttribute("OriginalTrans") then obj:SetAttribute("OriginalTrans", obj.Transparency) end
+			if not obj:GetAttribute("OriginalTrans") then
+				obj:SetAttribute("OriginalTrans", obj.Transparency)
+			end
 			obj.Transparency = 1
 		else
 			local origTrans = obj:GetAttribute("OriginalTrans")
-			if origTrans then obj.Transparency = origTrans end
+			if origTrans then
+				obj.Transparency = origTrans
+			end
 		end
 	elseif obj:IsA("ParticleEmitter") or obj:IsA("Sparkles") or obj:IsA("Fire") or obj:IsA("Trail") then
 		if isHidden then
-			if obj:GetAttribute("OriginalEnabled") == nil then obj:SetAttribute("OriginalEnabled", obj.Enabled) end
+			if obj:GetAttribute("OriginalEnabled") == nil then
+				obj:SetAttribute("OriginalEnabled", obj.Enabled)
+			end
 			obj.Enabled = false
 		else
 			local orig = obj:GetAttribute("OriginalEnabled")
-			if orig ~= nil then obj.Enabled = orig end
+			if orig ~= nil then
+				obj.Enabled = orig
+			end
 		end
 	end
 end
@@ -240,7 +262,9 @@ function Misc.AntiLag()
 	sData.Terrain.WaterTransparency = 1
 
 	for i, v in ipairs(workspace:GetDescendants()) do
-		if i % 200 == 0 then task.wait() end
+		if i % 200 == 0 then
+			task.wait()
+		end
 		if v:IsA("BasePart") then
 			v.Material = Enum.Material.SmoothPlastic
 			v.Reflectance = 0
@@ -250,13 +274,17 @@ function Misc.AntiLag()
 			v.Transparency = 1
 		end
 	end
-	pcall(function() settings().Rendering.QualityLevel = Enum.QualityLevel.Level01 end)
+	pcall(function()
+		settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+	end)
 end
 
 function Misc.HidePlant(state)
 	fVar.IsPlantHidden = state
 	local PlantFolder = Utils.GetPlantsFolder()
-	if not PlantFolder then return end
+	if not PlantFolder then
+		return
+	end
 
 	for _, obj in ipairs(PlantFolder:GetDescendants()) do
 		if not IsFruit(obj) then
@@ -269,7 +297,9 @@ end
 function Misc.HideFruit(state)
 	fVar.IsFruitHidden = state
 	local PlantFolder = Utils.GetPlantsFolder()
-	if not PlantFolder then return end
+	if not PlantFolder then
+		return
+	end
 
 	for _, obj in ipairs(PlantFolder:GetDescendants()) do
 		if IsFruit(obj) then
@@ -292,15 +322,23 @@ function Misc.UpdatePlantTracker()
 		if PlantFolder and not SharedPlantConnection then
 			SharedPlantConnection = PlantFolder.DescendantAdded:Connect(function(newObj)
 				task.wait(0.1)
-				if not newObj or not newObj.Parent then return end
-				if not (newObj:IsA("BasePart") or newObj:IsA("Model") or newObj:IsA("Decal") or newObj:IsA("Texture") or newObj:IsA("MeshPart")) then return end
+				if not newObj or not newObj.Parent then
+					return
+				end
+				if not (newObj:IsA("BasePart") or newObj:IsA("Model") or newObj:IsA("Decal") or newObj:IsA("Texture") or newObj:IsA("MeshPart")) then
+					return
+				end
 
 				local isThisFruit = IsFruit(newObj)
 				if isHideActive then
 					if isThisFruit then
-						if fVar.IsFruitHidden then SetVisibility(newObj, true) end
+						if fVar.IsFruitHidden then
+							SetVisibility(newObj, true)
+						end
 					else
-						if fVar.IsPlantHidden then SetVisibility(newObj, true) end
+						if fVar.IsPlantHidden then
+							SetVisibility(newObj, true)
+						end
 					end
 				end
 
@@ -322,7 +360,9 @@ function Misc.UpdatePlantTracker()
 end
 
 function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
-	if not (espfolder and obj and txt1) then return end
+	if not (espfolder and obj and txt1) then
+		return
+	end
 	local priority = arg or 0
 	if BGuiSession[uuid] then
 		BGuiSession[uuid]:Destroy()
@@ -378,21 +418,30 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
 	end
 
-	if priority == 3 then textLabel1.TextColor3 = Color3.fromRGB(200, 200, 10)
-	elseif priority == 2 then textLabel1.TextColor3 = Color3.fromRGB(200, 50, 10)
-	elseif priority == 1 then textLabel1.TextColor3 = Color3.fromRGB(10, 200, 10)
-	else textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200) end
+	if priority == 3 then
+		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 10)
+	elseif priority == 2 then
+		textLabel1.TextColor3 = Color3.fromRGB(200, 50, 10)
+	elseif priority == 1 then
+		textLabel1.TextColor3 = Color3.fromRGB(10, 200, 10)
+	else
+		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200)
+	end
 
 	BGuiSession[uuid] = bgui
 end
 
 function Misc.SetEspCrop(fruit)
 	local Options = reg.Options
-	if not Options.tgEspCrops.Value then return end
+	if not Options.tgEspCrops.Value then
+		return
+	end
 
 	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
-	if not ESPFolder then return end
+	if not ESPFolder then
+		return
+	end
 
 	local fruitName = fruit.Name
 	local fruitWeight = fruit:FindFirstChild("Weight") and fruit:FindFirstChild("Weight").Value or 0
@@ -405,24 +454,36 @@ function Misc.SetEspCrop(fruit)
 
 	local scale = fruit:GetAttribute("WeightMulti") or 0
 	local arg = 0
-	if scale >= 30 then arg = 3
-	elseif scale >= 20 then arg = 2
-	elseif scale >= 10 then arg = 1 end
+	if scale >= 30 then
+		arg = 3
+	elseif scale >= 20 then
+		arg = 2
+	elseif scale >= 10 then
+		arg = 1
+	end
 
 	Misc.CreatESP(ESPFolder, fruit, uuid, txt1, txt2, arg)
 end
 
 function Misc.SetEspPlant(plant)
 	local Options = reg.Options
-	if not (Options and Options.tgEspPlants and Options.tgEspPlants.Value) then return end
-	if not (plant and plant:IsA("Model")) then return end
+	if not (Options and Options.tgEspPlants and Options.tgEspPlants.Value) then
+		return
+	end
+	if not (plant and plant:IsA("Model")) then
+		return
+	end
 
 	local espPlantsList = GetSelectedItems(Options.ddEspPlants.Value)
-	if not table.find(espPlantsList, plant.Name) then return end
+	if not table.find(espPlantsList, plant.Name) then
+		return
+	end
 
 	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local ESPFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
-	if not ESPFolder then return end
+	if not ESPFolder then
+		return
+	end
 
 	local plantName = plant.Name
 	local plantWeightValue = plant:FindFirstChild("Weight") and plant:FindFirstChild("Weight").Value or 0
@@ -436,14 +497,18 @@ function Misc.EspCrops(State)
 	local Options = reg.Options
 	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local oldFolder = TargetFolder:FindFirstChild(FruitESPFolderName)
-	if oldFolder then oldFolder:Destroy() end
+	if oldFolder then
+		oldFolder:Destroy()
+	end
 	if State ~= true then
 		Misc.UpdatePlantTracker()
 		return
 	end
 
 	local espCropsList = GetSelectedItems(Options.ddEspCrops.Value)
-	if table.find(espCropsList, "NONE") then return end
+	if table.find(espCropsList, "NONE") then
+		return
+	end
 
 	local ESPFolder = Instance.new("Folder")
 	ESPFolder.Name = FruitESPFolderName
@@ -468,7 +533,9 @@ function Misc.EspPlants(State)
 	local Options = reg.Options
 	local TargetFolder = GetHUI and GetHUI() or CoreGui
 	local oldFolder = TargetFolder:FindFirstChild(PlantsESPFolderName)
-	if oldFolder then oldFolder:Destroy() end
+	if oldFolder then
+		oldFolder:Destroy()
+	end
 	if State ~= true then
 		Misc.UpdatePlantTracker()
 		return
@@ -499,62 +566,99 @@ function Misc.HideTracker()
 	Misc.UpdatePlantTracker()
 end
 
-function Misc.SeasonPassShop(State)
+function Misc.SeasonPassShop()
 	local Options = reg.Options
-	if not Options.tgSeasonPassShop.Value then return end
+	if not Options.tgSeasonPassShop or not Options.tgSeasonPassShop.Value then
+		return
+	end
 end
 
-function Misc.SeasonPassQuests(State)
+function Misc.SeasonPassQuests()
 	local Options = reg.Options
-	if not Options.tgSeasonPassQuests.Value then return end
+	if not Options.tgSeasonPassQuests or not Options.tgSeasonPassQuests.Value then
+		return
+	end
+	local GetData_result = sData.DataService:GetData()
+
+	local currentSeason = sData.SeasonPassData.CurrentSeason
+	local seasonInfo = GetData_result.SeasonPass[currentSeason]
+	local QuestsController = require(sData.Modules.QuestsController)
+
+	-- เช็คข้อมูล Container ของเควสรายวัน
+	if GetData_result.DailyQuests and GetData_result.DailyQuests.ContainerId then
+		local container = QuestsController:GetContainerFromId(GetData_result.DailyQuests.ContainerId)
+
+		if container then
+			local allCompleted = true
+
+			for _, quest in pairs(container.Quests) do
+				-- เช็คว่าทำเควสนี้เสร็จหรือยัง
+				if quest.Completed then
+					local isClaimed = table.find(seasonInfo.QuestsClaimed, quest.Id)
+					if not isClaimed then
+						sData.ClaimSeasonPassQuestRemote:FireServer(quest.Id)
+					end
+				else
+					allCompleted = false
+				end
+			end
+
+			-- กดสุ่มรางวัลใหญ่ (เมื่อทำครบและยังไม่เคยกด)
+			if allCompleted and not seasonInfo.QuestRewardClaimed then
+				sData.SeedPackEvent.Open:FireServer("Season Pass Quests")
+			end
+		end
+	end
 end
 
 function Misc.SeasonPassRewards()
 	local Options = reg.Options
-	if not Options.tgSeasonPassRewards.Value then return end
+	if not Options.tgSeasonPassRewards or not Options.tgSeasonPassRewards.Value then
+		return
+	end
 	local GetData_result = sData.DataService:GetData()
-	
+
 	local currentSeason = sData.SeasonPassData.CurrentSeason
-    local seasonInfo = GetData_result.SeasonPass[currentSeason]
-    local currentLevel = sData.SeasonPassUtils.CalculateLevel(seasonInfo.TotalExperience)
+	local seasonInfo = GetData_result.SeasonPass[currentSeason]
+	local currentLevel = sData.SeasonPassUtils.CalculateLevel(seasonInfo.TotalExperience)
 	local maxLevel = sData.SeasonPassStaticData.MAX_LEVEL or 50
 
 	local limitLevel = math.min(currentLevel, maxLevel)
 	for tier = 1, limitLevel do
-        -- เช็คการรับรางวัลฝั่งฟรี
-        local claimedFree = table.find(seasonInfo.ClaimedLevelFreeRewards, tier)
-        if not claimedFree then
-            sData.ClaimSeasonPassRewardRemote:FireServer(tier, false)
-        end
-        
-        -- เช็คการรับรางวัลฝั่งพรีเมียม (ตรวจสอบด้วยว่ามีสถานะพรีเมียมหรือไม่)
-        local claimedPremium = table.find(seasonInfo.ClaimedLevelPremiumRewards, tier)
-        if seasonInfo.IsPremium and not claimedPremium then
-            sData.ClaimSeasonPassRewardRemote:FireServer(tier, true)
-        end
-    end
+		-- เช็คการรับรางวัลฝั่งฟรี
+		local claimedFree = table.find(seasonInfo.ClaimedLevelFreeRewards, tier)
+		if not claimedFree then
+			sData.ClaimSeasonPassRewardRemote:FireServer(tier, false)
+		end
+
+		-- เช็คการรับรางวัลฝั่งพรีเมียม (ตรวจสอบด้วยว่ามีสถานะพรีเมียมหรือไม่)
+		local claimedPremium = table.find(seasonInfo.ClaimedLevelPremiumRewards, tier)
+		if seasonInfo.IsPremium and not claimedPremium then
+			sData.ClaimSeasonPassRewardRemote:FireServer(tier, true)
+		end
+	end
 
 	if currentLevel >= maxLevel then
-        -- คำนวณหา XP ของเลเวล Max เพื่อเอามาหักลบหา XP ที่เกินมา
-        local maxLevelXP = sData.SeasonPassUtils.CalculateXPForLevel(maxLevel)
-        local excessXP = seasonInfo.TotalExperience - maxLevelXP
-        
-        -- ดึงค่า XP ที่ต้องใช้ต่อ 1 Infinite Reward
-        -- (พี่เอฟลองเช็คชื่อตัวแปร InfRewardXP ใน SeasonPassStaticData อีกทีนะคะว่าชื่อตรงไหม)
-        local infLevelPerXP = sData.SeasonPassStaticData.INF_REWARD_XP or 10000 
-        
-        local totalInfEarned = math.floor(excessXP / infLevelPerXP)
-        local totalInfClaimed = seasonInfo.InfiniteRewardsClaimed or 0
-        
-        -- ถ้าจำนวนที่ควรได้ มากกว่าจำนวนที่เคยกดรับไป
-        if totalInfEarned > totalInfClaimed then
-            local claimsToMake = totalInfEarned - totalInfClaimed
-            for i = 1, claimsToMake do
-                sData.ClaimSeasonPassInfRewardRemote:FireServer()
-                task.wait(0.3) -- ดีเลย์เล็กน้อยกันการส่งข้อมูลถี่เกินไป
-            end
-            reg.Log("✨ รับ Infinite Rewards สำเร็จ: " .. tostring(claimsToMake) .. " กล่อง")
-        end
-    end
+		-- คำนวณหา XP ของเลเวล Max เพื่อเอามาหักลบหา XP ที่เกินมา
+		local maxLevelXP = sData.SeasonPassUtils.CalculateXPForLevel(maxLevel)
+		local excessXP = seasonInfo.TotalExperience - maxLevelXP
+
+		-- ดึงค่า XP ที่ต้องใช้ต่อ 1 Infinite Reward
+		-- (พี่เอฟลองเช็คชื่อตัวแปร InfRewardXP ใน SeasonPassStaticData อีกทีนะคะว่าชื่อตรงไหม)
+		local infLevelPerXP = sData.SeasonPassStaticData.INF_REWARD_XP or 10000
+
+		local totalInfEarned = math.floor(excessXP / infLevelPerXP)
+		local totalInfClaimed = seasonInfo.InfiniteRewardsClaimed or 0
+
+		-- ถ้าจำนวนที่ควรได้ มากกว่าจำนวนที่เคยกดรับไป
+		if totalInfEarned > totalInfClaimed then
+			local claimsToMake = totalInfEarned - totalInfClaimed
+			for i = 1, claimsToMake do
+				sData.ClaimSeasonPassInfRewardRemote:FireServer()
+				task.wait(0.3) -- ดีเลย์เล็กน้อยกันการส่งข้อมูลถี่เกินไป
+			end
+			reg.Log("✨ รับ Infinite Rewards สำเร็จ: " .. tostring(claimsToMake) .. " กล่อง")
+		end
+	end
 end
 return Misc

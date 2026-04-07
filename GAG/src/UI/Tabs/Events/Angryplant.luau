@@ -208,7 +208,9 @@ function Angryplant.autoAngryplant()
 			task.wait(0.5)
 			reg.Utils.EquipTool(item)
 			local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
-			reg.Log("Submit " .. ItemName)
+			if ItemName then
+				reg.Log("Submit " .. tostring(ItemName))
+			end
 			task.wait(0.5)
 			SeedEvent:FireServer("SubmitHeldPlant")
 			task.wait(0.5)

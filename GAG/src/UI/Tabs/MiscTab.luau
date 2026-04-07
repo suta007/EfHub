@@ -1,14 +1,15 @@
 local MiscTab = {}
-local _reg
+local reg
 
 function MiscTab.Initialize(Registry)
-	_reg = Registry
+	reg = Registry
 	local Options = Registry.Options
 	local Interface = Registry.Interface
 	local Tabs = Registry.Tabs
 	local QuickSave = Registry.Window.QuickSave
 	local Misc = Registry.Misc
 	local sData = Registry.sData
+	local EfTasks = reg.EfTasks
 
 	Tabs.MiscTab = Interface:AddTab({ Title = "Misc", Icon = "flower" })
 	local MiscSection = Tabs.MiscTab:AddCollapsibleSection("Misc", false)
@@ -113,15 +114,21 @@ function MiscTab.Initialize(Registry)
 		Title = "Season Pass Quests",
 		Default = false,
 		Callback = function(Value)
-			--Misc.SeasonPassQuests(Value)
+			EfTasks.ToggleTask("AutoSeasonPassQuests", Value, function()
+				Misc.SeasonPassQuests()
+				task.wait(60)
+			end)
 			QuickSave()
 		end,
 	})
 	SeasonPassSection:AddToggle("tgSeasonPassRewards", {
 		Title = "Season Pass Rewards",
 		Default = false,
-		Callback = function()
-			Misc.SeasonPassRewards()
+		Callback = function(Value)
+			EfTasks.ToggleTask("AutoSeasonPassRewards", Value, function()
+				Misc.SeasonPassRewards()
+				task.wait(60)
+			end)
 			QuickSave()
 		end,
 	})
@@ -139,8 +146,8 @@ function MiscTab.Initialize(Registry)
 		Default = { "ALL" },
 		Multi = true,
 		Searchable = true,
-		Callback = function(Value)
-			Misc.SeasonPassBuylist(Value)
+		Callback = function()
+			--Misc.SeasonPassBuylist(Value)
 			QuickSave()
 		end,
 	})
