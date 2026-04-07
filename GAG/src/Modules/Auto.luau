@@ -356,6 +356,47 @@ function Auto.CatLead()
 	end)
 end
 
-function Auto.OpenPack() end
+function Auto.OpenSeedPack()
+	local Options = reg.Options
+	if not Options.tgOpenPackEnable.Value or fVar.IsOpeningSeedPack then
+		return
+	end
+	local getSelectedItems = Utils.GetSelectedItems
+	local seedPacks = getSelectedItems(Options.ddOpenPackSelect.Value)
+	if #seedPacks == 0 then
+		reg.Log("🟡 No Seed Pack Selected")
+		return
+	end
+	local seedPackNames = {}
+	if table.find(seedPacks, "ALL") then
+		seedPackNames = sData.SeedPackTable
+	else
+		seedPackNames = seedPacks
+	end
+	Utils.RunWithFlag("IsOpeningSeedPack", "OpenSeedPack", function()
+		local backpack = sData.Backpack
+
+		for _, item in ipairs(backpack:GetChildren()) do
+			if not Options.tgOpenPackEnable.Value then
+				return
+			end
+			local delay = tonumber(Options.ipOpenPackDelay.Value) or 0
+			local packName = item:GetAttribute("n")
+			if item:IsA("Tool") and table.find(seedPackNames, packName) then
+				local packAmount = tonumber(item:GetAttribute("e")) or 0
+				for _ = 1, packAmount do
+					sData.SeedPackEvent.Open:FireServer(packName)
+					task.wait(delay)
+				end
+			end
+		end
+
+		if Options.tgOpenPackEnable.Value then
+			Options.tgOpenPackEnable:SetValue(false)
+			task.wait(0.5)
+		end
+		task.wait(0.5)
+	end)
+end
 
 return Auto

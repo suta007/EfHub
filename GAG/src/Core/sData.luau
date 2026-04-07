@@ -28,6 +28,7 @@ sData.ReclaimerEvent = sData.GameEvents:WaitForChild("ReclaimerService_RE")
 sData.SprinklerEvent = sData.GameEvents:WaitForChild("SprinklerService")
 sData.RefreshActivePetsUI = sData.GameEvents:WaitForChild("RefreshActivePetsUI")
 sData.PetsServiceEvent = sData.GameEvents:WaitForChild("PetsService")
+sData.SeedPackEvent = sData.GameEvents:WaitForChild("SeedPack")
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
@@ -138,6 +139,14 @@ end ]]
 sData.EasterShopTable = { "ALL" }
 for itemName, _itemInfo in pairs(EVENT_DATA["Easter Seed Shop"]) do
 	table.insert(sData.EasterShopTable, itemName)
+end
+
+local SEED_PACK_DATA = require(sData.Data:WaitForChild("SeedPackData") :: any)
+sData.SeedPackTable = { "ALL" }
+for _, info in pairs(SEED_PACK_DATA.Packs) do
+	if info.DisplayName then
+		table.insert(sData.SeedPackTable, info.DisplayName)
+	end
 end
 
 return sData

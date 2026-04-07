@@ -425,7 +425,8 @@ function AutoTab.Initialize(registry)
 		end,
 	})
 
-	--[[	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
+	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
+	--[[
 	OpenPackSection:AddToggle("tgOpenPackAnimation", {
 		Title = "Disable Animation",
 		Default = false,
@@ -443,33 +444,43 @@ function AutoTab.Initialize(registry)
 		end,
 	}) ]]
 
-	--[[ 	Options.tgOpenPackAnimation:SetValue(false)
+	Options.tgOpenPackAnimation:SetValue(false)
 	-- toggle enable
 	OpenPackSection:AddToggle("tgOpenPackEnable", {
 		Title = "Auto Open Pack",
 		Default = false,
 		Callback = function(Value)
 			if Value then
-				fVar.LockDownControlVar()
-				Auto.OpenPack()
-				fVar.ResetControlVar()
+				task.spawn(function()
+					pcall(Auto.OpenSeedPack)
+				end)
 			else
-				fVar.ResetControlVar()
-			end 
+				fVar.IsOpeningPack = false
+			end
 			QuickSave()
 		end,
-	}) ]]
+	})
 	-- dropdown select seed pack
-	--[[ 	OpenPackSection:AddDropdown("ddOpenPackSelect", {
+	OpenPackSection:AddDropdown("ddOpenPackSelect", {
 		Title = "Select Seed Pack",
-		Values = {}, --sData.SeedPackTable,
+		Values = sData.SeedPackTable,
 		Default = { "ALL" },
 		Multi = true,
 		Searchable = true,
-		Callback = function(Value)
+		Callback = function()
 			QuickSave()
 		end,
-	}) ]]
+	})
+	-- input delay
+	OpenPackSection:AddInput("ipOpenPackDelay", {
+		Title = "Delay",
+		Default = 10,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
 end
 
 return AutoTab

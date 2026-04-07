@@ -19,6 +19,8 @@ fVar.IsFeeding = false
 
 fVar.UIShopLoaded = false
 
+fVar.IsOpeningSeedPack = false
+
 fVar.CheckLevelConnection = nil
 fVar.CheckLevelConnection2 = nil
 
