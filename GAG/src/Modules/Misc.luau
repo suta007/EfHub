@@ -499,4 +499,62 @@ function Misc.HideTracker()
 	Misc.UpdatePlantTracker()
 end
 
+function Misc.SeasonPassShop(State)
+	local Options = reg.Options
+	if not Options.tgSeasonPassShop.Value then return end
+end
+
+function Misc.SeasonPassQuests(State)
+	local Options = reg.Options
+	if not Options.tgSeasonPassQuests.Value then return end
+end
+
+function Misc.SeasonPassRewards()
+	local Options = reg.Options
+	if not Options.tgSeasonPassRewards.Value then return end
+	local GetData_result = sData.DataService:GetData()
+	
+	local currentSeason = sData.SeasonPassData.CurrentSeason
+    local seasonInfo = GetData_result.SeasonPass[currentSeason]
+    local currentLevel = sData.SeasonPassUtils.CalculateLevel(seasonInfo.TotalExperience)
+	local maxLevel = sData.SeasonPassStaticData.MAX_LEVEL or 50
+
+	local limitLevel = math.min(currentLevel, maxLevel)
+	for tier = 1, limitLevel do
+        -- เช็คการรับรางวัลฝั่งฟรี
+        local claimedFree = table.find(seasonInfo.ClaimedLevelFreeRewards, tier)
+        if not claimedFree then
+            sData.ClaimSeasonPassRewardRemote:FireServer(tier, false)
+        end
+        
+        -- เช็คการรับรางวัลฝั่งพรีเมียม (ตรวจสอบด้วยว่ามีสถานะพรีเมียมหรือไม่)
+        local claimedPremium = table.find(seasonInfo.ClaimedLevelPremiumRewards, tier)
+        if seasonInfo.IsPremium and not claimedPremium then
+            sData.ClaimSeasonPassRewardRemote:FireServer(tier, true)
+        end
+    end
+
+	if currentLevel >= maxLevel then
+        -- คำนวณหา XP ของเลเวล Max เพื่อเอามาหักลบหา XP ที่เกินมา
+        local maxLevelXP = sData.SeasonPassUtils.CalculateXPForLevel(maxLevel)
+        local excessXP = seasonInfo.TotalExperience - maxLevelXP
+        
+        -- ดึงค่า XP ที่ต้องใช้ต่อ 1 Infinite Reward
+        -- (พี่เอฟลองเช็คชื่อตัวแปร InfRewardXP ใน SeasonPassStaticData อีกทีนะคะว่าชื่อตรงไหม)
+        local infLevelPerXP = sData.SeasonPassStaticData.InfRewardXP or 1000 
+        
+        local totalInfEarned = math.floor(excessXP / infLevelPerXP)
+        local totalInfClaimed = seasonInfo.InfiniteRewardsClaimed or 0
+        
+        -- ถ้าจำนวนที่ควรได้ มากกว่าจำนวนที่เคยกดรับไป
+        if totalInfEarned > totalInfClaimed then
+            local claimsToMake = totalInfEarned - totalInfClaimed
+            for i = 1, claimsToMake do
+                sData.ClaimSeasonPassInfRewardRemote:FireServer()
+                task.wait(0.3) -- ดีเลย์เล็กน้อยกันการส่งข้อมูลถี่เกินไป
+            end
+            reg.Log("✨ รับ Infinite Rewards สำเร็จ: " .. tostring(claimsToMake) .. " กล่อง")
+        end
+    end
+end
 return Misc

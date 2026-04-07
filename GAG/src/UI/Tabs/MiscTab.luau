@@ -107,6 +107,43 @@ function MiscTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
+
+	local SeasonPassSection = Tabs.MiscTab:AddCollapsibleSection("Season Pass", false)
+	SeasonPassSection:AddToggle("tgSeasonPassQuests", {
+		Title = "Season Pass Quests",
+		Default = false,
+		Callback = function(Value)
+			Misc.SeasonPassQuests(Value)
+			QuickSave()
+		end,
+	})
+	SeasonPassSection:AddToggle("tgSeasonPassRewards", {
+		Title = "Season Pass Rewards",
+		Default = false,
+		Callback = function()
+			Misc.SeasonPassRewards()
+			QuickSave()
+		end,
+	})
+	SeasonPassSection:AddToggle("tgSeasonPassShop", {
+		Title = "Season Pass Shop",
+		Default = false,
+		Callback = function(Value)
+			Misc.SeasonPassShop(Value)
+			QuickSave()
+		end,
+	})
+	SeasonPassSection:AddDropdown("ddSeasonPassBuylist", {
+		Title = "Season Pass Buylist",
+		Values = sData.SeasonPassShopTable,
+		Default = { "ALL" },
+		Multi = true,
+		Searchable = true,
+		Callback = function(Value)
+			Misc.SeasonPassBuylist(Value)
+			QuickSave()
+		end,
+	})
 end
 
 return MiscTab

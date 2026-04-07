@@ -1,0 +1,105 @@
+📋 Script initialized successfully.
+[Garden Basin] : (Table)
+  [LayoutOrder] : 3
+  [Type] : Cosmetic
+  [Rarity] : Rare
+  [Price] : 600
+  [PurchaseID] : 3564957303
+  [ImageId] : rbxassetid://130284931152446
+  [DisplayName] : Garden Basin
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 1
+  [StockChance] : 5
+  [GiftPurchaseID] : 0
+  [FallbackPrice] : 119
+[Season 4 Seed Pack] : (Table)
+  [LayoutOrder] : 4
+  [Type] : Seed Pack
+  [Rarity] : Divine
+  [Price] : 150
+  [PurchaseID] : 3564957517
+  [ImageId] : rbxassetid://86848065126412
+  [DisplayName] : Season 4 Seed Pack
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 2
+  [StockChance] : 5
+  [GiftPurchaseID] : 0
+  [FallbackPrice] : 199
+[Grow All] : (Table)
+  [LayoutOrder] : 6
+  [Type] : Gear
+  [Rarity] : Prismatic
+  [Price] : 1000
+  [PurchaseID] : 3415151239
+  [ImageId] : rbxassetid://120928632087334
+  [DisplayName] : Grow All
+  [Desc] : <font color="rgb(255,170,255)">Grows all plants in your garden</font>
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 1
+  [StockChance] : 250
+  [Stack] : 1
+  [GiftPurchaseID] : 3415151549
+  [FallbackPrice] : 375
+[Smith Hammer of Harvest] : (Table)
+  [LayoutOrder] : 2
+  [Type] : Gear
+  [Rarity] : Rare
+  [Price] : 275
+  [PurchaseID] : 3455273154
+  [ImageId] : rbxassetid://136717099575038
+  [DisplayName] : Hammer of Harvest
+  [Desc] : A replica of the legendary hammer. Harvests all fruit within a radius!
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 1
+  [StockChance] : 50
+  [Stack] : 1
+  [GiftPurchaseID] : 0
+  [FallbackPrice] : 179
+[Levelup Lollipop] : (Table)
+  [LayoutOrder] : 5
+  [Type] : Gear
+  [Rarity] : Prismatic
+  [Price] : 500
+  [PurchaseID] : 3329528135
+  [ImageId] : rbxassetid://92216660575982
+  [DisplayName] : Levelup Lollipop
+  [Desc] : <font color="rgb(255,0,0)">Increases your pet's age by 1</font>
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 1
+  [StockChance] : 150
+  [Stack] : 1
+  [GiftPurchaseID] : 3329530334
+  [FallbackPrice] : 79
+[Purple Treeshroom] : (Table)
+  [LayoutOrder] : 7
+  [Type] : Seed
+  [Rarity] : Prismatic
+  [Price] : 3000
+  [PurchaseID] : 3564958091
+  [ImageId] : rbxassetid://90889907425461
+  [DisplayName] : Purple Treeshroom
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 1
+  [StockChance] : 300
+  [GiftPurchaseID] : 0
+  [FallbackPrice] : 819
+[Season 4 Crate] : (Table)
+  [LayoutOrder] : 1
+  [Type] : Crate
+  [Rarity] : Common
+  [Price] : 100
+  [PurchaseID] : 3564957722
+  [ImageId] : rbxassetid://118362223804255
+  [DisplayName] : Season 4 Crate
+  [StockAmount] : (Table)
+    [1] : 1
+    [2] : 2
+  [StockChance] : 1
+  [GiftPurchaseID] : 0
+  [FallbackPrice] : 179

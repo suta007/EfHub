@@ -30,6 +30,14 @@ sData.RefreshActivePetsUI = sData.GameEvents:WaitForChild("RefreshActivePetsUI")
 sData.PetsServiceEvent = sData.GameEvents:WaitForChild("PetsService")
 sData.SeedPackEvent = sData.GameEvents:WaitForChild("SeedPack")
 
+sData.ClaimSeasonPassRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
+sData.ClaimSeasonPassInfRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward") 
+sData.ClaimSeasonPassQuestRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassQuest")
+sData.BuySeasonPassStockRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("BuySeasonPassStock")
+
+sData.SeasonPassData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
+sData.SeasonPassUtils = require(sData.Modules:WaitForChild("SeasonPass"):WaitForChild("SeasonPassUtils") :: any)
+
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
 sData.PetUtils = require(sData.PetServices.PetUtilities)
@@ -147,6 +155,16 @@ for _, info in pairs(SEED_PACK_DATA.Packs) do
 	if info.DisplayName then
 		table.insert(sData.SeedPackTable, info.DisplayName)
 	end
+end
+
+--["ShopItems"] = require(v1.Data.SeasonPass.SeasonPassData).ShopItems
+
+local SEASON_PASS_SHOP_DATA = sData.SeasonPassData.ShopItems
+sData.SeasonPassShopTable = { "ALL" }
+sData.SeasonPassPriceTable = {}
+for itemName, itemInfo in pairs(SEASON_PASS_SHOP_DATA) do
+	table.insert(sData.SeasonPassShopTable, itemName)
+	sData.SeasonPassPriceTable[itemName] = itemInfo.Price
 end
 
 return sData

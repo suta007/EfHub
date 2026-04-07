@@ -148,6 +148,7 @@ local data = GetData_result.EasterEventData
 --game:GetService("ReplicatedStorage"):WaitForChild("Data")
 
 --local EVENT_DATA = require(game:GetService("ReplicatedStorage"):WaitForChild("Data"):WaitForChild("EventShopData") :: any)
+local SEASON_PASS_SHOP_DATA = require(ReplicatedStorage:WaitForChild("Data"):WaitForChild("SeasonPass"):WaitForChild("SeasonPassShopData") :: any).ShopItems
 
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
@@ -167,4 +168,4 @@ local function ShowData(tbl, indent)
 	end
 end
 
-ShowData(data)
+ShowData(SEASON_PASS_SHOP_DATA)
