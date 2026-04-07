@@ -2566,7 +2566,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.07-00.00",
+SubTitle="2569.04.07-10.00",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -4240,7 +4240,7 @@ Default=false,
 Callback=function(p)
 e.ToggleTask("AutoEggHunt",p,function()
 c.autoEggHunt()
-task.wait(60)
+task.wait(30)
 end)
 f()
 if not p then
@@ -4355,8 +4355,11 @@ local t=s and s:GetChildren()or{r}
 for u,v in ipairs(t)do
 if v:IsA("Model")and table.find(p,v.Name)then
 
+local w=v:FindFirstChild("ProximityPrompt",true)
+if w and w.Enabled then
 l:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({v})
 task.wait(0.1)
+end
 end
 end
 end
@@ -4379,11 +4382,11 @@ task.wait(1)
 e.IsEasterHarvesting=false
 end
 function d.runSell(m)
+g.ToggleTask("AutoEasterSell",m,function()
 local n=e.Options
 local o=n.ipEasterSellDelay and tonumber(n.ipEasterSellDelay.Value)or 600
 local p=n.tgEasterSellFull and n.tgEasterSellFull.Value or false
 local q=p and 1 or o
-g.ToggleTask("AutoEasterSell",m,function()
 if p then
 if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
 d.AutoEasterSell()
@@ -4517,26 +4520,28 @@ local n=CFrame.new(-100.68,7.91,-9.52)
 local o,p,q,r,s
 local t
 
-function h.Initialize(u,v)
-i=u
-local w=i.Options
-_=w
+local u=game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
+
+function h.Initialize(v,w)
+i=v
+local x=i.Options
+_=x
 k=i.Window.QuickSave
 j=i.EfTasks
-l=v
+l=w
 m=i.sData
 t=i.Utils
 
-local x=l:AddCollapsibleSection("Angryplant",false)
-x:AddToggle("tgAngryplantEnable",{
+local y=l:AddCollapsibleSection("Angryplant",false)
+y:AddToggle("tgAngryplantEnable",{
 Title="Angryplant Enable",
 Default=false,
-Callback=function(y)
-j.ToggleTask("AutoAngryplant",y,function()
+Callback=function(z)
+j.ToggleTask("AutoAngryplant",z,function()
 h.autoAngryplant()
 task.wait(10)
 end)
-if not y then
+if not z then
 i.IsHuntEgg=false
 i.IsEasterHarvesting=false
 end
@@ -4544,15 +4549,15 @@ k()
 end,
 })
 
-x:AddToggle("tgAngryPlants",{
+y:AddToggle("tgAngryPlants",{
 Title="Plants Quest Seed Enable",
 Default=false,
-Callback=function(y)
+Callback=function(z)
 k()
 end,
 })
 
-x:AddDropdown("ddFocusPlant",{
+y:AddDropdown("ddFocusPlant",{
 Title="Focus Plant",
 Values=g,
 Multi=true,
@@ -4562,184 +4567,229 @@ Callback=function()
 k()
 end,
 })
-x:AddButton({
+y:AddButton({
 Title="Set Position",
 Callback=function()
-local y=m.Character:GetPivot().Position
-local z=string.format("%.3f, %.3f, %.3f",y.X,y.Y,y.Z)
-w.ipAngryplantPos:SetValue(z)
+local z=m.Character:GetPivot().Position
+local A=string.format("%.3f, %.3f, %.3f",z.X,z.Y,z.Z)
+x.ipAngryplantPos:SetValue(A)
 k()
 end,
 })
-x:AddInput("ipAngryplantPos",{
+y:AddInput("ipAngryplantPos",{
 Title="Position",
 Default="",
 Placeholder="X, Y, Z",
 Numeric=false,
 Finished=false,
-Callback=function(y)
+Callback=function(z)
 k()
 end,
 })
 
-x:AddParagraph("NextQuest",{
+y:AddParagraph("NextQuest",{
 Title="Next Quest Time",
 Content="Wait for update...",
 })
 end
 local function QuestValue()
-local u=i.Options
-local v=c:GetData().EasterEventData
-local w=v.Progression or 1
-local x=w>#d
-if not x then
-local y=d[w]
-local z=y.PLANT_NAME or nil
-local A=y.WEIGHT or 0
-local B=y.MUTATION or"ALL"
-local C=y.VARIANT or"ALL"
-local D=d[w+1]
-local E=""
+local v=i.Options
+local w=c:GetData().EasterEventData
+local x=w.Progression or 1
+local y=x>#d
+if not y then
+local z=d[x]
+local A=z.PLANT_NAME or nil
+local B=z.WEIGHT or 0
+local C=z.MUTATION or"ALL"
+local D=z.VARIANT or"ALL"
+local E=d[x+1]
+local F=""
 
 
-if D then
+if E then
 
-local F=tostring(D.PLANT_NAME or"Unknown")
-local G=tonumber(D.WEIGHT)or 0
-local H=tostring(D.MUTATION or"ALL")
-local I=tostring(D.VARIANT or"ALL")
+local G=tostring(E.PLANT_NAME or"Unknown")
+local H=tonumber(E.WEIGHT)or 0
+local I=tostring(E.MUTATION or"ALL")
+local J=tostring(E.VARIANT or"ALL")
 
 
-E=string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s",F,G,H,I)
+F=string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s",G,H,I,J)
 else
 
-E="Next Quest: None"
+F="Next Quest: None"
 end
-return z,A,B,C,E
+return A,B,C,D,F
 end
-u.NextQuest:SetValue("Completed")
+v.NextQuest:SetValue("Completed")
 return nil,nil,nil,nil
 end
 
-local function CheckQuest(u)
-local v=i.Options
+local function CheckQuest(v)
+local w=i.Options
 o,p,q,r,s=QuestValue()
 if not o then
 return
 end
-local w=u:FindFirstChild("Item_String")and u:FindFirstChild("Item_String").Value or u.Name
-local x=u:FindFirstChild("Variant")and u:FindFirstChild("Variant").Value
-local y=u:FindFirstChild("Weight")and u:FindFirstChild("Weight").Value
+local x=v:FindFirstChild("Item_String")and v:FindFirstChild("Item_String").Value or v.Name
+local y=v:FindFirstChild("Variant")and v:FindFirstChild("Variant").Value
+local z=v:FindFirstChild("Weight")and v:FindFirstChild("Weight").Value
 
-if w~=o then
+if x~=o then
 return
 end
-if y<p then
+if z<p then
 return
 end
-if q~="ALL"and u:GetAttribute(q)~=true then
+if q~="ALL"and v:GetAttribute(q)~=true then
 return
 end
-if r~="ALL"and x~=r then
+if r~="ALL"and y~=r then
 return
 end
 if s then
-v.NextQuest:SetValue(s)
+w.NextQuest:SetValue(s)
 end
 return true
 end
 
 function h.autoAngryplant()
-local u=i.Options
-if not u.tgAngryplantEnable.Value or i.IsHuntEgg then
+local v=i.Options
+if not v.tgAngryplantEnable.Value or i.IsHuntEgg then
 return
 end
+
+local w=c:GetData().EasterEventData
+if w.Progression>#d then
+i.Log("Auto Claim: Exotic Seed Pack ready!")
+i.IsHuntEgg=true
+task.wait(1)
+i.IsEasterHarvesting=true
+i.sData.Character:PivotTo(n)
+task.wait(0.5)
+e:FireServer("ClaimPremiumPack")
+task.wait(1.5)
+i.Utils.ClickButton(i.Utils.GardenButton)
+task.wait(1)
+i.IsHuntEgg=false
+i.IsEasterHarvesting=false
+return
+end
+
 i.IsHuntEgg=true
 task.wait(1)
 i.IsEasterHarvesting=true
 
-local v=i.sData.Backpack
-local w=false
-for x,y in ipairs(v:GetChildren())do
-if CheckQuest(y)then
+local x=i.sData.Backpack
+local y=false
+for z,A in ipairs(x:GetChildren())do
+if CheckQuest(A)then
 i.sData.Character:PivotTo(n)
 task.wait(0.5)
-i.Utils.EquipTool(y)
-local z=y:FindFirstChild("Item_String")and y:FindFirstChild("Item_String").Value
-i.Log("Submit "..z)
+i.Utils.EquipTool(A)
+local B=A:FindFirstChild("Item_String")and A:FindFirstChild("Item_String").Value
+i.Log("Submit "..B)
 task.wait(0.5)
 e:FireServer("SubmitHeldPlant")
 task.wait(0.5)
 i.Utils.ClickButton(i.Utils.GardenButton)
 task.wait(1)
-w=true
+y=true
 break
 end
 end
-if not w then
-if u.tgAngryPlants.Value then
-if q=="Choc"then
-if h.ChkBackpack("Chocolate Sprinkler")then
-h.autoPlants()
-end
-else
-h.autoPlants()
-end
-end
+if not y then
+task.spawn(function()
+pcall(h.chkGarden)
+end)
 end
 i.IsHuntEgg=false
 i.IsEasterHarvesting=false
 end
 
-function h.autoPlants()
-local u=i.Options
-local v=t.GetSelectedItems(u.ddFocusPlant.Value)
-if not table.find(v,o)then
-if q=="Choc"then
-local w=u.ipSprinklerPosition.Value
-local x=t.ParseVector3(w)
-if x then
-h.autoChoco(x)
-end
-end
-return
-end
+function h.chkGarden()
+local v=i.Options
 local w=false
 local x=t.GetPlantsFolder()
-for y,z in ipairs(x:GetChildren())do
-local A=z:FindFirstChild("Fruits")
-local B=A and A:GetChildren()or{z}
+local y=nil
+for z,A in ipairs(x:GetChildren())do
+local B=A:FindFirstChild("Fruits")
+local C=B and B:GetChildren()or{A}
 
-for C,D in ipairs(B)do
-if D:IsA("Model")and CheckQuest(D)then
+for D,E in ipairs(C)do
+if E:IsA("Model")and CheckQuest(E)then
+local F=E:FindFirstChild("ProximityPrompt",true)
+if F and F.Enabled then
 w=true
+y=E
+else
+task.wait(10)
+end
 break
 end
 end
 if w then
-break
+local D=u:WaitForChild("Crops",5):WaitForChild("Collect",5)
+if D then
+local E,F=pcall(function()
+D:FireServer({y})
+end)
+if E then
+task.wait(1)
+task.spawn(function()
+h.autoAngryplant()
+end)
 end
 end
-if w then
+else
+if v.tgAngryPlants.Value then
+if q=="Choc"then
+if h.ChkBackpack("Chocolate Sprinkler")then
+task.spawn(function()
+h.autoPlants()
+end)
+end
+else
+task.spawn(function()
+h.autoPlants()
+end)
+end
+end
+end
+end
+end
+
+function h.autoPlants()
+local v=i.Options
+local w=t.GetSelectedItems(v.ddFocusPlant.Value)
+if not table.find(w,o)then
+if q=="Choc"then
+local x=v.ipSprinklerPosition.Value
+local y=t.ParseVector3(x)
+if y then
+h.autoChoco(y)
+end
+end
 return
 end
 
-local y=m.Backpack
-for z,A in ipairs(y:GetChildren())do
-local B=A:GetAttribute("Seed")
-if B and B==o then
-local C=t.ParseVector3(u.ipAngryplantPos.Value)
-if C then
+local x=m.Backpack
+for y,z in ipairs(x:GetChildren())do
+local A=z:GetAttribute("Seed")
+if A and A==o then
+local B=t.ParseVector3(v.ipAngryplantPos.Value)
+if B then
 t.UnequipTool()
 task.wait(0.1)
-t.EquipTool(A)
+t.EquipTool(z)
 task.wait(0.1)
-m.GameEvents:WaitForChild("Plant_RE"):FireServer(vector.create(C.X,C.Y,C.Z),B)
+m.GameEvents:WaitForChild("Plant_RE"):FireServer(vector.create(B.X,B.Y,B.Z),A)
 task.wait(0.2)
 t.UnequipTool()
 task.wait(0.1)
 if q=="Choc"then
-h.autoChoco(C)
+h.autoChoco(B)
 end
 break
 end
@@ -4747,34 +4797,34 @@ end
 end
 end
 
-function h.autoChoco(u)
+function h.autoChoco(v)
 if h.ChkSprinkle("Chocolate Sprinkler")then
 return
 end
-local v=m.Backpack
-for w,x in ipairs(v:GetChildren())do
-if x:IsA("Tool")and x.Name:match("Chocolate Sprinkler")then
-local y=CFrame.new(u)
-t.EquipTool(x)
-m.SprinklerEvent:FireServer("Create",y)
+local w=m.Backpack
+for x,y in ipairs(w:GetChildren())do
+if y:IsA("Tool")and y.Name:match("Chocolate Sprinkler")then
+local z=CFrame.new(v)
+t.EquipTool(y)
+m.SprinklerEvent:FireServer("Create",z)
 task.wait(0.1)
 t.UnequipTool()
 task.wait(5)
-h.autoGrand(u)
+h.autoGrand(v)
 end
 end
 end
 
-function h.autoGrand(u)
+function h.autoGrand(v)
 if h.ChkSprinkle("Grandmaster Sprinkler")then
 return
 end
-local v=m.Backpack
-for w,x in ipairs(v:GetChildren())do
-if x:IsA("Tool")and x.Name:match("Grandmaster Sprinkler")then
-local y=CFrame.new(u)
-t.EquipTool(x)
-m.SprinklerEvent:FireServer("Create",y)
+local w=m.Backpack
+for x,y in ipairs(w:GetChildren())do
+if y:IsA("Tool")and y.Name:match("Grandmaster Sprinkler")then
+local z=CFrame.new(v)
+t.EquipTool(y)
+m.SprinklerEvent:FireServer("Create",z)
 task.wait(0.1)
 t.UnequipTool()
 task.wait(0.1)
@@ -4782,24 +4832,24 @@ end
 end
 end
 
-function h.ChkSprinkle(u)
-local v=t.GetMyFarm():FindFirstChild("Important")
-local w=v:FindFirstChild("Objects_Physical")
-if not w then
+function h.ChkSprinkle(v)
+local w=t.GetMyFarm():FindFirstChild("Important")
+local x=w:FindFirstChild("Objects_Physical")
+if not x then
 return
 end
-for x,y in ipairs(w:GetChildren())do
-if y:IsA("Model")and y.Name:match(u)then
+for y,z in ipairs(x:GetChildren())do
+if z:IsA("Model")and z.Name:match(v)then
 return true
 end
 end
 return false
 end
 
-function h.ChkBackpack(u)
-local v=m.Backpack
-for w,x in ipairs(v:GetChildren())do
-if x:IsA("Tool")and x.Name:match(u)then
+function h.ChkBackpack(v)
+local w=m.Backpack
+for x,y in ipairs(w:GetChildren())do
+if y:IsA("Tool")and y.Name:match(v)then
 return true
 end
 end
