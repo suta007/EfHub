@@ -185,11 +185,11 @@ function Angryplant.autoAngryplant()
 		reg.IsHuntEgg = true
 		task.wait(1)
 		reg.IsEasterHarvesting = true
-		--reg.sData.Character:PivotTo(questPos)
+		reg.sData.Character:PivotTo(questPos)
 		task.wait(0.5)
 		SeedEvent:FireServer("ClaimPremiumPack")
 		task.wait(1.5)
-		--reg.Utils.ClickButton(reg.Utils.GardenButton)
+		reg.Utils.ClickButton(reg.Utils.GardenButton)
 		task.wait(1)
 		reg.IsHuntEgg = false
 		reg.IsEasterHarvesting = false
@@ -204,7 +204,7 @@ function Angryplant.autoAngryplant()
 	local angryPass = false
 	for _, item in ipairs(Backpack:GetChildren()) do
 		if CheckQuest(item) then
-			--reg.sData.Character:PivotTo(questPos)
+			reg.sData.Character:PivotTo(questPos)
 			task.wait(0.5)
 			reg.Utils.EquipTool(item)
 			local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
@@ -212,7 +212,7 @@ function Angryplant.autoAngryplant()
 			task.wait(0.5)
 			SeedEvent:FireServer("SubmitHeldPlant")
 			task.wait(0.5)
-			--reg.Utils.ClickButton(reg.Utils.GardenButton)
+			reg.Utils.ClickButton(reg.Utils.GardenButton)
 			task.wait(1)
 			angryPass = true
 			break
