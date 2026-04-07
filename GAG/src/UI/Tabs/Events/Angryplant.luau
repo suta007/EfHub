@@ -220,7 +220,7 @@ function Angryplant.autoAngryplant()
 	end
 	if not angryPass then
 		task.spawn(function()
-			Angryplant.chkGarden()
+			pcall(Angryplant.chkGarden)
 		end)
 	end
 	reg.IsHuntEgg = false
@@ -238,17 +238,27 @@ function Angryplant.chkGarden()
 
 		for _, fruit in ipairs(Fruits) do
 			if fruit:IsA("Model") and CheckQuest(fruit) then
-				gardenPass = true
-				targetFruit = fruit
-				break
+				local Prompt = fruit:FindFirstChild("ProximityPrompt", true)
+				if Prompt and Prompt.Enabled then
+					gardenPass = true
+					targetFruit = fruit
+					break
+				end
 			end
 		end
 		if gardenPass then
-			GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ targetFruit })
-			task.wait(1)
-			task.spawn(function()
-				Angryplant.autoAngryplant()
-			end)
+			local CropsRemote = GameEvents:WaitForChild("Crops", 5):WaitForChild("Collect", 5)
+			if CropsRemote then
+				local success, _err = pcall(function()
+					CropsRemote:FireServer({ targetFruit })
+				end)
+				if success then
+					task.wait(1)
+					task.spawn(function()
+						Angryplant.autoAngryplant()
+					end)
+				end
+			end
 		else
 			if Options.tgAngryPlants.Value then
 				if chkMutation == "Choc" then

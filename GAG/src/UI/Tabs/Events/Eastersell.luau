@@ -45,8 +45,11 @@ function Eastersell.HarvestCrops()
 		for _, fruit in ipairs(Fruits) do
 			if fruit:IsA("Model") and table.find(HarvestList, fruit.Name) then
 				--sData.CollectEvent:FireServer({ fruit })
-				GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
-				task.wait(0.1)
+				local Prompt = fruit:FindFirstChild("ProximityPrompt", true)
+				if Prompt and Prompt.Enabled then
+					GameEvents:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({ fruit })
+					task.wait(0.1)
+				end
 			end
 		end
 	end
