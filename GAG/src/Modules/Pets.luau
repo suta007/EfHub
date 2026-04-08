@@ -813,6 +813,7 @@ function Pets.PlaceEggs()
 			Utils.EquipTool(egg)
 
 			task.wait(0.3)
+			reg.Log("Position is : " .. tostring(eggCFrame.Position))
 			local success, err = pcall(function()
 				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", eggCFrame.Position)
 			end)
@@ -825,6 +826,7 @@ function Pets.PlaceEggs()
 			else
 				eggCFrame = Utils.GetRandomPlotPos()
 			end
+			Utils.UnequipTool()
 		else
 			break
 		end
