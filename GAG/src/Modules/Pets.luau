@@ -819,12 +819,12 @@ function Pets.PlaceEggs()
 			task.wait(0.3)
 			local finalPos = vector.create(eggCFrame.Position.X, 1.5, eggCFrame.Position.Z)
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
-			local success, err = pcall(function()
-				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", finalPos)
-			end)
-			if not success then
-				reg.Log("PlaceEgg failed: " .. tostring(err))
-			end
+			--local success, err = pcall(function()
+			sData.PetEggService:FireServer("CreateEgg", finalPos)
+			--end)
+			--if not success then
+			--	reg.Log("PlaceEgg failed: " .. tostring(err))
+			--end
 			if placeMethod == "Set" then
 				plotPos = Utils.GetSetPlotPos(plotPos[2], plotPos[3], plotPos[4])
 				eggCFrame = plotPos[1]
