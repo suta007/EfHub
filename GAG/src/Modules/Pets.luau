@@ -814,7 +814,7 @@ function Pets.PlaceEggs()
 
 			task.wait(0.3)
 			local success, err = pcall(function()
-				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", eggCFrame)
+				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", eggCFrame.Position)
 			end)
 			if not success then
 				reg.Log("PlaceEgg failed: " .. tostring(err))
