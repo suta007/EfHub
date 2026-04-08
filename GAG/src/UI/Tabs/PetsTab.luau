@@ -296,9 +296,9 @@ function PetsTab.Initialize(registry)
 				Pets.PlaceEggs()
 				task.wait(2)
 			end) ]]
-			--Pets.PlaceEggs()
+			--
 			if Value then
-				Pets.Test()
+				Pets.PlaceEggs()
 			end
 			QuickSave()
 		end,
