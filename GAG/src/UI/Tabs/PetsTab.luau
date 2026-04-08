@@ -348,7 +348,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddInput("ipDelayPlaceEgg", {
+	HatchEggSection:AddInput("inpDelayPlaceEgg", {
 		Title = "Delay",
 		Default = 2,
 		Numeric = true,
@@ -413,6 +413,14 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	HatchEggSection:AddDropdown("ddSpecialHatchLoadOut", {
+		Title = "Select Special Hatch Loadout",
+		Values = { "1", "2", "3", "4", "5", "6" },
+		Default = "4",
+		Callback = function()
+			QuickSave()
+		end,
+	})
 	HatchEggSection:AddInput("ipDelayHatchPet", {
 		Title = "Delay",
 		Default = 2,
@@ -467,6 +475,24 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	HatchEggSection:AddDropdown("ddSellLoadOut", {
+		Title = "Select Sell Loadout",
+		Values = { "1", "2", "3", "4", "5", "6" },
+		Default = "3",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddInput("ipDelaySellHatch", {
+		Title = "Delay",
+		Default = 2,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
 	--#endregion
 end
 

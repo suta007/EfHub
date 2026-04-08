@@ -51,6 +51,11 @@ function Utils.GetPlantsFolder()
 	return Farm_Important and Farm_Important:FindFirstChild("Plants_Physical")
 end
 
+function Utils.GetObjectsFolder()
+	local Farm_Important = Utils.GetMyFarm():FindFirstChild("Important")
+	return Farm_Important and Farm_Important:FindFirstChild("Objects_Physical")
+end
+
 function Utils.GetPlot()
 	local myPlot = {}
 	local plantLocations = Utils.GetMyFarm().Important.Plant_Locations:GetChildren()
@@ -81,12 +86,18 @@ function Utils.GetBoundary(Plot)
 	}
 end
 
-function Utils.GetRandomPlotPos()
+function Utils.GetRandomPlotPos(plot)
+	local gPlot = plot or nil
+	local targetPart
 	local MyPlantableParts = Utils.GetPlot()
 	if #MyPlantableParts == 0 then
 		return nil
 	end
-	local targetPart = MyPlantableParts[math.random(1, #MyPlantableParts)]
+	if not gPlot then
+		targetPart = MyPlantableParts[math.random(1, #MyPlantableParts)]
+	else
+		targetPart = MyPlantableParts[gPlot]
+	end
 	local size = targetPart.Size
 	local cframe = targetPart.CFrame
 
@@ -104,6 +115,34 @@ function Utils.GetRandomPlotPos()
 	local finalZ = worldCFrame.Position.Z
 
 	return CFrame.new(finalX, finalY, finalZ)
+end
+
+function Utils.GetSetPlotPos(plot, order, x)
+	local plotNum = plot or 1
+	local newOrder = (order or 0) + 1
+	local MyPlantableParts = Utils.GetPlot()
+	if #MyPlantableParts == 0 then
+		return nil
+	end
+	local targetPart = MyPlantableParts[plotNum]
+	local Boundary = Utils.GetBoundary(targetPart)
+	local newX = x or Boundary.maxX
+	local y = 0.15
+	local newZ = Boundary.minZ + (newOrder * 4)
+	if newZ > Boundary.maxZ then
+		newX = newX - 4
+		newZ = Boundary.minZ
+		newOrder = 0
+	end
+	if newX < Boundary.minX then
+		if plotNum == 1 then
+			plotNum = 2
+		else
+			plotNum = 1
+		end
+		return Utils.GetSetPlotPos(plotNum, 0)
+	end
+	return { CFrame.new(newX, y, newZ), plotNum, newOrder, newX }
 end
 
 function Utils.GetPosition()

@@ -294,16 +294,19 @@ function Pets.UnequipPet(uuid)
 end
 
 function Pets.SwapPetLoadout(Loadout)
+	local currentLoadout = sData.DataService:GetData().PetsData.SelectedPetLoadout
+	if currentLoadout == Loadout then
+		return
+	end
 	if Loadout == 2 then
 		Loadout = 3
 	elseif Loadout == 3 then
 		Loadout = 2
 	end
 	sData.PetsServiceEvent:FireServer("SwapPetLoadout", Loadout)
+	task.wait(8)
 end
--- GetData_result.PetMutationMachine.PetReady=false
--- GetData_result.PetMutationMachine.TimeLeft=0
--- GetData_result.PetMutationMachine.IsRunning=false
+
 function Pets.FarmLevel()
 	local Options = reg.Options
 	if not Options.tgMutantEnabled.Value or fVar.IsMutating then
@@ -755,6 +758,78 @@ function Pets.FeedPets()
 		end
 	end
 	fVar.IsFeeding = false
+end
+
+function Pets.EggInFarm()
+	local ObjectsFolder = Utils.GetObjectsFolder()
+	if not ObjectsFolder then
+		return
+	end
+	local eggs = {}
+	for _, obj in ipairs(ObjectsFolder:GetChildren()) do
+		if obj and obj:GetAttribute("OBJECT_TYPE") == "PetEgg" then
+			table.insert(eggs, obj)
+		end
+	end
+	return eggs
+end
+
+function Pets.PlaceEggs()
+	local Options = reg.Options
+	if not Options.tgPlaceEggsEn or not Options.tgPlaceEggsEn.Value then
+		return
+	end
+	local delayPlaceEgg = tonumber(Options.inpDelayPlaceEgg.Value)
+	task.wait(delayPlaceEgg)
+
+	local placeEggList = GetSelectedItems(Options.ddPlaceEgg.Value)
+	if #placeEggList == 0 then
+		reg.Log("🟠 PlaceEggs: No Egg Selected")
+		return
+	end
+	local maxEgg = tonumber(Options.ipMaxEggs.Value)
+	if maxEgg == 0 then
+		reg.Log("🟠 PlaceEggs: Max Egg must be greater than 0")
+		return
+	end
+	local speedLoadout = tonumber(Options.ddSpeedLoadout.Value) or 1
+	pcall(Pets.SwapPetLoadout, speedLoadout)
+	local placeSlot = tonumber(Options.ddPlaceSlot.Value) or 1
+	local placeMethod = Options.ddPlaceMethod.Value
+	local plotPos
+	local eggCFrame
+	if placeMethod == "Set" then
+		plotPos = Utils.GetSetPlotPos(placeSlot)
+		eggCFrame = plotPos[1]
+	else
+		eggCFrame = Utils.GetRandomPlotPos()
+	end
+	local rng = Random.new()
+	while Options.tgPlaceEggsEn.Value do
+		local eggs = Pets.EggInFarm()
+		if eggs and type(eggs) == "table" and #eggs < maxEgg then
+			local selectEgg = placeEggList[rng:NextInteger(1, #placeEggList)]
+			local egg = Utils.FindToolByPattern(sData.Backpack, selectEgg)
+			Utils.EquipTool(egg)
+
+			task.wait(0.3)
+			local success, err = pcall(function()
+				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", eggCFrame)
+			end)
+			if not success then
+				reg.Log("PlaceEgg failed: " .. tostring(err))
+			end
+			if placeMethod == "Set" then
+				plotPos = Utils.GetSetPlotPos(plotPos[2], plotPos[3], plotPos[4])
+				eggCFrame = plotPos[1]
+			else
+				eggCFrame = Utils.GetRandomPlotPos()
+			end
+		else
+			break
+		end
+		task.wait(0.5)
+	end
 end
 
 return Pets
