@@ -804,14 +804,7 @@ function Pets.PlaceEggs()
 	local MyPlantableParts = Utils.GetPlot()
 	local targetPart = MyPlantableParts[placeSlot]
 	local Boundary = Utils.GetBoundary(targetPart)
-	sData.Character:PivotTo(CFrame.new(Boundary.maxX, 3, Boundary.minZ))
-	task.wait(1)
-	sData.Character:PivotTo(CFrame.new(Boundary.maxX, 3, Boundary.maxZ))
-	task.wait(1)
-	sData.Character:PivotTo(CFrame.new(Boundary.minX, 3, Boundary.maxZ))
-	task.wait(1)
-	sData.Character:PivotTo(CFrame.new(Boundary.minX, 3, Boundary.minZ))
-	task.wait(1)
+
 	if placeMethod == "Set" then
 		plotPos = Utils.GetSetPlotPos(placeSlot)
 		eggCFrame = plotPos[1]
@@ -852,11 +845,19 @@ end
 
 function Pets.Test()
 	local MyPlantableParts = Utils.GetPlot()
-	for i, Plot in ipairs(MyPlantableParts) do
-		local bCf = Plot.CFrame
-		local size = Plot.Size
-		reg.Log("Plot " .. tostring(i) .. " Position : " .. tostring(bCf.Position) .. " Size : " .. tostring(size))
-	end
+	local boundary = Utils.GetBoundary(MyPlantableParts[1])
+	reg.Log("Boundary is : " .. tostring(boundary))
+	local bCf = boundary.cf
+	reg.Log("Position : " .. tostring(bCf.Position))
+	reg.Log("minX : " .. tostring(boundary.minX) .. " maxX : " .. tostring(boundary.maxX) .. " minZ : " .. tostring(boundary.minZ) .. " maxZ : " .. tostring(boundary.maxZ))
+	sData.Character:PivotTo(CFrame.new(boundary.maxX, 3, boundary.minZ))
+	task.wait(1)
+	sData.Character:PivotTo(CFrame.new(boundary.maxX, 3, boundary.maxZ))
+	task.wait(1)
+	sData.Character:PivotTo(CFrame.new(boundary.minX, 3, boundary.maxZ))
+	task.wait(1)
+	sData.Character:PivotTo(CFrame.new(boundary.minX, 3, boundary.minZ))
+	task.wait(1)
 end
 
 return Pets
