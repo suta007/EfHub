@@ -813,14 +813,14 @@ function Pets.PlaceEggs()
 			local egg = Utils.FindToolByPattern(sData.Backpack, selectEgg)
 			Utils.EquipTool(egg)
 
-			task.wait(0.3)
-			sData.Character:PivotTo(eggCFrame + Vector3.new(0, 5, 0))
+			--sData.Character:PivotTo(eggCFrame + Vector3.new(0, 5, 0))
 
 			task.wait(0.3)
-			local finalPos = vector.create(eggCFrame.Position.X, 0.135, eggCFrame.Position.Z)
+			local finalPos = vector.create(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
 			--local success, err = pcall(function()
 			sData.PetEggService:FireServer("CreateEgg", finalPos)
+			task.wait(1)
 			--end)
 			--if not success then
 			--	reg.Log("PlaceEgg failed: " .. tostring(err))
