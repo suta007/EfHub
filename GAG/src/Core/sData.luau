@@ -172,7 +172,7 @@ for itemName, itemInfo in pairs(SEASON_PASS_SHOP_DATA) do
 	sData.SeasonPassPriceTable[itemName] = itemInfo.Price
 end
 
-local PET_EGG_DATA = sData.Data:WaitForChild("PetRegistry"):WaitForChild("PetEggs")
+local PET_EGG_DATA = require(sData.Data:WaitForChild("PetRegistry"):WaitForChild("PetEggs"))
 sData.EggDataTable = { "ALL" }
 for eggName, _eggInfo in pairs(PET_EGG_DATA) do
 	table.insert(sData.EggDataTable, eggName)
