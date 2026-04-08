@@ -817,7 +817,7 @@ function Pets.PlaceEggs()
 			sData.Character:PivotTo(eggCFrame + Vector3.new(0, 5, 0))
 
 			task.wait(0.3)
-			local finalPos = Vector3.new(eggCFrame.Position.X, 1.5, eggCFrame.Position.Z)
+			local finalPos = vector.create(eggCFrame.Position.X, 1.5, eggCFrame.Position.Z)
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
 			local success, err = pcall(function()
 				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", finalPos)
