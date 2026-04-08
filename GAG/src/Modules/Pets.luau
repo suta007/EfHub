@@ -798,6 +798,20 @@ function Pets.PlaceEggs()
 	local placeMethod = Options.ddPlaceMethod.Value
 	local plotPos
 	local eggCFrame
+	reg.Log("Place Method is : " .. tostring(Options.ddPlaceMethod.Value))
+	reg.Log("Place Slot is : " .. tostring(Options.ddPlaceSlot.Value))
+
+	local MyPlantableParts = Utils.GetPlot()
+	local targetPart = MyPlantableParts[placeSlot]
+	local Boundary = Utils.GetBoundary(targetPart)
+	sData.Character:PivotTo(CFrame.new(Boundary.maxX, 3, Boundary.minZ))
+	task.wait(1)
+	sData.Character:PivotTo(CFrame.new(Boundary.maxX, 3, Boundary.maxZ))
+	task.wait(1)
+	sData.Character:PivotTo(CFrame.new(Boundary.minX, 3, Boundary.maxZ))
+	task.wait(1)
+	sData.Character:PivotTo(CFrame.new(Boundary.minX, 3, Boundary.minZ))
+	task.wait(1)
 	if placeMethod == "Set" then
 		plotPos = Utils.GetSetPlotPos(placeSlot)
 		eggCFrame = plotPos[1]
