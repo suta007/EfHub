@@ -3492,7 +3492,7 @@ PlaceEggs = function()
 			return
 		end
 		local NewPos = (cf * CFrame.new(x, 0, z)).Position
-		local finalPos = Vector3.new(NewPos.X, y, NewPos.Z)
+		local finalPos = vector.create(NewPos.X, y, NewPos.Z)
 
 		local myIndex = Random.new():NextInteger(1, #PlaceEggList)
 		local Egg = PlaceEggList[myIndex]
