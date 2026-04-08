@@ -850,4 +850,13 @@ function Pets.PlaceEggs()
 	end
 end
 
+function Pets.Test()
+	local MyPlantableParts = Utils.GetPlot()
+	for i, Plot in ipairs(MyPlantableParts) do
+		local bCf = Plot.CFrame
+		local size = Plot.Size
+		reg.Log("Plot " .. tostring(i) .. " Position : " .. tostring(bCf.Position) .. " Size : " .. tostring(size))
+	end
+end
+
 return Pets
