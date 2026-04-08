@@ -126,6 +126,7 @@ function Utils.GetSetPlotPos(plot, order, x)
 	end
 	local targetPart = MyPlantableParts[plotNum]
 	local Boundary = Utils.GetBoundary(targetPart)
+	local cframe = Boundary.cf
 	local newX = x or Boundary.maxX
 	local y = 0.15
 	local newZ = Boundary.minZ + (newOrder * 4)
@@ -142,7 +143,14 @@ function Utils.GetSetPlotPos(plot, order, x)
 		end
 		return Utils.GetSetPlotPos(plotNum, 0)
 	end
-	return { CFrame.new(newX, y, newZ), plotNum, newOrder, newX }
+
+	local localOffset = CFrame.new(newX, y, newZ)
+	local worldCFrame = cframe * localOffset
+
+	local finalX = worldCFrame.Position.X
+	local finalY = cframe.Position.Y
+	local finalZ = worldCFrame.Position.Z
+	return { CFrame.new(finalX, finalY, finalZ), plotNum, newOrder, newX }
 end
 
 function Utils.GetPosition()

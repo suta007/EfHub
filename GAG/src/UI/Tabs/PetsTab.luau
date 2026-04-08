@@ -291,13 +291,15 @@ function PetsTab.Initialize(registry)
 	HatchEggSection:AddToggle("tgPlaceEggsEn", {
 		Title = "Enable Auto Place Eggs",
 		Default = false,
-		Callback = function(_Value)
+		Callback = function(Value)
 			--[[ 			EfTasks.ToggleTask("PlaceEggs", Value, function()
 				Pets.PlaceEggs()
 				task.wait(2)
 			end) ]]
 			--Pets.PlaceEggs()
-			Pets.Test()
+			if Value then
+				Pets.Test()
+			end
 			QuickSave()
 		end,
 	})

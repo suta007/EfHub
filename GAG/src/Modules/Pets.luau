@@ -798,12 +798,6 @@ function Pets.PlaceEggs()
 	local placeMethod = Options.ddPlaceMethod.Value
 	local plotPos
 	local eggCFrame
-	reg.Log("Place Method is : " .. tostring(Options.ddPlaceMethod.Value))
-	reg.Log("Place Slot is : " .. tostring(Options.ddPlaceSlot.Value))
-
-	local MyPlantableParts = Utils.GetPlot()
-	local targetPart = MyPlantableParts[placeSlot]
-	local Boundary = Utils.GetBoundary(targetPart)
 
 	if placeMethod == "Set" then
 		plotPos = Utils.GetSetPlotPos(placeSlot)
@@ -820,11 +814,8 @@ function Pets.PlaceEggs()
 			Utils.EquipTool(egg)
 
 			task.wait(0.3)
-			local finalPos = Vector3.new(eggCFrame.Position.X, eggCFrame.Position.Y, eggCFrame.Position.Z)
-			reg.Log("Pos is : " .. tostring(finalPos))
-			sData.Character:PivotTo(eggCFrame + Vector3.new(0, 5, 0))
 			local success, err = pcall(function()
-				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", finalPos)
+				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", Vector3.new(eggCFrame.Position.X, 1.5, eggCFrame.Position.Z))
 			end)
 			if not success then
 				reg.Log("PlaceEgg failed: " .. tostring(err))
