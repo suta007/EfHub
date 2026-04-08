@@ -813,9 +813,11 @@ function Pets.PlaceEggs()
 			Utils.EquipTool(egg)
 
 			task.wait(0.3)
-			reg.Log("Position is : " .. tostring(eggCFrame.Position))
+			local finalPos = Vector3.new(eggCFrame.Position.X, eggCFrame.Position.Y, eggCFrame.Position.Z)
+			reg.Log("Pos is : " .. tostring(finalPos))
+			sData.Character:PivotTo(eggCFrame + Vector3.new(0, 5, 0))
 			local success, err = pcall(function()
-				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", eggCFrame.Position)
+				sData.GameEvents:WaitForChild("PetEggService"):FireServer("CreateEgg", finalPos)
 			end)
 			if not success then
 				reg.Log("PlaceEgg failed: " .. tostring(err))
