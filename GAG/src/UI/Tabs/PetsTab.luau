@@ -17,6 +17,7 @@ function PetsTab.Initialize(registry)
 
 	Tabs.Pets = Interface:AddTab({ Title = "Pets", Icon = "paw-print" })
 
+	--#region Age Break Section
 	local AgeBreakSection = Tabs.Pets:AddCollapsibleSection("Age Break", false)
 
 	AgeBreakSection:AddToggle("tgAgeBreakEnabled", {
@@ -97,6 +98,9 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	--#endregion
+
+	--#region Mutant Section
 
 	local MutantSection = Tabs.Pets:AddCollapsibleSection("Mutation", false)
 
@@ -236,7 +240,9 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	--#endregion
 
+	--#region Feed Pets Section
 	local FeedPetsSection = Tabs.Pets:AddCollapsibleSection("Feed Pets", false)
 
 	FeedPetsSection:AddToggle("tgFeedPetsEnabled", {
@@ -277,6 +283,191 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	--#endregion
+
+	--#region Egg Section
+	local HatchEggSection = Tabs.Pets:AddCollapsibleSection("Hatch Eggs", false)
+
+	HatchEggSection:AddToggle("tgPlaceEggsEn", {
+		Title = "Enable Auto Place Eggs",
+		Default = false,
+		Callback = function(Value)
+			--[[ 			EfTasks.ToggleTask("PlaceEggs", Value, function()
+				Pets.PlaceEggs()
+				task.wait(2)
+			end) ]]
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddButton({
+		Title = "Clear Selected Egg Type",
+		Callback = function()
+			Options.ddPlaceEgg:SetValue({ ALL = true })
+		end,
+	})
+	HatchEggSection:AddDropdown("ddPlaceEgg", {
+		Title = "Select Egg Type",
+		Values = sData.EggDataTable,
+		Default = { "ALL" },
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddInput("ipMaxEggs", {
+		Title = "Max Egg",
+		Default = 3,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDropdown("ddPlaceMethod", {
+		Title = "Select Place Method",
+		Values = { "Set", "Random" },
+		Default = "Set",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDropdown("ddPlaceSlot", {
+		Title = "Select Place Slot",
+		Values = { "1", "2" },
+		Default = "1",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDropdown("ddSpeedLoadOut", {
+		Title = "Speed Loadout",
+		Values = { "0", "1", "2", "3", "4", "5", "6" },
+		Default = "1",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddInput("ipDelayPlaceEgg", {
+		Title = "Delay",
+		Default = 2,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDivider()
+	HatchEggSection:AddToggle("tgAutoHatchEn", {
+		Title = "Enable Auto Hatch",
+		Default = false,
+		Callback = function(Value)
+			--[[ 			if not Value then
+				fVar.IsHatching = false
+			end
+			EfTasks.ToggleTask("AutoHatch", Value, function()
+				Pets.AutoHatch()
+				task.wait(2)
+			end) ]]
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDropdown("ddHatchLoadOut", {
+		Title = "Select Hatch Loadout",
+		Values = { "1", "2", "3", "4", "5", "6" },
+		Default = "2",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddButton({
+		Title = "Clear Selected Special Pet Type",
+		Callback = function()
+			Options.ddSpecialHatchPet:SetValue({ NONE = true })
+		end,
+	})
+	HatchEggSection:AddDropdown("ddSpecialHatchPet", {
+		Title = "Select Special Pet Type",
+		Values = sData.PetsDataBlackTable,
+		Default = { "NONE" },
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDropdown("ddSpecialHatchThreshold", {
+		Title = "Select Weight Threshold",
+		Values = { "Below", "Above" },
+		Default = "Below",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddInput("ipSpecialHatchWeight", {
+		Title = "Base Weight",
+		Default = 3.5,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddInput("ipDelayHatchPet", {
+		Title = "Delay",
+		Default = 2,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDivider()
+	HatchEggSection:AddToggle("tgSellHatchEn", {
+		Title = "Enable Auto Sell Hatch",
+		Default = false,
+		Callback = function(_Value)
+			--[[ 			EfTasks.ToggleTask("SellHatch", Value, function()
+				Pets.SellHatch()
+				task.wait(2)
+			end) ]]
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddButton({
+		Title = "Clear Selected Sell Pet Type",
+		Callback = function()
+			Options.ddSellPet:SetValue({ NONE = true })
+		end,
+	})
+	HatchEggSection:AddDropdown("ddSellPet", {
+		Title = "Select Sell Pet Type",
+		Values = sData.PetsDataBlackTable,
+		Default = { "NONE" },
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddDropdown("ddSellPetThreshold", {
+		Title = "Select Weight Threshold",
+		Values = { "Below", "Above" },
+		Default = "Below",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	HatchEggSection:AddInput("ipSellPetWeight", {
+		Title = "Base Weight",
+		Default = 3.5,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--#endregion
 end
 
 return PetsTab

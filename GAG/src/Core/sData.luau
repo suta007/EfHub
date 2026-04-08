@@ -58,6 +58,7 @@ sData.Workspace = game:GetService("Workspace")
 --	reg = registry
 --end
 
+--local PetRegistry = require("../../referent/game/ReplicatedStorage/Data/PetRegistry")
 local SEED_SHOP_DATA = require(sData.Data:WaitForChild("SeedShopData") :: any)
 sData.SeedShopTable = { "ALL" }
 for seedName, _seedInfo in pairs(SEED_SHOP_DATA) do
@@ -93,6 +94,8 @@ for petName, petInfo in pairs(PET_LIST) do
 	table.insert(sData.PetsDataTable, petName)
 	sData.HungerDataTable[petName] = petInfo["DefaultHunger"]
 end
+sData.PetsDataBlackTable = table.clone(sData.PetsDataTable)
+sData.PetsDataBlackTable[1] = "NONE"
 
 local PET_MUTATION_DATA = require(sData.PetRegistry:WaitForChild("PetMutationRegistry") :: any)
 sData.PetMutationDataTable = { "NONE" }
@@ -167,6 +170,12 @@ sData.SeasonPassPriceTable = {}
 for itemName, itemInfo in pairs(SEASON_PASS_SHOP_DATA) do
 	table.insert(sData.SeasonPassShopTable, itemName)
 	sData.SeasonPassPriceTable[itemName] = itemInfo.Price
+end
+
+local PET_EGG_DATA = sData.Data:WaitForChild("PetRegistry"):WaitForChild("PetEggs")
+sData.EggDataTable = { "ALL" }
+for eggName, _eggInfo in pairs(PET_EGG_DATA) do
+	table.insert(sData.EggDataTable, eggName)
 end
 
 return sData

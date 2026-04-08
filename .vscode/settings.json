@@ -16,10 +16,15 @@
     "luau-lsp.sourcemap.enabled": false,
     "luau-lsp.sourcemap.includeNonScripts": false,
     "[lua]": {
-        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.foldingStrategy": "indentation",
+        "editor.showFoldingControls": "always"
     },
     "[luau]": {
-        "editor.defaultFormatter": "JohnnyMorganz.stylua"
+        "editor.defaultFormatter": "JohnnyMorganz.stylua",
+        "editor.foldingStrategy": "indentation",
+        "editor.showFoldingControls": "always"
     },
-    "stylua.styluaPath": ""
+    "stylua.styluaPath": "",
+    "editor.defaultFormatter": "JohnnyMorganz.stylua"
 }
