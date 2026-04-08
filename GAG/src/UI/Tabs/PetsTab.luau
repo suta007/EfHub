@@ -341,7 +341,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddDropdown("ddSpeedLoadOut", {
+	HatchEggSection:AddDropdown("ddSpeedLoadout", {
 		Title = "Speed Loadout",
 		Values = { "0", "1", "2", "3", "4", "5", "6" },
 		Default = "1",
@@ -373,7 +373,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddDropdown("ddHatchLoadOut", {
+	HatchEggSection:AddDropdown("ddHatchLoadout", {
 		Title = "Select Hatch Loadout",
 		Values = { "1", "2", "3", "4", "5", "6" },
 		Default = "2",
@@ -414,7 +414,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddDropdown("ddSpecialHatchLoadOut", {
+	HatchEggSection:AddDropdown("ddSpecialHatchLoadout", {
 		Title = "Select Special Hatch Loadout",
 		Values = { "1", "2", "3", "4", "5", "6" },
 		Default = "4",
@@ -476,7 +476,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddDropdown("ddSellLoadOut", {
+	HatchEggSection:AddDropdown("ddSellLoadout", {
 		Title = "Select Sell Loadout",
 		Values = { "1", "2", "3", "4", "5", "6" },
 		Default = "3",
