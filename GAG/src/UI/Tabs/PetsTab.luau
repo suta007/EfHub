@@ -292,14 +292,7 @@ function PetsTab.Initialize(registry)
 		Title = "Enable Auto Place Eggs",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			EfTasks.ToggleTask("PlaceEggs", Value, function()
-				Pets.PlaceEggs()
-				task.wait(2)
-			end) ]]
-			--
-			if Value then
-				Pets.PlaceEggs()
-			end
+			Pets.RunHatchSet()
 			QuickSave()
 		end,
 	})
@@ -366,16 +359,7 @@ function PetsTab.Initialize(registry)
 		Title = "Enable Auto Hatch",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			if not Value then
-				fVar.IsHatching = false
-			end
-			EfTasks.ToggleTask("AutoHatch", Value, function()
-				Pets.AutoHatch()
-				task.wait(2)
-			end) ]]
-			if Value then
-				Pets.HatchEgg()
-			end
+			Pets.RunHatchSet()
 			QuickSave()
 		end,
 	})
@@ -430,14 +414,11 @@ function PetsTab.Initialize(registry)
 		end,
 	})
 	HatchEggSection:AddDivider()
-	HatchEggSection:AddToggle("tgSellHatchEn", {
-		Title = "Enable Auto Sell Hatch",
+	HatchEggSection:AddToggle("tgSellPetEn", {
+		Title = "Enable Auto Sell Pet",
 		Default = false,
-		Callback = function(_Value)
-			--[[ 			EfTasks.ToggleTask("SellHatch", Value, function()
-				Pets.SellHatch()
-				task.wait(2)
-			end) ]]
+		Callback = function()
+			Pets.RunHatchSet()
 			QuickSave()
 		end,
 	})
@@ -465,7 +446,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddInput("ipSellPetWeight", {
+	HatchEggSection:AddInput("inpSellPetWeight", {
 		Title = "Base Weight",
 		Default = 3.5,
 		Numeric = true,
@@ -482,7 +463,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddInput("ipDelaySellHatch", {
+	HatchEggSection:AddInput("inpDelaySellPet", {
 		Title = "Delay",
 		Default = 2,
 		Numeric = true,

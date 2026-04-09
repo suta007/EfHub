@@ -779,8 +779,6 @@ function Pets.PlaceEggs()
 	if not Options.tgPlaceEggsEn or not Options.tgPlaceEggsEn.Value then
 		return
 	end
-	local delayPlaceEgg = tonumber(Options.inpDelayPlaceEgg.Value)
-	task.wait(delayPlaceEgg)
 
 	local placeEggList = GetSelectedItems(Options.ddPlaceEgg.Value)
 	if #placeEggList == 0 then
@@ -812,13 +810,13 @@ function Pets.PlaceEggs()
 			local selectEgg = placeEggList[rng:NextInteger(1, #placeEggList)]
 			local egg = Utils.FindToolByPattern(sData.Backpack, selectEgg)
 			Utils.EquipTool(egg)
-			task.wait(0.5)
+			task.wait(0.3)
 			--local finalPos = Vector3.new(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			local finalPos = vector.create(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
 
 			sData.PetEggService:FireServer("CreateEgg", finalPos)
-			task.wait(0.5)
+			task.wait(0.3)
 			if placeMethod == "Set" then
 				plotPos = Utils.GetSetPlotPos(plotPos[2], plotPos[3], plotPos[4])
 				eggCFrame = plotPos[1]
@@ -826,7 +824,7 @@ function Pets.PlaceEggs()
 				eggCFrame = Utils.GetRandomPlotPos()
 			end
 			Utils.UnequipTool()
-			task.wait()
+			task.wait(0.1)
 		else
 			break
 		end
@@ -867,8 +865,7 @@ function Pets.HatchEgg()
 	if not Options.tgAutoHatchEn or not Options.tgAutoHatchEn.Value then
 		return
 	end
-	local delayHatchEgg = tonumber(Options.inpDelayHatchEgg.Value)
-	task.wait(delayHatchEgg)
+
 	while Options.tgAutoHatchEn.Value do
 		local GetData_result = sData.DataService:GetData()
 		local ReadyEggs = {}
@@ -917,6 +914,112 @@ function Pets.HatchEgg()
 		end
 		task.wait(1)
 		break
+	end
+end
+
+local function IsValidSellPet(petData)
+	if not petData or type(petData) ~= "table" then
+		return false
+	end
+	local Options = reg.Options
+	local sPet = GetSelectedItems(Options.ddSellPet.Value)
+	local sThreshold = Options.ddSellPetThreshold.Value
+	local sWeight = tonumber(Options.inpSellPetWeight.Value)
+
+	local sPetType = petData.PetType
+	local sBaseWeight = petData.PetData.BaseWeight
+	local sMutant = petData.PetData.MutationType or "m"
+	local sFavorite = petData.PetData.IsFavorite
+	if sFavorite then
+		return false
+	end
+	if sMutant ~= "m" then
+		return false
+	end
+	if not table.find(sPet, sPetType) then
+		return false
+	end
+	if sWeight > 0 then
+		if sThreshold == "Below" and sBaseWeight >= sWeight then
+			return false
+		end
+		if sThreshold == "Above" and sBaseWeight <= sWeight then
+			return false
+		end
+	end
+	return true
+end
+local function scanSellPetList()
+	local SellPetList = {}
+	local GetData_result = sData.DataService:GetData()
+	local inventory = GetData_result.PetsData.PetInventory
+	if inventory then
+		for _, v in pairs(inventory) do
+			if type(v) == "table" then
+				for _, petData in pairs(v) do
+					if type(petData) == "table" and IsValidSellPet(petData) then
+						table.insert(SellPetList, petData.UUID)
+					end
+				end
+			end
+		end
+	end
+	return SellPetList
+end
+function Pets.SellPet()
+	local Options = reg.Options
+	if not Options.tgSellPetEn or not Options.tgSellPetEn.Value then
+		return
+	end
+
+	local sellPetList = scanSellPetList()
+	if #sellPetList > 0 then
+		pcall(Pets.SwapPetLoadout, tonumber(Options.ddSellLoadout.Value) or 3)
+		for _, petUUID in pairs(sellPetList) do
+			if Pets.HeldPet(petUUID) then
+				task.wait()
+				sData.GameEvents:WaitForChild("SellPet_RE"):FireServer()
+			end
+			task.wait(0.2)
+		end
+	end
+end
+local hatchSetTask = nil
+function Pets.RunHatchSet()
+	local Options = reg.Options
+	local PlaceEggsEn = Options.tgPlaceEggsEn and Options.tgPlaceEggsEn.Value
+	local HatchSetEn = Options.tgAutoHatchEn and Options.tgAutoHatchEn.Value
+	local SellPetEn = Options.tgSellPetEn and Options.tgSellPetEn.Value
+
+	if not hatchSetTask then
+		hatchSetTask = task.spawn(function()
+			while true do
+				pcall(function()
+					local delayPlaceEgg = tonumber(Options.inpDelayPlaceEgg.Value)
+					local delayHatchEgg = tonumber(Options.inpDelayHatchEgg.Value)
+					local delaySellPet = tonumber(Options.inpDelaySellPet.Value)
+					task.wait(delayPlaceEgg)
+					Pets.PlaceEggs()
+
+					task.wait(delayHatchEgg)
+					Pets.HatchEgg()
+
+					task.wait(delaySellPet)
+					Pets.SellPet()
+					task.wait()
+				end)
+			end
+		end)
+	end
+
+	if not (PlaceEggsEn or HatchSetEn or SellPetEn) then
+		pcall(function()
+			if hatchSetTask then
+				hatchSetTask:Cancel()
+				hatchSetTask = nil
+				return
+			end
+		end)
 	end
 end
 
