@@ -834,7 +834,7 @@ end
 
 local function ValidEggs(EggsData, rEggs)
 	local Options = reg.Options
-	local sHatchPet = GetSelectedItems(Options.SpecialHatchPet.Value) or {}
+	local sHatchPet = GetSelectedItems(Options.ddSpecialHatchPet.Value) or {}
 	local sWeight = tonumber(Options.inpSpecialHatchWeight.Value) or 3.5
 
 	local spEggs = {}
