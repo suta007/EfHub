@@ -374,7 +374,7 @@ function PetsTab.Initialize(registry)
 				task.wait(2)
 			end) ]]
 			if Value then
-				Pets.AutoHatch()
+				Pets.HatchEgg()
 			end
 			QuickSave()
 		end,
