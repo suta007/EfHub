@@ -294,14 +294,14 @@ function Pets.UnequipPet(uuid)
 end
 
 function Pets.SwapPetLoadout(Loadout)
-	local currentLoadout = sData.DataService:GetData().PetsData.SelectedPetLoadout
-	if currentLoadout == Loadout then
-		return
-	end
 	if Loadout == 2 then
 		Loadout = 3
 	elseif Loadout == 3 then
 		Loadout = 2
+	end
+	local currentLoadout = sData.DataService:GetData().PetsData.SelectedPetLoadout
+	if currentLoadout == Loadout then
+		return
 	end
 	sData.PetsServiceEvent:FireServer("SwapPetLoadout", Loadout)
 	task.wait(9)
