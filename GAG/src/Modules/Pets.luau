@@ -304,7 +304,7 @@ function Pets.SwapPetLoadout(Loadout)
 		Loadout = 2
 	end
 	sData.PetsServiceEvent:FireServer("SwapPetLoadout", Loadout)
-	task.wait(8)
+	task.wait(9)
 end
 
 function Pets.FarmLevel()
@@ -813,12 +813,10 @@ function Pets.PlaceEggs()
 			local egg = Utils.FindToolByPattern(sData.Backpack, selectEgg)
 			Utils.EquipTool(egg)
 			task.wait(0.3)
-			--local finalPos = vector.create(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			local finalPos = Vector3.new(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
 
 			sData.PetEggService:FireServer("CreateEgg", finalPos)
-			task.wait(0.3)
 
 			if placeMethod == "Set" then
 				plotPos = Utils.GetSetPlotPos(plotPos[2], plotPos[3], plotPos[4])
@@ -830,25 +828,94 @@ function Pets.PlaceEggs()
 		else
 			break
 		end
-		task.wait(0.5)
+		task.wait(0.1)
 	end
 end
 
-function Pets.Test()
-	local MyPlantableParts = Utils.GetPlot()
-	local boundary = Utils.GetBoundary(MyPlantableParts[1])
-	reg.Log("Boundary is : " .. tostring(boundary))
-	local bCf = boundary.cf
-	reg.Log("Position : " .. tostring(bCf.Position))
-	reg.Log("minX : " .. tostring(boundary.minX) .. " maxX : " .. tostring(boundary.maxX) .. " minZ : " .. tostring(boundary.minZ) .. " maxZ : " .. tostring(boundary.maxZ))
-	sData.Character:PivotTo(CFrame.new(boundary.maxX, 3, boundary.minZ))
-	task.wait(1)
-	sData.Character:PivotTo(CFrame.new(boundary.maxX, 3, boundary.maxZ))
-	task.wait(1)
-	sData.Character:PivotTo(CFrame.new(boundary.minX, 3, boundary.maxZ))
-	task.wait(1)
-	sData.Character:PivotTo(CFrame.new(boundary.minX, 3, boundary.minZ))
-	task.wait(1)
+local function ValidEggs(EggsData, rEggs)
+	local Options = reg.Options
+	local sHatchPet = GetSelectedItems(Options.SpecialHatchPet.Value) or {}
+	local sWeight = tonumber(Options.inpSpecialHatchWeight.Value) or 3.5
+
+	local spEggs = {}
+	local nmEggs = {}
+	if not EggsData or not rEggs then
+		return nil, nil
+	end
+
+	for _, rEgg in rEggs do
+		local EggData = EggsData[rEgg:GetAttribute("OBJECT_UUID")]
+		if EggData then
+			local HatchWeight = EggData.Data.BaseWeight * 1.1
+			local HatchPetType = EggData.Data.Type
+			if sWeight ~= 0 and HatchWeight >= sWeight then
+				table.insert(spEggs, rEgg)
+			elseif #sHatchPet > 0 and table.find(sHatchPet, HatchPetType) then
+				table.insert(spEggs, rEgg)
+			else
+				table.insert(nmEggs, rEgg)
+			end
+		end
+	end
+	return nmEggs, spEggs
+end
+
+function Pets.HatchEgg()
+	local Options = reg.Options
+	if not Options.tgAutoHatchEn or not Options.tgAutoHatchEn.Value then
+		return
+	end
+	local delayHatchEgg = tonumber(Options.inpDelayHatchEgg.Value)
+	task.wait(delayHatchEgg)
+	while Options.tgAutoHatchEn.Value do
+		local GetData_result = sData.DataService:GetData()
+		local ReadyEggs = {}
+		local PetsData = {}
+		local myEggs = Pets.EggInFarm()
+		local SelectedSlot = GetData_result.SaveSlots.SelectedSlot
+		local fData = GetData_result.SaveSlots.AllSlots[SelectedSlot].SavedObjects
+		if not fData or type(fData) ~= "table" then
+			task.wait(5)
+			continue
+		end
+		local petCount = 0
+		for Key, PetData in pairs(fData) do
+			if PetData.ObjectType == "PetEgg" then
+				PetsData[Key] = PetData
+				petCount = petCount + 1
+			end
+		end
+
+		for _, nEggs in pairs(myEggs) do
+			if nEggs:GetAttribute("READY") == true then
+				table.insert(ReadyEggs, nEggs)
+			end
+		end
+
+		if petCount ~= #ReadyEggs then
+			task.wait(5)
+			continue
+		end
+		local NormalEggs, SpecialEggs = ValidEggs(PetsData, ReadyEggs)
+
+		if #SpecialEggs > 0 then
+			pcall(Pets.SwapPetLoadout, tonumber(Options.ddSpecialHatchLoadout.Value) or 4)
+			for _, sEgg in pairs(SpecialEggs) do
+				sData.PetEggService:FireServer("HatchPet", sEgg)
+				task.wait(0.2)
+			end
+		end
+		task.wait(2)
+		if #NormalEggs > 0 then
+			pcall(Pets.SwapPetLoadout, tonumber(Options.ddHatchLoadout.Value) or 2)
+			for _, rEgg in pairs(NormalEggs) do
+				sData.PetEggService:FireServer("HatchPet", rEgg)
+				task.wait(0.2)
+			end
+		end
+		task.wait(1)
+		break
+	end
 end
 
 return Pets

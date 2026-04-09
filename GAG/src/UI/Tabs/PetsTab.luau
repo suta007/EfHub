@@ -373,6 +373,9 @@ function PetsTab.Initialize(registry)
 				Pets.AutoHatch()
 				task.wait(2)
 			end) ]]
+			if Value then
+				Pets.AutoHatch()
+			end
 			QuickSave()
 		end,
 	})
@@ -400,15 +403,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddDropdown("ddSpecialHatchThreshold", {
-		Title = "Select Weight Threshold",
-		Values = { "Below", "Above" },
-		Default = "Below",
-		Callback = function()
-			QuickSave()
-		end,
-	})
-	HatchEggSection:AddInput("ipSpecialHatchWeight", {
+	HatchEggSection:AddInput("inpSpecialHatchWeight", {
 		Title = "Base Weight",
 		Default = 3.5,
 		Numeric = true,
@@ -425,7 +420,7 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	HatchEggSection:AddInput("ipDelayHatchPet", {
+	HatchEggSection:AddInput("inpDelayHatchEgg", {
 		Title = "Delay",
 		Default = 2,
 		Numeric = true,

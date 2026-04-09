@@ -119,7 +119,7 @@ end
 
 function Utils.GetSetPlotPos(plot, order, x)
 	local plotNum = plot or 1
-	local newOrder = (order or 0) + 1
+	local newOrder = order or 0
 	local MyPlantableParts = Utils.GetPlot()
 	if #MyPlantableParts == 0 then
 		return nil
@@ -130,6 +130,7 @@ function Utils.GetSetPlotPos(plot, order, x)
 	local newX = x or Boundary.maxX
 	local y = 0.15
 	local newZ = Boundary.minZ + (newOrder * 4)
+	newOrder = newOrder + 1
 	if newZ > Boundary.maxZ then
 		newX = newX - 4
 		newZ = Boundary.minZ

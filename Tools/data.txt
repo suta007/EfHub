@@ -1,0 +1,175 @@
+Script initialized successfully.
+========== [ LocalPlayer ] ==========
+[Properties - Dynamic]
+  AccountAge: 179
+  AppearanceDidLoad: false
+  Archivable: true
+  AutoJumpEnabled: true
+  CameraMaxZoomDistance: 128
+  CameraMinZoomDistance: 0.5
+  CameraMode: Enum.CameraMode.Classic
+  CanLoadCharacterAppearance: true
+  Capabilities: 
+  Character: Workspace.H3rM1t29
+  CharacterAppearance: https://api.roblox.com/v1.1/avatar-fetch/?placeId=126884695634066&userId=9701650296
+  CharacterAppearanceId: 9701650296
+  ChatAvailabilityStatus: AgeVerificationRequired
+  ChatMode: Enum.ChatMode.TextAndMenu
+  ClassName: Player
+  DataComplexity: 0
+  DataComplexityLimit: 45000
+  DataCost: 457358
+  DataReady: false
+  DevCameraOcclusionMode: Enum.DevCameraOcclusionMode.Zoom
+  DevComputerCameraMode: Enum.DevComputerCameraMovementMode.UserChoice
+  DevComputerMovementMode: Enum.DevComputerMovementMode.UserChoice
+  DevEnableMouseLock: true
+  DevTouchCameraMode: Enum.DevTouchCameraMovementMode.UserChoice
+  DevTouchMovementMode: Enum.DevTouchMovementMode.UserChoice
+  DisplayName: H3rM1t29
+  FollowUserId: 0
+  GameplayPaused: false
+  Guest: false
+  HasRobloxSubscription: false
+  HasVerifiedBadge: false
+  HealthDisplayDistance: 100
+  InputLatency: 0
+  LocaleId: th-th
+  MaximumSimulationRadius: 1000
+  MembershipType: Enum.MembershipType.None
+  Name: H3rM1t29
+  NameDisplayDistance: 100
+  Neutral: true
+  OsPlatform: 
+  Parent: Players
+  PartyId: 
+  PlatformName: 
+  RobloxLocked: false
+  Sandboxed: false
+  SimulationRadius: 398.4009094238281
+  SourceAssetId: -1
+  StepIdOffset: 0
+  TeamColor: White
+  Teleported: false
+  TeleportedIn: false
+  ThirdPartyTextChatRestrictionStatus: Enum.ChatRestrictionStatus.NotRestricted
+  UnfilteredChat: false
+  UniqueId: 00000000-0000-0000-0000-000000000000
+  UserId: 9701650296
+  VRDevice: 
+  VREnabled: false
+  archivable: true
+  className: Player
+  userId: 9701650296
+[Attributes - Dynamic]
+  OfflineGrewPets: true
+  FavoriteIconsEnabled: true
+  PassBoost: 0
+  AB_StarterPack: Variant1
+  Core_FOV: 70
+  AB_RewardedAds: true
+  KeepPetOnGround: false
+  AB_RestockTimer_NEW: Not_Visible
+  AB_rewarded_video_ad_DailyDealsInf: true
+  IncubatedPets: true
+  __UG_NEW: false
+  EasterEggHuntCooldownRemaining: -0
+  AB_rewarded_video_ad_WateringCan: true
+  Loading_Screen_Finished: true
+  EasterEggHuntCooldownEnd: 1775710269.70782
+  DontOpenAction: false
+  FriendBoost: 0
+  TestKeyTeleport: false
+  AB_FTUELuckBoost: 0
+  PetScaling: false
+  AB_PetTutorial: false
+  _tradeHistoryFetched: true
+  __UG: true
+  SessionTime: 888
+  AB_TutorialVariant: Variant4
+  SessionTimeLuckEnabled: false
+  Grow_Amount: 41585
+  Haptic_AB: true
+  UnfairTradeWarning: true
+  AB_FruitCollection: false
+  PetMutationVFX: false
+  CurrentSlot: Save Slot #2
+  CropMutationVFX: false
+  SessionTimeLuck: 0
+  PerformanceMode: true
+  Finished_Loading: true
+  LowerPlantFXQuality: false
+  ToggleNotifications: true
+  AutoCloseActivePetsUI: true
+  FenceSkin: DEFAULT
+  Setup_Finished: true
+  BonusBackpackSize: 50
+  NewYearsEggPriceMultiplier: Control
+  FarmFullyLoaded: true
+  Expansion: 0, 0, 0
+  BLOCK_TIME_UPDATES: true
+  TraderStreakReset: 12
+  AB_FTUEShovel: Variant3
+  SessionTimeLuckIndex: 1
+  ViewInventoryPermission: Everyone
+  DiggingRefreshTime: 8640
+  IncubatedPetEggs: true
+  DataFullyLoaded: true
+  Steal_AB: true
+==========================================
+========== [ Workspace ] ==========
+[Properties - Dynamic]
+  AirDensity: 0.0012000000569969416
+  AirTurbulenceIntensity: 0
+  AllowThirdPartySales: false
+  Archivable: true
+  AuthorityMode: Enum.AuthorityMode.Automatic
+  Capabilities: 
+  ClassName: Workspace
+  ClientAnimatorThrottling: Enum.ClientAnimatorThrottlingMode.Default
+  CurrentCamera: Workspace.Camera
+  DataCost: 160620
+  DistributedGameTime: 816.7500397958793
+  FallHeightEnabled: true
+  FallenPartsDestroyHeight: -500
+  FilteringEnabled: true
+  GlobalWind: 0, 0, 0
+  Gravity: 196.1999969482422
+  InsertPoint: 0, 0, 0
+  InterpolationThrottling: Enum.InterpolationThrottlingMode.Default
+  LevelOfDetail: Enum.ModelLevelOfDetail.Automatic
+  LuauTypeCheckMode: Enum.LuauTypeCheckMode.Default
+  ModelStreamingMode: Enum.ModelStreamingMode.Default
+  Name: Workspace
+  Parent: Ugc
+  PhysicsStepTime: 0.0024812459014356136
+  Retargeting: Enum.AnimatorRetargetingMode.Default
+  RobloxLocked: false
+  Sandboxed: false
+  SourceAssetId: -1
+  StreamingEnabled: false
+  Terrain: Workspace.Terrain
+  UniqueId: 00000000-0000-0000-0000-000000000000
+  WorldPivot: 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1
+  archivable: true
+  className: Workspace
+[Attributes - Dynamic]
+  AuthorizedRolesLiveGame: [255,254,7]
+  NightEvent: false
+  AuthorizedRolesQAGame: [255,254,253,200,16,15,7]
+  d: 100
+  AllEvents: ["TestEvent","BatCallerCharm"]
+  AllWeather: ["Obby","Gale","Frost","SheckleRain","MeteorShower","Disco","ChocolateRain","JandelStorm","DJJhai","Tornado","JandelLazer","BeeNado","BeeStorm","Blackhole","Rainbow","JandelFloat","Windy","SunGod","Volcano","MeteorStrike","Heatwave","AlienInvasion","SpaceTravel","UnderTheSea","Thunderstorm","SolarFlare","Drought","TropicalRain","ChickenRain","AuroraBorealis","Sandstorm","ShootingStars","DJSandstorm","Rain","PoolParty","AirHead","TextCollect","CrystalBeams","JandelZombie","RadioactiveCarrot","AcidRain","Armageddon","SolarEclipse","TK_RouteRunner","TK_PostDunk","TK_MoneyRain","TK_LightningStorm","JandelKatana","Stoplight","JunkbotRaid","Oil","Boil","Cooking","FlamingoLazer","FlamingoFloat","Enchantment","Beanaura","Brainrot Portal","Brainrot Stampede","Dissonant","BoomboxParty","JandelUFO","PyramidObby","ChristmasCrackers","WaterYourGardens","Earthquake","GiantSwordPull","Tsunami","RainDance","Sunset","YetiNight","Offering","MidasRain","StrobeParty","SoccerEvent","SeedRain","a","Supernova","SuperStorm","ReaperScythe","MarrowMoon","FruitBatAttack","VampireBatThirst","RainingGlassAnimals","GiantCauldron","GlassAnimalConcert","SafariRain","SafariDrought","SafariNight","SafariStampede","SafariOasis","Eruption","PermafrostExplosion","RestockFever","SafariTyphoon","SafariStorm","SafariDusk","SafariHunt","SafariMegaHarvest","AlienAurora","SmithingFever","SafariTour","SmithingStorm","LaserCrystals","GentleDrizzle","DiscoParty","Blizzard","Snowfall","SnowDay","MilkAndCookies","FestiveNight","SnowballFight","SilentNight","GiantCandyCaneRain","David's December Drop","ChristmasDinner","SantaIsHere","IceRink","IceKing","JandelWaldo","WhiteElephant","DivineSeedRain","GiantSnowballDodge","PrismaticSeedRain","TranscendentSeedRain","MythicalSeedRain","WhaleWaters","WinterAurora","2026Fireworks","Cyclone","SpinnerGame","4Seasons","SurfsUp","CupidsArrows","AlienChaos","LeprechaunRainbow","KingOfTheHill","JandelsLastStand","JandelBeanstalk","JandelStampede","JhaiWedding","JandelFestival","JandelMagician","Easter2026"]
+  AllowFakePurchases: false
+  GlobalCraftingMultiplier: 1
+  AuthorizedUsersLiveGame: [537836346,813163219,327423121,10916243,425901043,7627847305,33372493,339310190,3296891394]
+  1: D
+  TradingEligibilityState: true
+  LogLevelClient: Warning
+  AuthorizedUsersDevGame: [8095632868,327423121,178596165,8038988248,425901043,885530,10916243,14838908,6096303964,537836346,2927843917,813163219,1966448091,8047477009,8035006873,224410,59240296,538710840,169231774,4886900128,2678001507,2243026817,189239279,7627847305,3322671272,92896663,50252478,2275737958,8676725876,9062754010,9070867124,9099919347,4741243987,9887377047,8151008303,1647400306,9702825457,9923316322,355661302,33372493,-1,-2,-3,-4,348338200,5116026013,4135776327,339310190,724719395]
+  AuthorizedGlobalChatQueuers: [339310190,327423121,14838908,3296891394]
+  HeatwaveEvent: false
+  CurrentWeatherEvents: []
+  AuthorizedGlobalCommand: [10916243,327423121,425901043,3296891394,7627847305,33372493,355661302]
+  KillerBunny: false
+==========================================

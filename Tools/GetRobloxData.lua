@@ -139,3 +139,107 @@ end
 
 --ShowData(fData)
 --[[==========================================================]]
+
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+
+-- ฟังก์ชันดึง Properties ทั้งหมด (ใช้ความสามารถของ Delta)
+local function GetDynamicProperties(instance)
+	local props = {}
+
+	-- พยายามใช้ฟังก์ชันของ Executor (getproperties หรือ gethiddenproperties)
+	local getProps = getproperties or gethiddenproperties or nil
+
+	if getProps then
+		local success, result = pcall(function()
+			return getProps(instance)
+		end)
+		if success and type(result) == "table" then
+			for k, v in pairs(result) do
+				-- บางตัวอาจให้มาเป็น list ของชื่อ [1]="Name", [2]="ClassName"...
+				-- บางตัวอาจให้มาเป็น dict {Name="Part", ClassName="Part"...}
+				if type(k) == "number" and type(v) == "string" then
+					table.insert(props, v)
+				elseif type(k) == "string" then
+					table.insert(props, k)
+				end
+			end
+		end
+	end
+
+	-- Fallback: ถ้า Executor ไม่รองรับการดึงแบบ Dynamic ให้ใช้รายการพื้นฐาน
+	if #props == 0 then
+		AddLog("Warning: getproperties and gethiddenproperties not found or returned empty. Using fallback list.")
+		if instance:IsA("Player") then
+			props = { "Name", "DisplayName", "UserId", "AccountAge", "MembershipType", "Team" }
+		elseif instance:IsA("Workspace") or instance:IsA("WorldRoot") then
+			props = { "Name", "ClassName", "Gravity", "FallenPartsDestroyHeight", "DistributedGameTime" }
+		else
+			props = { "Name", "ClassName", "Parent" }
+		end
+	end
+
+	return props
+end
+
+local function LogAllData(title, instance)
+	AddLog("========== [ " .. title .. " ] ==========")
+
+	-- 1. ค้นหาและอ่าน Properties
+	AddLog("[Properties - Dynamic]")
+	local propertyNames = GetDynamicProperties(instance)
+
+	-- จัดลำดับและกรองชื่อที่ซ้ำกัน
+	local uniqueProps = {}
+	for _, name in ipairs(propertyNames) do
+		uniqueProps[name] = true
+	end
+
+	local sortedNames = {}
+	for name in pairs(uniqueProps) do
+		table.insert(sortedNames, name)
+	end
+	table.sort(sortedNames)
+
+	for _, name in ipairs(sortedNames) do
+		local success, value = pcall(function()
+			return instance[name]
+		end)
+		if success then
+			-- แปลงข้อมูลที่แสดงผลไม่ได้ให้เป็นข้อความ
+			local valStr = tostring(value)
+			if typeof(value) == "Instance" then
+				valStr = value:GetFullName()
+			end
+			AddLog("  " .. name .. ": " .. valStr)
+		end
+	end
+
+	-- 2. อ่าน Attributes (ดั้งเดิมของ Roblox ทำได้อยู่แล้ว)
+	AddLog("[Attributes - Dynamic]")
+	local attributes = instance:GetAttributes()
+	local attrCount = 0
+	for key, value in pairs(attributes) do
+		AddLog("  " .. tostring(key) .. ": " .. tostring(value))
+		attrCount = attrCount + 1
+	end
+
+	if attrCount == 0 then
+		AddLog("  (No attributes found)")
+	end
+
+	AddLog("==========================================")
+end
+
+-- เริ่มทำงาน
+task.spawn(function()
+	if LocalPlayer then
+		LogAllData("LocalPlayer", LocalPlayer)
+	else
+		AddLog("Error: LocalPlayer is nil")
+	end
+
+	task.wait(0.5) -- หน่วงเวลาเล็กน้อยเพื่อให้ Log ไม่ตีกัน
+	LogAllData("Workspace", Workspace)
+end)
