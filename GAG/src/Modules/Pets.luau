@@ -818,7 +818,7 @@ function Pets.PlaceEggs()
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
 
 			sData.PetEggService:FireServer("CreateEgg", finalPos)
-
+			task.wait(0.5)
 			if placeMethod == "Set" then
 				plotPos = Utils.GetSetPlotPos(plotPos[2], plotPos[3], plotPos[4])
 				eggCFrame = plotPos[1]
