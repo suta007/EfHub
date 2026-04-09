@@ -812,7 +812,7 @@ function Pets.PlaceEggs()
 			local selectEgg = placeEggList[rng:NextInteger(1, #placeEggList)]
 			local egg = Utils.FindToolByPattern(sData.Backpack, selectEgg)
 			Utils.EquipTool(egg)
-			task.wait(0.3)
+			task.wait(0.5)
 			--local finalPos = Vector3.new(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			local finalPos = vector.create(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			reg.Log("PlaceEgg: " .. tostring(finalPos))
@@ -826,6 +826,7 @@ function Pets.PlaceEggs()
 				eggCFrame = Utils.GetRandomPlotPos()
 			end
 			Utils.UnequipTool()
+			task.wait()
 		else
 			break
 		end
