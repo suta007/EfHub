@@ -987,17 +987,14 @@ end
 local hatchSetTask = nil
 function Pets.RunHatchSet()
 	local Options = reg.Options
-	local PlaceEggsEn = Options.tgPlaceEggsEn and Options.tgPlaceEggsEn.Value
-	local HatchSetEn = Options.tgAutoHatchEn and Options.tgAutoHatchEn.Value
-	local SellPetEn = Options.tgSellPetEn and Options.tgSellPetEn.Value
 
 	if not hatchSetTask then
 		hatchSetTask = task.spawn(function()
 			while true do
 				pcall(function()
-					local delayPlaceEgg = tonumber(Options.inpDelayPlaceEgg.Value)
-					local delayHatchEgg = tonumber(Options.inpDelayHatchEgg.Value)
-					local delaySellPet = tonumber(Options.inpDelaySellPet.Value)
+					local delayPlaceEgg = Options.inpDelayPlaceEgg and tonumber(Options.inpDelayPlaceEgg.Value) or 8
+					local delayHatchEgg = Options.inpDelayHatchEgg and tonumber(Options.inpDelayHatchEgg.Value) or 8
+					local delaySellPet = Options.inpDelaySellPet and tonumber(Options.inpDelaySellPet.Value) or 8
 					task.wait(delayPlaceEgg)
 					Pets.PlaceEggs()
 
@@ -1006,18 +1003,20 @@ function Pets.RunHatchSet()
 
 					task.wait(delaySellPet)
 					Pets.SellPet()
-					task.wait()
 				end)
+				task.wait(1)
 			end
 		end)
 	end
+	local PlaceEggsEn = Options.tgPlaceEggsEn and Options.tgPlaceEggsEn.Value
+	local HatchSetEn = Options.tgAutoHatchEn and Options.tgAutoHatchEn.Value
+	local SellPetEn = Options.tgSellPetEn and Options.tgSellPetEn.Value
 
 	if not (PlaceEggsEn or HatchSetEn or SellPetEn) then
 		pcall(function()
 			if hatchSetTask then
-				hatchSetTask:Cancel()
+				task.cancel(hatchSetTask)
 				hatchSetTask = nil
-				return
 			end
 		end)
 	end
