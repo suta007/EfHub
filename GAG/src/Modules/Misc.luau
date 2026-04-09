@@ -614,13 +614,88 @@ function Misc.EspEggs(State)
 		if EggData then
 			local HatchWeight = EggData.Data.BaseWeight * 1.1
 			local HatchPetType = EggData.Data.Type
-			local txt1 = string.format("<b>%s</b> (%.2f kg)", HatchPetType, tonumber(HatchWeight) or 0)
-			Misc.CreatESP(ESPFolder, Egg, uuid, txt1, "", 3)
+			local txt1 = string.format("<b>%s</b>", HatchPetType)
+			local txt2 = string.format("<b>(%.2f kg)</b>", tonumber(HatchWeight) or 0)
+			local arg = 0
+			if HatchWeight >= 10 then
+				arg = 3
+			elseif HatchWeight >= 8 then
+				arg = 2
+			elseif HatchWeight >= 6 then
+				arg = 1
+			end
+			Misc.CreatESP(ESPFolder, Egg, uuid, txt1, txt2, arg)
 		end
 	end
 end
 
-function Misc.EspCrates(State) end
+function Misc.CratesInFarm()
+	local ObjectsFolder = Utils.GetObjectsFolder()
+	if not ObjectsFolder then
+		return
+	end
+	local crates = {}
+	for _, obj in ipairs(ObjectsFolder:GetChildren()) do
+		if obj and obj:GetAttribute("OBJECT_TYPE") == "CosmeticCrate" then
+			table.insert(crates, obj)
+		end
+	end
+	return crates
+end
+
+function Misc.EspCrates(State)
+	--local Options = reg.Options
+	local TargetFolder = GetHUI and GetHUI() or CoreGui
+	local oldFolder = TargetFolder:FindFirstChild(CratesESPFolderName)
+	if oldFolder then
+		oldFolder:Destroy()
+	end
+	if State ~= true then
+		--Misc.UpdatePlantTracker()
+		return
+	end
+
+	local ESPFolder = Instance.new("Folder")
+	ESPFolder.Name = CratesESPFolderName
+	ESPFolder.Parent = TargetFolder
+
+	local GetData_result = sData.DataService:GetData()
+	local ReadyCrates = {}
+	local CratesData = {}
+	local myCrates = Misc.CratesInFarm()
+	local SelectedSlot = GetData_result.SaveSlots.SelectedSlot
+	local fData = GetData_result.SaveSlots.AllSlots[SelectedSlot].SavedObjects
+	if not fData or type(fData) ~= "table" then
+		--task.wait(5)
+		return
+	end
+
+	for Key, CrateData in pairs(fData) do
+		if CrateData.ObjectType == "CosmeticCrate" then
+			CratesData[Key] = CrateData
+		end
+	end
+
+	for _, nCrates in pairs(myCrates) do
+		if nCrates:GetAttribute("READY") == true then
+			table.insert(ReadyCrates, nCrates)
+		end
+	end
+
+	if #ReadyCrates == 0 then
+		return
+	end
+
+	for _, nCrates in ReadyCrates do
+		local uuid = nCrates:GetAttribute("OBJECT_UUID")
+		local CrateData = CratesData[uuid]
+		if CrateData then
+			local CosmeticType = CrateData.Data.CosmeticType
+			local txt1 = string.format("<b>%s</b>", CosmeticType)
+			Misc.CreatESP(ESPFolder, nCrates, uuid, txt1, "", 1)
+		end
+	end
+end
 
 function Misc.HideTracker()
 	Misc.UpdatePlantTracker()

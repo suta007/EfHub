@@ -121,7 +121,7 @@ function MiscTab.Initialize(Registry)
 		Title = "Esp Crates",
 		Default = false,
 		Callback = function(Value)
-			--Misc.EspCrates(Value)
+			Misc.EspCrates(Value)
 			QuickSave()
 		end,
 	})
