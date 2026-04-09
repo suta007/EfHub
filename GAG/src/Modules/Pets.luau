@@ -992,9 +992,9 @@ function Pets.RunHatchSet()
 		hatchSetTask = task.spawn(function()
 			while true do
 				pcall(function()
-					local delayPlaceEgg = Options.inpDelayPlaceEgg and tonumber(Options.inpDelayPlaceEgg.Value) or 8
-					local delayHatchEgg = Options.inpDelayHatchEgg and tonumber(Options.inpDelayHatchEgg.Value) or 8
-					local delaySellPet = Options.inpDelaySellPet and tonumber(Options.inpDelaySellPet.Value) or 8
+					local delayPlaceEgg = Options.inpDelayPlaceEgg and tonumber(Options.inpDelayPlaceEgg.Value) or 2
+					local delayHatchEgg = Options.inpDelayHatchEgg and tonumber(Options.inpDelayHatchEgg.Value) or 2
+					local delaySellPet = Options.inpDelaySellPet and tonumber(Options.inpDelaySellPet.Value) or 2
 					task.wait(delayPlaceEgg)
 					Pets.PlaceEggs()
 

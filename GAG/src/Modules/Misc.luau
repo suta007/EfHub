@@ -14,6 +14,8 @@ local fVar
 local SharedPlantConnection = nil
 local PlantsESPFolderName = "PlantsESP"
 local FruitESPFolderName = "FruitESP"
+local EggsESPFolderName = "EggsESP"
+local CratesESPFolderName = "CratesESP"
 local BGuiSession = {}
 local CoreGui = game:GetService("CoreGui")
 local getgenv = (getfenv() :: any).getgenv
@@ -561,6 +563,64 @@ function Misc.EspPlants(State)
 	end
 	Misc.UpdatePlantTracker()
 end
+
+function Misc.EspEggs(State)
+	--local Options = reg.Options
+	local TargetFolder = GetHUI and GetHUI() or CoreGui
+	local oldFolder = TargetFolder:FindFirstChild(EggsESPFolderName)
+	if oldFolder then
+		oldFolder:Destroy()
+	end
+	if State ~= true then
+		--Misc.UpdatePlantTracker()
+		return
+	end
+
+	local ESPFolder = Instance.new("Folder")
+	ESPFolder.Name = EggsESPFolderName
+	ESPFolder.Parent = TargetFolder
+
+	local GetData_result = sData.DataService:GetData()
+	local ReadyEggs = {}
+	local PetsData = {}
+	local myEggs = reg.Pets.EggInFarm()
+	local SelectedSlot = GetData_result.SaveSlots.SelectedSlot
+	local fData = GetData_result.SaveSlots.AllSlots[SelectedSlot].SavedObjects
+	if not fData or type(fData) ~= "table" then
+		--task.wait(5)
+		return
+	end
+	local petCount = 0
+	for Key, PetData in pairs(fData) do
+		if PetData.ObjectType == "PetEgg" then
+			PetsData[Key] = PetData
+			petCount = petCount + 1
+		end
+	end
+
+	for _, nEggs in pairs(myEggs) do
+		if nEggs:GetAttribute("READY") == true then
+			table.insert(ReadyEggs, nEggs)
+		end
+	end
+
+	if #ReadyEggs == 0 then
+		return
+	end
+
+	for _, Egg in ReadyEggs do
+		local uuid = Egg:GetAttribute("OBJECT_UUID")
+		local EggData = PetsData[uuid]
+		if EggData then
+			local HatchWeight = EggData.Data.BaseWeight * 1.1
+			local HatchPetType = EggData.Data.Type
+			local txt1 = string.format("<b>%s</b> (%.2f kg)", HatchPetType, tonumber(HatchWeight) or 0)
+			Misc.CreatESP(ESPFolder, Egg, uuid, txt1, "", 3)
+		end
+	end
+end
+
+function Misc.EspCrates(State) end
 
 function Misc.HideTracker()
 	Misc.UpdatePlantTracker()

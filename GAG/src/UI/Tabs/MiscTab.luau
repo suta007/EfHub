@@ -108,6 +108,23 @@ function MiscTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
+	EspSection:AddDivider()
+	EspSection:AddToggle("tgEspEggs", {
+		Title = "Esp Eggs",
+		Default = false,
+		Callback = function(Value)
+			Misc.EspEggs(Value)
+			QuickSave()
+		end,
+	})
+	EspSection:AddToggle("tgEspCrates", {
+		Title = "Esp Crates",
+		Default = false,
+		Callback = function(Value)
+			--Misc.EspCrates(Value)
+			QuickSave()
+		end,
+	})
 
 	local SeasonPassSection = Tabs.MiscTab:AddCollapsibleSection("Season Pass", false)
 	SeasonPassSection:AddToggle("tgSeasonPassQuests", {
