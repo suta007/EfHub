@@ -376,7 +376,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	bgui.Name = "ESP_" .. uuid
 	bgui.Adornee = obj
 	bgui.Size = UDim2.fromOffset(600, hasTxt2 and 120 or 65)
-	bgui.StudsOffset = Vector3.new(0, 4, 0)
+	bgui.StudsOffset = Vector3.new(0, 1, 0)
 	bgui.AlwaysOnTop = true
 	bgui.LightInfluence = 0
 	bgui.Active = false
@@ -399,7 +399,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	textLabel1.TextWrapped = false
 	textLabel1.Active = false
 	textLabel1.RichText = true
-	textLabel1.TextSize = 12
+	textLabel1.TextSize = 16
 	textLabel1.Font = Enum.Font.FredokaOne
 	textLabel1.Text = txt1
 
@@ -414,7 +414,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		textLabel2.TextWrapped = true
 		textLabel2.Active = false
 		textLabel2.RichText = true
-		textLabel2.TextSize = 10
+		textLabel2.TextSize = 14
 		textLabel2.Text = txt2
 		textLabel2.Font = Enum.Font.FredokaOne
 		textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
@@ -427,7 +427,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	elseif priority == 1 then
 		textLabel1.TextColor3 = Color3.fromRGB(10, 200, 10)
 	else
-		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200)
+		textLabel1.TextColor3 = Color3.fromRGB(50, 50, 50)
 	end
 
 	BGuiSession[uuid] = bgui
