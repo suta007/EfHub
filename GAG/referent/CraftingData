@@ -1,0 +1,429 @@
+Script initialized successfully.
+[GlobalCraftingObjectData] : (Table)
+  [SmithingEventPetWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventPetWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [Workbench-1] : (Table)
+    [MachineData] : (Table)
+      [GearEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Golden Piggy
+        [InputItems] : (Table)
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Tanning Mirror
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Medium Treat
+  [SeedEventWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SeedEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventGearWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventGearWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventCosmeticWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Horse Shoe Magnet
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Smith Hammer of Harvest
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Divine Coal
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Legendary Coal
+
+################################################################
+
+Script initialized successfully.
+[GlobalCraftingObjectData] : (Table)
+  [SmithingEventPetWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventPetWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [Workbench-1] : (Table)
+    [MachineData] : (Table)
+      [GearEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Lightning Rod
+        [InputItems] : (Table)
+  [SeedEventWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SeedEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventGearWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventGearWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventCosmeticWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Horse Shoe Magnet
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Smith Hammer of Harvest
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Divine Coal
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Legendary Coal
+
+=======================================================================
+Script initialized successfully.
+[GlobalCraftingObjectData] : (Table)
+  [SmithingEventPetWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventPetWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [Workbench-1] : (Table)
+    [MachineData] : (Table)
+      [GearEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SeedEventWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SeedEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventGearWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventGearWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventCosmeticWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Horse Shoe Magnet
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Smith Hammer of Harvest
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Divine Coal
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Legendary Coal
+
+================================================================
+
+Script initialized successfully.
+[GlobalCraftingObjectData] : (Table)
+  [SmithingEventPetWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventPetWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [Workbench-1] : (Table)
+    [MachineData] : (Table)
+      [GearEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Lightning Rod
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Basic Sprinkler
+          [2] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Advanced Sprinkler
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Godly Sprinkler
+  [SeedEventWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SeedEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventGearWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventGearWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventCosmeticWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Horse Shoe Magnet
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Smith Hammer of Harvest
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Divine Coal
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Legendary Coal
+
+=================================================================
+
+Script initialized successfully.
+[GlobalCraftingObjectData] : (Table)
+  [SmithingEventPetWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventPetWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [Workbench-1] : (Table)
+    [MachineData] : (Table)
+      [GearEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+          [1] : (Table)
+            [InputItems] : (Table)
+              [1] : (Table)
+                [ItemType] : Gear
+                [ItemData] : (Table)
+                  [ItemName] : Basic Sprinkler
+              [2] : (Table)
+                [ItemType] : Gear
+                [ItemData] : (Table)
+                  [ItemName] : Godly Sprinkler
+              [3] : (Table)
+                [ItemType] : Gear
+                [ItemData] : (Table)
+                  [ItemName] : Advanced Sprinkler
+            [RecipeId] : Lightning Rod
+            [TimeRemaining] : 2682
+            [IsDone] : false
+        [InputItems] : (Table)
+  [SeedEventWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SeedEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventGearWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventGearWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventCosmeticWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Horse Shoe Magnet
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Smith Hammer of Harvest
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Divine Coal
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Legendary Coal
+
+====================================================
+
+
+Script initialized successfully.
+[GlobalCraftingObjectData] : (Table)
+  [SmithingEventPetWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventPetWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [Workbench-1] : (Table)
+    [MachineData] : (Table)
+      [GearEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+          [1] : (Table)
+            [InputItems] : (Table)
+              [1] : (Table)
+                [ItemType] : Gear
+                [ItemData] : (Table)
+                  [ItemName] : Basic Sprinkler
+              [2] : (Table)
+                [ItemType] : Gear
+                [ItemData] : (Table)
+                  [ItemName] : Godly Sprinkler
+              [3] : (Table)
+                [ItemType] : Gear
+                [ItemData] : (Table)
+                  [ItemName] : Advanced Sprinkler
+            [RecipeId] : Lightning Rod
+            [TimeRemaining] : 2553
+            [IsDone] : false
+        [InputItems] : (Table)
+  [SeedEventWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SeedEventWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Mandrake
+        [InputItems] : (Table)
+  [SmithingEventGearWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventGearWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [InputItems] : (Table)
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [MachineData] : (Table)
+      [SmithingEventCosmeticWorkbench] : (Table)
+        [CraftingItems] : (Table)
+        [RecipeId] : Horse Shoe Magnet
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Smith Hammer of Harvest
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Divine Coal
+          [3] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Legendary Coal
+
+============================================
+Script initialized successfully.
+[SmithingEventPetWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SmithingEventPetWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [InputItems] : (Table)
+[Workbench-1] : (Table)
+  [MachineData] : (Table)
+    [GearEventWorkbench] : (Table)
+      [CraftingItems] : (Table)
+        [1] : (Table)
+          [InputItems] : (Table)
+            [1] : (Table)
+              [ItemType] : Gear
+              [ItemData] : (Table)
+                [ItemName] : Basic Sprinkler
+            [2] : (Table)
+              [ItemType] : Gear
+              [ItemData] : (Table)
+                [ItemName] : Godly Sprinkler
+            [3] : (Table)
+              [ItemType] : Gear
+              [ItemData] : (Table)
+                [ItemName] : Advanced Sprinkler
+          [RecipeId] : Lightning Rod
+          [TimeRemaining] : 1984
+          [IsDone] : false
+      [InputItems] : (Table)
+[SeedEventWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SeedEventWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [InputItems] : (Table)
+[SmithingEventGearWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SmithingEventGearWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [InputItems] : (Table)
+[SmithingEventCosmeticWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SmithingEventCosmeticWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [RecipeId] : Horse Shoe Magnet
+      [InputItems] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [ItemName] : Smith Hammer of Harvest
+        [4] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [ItemName] : Divine Coal
+        [3] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [ItemName] : Legendary Coal
+
+===============================
+Script initialized successfully.
+[SmithingEventPetWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SmithingEventPetWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [InputItems] : (Table)
+[Workbench-1] : (Table)
+  [MachineData] : (Table)
+    [GearEventWorkbench] : (Table)
+      [CraftingItems] : (Table)
+        [1] : (Table)
+          [IsDone] : true
+          [RecipeId] : Lightning Rod
+          [TimeRemaining] : 0
+          [InputItems] : (Table)
+            [1] : (Table)
+              [ItemType] : Gear
+              [ItemData] : (Table)
+                [ItemName] : Basic Sprinkler
+            [2] : (Table)
+              [ItemType] : Gear
+              [ItemData] : (Table)
+                [ItemName] : Godly Sprinkler
+            [3] : (Table)
+              [ItemType] : Gear
+              [ItemData] : (Table)
+                [ItemName] : Advanced Sprinkler
+      [InputItems] : (Table)
+[SeedEventWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SeedEventWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [InputItems] : (Table)
+[SmithingEventGearWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SmithingEventGearWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [InputItems] : (Table)
+[SmithingEventCosmeticWorkbench] : (Table)
+  [MachineData] : (Table)
+    [SmithingEventCosmeticWorkbench] : (Table)
+      [CraftingItems] : (Table)
+      [RecipeId] : Horse Shoe Magnet
+      [InputItems] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [ItemName] : Smith Hammer of Harvest
+        [4] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [ItemName] : Divine Coal
+        [3] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [ItemName] : Legendary Coal

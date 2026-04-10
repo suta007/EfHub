@@ -14,7 +14,6 @@ function AutoTab.Initialize(registry)
 	--local Utils = reg.Utils
 
 	Tabs.Auto = Interface:AddTab({ Title = "Automatic", Icon = "bot" })
-
 	-- [[ Remove Plants Section ]]
 	local RemoveSection = Tabs.Auto:AddCollapsibleSection("Remove Plants", false)
 	RemoveSection:AddToggle("tgRemovePlantsEnable", {
@@ -65,7 +64,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	-- [[ Remove Fruit Section ]]
 	local RemoveFruitSection = Tabs.Auto:AddCollapsibleSection("Remove Fruit", false)
 	RemoveFruitSection:AddToggle("tgRemoveFruitEnable", {
@@ -82,9 +80,7 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	RemoveFruitSection:AddDivider()
-
 	RemoveFruitSection:AddButton({
 		Title = "Clear Selected Remove Crops",
 		Callback = function()
@@ -117,7 +113,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	RemoveFruitSection:AddDivider()
 	RemoveFruitSection:AddButton({
 		Title = "Clear Selected Mutant",
@@ -125,7 +120,6 @@ function AutoTab.Initialize(registry)
 			Options.ddRemoveMutants:SetValue({ ALL = true })
 		end,
 	})
-
 	RemoveFruitSection:AddDropdown("ddRemoveMutants", {
 		Title = "Select Mutants",
 		Values = sData.MutationDataTable,
@@ -136,14 +130,12 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	RemoveFruitSection:AddButton({
 		Title = "Clear Backlist Mutant",
 		Callback = function()
 			Options.ddRemoveBlackMutants:SetValue({ NONE = true })
 		end,
 	})
-
 	RemoveFruitSection:AddDropdown("ddRemoveBlackMutants", {
 		Title = "Backlist Mutants",
 		Values = sData.MutationDataBlackTable,
@@ -154,7 +146,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	RemoveFruitSection:AddDivider()
 	RemoveFruitSection:AddDropdown("ddRemoveVariant", {
 		Title = "Variant",
@@ -193,7 +184,7 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
+	--Trowel Section
 	local TrowelSection = Tabs.Auto:AddCollapsibleSection("Trowel", false)
 	TrowelSection:AddButton({
 		Title = "Set Position",
@@ -206,7 +197,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	TrowelSection:AddInput("ipTrowelPosition", {
 		Title = "Trowel Position",
 		Default = "",
@@ -217,7 +207,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	TrowelSection:AddDivider()
 	TrowelSection:AddToggle("tgTrowelEnable", {
 		Title = "Trowel",
@@ -264,7 +253,7 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
+	--Reclaim Section
 	local ReclaimSection = Tabs.Auto:AddCollapsibleSection("Reclaim", false)
 	ReclaimSection:AddToggle("tgReclaimEnable", {
 		Title = "Reclaim",
@@ -314,6 +303,7 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	--Sprinkler Section
 	local SprinklerSection = Tabs.Auto:AddCollapsibleSection("Sprinkler", false)
 	SprinklerSection:AddButton({
 		Title = "Set Position",
@@ -335,7 +325,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-
 	SprinklerSection:AddDivider()
 	SprinklerSection:AddToggle("tgSprinklerEnable", {
 		Title = "Sprinkler",
@@ -424,10 +413,8 @@ function AutoTab.Initialize(registry)
 			end
 		end,
 	})
-
+	--Open Pack Section
 	local OpenPackSection = Tabs.Auto:AddCollapsibleSection("Open Pack", false)
-
-	-- toggle enable
 	OpenPackSection:AddToggle("tgOpenPackEnable", {
 		Title = "Auto Open Pack",
 		Default = false,
@@ -442,7 +429,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	-- dropdown select seed pack
 	OpenPackSection:AddDropdown("ddOpenPack", {
 		Title = "Select Seed Pack",
 		Values = sData.SeedPackTable,
@@ -453,12 +439,37 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	-- input delay
 	OpenPackSection:AddInput("ipOpenPackDelay", {
 		Title = "Delay",
 		Default = 10,
 		Numeric = true,
 		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Craft Section
+	local CraftSection = Tabs.Auto:AddCollapsibleSection("Craft", false)
+	CraftSection:AddToggle("tgCraftEnable", {
+		Title = "Auto Craft",
+		Default = false,
+		Callback = function(Value)
+			--[[ 			if Value then
+				task.spawn(function()
+					pcall(Auto.Craft)
+				end)
+			else
+				fVar.IsCrafting = false
+			end ]]
+			QuickSave()
+		end,
+	})
+	CraftSection:AddDropdown("ddCraft", {
+		Title = "Select Craft",
+		Values = sData.GearEventDataTable,
+		Default = "",
+		Multi = false,
+		Searchable = true,
 		Callback = function()
 			QuickSave()
 		end,

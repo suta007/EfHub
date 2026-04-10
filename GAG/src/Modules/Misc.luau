@@ -427,7 +427,7 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	elseif priority == 1 then
 		textLabel1.TextColor3 = Color3.fromRGB(10, 200, 10)
 	else
-		textLabel1.TextColor3 = Color3.fromRGB(50, 50, 50)
+		textLabel1.TextColor3 = Color3.fromRGB(200, 200, 200)
 	end
 
 	BGuiSession[uuid] = bgui
@@ -780,26 +780,21 @@ function Misc.SeasonPassRewards()
 	end
 
 	if currentLevel >= maxLevel then
-		-- คำนวณหา XP ของเลเวล Max เพื่อเอามาหักลบหา XP ที่เกินมา
 		local maxLevelXP = sData.SeasonPassUtils.CalculateXPForLevel(maxLevel)
 		local excessXP = seasonInfo.TotalExperience - maxLevelXP
 
-		-- ดึงค่า XP ที่ต้องใช้ต่อ 1 Infinite Reward
-		-- (พี่เอฟลองเช็คชื่อตัวแปร InfRewardXP ใน SeasonPassStaticData อีกทีนะคะว่าชื่อตรงไหม)
 		local infLevelPerXP = sData.SeasonPassStaticData.INF_REWARD_XP or 10000
 
 		local totalInfEarned = math.floor(excessXP / infLevelPerXP)
 		local totalInfClaimed = seasonInfo.InfiniteRewardsClaimed or 0
 
-		-- ถ้าจำนวนที่ควรได้ มากกว่าจำนวนที่เคยกดรับไป
 		if totalInfEarned > totalInfClaimed then
 			local claimsToMake = totalInfEarned - totalInfClaimed
 			for i = 1, claimsToMake do
 				reg.Log("Claiming Season Pass Point : " .. tostring(i))
 				sData.ClaimSeasonPassInfRewardRemote:FireServer()
-				task.wait(0.3) -- ดีเลย์เล็กน้อยกันการส่งข้อมูลถี่เกินไป
+				task.wait(0.3)
 			end
-			--reg.Log("✨ รับ Infinite Rewards สำเร็จ: " .. tostring(claimsToMake) .. " กล่อง")
 		end
 	end
 end

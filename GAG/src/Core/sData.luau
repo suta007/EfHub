@@ -179,4 +179,11 @@ for eggName, _eggInfo in pairs(PET_EGG_DATA) do
 	table.insert(sData.EggDataTable, eggName)
 end
 
+local RecipeRegistry = require(sData.Data:WaitForChild("CraftingData"):WaitForChild("CraftingRecipeRegistry") :: any)
+sData.GearEventData = RecipeRegistry.RecipiesSortedByMachineType.GearEventWorkbench
+sData.GearEventDataTable = {}
+for itemName, _itemInfo in pairs(sData.GearEventData) do
+	table.insert(sData.GearEventDataTable, itemName)
+end
+
 return sData

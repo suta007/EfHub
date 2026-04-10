@@ -131,11 +131,13 @@ local function ShowData(tbl, indent)
 	end
 end
 
---local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 --local DataService = require(ReplicatedStorage.Modules.DataService :: any)
 --local GetData_result = DataService:GetData()
 --local SelectedSlot = GetData_result.SaveSlots.SelectedSlot
 --local fData = GetData_result.SaveSlots.AllSlots[SelectedSlot].SavedObjects
-
---ShowData(fData)
+--local Data = GetData_result.CraftingData.GlobalCraftingObjectData
+local CraftingDataPath = ReplicatedStorage:WaitForChild("Data"):WaitForChild("CraftingData")
+local RecipeRegistry = require(CraftingDataPath:WaitForChild("CraftingRecipeRegistry") :: any)
+ShowData(RecipeRegistry)
 --[[==========================================================]]

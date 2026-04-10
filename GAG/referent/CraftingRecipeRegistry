@@ -1,0 +1,5991 @@
+Script initialized successfully.
+[RecipiesSortedByMachineType] : (Table)
+  [FairyWorldCraftingWorkBench] : (Table)
+    [Enchanted Crate] : (Table)
+      [LayoutOrder] : 40
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Enchanted Seed Pack
+      [MachineTypes] : (Table)
+        [1] : FairyWorldCraftingWorkBench
+      [Cost] : (Table)
+        [CurrencyType] : FairyPoints
+        [Amount] : 1000
+      [TimeToCraft] : 300
+      [PurchaseID] : 3394272617
+      [RobuxPrice] : 179
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Enchanted Crate
+    [Enchanted Chest] : (Table)
+      [LayoutOrder] : 10
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sunbulb
+        [2] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Enchanted Seed Pack
+        [3] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Enchanted Egg
+      [MachineTypes] : (Table)
+        [1] : FairyWorldCraftingWorkBench
+      [Cost] : (Table)
+        [CurrencyType] : FairyPoints
+        [Amount] : 6000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3394265025
+      [RobuxPrice] : 199
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Enchanted Chest
+    [Enchanted Seed Pack] : (Table)
+      [LayoutOrder] : 20
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mushroom
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mushroom
+      [MachineTypes] : (Table)
+        [1] : FairyWorldCraftingWorkBench
+      [Cost] : (Table)
+        [CurrencyType] : FairyPoints
+        [Amount] : 1500
+      [TimeToCraft] : 300
+      [PurchaseID] : 3394271793
+      [RobuxPrice] : 99
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Enchanted Seed Pack
+    [Enchanted Egg] : (Table)
+      [LayoutOrder] : 30
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Glowthorn
+        [2] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Enchanted Seed Pack
+      [MachineTypes] : (Table)
+        [1] : FairyWorldCraftingWorkBench
+      [Cost] : (Table)
+        [CurrencyType] : FairyPoints
+        [Amount] : 3000
+      [TimeToCraft] : 600
+      [PurchaseID] : 3394272325
+      [RobuxPrice] : 129
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Enchanted Egg
+    [Glimmering Crate] : (Table)
+      [LayoutOrder] : 50
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Enchanted Crate
+      [MachineTypes] : (Table)
+        [1] : FairyWorldCraftingWorkBench
+      [Cost] : (Table)
+        [CurrencyType] : FairyPoints
+        [Amount] : 1000
+      [TimeToCraft] : 300
+      [PurchaseID] : 3394269769
+      [RobuxPrice] : 179
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Glimmering Crate
+  [GearEventWorkbench] : (Table)
+    [Sweet Soaker Sprinkler] : (Table)
+      [LayoutOrder] : 40
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Watermelon
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Watermelon
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Watermelon
+        [4] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Master Sprinkler
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3306484252
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Sweet Soaker Sprinkler
+    [Small Treat] : (Table)
+      [LayoutOrder] : 115
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dragon Fruit
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Blueberry
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [TimeToCraft] : 600
+      [PurchaseID] : 3329527534
+      [RobuxPrice] : 89
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 3
+            [ItemName] : Small Treat
+    [Stalk Sprout Sprinkler] : (Table)
+      [LayoutOrder] : 60
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mushroom
+        [4] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Advanced Sprinkler
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3306484241
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Stalk Sprout Sprinkler
+    [Golden Piggy] : (Table)
+      [LayoutOrder] : 160
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Silver Piggy
+        [2] : (Table)
+          [ItemType] : Food
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Pizza
+        [3] : (Table)
+          [ItemType] : Tanning Mirror
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Tanning Mirror
+        [4] : (Table)
+          [ItemType] : PetBoost
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Medium Treat
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 300000000
+      [TimeToCraft] : 2700
+      [PurchaseID] : 3460381429
+      [RobuxPrice] : 459
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Golden Piggy
+    [Berry Blusher Sprinkler] : (Table)
+      [LayoutOrder] : 20
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Grape
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Blueberry
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Strawberry
+        [4] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3306484242
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Berry Blusher Sprinkler
+    [Mutation Spray Chilled] : (Table)
+      [LayoutOrder] : 80
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : SprayBottle
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleaning Spray
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 500000
+      [PurchaseID] : 3317772898
+      [RobuxPrice] : 189
+      [TimeToCraft] : 300
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [DisplayInCrafting] : false
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Mutation Spray Chilled
+    [Small Toy] : (Table)
+      [LayoutOrder] : 113
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Coconut
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Coconut
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [TimeToCraft] : 600
+      [PurchaseID] : 3329526448
+      [RobuxPrice] : 139
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 3
+            [ItemName] : Small Toy
+    [Pack Bee] : (Table)
+      [LayoutOrder] : 120
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Anti Bee Egg
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legacy Sunflower
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Purple Dahlia
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 250
+      [TimeToCraft] : 14400
+      [PurchaseID] : 3306484257
+      [RobuxPrice] : 799
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Pack Bee
+    [Reclaimer] : (Table)
+      [LayoutOrder] : 8
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+        [2] : (Table)
+          [ItemType] : Harvest Tool
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Harvest Tool
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 500000
+      [TimeToCraft] : 1500
+      [PurchaseID] : 3309686533
+      [RobuxPrice] : 199
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 3
+            [ItemName] : Reclaimer
+    [Lightning Rod] : (Table)
+      [LayoutOrder] : 5
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Basic Sprinkler
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Advanced Sprinkler
+        [3] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 500000
+      [TimeToCraft] : 2700
+      [PurchaseID] : 3265946758
+      [RobuxPrice] : 179
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Lightning Rod
+    [Gold Ingot] : (Table)
+      [LayoutOrder] : 140
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Giant Pinecone
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [3] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Advanced Sprinkler
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 300000
+      [TimeToCraft] : 60
+      [PurchaseID] : 3460381002
+      [RobuxPrice] : 33
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Gold Ingot
+    [Mutation Spray Glimmering] : (Table)
+      [LayoutOrder] : 12
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : SprayBottle
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleaning Spray
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Orange Tulip
+        [3] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mango
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [PurchaseID] : 3388357651
+      [RobuxPrice] : 159
+      [TimeToCraft] : 900
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [DisplayInCrafting] : false
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Mutation Spray Glimmering
+    [Spice Spritzer Sprinkler] : (Table)
+      [LayoutOrder] : 30
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pepper
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Ember Lily
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cacao
+        [4] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Master Sprinkler
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3306484232
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Spice Spritzer Sprinkler
+    [Silver Ingot] : (Table)
+      [LayoutOrder] : 130
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sugar Apple
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Buttercup
+        [3] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Basic Sprinkler
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 150000
+      [TimeToCraft] : 60
+      [PurchaseID] : 3460380386
+      [RobuxPrice] : 29
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Silver Ingot
+    [Silver Piggy] : (Table)
+      [LayoutOrder] : 150
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pig
+        [2] : (Table)
+          [ItemType] : Food
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Sushi
+        [3] : (Table)
+          [ItemType] : Lightning Rod
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Lightning Rod
+        [4] : (Table)
+          [ItemType] : PetBoost
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Medium Toy
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 150000000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3460381175
+      [RobuxPrice] : 419
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Silver Piggy
+    [Event Lantern] : (Table)
+      [LayoutOrder] : 10
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Recall Wrench
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Recall Wrench
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Apple
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 350000
+      [TimeToCraft] : 10
+      [PurchaseID] : 3388358462
+      [RobuxPrice] : 39
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 30
+            [ItemName] : Event Lantern
+    [Mutation Spray Shocked] : (Table)
+      [LayoutOrder] : 90
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : SprayBottle
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleaning Spray
+        [2] : (Table)
+          [ItemType] : Lightning Rod
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Lightning Rod
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [PurchaseID] : 3306484253
+      [RobuxPrice] : 199
+      [TimeToCraft] : 1800
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Mutation Spray Shocked
+    [Chimera Stone] : (Table)
+      [LayoutOrder] : 170
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mythical Egg
+        [2] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bug Egg
+        [3] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Jungle Egg
+        [4] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Gem Egg
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 500000000
+      [PurchaseID] : 3460382022
+      [RobuxPrice] : 199
+      [TimeToCraft] : 3600
+      [DisplayInCrafting] : true
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Chimera Stone
+    [Flower Froster Sprinkler] : (Table)
+      [LayoutOrder] : 50
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Orange Tulip
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [3] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Advanced Sprinkler
+        [4] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Basic Sprinkler
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3306484243
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Flower Froster Sprinkler
+    [Pet Pouch] : (Table)
+      [LayoutOrder] : 118
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+        [2] : (Table)
+          [ItemType] : Food
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Corndog
+        [3] : (Table)
+          [ItemType] : PetBoost
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Small Treat
+        [4] : (Table)
+          [ItemType] : PetBoost
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Small Toy
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 50000000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3369521127
+      [RobuxPrice] : 89
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Pet Pouch
+    [Mutation Spray Choc] : (Table)
+      [LayoutOrder] : 70
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : SprayBottle
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleaning Spray
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cacao
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 200000
+      [PurchaseID] : 3306484247
+      [RobuxPrice] : 179
+      [TimeToCraft] : 720
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Mutation Spray Choc
+    [Anti Bee Egg] : (Table)
+      [LayoutOrder] : 110
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bee Egg
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 25
+      [TimeToCraft] : 7200
+      [PurchaseID] : 3306484244
+      [RobuxPrice] : 149
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Anti Bee Egg
+    [Honey Crafters Crate] : (Table)
+      [LayoutOrder] : 100
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bee Crate
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 12
+      [PurchaseID] : 3306484248
+      [RobuxPrice] : 179
+      [TimeToCraft] : 1800
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Honey Crafters Crate
+    [Tanning Mirror] : (Table)
+      [LayoutOrder] : 6
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Basic Sprinkler
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Advanced Sprinkler
+        [3] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 500000
+      [TimeToCraft] : 2700
+      [PurchaseID] : 3311159836
+      [RobuxPrice] : 219
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Tanning Mirror
+    [Mutation Spray Pollinated] : (Table)
+      [LayoutOrder] : 80
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : SprayBottle
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleaning Spray
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bee Balm
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 25
+      [PurchaseID] : 3306484250
+      [RobuxPrice] : 179
+      [TimeToCraft] : 300
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Mutation Spray Pollinated
+    [Tropical Mist Sprinkler] : (Table)
+      [LayoutOrder] : 10
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Coconut
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dragon Fruit
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mango
+        [4] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : GearEventWorkbench
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3306484251
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Tropical Mist Sprinkler
+  [SeedEventWorkbench] : (Table)
+    [Olive@SeedEventWorkbench] : (Table)
+      [LayoutOrder] : 40
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Basic Sprinkler
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Basic Sprinkler
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Grape
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Tomato
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 750000
+      [TimeToCraft] : 900
+      [PurchaseID] : 0
+      [RobuxPrice] : 129
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Olive
+    [Evo Apple IV] : (Table)
+      [LayoutOrder] : 30
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple III
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple III
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple III
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Elder Strawberry
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 100000000
+      [PurchaseID] : 3420524565
+      [RobuxPrice] : 849
+      [TimeToCraft] : 2400
+      [DisplayInCrafting] : true
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Evo Apple IV
+    [Peace Lily] : (Table)
+      [LayoutOrder] : 140
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rafflesia
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cauliflower
+      [Cost] : (Table)
+        [CurrencyType] : SummerCoins
+        [Amount] : 3
+      [PurchaseID] : 3317730044
+      [RobuxPrice] : 129
+      [TimeToCraft] : 600
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Peace Lily
+    [Lumira] : (Table)
+      [LayoutOrder] : 160
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pumpkin
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pumpkin
+        [3] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dandelion
+        [4] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Flower Seed Pack
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 40
+      [PurchaseID] : 3306485023
+      [RobuxPrice] : 529
+      [TimeToCraft] : 1200
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Lumira
+    [Grand Volcania] : (Table)
+      [LayoutOrder] : 30
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Ember Lily
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Ember Lily
+        [3] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dinosaur Egg
+        [4] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Ancient Seed Pack
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 900000
+      [PurchaseID] : 3329521774
+      [RobuxPrice] : 819
+      [TimeToCraft] : 2700
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Grand Volcania
+    [Aloe Vera] : (Table)
+      [LayoutOrder] : 143
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Peace Lily
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Prickly Pear
+      [Cost] : (Table)
+        [CurrencyType] : SummerCoins
+        [Amount] : 18
+      [PurchaseID] : 3317175501
+      [RobuxPrice] : 299
+      [TimeToCraft] : 600
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Aloe Vera
+    [Hollow Bamboo@SeedEventWorkbench] : (Table)
+      [LayoutOrder] : 50
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Advanced Sprinkler
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5000000
+      [TimeToCraft] : 2700
+      [PurchaseID] : 0
+      [RobuxPrice] : 507
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Hollow Bamboo
+    [Amber Spine] : (Table)
+      [LayoutOrder] : 30
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pumpkin
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Horsetail
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 650000
+      [PurchaseID] : 3329520620
+      [RobuxPrice] : 625
+      [TimeToCraft] : 1800
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Amber Spine
+    [Evo Apple I] : (Table)
+      [LayoutOrder] : 10
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Beetroot IV
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Blueberry IV
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Pumpkin IV
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Mushroom IV
+        [5] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sugar Apple
+      [DisplayInCrafting] : true
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [TimeToCraft] : 600
+      [PurchaseID] : 3420523696
+      [RobuxPrice] : 195
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Evo Apple I
+    [Guanabana] : (Table)
+      [LayoutOrder] : 145
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Aloe Vera
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Prickly Pear
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Banana
+      [Cost] : (Table)
+        [CurrencyType] : SummerCoins
+        [Amount] : 30
+      [PurchaseID] : 3317175618
+      [RobuxPrice] : 779
+      [TimeToCraft] : 600
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Guanabana
+    [Dandelion] : (Table)
+      [LayoutOrder] : 150
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [3] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Manuka Flower
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 20
+      [PurchaseID] : 3306485029
+      [RobuxPrice] : 199
+      [TimeToCraft] : 960
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Dandelion
+    [Honeysuckle] : (Table)
+      [LayoutOrder] : 170
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pink Lily
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Purple Dahlia
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 80
+      [PurchaseID] : 3306485032
+      [RobuxPrice] : 619
+      [TimeToCraft] : 1440
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Honeysuckle
+    [Yarrow@SeedEventWorkbench] : (Table)
+      [LayoutOrder] : 60
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Master Sprinkler
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Master Sprinkler
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Burning Bud
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 18000000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 0
+      [RobuxPrice] : 729
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Yarrow
+    [Lingonberry] : (Table)
+      [LayoutOrder] : 25
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Blueberry
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Blueberry
+        [3] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Blueberry
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Horsetail
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 450000
+      [PurchaseID] : 3329520955
+      [RobuxPrice] : 209
+      [TimeToCraft] : 900
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Lingonberry
+    [Evo Apple III] : (Table)
+      [LayoutOrder] : 20
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple II
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple II
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple II
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Giant Pinecone
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 70000000
+      [PurchaseID] : 3420524301
+      [RobuxPrice] : 679
+      [TimeToCraft] : 1800
+      [DisplayInCrafting] : true
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Evo Apple III
+    [Mandrake] : (Table)
+      [LayoutOrder] : 5
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Carrot
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [TimeToCraft] : 300
+      [PurchaseID] : 3371045808
+      [RobuxPrice] : 199
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 3
+            [ItemName] : Mandrake
+    [Horsetail] : (Table)
+      [LayoutOrder] : 20
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Corn
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 15000
+      [PurchaseID] : 3329520820
+      [RobuxPrice] : 199
+      [TimeToCraft] : 900
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Horsetail
+    [Twisted Tangle] : (Table)
+      [LayoutOrder] : 10
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Mango
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 50000
+      [PurchaseID] : 3354091176
+      [RobuxPrice] : 239
+      [TimeToCraft] : 900
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Twisted Tangle
+    [Bee Balm] : (Table)
+      [LayoutOrder] : 180
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Crocus
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Lavender
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 10
+      [PurchaseID] : 3306485036
+      [RobuxPrice] : 179
+      [TimeToCraft] : 900
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Bee Balm
+    [Nectar Thorn] : (Table)
+      [LayoutOrder] : 190
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+        [3] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Nectarshade
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 20
+      [PurchaseID] : 3306485033
+      [RobuxPrice] : 659
+      [TimeToCraft] : 1800
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Nectar Thorn
+    [Crafters Seed Pack] : (Table)
+      [LayoutOrder] : 130
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Flower Seed Pack
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 10
+      [PurchaseID] : 3306485034
+      [RobuxPrice] : 199
+      [TimeToCraft] : 1200
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Crafters Seed Pack
+    [Veinpetal] : (Table)
+      [LayoutOrder] : 15
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Orange Tulip
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Burning Bud
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 650000
+      [PurchaseID] : 3354091526
+      [RobuxPrice] : 459
+      [TimeToCraft] : 1200
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Veinpetal
+    [Suncoil] : (Table)
+      [LayoutOrder] : 200
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Crocus
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dandelion
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Pink Lily
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 40
+      [PurchaseID] : 3306485035
+      [RobuxPrice] : 749
+      [TimeToCraft] : 2700
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Suncoil
+    [Evo Apple II] : (Table)
+      [LayoutOrder] : 15
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple I
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple I
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Evo Apple I
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Burning Bud
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 30000000
+      [PurchaseID] : 3420524026
+      [RobuxPrice] : 349
+      [TimeToCraft] : 1200
+      [DisplayInCrafting] : true
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Evo Apple II
+    [Manuka Flower] : (Table)
+      [LayoutOrder] : 140
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Orange Tulip
+      [Cost] : (Table)
+        [CurrencyType] : Honey
+        [Amount] : 6
+      [PurchaseID] : 3306485030
+      [RobuxPrice] : 99
+      [TimeToCraft] : 600
+      [DisplayInCrafting] : false
+      [MachineTypes] : (Table)
+        [1] : SeedEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Manuka Flower
+  [DinoEventWorkbench] : (Table)
+    [Archaeologist Crate] : (Table)
+      [LayoutOrder] : 115
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dinosaur Egg
+      [MachineTypes] : (Table)
+        [1] : DinoEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5500000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3329654888
+      [RobuxPrice] : 179
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [Quantity] : 2
+            [ItemName] : Archaeologist Crate
+    [Primal Egg] : (Table)
+      [LayoutOrder] : 130
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dinosaur Egg
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bone Blossom
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5500000
+      [PurchaseID] : 3329518200
+      [RobuxPrice] : 149
+      [TimeToCraft] : 1800
+      [IsUnlockable] : true
+      [MachineTypes] : (Table)
+        [1] : DinoEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Primal Egg
+    [Mutation Spray Amber] : (Table)
+      [LayoutOrder] : 90
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : SprayBottle
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleaning Spray
+        [2] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dinosaur Egg
+      [MachineTypes] : (Table)
+        [1] : DinoEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3322971805
+      [RobuxPrice] : 189
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Mutation Spray Amber
+    [Dino Crate] : (Table)
+      [LayoutOrder] : 110
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dinosaur Egg
+      [MachineTypes] : (Table)
+        [1] : DinoEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5500000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3324601485
+      [RobuxPrice] : 179
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [Quantity] : 2
+            [ItemName] : Dino Crate
+    [Ancient Seed Pack] : (Table)
+      [LayoutOrder] : 100
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dinosaur Egg
+      [MachineTypes] : (Table)
+        [1] : DinoEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5500000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3324600388
+      [RobuxPrice] : 199
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [Quantity] : 2
+            [ItemName] : Ancient Seed Pack
+    [Dinosaur Egg] : (Table)
+      [LayoutOrder] : 120
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bone Blossom
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5500000
+      [PurchaseID] : 3329519291
+      [RobuxPrice] : 149
+      [TimeToCraft] : 1800
+      [IsUnlockable] : true
+      [MachineTypes] : (Table)
+        [1] : DinoEventWorkbench
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Dinosaur Egg
+  [FairyGeniusEventWorkbench] : (Table)
+    [Fairy Net] : (Table)
+      [LayoutOrder] : 10
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sunbulb
+        [2] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Strawberry
+        [3] : (Table)
+          [ItemType] : Harvest Tool
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Harvest Tool
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : FairyPoints
+        [Amount] : 100
+      [TimeToCraft] : 30
+      [PurchaseID] : 3395556018
+      [RobuxPrice] : 109
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 20
+            [ItemName] : Fairy Net
+    [Glimmering Radar] : (Table)
+      [LayoutOrder] : 20
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [2] : (Table)
+          [ItemType] : Harvest Tool
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Harvest Tool
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [TimeToCraft] : 300
+      [PurchaseID] : 3395556015
+      [RobuxPrice] : 199
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 5
+            [ItemName] : Glimmering Radar
+    [Luminous Wand] : (Table)
+      [LayoutOrder] : 60
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [2] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [3] : (Table)
+          [ItemType] : Fairy Power Extender
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Power Extender
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 10000000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3395556016
+      [RobuxPrice] : 219
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Luminous Wand
+    [Fairy Targeter] : (Table)
+      [LayoutOrder] : 30
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [TimeToCraft] : 450
+      [PurchaseID] : 3395556011
+      [RobuxPrice] : 149
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Fairy Targeter
+    [Fairy Power Extender] : (Table)
+      [LayoutOrder] : 50
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [2] : (Table)
+          [ItemType] : Fairy Caller
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Caller
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5000000
+      [TimeToCraft] : 600
+      [PurchaseID] : 3395556012
+      [RobuxPrice] : 299
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Fairy Power Extender
+    [Fairy Summoner] : (Table)
+      [LayoutOrder] : 80
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [2] : (Table)
+          [ItemType] : Fairy Net
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Net
+        [3] : (Table)
+          [ItemType] : Fairy Power Extender
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Power Extender
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 15000000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3395556009
+      [RobuxPrice] : 399
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Fairy Summoner
+    [Fairy Caller] : (Table)
+      [LayoutOrder] : 40
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Fairy Jar
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Fairy Jar
+        [2] : (Table)
+          [ItemType] : Sprinkler
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Godly Sprinkler
+      [MachineTypes] : (Table)
+        [1] : FairyGeniusEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 2500000
+      [TimeToCraft] : 480
+      [PurchaseID] : 3395556013
+      [RobuxPrice] : 209
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 2
+            [ItemName] : Fairy Caller
+  [SmithingEventPetWorkbench] : (Table)
+    [Gem Egg] : (Table)
+      [LayoutOrder] : 100
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Egg
+        [2] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [3] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [4] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+      [MachineTypes] : (Table)
+        [1] : SmithingEventPetWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1000000
+      [TimeToCraft] : 600
+      [PurchaseID] : 3455269673
+      [RobuxPrice] : 209
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Gem Egg
+    [Cheetah] : (Table)
+      [LayoutOrder] : 300
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Orange Tabby
+        [2] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+        [3] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+      [MachineTypes] : (Table)
+        [1] : SmithingEventPetWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 8500000
+      [TimeToCraft] : 2400
+      [PurchaseID] : 3455274866
+      [RobuxPrice] : 549
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Cheetah
+    [Smithing Dog] : (Table)
+      [LayoutOrder] : 200
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Dog
+        [2] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [3] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+      [MachineTypes] : (Table)
+        [1] : SmithingEventPetWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 3000000
+      [TimeToCraft] : 1200
+      [PurchaseID] : 3455274572
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Pet
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Smithing Dog
+  [GiantBeanstalkEventWorkbench] : (Table)
+    [Bean Pool Table] : (Table)
+      [LayoutOrder] : 180
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Coconut
+        [4] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Crate
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 4500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3379259523
+      [RobuxPrice] : 209
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Bean Pool Table
+    [Pet Shard GiantBean] : (Table)
+      [LayoutOrder] : 200
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [4] : (Table)
+          [ItemType] : PetShard
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleansing Pet Shard
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 15000000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3379333073
+      [RobuxPrice] : 279
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetShard
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Pet Shard GiantBean
+    [Sprout Egg] : (Table)
+      [LayoutOrder] : 120
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Seed Pack
+        [4] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Uncommon Egg
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 2500000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3371044215
+      [RobuxPrice] : 149
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Sprout Egg
+    [Bean Sprout Float Light] : (Table)
+      [LayoutOrder] : 190
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Flare Melon
+        [4] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Crate
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 4500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3379259737
+      [RobuxPrice] : 149
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Bean Sprout Float Light
+    [Skyroot Chest] : (Table)
+      [LayoutOrder] : 100
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Seed Pack
+        [4] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Egg
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 7500000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3379243998
+      [RobuxPrice] : 199
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Skyroot Chest
+    [Green Bean Memories] : (Table)
+      [LayoutOrder] : 170
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [3] : (Table)
+          [ItemType] : Seed Pack
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Seed Pack
+        [4] : (Table)
+          [ItemType] : CosmeticCrate
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Sprout Crate
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 4500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3379259309
+      [RobuxPrice] : 239
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Green Bean Memories
+    [Willowberry] : (Table)
+      [LayoutOrder] : 160
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Flare Melon
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Glowpod
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+        [4] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Beanstalk
+      [MachineTypes] : (Table)
+        [1] : GiantBeanstalkEventWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 5500000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3379244616
+      [RobuxPrice] : 589
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Willowberry
+  [SmithingEventCosmeticWorkbench] : (Table)
+    [Blacksmith Grinder] : (Table)
+      [LayoutOrder] : 300
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [2] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Giant Pinecone
+      [MachineTypes] : (Table)
+        [1] : SmithingEventCosmeticWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 6000000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3455270632
+      [RobuxPrice] : 189
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Blacksmith Grinder
+    [Shield Statue] : (Table)
+      [LayoutOrder] : 400
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [2] : (Table)
+          [ItemType] : Favorite Tool
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Favorite Tool
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Apple
+      [MachineTypes] : (Table)
+        [1] : SmithingEventCosmeticWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 10500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3455271420
+      [RobuxPrice] : 239
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Shield Statue
+    [Coal Box] : (Table)
+      [LayoutOrder] : 200
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [2] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [3] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Coconut
+      [MachineTypes] : (Table)
+        [1] : SmithingEventCosmeticWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3455270320
+      [RobuxPrice] : 119
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Coal Box
+    [Tools Rack] : (Table)
+      [LayoutOrder] : 180
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [2] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Olive
+      [MachineTypes] : (Table)
+        [1] : SmithingEventCosmeticWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 7000000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3455271054
+      [RobuxPrice] : 119
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Tools Rack
+    [Horse Shoe Magnet] : (Table)
+      [LayoutOrder] : 500
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Smith Hammer of Harvest
+          [ItemData] : (Table)
+            [ItemName] : Smith Hammer of Harvest
+        [2] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Hollow Bamboo
+        [3] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+        [4] : (Table)
+          [ItemType] : Divine Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Divine Coal
+      [MachineTypes] : (Table)
+        [1] : SmithingEventCosmeticWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 15000000
+      [TimeToCraft] : 7200
+      [PurchaseID] : 3455271745
+      [RobuxPrice] : 537
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Horse Shoe Magnet
+    [Anvil] : (Table)
+      [LayoutOrder] : 100
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [2] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [3] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+      [MachineTypes] : (Table)
+        [1] : SmithingEventCosmeticWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 3455270076
+      [RobuxPrice] : 119
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Cosmetic
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Anvil
+  [SmithingEventGearWorkbench] : (Table)
+    [Thundelbringer] : (Table)
+      [LayoutOrder] : 500
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Smith Hammer of Harvest
+          [ItemData] : (Table)
+            [ItemName] : Smith Hammer of Harvest
+        [2] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+        [3] : (Table)
+          [ItemType] : Divine Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Divine Coal
+        [4] : (Table)
+          [ItemType] : Lightning Rod
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Lightning Rod
+      [MachineTypes] : (Table)
+        [1] : SmithingEventGearWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 40000000
+      [TimeToCraft] : 4500
+      [PurchaseID] : 3455277251
+      [RobuxPrice] : 489
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Thundelbringer
+    [Smith Hammer of Harvest] : (Table)
+      [LayoutOrder] : 220
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Harvest Tool
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Harvest Tool
+        [2] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [3] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [4] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+      [MachineTypes] : (Table)
+        [1] : SmithingEventGearWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 6000000
+      [TimeToCraft] : 1800
+      [PurchaseID] : 3455273154
+      [RobuxPrice] : 149
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Smith Hammer of Harvest
+    [Pet Shard Forger] : (Table)
+      [LayoutOrder] : 210
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : PetEgg
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Gem Egg
+        [2] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+        [3] : (Table)
+          [ItemType] : PetShard
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cleansing Pet Shard
+      [MachineTypes] : (Table)
+        [1] : SmithingEventGearWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 15000000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 3455275888
+      [RobuxPrice] : 499
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Pet Shard Forger
+    [Smith Treat] : (Table)
+      [LayoutOrder] : 205
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [2] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [3] : (Table)
+          [ItemType] : PetBoost
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Small Treat
+        [4] : (Table)
+          [ItemType] : PetBoost
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Small Treat
+      [MachineTypes] : (Table)
+        [1] : SmithingEventGearWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 4000000
+      [TimeToCraft] : 600
+      [PurchaseID] : 3455273350
+      [RobuxPrice] : 229
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Gear
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Smith Treat
+  [SmithingEventSeedWorkbench] : (Table)
+    [Olive] : (Table)
+      [LayoutOrder] : 100
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [2] : (Table)
+          [ItemType] : Common Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Common Coal
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Grape
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Tomato
+      [MachineTypes] : (Table)
+        [1] : SmithingEventSeedWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 500000
+      [TimeToCraft] : 900
+      [PurchaseID] : 0
+      [RobuxPrice] : 129
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Olive
+    [Hollow Bamboo] : (Table)
+      [LayoutOrder] : 200
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Rare Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Rare Coal
+        [2] : (Table)
+          [ItemType] : Legendary Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Legendary Coal
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Bamboo
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Cactus
+      [MachineTypes] : (Table)
+        [1] : SmithingEventSeedWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 1500000
+      [TimeToCraft] : 2700
+      [PurchaseID] : 0
+      [RobuxPrice] : 507
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Hollow Bamboo
+    [Yarrow] : (Table)
+      [LayoutOrder] : 300
+      [Inputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Divine Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Divine Coal
+        [2] : (Table)
+          [ItemType] : Divine Coal
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Divine Coal
+        [3] : (Table)
+          [ItemType] : Holdable
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Burning Bud
+        [4] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [AcceptAllTypes] : false
+            [ItemName] : Daffodil
+      [MachineTypes] : (Table)
+        [1] : SmithingEventSeedWorkbench
+      [Cost] : (Table)
+        [CurrencyType] : Sheckles
+        [Amount] : 10000000
+      [TimeToCraft] : 3600
+      [PurchaseID] : 0
+      [RobuxPrice] : 729
+      [Outputs] : (Table)
+        [1] : (Table)
+          [ItemType] : Seed
+          [ItemData] : (Table)
+            [Quantity] : 1
+            [ItemName] : Yarrow
+[ItemRecipes] : (Table)
+  [Lumira] : (Table)
+    [LayoutOrder] : 160
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pumpkin
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pumpkin
+      [3] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dandelion
+      [4] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Flower Seed Pack
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 40
+    [PurchaseID] : 3306485023
+    [RobuxPrice] : 529
+    [TimeToCraft] : 1200
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Lumira
+  [Tropical Mist Sprinkler] : (Table)
+    [LayoutOrder] : 10
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Coconut
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dragon Fruit
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mango
+      [4] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3306484251
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Tropical Mist Sprinkler
+  [Dinosaur Egg] : (Table)
+    [LayoutOrder] : 120
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bone Blossom
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5500000
+    [PurchaseID] : 3329519291
+    [RobuxPrice] : 149
+    [TimeToCraft] : 1800
+    [IsUnlockable] : true
+    [MachineTypes] : (Table)
+      [1] : DinoEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Dinosaur Egg
+  [Hollow Bamboo@SeedEventWorkbench] : (Table)
+    [LayoutOrder] : 50
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Advanced Sprinkler
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5000000
+    [TimeToCraft] : 2700
+    [PurchaseID] : 0
+    [RobuxPrice] : 507
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Hollow Bamboo
+  [Small Toy] : (Table)
+    [LayoutOrder] : 113
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Coconut
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Coconut
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [TimeToCraft] : 600
+    [PurchaseID] : 3329526448
+    [RobuxPrice] : 139
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 3
+          [ItemName] : Small Toy
+  [Dandelion] : (Table)
+    [LayoutOrder] : 150
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [3] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Manuka Flower
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 20
+    [PurchaseID] : 3306485029
+    [RobuxPrice] : 199
+    [TimeToCraft] : 960
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Dandelion
+  [Lightning Rod] : (Table)
+    [LayoutOrder] : 5
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Basic Sprinkler
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Advanced Sprinkler
+      [3] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 500000
+    [TimeToCraft] : 2700
+    [PurchaseID] : 3265946758
+    [RobuxPrice] : 179
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Lightning Rod
+  [Enchanted Crate] : (Table)
+    [LayoutOrder] : 40
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Enchanted Seed Pack
+    [MachineTypes] : (Table)
+      [1] : FairyWorldCraftingWorkBench
+    [Cost] : (Table)
+      [CurrencyType] : FairyPoints
+      [Amount] : 1000
+    [TimeToCraft] : 300
+    [PurchaseID] : 3394272617
+    [RobuxPrice] : 179
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Enchanted Crate
+  [Smithing Dog] : (Table)
+    [LayoutOrder] : 200
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dog
+      [2] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [3] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+    [MachineTypes] : (Table)
+      [1] : SmithingEventPetWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 3000000
+    [TimeToCraft] : 1200
+    [PurchaseID] : 3455274572
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Smithing Dog
+  [Smith Treat] : (Table)
+    [LayoutOrder] : 205
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [2] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [3] : (Table)
+        [ItemType] : PetBoost
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Small Treat
+      [4] : (Table)
+        [ItemType] : PetBoost
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Small Treat
+    [MachineTypes] : (Table)
+      [1] : SmithingEventGearWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 4000000
+    [TimeToCraft] : 600
+    [PurchaseID] : 3455273350
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Smith Treat
+  [Green Bean Memories] : (Table)
+    [LayoutOrder] : 170
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Seed Pack
+      [4] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Crate
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 4500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3379259309
+    [RobuxPrice] : 239
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Green Bean Memories
+  [Horsetail] : (Table)
+    [LayoutOrder] : 20
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Corn
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 15000
+    [PurchaseID] : 3329520820
+    [RobuxPrice] : 199
+    [TimeToCraft] : 900
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Horsetail
+  [Pet Pouch] : (Table)
+    [LayoutOrder] : 118
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+      [2] : (Table)
+        [ItemType] : Food
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Corndog
+      [3] : (Table)
+        [ItemType] : PetBoost
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Small Treat
+      [4] : (Table)
+        [ItemType] : PetBoost
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Small Toy
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 50000000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3369521127
+    [RobuxPrice] : 89
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Pet Pouch
+  [Mutation Spray Choc] : (Table)
+    [LayoutOrder] : 70
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : SprayBottle
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleaning Spray
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cacao
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 200000
+    [PurchaseID] : 3306484247
+    [RobuxPrice] : 179
+    [TimeToCraft] : 720
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Mutation Spray Choc
+  [Fairy Caller] : (Table)
+    [LayoutOrder] : 40
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 2500000
+    [TimeToCraft] : 480
+    [PurchaseID] : 3395556013
+    [RobuxPrice] : 209
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 2
+          [ItemName] : Fairy Caller
+  [Sweet Soaker Sprinkler] : (Table)
+    [LayoutOrder] : 40
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Watermelon
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Watermelon
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Watermelon
+      [4] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Master Sprinkler
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3306484252
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Sweet Soaker Sprinkler
+  [Yarrow] : (Table)
+    [LayoutOrder] : 300
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Divine Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Divine Coal
+      [2] : (Table)
+        [ItemType] : Divine Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Divine Coal
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Burning Bud
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+    [MachineTypes] : (Table)
+      [1] : SmithingEventSeedWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 10000000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 0
+    [RobuxPrice] : 729
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Yarrow
+  [Golden Piggy] : (Table)
+    [LayoutOrder] : 160
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Silver Piggy
+      [2] : (Table)
+        [ItemType] : Food
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Pizza
+      [3] : (Table)
+        [ItemType] : Tanning Mirror
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Tanning Mirror
+      [4] : (Table)
+        [ItemType] : PetBoost
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Medium Treat
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 300000000
+    [TimeToCraft] : 2700
+    [PurchaseID] : 3460381429
+    [RobuxPrice] : 459
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Golden Piggy
+  [Aloe Vera] : (Table)
+    [LayoutOrder] : 143
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Peace Lily
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Prickly Pear
+    [Cost] : (Table)
+      [CurrencyType] : SummerCoins
+      [Amount] : 18
+    [PurchaseID] : 3317175501
+    [RobuxPrice] : 299
+    [TimeToCraft] : 600
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Aloe Vera
+  [Blacksmith Grinder] : (Table)
+    [LayoutOrder] : 300
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [2] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Giant Pinecone
+    [MachineTypes] : (Table)
+      [1] : SmithingEventCosmeticWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 6000000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3455270632
+    [RobuxPrice] : 189
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Blacksmith Grinder
+  [Amber Spine] : (Table)
+    [LayoutOrder] : 30
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pumpkin
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Horsetail
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 650000
+    [PurchaseID] : 3329520620
+    [RobuxPrice] : 625
+    [TimeToCraft] : 1800
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Amber Spine
+  [Guanabana] : (Table)
+    [LayoutOrder] : 145
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Aloe Vera
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Prickly Pear
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Banana
+    [Cost] : (Table)
+      [CurrencyType] : SummerCoins
+      [Amount] : 30
+    [PurchaseID] : 3317175618
+    [RobuxPrice] : 779
+    [TimeToCraft] : 600
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Guanabana
+  [Mutation Spray Glimmering] : (Table)
+    [LayoutOrder] : 12
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : SprayBottle
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleaning Spray
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Orange Tulip
+      [3] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mango
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [PurchaseID] : 3388357651
+    [RobuxPrice] : 159
+    [TimeToCraft] : 900
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [DisplayInCrafting] : false
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Mutation Spray Glimmering
+  [Spice Spritzer Sprinkler] : (Table)
+    [LayoutOrder] : 30
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pepper
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Ember Lily
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cacao
+      [4] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Master Sprinkler
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3306484232
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Spice Spritzer Sprinkler
+  [Dino Crate] : (Table)
+    [LayoutOrder] : 110
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dinosaur Egg
+    [MachineTypes] : (Table)
+      [1] : DinoEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5500000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3324601485
+    [RobuxPrice] : 179
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [Quantity] : 2
+          [ItemName] : Dino Crate
+  [Twisted Tangle] : (Table)
+    [LayoutOrder] : 10
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mango
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 50000
+    [PurchaseID] : 3354091176
+    [RobuxPrice] : 239
+    [TimeToCraft] : 900
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Twisted Tangle
+  [Glimmering Radar] : (Table)
+    [LayoutOrder] : 20
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [2] : (Table)
+        [ItemType] : Harvest Tool
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Harvest Tool
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [TimeToCraft] : 300
+    [PurchaseID] : 3395556015
+    [RobuxPrice] : 199
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 5
+          [ItemName] : Glimmering Radar
+  [Bean Sprout Float Light] : (Table)
+    [LayoutOrder] : 190
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Flare Melon
+      [4] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Crate
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 4500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3379259737
+    [RobuxPrice] : 149
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Bean Sprout Float Light
+  [Olive@SeedEventWorkbench] : (Table)
+    [LayoutOrder] : 40
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Basic Sprinkler
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Basic Sprinkler
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Grape
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Tomato
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 750000
+    [TimeToCraft] : 900
+    [PurchaseID] : 0
+    [RobuxPrice] : 129
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Olive
+  [Enchanted Seed Pack] : (Table)
+    [LayoutOrder] : 20
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mushroom
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mushroom
+    [MachineTypes] : (Table)
+      [1] : FairyWorldCraftingWorkBench
+    [Cost] : (Table)
+      [CurrencyType] : FairyPoints
+      [Amount] : 1500
+    [TimeToCraft] : 300
+    [PurchaseID] : 3394271793
+    [RobuxPrice] : 99
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Enchanted Seed Pack
+  [Sprout Egg] : (Table)
+    [LayoutOrder] : 120
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Seed Pack
+      [4] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Uncommon Egg
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 2500000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3371044215
+    [RobuxPrice] : 149
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Sprout Egg
+  [Enchanted Chest] : (Table)
+    [LayoutOrder] : 10
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sunbulb
+      [2] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Enchanted Seed Pack
+      [3] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Enchanted Egg
+    [MachineTypes] : (Table)
+      [1] : FairyWorldCraftingWorkBench
+    [Cost] : (Table)
+      [CurrencyType] : FairyPoints
+      [Amount] : 6000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3394265025
+    [RobuxPrice] : 199
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Enchanted Chest
+  [Small Treat] : (Table)
+    [LayoutOrder] : 115
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dragon Fruit
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Blueberry
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [TimeToCraft] : 600
+    [PurchaseID] : 3329527534
+    [RobuxPrice] : 89
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 3
+          [ItemName] : Small Treat
+  [Glimmering Crate] : (Table)
+    [LayoutOrder] : 50
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Enchanted Crate
+    [MachineTypes] : (Table)
+      [1] : FairyWorldCraftingWorkBench
+    [Cost] : (Table)
+      [CurrencyType] : FairyPoints
+      [Amount] : 1000
+    [TimeToCraft] : 300
+    [PurchaseID] : 3394269769
+    [RobuxPrice] : 179
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Glimmering Crate
+  [Thundelbringer] : (Table)
+    [LayoutOrder] : 500
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Smith Hammer of Harvest
+        [ItemData] : (Table)
+          [ItemName] : Smith Hammer of Harvest
+      [2] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+      [3] : (Table)
+        [ItemType] : Divine Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Divine Coal
+      [4] : (Table)
+        [ItemType] : Lightning Rod
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Lightning Rod
+    [MachineTypes] : (Table)
+      [1] : SmithingEventGearWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 40000000
+    [TimeToCraft] : 4500
+    [PurchaseID] : 3455277251
+    [RobuxPrice] : 489
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Thundelbringer
+  [Berry Blusher Sprinkler] : (Table)
+    [LayoutOrder] : 20
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Grape
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Blueberry
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Strawberry
+      [4] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3306484242
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Berry Blusher Sprinkler
+  [Luminous Wand] : (Table)
+    [LayoutOrder] : 60
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [2] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [3] : (Table)
+        [ItemType] : Fairy Power Extender
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Power Extender
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 10000000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3395556016
+    [RobuxPrice] : 219
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Luminous Wand
+  [Mutation Spray Chilled] : (Table)
+    [LayoutOrder] : 80
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : SprayBottle
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleaning Spray
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 500000
+    [PurchaseID] : 3317772898
+    [RobuxPrice] : 189
+    [TimeToCraft] : 300
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [DisplayInCrafting] : false
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Mutation Spray Chilled
+  [Archaeologist Crate] : (Table)
+    [LayoutOrder] : 115
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dinosaur Egg
+    [MachineTypes] : (Table)
+      [1] : DinoEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5500000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3329654888
+    [RobuxPrice] : 179
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [Quantity] : 2
+          [ItemName] : Archaeologist Crate
+  [Pack Bee] : (Table)
+    [LayoutOrder] : 120
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Anti Bee Egg
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legacy Sunflower
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Purple Dahlia
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 250
+    [TimeToCraft] : 14400
+    [PurchaseID] : 3306484257
+    [RobuxPrice] : 799
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Pack Bee
+  [Tools Rack] : (Table)
+    [LayoutOrder] : 180
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [2] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Olive
+    [MachineTypes] : (Table)
+      [1] : SmithingEventCosmeticWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 7000000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3455271054
+    [RobuxPrice] : 119
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Tools Rack
+  [Smith Hammer of Harvest] : (Table)
+    [LayoutOrder] : 220
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Harvest Tool
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Harvest Tool
+      [2] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [3] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [4] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+    [MachineTypes] : (Table)
+      [1] : SmithingEventGearWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 6000000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3455273154
+    [RobuxPrice] : 149
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Smith Hammer of Harvest
+  [Hollow Bamboo] : (Table)
+    [LayoutOrder] : 200
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [2] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+    [MachineTypes] : (Table)
+      [1] : SmithingEventSeedWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1500000
+    [TimeToCraft] : 2700
+    [PurchaseID] : 0
+    [RobuxPrice] : 507
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Hollow Bamboo
+  [Gold Ingot] : (Table)
+    [LayoutOrder] : 140
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Giant Pinecone
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [3] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Advanced Sprinkler
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 300000
+    [TimeToCraft] : 60
+    [PurchaseID] : 3460381002
+    [RobuxPrice] : 33
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Gold Ingot
+  [Shield Statue] : (Table)
+    [LayoutOrder] : 400
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [2] : (Table)
+        [ItemType] : Favorite Tool
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Favorite Tool
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Apple
+    [MachineTypes] : (Table)
+      [1] : SmithingEventCosmeticWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 10500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3455271420
+    [RobuxPrice] : 239
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Shield Statue
+  [Coal Box] : (Table)
+    [LayoutOrder] : 200
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [2] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+      [3] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Coconut
+    [MachineTypes] : (Table)
+      [1] : SmithingEventCosmeticWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3455270320
+    [RobuxPrice] : 119
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Coal Box
+  [Anvil] : (Table)
+    [LayoutOrder] : 100
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [2] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [3] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+    [MachineTypes] : (Table)
+      [1] : SmithingEventCosmeticWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3455270076
+    [RobuxPrice] : 119
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Anvil
+  [Primal Egg] : (Table)
+    [LayoutOrder] : 130
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dinosaur Egg
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bone Blossom
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5500000
+    [PurchaseID] : 3329518200
+    [RobuxPrice] : 149
+    [TimeToCraft] : 1800
+    [IsUnlockable] : true
+    [MachineTypes] : (Table)
+      [1] : DinoEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Primal Egg
+  [Lingonberry] : (Table)
+    [LayoutOrder] : 25
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Blueberry
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Blueberry
+      [3] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Blueberry
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Horsetail
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 450000
+    [PurchaseID] : 3329520955
+    [RobuxPrice] : 209
+    [TimeToCraft] : 900
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Lingonberry
+  [Evo Apple III] : (Table)
+    [LayoutOrder] : 20
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple II
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple II
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple II
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Giant Pinecone
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 70000000
+    [PurchaseID] : 3420524301
+    [RobuxPrice] : 679
+    [TimeToCraft] : 1800
+    [DisplayInCrafting] : true
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Evo Apple III
+  [Cheetah] : (Table)
+    [LayoutOrder] : 300
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Orange Tabby
+      [2] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+      [3] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+    [MachineTypes] : (Table)
+      [1] : SmithingEventPetWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 8500000
+    [TimeToCraft] : 2400
+    [PurchaseID] : 3455274866
+    [RobuxPrice] : 549
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Cheetah
+  [Gem Egg] : (Table)
+    [LayoutOrder] : 100
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+      [2] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [3] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [4] : (Table)
+        [ItemType] : Rare Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rare Coal
+    [MachineTypes] : (Table)
+      [1] : SmithingEventPetWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [TimeToCraft] : 600
+    [PurchaseID] : 3455269673
+    [RobuxPrice] : 209
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Gem Egg
+  [Olive] : (Table)
+    [LayoutOrder] : 100
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [2] : (Table)
+        [ItemType] : Common Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Coal
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Grape
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Tomato
+    [MachineTypes] : (Table)
+      [1] : SmithingEventSeedWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 0
+    [RobuxPrice] : 129
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Olive
+  [Fairy Summoner] : (Table)
+    [LayoutOrder] : 80
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [2] : (Table)
+        [ItemType] : Fairy Net
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Net
+      [3] : (Table)
+        [ItemType] : Fairy Power Extender
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Power Extender
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 15000000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3395556009
+    [RobuxPrice] : 399
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Fairy Summoner
+  [Horse Shoe Magnet] : (Table)
+    [LayoutOrder] : 500
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Smith Hammer of Harvest
+        [ItemData] : (Table)
+          [ItemName] : Smith Hammer of Harvest
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Hollow Bamboo
+      [3] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+      [4] : (Table)
+        [ItemType] : Divine Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Divine Coal
+    [MachineTypes] : (Table)
+      [1] : SmithingEventCosmeticWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 15000000
+    [TimeToCraft] : 7200
+    [PurchaseID] : 3455271745
+    [RobuxPrice] : 537
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Horse Shoe Magnet
+  [Anti Bee Egg] : (Table)
+    [LayoutOrder] : 110
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bee Egg
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 25
+    [TimeToCraft] : 7200
+    [PurchaseID] : 3306484244
+    [RobuxPrice] : 149
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Anti Bee Egg
+  [Honey Crafters Crate] : (Table)
+    [LayoutOrder] : 100
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bee Crate
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 12
+    [PurchaseID] : 3306484248
+    [RobuxPrice] : 179
+    [TimeToCraft] : 1800
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Honey Crafters Crate
+  [Enchanted Egg] : (Table)
+    [LayoutOrder] : 30
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Glowthorn
+      [2] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Enchanted Seed Pack
+    [MachineTypes] : (Table)
+      [1] : FairyWorldCraftingWorkBench
+    [Cost] : (Table)
+      [CurrencyType] : FairyPoints
+      [Amount] : 3000
+    [TimeToCraft] : 600
+    [PurchaseID] : 3394272325
+    [RobuxPrice] : 129
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Enchanted Egg
+  [Pet Shard Forger] : (Table)
+    [LayoutOrder] : 210
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Gem Egg
+      [2] : (Table)
+        [ItemType] : Legendary Coal
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Legendary Coal
+      [3] : (Table)
+        [ItemType] : PetShard
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleansing Pet Shard
+    [MachineTypes] : (Table)
+      [1] : SmithingEventGearWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 15000000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3455275888
+    [RobuxPrice] : 499
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Pet Shard Forger
+  [Evo Apple I] : (Table)
+    [LayoutOrder] : 10
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Beetroot IV
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Blueberry IV
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Pumpkin IV
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Mushroom IV
+      [5] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sugar Apple
+    [DisplayInCrafting] : true
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [TimeToCraft] : 600
+    [PurchaseID] : 3420523696
+    [RobuxPrice] : 195
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Evo Apple I
+  [Fairy Net] : (Table)
+    [LayoutOrder] : 10
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sunbulb
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Strawberry
+      [3] : (Table)
+        [ItemType] : Harvest Tool
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Harvest Tool
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : FairyPoints
+      [Amount] : 100
+    [TimeToCraft] : 30
+    [PurchaseID] : 3395556018
+    [RobuxPrice] : 109
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 20
+          [ItemName] : Fairy Net
+  [Evo Apple IV] : (Table)
+    [LayoutOrder] : 30
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple III
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple III
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple III
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Elder Strawberry
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 100000000
+    [PurchaseID] : 3420524565
+    [RobuxPrice] : 849
+    [TimeToCraft] : 2400
+    [DisplayInCrafting] : true
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Evo Apple IV
+  [Peace Lily] : (Table)
+    [LayoutOrder] : 140
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Rafflesia
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cauliflower
+    [Cost] : (Table)
+      [CurrencyType] : SummerCoins
+      [Amount] : 3
+    [PurchaseID] : 3317730044
+    [RobuxPrice] : 129
+    [TimeToCraft] : 600
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Peace Lily
+  [Fairy Targeter] : (Table)
+    [LayoutOrder] : 30
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [TimeToCraft] : 450
+    [PurchaseID] : 3395556011
+    [RobuxPrice] : 149
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Fairy Targeter
+  [Willowberry] : (Table)
+    [LayoutOrder] : 160
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Flare Melon
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Glowpod
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5500000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3379244616
+    [RobuxPrice] : 589
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Willowberry
+  [Stalk Sprout Sprinkler] : (Table)
+    [LayoutOrder] : 60
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bamboo
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mushroom
+      [4] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Advanced Sprinkler
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3306484241
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Stalk Sprout Sprinkler
+  [Ancient Seed Pack] : (Table)
+    [LayoutOrder] : 100
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dinosaur Egg
+    [MachineTypes] : (Table)
+      [1] : DinoEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5500000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3324600388
+    [RobuxPrice] : 199
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [Quantity] : 2
+          [ItemName] : Ancient Seed Pack
+  [Mandrake] : (Table)
+    [LayoutOrder] : 5
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Carrot
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [TimeToCraft] : 300
+    [PurchaseID] : 3371045808
+    [RobuxPrice] : 199
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 3
+          [ItemName] : Mandrake
+  [Evo Apple II] : (Table)
+    [LayoutOrder] : 15
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple I
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple I
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Evo Apple I
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Burning Bud
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 30000000
+    [PurchaseID] : 3420524026
+    [RobuxPrice] : 349
+    [TimeToCraft] : 1200
+    [DisplayInCrafting] : true
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Evo Apple II
+  [Pet Shard GiantBean] : (Table)
+    [LayoutOrder] : 200
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [4] : (Table)
+        [ItemType] : PetShard
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleansing Pet Shard
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 15000000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3379333073
+    [RobuxPrice] : 279
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetShard
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Pet Shard GiantBean
+  [Suncoil] : (Table)
+    [LayoutOrder] : 200
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Crocus
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dandelion
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pink Lily
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 40
+    [PurchaseID] : 3306485035
+    [RobuxPrice] : 749
+    [TimeToCraft] : 2700
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Suncoil
+  [Skyroot Chest] : (Table)
+    [LayoutOrder] : 100
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Seed Pack
+      [4] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Egg
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 7500000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3379243998
+    [RobuxPrice] : 199
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Skyroot Chest
+  [Grand Volcania] : (Table)
+    [LayoutOrder] : 30
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Ember Lily
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Ember Lily
+      [3] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dinosaur Egg
+      [4] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Ancient Seed Pack
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 900000
+    [PurchaseID] : 3329521774
+    [RobuxPrice] : 819
+    [TimeToCraft] : 2700
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Grand Volcania
+  [Reclaimer] : (Table)
+    [LayoutOrder] : 8
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Common Egg
+      [2] : (Table)
+        [ItemType] : Harvest Tool
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Harvest Tool
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 500000
+    [TimeToCraft] : 1500
+    [PurchaseID] : 3309686533
+    [RobuxPrice] : 199
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 3
+          [ItemName] : Reclaimer
+  [Mutation Spray Pollinated] : (Table)
+    [LayoutOrder] : 80
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : SprayBottle
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleaning Spray
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bee Balm
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 25
+    [PurchaseID] : 3306484250
+    [RobuxPrice] : 179
+    [TimeToCraft] : 300
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Mutation Spray Pollinated
+  [Veinpetal] : (Table)
+    [LayoutOrder] : 15
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Orange Tulip
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [4] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Burning Bud
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 650000
+    [PurchaseID] : 3354091526
+    [RobuxPrice] : 459
+    [TimeToCraft] : 1200
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Veinpetal
+  [Bean Pool Table] : (Table)
+    [LayoutOrder] : 180
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Beanstalk
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Coconut
+      [4] : (Table)
+        [ItemType] : CosmeticCrate
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sprout Crate
+    [MachineTypes] : (Table)
+      [1] : GiantBeanstalkEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 4500000
+    [TimeToCraft] : 900
+    [PurchaseID] : 3379259523
+    [RobuxPrice] : 209
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Bean Pool Table
+  [Tanning Mirror] : (Table)
+    [LayoutOrder] : 6
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Basic Sprinkler
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Advanced Sprinkler
+      [3] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Godly Sprinkler
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 500000
+    [TimeToCraft] : 2700
+    [PurchaseID] : 3311159836
+    [RobuxPrice] : 219
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Tanning Mirror
+  [Honeysuckle] : (Table)
+    [LayoutOrder] : 170
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pink Lily
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Purple Dahlia
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 80
+    [PurchaseID] : 3306485032
+    [RobuxPrice] : 619
+    [TimeToCraft] : 1440
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Honeysuckle
+  [Yarrow@SeedEventWorkbench] : (Table)
+    [LayoutOrder] : 60
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Master Sprinkler
+      [2] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Master Sprinkler
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Burning Bud
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 18000000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 0
+    [RobuxPrice] : 729
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Yarrow
+  [Crafters Seed Pack] : (Table)
+    [LayoutOrder] : 130
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Flower Seed Pack
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 10
+    [PurchaseID] : 3306485034
+    [RobuxPrice] : 199
+    [TimeToCraft] : 1200
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed Pack
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Crafters Seed Pack
+  [Fairy Power Extender] : (Table)
+    [LayoutOrder] : 50
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Fairy Jar
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Jar
+      [2] : (Table)
+        [ItemType] : Fairy Caller
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Fairy Caller
+    [MachineTypes] : (Table)
+      [1] : FairyGeniusEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 5000000
+    [TimeToCraft] : 600
+    [PurchaseID] : 3395556012
+    [RobuxPrice] : 299
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Fairy Power Extender
+  [Mutation Spray Amber] : (Table)
+    [LayoutOrder] : 90
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : SprayBottle
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleaning Spray
+      [2] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Dinosaur Egg
+    [MachineTypes] : (Table)
+      [1] : DinoEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3322971805
+    [RobuxPrice] : 189
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Mutation Spray Amber
+  [Nectar Thorn] : (Table)
+    [LayoutOrder] : 190
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+      [3] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cactus
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Nectarshade
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 20
+    [PurchaseID] : 3306485033
+    [RobuxPrice] : 659
+    [TimeToCraft] : 1800
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Nectar Thorn
+  [Bee Balm] : (Table)
+    [LayoutOrder] : 180
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Crocus
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Lavender
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 10
+    [PurchaseID] : 3306485036
+    [RobuxPrice] : 179
+    [TimeToCraft] : 900
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Bee Balm
+  [Flower Froster Sprinkler] : (Table)
+    [LayoutOrder] : 50
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Orange Tulip
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [3] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Advanced Sprinkler
+      [4] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Basic Sprinkler
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [TimeToCraft] : 3600
+    [PurchaseID] : 3306484243
+    [RobuxPrice] : 229
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Flower Froster Sprinkler
+  [Chimera Stone] : (Table)
+    [LayoutOrder] : 170
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Mythical Egg
+      [2] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Bug Egg
+      [3] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Jungle Egg
+      [4] : (Table)
+        [ItemType] : PetEgg
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Gem Egg
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 500000000
+    [PurchaseID] : 3460382022
+    [RobuxPrice] : 199
+    [TimeToCraft] : 3600
+    [DisplayInCrafting] : true
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Chimera Stone
+  [Mutation Spray Shocked] : (Table)
+    [LayoutOrder] : 90
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : SprayBottle
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Cleaning Spray
+      [2] : (Table)
+        [ItemType] : Lightning Rod
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Lightning Rod
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 1000000
+    [PurchaseID] : 3306484253
+    [RobuxPrice] : 199
+    [TimeToCraft] : 1800
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Mutation Spray Shocked
+  [Event Lantern] : (Table)
+    [LayoutOrder] : 10
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Recall Wrench
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Recall Wrench
+      [2] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Apple
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 350000
+    [TimeToCraft] : 10
+    [PurchaseID] : 3388358462
+    [RobuxPrice] : 39
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [Quantity] : 30
+          [ItemName] : Event Lantern
+  [Silver Piggy] : (Table)
+    [LayoutOrder] : 150
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Pig
+      [2] : (Table)
+        [ItemType] : Food
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Sushi
+      [3] : (Table)
+        [ItemType] : Lightning Rod
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Lightning Rod
+      [4] : (Table)
+        [ItemType] : PetBoost
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Medium Toy
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 150000000
+    [TimeToCraft] : 1800
+    [PurchaseID] : 3460381175
+    [RobuxPrice] : 419
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Pet
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Silver Piggy
+  [Silver Ingot] : (Table)
+    [LayoutOrder] : 130
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Sugar Apple
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Buttercup
+      [3] : (Table)
+        [ItemType] : Sprinkler
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Basic Sprinkler
+    [MachineTypes] : (Table)
+      [1] : GearEventWorkbench
+    [Cost] : (Table)
+      [CurrencyType] : Sheckles
+      [Amount] : 150000
+    [TimeToCraft] : 60
+    [PurchaseID] : 3460380386
+    [RobuxPrice] : 29
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Cosmetic
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Silver Ingot
+  [Manuka Flower] : (Table)
+    [LayoutOrder] : 140
+    [Inputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Daffodil
+      [2] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [AcceptAllTypes] : false
+          [ItemName] : Orange Tulip
+    [Cost] : (Table)
+      [CurrencyType] : Honey
+      [Amount] : 6
+    [PurchaseID] : 3306485030
+    [RobuxPrice] : 99
+    [TimeToCraft] : 600
+    [DisplayInCrafting] : false
+    [MachineTypes] : (Table)
+      [1] : SeedEventWorkbench
+    [Outputs] : (Table)
+      [1] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Quantity] : 1
+          [ItemName] : Manuka Flower
