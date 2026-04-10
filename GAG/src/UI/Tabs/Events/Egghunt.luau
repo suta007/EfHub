@@ -27,7 +27,7 @@ function Egghunt.Initialize(registry, tab)
 		Callback = function(Value)
 			EfTasks.ToggleTask("AutoEggHunt", Value, function()
 				Egghunt.autoEggHunt()
-				task.wait(30)
+				task.wait(60)
 			end)
 			QuickSave()
 			if not Value then

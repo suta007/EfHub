@@ -30,6 +30,7 @@ sData.RefreshActivePetsUI = sData.GameEvents:WaitForChild("RefreshActivePetsUI")
 sData.PetsServiceEvent = sData.GameEvents:WaitForChild("PetsService")
 sData.SeedPackEvent = sData.GameEvents:WaitForChild("SeedPack")
 sData.PetEggService = sData.GameEvents:WaitForChild("PetEggService")
+sData.CraftingEvent = sData.GameEvents:WaitForChild("CraftingGlobalObjectService")
 
 sData.ClaimSeasonPassRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
 sData.ClaimSeasonPassInfRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward")

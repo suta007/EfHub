@@ -21,6 +21,8 @@ fVar.UIShopLoaded = false
 
 fVar.IsOpeningSeedPack = false
 
+fVar.CraftGearRunning = false
+
 fVar.CheckLevelConnection = nil
 fVar.CheckLevelConnection2 = nil
 

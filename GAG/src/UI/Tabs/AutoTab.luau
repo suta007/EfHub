@@ -450,21 +450,21 @@ function AutoTab.Initialize(registry)
 	})
 	--Craft Section
 	local CraftSection = Tabs.Auto:AddCollapsibleSection("Craft", false)
-	CraftSection:AddToggle("tgCraftEnable", {
+	CraftSection:AddToggle("tgCraftGearEnable", {
 		Title = "Auto Craft",
 		Default = false,
 		Callback = function(Value)
-			--[[ 			if Value then
-				task.spawn(function()
-					pcall(Auto.Craft)
-				end)
-			else
-				fVar.IsCrafting = false
-			end ]]
+			EfTasks.Create("AutoCraftGear", Value, function()
+				Auto.CraftGear()
+				task.wait(60)
+			end)
 			QuickSave()
+			if not Value then
+				fVar.CraftGearRunning = false
+			end
 		end,
 	})
-	CraftSection:AddDropdown("ddCraft", {
+	CraftSection:AddDropdown("ddCraftGear", {
 		Title = "Select Craft",
 		Values = sData.GearEventDataTable,
 		Default = "",
@@ -474,6 +474,7 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	--
 end
 
 return AutoTab
