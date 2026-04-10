@@ -413,7 +413,7 @@ local function GetRequiredItemsCount(targetItemName: string): number
 	return 0
 end
 
-local TARGET_BENCH_INSTANCE = sData.Workspace:WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
+local TARGET_BENCH_INSTANCE = game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
 local TARGET_MACHINE_TYPE = "GearEventWorkbench"
 local TARGET_BENCH_ID = "Workbench-1"
 local CRAFT_INDEX = 1
