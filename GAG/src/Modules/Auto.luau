@@ -418,6 +418,8 @@ local TARGET_MACHINE_TYPE = "GearEventWorkbench"
 local TARGET_BENCH_ID = "Workbench-1"
 local CRAFT_INDEX = 1
 
+local CraftingStationHandler = require(sData.Modules:WaitForChild("CraftingStationHandler"))
+
 function Auto.CraftGear()
 	local Options = reg.Options
 	if not Options.tgCraftGearEnable or not Options.tgCraftGearEnable.Value or fVar.CraftGearRunning then
@@ -461,13 +463,18 @@ function Auto.CraftGear()
 
 		local isReadyToCraft = false
 
+		pcall(function()
+			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
+		end)
+		task.wait(0.5)
+
 		for attempt = 1, 3 do
 			if not Options.tgCraftGearEnable.Value then
 				return
 			end
 
 			pcall(function()
-				sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
+				CraftingStationHandler:SubmitAllRequiredItems(TARGET_BENCH_INSTANCE)
 			end)
 			task.wait(0.5)
 
