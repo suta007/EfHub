@@ -29,6 +29,8 @@ b.SprinklerEvent=b.GameEvents:WaitForChild("SprinklerService")
 b.RefreshActivePetsUI=b.GameEvents:WaitForChild("RefreshActivePetsUI")
 b.PetsServiceEvent=b.GameEvents:WaitForChild("PetsService")
 b.SeedPackEvent=b.GameEvents:WaitForChild("SeedPack")
+b.PetEggService=b.GameEvents:WaitForChild("PetEggService")
+b.CraftingEvent=b.GameEvents:WaitForChild("CraftingGlobalObjectService")
 
 b.ClaimSeasonPassRewardRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
 b.ClaimSeasonPassInfRewardRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward")
@@ -53,6 +55,7 @@ b.CoreGui=game:GetService("CoreGui")
 
 b.PetShardService_RE=b.GameEvents:WaitForChild("PetShardService_RE")
 b.Workspace=game:GetService("Workspace")
+
 
 
 
@@ -93,6 +96,8 @@ for h,i in pairs(g)do
 table.insert(b.PetsDataTable,h)
 b.HungerDataTable[h]=i["DefaultHunger"]
 end
+b.PetsDataBlackTable=table.clone(b.PetsDataTable)
+b.PetsDataBlackTable[1]="NONE"
 
 local h=require(b.PetRegistry:WaitForChild("PetMutationRegistry")::any)
 b.PetMutationDataTable={"NONE"}
@@ -169,6 +174,19 @@ table.insert(b.SeasonPassShopTable,o)
 b.SeasonPassPriceTable[o]=p.Price
 end
 
+local o=require(b.Data:WaitForChild("PetRegistry"):WaitForChild("PetEggs"))
+b.EggDataTable={"ALL"}
+for p,q in pairs(o)do
+table.insert(b.EggDataTable,p)
+end
+
+local p=require(b.Data:WaitForChild("CraftingData"):WaitForChild("CraftingRecipeRegistry")::any)
+b.GearEventData=p.RecipiesSortedByMachineType.GearEventWorkbench
+b.GearEventDataTable={}
+for q,r in pairs(b.GearEventData)do
+table.insert(b.GearEventDataTable,q)
+end
+
 return b end function a.a():typeof(__modImpl())local b=a.cache.a if not b then b={c=__modImpl()}a.cache.a=b end return b.c end end do local function __modImpl()
 
 local b={}
@@ -193,6 +211,8 @@ b.IsFeeding=false
 b.UIShopLoaded=false
 
 b.IsOpeningSeedPack=false
+
+b.CraftGearRunning=false
 
 b.CheckLevelConnection=nil
 b.CheckLevelConnection2=nil
@@ -257,6 +277,11 @@ local g=c.GetMyFarm():FindFirstChild("Important")
 return g and g:FindFirstChild("Plants_Physical")
 end
 
+function c.GetObjectsFolder()
+local g=c.GetMyFarm():FindFirstChild("Important")
+return g and g:FindFirstChild("Objects_Physical")
+end
+
 function c.GetPlot()
 local g={}
 local h=c.GetMyFarm().Important.Plant_Locations:GetChildren()
@@ -287,29 +312,72 @@ maxZ=m,
 }
 end
 
-function c.GetRandomPlotPos()
-local g=c.GetPlot()
-if#g==0 then
+function c.GetRandomPlotPos(g)
+local h=g or nil
+local i
+local j=c.GetPlot()
+if#j==0 then
 return nil
 end
-local h=g[math.random(1,#g)]
-local i=h.Size
-local j=h.CFrame
+if not h then
+i=j[math.random(1,#j)]
+else
+i=j[h]
+end
+local k=i.Size
+local l=i.CFrame
 
-local k=f:NextNumber(-i.X/2,i.X/2)
+local m=f:NextNumber(-k.X/2,k.X/2)
 
-local l=f:NextNumber(-i.Z/2,i.Z/2)
+local n=f:NextNumber(-k.Z/2,k.Z/2)
 
-local m=1
+local o=1
 
-local n=CFrame.new(k,m,l)
-local o=j*n
+local p=CFrame.new(m,o,n)
+local q=l*p
 
-local p=o.Position.X
-local q=j.Position.Y
-local r=o.Position.Z
+local r=q.Position.X
+local s=l.Position.Y
+local t=q.Position.Z
 
-return CFrame.new(p,q,r)
+return CFrame.new(r,s,t)
+end
+
+function c.GetSetPlotPos(g,h,i)
+local j=g or 1
+local k=h or 0
+local l=c.GetPlot()
+if#l==0 then
+return nil
+end
+local m=l[j]
+local n=c.GetBoundary(m)
+local o=n.cf
+local p=i or n.maxX
+local q=0.15
+local r=n.minZ+(k*4)
+k=k+1
+if r>n.maxZ then
+p=p-4
+r=n.minZ
+k=0
+end
+if p<n.minX then
+if j==1 then
+j=2
+else
+j=1
+end
+return c.GetSetPlotPos(j,0)
+end
+
+local s=CFrame.new(p,q,r)
+local t=o*s
+
+local u=t.Position.X
+local v=o.Position.Y
+local w=t.Position.Z
+return{CFrame.new(u,v,w),j,k,p}
 end
 
 function c.GetPosition()
@@ -1376,6 +1444,120 @@ task.wait(0.5)
 end)
 end
 
+local function GetRequiredItemsCount(g:string):number
+for h,i in pairs(e.GearEventData)do
+if h==g then
+local j=i.Inputs
+if type(j)=="table"then
+return#j
+else
+return 0
+end
+end
+end
+return 0
+end
+
+function b.CraftGear()
+local g=c.Options
+if not g.tgCraftGearEnable or not g.tgCraftGearEnable.Value or d.CraftGearRunning then
+return
+end
+
+local h=game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
+local i="GearEventWorkbench"
+local j="Workbench-1"
+local k=1
+local l=require(e.Modules.CraftingStationHandler)
+
+f.RunWithFlag("CraftGearRunning","CraftGear",function()
+local m=g.ddCraftGear.Value
+if not m or m==""then
+c.Log("🟡 No Gear Selected")
+return
+end
+local n=e.DataService:GetData()
+local o=n.CraftingData.GlobalCraftingObjectData
+local p=o[j].MachineData[i]
+
+if not p then
+c.Log("🟡 No Bench Data")
+return
+end
+local q=p.CraftingItems
+
+if q and q[k]then
+if q[k].IsDone==false then
+return
+elseif q[k].IsDone==true then
+pcall(function()
+e.CraftingEvent:FireServer("Claim",h,i,k)
+c.Log("Claim "..tostring(q[k].RecipeId))
+end)
+task.wait(1.5)
+return
+end
+end
+
+local r=GetRequiredItemsCount(m)
+if r==0 then
+c.Log("🟡 No Recipe Found")
+return
+end
+
+local s=false
+
+pcall(function()
+e.CraftingEvent:FireServer("SetRecipe",h,i,m)
+end)
+task.wait(0.5)
+
+for t=1,3 do
+if not g.tgCraftGearEnable.Value then
+return
+end
+
+pcall(function()
+l:SubmitAllRequiredItems(h)
+end)
+task.wait(0.5)
+
+
+local u=e.DataService:GetData()
+local v=u.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
+local w=v.InputItems
+local x=w and#w or 0
+
+if x==r then
+s=true
+break
+else
+c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",x,r,t))
+task.wait(1)
+end
+end
+
+
+if not s then
+c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
+if g.tgCraftGearEnable then
+g.tgCraftGearEnable:SetValue(false)
+end
+return
+end
+
+
+
+
+pcall(function()
+e.CraftingEvent:FireServer("Craft",h,i)
+c.Log("ของครบถ้วน สั่ง Craft -> "..m)
+end)
+
+task.wait(1.5)
+end)
+end
+
 return b end function a.g():typeof(__modImpl())local b=a.cache.g if not b then b={c=__modImpl()}a.cache.g=b end return b.c end end do local function __modImpl()
 
 local b={}
@@ -1679,10 +1861,13 @@ k=3
 elseif k==3 then
 k=2
 end
-e.PetsServiceEvent:FireServer("SwapPetLoadout",k)
+local l=e.DataService:GetData().PetsData.SelectedPetLoadout
+if l==k then
+return
 end
-
-
+e.PetsServiceEvent:FireServer("SwapPetLoadout",k)
+task.wait(9)
+end
 
 function b.FarmLevel()
 local k=c.Options
@@ -2137,6 +2322,268 @@ end
 d.IsFeeding=false
 end
 
+function b.EggInFarm()
+local k=f.GetObjectsFolder()
+if not k then
+return
+end
+local l={}
+for m,n in ipairs(k:GetChildren())do
+if n and n:GetAttribute("OBJECT_TYPE")=="PetEgg"then
+table.insert(l,n)
+end
+end
+return l
+end
+
+function b.PlaceEggs()
+local k=c.Options
+if not k.tgPlaceEggsEn or not k.tgPlaceEggsEn.Value then
+return
+end
+
+local l=g(k.ddPlaceEgg.Value)
+if#l==0 then
+c.Log("🟠 PlaceEggs: No Egg Selected")
+return
+end
+local m=tonumber(k.ipMaxEggs.Value)
+if m==0 then
+c.Log("🟠 PlaceEggs: Max Egg must be greater than 0")
+return
+end
+local n=tonumber(k.ddSpeedLoadout.Value)or 1
+pcall(b.SwapPetLoadout,n)
+local o=tonumber(k.ddPlaceSlot.Value)or 1
+local p=k.ddPlaceMethod.Value
+local q
+local r
+
+if p=="Set"then
+q=f.GetSetPlotPos(o)
+r=q[1]
+else
+r=f.GetRandomPlotPos()
+end
+local s=Random.new()
+while k.tgPlaceEggsEn.Value do
+local t=b.EggInFarm()
+if t and type(t)=="table"and#t<m then
+local u=l[s:NextInteger(1,#l)]
+local v=f.FindToolByPattern(e.Backpack,u)
+f.EquipTool(v)
+task.wait(0.3)
+
+local w=vector.create(r.Position.X,0.1355266571044922,r.Position.Z)
+c.Log("PlaceEgg: "..tostring(w))
+
+e.PetEggService:FireServer("CreateEgg",w)
+task.wait(0.3)
+if p=="Set"then
+q=f.GetSetPlotPos(q[2],q[3],q[4])
+r=q[1]
+else
+r=f.GetRandomPlotPos()
+end
+f.UnequipTool()
+task.wait(0.1)
+else
+break
+end
+task.wait(0.1)
+end
+end
+
+local function ValidEggs(k,l)
+local m=c.Options
+local n=g(m.ddSpecialHatchPet.Value)or{}
+local o=tonumber(m.inpSpecialHatchWeight.Value)or 3.5
+
+local p={}
+local q={}
+if not k or not l then
+return nil,nil
+end
+
+for r,s in l do
+local t=k[s:GetAttribute("OBJECT_UUID")]
+if t then
+local u=t.Data.BaseWeight*1.1
+local v=t.Data.Type
+if o~=0 and u>=o then
+table.insert(p,s)
+elseif#n>0 and table.find(n,v)then
+table.insert(p,s)
+else
+table.insert(q,s)
+end
+end
+end
+return q,p
+end
+
+function b.HatchEgg()
+local k=c.Options
+if not k.tgAutoHatchEn or not k.tgAutoHatchEn.Value then
+return
+end
+
+while k.tgAutoHatchEn.Value do
+local l=e.DataService:GetData()
+local m={}
+local n={}
+local o=b.EggInFarm()
+local p=l.SaveSlots.SelectedSlot
+local q=l.SaveSlots.AllSlots[p].SavedObjects
+if not q or type(q)~="table"then
+task.wait(5)
+continue
+end
+local r=0
+for s,t in pairs(q)do
+if t.ObjectType=="PetEgg"then
+n[s]=t
+r=r+1
+end
+end
+
+for s,t in pairs(o)do
+if t:GetAttribute("READY")==true then
+table.insert(m,t)
+end
+end
+
+if r~=#m then
+task.wait(5)
+continue
+end
+local s,t=ValidEggs(n,m)
+
+if#t>0 then
+pcall(b.SwapPetLoadout,tonumber(k.ddSpecialHatchLoadout.Value)or 4)
+for u,v in pairs(t)do
+e.PetEggService:FireServer("HatchPet",v)
+task.wait(0.2)
+end
+end
+task.wait(2)
+if#s>0 then
+pcall(b.SwapPetLoadout,tonumber(k.ddHatchLoadout.Value)or 2)
+for u,v in pairs(s)do
+e.PetEggService:FireServer("HatchPet",v)
+task.wait(0.2)
+end
+end
+task.wait(1)
+break
+end
+end
+
+local function IsValidSellPet(k)
+if not k or type(k)~="table"then
+return false
+end
+local l=c.Options
+local m=g(l.ddSellPet.Value)
+local n=l.ddSellPetThreshold.Value
+local o=tonumber(l.inpSellPetWeight.Value)
+
+local p=k.PetType
+local q=k.PetData.BaseWeight
+local r=k.PetData.MutationType or"m"
+local s=k.PetData.IsFavorite
+if s then
+return false
+end
+if r~="m"then
+return false
+end
+if not table.find(m,p)then
+return false
+end
+if o>0 then
+if n=="Below"and q>=o then
+return false
+end
+if n=="Above"and q<=o then
+return false
+end
+end
+return true
+end
+local function scanSellPetList()
+local k={}
+local l=e.DataService:GetData()
+local m=l.PetsData.PetInventory
+if m then
+for n,o in pairs(m)do
+if type(o)=="table"then
+for p,q in pairs(o)do
+if type(q)=="table"and IsValidSellPet(q)then
+table.insert(k,q.UUID)
+end
+end
+end
+end
+end
+return k
+end
+function b.SellPet()
+local k=c.Options
+if not k.tgSellPetEn or not k.tgSellPetEn.Value then
+return
+end
+
+local l=scanSellPetList()
+if#l>0 then
+pcall(b.SwapPetLoadout,tonumber(k.ddSellLoadout.Value)or 3)
+for m,n in pairs(l)do
+if b.HeldPet(n)then
+task.wait()
+e.GameEvents:WaitForChild("SellPet_RE"):FireServer()
+end
+task.wait(0.2)
+end
+end
+end
+local k=nil
+function b.RunHatchSet()
+local l=c.Options
+
+if not k then
+k=task.spawn(function()
+while true do
+pcall(function()
+local m=l.inpDelayPlaceEgg and tonumber(l.inpDelayPlaceEgg.Value)or 2
+local n=l.inpDelayHatchEgg and tonumber(l.inpDelayHatchEgg.Value)or 2
+local o=l.inpDelaySellPet and tonumber(l.inpDelaySellPet.Value)or 2
+task.wait(m)
+b.PlaceEggs()
+
+task.wait(n)
+b.HatchEgg()
+
+task.wait(o)
+b.SellPet()
+end)
+task.wait(1)
+end
+end)
+end
+local m=l.tgPlaceEggsEn and l.tgPlaceEggsEn.Value
+local n=l.tgAutoHatchEn and l.tgAutoHatchEn.Value
+local o=l.tgSellPetEn and l.tgSellPetEn.Value
+
+if not(m or n or o)then
+pcall(function()
+if k then
+task.cancel(k)
+k=nil
+end
+end)
+end
+end
+
 return b end function a.h():typeof(__modImpl())local b=a.cache.h if not b then b={c=__modImpl()}a.cache.h=b end return b.c end end do local function __modImpl()
 
 local b=game:GetService("ReplicatedStorage")
@@ -2155,60 +2602,62 @@ local l
 local m=nil
 local n="PlantsESP"
 local o="FruitESP"
-local p={}
-local q=game:GetService("CoreGui")
-local r=(getfenv()::any).getgenv
-local s=if r then r().GetHUI else nil
-if not s then
-s=function()
-return q
+local p="EggsESP"
+local q="CratesESP"
+local r={}
+local s=game:GetService("CoreGui")
+local t=(getfenv()::any).getgenv
+local u=if t then t().GetHUI else nil
+if not u then
+u=function()
+return s
 end
 end
 
-local t
+local v
 
 
 
 
-local function FormatComma(u)
-local v=tostring(u)
+local function FormatComma(w)
+local x=tostring(w)
 repeat
-local w
-v,w=string.gsub(v,"^(-?%d+)(%d%d%d)","%1,%2")
-until w==0
-return v
+local y
+x,y=string.gsub(x,"^(-?%d+)(%d%d%d)","%1,%2")
+until y==0
+return x
 end
 
-local u={"CENT","VIG","NOV","OCT","SEP","SXD","QUI","QUA","TR","DU","UN","DE","NO","OC","SP","SX","QI","QA","T","B","M","K"}
-local v={}
-local w=#u-1
+local w={"CENT","VIG","NOV","OCT","SEP","SXD","QUI","QUA","TR","DU","UN","DE","NO","OC","SP","SX","QI","QA","T","B","M","K"}
+local x={}
+local y=#w-1
 
-for x,y in ipairs(u)do
-table.insert(v,{
-Number=math.pow(1000,w)*1000,
-Symbol=y,
+for z,A in ipairs(w)do
+table.insert(x,{
+Number=math.pow(1000,y)*1000,
+Symbol=A,
 })
-w=w-1
+y=y-1
 end
 
-local function FormatCompactPrice(x,y)
-x=tonumber(x)or 0
-if x<1000 then
-return FormatComma(math.floor(x))
+local function FormatCompactPrice(z,A)
+z=tonumber(z)or 0
+if z<1000 then
+return FormatComma(math.floor(z))
 end
-for z,A in ipairs(v)do
-if A.Number<=x then
-local B=x/A.Number
-local C=string.format("%."..(y or"3").."f",B)
-C=string.gsub(C,"0+$","")
-C=string.gsub(C,"%.$","")
-return C..A.Symbol
+for B,C in ipairs(x)do
+if C.Number<=z then
+local D=z/C.Number
+local E=string.format("%."..(A or"3").."f",D)
+E=string.gsub(E,"0+$","")
+E=string.gsub(E,"%.$","")
+return E..C.Symbol
 end
 end
-return FormatComma(math.floor(x))
+return FormatComma(math.floor(z))
 end
 
-local x={
+local z={
 {X=0,Y=0},
 {X=1e12,Y=1e12},
 {X=20e12,Y=10e12},
@@ -2217,85 +2666,85 @@ local x={
 {X=750e12,Y=280e12},
 }
 
-local function ApplyMarketTax(y)
-for z=2,#x do
-local A=x[z-1]
-local B=x[z]
-if A.X<=y and y<=B.X then
-return(B.Y-A.Y)/(B.X-A.X)*(y-A.X)+A.Y
+local function ApplyMarketTax(A)
+for B=2,#z do
+local C=z[B-1]
+local D=z[B]
+if C.X<=A and A<=D.X then
+return(D.Y-C.Y)/(D.X-C.X)*(A-C.X)+C.Y
 end
 end
-local z=x[#x-1]
-local A=x[#x]
-return(A.Y-z.Y)/(A.X-z.X)*(y-A.X)+A.Y
-end
-
-local function GetFormattedFruitPrice(y)
-if not y or typeof(y)~="Instance"then
-return"0"
-end
-local z=y:FindFirstChild("Item_String")
-local A=z and z.Value or y.Name
-local B=y:FindFirstChild("Variant")
-local C=y:FindFirstChild("Weight")
-if not B or not C then
-return"0"
+local B=z[#z-1]
+local C=z[#z]
+return(C.Y-B.Y)/(C.X-B.X)*(A-C.X)+C.Y
 end
 
+local function GetFormattedFruitPrice(A)
+if not A or typeof(A)~="Instance"then
+return"0"
+end
+local B=A:FindFirstChild("Item_String")
+local C=B and B.Value or A.Name
+local D=A:FindFirstChild("Variant")
+local E=A:FindFirstChild("Weight")
+if not D or not E then
+return"0"
+end
+
+local F=E.Value
+local G=A:GetAttribute("FruitVersion")or A:GetAttribute(e.FruitVersion)or 0
+local H=d:CalcValueMulti(A)
+local I=c.Return_Variant_Multiplier(D.Value)
+local J=c.Return_Data(C)
+
+if not J or#J<3 then
+return"0"
+end
+local K=J[2]
+local L=J[3]
+
+local M=L*H*I
+local N=F/K
+local O=math.clamp(N,0.95,100000000)
+local P=M*(O*O)
+
+if G>=1 then
+local Q=ApplyMarketTax(P)
+P=math.max(Q,0)
+end
+
+return FormatCompactPrice(math.round(P),"3")
+end
+
+local function GetFormattedMutations(A)
+if not A or typeof(A)~="Instance"then
+return""
+end
+local B={}
+
+local C=A:FindFirstChild("Variant")
+if C and C:IsA("StringValue")then
 local D=C.Value
-local E=y:GetAttribute("FruitVersion")or y:GetAttribute(e.FruitVersion)or 0
-local F=d:CalcValueMulti(y)
-local G=c.Return_Variant_Multiplier(B.Value)
-local H=c.Return_Data(A)
-
-if not H or#H<3 then
-return"0"
-end
-local I=H[2]
-local J=H[3]
-
-local K=J*F*G
-local L=D/I
-local M=math.clamp(L,0.95,100000000)
-local N=K*(M*M)
-
-if E>=1 then
-local O=ApplyMarketTax(N)
-N=math.max(O,0)
-end
-
-return FormatCompactPrice(math.round(N),"3")
-end
-
-local function GetFormattedMutations(y)
-if not y or typeof(y)~="Instance"then
-return""
-end
-local z={}
-
-local A=y:FindFirstChild("Variant")
-if A and A:IsA("StringValue")then
-local B=A.Value
-if B~=""and B~="Normal"then
-if B=="Rainbow"then
-table.insert(z,"🌈 Rainbow")
+if D~=""and D~="Normal"then
+if D=="Rainbow"then
+table.insert(B,"🌈 Rainbow")
 else
-local C=f:GetHex(B)
-local D=string.sub(C,1,1)=="#"and""or"#"
-table.insert(z,string.format('<font color="%s%s">%s</font>',D,C,B))
+local E=f:GetHex(D)
+local F=string.sub(E,1,1)=="#"and""or"#"
+table.insert(B,string.format('<font color="%s%s">%s</font>',F,E,D))
 end
 end
 end
 
-for B,C in pairs(g)do
-if y:GetAttribute(B)then
-local D=C.Color and C.Color:ToHex()or"FFFFFF"
-table.insert(z,string.format('<font color="#%s">%s</font>',D,B))
+for D,E in pairs(g)do
+if A:GetAttribute(D)then
+local F=E.Color and E.Color:ToHex()or"FFFFFF"
+table.insert(B,string.format('<font color="#%s">%s</font>',F,D))
 end
 end
 
-if#z>0 then
-return table.concat(z,", ")
+if#B>0 then
+return table.concat(B,", ")
 else
 return""
 end
@@ -2304,75 +2753,75 @@ end
 
 
 
-local function IsFruit(y)
-if typeof(y)~="Instance"then
+local function IsFruit(A)
+if typeof(A)~="Instance"then
 return false
 end
-if y:HasTag("Harvestable")or y:HasTag("FruitTool")then
+if A:HasTag("Harvestable")or A:HasTag("FruitTool")then
 return true
 end
-local z=y:FindFirstAncestorWhichIsA("Model")or y:FindFirstAncestorWhichIsA("Tool")
-if z and(z:HasTag("Harvestable")or z:HasTag("FruitTool"))then
+local B=A:FindFirstAncestorWhichIsA("Model")or A:FindFirstAncestorWhichIsA("Tool")
+if B and(B:HasTag("Harvestable")or B:HasTag("FruitTool"))then
 return true
 end
-local A=y
-while A and A~=workspace do
-if A.Name=="Fruits"then
+local C=A
+while C and C~=workspace do
+if C.Name=="Fruits"then
 return true
 end
-A=A.Parent
+C=C.Parent
 end
 return false
 end
 
-local function SetVisibility(y,z)
-if y:IsA("BasePart")then
-y.LocalTransparencyModifier=z and 1 or 0
-if z then
-if y:GetAttribute("OriginalCanCollide")==nil then
-y:SetAttribute("OriginalCanCollide",y.CanCollide)
-y:SetAttribute("OriginalCanTouch",y.CanTouch)
-y:SetAttribute("OriginalCanQuery",y.CanQuery)
+local function SetVisibility(A,B)
+if A:IsA("BasePart")then
+A.LocalTransparencyModifier=B and 1 or 0
+if B then
+if A:GetAttribute("OriginalCanCollide")==nil then
+A:SetAttribute("OriginalCanCollide",A.CanCollide)
+A:SetAttribute("OriginalCanTouch",A.CanTouch)
+A:SetAttribute("OriginalCanQuery",A.CanQuery)
 end
-y.CanCollide=false
-y.CanTouch=false
-y.CanQuery=false
+A.CanCollide=false
+A.CanTouch=false
+A.CanQuery=false
 else
-local A=y:GetAttribute("OriginalCanCollide")
-local B=y:GetAttribute("OriginalCanTouch")
-local C=y:GetAttribute("OriginalCanQuery")
-if A~=nil then
-y.CanCollide=A
-end
-if B~=nil then
-y.CanTouch=B
-end
+local C=A:GetAttribute("OriginalCanCollide")
+local D=A:GetAttribute("OriginalCanTouch")
+local E=A:GetAttribute("OriginalCanQuery")
 if C~=nil then
-y.CanQuery=C
+A.CanCollide=C
+end
+if D~=nil then
+A.CanTouch=D
+end
+if E~=nil then
+A.CanQuery=E
 end
 end
-elseif y:IsA("Decal")or y:IsA("Texture")then
-if z then
-if not y:GetAttribute("OriginalTrans")then
-y:SetAttribute("OriginalTrans",y.Transparency)
+elseif A:IsA("Decal")or A:IsA("Texture")then
+if B then
+if not A:GetAttribute("OriginalTrans")then
+A:SetAttribute("OriginalTrans",A.Transparency)
 end
-y.Transparency=1
+A.Transparency=1
 else
-local A=y:GetAttribute("OriginalTrans")
-if A then
-y.Transparency=A
+local C=A:GetAttribute("OriginalTrans")
+if C then
+A.Transparency=C
 end
 end
-elseif y:IsA("ParticleEmitter")or y:IsA("Sparkles")or y:IsA("Fire")or y:IsA("Trail")then
-if z then
-if y:GetAttribute("OriginalEnabled")==nil then
-y:SetAttribute("OriginalEnabled",y.Enabled)
+elseif A:IsA("ParticleEmitter")or A:IsA("Sparkles")or A:IsA("Fire")or A:IsA("Trail")then
+if B then
+if A:GetAttribute("OriginalEnabled")==nil then
+A:SetAttribute("OriginalEnabled",A.Enabled)
 end
-y.Enabled=false
+A.Enabled=false
 else
-local A=y:GetAttribute("OriginalEnabled")
-if A~=nil then
-y.Enabled=A
+local C=A:GetAttribute("OriginalEnabled")
+if C~=nil then
+A.Enabled=C
 end
 end
 end
@@ -2381,12 +2830,12 @@ end
 
 
 
-function h.Initialize(y)
-i=y
+function h.Initialize(A)
+i=A
 j=i.sData
 k=i.Utils
 l=i.fVar
-t=i.Utils.GetSelectedItems
+v=i.Utils.GetSelectedItems
 end
 
 function h.AntiLag()
@@ -2402,17 +2851,17 @@ j.Terrain.WaterWaveSpeed=0
 j.Terrain.WaterReflectance=0
 j.Terrain.WaterTransparency=1
 
-for y,z in ipairs(workspace:GetDescendants())do
-if y%200==0 then
+for A,B in ipairs(workspace:GetDescendants())do
+if A%200==0 then
 task.wait()
 end
-if z:IsA("BasePart")then
-z.Material=Enum.Material.SmoothPlastic
-z.Reflectance=0
-elseif z:IsA("ParticleEmitter")then
-z.Enabled=false
-elseif z:IsA("Decal")or z:IsA("Texture")then
-z.Transparency=1
+if B:IsA("BasePart")then
+B.Material=Enum.Material.SmoothPlastic
+B.Reflectance=0
+elseif B:IsA("ParticleEmitter")then
+B.Enabled=false
+elseif B:IsA("Decal")or B:IsA("Texture")then
+B.Transparency=1
 end
 end
 pcall(function()
@@ -2420,74 +2869,74 @@ settings().Rendering.QualityLevel=Enum.QualityLevel.Level01
 end)
 end
 
-function h.HidePlant(y)
-l.IsPlantHidden=y
-local z=k.GetPlantsFolder()
-if not z then
+function h.HidePlant(A)
+l.IsPlantHidden=A
+local B=k.GetPlantsFolder()
+if not B then
 return
 end
 
-for A,B in ipairs(z:GetDescendants())do
-if not IsFruit(B)then
-SetVisibility(B,y)
+for C,D in ipairs(B:GetDescendants())do
+if not IsFruit(D)then
+SetVisibility(D,A)
 end
 end
 h.UpdatePlantTracker()
 end
 
-function h.HideFruit(y)
-l.IsFruitHidden=y
-local z=k.GetPlantsFolder()
-if not z then
+function h.HideFruit(A)
+l.IsFruitHidden=A
+local B=k.GetPlantsFolder()
+if not B then
 return
 end
 
-for A,B in ipairs(z:GetDescendants())do
-if IsFruit(B)then
-SetVisibility(B,y)
+for C,D in ipairs(B:GetDescendants())do
+if IsFruit(D)then
+SetVisibility(D,A)
 end
 end
 h.UpdatePlantTracker()
 end
 
 function h.UpdatePlantTracker()
-local y=i.Options
-local z=(y.tgHideFruits and y.tgHideFruits.Value)or(y.tgHidePlants and y.tgHidePlants.Value)
-local A=y.ddEspCrops and t(y.ddEspCrops.Value)or{}
-local B=y.tgEspCrops and y.tgEspCrops.Value and not table.find(A,"NONE")
-local C=y.ddEspPlants and t(y.ddEspPlants.Value)or{}
-local D=y.tgEspPlants and y.tgEspPlants.Value and not table.find(C,"NONE")
+local A=i.Options
+local B=(A.tgHideFruits and A.tgHideFruits.Value)or(A.tgHidePlants and A.tgHidePlants.Value)
+local C=A.ddEspCrops and v(A.ddEspCrops.Value)or{}
+local D=A.tgEspCrops and A.tgEspCrops.Value and not table.find(C,"NONE")
+local E=A.ddEspPlants and v(A.ddEspPlants.Value)or{}
+local F=A.tgEspPlants and A.tgEspPlants.Value and not table.find(E,"NONE")
 
-if z or B or D then
-local E=k.GetPlantsFolder()
-if E and not m then
-m=E.DescendantAdded:Connect(function(F)
+if B or D or F then
+local G=k.GetPlantsFolder()
+if G and not m then
+m=G.DescendantAdded:Connect(function(H)
 task.wait(0.1)
-if not F or not F.Parent then
+if not H or not H.Parent then
 return
 end
-if not(F:IsA("BasePart")or F:IsA("Model")or F:IsA("Decal")or F:IsA("Texture")or F:IsA("MeshPart"))then
+if not(H:IsA("BasePart")or H:IsA("Model")or H:IsA("Decal")or H:IsA("Texture")or H:IsA("MeshPart"))then
 return
 end
 
-local G=IsFruit(F)
-if z then
-if G then
+local I=IsFruit(H)
+if B then
+if I then
 if l.IsFruitHidden then
-SetVisibility(F,true)
+SetVisibility(H,true)
 end
 else
 if l.IsPlantHidden then
-SetVisibility(F,true)
+SetVisibility(H,true)
 end
 end
 end
 
-if F:IsA("Model")then
-if G and B and table.find(A,F.Name)then
-h.SetEspCrop(F)
-elseif not G and D and table.find(C,F.Name)then
-h.SetEspPlant(F)
+if H:IsA("Model")then
+if I and D and table.find(C,H.Name)then
+h.SetEspCrop(H)
+elseif not I and F and table.find(E,H.Name)then
+h.SetEspPlant(H)
 end
 end
 end)
@@ -2500,207 +2949,340 @@ end
 end
 end
 
-function h.CreatESP(y,z,A,B,C,D)
-if not(y and z and B)then
+function h.CreatESP(A,B,C,D,E,F)
+if not(A and B and D)then
 return
 end
-local E=D or 0
-if p[A]then
-p[A]:Destroy()
-p[A]=nil
+local G=F or 0
+if r[C]then
+r[C]:Destroy()
+r[C]=nil
 end
 
-local F=C~=nil and C~=""
-local G=Instance.new("BillboardGui")
-G.Name="ESP_"..A
-G.Adornee=z
-G.Size=UDim2.fromOffset(600,F and 120 or 65)
-G.StudsOffset=Vector3.new(0,4,0)
-G.AlwaysOnTop=true
-G.LightInfluence=0
-G.Active=false
-G.Parent=y
-
-local H=Instance.new("UIListLayout")
-H.Parent=G
-H.SortOrder=Enum.SortOrder.LayoutOrder
-H.Padding=UDim.new(0,2)
-H.HorizontalAlignment=Enum.HorizontalAlignment.Center
-H.VerticalAlignment=Enum.VerticalAlignment.Top
-
-local I=Instance.new("TextLabel")
-I.Name="InfoLabel"
-I.Parent=G
-I.LayoutOrder=1
-I.Size=UDim2.fromScale(1,0)
-I.AutomaticSize=Enum.AutomaticSize.XY
-I.BackgroundTransparency=1
-I.TextWrapped=false
+local H=E~=nil and E~=""
+local I=Instance.new("BillboardGui")
+I.Name="ESP_"..C
+I.Adornee=B
+I.Size=UDim2.fromOffset(600,H and 120 or 65)
+I.StudsOffset=Vector3.new(0,1,0)
+I.AlwaysOnTop=true
+I.LightInfluence=0
 I.Active=false
-I.RichText=true
-I.TextSize=12
-I.Font=Enum.Font.FredokaOne
-I.Text=B
+I.Parent=A
 
-if F then
-local J=Instance.new("TextLabel")
-J.Name="MutationLabel"
-J.Parent=G
-J.LayoutOrder=2
-J.Size=UDim2.fromScale(1,0)
-J.AutomaticSize=Enum.AutomaticSize.Y
-J.BackgroundTransparency=1
-J.TextWrapped=true
-J.Active=false
-J.RichText=true
-J.TextSize=10
-J.Text=C
-J.Font=Enum.Font.FredokaOne
-J.TextColor3=Color3.fromRGB(200,200,200)
+local J=Instance.new("UIListLayout")
+J.Parent=I
+J.SortOrder=Enum.SortOrder.LayoutOrder
+J.Padding=UDim.new(0,2)
+J.HorizontalAlignment=Enum.HorizontalAlignment.Center
+J.VerticalAlignment=Enum.VerticalAlignment.Top
+
+local K=Instance.new("TextLabel")
+K.Name="InfoLabel"
+K.Parent=I
+K.LayoutOrder=1
+K.Size=UDim2.fromScale(1,0)
+K.AutomaticSize=Enum.AutomaticSize.XY
+K.BackgroundTransparency=1
+K.TextWrapped=false
+K.Active=false
+K.RichText=true
+K.TextSize=16
+K.Font=Enum.Font.FredokaOne
+K.Text=D
+
+if H then
+local L=Instance.new("TextLabel")
+L.Name="MutationLabel"
+L.Parent=I
+L.LayoutOrder=2
+L.Size=UDim2.fromScale(1,0)
+L.AutomaticSize=Enum.AutomaticSize.Y
+L.BackgroundTransparency=1
+L.TextWrapped=true
+L.Active=false
+L.RichText=true
+L.TextSize=14
+L.Text=E
+L.Font=Enum.Font.FredokaOne
+L.TextColor3=Color3.fromRGB(200,200,200)
 end
 
-if E==3 then
-I.TextColor3=Color3.fromRGB(200,200,10)
-elseif E==2 then
-I.TextColor3=Color3.fromRGB(200,50,10)
-elseif E==1 then
-I.TextColor3=Color3.fromRGB(10,200,10)
+if G==3 then
+K.TextColor3=Color3.fromRGB(200,200,10)
+elseif G==2 then
+K.TextColor3=Color3.fromRGB(200,50,10)
+elseif G==1 then
+K.TextColor3=Color3.fromRGB(10,200,10)
 else
-I.TextColor3=Color3.fromRGB(200,200,200)
+K.TextColor3=Color3.fromRGB(200,200,200)
 end
 
-p[A]=G
+r[C]=I
 end
 
-function h.SetEspCrop(y)
-local z=i.Options
-if not z.tgEspCrops.Value then
+function h.SetEspCrop(A)
+local B=i.Options
+if not B.tgEspCrops.Value then
 return
 end
 
-local A=s and s()or q
-local B=A:FindFirstChild(o)
-if not B then
+local C=u and u()or s
+local D=C:FindFirstChild(o)
+if not D then
 return
 end
 
-local C=y.Name
-local D=y:FindFirstChild("Weight")and y:FindFirstChild("Weight").Value or 0
-local E=y:FindFirstChild("Item_Seed")and y:FindFirstChild("Item_Seed").Value or C
-local F=E
+local E=A.Name
+local F=A:FindFirstChild("Weight")and A:FindFirstChild("Weight").Value or 0
+local G=A:FindFirstChild("Item_Seed")and A:FindFirstChild("Item_Seed").Value or E
+local H=G
 
-local G=GetFormattedFruitPrice(y)
-local H=string.format('<b>%s</b> (%.2fkg, <font color="#FFD700">$%s</font>)',C,D,G)
-local I=GetFormattedMutations(y)
+local I=GetFormattedFruitPrice(A)
+local J=string.format('<b>%s</b> (%.2fkg, <font color="#FFD700">$%s</font>)',E,F,I)
+local K=GetFormattedMutations(A)
 
-local J=y:GetAttribute("WeightMulti")or 0
+local L=A:GetAttribute("WeightMulti")or 0
+local M=0
+if L>=30 then
+M=3
+elseif L>=20 then
+M=2
+elseif L>=10 then
+M=1
+end
+
+h.CreatESP(D,A,H,J,K,M)
+end
+
+function h.SetEspPlant(A)
+local B=i.Options
+if not(B and B.tgEspPlants and B.tgEspPlants.Value)then
+return
+end
+if not(A and A:IsA("Model"))then
+return
+end
+
+local C=v(B.ddEspPlants.Value)
+if not table.find(C,A.Name)then
+return
+end
+
+local D=u and u()or s
+local E=D:FindFirstChild(n)
+if not E then
+return
+end
+
+local F=A.Name
+local G=A:FindFirstChild("Weight")and A:FindFirstChild("Weight").Value or 0
+local H=tostring(A:GetAttribute("UUID")or A:GetDebugId())
+
+local I=string.format("<b>%s</b> (%.2fkg)",F,tonumber(G)or 0)
+h.CreatESP(E,A,H,I,"",0)
+end
+
+function h.EspCrops(A)
+local B=i.Options
+local C=u and u()or s
+local D=C:FindFirstChild(o)
+if D then
+D:Destroy()
+end
+if A~=true then
+h.UpdatePlantTracker()
+return
+end
+
+local E=v(B.ddEspCrops.Value)
+if table.find(E,"NONE")then
+return
+end
+
+local F=Instance.new("Folder")
+F.Name=o
+F.Parent=C
+
+local G=k.GetPlantsFolder()
+if G then
+for H,I in ipairs(G:GetChildren())do
+local J=I:FindFirstChild("Fruits")
+local K=J and J:GetChildren()or{I}
+for L,M in ipairs(K)do
+if M:IsA("Model")and table.find(E,M.Name)then
+h.SetEspCrop(M)
+end
+end
+end
+end
+h.UpdatePlantTracker()
+end
+
+function h.EspPlants(A)
+local B=i.Options
+local C=u and u()or s
+local D=C:FindFirstChild(n)
+if D then
+D:Destroy()
+end
+if A~=true then
+h.UpdatePlantTracker()
+return
+end
+
+local E=v(B.ddEspPlants.Value)
+if table.find(E,"NONE")then
+h.UpdatePlantTracker()
+return
+end
+
+local F=Instance.new("Folder")
+F.Name=n
+F.Parent=C
+
+local G=k.GetPlantsFolder()
+if G then
+for H,I in ipairs(G:GetChildren())do
+if I:IsA("Model")and table.find(E,I.Name)then
+h.SetEspPlant(I)
+end
+end
+end
+h.UpdatePlantTracker()
+end
+
+function h.EspEggs(A)
+
+local B=u and u()or s
+local C=B:FindFirstChild(p)
+if C then
+C:Destroy()
+end
+if A~=true then
+
+return
+end
+
+local D=Instance.new("Folder")
+D.Name=p
+D.Parent=B
+
+local E=j.DataService:GetData()
+local F={}
+local G={}
+local H=i.Pets.EggInFarm()
+local I=E.SaveSlots.SelectedSlot
+local J=E.SaveSlots.AllSlots[I].SavedObjects
+if not J or type(J)~="table"then
+
+return
+end
 local K=0
-if J>=30 then
-K=3
-elseif J>=20 then
-K=2
-elseif J>=10 then
-K=1
+for L,M in pairs(J)do
+if M.ObjectType=="PetEgg"then
+G[L]=M
+K=K+1
+end
 end
 
-h.CreatESP(B,y,F,H,I,K)
+for L,M in pairs(H)do
+if M:GetAttribute("READY")==true then
+table.insert(F,M)
+end
 end
 
-function h.SetEspPlant(y)
-local z=i.Options
-if not(z and z.tgEspPlants and z.tgEspPlants.Value)then
-return
-end
-if not(y and y:IsA("Model"))then
+if#F==0 then
 return
 end
 
-local A=t(z.ddEspPlants.Value)
-if not table.find(A,y.Name)then
+for L,M in F do
+local N=M:GetAttribute("OBJECT_UUID")
+local O=G[N]
+if O then
+local P=O.Data.BaseWeight*1.1
+local Q=O.Data.Type
+local R=string.format("<b>%s</b>",Q)
+local S=string.format("<b>(%.2f kg)</b>",tonumber(P)or 0)
+local T=0
+if P>=10 then
+T=3
+elseif P>=8 then
+T=2
+elseif P>=6 then
+T=1
+end
+h.CreatESP(D,M,N,R,S,T)
+end
+end
+end
+
+function h.CratesInFarm()
+local A=k.GetObjectsFolder()
+if not A then
 return
 end
-
-local B=s and s()or q
-local C=B:FindFirstChild(n)
-if not C then
-return
+local B={}
+for C,D in ipairs(A:GetChildren())do
+if D and D:GetAttribute("OBJECT_TYPE")=="CosmeticCrate"then
+table.insert(B,D)
+end
+end
+return B
 end
 
-local D=y.Name
-local E=y:FindFirstChild("Weight")and y:FindFirstChild("Weight").Value or 0
-local F=tostring(y:GetAttribute("UUID")or y:GetDebugId())
+function h.EspCrates(A)
 
-local G=string.format("<b>%s</b> (%.2fkg)",D,tonumber(E)or 0)
-h.CreatESP(C,y,F,G,"",0)
+local B=u and u()or s
+local C=B:FindFirstChild(q)
+if C then
+C:Destroy()
 end
+if A~=true then
 
-function h.EspCrops(y)
-local z=i.Options
-local A=s and s()or q
-local B=A:FindFirstChild(o)
-if B then
-B:Destroy()
-end
-if y~=true then
-h.UpdatePlantTracker()
-return
-end
-
-local C=t(z.ddEspCrops.Value)
-if table.find(C,"NONE")then
-return
-end
-
-local D=Instance.new("Folder")
-D.Name=o
-D.Parent=A
-
-local E=k.GetPlantsFolder()
-if E then
-for F,G in ipairs(E:GetChildren())do
-local H=G:FindFirstChild("Fruits")
-local I=H and H:GetChildren()or{G}
-for J,K in ipairs(I)do
-if K:IsA("Model")and table.find(C,K.Name)then
-h.SetEspCrop(K)
-end
-end
-end
-end
-h.UpdatePlantTracker()
-end
-
-function h.EspPlants(y)
-local z=i.Options
-local A=s and s()or q
-local B=A:FindFirstChild(n)
-if B then
-B:Destroy()
-end
-if y~=true then
-h.UpdatePlantTracker()
-return
-end
-
-local C=t(z.ddEspPlants.Value)
-if table.find(C,"NONE")then
-h.UpdatePlantTracker()
 return
 end
 
 local D=Instance.new("Folder")
-D.Name=n
-D.Parent=A
+D.Name=q
+D.Parent=B
 
-local E=k.GetPlantsFolder()
-if E then
-for F,G in ipairs(E:GetChildren())do
-if G:IsA("Model")and table.find(C,G.Name)then
-h.SetEspPlant(G)
+local E=j.DataService:GetData()
+local F={}
+local G={}
+local H=h.CratesInFarm()
+local I=E.SaveSlots.SelectedSlot
+local J=E.SaveSlots.AllSlots[I].SavedObjects
+if not J or type(J)~="table"then
+
+return
+end
+
+for K,L in pairs(J)do
+if L.ObjectType=="CosmeticCrate"then
+G[K]=L
 end
 end
+
+for K,L in pairs(H)do
+if L:GetAttribute("READY")==true then
+table.insert(F,L)
 end
-h.UpdatePlantTracker()
+end
+
+if#F==0 then
+return
+end
+
+for K,L in F do
+local M=L:GetAttribute("OBJECT_UUID")
+local N=G[M]
+if N then
+local O=N.Data.CosmeticType
+local P=string.format("<b>%s</b>",O)
+h.CreatESP(D,L,M,P,"",1)
+end
+end
 end
 
 function h.HideTracker()
@@ -2708,46 +3290,46 @@ h.UpdatePlantTracker()
 end
 
 function h.SeasonPassShop()
-local y=i.Options
-if not y.tgSeasonPassShop or not y.tgSeasonPassShop.Value then
+local A=i.Options
+if not A.tgSeasonPassShop or not A.tgSeasonPassShop.Value then
 return
 end
 end
 
 function h.SeasonPassQuests()
-local y=i.Options
-if not y.tgSeasonPassQuests or not y.tgSeasonPassQuests.Value then
+local A=i.Options
+if not A.tgSeasonPassQuests or not A.tgSeasonPassQuests.Value then
 return
 end
-local z=j.DataService:GetData()
+local B=j.DataService:GetData()
 
-local A=j.SeasonPassData.CurrentSeason
-local B=z.SeasonPass[A]
+local C=j.SeasonPassData.CurrentSeason
+local D=B.SeasonPass[C]
 
 
-local C=z.DailyQuests and z.DailyQuests.ContainerId
-if C then
-local D=z.QuestContainers[C]
+local E=B.DailyQuests and B.DailyQuests.ContainerId
+if E then
+local F=B.QuestContainers[E]
 
-if D then
-local E=true
+if F then
+local G=true
 
-for F,G in pairs(D.Quests)do
+for H,I in pairs(F.Quests)do
 
-if G.Completed then
-local H=table.find(B.QuestsClaimed,G.Id)
-if not H then
-i.Log("Claiming Season Pass Quest: "..tostring(G.Id))
-j.ClaimSeasonPassQuestRemote:FireServer(G.Id)
+if I.Completed then
+local J=table.find(D.QuestsClaimed,I.Id)
+if not J then
+i.Log("Claiming Season Pass Quest: "..tostring(I.Id))
+j.ClaimSeasonPassQuestRemote:FireServer(I.Id)
 task.wait(0.5)
 end
 else
-E=false
+G=false
 end
 end
 
 
-if E and not B.QuestRewardClaimed then
+if G and not D.QuestRewardClaimed then
 j.SeedPackEvent.Open:FireServer("Season Pass Quests")
 end
 end
@@ -2755,57 +3337,52 @@ end
 end
 
 function h.SeasonPassRewards()
-local y=i.Options
-if not y.tgSeasonPassRewards or not y.tgSeasonPassRewards.Value then
+local A=i.Options
+if not A.tgSeasonPassRewards or not A.tgSeasonPassRewards.Value then
 return
 end
-local z=j.DataService:GetData()
+local B=j.DataService:GetData()
 
-local A=j.SeasonPassData.CurrentSeason
-local B=z.SeasonPass[A]
-local C=j.SeasonPassUtils.CalculateLevel(B.TotalExperience)
-local D=j.SeasonPassStaticData.MAX_LEVEL or 50
+local C=j.SeasonPassData.CurrentSeason
+local D=B.SeasonPass[C]
+local E=j.SeasonPassUtils.CalculateLevel(D.TotalExperience)
+local F=j.SeasonPassStaticData.MAX_LEVEL or 50
 
-local E=math.min(C,D)
-for F=1,E do
+local G=math.min(E,F)
+for H=1,G do
 
-local G=table.find(B.ClaimedLevelFreeRewards,F)
-if not G then
-i.Log("Claiming Season Pass Reward: "..tostring(F))
-j.ClaimSeasonPassRewardRemote:FireServer(F,false)
+local I=table.find(D.ClaimedLevelFreeRewards,H)
+if not I then
+i.Log("Claiming Season Pass Reward: "..tostring(H))
+j.ClaimSeasonPassRewardRemote:FireServer(H,false)
 task.wait(0.3)
 end
 
 
-local H=table.find(B.ClaimedLevelPremiumRewards,F)
-if B.IsPremium and not H then
-i.Log("Claiming Premium Season Pass Reward: "..tostring(F))
-j.ClaimSeasonPassRewardRemote:FireServer(F,true)
+local J=table.find(D.ClaimedLevelPremiumRewards,H)
+if D.IsPremium and not J then
+i.Log("Claiming Premium Season Pass Reward: "..tostring(H))
+j.ClaimSeasonPassRewardRemote:FireServer(H,true)
 task.wait(0.3)
 end
 end
 
-if C>=D then
+if E>=F then
+local H=j.SeasonPassUtils.CalculateXPForLevel(F)
+local I=D.TotalExperience-H
 
-local F=j.SeasonPassUtils.CalculateXPForLevel(D)
-local G=B.TotalExperience-F
+local J=j.SeasonPassStaticData.INF_REWARD_XP or 10000
 
+local K=math.floor(I/J)
+local L=D.InfiniteRewardsClaimed or 0
 
-
-local H=j.SeasonPassStaticData.INF_REWARD_XP or 10000
-
-local I=math.floor(G/H)
-local J=B.InfiniteRewardsClaimed or 0
-
-
-if I>J then
-local K=I-J
-for L=1,K do
-i.Log("Claiming Season Pass Point : "..tostring(L))
+if K>L then
+local M=K-L
+for N=1,M do
+i.Log("Claiming Season Pass Point : "..tostring(N))
 j.ClaimSeasonPassInfRewardRemote:FireServer()
 task.wait(0.3)
 end
-
 end
 end
 end
@@ -2832,7 +3409,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.07-23.00",
+SubTitle="2569.04.10-17.35",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -3653,6 +4230,7 @@ local m=c.fVar
 
 g.Pets=f:AddTab({Title="Pets",Icon="paw-print"})
 
+
 local n=g.Pets:AddCollapsibleSection("Age Break",false)
 
 n:AddToggle("tgAgeBreakEnabled",{
@@ -3733,6 +4311,9 @@ Callback=function(o)
 i()
 end,
 })
+
+
+
 
 local o=g.Pets:AddCollapsibleSection("Mutation",false)
 
@@ -3873,6 +4454,8 @@ i()
 end,
 })
 
+
+
 local p=g.Pets:AddCollapsibleSection("Feed Pets",false)
 
 p:AddToggle("tgFeedPetsEnabled",{
@@ -3913,6 +4496,197 @@ Callback=function()
 i()
 end,
 })
+
+
+
+local q=g.Pets:AddCollapsibleSection("Hatch Eggs",false)
+
+q:AddToggle("tgPlaceEggsEn",{
+Title="Enable Auto Place Eggs",
+Default=false,
+Callback=function(r)
+l.RunHatchSet()
+i()
+end,
+})
+q:AddButton({
+Title="Clear Selected Egg Type",
+Callback=function()
+h.ddPlaceEgg:SetValue({ALL=true})
+end,
+})
+q:AddDropdown("ddPlaceEgg",{
+Title="Select Egg Type",
+Values=j.EggDataTable,
+Default={"ALL"},
+Multi=true,
+Searchable=true,
+Callback=function()
+i()
+end,
+})
+q:AddInput("ipMaxEggs",{
+Title="Max Egg",
+Default=3,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+q:AddDropdown("ddPlaceMethod",{
+Title="Select Place Method",
+Values={"Set","Random"},
+Default="Set",
+Callback=function()
+i()
+end,
+})
+q:AddDropdown("ddPlaceSlot",{
+Title="Select Place Slot",
+Values={"1","2"},
+Default="1",
+Callback=function()
+i()
+end,
+})
+q:AddDropdown("ddSpeedLoadout",{
+Title="Speed Loadout",
+Values={"0","1","2","3","4","5","6"},
+Default="1",
+Callback=function()
+i()
+end,
+})
+q:AddInput("inpDelayPlaceEgg",{
+Title="Delay",
+Default=2,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+q:AddDivider()
+q:AddToggle("tgAutoHatchEn",{
+Title="Enable Auto Hatch",
+Default=false,
+Callback=function(r)
+l.RunHatchSet()
+i()
+end,
+})
+q:AddDropdown("ddHatchLoadout",{
+Title="Select Hatch Loadout",
+Values={"1","2","3","4","5","6"},
+Default="2",
+Callback=function()
+i()
+end,
+})
+q:AddButton({
+Title="Clear Selected Special Pet Type",
+Callback=function()
+h.ddSpecialHatchPet:SetValue({NONE=true})
+end,
+})
+q:AddDropdown("ddSpecialHatchPet",{
+Title="Select Special Pet Type",
+Values=j.PetsDataBlackTable,
+Default={"NONE"},
+Multi=true,
+Searchable=true,
+Callback=function()
+i()
+end,
+})
+q:AddInput("inpSpecialHatchWeight",{
+Title="Base Weight",
+Default=3.5,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+q:AddDropdown("ddSpecialHatchLoadout",{
+Title="Select Special Hatch Loadout",
+Values={"1","2","3","4","5","6"},
+Default="4",
+Callback=function()
+i()
+end,
+})
+q:AddInput("inpDelayHatchEgg",{
+Title="Delay",
+Default=2,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+q:AddDivider()
+q:AddToggle("tgSellPetEn",{
+Title="Enable Auto Sell Pet",
+Default=false,
+Callback=function()
+l.RunHatchSet()
+i()
+end,
+})
+q:AddButton({
+Title="Clear Selected Sell Pet Type",
+Callback=function()
+h.ddSellPet:SetValue({NONE=true})
+end,
+})
+q:AddDropdown("ddSellPet",{
+Title="Select Sell Pet Type",
+Values=j.PetsDataBlackTable,
+Default={"NONE"},
+Multi=true,
+Searchable=true,
+Callback=function()
+i()
+end,
+})
+q:AddDropdown("ddSellPetThreshold",{
+Title="Select Weight Threshold",
+Values={"Below","Above"},
+Default="Below",
+Callback=function()
+i()
+end,
+})
+q:AddInput("inpSellPetWeight",{
+Title="Base Weight",
+Default=3.5,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+q:AddDropdown("ddSellLoadout",{
+Title="Select Sell Loadout",
+Values={"1","2","3","4","5","6"},
+Default="3",
+Callback=function()
+i()
+end,
+})
+q:AddInput("inpDelaySellPet",{
+Title="Delay",
+Default=2,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+
+
 end
 
 return b end function a.m():typeof(__modImpl())local b=a.cache.m if not b then b={c=__modImpl()}a.cache.m=b end return b.c end end do local function __modImpl()
@@ -3933,7 +4707,6 @@ local l=c.EfTasks
 
 
 f.Auto=e:AddTab({Title="Automatic",Icon="bot"})
-
 
 local m=f.Auto:AddCollapsibleSection("Remove Plants",false)
 m:AddToggle("tgRemovePlantsEnable",{
@@ -3985,7 +4758,6 @@ h()
 end,
 })
 
-
 local n=f.Auto:AddCollapsibleSection("Remove Fruit",false)
 n:AddToggle("tgRemoveFruitEnable",{
 Title="Auto Remove Fruit",
@@ -4001,9 +4773,7 @@ end)
 h()
 end,
 })
-
 n:AddDivider()
-
 n:AddButton({
 Title="Clear Selected Remove Crops",
 Callback=function()
@@ -4036,7 +4806,6 @@ Callback=function()
 h()
 end,
 })
-
 n:AddDivider()
 n:AddButton({
 Title="Clear Selected Mutant",
@@ -4044,7 +4813,6 @@ Callback=function()
 g.ddRemoveMutants:SetValue({ALL=true})
 end,
 })
-
 n:AddDropdown("ddRemoveMutants",{
 Title="Select Mutants",
 Values=i.MutationDataTable,
@@ -4055,14 +4823,12 @@ Callback=function()
 h()
 end,
 })
-
 n:AddButton({
 Title="Clear Backlist Mutant",
 Callback=function()
 g.ddRemoveBlackMutants:SetValue({NONE=true})
 end,
 })
-
 n:AddDropdown("ddRemoveBlackMutants",{
 Title="Backlist Mutants",
 Values=i.MutationDataBlackTable,
@@ -4073,7 +4839,6 @@ Callback=function()
 h()
 end,
 })
-
 n:AddDivider()
 n:AddDropdown("ddRemoveVariant",{
 Title="Variant",
@@ -4125,7 +4890,6 @@ g.ipTrowelPosition:SetValue(q)
 h()
 end,
 })
-
 o:AddInput("ipTrowelPosition",{
 Title="Trowel Position",
 Default="",
@@ -4136,7 +4900,6 @@ Callback=function()
 h()
 end,
 })
-
 o:AddDivider()
 o:AddToggle("tgTrowelEnable",{
 Title="Trowel",
@@ -4233,6 +4996,7 @@ Callback=function()
 h()
 end,
 })
+
 local q=f.Auto:AddCollapsibleSection("Sprinkler",false)
 q:AddButton({
 Title="Set Position",
@@ -4254,7 +5018,6 @@ Callback=function()
 h()
 end,
 })
-
 q:AddDivider()
 q:AddToggle("tgSprinklerEnable",{
 Title="Sprinkler",
@@ -4345,8 +5108,6 @@ end,
 })
 
 local r=f.Auto:AddCollapsibleSection("Open Pack",false)
-
-
 r:AddToggle("tgOpenPackEnable",{
 Title="Auto Open Pack",
 Default=false,
@@ -4361,7 +5122,6 @@ end
 h()
 end,
 })
-
 r:AddDropdown("ddOpenPack",{
 Title="Select Seed Pack",
 Values=i.SeedPackTable,
@@ -4372,7 +5132,6 @@ Callback=function()
 h()
 end,
 })
-
 r:AddInput("ipOpenPackDelay",{
 Title="Delay",
 Default=10,
@@ -4382,6 +5141,33 @@ Callback=function()
 h()
 end,
 })
+
+local s=f.Auto:AddCollapsibleSection("Craft",false)
+s:AddToggle("tgCraftGearEnable",{
+Title="Auto Craft",
+Default=false,
+Callback=function(t)
+l.ToggleTask("AutoCraftGear",t,function()
+j.CraftGear()
+task.wait(60)
+end)
+h()
+if not t then
+k.CraftGearRunning=false
+end
+end,
+})
+s:AddDropdown("ddCraftGear",{
+Title="Select Craft",
+Values=i.GearEventDataTable,
+Default="",
+Multi=false,
+Searchable=true,
+Callback=function()
+h()
+end,
+})
+
 end
 
 return b end function a.n():typeof(__modImpl())local b=a.cache.n if not b then b={c=__modImpl()}a.cache.n=b end return b.c end end do local function __modImpl()
@@ -4496,6 +5282,23 @@ end
 h()
 end,
 })
+n:AddDivider()
+n:AddToggle("tgEspEggs",{
+Title="Esp Eggs",
+Default=false,
+Callback=function(o)
+i.EspEggs(o)
+h()
+end,
+})
+n:AddToggle("tgEspCrates",{
+Title="Esp Crates",
+Default=false,
+Callback=function(o)
+i.EspCrates(o)
+h()
+end,
+})
 
 local o=g.MiscTab:AddCollapsibleSection("Season Pass",false)
 o:AddToggle("tgSeasonPassQuests",{
@@ -4553,7 +5356,7 @@ Default=false,
 Callback=function(p)
 e.ToggleTask("AutoEggHunt",p,function()
 c.autoEggHunt()
-task.wait(30)
+task.wait(60)
 end)
 f()
 if not p then
