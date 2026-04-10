@@ -1,15 +1,69 @@
 Script initialized successfully.
 [Season 3] : (Table)
   [Stocks] : (Table)
-    [Holiday Crate] : (Table)
+    [Holiday Seed Pack] : (Table)
       [MaxStock] : 2
       [Stock] : 2
+    [Holiday Crate] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
   [QuestsCompleted] : (Table)
+    [1] : q366c694691764c5b
   [QuestRewardClaimed] : false
   [QuestsClaimed] : (Table)
-  [TotalExperience] : 3982047
-  [InfRewardsClaimed] : 169
+  [TotalExperience] : 12206339
+  [InfRewardsClaimed] : 870
   [ClaimedLevelPremiumRewards] : (Table)
+    [1] : 49
+    [2] : 48
+    [3] : 47
+    [4] : 46
+    [5] : 45
+    [6] : 44
+    [7] : 43
+    [8] : 42
+    [9] : 41
+    [10] : 40
+    [11] : 39
+    [12] : 38
+    [13] : 37
+    [14] : 36
+    [15] : 35
+    [16] : 34
+    [17] : 33
+    [18] : 32
+    [19] : 31
+    [20] : 30
+    [21] : 29
+    [22] : 28
+    [23] : 27
+    [24] : 26
+    [25] : 25
+    [26] : 24
+    [27] : 23
+    [28] : 22
+    [29] : 21
+    [30] : 20
+    [31] : 19
+    [32] : 18
+    [33] : 17
+    [34] : 16
+    [35] : 15
+    [36] : 14
+    [37] : 13
+    [38] : 12
+    [39] : 11
+    [40] : 10
+    [41] : 9
+    [42] : 8
+    [43] : 7
+    [44] : 6
+    [45] : 5
+    [46] : 4
+    [47] : 3
+    [48] : 2
+    [49] : 1
+    [50] : 50
   [ClaimedLevelFreeRewards] : (Table)
     [1] : 1
     [2] : 2
@@ -21,14 +75,78 @@ Script initialized successfully.
     [8] : 8
     [9] : 9
     [10] : 10
-    [11] : 18
-    [12] : 17
-    [13] : 16
-    [14] : 15
-    [15] : 14
-    [16] : 13
-    [17] : 12
-    [18] : 11
+    [11] : 11
+    [12] : 12
+    [13] : 13
+    [14] : 14
+    [15] : 15
+    [16] : 16
+    [17] : 17
+    [18] : 18
+    [19] : 19
+    [20] : 20
+    [21] : 21
+    [22] : 22
+    [23] : 23
+    [24] : 24
+    [25] : 25
+    [26] : 26
+    [27] : 30
+    [28] : 29
+    [29] : 28
+    [30] : 27
+    [31] : 31
+    [32] : 32
+    [33] : 33
+    [34] : 34
+    [35] : 35
+    [36] : 36
+    [37] : 37
+    [38] : 40
+    [39] : 39
+    [40] : 38
+    [41] : 41
+    [42] : 43
+    [43] : 42
+    [44] : 44
+    [45] : 45
+    [46] : 46
+    [47] : 47
+    [48] : 48
+    [49] : 49
+    [50] : 50
+  [ShopItem] : 479367278
+  [IsPremium] : true
+[Season 4] : (Table)
+  [Stocks] : (Table)
+    [Season 4 Crate] : (Table)
+      [Stock] : 1
+      [MaxStock] : 1
+  [QuestsCompleted] : (Table)
+  [QuestRewardClaimed] : false
+  [QuestsClaimed] : (Table)
+    [1] : q36679195888a4a87
+  [TotalExperience] : 1754594
+  [InfRewardsClaimed] : 25
+  [ClaimedLevelPremiumRewards] : (Table)
+    [1] : 1
+    [2] : 2
+    [3] : 3
+    [4] : 4
+    [5] : 5
+    [6] : 6
+    [7] : 7
+    [8] : 8
+    [9] : 9
+    [10] : 10
+    [11] : 11
+    [12] : 12
+    [13] : 13
+    [14] : 14
+    [15] : 15
+    [16] : 16
+    [17] : 17
+    [18] : 18
     [19] : 19
     [20] : 20
     [21] : 21
@@ -39,75 +157,28 @@ Script initialized successfully.
     [26] : 26
     [27] : 27
     [28] : 28
-    [29] : 30
-    [30] : 29
-    [31] : 32
-    [32] : 31
-    [33] : 35
+    [29] : 29
+    [30] : 30
+    [31] : 31
+    [32] : 32
+    [33] : 33
     [34] : 34
-    [35] : 33
+    [35] : 35
     [36] : 36
     [37] : 37
     [38] : 38
     [39] : 39
     [40] : 40
-    [41] : 45
-    [42] : 44
+    [41] : 41
+    [42] : 42
     [43] : 43
-    [44] : 42
-    [45] : 41
+    [44] : 44
+    [45] : 45
     [46] : 46
     [47] : 47
     [48] : 48
     [49] : 49
     [50] : 50
-  [ShopItem] : 479368960
-  [IsPremium] : false
-[Season 4] : (Table)
-  [Stocks] : (Table)
-    [Season 4 Crate] : (Table)
-      [Stock] : 2
-      [MaxStock] : 2
-  [QuestsCompleted] : (Table)
-    [1] : q84c04dd3d526464a
-  [QuestRewardClaimed] : false
-  [QuestsClaimed] : (Table)
-    [1] : qe079d05ec31543dc
-  [TotalExperience] : 47255
-  [InfRewardsClaimed] : 0
-  [ClaimedLevelPremiumRewards] : (Table)
-    [1] : 1
-    [2] : 2
-    [3] : 3
-    [4] : 4
-    [5] : 5
-    [6] : 6
-    [7] : 7
-    [8] : 8
-  [ClaimedLevelFreeRewards] : (Table)
-    [1] : 1
-    [2] : 2
-    [3] : 3
-    [4] : 4
-    [5] : 5
-    [6] : 6
-    [7] : 7
-    [8] : 8
-  [ShopItem] : 479369821
-  [IsPremium] : true
-[Season 2] : (Table)
-  [Stocks] : (Table)
-    [Zenith Crate] : (Table)
-      [MaxStock] : 1
-      [Stock] : 1
-  [QuestsCompleted] : (Table)
-    [1] : qe3f656c50564497c
-    [2] : q567314778cad4a74
-    [3] : qcce59c156f0440e4
-  [InfRewardsClaimed] : 0
-  [QuestsClaimed] : (Table)
-  [TotalExperience] : 848429
-  [ClaimedLevelPremiumRewards] : (Table)
   [ClaimedLevelFreeRewards] : (Table)
     [1] : 1
     [2] : 2
@@ -143,21 +214,36 @@ Script initialized successfully.
     [32] : 32
     [33] : 33
     [34] : 34
-    [35] : 37
+    [35] : 35
     [36] : 36
-    [37] : 35
-  [ShopItem] : 479334666
-  [IsPremium] : false
-[Season 1] : (Table)
+    [37] : 37
+    [38] : 38
+    [39] : 39
+    [40] : 40
+    [41] : 41
+    [42] : 42
+    [43] : 43
+    [44] : 44
+    [45] : 45
+    [46] : 46
+    [47] : 47
+    [48] : 48
+    [49] : 49
+    [50] : 50
+  [ShopItem] : 479370646
+  [IsPremium] : true
+[Season 2] : (Table)
   [Stocks] : (Table)
-    [Prime Crate] : (Table)
-      [MaxStock] : 2
-      [Stock] : 2
+    [Zenith Crate] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
   [QuestsCompleted] : (Table)
-    [1] : q738df2c90b044ab5
-  [InfRewardsClaimed] : 0
+    [1] : q29db4705d4a746df
+  [QuestRewardClaimed] : true
   [QuestsClaimed] : (Table)
-  [TotalExperience] : 364620
+    [1] : q29db4705d4a746df
+  [TotalExperience] : 3066611
+  [InfRewardsClaimed] : 156
   [ClaimedLevelPremiumRewards] : (Table)
   [ClaimedLevelFreeRewards] : (Table)
     [1] : 1
@@ -177,28 +263,103 @@ Script initialized successfully.
     [15] : 15
     [16] : 16
     [17] : 17
-    [18] : 23
-    [19] : 22
+    [18] : 18
+    [19] : 19
     [20] : 21
     [21] : 20
-    [22] : 19
-    [23] : 18
+    [22] : 22
+    [23] : 23
     [24] : 24
+    [25] : 25
+    [26] : 26
+    [27] : 28
+    [28] : 27
+    [29] : 29
+    [30] : 30
+    [31] : 31
+    [32] : 32
+    [33] : 33
+    [34] : 34
+    [35] : 35
+    [36] : 36
+    [37] : 37
+    [38] : 38
+    [39] : 45
+    [40] : 44
+    [41] : 43
+    [42] : 42
+    [43] : 41
+    [44] : 40
+    [45] : 39
+    [46] : 46
+    [47] : 47
+    [48] : 50
+    [49] : 49
+    [50] : 48
+  [ShopItem] : 479334666
+  [IsPremium] : false
+[Season 1] : (Table)
+  [Stocks] : (Table)
+    [Prime Crate] : (Table)
+      [MaxStock] : 2
+      [Stock] : 0
+  [QuestsCompleted] : (Table)
+    [1] : q0c319513a4644c4c
+  [InfRewardsClaimed] : 158
+  [QuestsClaimed] : (Table)
+    [1] : q0c319513a4644c4c
+  [TotalExperience] : 3080881
+  [ClaimedLevelPremiumRewards] : (Table)
+  [ClaimedLevelFreeRewards] : (Table)
+    [1] : 1
+    [2] : 2
+    [3] : 3
+    [4] : 4
+    [5] : 5
+    [6] : 6
+    [7] : 7
+    [8] : 8
+    [9] : 10
+    [10] : 9
+    [11] : 11
+    [12] : 12
+    [13] : 13
+    [14] : 14
+    [15] : 15
+    [16] : 16
+    [17] : 17
+    [18] : 18
+    [19] : 19
+    [20] : 20
+    [21] : 21
+    [22] : 22
+    [23] : 23
+    [24] : 24
+    [25] : 25
+    [26] : 26
+    [27] : 27
+    [28] : 28
+    [29] : 29
+    [30] : 30
+    [31] : 31
+    [32] : 32
+    [33] : 33
+    [34] : 34
+    [35] : 35
+    [36] : 36
+    [37] : 37
+    [38] : 38
+    [39] : 39
+    [40] : 40
+    [41] : 41
+    [42] : 42
+    [43] : 43
+    [44] : 44
+    [45] : 45
+    [46] : 46
+    [47] : 47
+    [48] : 48
+    [49] : 49
+    [50] : 50
   [ShopItem] : 479324585
   [IsPremium] : false
-
-
-  size 31,0.001, 59
-  6, 0,11, -105
-
-19  -77
-19   132
--7   -134
--8   -77
-
-  size 31,0.001, 59
-  -38, 0,11, -105
-  -23  -76
-  -52  -76
-  -52  -133
-  -23 -133

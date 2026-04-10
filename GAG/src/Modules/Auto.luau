@@ -450,7 +450,7 @@ function Auto.CraftGear()
 					reg.Log("Claim " .. tostring(craftingItems[CRAFT_INDEX].RecipeId))
 				end)
 				task.wait(1.5)
-				return
+				--return
 			end
 		end
 

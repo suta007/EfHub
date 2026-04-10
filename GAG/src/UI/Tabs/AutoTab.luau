@@ -456,7 +456,7 @@ function AutoTab.Initialize(registry)
 		Callback = function(Value)
 			EfTasks.ToggleTask("AutoCraftGear", Value, function()
 				Auto.CraftGear()
-				task.wait(60)
+				task.wait(30)
 			end)
 			QuickSave()
 			if not Value then

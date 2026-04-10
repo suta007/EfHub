@@ -754,7 +754,7 @@ function Misc.SeasonPassRewards()
 		return
 	end
 	local GetData_result = sData.DataService:GetData()
-
+	task.wait(0.3)
 	local currentSeason = sData.SeasonPassData.CurrentSeason
 	local seasonInfo = GetData_result.SeasonPass[currentSeason]
 	local currentLevel = sData.SeasonPassUtils.CalculateLevel(seasonInfo.TotalExperience)
@@ -793,7 +793,7 @@ function Misc.SeasonPassRewards()
 			for i = 1, claimsToMake do
 				reg.Log("Claiming Season Pass Point : " .. tostring(i))
 				sData.ClaimSeasonPassInfRewardRemote:FireServer()
-				task.wait(0.3)
+				task.wait(1)
 			end
 		end
 	end
