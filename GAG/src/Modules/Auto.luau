@@ -413,18 +413,17 @@ local function GetRequiredItemsCount(targetItemName: string): number
 	return 0
 end
 
-local TARGET_BENCH_INSTANCE = game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
-local TARGET_MACHINE_TYPE = "GearEventWorkbench"
-local TARGET_BENCH_ID = "Workbench-1"
-local CRAFT_INDEX = 1
-
-local CraftingStationHandler = require(sData.Modules:WaitForChild("CraftingStationHandler"))
-
 function Auto.CraftGear()
 	local Options = reg.Options
 	if not Options.tgCraftGearEnable or not Options.tgCraftGearEnable.Value or fVar.CraftGearRunning then
 		return
 	end
+
+	local TARGET_BENCH_INSTANCE = game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
+	local TARGET_MACHINE_TYPE = "GearEventWorkbench"
+	local TARGET_BENCH_ID = "Workbench-1"
+	local CRAFT_INDEX = 1
+	local CraftingStationHandler = require(sData.Modules.CraftingStationHandler)
 
 	Utils.RunWithFlag("CraftGearRunning", "CraftGear", function()
 		local targetRecipe = Options.ddCraftGear.Value
