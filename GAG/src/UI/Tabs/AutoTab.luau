@@ -454,7 +454,7 @@ function AutoTab.Initialize(registry)
 		Title = "Auto Craft",
 		Default = false,
 		Callback = function(Value)
-			EfTasks.Create("AutoCraftGear", Value, function()
+			EfTasks.ToggleTask("AutoCraftGear", Value, function()
 				Auto.CraftGear()
 				task.wait(60)
 			end)
