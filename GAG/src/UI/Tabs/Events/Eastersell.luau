@@ -76,7 +76,12 @@ function Eastersell.runSell(state)
 		local Options = reg.Options
 		local SellDelay = Options.ipEasterSellDelay and tonumber(Options.ipEasterSellDelay.Value) or 600
 		local SellFull = Options.tgEasterSellFull and Options.tgEasterSellFull.Value or false
-		local SellWait = SellFull and 1 or SellDelay
+		local SellWait
+		if SellFull then
+			SellWait = 1
+		else
+			SellWait = SellDelay
+		end
 		if SellFull then
 			if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 				Eastersell.AutoEasterSell()
