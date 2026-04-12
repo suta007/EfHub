@@ -298,7 +298,7 @@ function AutoTab.Initialize(registry)
 		Title = "Plants Weight",
 		Default = 0,
 		Numeric = true,
-		Finished = false,
+		Finished = true,
 		Callback = function()
 			QuickSave()
 		end,

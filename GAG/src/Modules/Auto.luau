@@ -211,6 +211,7 @@ function Auto.Reclaim()
 					sData.ReclaimerEvent:FireServer("TryReclaim", plant)
 					Utils.UnequipTool()
 				end
+				task.wait(0.1)
 			end
 		end
 
@@ -385,6 +386,9 @@ function Auto.OpenSeedPack()
 			if item:IsA("Tool") and table.find(seedPackNames, packName) then
 				local packAmount = tonumber(item:GetAttribute("e")) or 0
 				for _ = 1, packAmount do
+					if not Options.tgOpenPackEnable.Value then
+						return
+					end
 					sData.SeedPackEvent.Open:FireServer(packName)
 					task.wait(delay)
 				end
