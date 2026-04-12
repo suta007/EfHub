@@ -1495,7 +1495,7 @@ e.CraftingEvent:FireServer("Claim",h,i,k)
 c.Log("Claim "..tostring(q[k].RecipeId))
 end)
 task.wait(1.5)
-return
+
 end
 end
 
@@ -3342,7 +3342,7 @@ if not A.tgSeasonPassRewards or not A.tgSeasonPassRewards.Value then
 return
 end
 local B=j.DataService:GetData()
-
+task.wait(0.3)
 local C=j.SeasonPassData.CurrentSeason
 local D=B.SeasonPass[C]
 local E=j.SeasonPassUtils.CalculateLevel(D.TotalExperience)
@@ -3381,7 +3381,7 @@ local M=K-L
 for N=1,M do
 i.Log("Claiming Season Pass Point : "..tostring(N))
 j.ClaimSeasonPassInfRewardRemote:FireServer()
-task.wait(0.3)
+task.wait(1)
 end
 end
 end
@@ -3409,9 +3409,9 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.10-17.35",
+SubTitle="2569.04.12-11.16",
 TabWidth=100,
-Size=UDim2.fromOffset(600,340),
+Size=UDim2.fromOffset(600,400),
 Resize=false,
 MinSize=Vector2.new(580,400),
 Acrylic=true,
@@ -5149,7 +5149,7 @@ Default=false,
 Callback=function(t)
 l.ToggleTask("AutoCraftGear",t,function()
 j.CraftGear()
-task.wait(60)
+task.wait(30)
 end)
 h()
 if not t then
@@ -5502,7 +5502,12 @@ g.ToggleTask("AutoEasterSell",m,function()
 local n=e.Options
 local o=n.ipEasterSellDelay and tonumber(n.ipEasterSellDelay.Value)or 600
 local p=n.tgEasterSellFull and n.tgEasterSellFull.Value or false
-local q=p and 1 or o
+local q
+if p then
+q=1
+else
+q=o
+end
 if p then
 if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
 d.AutoEasterSell()
@@ -6069,6 +6074,309 @@ end
 
 return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
+local b={}
+local c
+local d
+local e
+local f
+local g
+local h
+
+local i:Folder?
+
+local j="Shovel [Destroy Plants]"
+
+local function getShovelTool()
+local k=g.Backpack
+local l=h.FindToolByName(k,j)
+if l then
+return l
+end
+local m=g.Character
+if m then
+return m:FindFirstChild(j)
+end
+return nil
+end
+
+local function ensureEvilFolder():Folder?
+if i and i.Parent then
+return i
+end
+local k=g.GameEvents:FindFirstChild("EvilBunny")
+or g.GameEvents:WaitForChild("EvilBunny",15)
+if not k then
+return nil
+end
+i=k::Folder
+return i
+end
+
+local function findTargetPlants(k:string)
+local l=h.GetPlantsFolder()
+if not l then
+return{}
+end
+local m={}
+for n,o in ipairs(l:GetChildren())do
+if o:IsA("Model")and o.Name==k and o:GetAttribute("Favorited")~=true then
+table.insert(m,o)
+end
+end
+return m
+end
+
+local function shovelPlant(k:Model):boolean
+local l=getShovelTool()
+if not l then
+c.Log("Evil Bunny: ไม่พบพลั่ว (Shovel)","WARN")
+return false
+end
+h.UnequipTool()
+task.wait(0.05)
+h.EquipTool(l)
+g.RemoveItemEvent:FireServer(k)
+task.wait(0.12)
+h.UnequipTool()
+return true
+end
+
+local function findSeedToolForPlant(k:string):Tool?
+for l,m in ipairs(g.Backpack:GetChildren())do
+if m:IsA("Tool")and m:GetAttribute("Seed")==k then
+return m
+end
+end
+local l=g.Character
+if l then
+for m,n in ipairs(l:GetChildren())do
+if n:IsA("Tool")and n:GetAttribute("Seed")==k then
+return n
+end
+end
+end
+return nil
+end
+
+
+local function tryReplantAtOriginalSpot(k:string,l:Vector3)
+if not k or k==""then
+return
+end
+local m=findSeedToolForPlant(k)
+if not m then
+c.Log("Evil Bunny: ไม่มีเมล็ด '"..k.."' ในถุง — ข้ามปลูกทดแทน")
+return
+end
+local n=g.GameEvents:FindFirstChild("Plant_RE")or g.GameEvents:WaitForChild("Plant_RE",8)
+if not n then
+c.Log("Evil Bunny: ไม่พบ Plant_RE — ปลูกทดแทนไม่ได้","WARN")
+return
+end
+h.UnequipTool()
+task.wait(0.06)
+h.EquipTool(m)
+task.wait(0.1)
+local o,p=pcall(function()
+n:FireServer(vector.create(l.X,l.Y,l.Z),k)
+end)
+task.wait(0.12)
+h.UnequipTool()
+if o then
+c.Log("Evil Bunny: ปลูกทดแทนตำแหน่งเดิม — "..k)
+else
+c.Log("Evil Bunny: ปลูกทดแทนล้มเหลว — "..tostring(p),"WARN")
+end
+end
+
+
+local function destroyQuestPlant(k:string):(boolean,string?,Vector3?)
+if not k or k==""or k=="???"then
+c.Log("Evil Bunny: ไม่ได้รับชื่อต้นเป้าหมายจากเซิร์ฟเวอร์","WARN")
+return false,nil,nil
+end
+local l=findTargetPlants(k)
+if#l==0 then
+c.Log("Evil Bunny: ไม่พบต้น '"..k.."' ในสวน (หรือถูก Favorite)","WARN")
+return false,nil,nil
+end
+if#l>1 then
+c.Log("Evil Bunny: พบหลายต้นชื่อ '"..k.."' — จะทำลายต้นแรกที่ไม่ Favorite","WARN")
+end
+local m=l[1]
+local n=m:GetPivot().Position
+if not shovelPlant(m)then
+return false,nil,nil
+end
+task.wait(0.2)
+return true,k,n
+end
+
+local function pollUntilComplete(k,l,m:number):boolean
+local n=os.clock()+m
+while os.clock()<n do
+task.wait(0.35)
+local o,p=pcall(function()
+return k:InvokeServer()
+end)
+if o and type(p)=="table"then
+if p.QuestState=="Complete"then
+local q,r=pcall(function()
+return l:InvokeServer()
+end)
+if q and r then
+c.Log("Evil Bunny: รับรางวัล — "..tostring(r))
+elseif q then
+c.Log("Evil Bunny: รับรางวัลไม่สำเร็จ (เซิร์ฟเวอร์ปฏิเสธ)","WARN")
+end
+return true
+end
+end
+end
+c.Log("Evil Bunny: หมดเวลารอเควสเสร็จ — ลองใหม่รอบถัดไป","WARN")
+return false
+end
+
+function b.autoEvilbunny()
+local k=c.Options
+if not k.tgEvilbunnyEnable.Value or c.IsEvilbunny or c.IsHuntEgg then
+return
+end
+
+local l=ensureEvilFolder()
+if not l then
+c.Log("Evil Bunny: ไม่พบ GameEvents.EvilBunny (อีเวนต์อาจยังไม่เปิด)","WARN")
+task.wait(20)
+return
+end
+
+local m=l:FindFirstChild("EvilBunnyInteract")::RemoteFunction?
+local n=l:FindFirstChild("EvilBunnyGiveQuest")::RemoteFunction?
+local o=l:FindFirstChild("EvilBunnyClaim")::RemoteFunction?
+if not(m and n and o)then
+c.Log("Evil Bunny: Remote ไม่ครบในโฟลเดอร์ EvilBunny","WARN")
+task.wait(15)
+return
+end
+
+c.IsEvilbunny=true
+c.IsEasterHarvesting=true
+
+local p,q=pcall(function()
+local p,q=pcall(function()
+return m:InvokeServer()
+end)
+if not p or type(q)~="table"then
+c.Log("Evil Bunny: EvilBunnyInteract ล้มเหลว — "..tostring(q),"WARN")
+return
+end
+
+local r=q.QuestState
+
+if r=="Cooldown"then
+local s=tonumber(q.CooldownRemaining)or 60
+c.Log("Evil Bunny: คูลดาวน์ ~"..tostring(math.ceil(s)).." วินาที")
+task.wait(math.clamp(s,2,3660))
+return
+end
+
+if r=="Complete"then
+local s,t=pcall(function()
+return o:InvokeServer()
+end)
+if s and t then
+c.Log("Evil Bunny: รับรางวัล — "..tostring(t))
+elseif s then
+c.Log("Evil Bunny: ยังรับรางวัลไม่ได้","WARN")
+else
+c.Log("Evil Bunny: EvilBunnyClaim error — "..tostring(t),"WARN")
+end
+task.wait(1)
+return
+end
+
+if r=="Active"then
+local s=q.TargetPlantName
+if not s then
+local t,u=pcall(function()
+return m:InvokeServer()
+end)
+s=(t and type(u)=="table"and u.TargetPlantName)or nil
+end
+local t,u,v=destroyQuestPlant(tostring(s or""))
+if not t or not u or not v then
+task.wait(3)
+return
+end
+tryReplantAtOriginalSpot(u,v)
+pollUntilComplete(m,o,45)
+return
+end
+
+
+local s,t=pcall(function()
+return n:InvokeServer()
+end)
+if not s then
+c.Log("Evil Bunny: EvilBunnyGiveQuest error — "..tostring(t),"WARN")
+return
+end
+if not t then
+c.Log("Evil Bunny: ไม่มีต้นที่ใช้เควสได้ — ปลูกต้นอื่นก่อน","WARN")
+task.wait(12)
+return
+end
+
+local u=type(t)=="string"and t or tostring(t)
+c.Log("Evil Bunny: รับเควส — ทำลาย: "..u)
+task.wait(0.25)
+local v,w,x=destroyQuestPlant(u)
+if not v or not w or not x then
+task.wait(3)
+return
+end
+tryReplantAtOriginalSpot(w,x)
+pollUntilComplete(m,o,45)
+end)
+
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
+
+if not p then
+c.Log("Evil Bunny: "..tostring(q),"ERROR")
+end
+end
+
+function b.Initialize(k,l)
+c=k
+local m=c.Options
+_=m
+e=c.Window.QuickSave
+d=c.EfTasks
+f=l
+g=c.sData
+h=c.Utils
+
+local n=f:AddCollapsibleSection("Evilbunny",false)
+n:AddToggle("tgEvilbunnyEnable",{
+Title="Evilbunny Enable",
+Default=false,
+Callback=function(o)
+d.ToggleTask("AutoEvilbunny",o,function()
+b.autoEvilbunny()
+task.wait(4)
+end)
+if not o then
+c.IsEvilbunny=false
+c.IsEasterHarvesting=false
+end
+e()
+end,
+})
+end
+
+return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+
 
 
 local b=(getfenv()::any).getgenv
@@ -6084,11 +6392,13 @@ g.Egghunt=c("UI/Tabs/Events/Egghunt")
 g.Eastersell=c("UI/Tabs/Events/Eastersell")
 g.Angryplant=c("UI/Tabs/Events/Angryplant")
 g.Goldenegg=c("UI/Tabs/Events/Goldenegg")
+g.Evilbunny=c("UI/Tabs/Events/Evilbunny")
 else
 g.Egghunt=a.p()
 g.Eastersell=a.q()
 g.Angryplant=a.r()
 g.Goldenegg=a.s()
+g.Evilbunny=a.t()
 end
 return g
 end
@@ -6108,11 +6418,12 @@ i.Egghunt.Initialize(e,f.Events)
 i.Eastersell.Initialize(e,f.Events)
 i.Angryplant.Initialize(e,f.Events)
 i.Goldenegg.Initialize(e,f.Events)
+i.Evilbunny.Initialize(e,f.Events)
 
 
 end
 
-return d end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6202,7 +6513,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
+return c end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6277,8 +6588,8 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.t()
-e.LogTab=a.u()
+e.EventsTab=a.u()
+e.LogTab=a.v()
 
 
 
@@ -6323,7 +6634,7 @@ e.Utils.ViewButton()
 return e
 end
 
-return d end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end end
+return d end function a.w():typeof(__modImpl())local b=a.cache.w if not b then b={c=__modImpl()}a.cache.w=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -6353,7 +6664,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.v()
+c=a.w()
 end
 
 
