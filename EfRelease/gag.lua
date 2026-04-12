@@ -1232,8 +1232,8 @@ local g=c.Options
 if not g.tgReclaimEnable.Value or d.IsReclaiming then
 return
 end
-f.RunWithFlag("IsReclaiming","Reclaim",function()
 local h=f.GetSelectedItems
+f.RunWithFlag("IsReclaiming","Reclaim",function()
 local i=h(g.ddReclaimPlants.Value)
 local j=g.ddReclaimPlantsWeight.Value
 local k=tonumber(g.ipReclaimPlantsWeight.Value)or 0
@@ -1256,6 +1256,7 @@ f.EquipTool(n)
 e.ReclaimerEvent:FireServer("TryReclaim",p)
 f.UnequipTool()
 end
+task.wait(0.1)
 end
 end
 
@@ -1430,6 +1431,9 @@ local o=m:GetAttribute("n")
 if m:IsA("Tool")and table.find(j,o)then
 local p=tonumber(m:GetAttribute("e"))or 0
 for q=1,p do
+if not g.tgOpenPackEnable.Value then
+return
+end
 e.SeedPackEvent.Open:FireServer(o)
 task.wait(n)
 end
@@ -4991,7 +4995,7 @@ p:AddInput("ipReclaimPlantsWeight",{
 Title="Plants Weight",
 Default=0,
 Numeric=true,
-Finished=false,
+Finished=true,
 Callback=function()
 h()
 end,
