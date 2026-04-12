@@ -187,8 +187,8 @@ function Auto.Reclaim()
 	if not options.tgReclaimEnable.Value or fVar.IsReclaiming then
 		return
 	end
+	local getSelectedItems = Utils.GetSelectedItems
 	Utils.RunWithFlag("IsReclaiming", "Reclaim", function()
-		local getSelectedItems = Utils.GetSelectedItems
 		local reclaimPlantsList = getSelectedItems(options.ddReclaimPlants.Value)
 		local plantsWeightThreshold = options.ddReclaimPlantsWeight.Value
 		local plantsWeightValue = tonumber(options.ipReclaimPlantsWeight.Value) or 0
