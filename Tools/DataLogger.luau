@@ -132,15 +132,11 @@ local function ShowData(tbl, indent)
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local DataService = require(ReplicatedStorage.Modules.DataService :: any)
---local GetData_result = DataService:GetData()
+local DataService = require(ReplicatedStorage.Modules.DataService :: any)
+local GetData_result = DataService:GetData()
+local GlobalData = GetData_result.CraftingData.GlobalCraftingObjectData
+local SeedEventWorkbench = GlobalData.SeedEventWorkbench
 --local SelectedSlot = GetData_result.SaveSlots.SelectedSlot
 --local fData = GetData_result.SaveSlots.AllSlots[SelectedSlot].SavedObjects
 --local Data = GetData_result.SeasonPass
---ShowData(Data)
---[[==========================================================]]
-
-ReplicatedStorage:WaitForChild("GameEvents").Notification.OnClientEvent:Connect(function(...)
-	local args = { ... }
-	ShowData(args)
-end)
+ShowData(SeedEventWorkbench)

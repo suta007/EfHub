@@ -1,0 +1,65 @@
+Script initialized successfully.
+[MachineData] : (Table)
+  [SeedEventWorkbench] : (Table)
+    [CraftingItems] : (Table)
+    [RecipeId] : Hollow Bamboo@SeedEventWorkbench
+    [InputItems] : (Table)
+      [1] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [ItemName] : Advanced Sprinkler
+      [2] : (Table)
+        [ItemType] : Gear
+        [ItemData] : (Table)
+          [ItemName] : Godly Sprinkler
+      [3] : (Table)
+        [ItemType] : Holdable
+        [ItemData] : (Table)
+          [ItemName] : Bamboo
+          [IsFavorite] : false
+          [Seed] : 205090
+          [Variant] : Normal
+          [MutationString] : 
+          [WeightMultiplier] : 1
+      [4] : (Table)
+        [ItemType] : Seed
+        [ItemData] : (Table)
+          [Variant] : Normal
+          [ItemName] : Cactus
+
+
+=============================================
+
+
+Script initialized successfully.
+[MachineData] : (Table)
+  [SeedEventWorkbench] : (Table)
+    [CraftingItems] : (Table)
+      [1] : (Table)
+        [InputItems] : (Table)
+          [1] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Advanced Sprinkler
+          [2] : (Table)
+            [ItemType] : Seed
+            [ItemData] : (Table)
+              [Variant] : Normal
+              [ItemName] : Cactus
+          [3] : (Table)
+            [ItemType] : Holdable
+            [ItemData] : (Table)
+              [ItemName] : Bamboo
+              [IsFavorite] : false
+              [Seed] : 205090
+              [Variant] : Normal
+              [MutationString] : 
+              [WeightMultiplier] : 1
+          [4] : (Table)
+            [ItemType] : Gear
+            [ItemData] : (Table)
+              [ItemName] : Godly Sprinkler
+        [RecipeId] : Hollow Bamboo@SeedEventWorkbench
+        [TimeRemaining] : 2675
+        [IsDone] : false
+    [InputItems] : (Table)
