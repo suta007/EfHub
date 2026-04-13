@@ -193,4 +193,10 @@ for itemName, _itemInfo in pairs(sData.SeedEventData) do
 	table.insert(sData.SeedEventDataTable, itemName)
 end
 
+sData.SmithCosData = RecipeRegistry.RecipiesSortedByMachineType.SmithingEventCosmeticWorkbench
+sData.SmithCosDataTable = {}
+for itemName, _itemInfo in pairs(sData.SmithCosData) do
+	table.insert(sData.SmithCosDataTable, itemName)
+end
+
 return sData
