@@ -403,8 +403,8 @@ function Auto.OpenSeedPack()
 	end)
 end
 
-local function GetRequiredItemsCount(targetItemName: string): number
-	for key, recipeData in pairs(sData.GearEventData) do
+local function GetRequiredItemsCount(targetItemName: string, CraftingData: { [any]: any }): number
+	for key, recipeData in pairs(CraftingData) do
 		if key == targetItemName then
 			local quantity = recipeData.Inputs
 			if type(quantity) == "table" then
@@ -458,7 +458,107 @@ function Auto.CraftGear()
 			end
 		end
 
-		local requiredCount = GetRequiredItemsCount(targetRecipe)
+		local requiredCount = GetRequiredItemsCount(targetRecipe, sData.GearEventData)
+		if requiredCount == 0 then
+			reg.Log("🟡 No Recipe Found")
+			return
+		end
+
+		local isReadyToCraft = false
+
+		pcall(function()
+			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
+		end)
+		task.wait(0.5)
+
+		for attempt = 1, 3 do
+			if not Options.tgCraftGearEnable.Value then
+				return
+			end
+
+			pcall(function()
+				CraftingStationHandler:SubmitAllRequiredItems(TARGET_BENCH_INSTANCE)
+			end)
+			task.wait(0.5)
+
+			-- ดึง Data ใหม่มาเช็ค InputItems
+			local updatedDataResult = sData.DataService:GetData()
+			local updatedBenchData = updatedDataResult.CraftingData.GlobalCraftingObjectData[TARGET_BENCH_ID].MachineData[TARGET_MACHINE_TYPE]
+			local currentInputItems = updatedBenchData.InputItems
+			local inputCount = currentInputItems and #currentInputItems or 0
+
+			if inputCount == requiredCount then
+				isReadyToCraft = true
+				break
+			else
+				reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3", inputCount, requiredCount, attempt))
+				task.wait(1)
+			end
+		end
+
+		-- ถ้า 3 รอบแล้วของไม่พอ ปิดระบบ
+		if not isReadyToCraft then
+			reg.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
+			if Options.tgCraftGearEnable then
+				Options.tgCraftGearEnable:SetValue(false)
+			end
+			return
+		end
+
+		-- ====================================================
+		-- 🔴 ข้อ 3: ของครบ สั่ง Craft
+		-- ====================================================
+		pcall(function()
+			sData.CraftingEvent:FireServer("Craft", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE)
+			reg.Log("ของครบถ้วน สั่ง Craft -> " .. targetRecipe)
+		end)
+
+		task.wait(1.5)
+	end)
+end
+
+function Auto.CraftSeed()
+	local Options = reg.Options
+	if not Options.tgCraftSeedEnable or not Options.tgCraftSeedEnable.Value or fVar.CraftSeedRunning then
+		return
+	end
+	--SeedEventCraftingWorkBench
+	local TARGET_BENCH_INSTANCE = game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("SeedEventCraftingWorkBench")
+	local TARGET_MACHINE_TYPE = "SeedEventWorkbench"
+	local TARGET_BENCH_ID = "SeedEventWorkbench"
+	local CRAFT_INDEX = 1
+	local CraftingStationHandler = require(sData.Modules.CraftingStationHandler)
+
+	Utils.RunWithFlag("CraftSeedRunning", "CraftSeed", function()
+		local targetRecipe = Options.ddCraftSeed.Value
+		if not targetRecipe or targetRecipe == "" then
+			reg.Log("🟡 No Seed Selected")
+			return
+		end
+		local GetData_result = sData.DataService:GetData()
+		local GlobalData = GetData_result.CraftingData.GlobalCraftingObjectData
+		local benchData = GlobalData[TARGET_BENCH_ID].MachineData[TARGET_MACHINE_TYPE]
+
+		if not benchData then
+			reg.Log("🟡 No Bench Data")
+			return
+		end
+		local craftingItems = benchData.CraftingItems
+
+		if craftingItems and craftingItems[CRAFT_INDEX] then
+			if craftingItems[CRAFT_INDEX].IsDone == false then
+				return
+			elseif craftingItems[CRAFT_INDEX].IsDone == true then
+				pcall(function()
+					sData.CraftingEvent:FireServer("Claim", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, CRAFT_INDEX)
+					reg.Log("Claim " .. tostring(craftingItems[CRAFT_INDEX].RecipeId))
+				end)
+				task.wait(1.5)
+				--return
+			end
+		end
+
+		local requiredCount = GetRequiredItemsCount(targetRecipe, sData.SeedEventData)
 		if requiredCount == 0 then
 			reg.Log("🟡 No Recipe Found")
 			return

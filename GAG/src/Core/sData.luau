@@ -187,4 +187,10 @@ for itemName, _itemInfo in pairs(sData.GearEventData) do
 	table.insert(sData.GearEventDataTable, itemName)
 end
 
+sData.SeedEventData = RecipeRegistry.RecipiesSortedByMachineType.SeedEventWorkbench
+sData.SeedEventDataTable = {}
+for itemName, _itemInfo in pairs(sData.SeedEventData) do
+	table.insert(sData.SeedEventDataTable, itemName)
+end
+
 return sData
