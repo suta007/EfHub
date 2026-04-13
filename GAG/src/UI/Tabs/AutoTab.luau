@@ -499,31 +499,6 @@ function AutoTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
-	CraftSection:AddDivider()
-	CraftSection:AddToggle("tgCraftSmithCosEnable", {
-		Title = "Auto Craft Smithing Cosmetic",
-		Default = false,
-		Callback = function(Value)
-			EfTasks.ToggleTask("AutoCraftSmithCos", Value, function()
-				Auto.CraftSmithCos()
-				task.wait(30)
-			end)
-			QuickSave()
-			if not Value then
-				fVar.CraftSmithCosRunning = false
-			end
-		end,
-	})
-	CraftSection:AddDropdown("ddCraftSmithCos", {
-		Title = "Select Craft Smithing Cosmetic",
-		Values = sData.SmithCosDataTable,
-		Default = "",
-		Multi = false,
-		Searchable = true,
-		Callback = function()
-			QuickSave()
-		end,
-	})
 
 	--
 end
