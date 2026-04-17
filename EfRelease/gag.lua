@@ -187,6 +187,18 @@ for q,r in pairs(b.GearEventData)do
 table.insert(b.GearEventDataTable,q)
 end
 
+b.SeedEventData=p.RecipiesSortedByMachineType.SeedEventWorkbench
+b.SeedEventDataTable={}
+for q,r in pairs(b.SeedEventData)do
+table.insert(b.SeedEventDataTable,q)
+end
+
+b.SmithCosData=p.RecipiesSortedByMachineType.SmithingEventCosmeticWorkbench
+b.SmithCosDataTable={}
+for q,r in pairs(b.SmithCosData)do
+table.insert(b.SmithCosDataTable,q)
+end
+
 return b end function a.a():typeof(__modImpl())local b=a.cache.a if not b then b={c=__modImpl()}a.cache.a=b end return b.c end end do local function __modImpl()
 
 local b={}
@@ -1448,12 +1460,12 @@ task.wait(0.5)
 end)
 end
 
-local function GetRequiredItemsCount(g:string):number
-for h,i in pairs(e.GearEventData)do
-if h==g then
-local j=i.Inputs
-if type(j)=="table"then
-return#j
+local function GetRequiredItemsCount(g:string,h:{[any]:any}):number
+for i,j in pairs(h)do
+if i==g then
+local k=j.Inputs
+if type(k)=="table"then
+return#k
 else
 return 0
 end
@@ -1503,7 +1515,7 @@ task.wait(1.5)
 end
 end
 
-local r=GetRequiredItemsCount(m)
+local r=GetRequiredItemsCount(m,e.GearEventData)
 if r==0 then
 c.Log("🟡 No Recipe Found")
 return
@@ -1546,6 +1558,106 @@ if not s then
 c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
 if g.tgCraftGearEnable then
 g.tgCraftGearEnable:SetValue(false)
+end
+return
+end
+
+
+
+
+pcall(function()
+e.CraftingEvent:FireServer("Craft",h,i)
+c.Log("ของครบถ้วน สั่ง Craft -> "..m)
+end)
+
+task.wait(1.5)
+end)
+end
+
+function b.CraftSeed()
+local g=c.Options
+if not g.tgCraftSeedEnable or not g.tgCraftSeedEnable.Value or d.CraftSeedRunning then
+return
+end
+
+local h=game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("SeedEventCraftingWorkBench")
+local i="SeedEventWorkbench"
+local j="SeedEventWorkbench"
+local k=1
+local l=require(e.Modules.CraftingStationHandler)
+
+f.RunWithFlag("CraftSeedRunning","CraftSeed",function()
+local m=g.ddCraftSeed.Value
+if not m or m==""then
+c.Log("🟡 No Seed Selected")
+return
+end
+local n=e.DataService:GetData()
+local o=n.CraftingData.GlobalCraftingObjectData
+local p=o[j].MachineData[i]
+
+if not p then
+c.Log("🟡 No Bench Data")
+return
+end
+local q=p.CraftingItems
+
+if q and q[k]then
+if q[k].IsDone==false then
+return
+elseif q[k].IsDone==true then
+pcall(function()
+e.CraftingEvent:FireServer("Claim",h,i,k)
+c.Log("Claim "..tostring(q[k].RecipeId))
+end)
+task.wait(1.5)
+
+end
+end
+
+local r=GetRequiredItemsCount(m,e.SeedEventData)
+if r==0 then
+c.Log("🟡 No Recipe Found")
+return
+end
+
+local s=false
+
+pcall(function()
+e.CraftingEvent:FireServer("SetRecipe",h,i,m)
+end)
+task.wait(0.5)
+
+for t=1,3 do
+if not g.tgCraftSeedEnable.Value then
+return
+end
+
+pcall(function()
+l:SubmitAllRequiredItems(h)
+end)
+task.wait(0.5)
+
+
+local u=e.DataService:GetData()
+local v=u.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
+local w=v.InputItems
+local x=w and#w or 0
+
+if x==r then
+s=true
+break
+else
+c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",x,r,t))
+task.wait(1)
+end
+end
+
+
+if not s then
+c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
+if g.tgCraftSeedEnable then
+g.tgCraftSeedEnable:SetValue(false)
 end
 return
 end
@@ -3413,11 +3525,11 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.12-11.16",
+SubTitle="2569.04.13-10.37",
 TabWidth=100,
-Size=UDim2.fromOffset(600,400),
+Size=UDim2.fromOffset(600,320),
 Resize=false,
-MinSize=Vector2.new(580,400),
+
 Acrylic=true,
 Theme="Darker",
 MinimizeKey=Enum.KeyCode.RightControl,
@@ -5148,7 +5260,7 @@ end,
 
 local s=f.Auto:AddCollapsibleSection("Craft",false)
 s:AddToggle("tgCraftGearEnable",{
-Title="Auto Craft",
+Title="Auto Craft Gear",
 Default=false,
 Callback=function(t)
 l.ToggleTask("AutoCraftGear",t,function()
@@ -5171,6 +5283,32 @@ Callback=function()
 h()
 end,
 })
+s:AddDivider()
+s:AddToggle("tgCraftSeedEnable",{
+Title="Auto Craft Seed",
+Default=false,
+Callback=function(t)
+l.ToggleTask("AutoCraftSeed",t,function()
+j.CraftSeed()
+task.wait(30)
+end)
+h()
+if not t then
+k.CraftGearRunning=false
+end
+end,
+})
+s:AddDropdown("ddCraftSeed",{
+Title="Select Craft",
+Values=i.SeedEventDataTable,
+Default="",
+Multi=false,
+Searchable=true,
+Callback=function()
+h()
+end,
+})
+
 
 end
 
@@ -6107,8 +6245,7 @@ local function ensureEvilFolder():Folder?
 if i and i.Parent then
 return i
 end
-local k=g.GameEvents:FindFirstChild("EvilBunny")
-or g.GameEvents:WaitForChild("EvilBunny",15)
+local k=g.GameEvents:FindFirstChild("EvilBunny")or g.GameEvents:WaitForChild("EvilBunny",15)
 if not k then
 return nil
 end
@@ -6259,12 +6396,14 @@ local n=l:FindFirstChild("EvilBunnyGiveQuest")::RemoteFunction?
 local o=l:FindFirstChild("EvilBunnyClaim")::RemoteFunction?
 if not(m and n and o)then
 c.Log("Evil Bunny: Remote ไม่ครบในโฟลเดอร์ EvilBunny","WARN")
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
 task.wait(15)
 return
 end
-
-c.IsEvilbunny=true
 c.IsEasterHarvesting=true
+task.wait(0.5)
+c.IsEvilbunny=true
 
 local p,q=pcall(function()
 local p,q=pcall(function()
@@ -6280,6 +6419,8 @@ local r=q.QuestState
 if r=="Cooldown"then
 local s=tonumber(q.CooldownRemaining)or 60
 c.Log("Evil Bunny: คูลดาวน์ ~"..tostring(math.ceil(s)).." วินาที")
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
 task.wait(math.clamp(s,2,3660))
 return
 end
@@ -6295,6 +6436,8 @@ c.Log("Evil Bunny: ยังรับรางวัลไม่ได้","WARN
 else
 c.Log("Evil Bunny: EvilBunnyClaim error — "..tostring(t),"WARN")
 end
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
 task.wait(1)
 return
 end
@@ -6309,6 +6452,8 @@ s=(t and type(u)=="table"and u.TargetPlantName)or nil
 end
 local t,u,v=destroyQuestPlant(tostring(s or""))
 if not t or not u or not v then
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
 task.wait(3)
 return
 end
@@ -6327,6 +6472,8 @@ return
 end
 if not t then
 c.Log("Evil Bunny: ไม่มีต้นที่ใช้เควสได้ — ปลูกต้นอื่นก่อน","WARN")
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
 task.wait(12)
 return
 end
@@ -6336,6 +6483,8 @@ c.Log("Evil Bunny: รับเควส — ทำลาย: "..u)
 task.wait(0.25)
 local v,w,x=destroyQuestPlant(u)
 if not v or not w or not x then
+c.IsEasterHarvesting=false
+c.IsEvilbunny=false
 task.wait(3)
 return
 end
