@@ -27,8 +27,7 @@ local function ensureEvilFolder(): Folder?
 	if evilFolder and evilFolder.Parent then
 		return evilFolder
 	end
-	local ge = sData.GameEvents:FindFirstChild("EvilBunny")
-		or sData.GameEvents:WaitForChild("EvilBunny", 15)
+	local ge = sData.GameEvents:FindFirstChild("EvilBunny") or sData.GameEvents:WaitForChild("EvilBunny", 15)
 	if not ge then
 		return nil
 	end
@@ -179,12 +178,14 @@ function Evilbunny.autoEvilbunny()
 	local claim = folder:FindFirstChild("EvilBunnyClaim") :: RemoteFunction?
 	if not (interact and giveQuest and claim) then
 		reg.Log("Evil Bunny: Remote ไม่ครบในโฟลเดอร์ EvilBunny", "WARN")
+		reg.IsEasterHarvesting = false
+		reg.IsEvilbunny = false
 		task.wait(15)
 		return
 	end
-
-	reg.IsEvilbunny = true
 	reg.IsEasterHarvesting = true
+	task.wait(0.5)
+	reg.IsEvilbunny = true
 
 	local okRun, errRun = pcall(function()
 		local okSnap, snap = pcall(function()
@@ -200,6 +201,8 @@ function Evilbunny.autoEvilbunny()
 		if state == "Cooldown" then
 			local left = tonumber(snap.CooldownRemaining) or 60
 			reg.Log("Evil Bunny: คูลดาวน์ ~" .. tostring(math.ceil(left)) .. " วินาที")
+			reg.IsEasterHarvesting = false
+			reg.IsEvilbunny = false
 			task.wait(math.clamp(left, 2, 3660))
 			return
 		end
@@ -215,6 +218,8 @@ function Evilbunny.autoEvilbunny()
 			else
 				reg.Log("Evil Bunny: EvilBunnyClaim error — " .. tostring(reward), "WARN")
 			end
+			reg.IsEasterHarvesting = false
+			reg.IsEvilbunny = false
 			task.wait(1)
 			return
 		end
@@ -229,6 +234,8 @@ function Evilbunny.autoEvilbunny()
 			end
 			local dug, replantSeed, replantPos = destroyQuestPlant(tostring(targetName or ""))
 			if not dug or not replantSeed or not replantPos then
+				reg.IsEasterHarvesting = false
+				reg.IsEvilbunny = false
 				task.wait(3)
 				return
 			end
@@ -247,6 +254,8 @@ function Evilbunny.autoEvilbunny()
 		end
 		if not granted then
 			reg.Log("Evil Bunny: ไม่มีต้นที่ใช้เควสได้ — ปลูกต้นอื่นก่อน", "WARN")
+			reg.IsEasterHarvesting = false
+			reg.IsEvilbunny = false
 			task.wait(12)
 			return
 		end
@@ -256,6 +265,8 @@ function Evilbunny.autoEvilbunny()
 		task.wait(0.25)
 		local dug2, replantSeed2, replantPos2 = destroyQuestPlant(plantName)
 		if not dug2 or not replantSeed2 or not replantPos2 then
+			reg.IsEasterHarvesting = false
+			reg.IsEvilbunny = false
 			task.wait(3)
 			return
 		end
