@@ -185,12 +185,14 @@ function Angryplant.autoAngryplant()
 			reg.sData.Character:PivotTo(questPos)
 			task.wait(0.5)
 			reg.Utils.EquipTool(item)
-			local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
-			if ItemName then
-				reg.Log("Submit " .. tostring(ItemName))
-			end
+			--local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
+			--if ItemName then
+			--	reg.Log("Submit " .. tostring(ItemName))
+			--end
 			task.wait(0.5)
-			pcall(SeedEvent:FireServer("SubmitHeldPlant"))
+			pcall(function()
+				SeedEvent:FireServer("SubmitHeldPlant")
+			end)
 			task.wait(0.5)
 			reg.Utils.ClickButton(reg.Utils.GardenButton)
 			task.wait(1)
