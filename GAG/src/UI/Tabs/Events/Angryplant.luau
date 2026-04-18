@@ -12,29 +12,7 @@ local EfTasks
 local QuickSave
 local EventsTab
 local sData
-local questPos = CFrame.new(-100.68, 7.91, -9.52) ---100.68,7.91,-9.52
---[[
-
-📋 Script initialized successfully.
-[Progression] : 3
-[ProgressionSeedPacks] : 0
-[HasBeenFed] : true
-[HasSeenPopup] : true
-[GoldenEgg] : (Table)
-  [BuyAmount] : 0
-  [LastBuyTime] : 1775356196.09477
-[TotalEasterPlaytime] : 5680
-[HasSoldEasterPlant] : true
-[HasEnabledEasterGarden] : true
-[RequiredPlantInfo] : (Table)
-  [RequiredPlantSize] : 1.4
-  [RequiredPlant] : Easter Gumball
-[SeedPackGiverDiscovered] : true
-[TotalTrackedPlaytime] : 22474
-[HasPurchasedEasterPlant] : true
-[HasBeenGivenStarterPack] : true
-
-]]
+local questPos = CFrame.new(-100.68, 5.2, -9.52)
 
 local chkName, chkWeight, chkMutation, chkVariant, chkNextQuest
 local Utils
@@ -207,12 +185,12 @@ function Angryplant.autoAngryplant()
 			reg.sData.Character:PivotTo(questPos)
 			task.wait(0.5)
 			reg.Utils.EquipTool(item)
-			local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
-			if ItemName then
-				reg.Log("Submit " .. tostring(ItemName))
-			end
+			--local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
+			--if ItemName then
+			--	reg.Log("Submit " .. tostring(ItemName))
+			--end
 			task.wait(0.5)
-			SeedEvent:FireServer("SubmitHeldPlant")
+			pcall(SeedEvent:FireServer("SubmitHeldPlant"))
 			task.wait(0.5)
 			reg.Utils.ClickButton(reg.Utils.GardenButton)
 			task.wait(1)
