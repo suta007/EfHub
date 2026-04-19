@@ -7,8 +7,9 @@ local EventsTab
 local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
-local homePos = CFrame.new(-43.30, 4.7, -78.98)
+--local homePos = CFrame.new(-43.30, 4.7, -78.98)
 local eventConnection = nil
+local Utils
 
 local function isEggWarActive()
 	local endsAt = Workspace:GetAttribute("GlobalEggHuntEndsAt")
@@ -23,7 +24,7 @@ function Eggwar.autoEggwar()
 	if not Options.tgEggwarEnable.Value or reg.IsHuntEgg then
 		return
 	end
-
+	local homePos = CFrame.new(Utils.ParseVector3(Options.ipEggwarPos.Value))
 	reg.IsHuntEgg = true
 	reg.IsEasterHarvesting = true
 	local character = LocalPlayer.Character
@@ -105,9 +106,10 @@ function Eggwar.Initialize(registry, tab)
 	reg = registry
 	QuickSave = reg.Window.QuickSave
 	EventsTab = tab
+	Utils = reg.Utils
 	local Options = reg.Options
 	_ = Options
-
+	local character = LocalPlayer.Character
 	local EggwarSection = EventsTab:AddCollapsibleSection("Eggwar", false)
 	EggwarSection:AddToggle("tgEggwarEnable", {
 		Title = "Eggwar Event Enable",
@@ -119,6 +121,26 @@ function Eggwar.Initialize(registry, tab)
 				reg.IsHuntEgg = false
 				reg.IsEasterHarvesting = false
 			end
+		end,
+	})
+
+	EggwarSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			local Pos = character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipEggwarPos:SetValue(formattedPos)
+			QuickSave()
+		end,
+	})
+	EggwarSection:AddInput("ipEggwarPos", {
+		Title = "Position",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
+		Callback = function(_Value)
+			QuickSave()
 		end,
 	})
 end
