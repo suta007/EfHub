@@ -29,16 +29,16 @@ function Eggwar.autoEggwar()
 	for _, obj in pairs(Workspace:GetChildren()) do
 		if obj.Name == "Model" then
 			character:PivotTo(obj:GetPivot())
-			task.wait(0.5)
+			task.wait(2)
 			local target = obj:FindFirstChild("ProximityPrompt", true)
 			if target then
 				fireproximityprompt(target)
-				task.wait(0.7)
+				task.wait(2)
 				character:PivotTo(homePos)
-				task.wait(0.7)
+				task.wait(2)
 			end
 		end
-		task.wait()
+		task.wait(0.2)
 	end
 
 	reg.IsHuntEgg = false
@@ -79,6 +79,7 @@ function Eggwar.Initialize(registry, tab)
 			if not Value then
 				reg.IsHuntEgg = false
 				reg.IsEasterHarvesting = false
+				isWarLaunched = false
 			end
 			EfTasks.ToggleTask("AutoEggwar", Value, function()
 				Eggwar.checktime()
