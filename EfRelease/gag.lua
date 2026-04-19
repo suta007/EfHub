@@ -3525,9 +3525,9 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.19-15.55",
+SubTitle="2569.04.19-22.45",
 TabWidth=100,
-Size=UDim2.fromOffset(600,320),
+Size=UDim2.fromOffset(600,360),
 Resize=false,
 
 Acrylic=true,
@@ -6474,19 +6474,26 @@ local m=d.Options
 if not m.tgEggwarEnable.Value or d.IsHuntEgg then
 return
 end
-local n=CFrame.new(j.ParseVector3(m.ipEggwarPos.Value))
+local n=j.ParseVector3(m.ipEggwarPos.Value)
+if not n then
+d.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
+return
+end
+local o=CFrame.new(n)
 d.IsHuntEgg=true
 d.IsEasterHarvesting=true
-local o=i.Character
-
-for p,q in pairs(g:GetChildren())do
-if q.Name=="Model"then
-o:PivotTo(q.CFrame)
-task.wait(0.3)
-c(q)
+local p=i.Character
+for q,r in pairs(g:GetChildren())do
+if r.Name=="Model"then
+p:PivotTo(r:GetPivot())
 task.wait(0.5)
-o:PivotTo(n)
-task.wait(0.5)
+local s=r:FindFirstChild("ProximityPrompt",true)
+if s then
+c(s)
+task.wait(0.7)
+p:PivotTo(o)
+task.wait(0.7)
+end
 end
 task.wait()
 end
