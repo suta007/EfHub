@@ -17,19 +17,29 @@ function Eggwar.autoEggwar()
 	if not Options.tgEggwarEnable.Value or reg.IsHuntEgg then
 		return
 	end
-	local homePos = CFrame.new(Utils.ParseVector3(Options.ipEggwarPos.Value))
+	local parsedVector = Utils.ParseVector3(Options.ipEggwarPos.Value)
+	if not parsedVector then
+		reg.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
+		return
+	end
+	local homePos = CFrame.new(parsedVector)
 	reg.IsHuntEgg = true
 	reg.IsEasterHarvesting = true
 	local character = LocalPlayer.Character
-
+	reg.Log("Eggwar Start Loop")
 	for _, obj in pairs(Workspace:GetChildren()) do
 		if obj.Name == "Model" then
-			character:PivotTo(obj.CFrame)
+			reg.Log("Eggwar Found Model")
+			character:PivotTo(obj:GetPivot())
 			task.wait(0.3)
-			fireproximityprompt(obj)
-			task.wait(0.5)
-			character:PivotTo(homePos)
-			task.wait(0.5)
+			local target = obj:FindFirstChild("ProximityPrompt", true)
+			if target then
+				reg.Log("Eggwar Found ProximityPrompt")
+				fireproximityprompt(target)
+				task.wait(0.5)
+				character:PivotTo(homePos)
+				task.wait(0.5)
+			end
 		end
 		task.wait()
 	end
@@ -43,10 +53,13 @@ function Eggwar.checktime()
 	if not Options.tgEggwarEnable.Value or reg.IsHuntEgg then
 		return
 	end
+	reg.Log("Eggwar is running")
 	local currentMinute = os.date("!*t").min
 	if currentMinute < 2 then
+		reg.Log("Eggwar Right time")
 		if not isWarLaunched then
 			isWarLaunched = true
+			reg.Log("Eggwar Start")
 			Eggwar.autoEggwar()
 		end
 	else
