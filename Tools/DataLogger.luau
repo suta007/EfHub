@@ -134,8 +134,7 @@ end
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService :: any)
 local GetData_result = DataService:GetData()
-local GlobalData = GetData_result.CraftingData.GlobalCraftingObjectData
-local data = GlobalData.SmithingEventCosmeticWorkbench
+local data = GetData_result.TeamEventData
 --local SelectedSlot = GetData_result.SaveSlots.SelectedSlot
 --local fData = GetData_result.SaveSlots.AllSlots[SelectedSlot].SavedObjects
 --local Data = GetData_result.SeasonPass

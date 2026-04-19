@@ -81,17 +81,20 @@ function Eastersell.AutoPacketEaster()
 
 	local data = sData.DataService:GetData()
 	local eventData = data.TeamEventData.CandyPackaging
-	local lastClaimed = eventData.LastClaimedTime or 0
+	if eventData then
+		local lastClaimed = eventData.LastClaimedTime or 0
 
-	local timeLeft = (lastClaimed + 1800) - workspace:GetServerTimeNow()
-	if timeLeft > 0 then
-		return
+		local timeLeft = (lastClaimed + 1800) - workspace:GetServerTimeNow()
+		if timeLeft > 0 then
+			return
+		end
 	end
 	reg.IsEasterHarvesting = true
 	--Utils.ClickButton(Utils.SellButton)
 	sData.Character:PivotTo(packetPos)
 	task.wait(0.5)
 	reg.Log("Send Packet")
+	--game:GetService("ReplicatedStorage").GameEvents.TeamEvents.CandyPackaging.SubmitAllRE
 	GameEvents:WaitForChild("TeamEvents"):WaitForChild("CandyPackaging"):WaitForChild("SubmitAllRE"):FireServer()
 	task.wait(1)
 	--Utils.ClickButton(Utils.GardenButton)
