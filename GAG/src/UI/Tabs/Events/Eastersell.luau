@@ -71,6 +71,34 @@ function Eastersell.AutoEasterSell()
 	task.wait(1)
 	reg.IsEasterHarvesting = false
 end
+
+function Eastersell.AutoPacketEaster()
+	local Options = reg.Options
+	if not Options.tgPacketEasterEnable or not Options.tgPacketEasterEnable.Value then
+		return
+	end
+	local packetPos = CFrame.new(-167.165, 4.5, 1.475)
+
+	local data = sData.DataService:GetData()
+	local eventData = data.TeamEventData.CandyPackaging
+	local lastClaimed = eventData.LastClaimedTime or 0
+
+	local timeLeft = (lastClaimed + 1800) - workspace:GetServerTimeNow()
+	if timeLeft > 0 then
+		return
+	end
+	reg.IsEasterHarvesting = true
+	--Utils.ClickButton(Utils.SellButton)
+	sData.Character:PivotTo(packetPos)
+	task.wait(0.5)
+	reg.Log("Send Packet")
+	GameEvents:WaitForChild("TeamEvents"):WaitForChild("CandyPackaging"):WaitForChild("SubmitAllRE"):FireServer()
+	task.wait(1)
+	--Utils.ClickButton(Utils.GardenButton)
+	--task.wait(1)
+	reg.IsEasterHarvesting = false
+end
+
 function Eastersell.runSell(state)
 	EfTasks.ToggleTask("AutoEasterSell", state, function()
 		local Options = reg.Options
@@ -84,6 +112,8 @@ function Eastersell.runSell(state)
 		end
 		if SellFull then
 			if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+				Eastersell.AutoPacketEaster()
+				task.wait(1)
 				Eastersell.AutoEasterSell()
 			end
 		else
@@ -133,6 +163,15 @@ function Eastersell.Initialize(registry, tab)
 				Eastersell.HarvestCrops()
 				task.wait(1)
 			end)
+			QuickSave()
+		end,
+	})
+
+	EastersellSection:AddDivider()
+	EastersellSection:AddToggle("tgPacketEasterEnable", {
+		Title = "Packet Easter Enable",
+		Default = false,
+		Callback = function(_Value)
 			QuickSave()
 		end,
 	})
