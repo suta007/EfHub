@@ -3525,7 +3525,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.13-10.37",
+SubTitle="2569.04.19-15.55",
 TabWidth=100,
 Size=UDim2.fromOffset(600,320),
 Resize=false,
@@ -5471,103 +5471,6 @@ return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b
 
 local b=game:GetService("ReplicatedStorage")
 
-local c={}
-local d
-local e
-local f
-local g
-
-local h=game:GetService("Players")
-local i=h.LocalPlayer
-local j=i.Character or i.CharacterAdded:Wait()
-
-local k=b:WaitForChild("GameEvents"):WaitForChild("Easter2026")
-
-function c.Initialize(l,m)
-d=l
-local n=d.Options
-_=n
-f=d.Window.QuickSave
-e=d.EfTasks
-g=m
-
-local o=g:AddCollapsibleSection("Egghunt",false)
-o:AddToggle("tgEgghuntEnable",{
-Title="Egghunt Event Enable",
-Default=false,
-Callback=function(p)
-e.ToggleTask("AutoEggHunt",p,function()
-c.autoEggHunt()
-task.wait(60)
-end)
-f()
-if not p then
-d.IsHuntEgg=false
-d.IsEasterHarvesting=false
-end
-end,
-})
-end
-
-function c.autoEggHunt()
-local l=d.Options
-if not l.tgEgghuntEnable.Value or d.IsHuntEgg then
-return
-end
-
-local m=i:GetAttribute("EasterEggHuntCooldownRemaining")
-if m and m>0 then
-d.Log("⏳ กิจกรรมติดคูลดาวน์ รออีก: "..math.floor(m).." วินาที")
-return
-end
-d.IsHuntEgg=true
-d.IsEasterHarvesting=true
-d.Log("🚀 กำลังส่งคำสั่งเริ่ม Egg Hunt ไปที่เซิร์ฟเวอร์...")
-task.wait(1)
-
-local n,o=k.EasterEventStartEggHunt:InvokeServer()
-
-
-if o and type(o)=="table"then
-local p=0
-
-
-for q,r in pairs(o)do
-
-if j:FindFirstChild("HumanoidRootPart")then
-j:PivotTo(CFrame.new(r))
-
-task.wait(0.5)
-end
-
-
-local s=k.CollectEasterEgg:InvokeServer(q)
-
-if s then
-p+=1
-d.Log("✨ เก็บไข่ใบที่ "..p.." สำเร็จ! (ID: "..tostring(q)..")")
-else
-task.wait(1)
-k.CollectEasterEgg:InvokeServer(q)
-end
-
-
-task.wait(1)
-end
-d.Log("🎉 ฟาร์มไข่เสร็จสิ้นทั้งหมด "..p.." ฟอง!")
-d.Utils.ClickButton(d.Utils.GardenButton)
-task.wait(1)
-else
-d.Log("❌ เริ่มเกมไม่ได้ หรือหาข้อมูลไข่ไม่พบ สถานะ: "..tostring(n))
-end
-d.IsHuntEgg=false
-d.IsEasterHarvesting=false
-end
-
-return c end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
-
-local b=game:GetService("ReplicatedStorage")
-
 local c=require(b.Modules.PlantTraitsData::any)
 local d={}
 local e
@@ -5639,6 +5542,37 @@ k.ClickButton(k.GardenButton)
 task.wait(1)
 e.IsEasterHarvesting=false
 end
+
+function d.AutoPacketEaster()
+local m=e.Options
+if not m.tgPacketEasterEnable or not m.tgPacketEasterEnable.Value then
+return
+end
+local n=CFrame.new(-167.165,4.5,1.475)
+
+local o=i.DataService:GetData()
+local p=o.TeamEventData.CandyPackaging
+if p then
+local q=p.LastClaimedTime or 0
+
+local r=(q+1800)-workspace:GetServerTimeNow()
+if r>0 then
+return
+end
+end
+e.IsEasterHarvesting=true
+
+i.Character:PivotTo(n)
+task.wait(0.5)
+e.Log("Send Packet")
+
+l:WaitForChild("TeamEvents"):WaitForChild("CandyPackaging"):WaitForChild("SubmitAllRE"):FireServer()
+task.wait(1)
+
+
+e.IsEasterHarvesting=false
+end
+
 function d.runSell(m)
 g.ToggleTask("AutoEasterSell",m,function()
 local n=e.Options
@@ -5652,6 +5586,8 @@ q=o
 end
 if p then
 if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
+d.AutoPacketEaster()
+task.wait(1)
 d.AutoEasterSell()
 end
 else
@@ -5706,6 +5642,15 @@ end,
 })
 
 p:AddDivider()
+p:AddToggle("tgPacketEasterEnable",{
+Title="Packet Easter Enable",
+Default=false,
+Callback=function(q)
+f()
+end,
+})
+
+p:AddDivider()
 
 p:AddInput("ipEasterSellDelay",{
 Title="Easter Sell Delay",
@@ -5740,7 +5685,7 @@ end,
 })
 end
 
-return d end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
+return d end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
 
 local b=game:GetService("ReplicatedStorage")
 local c=require(b.Modules.DataService::any)
@@ -5756,29 +5701,7 @@ local j
 local k
 local l
 local m
-local n=CFrame.new(-100.68,7.91,-9.52)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+local n=CFrame.new(-100.68,5.2,-9.52)
 
 local o,p,q,r,s
 local t
@@ -5951,12 +5874,14 @@ if CheckQuest(A)then
 i.sData.Character:PivotTo(n)
 task.wait(0.5)
 i.Utils.EquipTool(A)
-local B=A:FindFirstChild("Item_String")and A:FindFirstChild("Item_String").Value
-if B then
-i.Log("Submit "..tostring(B))
-end
+
+
+
+
 task.wait(0.5)
+pcall(function()
 e:FireServer("SubmitHeldPlant")
+end)
 task.wait(0.5)
 i.Utils.ClickButton(i.Utils.GardenButton)
 task.wait(1)
@@ -6121,7 +6046,7 @@ end
 return false
 end
 
-return h end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+return h end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -6214,7 +6139,7 @@ end,
 })
 end
 
-return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -6528,6 +6453,111 @@ end,
 })
 end
 
+return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+
+local b={}
+local c=(getfenv()::any).fireproximityprompt
+local d
+local e
+local f
+
+local g=game:GetService("Workspace")
+local h=game:GetService("Players")
+local i=h.LocalPlayer
+
+local j
+local k
+local l=false
+
+function b.autoEggwar()
+local m=d.Options
+if not m.tgEggwarEnable.Value or d.IsHuntEgg then
+return
+end
+local n=CFrame.new(j.ParseVector3(m.ipEggwarPos.Value))
+d.IsHuntEgg=true
+d.IsEasterHarvesting=true
+local o=i.Character
+
+for p,q in pairs(g:GetChildren())do
+if q.Name=="Model"then
+o:PivotTo(q.CFrame)
+task.wait(0.3)
+c(q)
+task.wait(0.5)
+o:PivotTo(n)
+task.wait(0.5)
+end
+task.wait()
+end
+
+d.IsHuntEgg=false
+d.IsEasterHarvesting=false
+end
+
+function b.checktime()
+local m=d.Options
+if not m.tgEggwarEnable.Value or d.IsHuntEgg then
+return
+end
+local n=os.date("!*t").min
+if n<2 then
+if not l then
+l=true
+b.autoEggwar()
+end
+else
+l=false
+end
+end
+
+function b.Initialize(m,n)
+d=m
+e=d.Window.QuickSave
+f=n
+j=d.Utils
+k=d.EfTasks
+local o=d.Options
+_=o
+local p=i.Character
+local q=f:AddCollapsibleSection("Eggwar",false)
+q:AddToggle("tgEggwarEnable",{
+Title="Eggwar Event Enable",
+Default=false,
+Callback=function(r)
+e()
+if not r then
+d.IsHuntEgg=false
+d.IsEasterHarvesting=false
+end
+k.ToggleTask("AutoEggwar",r,function()
+b.checktime()
+task.wait(5)
+end)
+end,
+})
+
+q:AddButton({
+Title="Set Position",
+Callback=function()
+local r=p:GetPivot().Position
+local s=string.format("%.3f, %.3f, %.3f",r.X,r.Y,r.Z)
+o.ipEggwarPos:SetValue(s)
+e()
+end,
+})
+q:AddInput("ipEggwarPos",{
+Title="Position",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function(r)
+e()
+end,
+})
+end
+
 return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
 
 
@@ -6541,17 +6571,19 @@ local f
 local function LoadEvents()
 local g={}
 if b().DEV_MODE then
-g.Egghunt=c("UI/Tabs/Events/Egghunt")
+
 g.Eastersell=c("UI/Tabs/Events/Eastersell")
 g.Angryplant=c("UI/Tabs/Events/Angryplant")
 g.Goldenegg=c("UI/Tabs/Events/Goldenegg")
 g.Evilbunny=c("UI/Tabs/Events/Evilbunny")
+g.Eggwar=c("UI/Tabs/Events/Eggwar")
 else
-g.Egghunt=a.p()
-g.Eastersell=a.q()
-g.Angryplant=a.r()
-g.Goldenegg=a.s()
-g.Evilbunny=a.t()
+
+g.Eastersell=a.p()
+g.Angryplant=a.q()
+g.Goldenegg=a.r()
+g.Evilbunny=a.s()
+g.Eggwar=a.t()
 end
 return g
 end
@@ -6567,11 +6599,12 @@ e.IsHuntEgg=false
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
 
 local i=LoadEvents()
-i.Egghunt.Initialize(e,f.Events)
+
 i.Eastersell.Initialize(e,f.Events)
 i.Angryplant.Initialize(e,f.Events)
 i.Goldenegg.Initialize(e,f.Events)
 i.Evilbunny.Initialize(e,f.Events)
+i.Eggwar.Initialize(e,f.Events)
 
 
 end
