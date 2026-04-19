@@ -3525,9 +3525,9 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.19-22.45",
+SubTitle="2569.04.20-00.05",
 TabWidth=100,
-Size=UDim2.fromOffset(600,360),
+Size=UDim2.fromOffset(600,340),
 Resize=false,
 
 Acrylic=true,
@@ -6486,16 +6486,16 @@ local p=i.Character
 for q,r in pairs(g:GetChildren())do
 if r.Name=="Model"then
 p:PivotTo(r:GetPivot())
-task.wait(0.5)
+task.wait(2)
 local s=r:FindFirstChild("ProximityPrompt",true)
 if s then
 c(s)
-task.wait(0.7)
+task.wait(2)
 p:PivotTo(o)
-task.wait(0.7)
+task.wait(2)
 end
 end
-task.wait()
+task.wait(0.2)
 end
 
 d.IsHuntEgg=false
@@ -6536,6 +6536,7 @@ e()
 if not r then
 d.IsHuntEgg=false
 d.IsEasterHarvesting=false
+l=false
 end
 k.ToggleTask("AutoEggwar",r,function()
 b.checktime()
