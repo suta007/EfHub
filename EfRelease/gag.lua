@@ -6479,20 +6479,25 @@ if not n then
 d.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
 return
 end
+d.Log("🟣 กำลังเก็บไข่")
 local o=CFrame.new(n)
 d.IsHuntEgg=true
 d.IsEasterHarvesting=true
 local p=i.Character
-for q,r in pairs(g:GetChildren())do
-if r.Name=="Model"then
-p:PivotTo(r:GetPivot())
+local q=1
+for r,s in pairs(g:GetChildren())do
+if s.Name=="Model"then
+p:PivotTo(s:GetPivot())
 task.wait(2)
-local s=r:FindFirstChild("ProximityPrompt",true)
-if s then
-c(s)
+local t=s:FindFirstChild("ProximityPrompt",true)
+if t then
+d.Log("🔵 กำลังเก็บไข่ "..q)
+c(t)
 task.wait(2)
 p:PivotTo(o)
 task.wait(2)
+d.Log("🟢 เก็บไข่ "..q.." สำเร็จ")
+q=q+1
 end
 end
 task.wait(0.2)
