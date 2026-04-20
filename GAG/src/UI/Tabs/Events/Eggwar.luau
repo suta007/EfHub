@@ -22,20 +22,25 @@ function Eggwar.autoEggwar()
 		reg.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
 		return
 	end
+	reg.Log("🟣 กำลังเก็บไข่")
 	local homePos = CFrame.new(parsedVector)
 	reg.IsHuntEgg = true
 	reg.IsEasterHarvesting = true
 	local character = LocalPlayer.Character
+	local count = 1
 	for _, obj in pairs(Workspace:GetChildren()) do
 		if obj.Name == "Model" then
 			character:PivotTo(obj:GetPivot())
 			task.wait(2)
 			local target = obj:FindFirstChild("ProximityPrompt", true)
 			if target then
+				reg.Log("🔵 กำลังเก็บไข่ " .. count)
 				fireproximityprompt(target)
 				task.wait(2)
 				character:PivotTo(homePos)
 				task.wait(2)
+				reg.Log("🟢 เก็บไข่ " .. count .. " สำเร็จ")
+				count = count + 1
 			end
 		end
 		task.wait(0.2)
