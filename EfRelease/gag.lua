@@ -3525,7 +3525,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.20-00.05",
+SubTitle="2569.04.20-15.15",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -6479,19 +6479,20 @@ if not n then
 d.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
 return
 end
-d.Log("🟣 กำลังเก็บไข่")
-local o=CFrame.new(n)
 d.IsHuntEgg=true
 d.IsEasterHarvesting=true
+local o=CFrame.new(n)
 local p=i.Character
 local q=1
+d.Log("🟣 กำลังเก็บไข่ รอ 10 วินาที")
+task.wait(10)
+
 for r,s in pairs(g:GetChildren())do
 if s.Name=="Model"then
 p:PivotTo(s:GetPivot())
 task.wait(2)
 local t=s:FindFirstChild("ProximityPrompt",true)
 if t then
-d.Log("🔵 กำลังเก็บไข่ "..q)
 c(t)
 task.wait(2)
 p:PivotTo(o)
@@ -6503,8 +6504,10 @@ end
 task.wait(0.2)
 end
 
+d.Log("🟣 เก็บไข่ครบ "..(q-1).." ใบ")
 d.IsHuntEgg=false
 d.IsEasterHarvesting=false
+l=false
 end
 
 function b.checktime()
