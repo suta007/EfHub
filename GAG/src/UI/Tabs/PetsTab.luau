@@ -472,6 +472,92 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	--#endregion
+	--#region Gift Pet Section
+	local GiftPetSection = Tabs.Pets:AddCollapsibleSection("Gift Pets", false)
+
+	GiftPetSection:AddButton({
+		Title = "Refresh Gift Friends",
+		Callback = function()
+			local Players = game:GetService("Players")
+			local LocalPlayer = Players.LocalPlayer
+			local allPlayers = Players:GetPlayers()
+			local friendTable = {}
+			for _, player in ipairs(allPlayers) do
+				if player.Name ~= LocalPlayer.Name then
+					table.insert(friendTable, player.Name)
+				end
+			end
+			Options.ddGiftFriends:SetValue(friendTable)
+		end,
+	})
+	GiftPetSection:AddDropdown("ddGiftFriends", {
+		Title = "Select Friends",
+		Values = {},
+		Default = "",
+		Multi = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	GiftPetSection:AddButton({
+		Title = "Clear Selected Gift Pet",
+		Callback = function()
+			Options.ddGiftPet:SetValue({})
+		end,
+	})
+
+	GiftPetSection:AddDropdown("ddGiftPet", {
+		Title = "Select Gift Pet Type",
+		Values = sData.PetsDataTable,
+		Default = {},
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	local giftMutant = table.clone(sData.PetMutationDataTable)
+	table.insert(giftMutant, 2, "ALL")
+	GiftPetSection:AddDropdown("ddGiftPetMutant", {
+		Title = "Select Mutant Pet",
+		Values = giftMutant,
+		Default = { "ALL" },
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	GiftPetSection:AddDropdown("ddGiftPetThreshold", {
+		Title = "Select Weight Threshold",
+		Values = { "Below", "Above" },
+		Default = "Below",
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	GiftPetSection:AddInput("inpGiftPetWeight", {
+		Title = "Base Weight",
+		Default = 0,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	GiftPetSection:AddToggle("tgGiftPetEn", {
+		Title = "Enable Auto Gift Pet",
+		Default = false,
+		Callback = function(Value)
+			EfTasks.ToggleTask("GiftPet", Value, function()
+				Pets.GiftPet()
+				task.wait(30)
+			end)
+			QuickSave()
+		end,
+	})
 
 	--#endregion
 end

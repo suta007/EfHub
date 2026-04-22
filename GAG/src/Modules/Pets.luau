@@ -848,9 +848,7 @@ local function ValidEggs(EggsData, rEggs)
 		if EggData then
 			local HatchWeight = EggData.Data.BaseWeight * 1.1
 			local HatchPetType = EggData.Data.Type
-			if sWeight ~= 0 and HatchWeight >= sWeight then
-				table.insert(spEggs, rEgg)
-			elseif #sHatchPet > 0 and table.find(sHatchPet, HatchPetType) then
+			if (sWeight ~= 0 and HatchWeight >= sWeight) or (#sHatchPet > 0 and table.find(sHatchPet, HatchPetType)) then
 				table.insert(spEggs, rEgg)
 			else
 				table.insert(nmEggs, rEgg)
@@ -929,6 +927,7 @@ local function IsValidSellPet(petData)
 	local sPetType = petData.PetType
 	local sBaseWeight = petData.PetData.BaseWeight
 	local sMutant = petData.PetData.MutationType or "m"
+
 	local sFavorite = petData.PetData.IsFavorite
 	if sFavorite then
 		return false
@@ -1019,6 +1018,91 @@ function Pets.RunHatchSet()
 				hatchSetTask = nil
 			end
 		end)
+	end
+end
+
+local function IsValidGiftPet(petData)
+	if not petData or type(petData) ~= "table" then
+		return false
+	end
+	local Options = reg.Options
+
+	local gPetTypes = GetSelectedItems(Options.ddGiftPet.Value)
+	local gThreshold = Options.ddGiftPetThreshold.Value
+	local gWeight = tonumber(Options.inpGiftPetWeight.Value)
+	local gMutant = GetSelectedItems(Options.ddGiftPetMutant.Value)
+
+	local gPetType = petData.PetType
+	local gBaseWeight = petData.PetData.BaseWeight
+	local petMutant = sData.EnumToNameCache[petData.PetData.MutationType] or "Normal"
+	local gFavorite = petData.PetData.IsFavorite
+	if gFavorite then
+		return false
+	end
+	if not table.find(gPetTypes, gPetType) then
+		return false
+	end
+	if gWeight > 0 then
+		if gThreshold == "Below" and gBaseWeight >= gWeight then
+			return false
+		end
+		if gThreshold == "Above" and gBaseWeight <= gWeight then
+			return false
+		end
+	end
+	if not table.find(gMutant, "ALL") and not table.find(gMutant, petMutant) then
+		return false
+	end
+
+	return true
+end
+
+function Pets.GiftPets()
+	local Options = reg.Options
+	if not Options.tgGiftPetEn or not Options.tgGiftPetEn.Value then
+		return
+	end
+	local friendName = Options.ddGiftFriends.Value
+	local selectedPetTypes = Options.ddGiftPet.Value
+	local baseWeight = tonumber(Options.inpGiftPetWeight.Value)
+	if not friendName or friendName == "" or not selectedPetTypes or #selectedPetTypes == 0 then
+		reg.Log("Invalid Gift Pet Settings")
+		return
+	end
+
+	local TargetPlayerObj = game:GetService("Players"):FindFirstChild(friendName)
+	if not TargetPlayerObj then
+		reg.Log("Invalid Friend Name")
+		return
+	end
+
+	if baseWeight == nil or type(baseWeight) ~= "number" then
+		reg.Log("Invalid Base Weight")
+		return
+	end
+
+	local data = sData.DataService:GetData()
+	local inventory = data and data.PetsData and data.PetsData.PetInventory
+	if inventory then
+		for _, v in pairs(inventory) do
+			if type(v) == "table" then
+				for kUUID, petData in pairs(v) do
+					if type(petData) == "table" then
+						if IsValidGiftPet(petData) then
+							local tuuid = petData.UUID or kUUID
+							if Pets.HeldPet(tuuid) then
+								local args = {
+									"GivePet",
+									TargetPlayerObj,
+								}
+								sData.GameEvents:WaitForChild("PetGiftingService"):FireServer(unpack(args))
+								task.wait(7)
+							end
+						end
+					end
+				end
+			end
+		end
 	end
 end
 
