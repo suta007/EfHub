@@ -1113,8 +1113,9 @@ function Pets.GiftPets()
 	end
 end
 local AcceptGiftPetsDriver = nil
-local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
+
 function Pets.AcceptGiftPets(Value)
+	local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
 	if Value then
 		--local GiftPetEvent = sData.GameEvents:WaitForChild("GiftPet")
 		--local AcceptPetGiftEvent = sData.GameEvents:WaitForChild("AcceptPetGift")
