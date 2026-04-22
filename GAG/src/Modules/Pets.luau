@@ -1,3 +1,4 @@
+local getconnections = (getfenv() :: any).getconnections
 local Pets = {}
 local reg
 local fVar
@@ -1113,7 +1114,7 @@ local AcceptGiftPetsDriver = nil
 function Pets.AcceptGiftPets(Value)
 	if Value then
 		local GiftPetEvent = sData.GameEvents:WaitForChild("GiftPet")
-		local AcceptPetGiftEvent = sData.GameEvents:WaitForChild("AcceptPetGift")
+		--local AcceptPetGiftEvent = sData.GameEvents:WaitForChild("AcceptPetGift")
 		if AcceptGiftPetsDriver then
 			return
 		end
@@ -1121,16 +1122,33 @@ function Pets.AcceptGiftPets(Value)
 			task.spawn(function()
 				task.wait(3)
 				--AcceptPetGiftEvent:FireServer(true, giftId)
-				task.spawn(function()
-					pcall(function()
-						local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
-						for _, obj in pairs(notiFrame:GetChildren()) do
-							if obj.Name == "Gift_Notification" then
-								local acceptBtn = obj.Holder.Frame.Accept
-								acceptBtn.Activated:Fire()
+				pcall(function()
+					local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
+					for _, obj in pairs(notiFrame:GetChildren()) do
+						if obj.Name == "Gift_Notification" then
+							local acceptBtn = obj.Holder.Frame.Accept
+							-- acceptBtn.Activated:Fire()
+							--[[
+							if getconnections then
+								for _, connection in pairs(getconnections(acceptBtn.Activated)) do
+									connection:Fire()
+								end
+							end
+							]]
+
+							if firesignal then
+								firesignal(acceptBtn.MouseButton1Click)
+							elseif getconnections then
+								for _, connection in pairs(getconnections(acceptBtn.MouseButton1Click)) do
+									if connection.Fire then
+										connection:Fire()
+									else
+										connection.Function()
+									end
+								end
 							end
 						end
-					end)
+					end
 				end)
 			end)
 		end)
