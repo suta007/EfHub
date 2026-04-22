@@ -1113,24 +1113,24 @@ local AcceptGiftPetsDriver = nil
 function Pets.AcceptGiftPets(Value)
 	if Value then
 		local GiftPetEvent = sData.GameEvents:WaitForChild("GiftPet")
+		local AcceptPetGiftEvent = sData.GameEvents:WaitForChild("AcceptPetGift")
 		if AcceptGiftPetsDriver then
 			return
 		end
 		AcceptGiftPetsDriver = GiftPetEvent.OnClientEvent:Connect(function(giftId, petName, _senderName)
 			task.spawn(function()
-				-- หน่วงเวลาให้ตัวเกมสร้าง UI v_u_9 ขึ้นมาบนหน้าจอให้เสร็จก่อน
-				task.wait(1.5)
-
-				pcall(function()
-					local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
-					for _, obj in pairs(notiFrame:GetChildren()) do
-						if obj.Name == "Gift_Notification" then
-							local acceptBtn = obj.Holder.Frame.Accept
-							pcall(function()
-								firesignal(acceptBtn.Activated)
-							end)
+				task.wait(3)
+				--AcceptPetGiftEvent:FireServer(true, giftId)
+				task.spawn(function()
+					pcall(function()
+						local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
+						for _, obj in pairs(notiFrame:GetChildren()) do
+							if obj.Name == "Gift_Notification" then
+								local acceptBtn = obj.Holder.Frame.Accept
+								acceptBtn.Activated:Fire()
+							end
 						end
-					end
+					end)
 				end)
 			end)
 		end)
