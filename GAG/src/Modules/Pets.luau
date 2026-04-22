@@ -1132,10 +1132,12 @@ function Pets.AcceptGiftPets(Value)
 					for _, obj in pairs(notiFrame:GetChildren()) do
 						if obj.Name == "Gift_Notification" then
 							local acceptBtn = obj.Holder.Frame.Accept
+							print("Accept Button Found", acceptBtn)
 							if firesignal then
 								firesignal(acceptBtn.MouseButton1Click)
 							elseif getconnections then
 								for _, connection in pairs(getconnections(acceptBtn.MouseButton1Click)) do
+									print("Accept Button Connection", connection)
 									if connection.Fire then
 										connection:Fire()
 									else
