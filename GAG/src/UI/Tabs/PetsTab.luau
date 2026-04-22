@@ -495,7 +495,6 @@ function PetsTab.Initialize(registry)
 		Title = "Select Friends",
 		Values = {},
 		Default = "",
-		Multi = false,
 		Callback = function()
 			QuickSave()
 		end,

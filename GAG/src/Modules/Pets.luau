@@ -1063,9 +1063,13 @@ function Pets.GiftPets()
 		return
 	end
 	local friendName = Options.ddGiftFriends.Value
-	local selectedPetTypes = Options.ddGiftPet.Value
+	local selectedPetTypes = GetSelectedItems(Options.ddGiftPet.Value)
 	local baseWeight = tonumber(Options.inpGiftPetWeight.Value)
-	if not friendName or friendName == "" or not selectedPetTypes or #selectedPetTypes == 0 then
+	if not friendName or friendName == "" then
+		reg.Log("Invalid Friend Name")
+		return
+	end
+	if not selectedPetTypes or #selectedPetTypes == 0 then
 		reg.Log("Invalid Gift Pet Settings")
 		return
 	end
