@@ -552,8 +552,8 @@ function PetsTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			EfTasks.ToggleTask("GiftPet", Value, function()
-				Pets.GiftPet()
-				task.wait(30)
+				Pets.GiftPets()
+				task.wait(1)
 			end)
 			QuickSave()
 		end,
