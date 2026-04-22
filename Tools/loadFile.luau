@@ -4,9 +4,9 @@ local LocalPlayer = Players.LocalPlayer
 local targets = {
 	--ReplicatedStorage = game:GetService("ReplicatedStorage"),
 	--ReplicatedFirst = game:GetService("ReplicatedFirst"),
-	PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts"),
+	--PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts"),
 	--PlayerGui = LocalPlayer:WaitForChild("PlayerGui"),
-	--Workspace = game:GetService("Workspace"),
+	Workspace = game:GetService("Workspace"),
 }
 
 local baseFolderName = "GAG_Ref"

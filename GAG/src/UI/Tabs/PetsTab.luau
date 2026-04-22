@@ -488,7 +488,7 @@ function PetsTab.Initialize(registry)
 					table.insert(friendTable, player.Name)
 				end
 			end
-			Options.ddGiftFriends:SetValue(friendTable)
+			Options.ddGiftFriends:SetValues(friendTable)
 		end,
 	})
 	GiftPetSection:AddDropdown("ddGiftFriends", {
