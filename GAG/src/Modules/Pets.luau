@@ -1120,18 +1120,18 @@ function Pets.AcceptGiftPets(Value)
 		AcceptGiftPetsDriver = GiftPetEvent.OnClientEvent:Connect(function(giftId, petName, _senderName)
 			task.wait(1)
 			AcceptPetGiftEvent:FireServer(true, giftId)
-
-			pcall(function()
-				local giftNotificationFolder = sData.PlayerGui:FindFirstChild("Gift_Notification")
-				if giftNotificationFolder and giftNotificationFolder:FindFirstChild("Frame") then
-					for _, uiElement in ipairs(giftNotificationFolder.Frame:GetChildren()) do
-						if uiElement:IsA("Frame") and uiElement:FindFirstChild("Holder") then
-							if uiElement.Holder.TextLabel.Text == petName then
+			task.spawn(function()
+				task.wait(2)
+				pcall(function()
+					local giftNotificationFolder = sData.PlayerGui:FindFirstChild("Gift_Notification")
+					if giftNotificationFolder and giftNotificationFolder:FindFirstChild("Frame") then
+						for _, uiElement in ipairs(giftNotificationFolder.Frame:GetChildren()) do
+							if uiElement:IsA("Frame") and uiElement:FindFirstChild("Holder") then
 								uiElement:Destroy()
 							end
 						end
 					end
-				end
+				end)
 			end)
 		end)
 	else
