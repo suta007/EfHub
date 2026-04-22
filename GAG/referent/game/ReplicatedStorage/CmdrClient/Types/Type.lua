@@ -1,4 +1,4 @@
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 return function(p_u_2)
 	-- upvalues: (copy) v_u_1
 	local v7 = {

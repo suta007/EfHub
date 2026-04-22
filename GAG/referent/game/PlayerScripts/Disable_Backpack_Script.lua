@@ -44,9 +44,11 @@ local v38 = v_u_1:WaitForChild("ButtercupCoinShop_UI")
 local v39 = v_u_1:WaitForChild("BuyButtercupCrate")
 local v40 = v_u_1:WaitForChild("ValentinesEvent_UI")
 local v41 = v_u_1:WaitForChild("ValentinesEvent2_UI")
-local v_u_42 = v_u_1:WaitForChild("Hud_UI")
-local v43 = v_u_1:WaitForChild("Seed_Shop")
-local v_u_44 = {
+local v42 = v_u_1:WaitForChild("TeamEventPartyInvite_UI")
+local v_u_43 = v42:WaitForChild("TeamInvites")
+local v_u_44 = v_u_1:WaitForChild("Hud_UI")
+local v45 = v_u_1:WaitForChild("Seed_Shop")
+local v_u_46 = {
 	v4,
 	v5,
 	v6,
@@ -58,7 +60,7 @@ local v_u_44 = {
 	v13,
 	v14,
 	v15,
-	v43,
+	v45,
 	v7,
 	v16,
 	v17,
@@ -86,26 +88,26 @@ local v_u_44 = {
 	v40,
 	v41
 }
-local v45 = v_u_1:FindFirstChild("ChristmasGiftRewards_UI")
-local v46 = v_u_1:FindFirstChild("ChristmasGiftV2Rewards_UI")
-local v47 = v_u_1:FindFirstChild("ChristmasTreeRewards_UI")
-local v48 = v_u_1:FindFirstChild("ChristmasTreeRewardList_UI")
-if v45 then
-	table.insert(v_u_44, v45)
-end
-if v46 then
-	table.insert(v_u_44, v46)
-end
+local v47 = v_u_1:FindFirstChild("ChristmasGiftRewards_UI")
+local v48 = v_u_1:FindFirstChild("ChristmasGiftV2Rewards_UI")
+local v49 = v_u_1:FindFirstChild("ChristmasTreeRewards_UI")
+local v50 = v_u_1:FindFirstChild("ChristmasTreeRewardList_UI")
 if v47 then
-	table.insert(v_u_44, v47)
+	table.insert(v_u_46, v47)
 end
 if v48 then
-	table.insert(v_u_44, v48)
+	table.insert(v_u_46, v48)
 end
-local v_u_49 = v_u_1:WaitForChild("BackpackGui")
-v43.Frame.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
-v43.TabAnchor.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
-v43.Daily.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+if v49 then
+	table.insert(v_u_46, v49)
+end
+if v50 then
+	table.insert(v_u_46, v50)
+end
+local v_u_51 = v_u_1:WaitForChild("BackpackGui")
+v45.Frame.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+v45.TabAnchor.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+v45.Daily.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 v5.MainMenu.Position = UDim2.new(0.54, 0, 0.54, 0)
 v6.SeasonPassFrame.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 if v2.TouchEnabled == true then
@@ -131,21 +133,10 @@ v19.SideBtns.UIScale.Scale = 1.1
 v20.Frame.Variant1.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 v20.Frame.Variant2.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 v21.TradeMenuFrame.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+v42.TeamInvites.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 v32.Frame.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
 v32.Frame.Size = UDim2.new(0.47, 0, 0.47, 0)
 v32.Frame.Position = UDim2.new(0.5, 0, 0.575, 0)
-if v45 then
-	local v50 = v45.Frame
-	v50.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
-	v50.Size = UDim2.new(0.47, 0, 0.47, 0)
-	v50.Position = UDim2.new(0.5, 0, 0.575, 0)
-end
-if v46 then
-	local v51 = v46.Frame
-	v51.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
-	v51.Size = UDim2.new(0.47, 0, 0.47, 0)
-	v51.Position = UDim2.new(0.5, 0, 0.575, 0)
-end
 if v47 then
 	local v52 = v47.Frame
 	v52.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
@@ -158,31 +149,45 @@ if v48 then
 	v53.Size = UDim2.new(0.47, 0, 0.47, 0)
 	v53.Position = UDim2.new(0.5, 0, 0.575, 0)
 end
+if v49 then
+	local v54 = v49.Frame
+	v54.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+	v54.Size = UDim2.new(0.47, 0, 0.47, 0)
+	v54.Position = UDim2.new(0.5, 0, 0.575, 0)
+end
+if v50 then
+	local v55 = v50.Frame
+	v55.UIAspectRatioConstraint.AspectType = Enum.AspectType.ScaleWithParentSize
+	v55.Size = UDim2.new(0.47, 0, 0.47, 0)
+	v55.Position = UDim2.new(0.5, 0, 0.575, 0)
+end
 function UPD()
-	-- upvalues: (copy) v_u_44, (copy) v_u_1, (copy) v_u_42, (copy) v_u_49
-	local v54 = false
-	for _, v55 in pairs(v_u_44) do
-		if v55.Enabled == true then
-			v54 = true
+	-- upvalues: (copy) v_u_46, (copy) v_u_43, (copy) v_u_1, (copy) v_u_44, (copy) v_u_51
+	local v56 = false
+	for _, v57 in pairs(v_u_46) do
+		if v57.Enabled == true then
+			v56 = true
 		end
 	end
-	if v54 == true then
-		local v56 = v_u_1:WaitForChild("Teleport_UI")
-		if v56 then
-			v56.Enabled = false
+	local v58 = v_u_43.Visible == true and true or v56
+	if v58 == true then
+		local v59 = v_u_1:WaitForChild("Teleport_UI")
+		if v59 then
+			v59.Enabled = false
 		end
 	else
-		local v57 = v_u_1:WaitForChild("Teleport_UI")
-		if v57 then
-			v57.Enabled = true
+		local v60 = v_u_1:WaitForChild("Teleport_UI")
+		if v60 then
+			v60.Enabled = true
 		end
 	end
-	v_u_42.Enabled = not v54
-	v_u_49.Enabled = not v54
+	v_u_44.Enabled = not v58
+	v_u_51.Enabled = not v58
 end
 UPD()
-for _, v58 in pairs(v_u_44) do
-	v58:GetPropertyChangedSignal("Enabled"):Connect(function()
+for _, v61 in pairs(v_u_46) do
+	v61:GetPropertyChangedSignal("Enabled"):Connect(function()
 		UPD()
 	end)
 end
+v_u_43:GetPropertyChangedSignal("Visible"):Connect(UPD)

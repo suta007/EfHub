@@ -549,6 +549,46 @@ local v11 = {
 		["NormalId"] = 3512151977,
 		["Display"] = "50 Premium Bird Eggs"
 	},
+	["+1 Premium Golden Egg"] = {
+		["GiftId"] = 3568827750,
+		["NormalId"] = 3568827015,
+		["Display"] = "1 Premium Golden Egg"
+	},
+	["+3 Premium Golden Eggs"] = {
+		["GiftId"] = 3568828285,
+		["NormalId"] = 3568827227,
+		["Display"] = "3 Premium Golden Eggs"
+	},
+	["+10 Premium Golden Eggs"] = {
+		["GiftId"] = 3568828441,
+		["NormalId"] = 3568827595,
+		["Display"] = "10 Premium Golden Eggs"
+	},
+	["+50 Premium Golden Eggs"] = {
+		["GiftId"] = 3570157336,
+		["NormalId"] = 3570157250,
+		["Display"] = "50 Premium Golden Eggs"
+	},
+	["+1 Premium Springtide Egg"] = {
+		["GiftId"] = 3576525092,
+		["NormalId"] = 3576524674,
+		["Display"] = "1 Premium Springtide Egg"
+	},
+	["+3 Premium Springtide Egg"] = {
+		["GiftId"] = 3576525196,
+		["NormalId"] = 3576524780,
+		["Display"] = "3 Premium Springtide Egg"
+	},
+	["+10 Premium Springtide Egg"] = {
+		["GiftId"] = 3576525248,
+		["NormalId"] = 3576524860,
+		["Display"] = "10 Premium Springtide Egg"
+	},
+	["+50 Premium Springtide Egg"] = {
+		["GiftId"] = 3576525311,
+		["NormalId"] = 3576525035,
+		["Display"] = "50 Premium Springtide Egg"
+	},
 	["Trade Token 50"] = {
 		["GiftId"] = 3425758808,
 		["NormalId"] = 3460376533,
@@ -718,6 +758,16 @@ local v11 = {
 		["GiftId"] = 3490207392,
 		["NormalId"] = 3490207231,
 		["Display"] = "Firework Fern"
+	},
+	["10 Exotic Easter Seed Packs"] = {
+		["GiftId"] = 3569021506,
+		["NormalId"] = v10.EasterPackExoticBuy10.PurchaseID,
+		["Display"] = "10 Exotic Easter Seed Packs"
+	},
+	["50 Exotic Easter Seed Packs"] = {
+		["GiftId"] = 3570335883,
+		["NormalId"] = v10.EasterPackExoticBuy50.PurchaseID,
+		["Display"] = "50 Exotic Easter Seed Packs"
 	}
 }
 for _, v12 in v2.Return_All_Seeds() do

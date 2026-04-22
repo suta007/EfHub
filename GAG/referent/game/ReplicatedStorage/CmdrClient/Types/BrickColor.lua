@@ -1,4 +1,5 @@
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+game:GetService("ReplicatedStorage")
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local v_u_2 = v_u_1.MakeFuzzyFinder({
 	"White",
 	"Grey",

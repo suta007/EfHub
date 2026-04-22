@@ -15,6 +15,7 @@ require(v1.Data.InfGrowPlantData.InfGrowPlantTypes)
 require(v1.Modules.GiveServiceCommon)
 local v3 = require(v1.Data.DiggingMinigame.DiggingConfigData)
 local v4 = require(v1.Data.TradeTokenData)
+require(v1.Modules.TeamEventHelper)
 local function v_u_9(p5)
 	-- upvalues: (copy) v_u_9
 	local v6 = table.clone(p5)
@@ -82,7 +83,8 @@ local v10 = {
 		["AdventToken"] = 0,
 		["CarrotCoins"] = 0,
 		["ButtercupCoins"] = 0,
-		["HeartCoins"] = 0
+		["HeartCoins"] = 0,
+		["ChocCoins"] = 0
 	},
 	["Fertilizer"] = {
 		["FertilizedPlants"] = {}
@@ -114,27 +116,61 @@ local v10 = {
 		["StreakEndTime"] = 0,
 		["CurrentStreak"] = 0,
 		["MaxStreak"] = 0
-	},
-	["DiggingData"] = {
-		["DataCycle"] = 0,
-		["RemainingDigs"] = v3.MAX_DIGS_AVALIABLE,
-		["DigComplete"] = false,
-		["GridSize"] = -1,
-		["NextDiggingGainTime"] = 0,
-		["TreasureData"] = {},
-		["GridData"] = {}
-	},
-	["SafariEvent"] = {
-		["ContibutedPoints"] = 0,
-		["TotalRewardsClaimed"] = 0,
-		["IndivdualRewardPoints"] = 0,
-		["V1Contributions"] = 0,
-		["Version"] = 0,
-		["ItemRewardsReceived"] = {},
-		["ItemRewardsLockedOut"] = {}
 	}
 }
 local v11 = {
+	["HasSeenPopup"] = false,
+	["HasBeenGivenStarterPack"] = false,
+	["HasSoldEasterPlant"] = false,
+	["HasPurchasedEasterPlant"] = false,
+	["HasEnabledEasterGarden"] = false,
+	["RequiredPlantInfo"] = {
+		["RequiredPlant"] = nil,
+		["RequiredPlantSize"] = nil,
+		["RequiredPlantVariant"] = nil,
+		["RequiredPlantMutation"] = nil
+	},
+	["HasBeenFed"] = false,
+	["SeedPackGiverDiscovered"] = false,
+	["Progression"] = 1,
+	["ProgressionSeedPacks"] = 0,
+	["CandyBlossomShardProgress"] = 0,
+	["GoldenEgg"] = {
+		["LastBuyTime"] = 0,
+		["BuyAmount"] = 0
+	},
+	["TotalEasterPlaytime"] = 0,
+	["TotalTrackedPlaytime"] = 0,
+	["EvilBunnyData"] = {
+		["QuestState"] = "Idle",
+		["TargetPlantKey"] = nil,
+		["TargetPlantName"] = nil,
+		["PlantScore"] = nil,
+		["LastSacrificeTime"] = 0,
+		["TotalSacrifices"] = 0
+	}
+}
+v10.EasterEventData = v11
+v10.TeamEventData = {}
+v10.DiggingData = {
+	["DataCycle"] = 0,
+	["RemainingDigs"] = v3.MAX_DIGS_AVALIABLE,
+	["DigComplete"] = false,
+	["GridSize"] = -1,
+	["NextDiggingGainTime"] = 0,
+	["TreasureData"] = {},
+	["GridData"] = {}
+}
+v10.SafariEvent = {
+	["ContibutedPoints"] = 0,
+	["TotalRewardsClaimed"] = 0,
+	["IndivdualRewardPoints"] = 0,
+	["V1Contributions"] = 0,
+	["Version"] = 0,
+	["ItemRewardsReceived"] = {},
+	["ItemRewardsLockedOut"] = {}
+}
+local v12 = {
 	["Advent"] = {
 		["Days"] = {},
 		["CurrentQuestContainer"] = nil,
@@ -173,11 +209,11 @@ local v11 = {
 		["HasATree"] = false
 	}
 }
-v10.ChristmasEvent = v11
+v10.ChristmasEvent = v12
 v10.HungryBirdsEvent = {
 	["CooldownTime"] = 0
 }
-local v12 = {
+local v13 = {
 	["Quests"] = {
 		["CurrentQuestContainer"] = nil,
 		["QuestGeneration"] = 0
@@ -185,12 +221,12 @@ local v12 = {
 	["Buttercup_Seeds"] = -1,
 	["EventActivated"] = false
 }
-v10.ButtercupEvent = v12
+v10.ButtercupEvent = v13
 v10.BlackButtercupEvent = {
 	["CurrentQuestIndex"] = 1,
 	["ButtercupsGiven"] = 0
 }
-local v13 = {
+local v14 = {
 	["Completed"] = {
 		false,
 		false,
@@ -212,7 +248,7 @@ local v13 = {
 	},
 	["Reward2PriceMultiplier"] = 1
 }
-v10.ValentinesEvent = v13
+v10.ValentinesEvent = v14
 v10.AdminQuest = nil
 v10.LevelData = {}
 v10.ClaimedCodes = {
@@ -263,13 +299,17 @@ v10.DailyQuests = {
 	["DailyRewards"] = {},
 	["DaysCompleted"] = 0
 }
+v10.SeasonPassDailyQuests = {
+	["Day"] = 0,
+	["ContainerId"] = ""
+}
 v10.SavedObjects = {}
 v10.ExtraBackpackSize = 0
 v10.InventoryData = {}
 v10.QuestContainers = {}
 v10.BadgeData = {}
 v10.AwardedBadges = {}
-local v14 = {
+local v15 = {
 	["MutableStats"] = {
 		["MaxEquippedPets"] = 3,
 		["MaxPetsInInventory"] = 60,
@@ -301,7 +341,7 @@ local v14 = {
 	["SelectedPetLoadout"] = 1,
 	["MaxLoadoutSlots"] = 3
 }
-v10.PetsData = v14
+v10.PetsData = v15
 v10.InfinitePack = {
 	["Depth"] = 0,
 	["Day"] = 0
@@ -332,14 +372,14 @@ v10.ItemGiftHistory = {
 	["Plants"] = {},
 	["Pets"] = {}
 }
-local v15 = {
+local v16 = {
 	["Inventory"] = {},
 	["History"] = {
 		["Sent"] = {},
 		["Received"] = {}
 	}
 }
-v10.Gifts = v15
+v10.Gifts = v16
 v10.Settings = {
 	["Textures"] = v2.Textures.SettingsData.DefaultValue,
 	["FavoriteIcons"] = v2.FavoriteIcons.SettingsData.DefaultValue,
@@ -361,7 +401,7 @@ v10.Settings = {
 	["ToggleNotifications"] = v2.ToggleNotifications.SettingsData.DefaultValue
 }
 v10.DefaultSettingsAlreadySet = {}
-local v16 = {
+local v17 = {
 	["Inventory"] = {},
 	["MutableStats"] = {
 		["MaxEquippedCosmetics"] = 0,
@@ -370,7 +410,7 @@ local v16 = {
 	},
 	["Equipped"] = {}
 }
-v10.CosmeticData = v16
+v10.CosmeticData = v17
 v10.ExpansionsData = {
 	["Unlocked"] = {},
 	["ExpansionTimers"] = {},
@@ -409,10 +449,10 @@ v10.CraftingData = {
 	["GlobalCraftingObjectData"] = {}
 }
 v10.InventorySortData = {}
-local v17 = {
+local v18 = {
 	["SelectedSlot"] = "DEFAULT"
 }
-local v18 = {
+local v19 = {
 	["DEFAULT"] = {
 		["LastLoaded"] = os.time(),
 		["LastSaveTime"] = os.time(),
@@ -423,9 +463,9 @@ local v18 = {
 		["SelectedFenceSkin"] = "DEFAULT"
 	}
 }
-v17.AllSlots = v18
-v17.UnlockedBefore = false
-v10.SaveSlots = v17
+v18.AllSlots = v19
+v18.UnlockedBefore = false
+v10.SaveSlots = v18
 v10.BoxingMachineData = {
 	["BoxingMachines"] = {}
 }
@@ -437,12 +477,12 @@ v10.BoothHistory = {
 	["Shard"] = 1,
 	["RecentTransactions"] = {}
 }
-local v19 = {
+local v20 = {
 	["Tokens"] = 0,
 	["ViewInventoryPermission"] = "Everyone",
 	["UnfairTradeWarning"] = true
 }
-local v20 = {
+local v21 = {
 	["Pin"] = nil,
 	["Recovery"] = nil,
 	["Disable"] = {
@@ -454,14 +494,14 @@ local v20 = {
 		["LastReset"] = 0
 	}
 }
-v19.Pin = v20
-v19.Listings = {}
-v19.TradeLocks = {}
-v19.TokenAmounts = {
+v20.Pin = v21
+v20.Listings = {}
+v20.TradeLocks = {}
+v20.TokenAmounts = {
 	["All"] = v_u_9(v4.TokenAmountsTemplate)
 }
-v19.RecentlyViewedListingIds = {}
-v10.TradeData = v19
+v20.RecentlyViewedListingIds = {}
+v10.TradeData = v20
 v10.Pity = {}
 v10.PunnishmentData = {
 	["Warnings"] = {}
@@ -484,7 +524,7 @@ v10.ArbitraryFTUEData = {
 v10.GiveawayData = {}
 v10.PermanentGears = {}
 v10.PlayerGiftCooldown = {}
-local v21 = {
+local v22 = {
 	["SnowGlobe"] = {
 		["TimesUsed"] = 0,
 		["CurrentChance"] = 0,
@@ -494,5 +534,12 @@ local v21 = {
 	["ChristmasStockingsTutorialCompleted"] = false,
 	["WonderWaterTutorialCompleted"] = false
 }
-v10.GearUseData = v21
+v10.GearUseData = v22
+v10.BurntPlants = 0
+v10.CandyBlossomCraftingProgress = {
+	["Eggs"] = 0,
+	["Candy Blossom Shard"] = 0,
+	["CRAFTS_COMPLETED"] = 0
+}
+v10.UpgraderMigrations = {}
 return v10

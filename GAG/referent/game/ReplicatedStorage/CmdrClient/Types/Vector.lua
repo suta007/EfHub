@@ -1,4 +1,4 @@
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local function v4(p2, p3)
 	if p2 == nil then
 		return false, ("Invalid or missing number at position %d in Vector type."):format(p3)

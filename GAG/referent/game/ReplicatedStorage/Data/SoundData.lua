@@ -105,6 +105,31 @@ v3.DiscoParty = {
 	["Poof"] = "rbxassetid://9116406610",
 	["Poof2"] = "rbxassetid://6883650972"
 }
+v3.JhaiWedding = {
+	["Music"] = "rbxassetid://1837474791"
+}
+v3.JandelFestival = {
+	["Music"] = "rbxassetid://142376088"
+}
+v3.JandelsLastStand = {
+	["EpicMusic"] = "rbxassetid://1843020764",
+	["Music"] = "rbxassetid://1846368080"
+}
+v3.SlowJam = {
+	["Music"] = "rbxassetid://100567856700768"
+}
+v3.ShredSolo = {
+	["Music"] = "rbxassetid://87202435773713"
+}
+v3.NeonRain = {
+	["Music"] = "rbxassetid://100567856700768"
+}
+v3.BubbleBath = {
+	["Music"] = "rbxassetid://129035572804214"
+}
+v3.SammysReturn = {
+	["Music"] = "rbxassetid://139637448871564"
+}
 v3.Dissonant = {
 	["GlitchSound"] = "rbxassetid://18909603132",
 	["GlitchStart"] = "rbxassetid://8622488090"
@@ -434,6 +459,15 @@ v3.Volcano = {
 }
 v3.WhiteElephant = {
 	["Landing"] = "rbxassetid://133613208963789"
+}
+v3.JandelBeanstalk = {
+	["PixieFly"] = "rbxassetid://90236158270980",
+	["Sprinkle"] = "rbxassetid://75996695699027",
+	["BeanstalGrow"] = "rbxassetid://111871794586598",
+	["Music"] = "rbxassetid://1840201434"
+}
+v3.DiscoApocalypse = {
+	["Music"] = "rbxassetid://83383430039184"
 }
 v1.Weather = v3
 local v10 = {

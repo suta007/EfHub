@@ -35,7 +35,7 @@ local function v_u_29()
 	-- upvalues: (copy) v_u_4, (copy) v_u_5
 	local v26 = v_u_4:GetData()
 	if v26 then
-		local v27 = v_u_5:GetContainerFromId(v26.DailyQuests.ContainerId)
+		local v27 = v_u_5:GetContainerFromId(v26.SeasonPassDailyQuests.ContainerId)
 		if v27 == nil then
 			return true
 		end
@@ -56,7 +56,7 @@ local function v_u_30()
 	if v_u_29() then
 		warn("Trying to skip dailies when they are already complete. Aborting")
 	else
-		v_u_6:PromptPurchase(v_u_7.SkipDailyQuest.PurchaseID, Enum.InfoType.Product)
+		v_u_6:PromptPurchase(v_u_7.SkipSeasonPassQuest.PurchaseID, Enum.InfoType.Product)
 	end
 end
 function v25.Start(_)
@@ -111,7 +111,7 @@ function v25.Start(_)
 			if not v39 then
 				return
 			end
-			if not (v39.DailyQuests and v39.DailyQuests.ContainerId) then
+			if not v39.SeasonPassDailyQuests or (not v39.SeasonPassDailyQuests.ContainerId or v39.SeasonPassDailyQuests.ContainerId == "") then
 				for v40 in v_u_32 do
 					local v41 = v_u_32[v40]
 					if v41 then
@@ -122,7 +122,7 @@ function v25.Start(_)
 				table.clear(v_u_32)
 				return
 			end
-			local v42 = v_u_5:GetContainerFromId(v39.DailyQuests.ContainerId)
+			local v42 = v_u_5:GetContainerFromId(v39.SeasonPassDailyQuests.ContainerId)
 			if not v42 then
 				return
 			end
@@ -188,8 +188,8 @@ function v25.Start(_)
 			v_u_38()
 		end)
 		task.spawn(v56)
-		local v57 = v_u_4:GetPathSignal("DailyQuests/@")
-		assert(v57, "Failed to listen for Daily Quests"):Connect(v56)
+		local v57 = v_u_4:GetPathSignal("SeasonPassDailyQuests/@")
+		assert(v57, "Failed to listen for SP Daily Quests"):Connect(v56)
 		local v58 = v_u_4:GetPathSignal("QuestContainers/@")
 		assert(v58, "Failed to listen for Quest Containers"):Connect(v56)
 		task.spawn(function()

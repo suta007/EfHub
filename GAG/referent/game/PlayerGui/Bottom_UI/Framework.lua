@@ -235,7 +235,7 @@ v10.OnClientEvent:Connect(v64);
 	-- upvalues: (copy) v_u_3, (copy) v_u_16, (copy) v_u_18, (copy) v_u_17, (copy) v_u_20, (copy) v_u_8
 	local v82 = v_u_3.TouchEnabled
 	if v82 then
-		v_u_16.Position = UDim2.new(1, 0, 0.1, 0)
+		v_u_16.Position = UDim2.new(1, 0, 0.225, 0)
 		v_u_18.Position = UDim2.new(0.95, 0, 1.8, 0)
 	end
 	for _, v_u_83 in v_u_17.List:GetChildren() do

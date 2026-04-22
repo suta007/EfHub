@@ -14,19 +14,19 @@ local v28 = {
 	["PetShopButton"] = function(_) end,
 	["Audio"] = function(p10)
 		-- upvalues: (copy) v_u_4, (copy) v_u_3
-		v_u_4:Create(v_u_3.Music, TweenInfo.new(2), {
+		v_u_4:Create(v_u_3.Music, TweenInfo.new(0.25), {
 			["Volume"] = p10 and 1 or 0
 		}):Play()
 	end,
 	["Sounds"] = function(p11)
 		-- upvalues: (copy) v_u_4, (copy) v_u_3
-		v_u_4:Create(v_u_3.Music.SFX, TweenInfo.new(2), {
+		v_u_4:Create(v_u_3.Music.SFX, TweenInfo.new(0.25), {
 			["Volume"] = p11 and 1 or 0
 		}):Play()
 	end,
 	["Music"] = function(p12)
 		-- upvalues: (copy) v_u_4, (copy) v_u_3
-		v_u_4:Create(v_u_3.Music.Tunes, TweenInfo.new(2), {
+		v_u_4:Create(v_u_3.Music.Tunes, TweenInfo.new(0.25), {
 			["Volume"] = p12 and 1 or 0
 		}):Play()
 	end,

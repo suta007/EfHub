@@ -1,0 +1,762 @@
+local v_u_1 = game:GetService("ReplicatedStorage")
+game:GetService("ContentProvider")
+local v_u_2 = game:GetService("TweenService")
+local v_u_3 = game:GetService("RunService")
+local v4 = game:GetService("Players")
+local v_u_5 = game:GetService("Debris")
+local v_u_6 = require(v_u_1.Modules.GenericRewardsUIController)
+local v_u_7 = require(v_u_1.UserGenerated.Strings.FormatAbbreviated)
+local v_u_8 = require(v_u_1.Modules.PetEggOddsController)
+local v_u_9 = require(v_u_1.Modules.NPCDialogueController)
+require(v_u_1.Modules.CreateTagHandler)
+local v_u_10 = require(v_u_1.Modules.ItemImageFinder)
+local v_u_11 = require(v_u_1.Modules.IsInTradeWorld)
+local v_u_12 = require(v_u_1.Modules.GuiController)
+local v_u_13 = require(v_u_1.Modules.UpdateService)
+local v_u_14 = require(v_u_1.Modules.Notification)
+require(v_u_1.Modules.SoundPlayer)
+require(v_u_1.Data.SoundData)
+local v_u_15 = require(v_u_1.Top_Text)
+local v_u_16 = require(v_u_1.Modules.Chalk)
+local v_u_17 = require(script.Rewards)
+local v_u_18 = v4.LocalPlayer
+local v_u_19 = v_u_18:WaitForChild("PlayerGui")
+local v_u_20 = v_u_19:WaitForChild("Billboard_UI"):WaitForChild("Objects")
+local v_u_21 = v_u_19:WaitForChild("EggWarIndex")
+local v22 = v_u_19:WaitForChild("EasterEggHuntUI")
+local v_u_23 = v22:WaitForChild("GlobalEasterEggHuntInfo")
+local v_u_24 = v22:WaitForChild("GlobalEasterEggHuntCountdown")
+local v_u_25 = script.EggModels:GetChildren()
+local v_u_26 = {}
+local v_u_27 = {}
+for _, v28 in v_u_17.Rewards do
+	local v29 = {
+		["Weight"] = v28.Weight,
+		["Reward"] = {
+			["Type"] = v28.Type == v_u_17.RewardType.GoldenEgg and "Egg" or v28.Type,
+			["Value"] = v28.Value,
+			["Quantity"] = v28.Quantity,
+			["Display"] = v28.Display
+		}
+	}
+	table.insert(v_u_26, v29)
+end
+local function v_u_34(p30)
+	-- upvalues: (copy) v_u_5
+	local v31 = script.Poof:Clone()
+	v31.Position = p30
+	local v32 = 0
+	for _, v33 in v31:QueryDescendants("ParticleEmitter") do
+		if v32 < v33.Lifetime.Max then
+			v32 = v33.Lifetime.Max
+		end
+		v33:Emit(v33:GetAttribute("EmitCount") or 1)
+	end
+	v31.Parent = workspace
+	v_u_5:AddItem(v31, v32)
+end
+function v_u_27.Start()
+	-- upvalues: (copy) v_u_11, (copy) v_u_1, (copy) v_u_27, (copy) v_u_34, (copy) v_u_23, (copy) v_u_18, (copy) v_u_24, (copy) v_u_21, (copy) v_u_17, (copy) v_u_7, (copy) v_u_10, (copy) v_u_8, (copy) v_u_12, (copy) v_u_3, (copy) v_u_19, (copy) v_u_13, (copy) v_u_25, (copy) v_u_15, (copy) v_u_14, (copy) v_u_16, (copy) v_u_20, (copy) v_u_6, (copy) v_u_26, (copy) v_u_9
+	if not v_u_11 then
+		v_u_1.GameEvents.Easter2026.StartGlobalEggHunt.OnClientEvent:Connect(v_u_27.ShowEgghuntSplash)
+		v_u_1.GameEvents.Easter2026.PoofEffect.OnClientEvent:Connect(v_u_34)
+		local v_u_35 = {}
+		v_u_1.GameEvents.Easter2026.ClearEasterEggs.OnClientEvent:Connect(function()
+			-- upvalues: (copy) v_u_35
+			for _, v36 in v_u_35 do
+				v36:Destroy()
+			end
+			table.clear(v_u_35)
+		end)
+		local v_u_37 = nil
+		local v_u_38 = v_u_23.Text
+		v_u_18.Character:GetAttributeChangedSignal("EasterEggHunt_CARRYING"):Connect(function()
+			-- upvalues: (ref) v_u_37, (ref) v_u_18, (ref) v_u_24, (ref) v_u_23, (copy) v_u_38
+			if not v_u_37 then
+				v_u_37 = v_u_18.Character:WaitForChild("Humanoid"):WaitForChild("Animator"):LoadAnimation(script.Carry)
+			end
+			local v39 = v_u_18.Character:GetAttribute("EasterEggHunt_CARRYING")
+			v_u_24.Visible = v39
+			v_u_37[v39 and "Play" or "Stop"](v_u_37)
+			v_u_23.Text = v39 and "Return to your Garden to claim a random reward!" or v_u_38
+		end)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_21, (ref) v_u_17, (ref) v_u_7, (ref) v_u_10, (ref) v_u_8, (ref) v_u_12, (ref) v_u_3
+			local v40 = v_u_21.EggIndex.Main.ScrollingFrame.ItemTemplate
+			v40.Parent = nil
+			local v41 = v_u_21.EggIndex.Main.PageTemplate.ScrollingFrame.ItemTemplate
+			v41.Parent = nil
+			local v42 = v_u_21.EggIndex.Main.PageTemplate
+			v42.Parent = nil
+			local v_u_43 = {}
+			local v_u_44 = {}
+			local v45 = {
+				["Golden Egg"] = "rbxassetid://136258776547580",
+				["Rare"] = "rbxassetid://137172797555948",
+				["Legendary"] = "rbxassetid://85438874340103",
+				["Mythical"] = "rbxassetid://127096404768673",
+				["Divine"] = "rbxassetid://136923756068988"
+			}
+			local v46 = {
+				["Divine"] = "Rainbow",
+				["Golden Egg"] = "Rainbow",
+				["Mythical"] = "Blue"
+			}
+			for v_u_47, v48 in v_u_17.GlobalRewards do
+				local v49 = v40:Clone()
+				v49.EggName.Text = v_u_47
+				v49.LayoutOrder = v_u_17.GlobalRewardRarities[v_u_47] * (v_u_47 == "Golden Egg" and -1 or 1)
+				v49.Icon.Image = v45[v_u_47]
+				if v46[v_u_47] == "Rainbow" then
+					v_u_44[v49.OuterStroke.UIGradient] = true
+					v49.OuterStroke.UIGradient.Enabled = true
+					v49.OuterStroke.Color = Color3.fromRGB(255, 255, 255)
+					v49.Details.InnerGlow.Visible = false
+					v49.UIGradient.Enabled = true
+					v49.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				elseif v46[v_u_47] == "Blue" then
+					v49.OuterStroke.Color = Color3.fromRGB(25, 41, 53)
+					v49.Details.InnerGlow.Visible = false
+					v49.Details.Glow.ImageColor3 = Color3.fromRGB(89, 146, 190)
+					v49.BackgroundColor3 = Color3.fromRGB(56, 92, 120)
+					v49.EggName.TextColor3 = Color3.fromRGB(113, 185, 240)
+					v49.EggName.UIStroke.Color = Color3.fromRGB(25, 41, 53)
+				end
+				v49.Parent = v_u_21.EggIndex.Main.ScrollingFrame
+				v49.SENSOR.Activated:Connect(function()
+					-- upvalues: (copy) v_u_47, (copy) v_u_43
+					local v50 = v_u_47
+					for v51, v52 in v_u_43 do
+						v52.Visible = v50 == v51
+					end
+				end)
+				local v53 = v42:Clone()
+				v53.Title.Text = ("%* Reward%*"):format(v_u_47, #v48 == 1 and "" or "s")
+				v53.Name = v_u_47
+				local v54 = 0
+				for _, v_u_55 in v48 do
+					v54 = v54 + 1
+					local v56 = v41:Clone()
+					v56.EntryName.Text = v_u_55.Display or v_u_55.Value
+					v56.Quantity.Text = v_u_55.Quantity > 1 and (("x%*"):format((v_u_7(v_u_55.Quantity))) or "") or ""
+					v56.Icon.Image = v_u_10(v_u_55.Value, v_u_55.Type)
+					local v57
+					if v_u_55.RainbowInterface then
+						v57 = v54 + 999 or v54
+					else
+						v57 = v54
+					end
+					v56.LayoutOrder = v57
+					if v_u_55.RainbowInterface then
+						v_u_44[v56.UIStroke.UIGradient] = true
+						v56.UIStroke.UIGradient.Enabled = true
+						v56.UIStroke.Color = Color3.fromRGB(255, 255, 255)
+						v56.Details.InnerGlow.Visible = false
+						v56.UIGradient.Enabled = true
+						v56.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					end
+					if v_u_55.Type == v_u_17.RewardType.Egg then
+						v56.EggOdds.Visible = true
+						v56.EggOdds.Activated:Connect(function()
+							-- upvalues: (ref) v_u_8, (copy) v_u_55
+							v_u_8:Open(v_u_55.Value)
+						end)
+					end
+					v56.Parent = v53.ScrollingFrame
+				end
+				v_u_43[v_u_47] = v53
+				v53.Parent = v_u_21.EggIndex.Main
+			end
+			local v58 = (1 / 0)
+			local v59 = nil
+			for v60, v61 in v_u_17.GlobalRewardRarities do
+				if v58 > v61 then
+					v59 = v60
+				end
+			end
+			v_u_21.EggIndex.Header.Close.Activated:Connect(function()
+				-- upvalues: (ref) v_u_12, (ref) v_u_21
+				v_u_12:Close(v_u_21)
+			end)
+			for v62, v63 in v_u_43 do
+				v63.Visible = v59 == v62
+			end
+			v_u_3.Heartbeat:Connect(function(p64)
+				-- upvalues: (copy) v_u_44
+				for v65 in v_u_44 do
+					v65.Rotation = (v65.Rotation + p64 * 30) % 360
+				end
+			end)
+		end)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_19
+			local v66 = v_u_19:WaitForChild("EgghuntSplash", 15)
+			if v66 then
+				local v67 = v66:FindFirstChild("Frame")
+				if v67 then
+					v67 = v66.Frame:FindFirstChild("ViewportFrame")
+				end
+				if v67 then
+					local v_u_68 = Instance.new("Part")
+					v_u_68.Size = Vector3.new(10, 10, 10)
+					v_u_68.Anchored = true
+					v_u_68.Transparency = 1
+					v_u_68.CanCollide = false
+					v_u_68.CanQuery = false
+					v_u_68.CanTouch = false
+					local v_u_69 = game:GetService("RunService").RenderStepped:Connect(function()
+						-- upvalues: (copy) v_u_68
+						if v_u_68 and v_u_68.Parent then
+							v_u_68.CFrame = workspace.CurrentCamera.CFrame * CFrame.new(0, 0, -10)
+						end
+					end)
+					for _, v70 in v67:GetDescendants() do
+						if v70:IsA("Decal") then
+							v70:Clone().Parent = v_u_68
+						end
+					end
+					v_u_68.Parent = workspace
+					task.delay(5, function()
+						-- upvalues: (copy) v_u_69, (copy) v_u_68
+						v_u_69:Disconnect()
+						v_u_68:Destroy()
+					end)
+				end
+			else
+				return
+			end
+		end)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_18, (ref) v_u_13, (ref) v_u_23, (ref) v_u_24
+			local v_u_71 = v_u_18:WaitForChild("Current_Biome")
+			local function v83()
+				-- upvalues: (ref) v_u_13, (ref) v_u_23, (ref) v_u_24, (copy) v_u_71
+				local v72 = not v_u_13:IsHiddenFromUpdate("Egg War")
+				local v73 = workspace:GetAttribute("GlobalEggHuntEndsAt")
+				if v72 then
+					if typeof(v73) == "number" then
+						v72 = workspace:GetServerTimeNow() < v73
+					else
+						v72 = false
+					end
+				end
+				v_u_23.Visible = v72
+				v_u_24.Visible = v72
+				if v72 then
+					v_u_71.Value = "EggWar"
+					local v74 = v_u_24
+					local v75 = v73 - workspace:GetServerTimeNow()
+					local v76 = math.floor(v75)
+					local v77 = math.floor(v76)
+					local v78 = math.max(v77, 0)
+					local v79
+					if v78 >= 60 then
+						local v80 = v78 / 60
+						local v81 = math.floor(v80)
+						local v82 = v78 % 60
+						v79 = ("%*:%* until Egg War ends!"):format(v81, (string.format("%02d", v82)))
+					else
+						v79 = ("%*s until Egg War ends!"):format(v78)
+					end
+					v74.Text = v79
+				elseif v_u_71.Value == "EggWar" then
+					v_u_71.Value = "Day_Time"
+				end
+			end
+			v83()
+			workspace:GetAttributeChangedSignal("GlobalEggHuntEndsAt"):Connect(v83)
+			while task.wait(1) do
+				local v84 = workspace:GetAttribute("GlobalEggHuntEndsAt")
+				if typeof(v84) == "number" and workspace:GetServerTimeNow() < v84 then
+					local v85 = v_u_24
+					local v86 = v84 - workspace:GetServerTimeNow()
+					local v87 = math.floor(v86)
+					local v88 = math.floor(v87)
+					local v89 = math.max(v88, 0)
+					local v90
+					if v89 >= 60 then
+						local v91 = v89 / 60
+						local v92 = math.floor(v91)
+						local v93 = v89 % 60
+						v90 = ("%*:%* until Egg War ends!"):format(v92, (string.format("%02d", v93)))
+					else
+						v90 = ("%*s until Egg War ends!"):format(v89)
+					end
+					v85.Text = v90
+				end
+			end
+		end)
+		task.spawn(function()
+			local v_u_94 = workspace.Interaction:WaitForChild("Easter2026"):WaitForChild("EggHuntPlatform"):WaitForChild("GlobalHolder"):WaitForChild("BillboardGui"):WaitForChild("Holder"):WaitForChild("Timer")
+			local function v_u_109()
+				local v95 = workspace:GetAttribute("GlobalEggHuntEndsAt")
+				if typeof(v95) == "number" then
+					local v96 = v95 - workspace:GetServerTimeNow()
+					local v97 = math.floor(v96)
+					local v98 = math.max(v97, 0)
+					if v98 <= 0 then
+						return "Egg War<br/>ONGOING!"
+					end
+					local v99 = v98 / 60
+					local v100 = math.floor(v99)
+					local v101 = v98 % 60
+					return ("Egg War ends<br/>in %*:%*"):format(v100, (string.format("%02d", v101)))
+				end
+				local v102 = DateTime.now().UnixTimestamp
+				local v103 = v102 / 3600
+				local v104 = math.ceil(v103) * 3600 - v102
+				local v105 = math.max(v104, 0)
+				if v105 <= 0 then
+					return "Egg War<br/>Starting Soon!"
+				end
+				local v106 = v105 / 60
+				local v107 = math.floor(v106)
+				local v108 = v105 % 60
+				return ("Egg War starts<br/>in %*:%*"):format(v107, (string.format("%02d", v108)))
+			end
+			v_u_94.Text = v_u_109()
+			workspace:GetAttributeChangedSignal("GlobalEggHuntEndsAt"):Connect(function()
+				-- upvalues: (copy) v_u_94, (copy) v_u_109
+				v_u_94.Text = v_u_109()
+			end)
+			while true do
+				task.wait(1)
+				v_u_94.Text = v_u_109()
+			end
+		end)
+		if v_u_13:IsHiddenFromUpdate("Egg Hunt") then
+			v_u_13.OnUpdated:Wait()
+		end
+		local v_u_110 = workspace.Interaction:WaitForChild("Easter2026"):WaitForChild("EggHuntPlatform"):WaitForChild("EasterEggHuntNPC")
+		v_u_34(v_u_110:GetPivot().Position)
+		local v111 = Instance.new("ProximityPrompt")
+		v111.Style = Enum.ProximityPromptStyle.Custom
+		v111.ActionText = "Talk"
+		v111.ObjectText = "Boppy"
+		v111.RequiresLineOfSight = false
+		v111.Parent = v_u_110:WaitForChild("RootPart")
+		task.spawn(function()
+			-- upvalues: (ref) v_u_18
+			local v_u_112 = workspace.Interaction:WaitForChild("Easter2026"):WaitForChild("EggHuntPlatform"):WaitForChild("Holder"):WaitForChild("BillboardGui"):WaitForChild("Holder"):WaitForChild("Timer")
+			local function v122()
+				-- upvalues: (ref) v_u_18, (copy) v_u_112
+				local v113 = v_u_18:GetAttribute("EasterEggHuntCooldownRemaining")
+				local v114 = typeof(v113) ~= "number" and 600 or v113
+				local v115 = v_u_112
+				local v116 = math.floor(v114)
+				local v117 = math.max(v116, 0)
+				local v118
+				if v117 <= 0 then
+					v118 = "Egg Hunt is<br/>READY TO START"
+				elseif v117 < 60 then
+					v118 = ("Egg Hunt is ready<br/>in %*s"):format(v117)
+				else
+					local v119 = v117 / 60
+					local v120 = math.floor(v119)
+					local v121 = v117 % 60
+					v118 = ("Egg Hunt is ready<br/>in %*:%*"):format(v120, (string.format("%02d", v121)))
+				end
+				v115.Text = v118
+			end
+			local v123 = v_u_18:GetAttribute("EasterEggHuntCooldownRemaining")
+			local v124 = typeof(v123) ~= "number" and 600 or v123
+			local v125 = math.floor(v124)
+			local v126 = math.max(v125, 0)
+			local v127
+			if v126 <= 0 then
+				v127 = "Egg Hunt is<br/>READY TO START"
+			elseif v126 < 60 then
+				v127 = ("Egg Hunt is ready<br/>in %*s"):format(v126)
+			else
+				local v128 = v126 / 60
+				local v129 = math.floor(v128)
+				local v130 = v126 % 60
+				v127 = ("Egg Hunt is ready<br/>in %*:%*"):format(v129, (string.format("%02d", v130)))
+			end
+			v_u_112.Text = v127
+			v_u_18:GetAttributeChangedSignal("EasterEggHuntCooldownRemaining"):Connect(v122)
+		end)
+		local function v_u_141()
+			-- upvalues: (ref) v_u_1, (ref) v_u_25, (ref) v_u_34, (copy) v_u_35, (ref) v_u_15, (copy) v_u_110, (ref) v_u_14, (ref) v_u_16
+			task.wait(1)
+			local v131, v_u_132 = v_u_1.GameEvents.Easter2026.EasterEventStartEggHunt:InvokeServer()
+			if v_u_132 and next(v_u_132) then
+				task.spawn(function()
+					-- upvalues: (copy) v_u_132, (ref) v_u_25, (ref) v_u_1, (ref) v_u_34, (ref) v_u_35, (ref) v_u_15, (ref) v_u_110, (ref) v_u_14, (ref) v_u_16
+					for v_u_133, v134 in v_u_132 do
+						local v_u_135 = v_u_25[math.random(#v_u_25)]:Clone()
+						v_u_135.Name = "Model"
+						v_u_135:ScaleTo(math.random(90, 110) / 100)
+						local v136 = CFrame.new(v134) * CFrame.new(Vector3.new(0, 1, 0) * v_u_135:GetExtentsSize().Y / 2)
+						local v137 = CFrame.Angles
+						local v138 = math.random(360)
+						v_u_135:PivotTo(v136 * v137(0, math.rad(v138), 1.5707963267948966))
+						local v_u_139 = Instance.new("Part")
+						v_u_139.Size = Vector3.new(0.5, 0.5, 0.5)
+						v_u_139.Position = v_u_135:GetPivot().Position
+						v_u_139.Anchored = true
+						v_u_139.CanCollide = false
+						v_u_139.CanQuery = false
+						v_u_139.CanTouch = false
+						v_u_139.Transparency = 1
+						v_u_139.Parent = v_u_135
+						v_u_135.PrimaryPart = v_u_139
+						local v140 = Instance.new("ProximityPrompt")
+						v140.Style = Enum.ProximityPromptStyle.Custom
+						v140.ActionText = "Collect"
+						v140.RequiresLineOfSight = false
+						v140.Triggered:Connect(function()
+							-- upvalues: (ref) v_u_1, (copy) v_u_133, (ref) v_u_34, (copy) v_u_139, (copy) v_u_135, (ref) v_u_35
+							if v_u_1.GameEvents.Easter2026.CollectEasterEgg:InvokeServer(v_u_133) then
+								v_u_34(v_u_139.Position)
+								v_u_135:Destroy()
+								v_u_35[v_u_133] = nil
+							end
+						end)
+						v140.Parent = v_u_139
+						v_u_35[v_u_133] = v_u_135
+						v_u_135.Parent = workspace
+					end
+					v_u_15.NpcText(v_u_110, "Okay, you need to find a total of 10 eggs.")
+					task.wait(2)
+					v_u_14:CreateNotification(v_u_16.color(255, 152, 220)("Objective: Find 10 Easter Eggs"))
+				end)
+				task.wait(2)
+				v_u_15.NpcText(v_u_110, v131)
+			else
+				v_u_15.NpcText(v_u_110, v131)
+			end
+			task.wait(2)
+		end
+		local v_u_142 = {
+			not v_u_13:IsHiddenAfterUpdate("Egg Hunt") and "Start Egg Hunt" or nil,
+			"View Rewards",
+			not v_u_13:IsHiddenFromUpdate("Egg War") and "What\'s the Egg War about?" or nil,
+			"Nevermind"
+		}
+		v_u_13.OnUpdated:Connect(function()
+			-- upvalues: (copy) v_u_142, (ref) v_u_20
+			local v143 = table.find(v_u_142, "Start Egg Hunt")
+			if v143 then
+				table.remove(v_u_142, v143)
+			end
+			for _, v144 in v_u_20:GetChildren() do
+				local v145 = v144:FindFirstChild("Frame")
+				local v146
+				if v145 then
+					local v147 = v145:FindFirstChild("Frame")
+					if v147 then
+						v146 = v147:FindFirstChild("Text_Element")
+					else
+						v146 = nil
+					end
+				else
+					v146 = nil
+				end
+				local v148
+				if v146 then
+					local v149 = v146:GetAttribute("Text")
+					if typeof(v149) == "string" then
+						v148 = v149 == "Start Egg Hunt" and true or v149:sub(1, 12) == "Egg Hunt Rea"
+					else
+						v148 = false
+					end
+				else
+					v148 = false
+				end
+				if v148 then
+					v144:Destroy()
+				end
+			end
+		end)
+		if v_u_13:IsHiddenFromUpdate("Egg War") then
+			task.spawn(function()
+				-- upvalues: (ref) v_u_13, (copy) v_u_142
+				v_u_13.OnUpdated:Wait()
+				local v150 = v_u_142
+				local v151 = #v_u_142
+				table.insert(v150, v151, "What\'s the Egg War about?")
+			end)
+		end
+		local v_u_152 = {
+			["Start Egg Hunt"] = v_u_141,
+			["View Rewards"] = function()
+				-- upvalues: (ref) v_u_13, (ref) v_u_6, (ref) v_u_26, (ref) v_u_12, (ref) v_u_21
+				if v_u_13:IsHiddenFromUpdate("Egg War") then
+					v_u_6:Open({
+						["Title"] = "Egg Hunt Rewards",
+						["RewardData"] = v_u_26,
+						["DisplayOdds"] = true
+					})
+				else
+					v_u_12:Open(v_u_21)
+				end
+			end,
+			["What\'s the Egg War about?"] = function()
+				-- upvalues: (ref) v_u_15, (copy) v_u_110
+				task.wait(1)
+				v_u_15.NpcText(v_u_110, "Exactly every hour, an Egg War occurs.")
+				task.wait(2)
+				v_u_15.NpcText(v_u_110, "Fight for eggs of various rarities and obtain rewards when you bring them back to your Garden!")
+				task.wait(4)
+				v_u_15.NpcText(v_u_110, "Although watch out...")
+				task.wait(2)
+				v_u_15.NpcText(v_u_110, "Players can smack you with their shovel!")
+				task.wait(3)
+			end,
+			["Nevermind"] = function() end
+		}
+		v_u_9:Start({
+			["ProximityPrompt"] = v111,
+			["SpeakingNPC"] = v_u_110,
+			["PromptList"] = v_u_142,
+			["OperationMap"] = v_u_152,
+			["IntroLines"] = { "Happy Easter!" },
+			["ExitLine"] = "Bye bye!",
+			["RandomIntroLine"] = true,
+			["RootPart"] = v_u_110.PrimaryPart
+		})
+		v_u_20.ChildAdded:Connect(function(p153)
+			-- upvalues: (copy) v_u_142, (ref) v_u_13, (copy) v_u_152, (copy) v_u_141, (ref) v_u_18
+			local v154 = p153:FindFirstChild("Frame")
+			local v155
+			if v154 then
+				local v156 = v154:FindFirstChild("Frame")
+				if v156 then
+					v155 = v156:FindFirstChild("Text_Element")
+				else
+					v155 = nil
+				end
+			else
+				v155 = nil
+			end
+			local v157
+			if v155 then
+				local v158 = v155:GetAttribute("Text")
+				if typeof(v158) == "string" then
+					v157 = v158 == "Start Egg Hunt" and true or v158:sub(1, 12) == "Egg Hunt Rea"
+				else
+					v157 = false
+				end
+			else
+				v157 = false
+			end
+			if v157 then
+				if table.find(v_u_142, "Start Egg Hunt") and not v_u_13:IsHiddenAfterUpdate("Egg Hunt") then
+					local v159 = p153:FindFirstChild("Frame")
+					local v_u_160
+					if v159 then
+						local v161 = v159:FindFirstChild("Frame")
+						if v161 then
+							v_u_160 = v161:FindFirstChild("Text_Element")
+						else
+							v_u_160 = nil
+						end
+					else
+						v_u_160 = nil
+					end
+					local v_u_162 = v_u_160.Parent.Parent:FindFirstChildWhichIsA("ImageButton")
+					local function v_u_169(p163)
+						-- upvalues: (copy) v_u_160, (copy) v_u_162, (ref) v_u_152, (ref) v_u_141
+						local v164 = p163 <= 0
+						local v165
+						if v164 then
+							v165 = "Start Egg Hunt"
+						else
+							local v166 = p163 / 60
+							local v167 = math.floor(v166)
+							local v168 = p163 % 60
+							v165 = v167 > 0 and ("Egg Hunt Ready in %*:%*"):format(v167, (string.format("%02d", v168))) or ("Egg Hunt Ready in %*s"):format(v168)
+						end
+						v_u_160.Text = ("[\"%*\"]"):format(v165)
+						v_u_160:SetAttribute("Text", "Start Egg Hunt")
+						v_u_160.TextColor3 = v164 and Color3.fromRGB(255, 255, 255) or Color3.fromRGB(130, 130, 130)
+						if v_u_162 then
+							v_u_162.Active = v164
+						end
+						v_u_152["Start Egg Hunt"] = v164 and v_u_141 or function() end
+					end
+					local v170 = v_u_18:GetAttribute("EasterEggHuntCooldownRemaining") or 0
+					local v171 = math.floor(v170)
+					v_u_169((math.max(v171, 0)))
+					local v_u_175 = task.spawn(function()
+						-- upvalues: (ref) v_u_18, (copy) v_u_169
+						repeat
+							task.wait(1)
+							local v172 = v_u_18:GetAttribute("EasterEggHuntCooldownRemaining") or 0
+							local v173 = math.floor(v172)
+							local v174 = math.max(v173, 0)
+							v_u_169(v174)
+						until v174 <= 0
+					end)
+					p153.Destroying:Connect(function()
+						-- upvalues: (copy) v_u_175
+						pcall(task.cancel, v_u_175)
+					end)
+				else
+					p153:Destroy()
+				end
+			else
+				return
+			end
+		end)
+	end
+end
+local v_u_176 = false
+function v_u_27.ShowEgghuntSplash()
+	-- upvalues: (ref) v_u_176, (copy) v_u_19, (copy) v_u_3, (copy) v_u_2
+	if not v_u_176 then
+		v_u_176 = true
+		task.spawn(function()
+			-- upvalues: (ref) v_u_19, (ref) v_u_176, (ref) v_u_3, (ref) v_u_2
+			local v177 = v_u_19:FindFirstChild("EgghuntSplash")
+			if v177 then
+				local v178 = v177:FindFirstChild("Frame")
+				if v178 then
+					v177.Enabled = true
+					local v179 = v178:FindFirstChild("Main")
+					if v179 then
+						v179 = v179:FindFirstChild("Detail")
+					end
+					v178:FindFirstChild("ViewportFrame")
+					local v180
+					if v179 then
+						v180 = v179:FindFirstChild("Egg1")
+					else
+						v180 = v179
+					end
+					local v181
+					if v179 then
+						v181 = v179:FindFirstChild("Egg2")
+					else
+						v181 = v179
+					end
+					if v179 then
+						v179 = v179:FindFirstChild("Basket")
+					end
+					local v_u_182 = v179:WaitForChild("Basket")
+					local v_u_183 = v179:WaitForChild("UIScale")
+					v_u_183.Scale = 0
+					local v_u_184 = Color3.fromRGB(255, 182, 213)
+					local v_u_185 = Color3.fromRGB(162, 210, 255)
+					local v_u_186 = Color3.fromRGB(255, 225, 238)
+					local v_u_187 = Color3.fromRGB(215, 235, 255)
+					local function v_u_192(p188)
+						-- upvalues: (copy) v_u_184, (copy) v_u_186, (copy) v_u_185, (copy) v_u_187
+						local v189 = p188 % 0.5 / 0.5
+						if v189 < 0.5 then
+							local v190 = v189 - 0.25
+							return v_u_184:Lerp(v_u_186, 1 - math.abs(v190) / 0.25)
+						else
+							local v191 = v189 - 0.75
+							return v_u_185:Lerp(v_u_187, 1 - math.abs(v191) / 0.25)
+						end
+					end
+					local v_u_193 = v178:FindFirstChild("RealLabel")
+					local v_u_194 = Instance.new("UIGradient")
+					v_u_194.Rotation = 15
+					local v195
+					if v_u_193 then
+						v195 = v_u_193.EventDesc or v178
+					else
+						v195 = v178
+					end
+					v_u_194.Parent = v195
+					local v_u_196 = 0
+					local v201 = v_u_3.RenderStepped:Connect(function(p197)
+						-- upvalues: (ref) v_u_196, (copy) v_u_192, (copy) v_u_194
+						v_u_196 = (v_u_196 + p197 * 0.3) % 0.5
+						local v198 = table.create(20)
+						for v199 = 0, 19 do
+							local v200 = v199 / 19
+							v198[v199 + 1] = ColorSequenceKeypoint.new(v200, v_u_192(v200 + v_u_196))
+						end
+						v_u_194.Color = ColorSequence.new(v198)
+					end)
+					local v202
+					if v_u_182 then
+						v202 = v_u_3.RenderStepped:Connect(function(p203)
+							-- upvalues: (copy) v_u_182
+							v_u_182:PivotTo(v_u_182:GetPivot() * CFrame.Angles(p203, 0, 0))
+						end)
+					else
+						v202 = nil
+					end
+					local v204
+					if v_u_193 then
+						local v_u_205 = 0
+						v204 = v_u_3.RenderStepped:Connect(function(p206)
+							-- upvalues: (ref) v_u_205, (copy) v_u_193
+							v_u_205 = v_u_205 + p206 * 4
+							local v207 = v_u_205
+							v_u_193.Rotation = math.sin(v207) * 4
+						end)
+					else
+						v204 = nil
+					end
+					v178.Position = UDim2.fromScale(0.5, 1.4)
+					if v180 then
+						v180.ImageTransparency = 1
+						v180.Position = UDim2.fromScale(-0.829, -1.007)
+					end
+					if v181 then
+						v181.ImageTransparency = 1
+						v181.Position = UDim2.fromScale(0.947, -1.007)
+					end
+					local v208 = TweenInfo.new(0.8, Enum.EasingStyle.Back, Enum.EasingDirection.Out)
+					local v209 = TweenInfo.new(0.9, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+					local v210 = TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.In)
+					v_u_2:Create(v178, v208, {
+						["Position"] = UDim2.fromScale(0.5, 0.7)
+					}):Play()
+					task.delay(0.3, function()
+						-- upvalues: (copy) v_u_183, (ref) v_u_2
+						script.EgghuntSplash:Play()
+						if v_u_183 then
+							v_u_2:Create(v_u_183, TweenInfo.new(1.3, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out), {
+								["Scale"] = 1
+							}):Play()
+						end
+					end)
+					task.wait(0.5)
+					if v180 then
+						v_u_2:Create(v180, v209, {
+							["ImageTransparency"] = 0,
+							["Position"] = UDim2.fromScale(-0.229, -1.007)
+						}):Play()
+					end
+					if v181 then
+						v_u_2:Create(v181, v209, {
+							["ImageTransparency"] = 0,
+							["Position"] = UDim2.fromScale(0.147, -1.007)
+						}):Play()
+					end
+					task.wait(2.7)
+					task.wait(0.3)
+					v_u_2:Create(v178, v210, {
+						["Position"] = UDim2.fromScale(0.5, 1.4)
+					}):Play()
+					task.wait(1)
+					v201:Disconnect()
+					v_u_194:Destroy()
+					if v202 then
+						v202:Disconnect()
+					end
+					if v204 then
+						v204:Disconnect()
+					end
+					if v_u_193 then
+						v_u_193.Rotation = 0
+					end
+					v177.Enabled = false
+					v_u_176 = false
+				end
+			else
+				v_u_176 = false
+				return
+			end
+		end)
+	end
+end
+task.spawn(v_u_27.Start)
+return v_u_27

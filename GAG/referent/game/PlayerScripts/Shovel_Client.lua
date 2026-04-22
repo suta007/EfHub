@@ -11,14 +11,15 @@ local v_u_10 = require(v3.Modules.Notification)
 local v_u_11 = require(v3.Data.SeedData)
 local v_u_12 = require(v3.Item_Module)
 local v_u_13 = require(v3.Modules.ConfirmationPromptController)
-local v_u_14 = game.Players.LocalPlayer
-local v_u_15 = workspace.CurrentCamera
-local v_u_16 = script.Highlight
-local v_u_17 = {
+local v_u_14 = require(v3.Modules.StringUtils)
+local v_u_15 = game.Players.LocalPlayer
+local v_u_16 = workspace.CurrentCamera
+local v_u_17 = script.Highlight
+local v_u_18 = {
 	["Instance"] = nil,
 	["IsPlaceableObject"] = false
 }
-local v_u_18 = {
+local v_u_19 = {
 	"Carrot",
 	"Strawberry",
 	"Blueberry",
@@ -56,164 +57,195 @@ local v_u_18 = {
 	"Horned Redrose",
 	"Peppermint Pop"
 }
-local v_u_19 = { "Carrot", "Christmas Tree" }
-local function v_u_24(p20)
-	-- upvalues: (copy) v_u_12, (copy) v_u_18
-	local v21 = p20.Name
-	local v22 = v_u_12.Return_Data(v21)
-	math.randomseed(p20.Item_Seed.Value)
+local v_u_20 = { "Carrot", "Candy Carrot", "Christmas Tree" }
+local function v_u_25(p21)
+	-- upvalues: (copy) v_u_12, (copy) v_u_19
+	local v22 = p21.Name
+	local v23 = v_u_12.Return_Data(v22)
+	math.randomseed(p21.Item_Seed.Value)
 	math.random(700, 1400)
-	if math.random(1, v22[4]) == 1 then
+	if math.random(1, v23[4]) == 1 then
 		return true
 	end
-	if p20.Variant.Value ~= "Normal" then
+	if p21.Variant.Value ~= "Normal" then
 		return true
 	end
-	for _, v23 in v_u_18 do
-		if string.lower(v21) == string.lower(v23) then
+	for _, v24 in v_u_19 do
+		if string.lower(v22) == string.lower(v24) then
 			return false
 		end
 	end
 	return true
 end
-local function v_u_27(p25)
-	-- upvalues: (copy) v_u_19
-	for _, v26 in v_u_19 do
-		if string.lower(p25) == string.lower(v26) then
+local function v_u_28(p26)
+	-- upvalues: (copy) v_u_20
+	for _, v27 in v_u_20 do
+		if string.lower(p26) == string.lower(v27) then
 			return true
 		end
 	end
-	return string.find(string.lower(p25), "sprinkler") and true or false
+	return string.find(string.lower(p26), "sprinkler") and true or false
 end
-local v_u_28 = nil
-local function v_u_32(p29)
-	-- upvalues: (copy) v_u_15, (copy) v_u_2
-	local v30 = v_u_15:ViewportPointToRay(p29.X, p29.Y)
-	local v31 = RaycastParams.new()
-	v31.FilterType = Enum.RaycastFilterType.Exclude
-	v31.FilterDescendantsInstances = { v_u_2:GetTagged("ShovelIgnore") }
-	return workspace:Raycast(v30.Origin, v30.Direction * 500, v31)
+local function v_u_35(p29)
+	-- upvalues: (copy) v_u_14, (copy) v_u_11, (copy) v_u_12
+	local v30 = v_u_14:StipFlavourText(p29)
+	local v31 = v_u_11[v30]
+	if not v31 then
+		return v30
+	end
+	local v32 = v31.SeedRarity
+	if v32 == "Prismatic" or v32 == "Transcendent" then
+		return v30
+	end
+	local v33 = v_u_12.Return_Rarity_Data(v32)
+	if not (v33 and v33[2]) then
+		return v30
+	end
+	local v34 = v33[2]
+	return ("<font color=\"%*\">%*</font>"):format(string.format("#%02X%02X%02X", v34.R * 255, v34.G * 255, v34.B * 255), v30)
+end
+local v_u_36 = nil
+local function v_u_40(p37)
+	-- upvalues: (copy) v_u_16, (copy) v_u_2
+	local v38 = v_u_16:ViewportPointToRay(p37.X, p37.Y)
+	local v39 = RaycastParams.new()
+	v39.FilterType = Enum.RaycastFilterType.Exclude
+	v39.FilterDescendantsInstances = { v_u_2:GetTagged("ShovelIgnore") }
+	return workspace:Raycast(v38.Origin, v38.Direction * 500, v39)
 end
 v5.RenderStepped:Connect(function()
-	-- upvalues: (copy) v_u_14, (copy) v_u_1, (copy) v_u_32, (copy) v_u_16, (copy) v_u_9, (copy) v_u_2, (copy) v_u_4
-	if v_u_14 and (v_u_14.Character and v_u_14.Character:FindFirstChild("Shovel [Destroy Plants]")) then
-		local v33 = v_u_32((v_u_1:GetMouseLocation()))
-		if v33 then
-			local v34 = v_u_9(v_u_14)
-			if v34 and v33.Instance:IsDescendantOf(v34) then
-				local v35 = v33.Instance:FindFirstAncestorWhichIsA("Model")
-				if v35 and (v_u_2:HasTag(v35, "Growable") or v_u_2:HasTag(v35, "PlaceableObject")) then
-					if v_u_16.Adornee ~= v35 then
-						v_u_16.FillTransparency = 1
-						v_u_4:Create(v_u_16, TweenInfo.new(0.25), {
-							["FillTransparency"] = 0.65
-						}):Play()
+	-- upvalues: (copy) v_u_15, (copy) v_u_13, (copy) v_u_1, (copy) v_u_40, (copy) v_u_17, (copy) v_u_9, (copy) v_u_2, (copy) v_u_4
+	if v_u_15 and (v_u_15.Character and v_u_15.Character:FindFirstChild("Shovel [Destroy Plants]")) then
+		if v_u_13:IsThisOpen() then
+			return
+		else
+			local v41 = v_u_40((v_u_1:GetMouseLocation()))
+			if v41 then
+				local v42 = v_u_9(v_u_15)
+				local v43 = v41.Instance:FindFirstAncestor("Farm")
+				if v43 then
+					v43 = v43:GetAttribute("CommunityGarden") == true
+				end
+				if v43 or v42 and v41.Instance:IsDescendantOf(v42) then
+					local v44 = v41.Instance:FindFirstAncestorWhichIsA("Model")
+					if v44 and (v_u_2:HasTag(v44, "Growable") or v_u_2:HasTag(v44, "PlaceableObject")) then
+						if v_u_17.Adornee ~= v44 then
+							v_u_17.FillTransparency = 1
+							v_u_4:Create(v_u_17, TweenInfo.new(0.25), {
+								["FillTransparency"] = 0.65
+							}):Play()
+						end
+						v_u_17.Adornee = v44
+					else
+						v_u_17.Adornee = nil
 					end
-					v_u_16.Adornee = v35
 				else
-					v_u_16.Adornee = nil
+					return
 				end
 			else
+				v_u_17.Adornee = nil
 				return
 			end
-		else
-			v_u_16.Adornee = nil
-			return
 		end
 	else
-		v_u_16.Adornee = nil
+		v_u_17.Adornee = nil
 		return
 	end
 end)
-local function v_u_48(p36, p37)
-	-- upvalues: (copy) v_u_14, (copy) v_u_32, (copy) v_u_9, (copy) v_u_2, (copy) v_u_27, (copy) v_u_10, (ref) v_u_28, (copy) v_u_17, (copy) v_u_8, (copy) v_u_13, (copy) v_u_24, (copy) v_u_11, (copy) v_u_12, (copy) v_u_7
-	if p37 then
+local function v_u_58(p45, p46)
+	-- upvalues: (copy) v_u_13, (copy) v_u_15, (copy) v_u_40, (copy) v_u_9, (copy) v_u_2, (copy) v_u_28, (copy) v_u_10, (ref) v_u_36, (copy) v_u_18, (copy) v_u_8, (copy) v_u_25, (copy) v_u_11, (copy) v_u_12, (copy) v_u_35, (copy) v_u_7
+	if p46 then
 		return
-	elseif v_u_14.Character and v_u_14.Character:FindFirstChild("Shovel [Destroy Plants]") then
-		local v38 = v_u_32(p36)
-		if v38 then
-			local v39 = v38.Instance:FindFirstAncestorWhichIsA("Model")
-			if v39 then
-				local v40 = v_u_9(v_u_14)
-				if v40 and v38.Instance:IsDescendantOf(v40) then
-					if v_u_2:HasTag(v39, "PlaceableObject") then
-						local v41 = v39.Name
-						print("TargetModel.Name:", v41)
-						if v_u_27(v41) then
-							v_u_10:CreateNotification((("You cannot shovel %*!"):format(v41)))
+	elseif v_u_13:IsThisOpen() then
+		return
+	elseif v_u_15.Character and v_u_15.Character:FindFirstChild("Shovel [Destroy Plants]") then
+		local v47 = v_u_40(p45)
+		if v47 then
+			local v48 = v47.Instance:FindFirstAncestorWhichIsA("Model")
+			if v48 then
+				local v49 = v_u_9(v_u_15)
+				local v50 = v47.Instance:FindFirstAncestor("Farm")
+				if v50 then
+					v50 = v50:GetAttribute("CommunityGarden") == true
+				end
+				if v50 or v49 and v47.Instance:IsDescendantOf(v49) then
+					if v_u_2:HasTag(v48, "PlaceableObject") then
+						local v51 = v48.Name
+						print("TargetModel.Name:", v51)
+						if v_u_28(v51) then
+							v_u_10:CreateNotification((("You cannot shovel %*!"):format(v51)))
 						else
-							if v_u_28 then
-								v_u_28:Disconnect()
-								v_u_28 = nil
+							if v_u_36 then
+								v_u_36:Disconnect()
+								v_u_36 = nil
 							end
-							v_u_17.Instance = v39
-							v_u_17.IsPlaceableObject = true
+							v_u_18.Instance = v48
+							v_u_18.IsPlaceableObject = true
 							v_u_13:Open({
 								["Title"] = "Shovelling...",
 								["Header"] = "Are you sure you want to shovel that?",
-								["Middle"] = ("%*"):format(v41),
-								["Footer"] = ""
+								["Middle"] = { v51 }
 							}, {
 								["ConfirmEvent"] = v_u_8,
-								["ConfirmEventData"] = { v_u_17.Instance },
+								["ConfirmEventData"] = { v_u_18.Instance },
 								["ConfirmCallback"] = function()
-									-- upvalues: (ref) v_u_17, (ref) v_u_28
-									v_u_17.Instance = nil
-									v_u_17.IsPlaceableObject = false
-									if v_u_28 then
-										v_u_28:Disconnect()
-										v_u_28 = nil
+									-- upvalues: (ref) v_u_18, (ref) v_u_36
+									v_u_18.Instance = nil
+									v_u_18.IsPlaceableObject = false
+									if v_u_36 then
+										v_u_36:Disconnect()
+										v_u_36 = nil
 									end
 								end
 							})
 						end
-					elseif v39:FindFirstChild("Grow") then
-						if v39:GetAttribute("Favorited") then
+					elseif v48:FindFirstChild("Grow") then
+						if v48:GetAttribute("Favorited") then
 							v_u_10:CreateNotification("This plant is favorited!")
 							return
 						else
-							local v42 = v39:FindFirstChild("Fruits")
-							if v42 then
-								for _, v43 in v42:GetChildren() do
-									if v43:GetAttribute("Favorited") then
+							local v52 = v48:FindFirstChild("Fruits")
+							if v52 then
+								for _, v53 in v52:GetChildren() do
+									if v53:GetAttribute("Favorited") then
 										v_u_10:CreateNotification("This plant has favorited fruit!")
 										return
 									end
 								end
 							end
-							local v44 = v39.Name
-							if v_u_27(v44) then
-								v_u_10:CreateNotification((("You cannot shovel %*!"):format(v44)))
+							local v54 = v48.Name
+							if v_u_28(v54) then
+								v_u_10:CreateNotification((("You cannot shovel %*!"):format(v54)))
 								return
-							elseif v_u_24(v39) then
-								local v45 = v_u_11[v44]
-								local v46 = v45 and v_u_12.Return_Rarity_Data(v45.SeedRarity) or nil
-								local _ = v46 and string.format("#%02X%02X%02X", v46[2].R * 255, v46[2].G * 255, v46[2].B * 255)
-								v_u_17.Instance = v38.Instance
-								v_u_17.IsPlaceableObject = false
-								local v47 = {
+							elseif v_u_25(v48) then
+								local v55 = v_u_11[v54]
+								local v56 = v_u_12.Return_Rarity_Data(v55.SeedRarity)
+								local v57 = v_u_35(v54)
+								v_u_18.Instance = v48
+								v_u_18.IsPlaceableObject = false
+								v_u_13:Open({
 									["Title"] = "Shovelling...",
 									["Header"] = "Are you sure you want to shovel that?",
-									["Middle"] = ("%*"):format(v44),
-									["Footer"] = "are considered valuable and removing this cannot be undone."
-								}
-								warn(v39, v39:GetFullName(), v_u_17)
-								v_u_13:Open(v47, {
+									["Middle"] = v57,
+									["Footer"] = "are considered valuable and removing this cannot be undone.",
+									["AnimatedWords"] = {
+										[v54] = v56[1]
+									}
+								}, {
 									["ConfirmEvent"] = v_u_7,
-									["ConfirmEventData"] = { v39 },
+									["ConfirmEventData"] = { v48 },
 									["ConfirmCallback"] = function()
-										-- upvalues: (ref) v_u_17, (ref) v_u_28
-										print("Call back")
-										v_u_17.Instance = nil
-										v_u_17.IsPlaceableObject = false
-										if v_u_28 then
-											v_u_28:Disconnect()
-											v_u_28 = nil
+										-- upvalues: (ref) v_u_18, (ref) v_u_36
+										v_u_18.Instance = nil
+										v_u_18.IsPlaceableObject = false
+										if v_u_36 then
+											v_u_36:Disconnect()
+											v_u_36 = nil
 										end
 									end
 								})
 							else
-								v_u_7:FireServer(v38.Instance)
+								v_u_7:FireServer(v47.Instance)
 							end
 						end
 					else
@@ -232,20 +264,20 @@ local function v_u_48(p36, p37)
 		return
 	end
 end
-local v_u_49 = nil
-local function v50()
-	-- upvalues: (ref) v_u_49, (copy) v_u_1, (copy) v_u_48, (copy) v_u_14
-	if v_u_49 then
-		v_u_49:Disconnect()
+local v_u_59 = nil
+local function v60()
+	-- upvalues: (ref) v_u_59, (copy) v_u_1, (copy) v_u_58, (copy) v_u_15
+	if v_u_59 then
+		v_u_59:Disconnect()
 	end
 	if v_u_1:GetLastInputType() == Enum.UserInputType.Touch then
-		v_u_49 = v_u_1.TouchTapInWorld:Connect(v_u_48)
+		v_u_59 = v_u_1.TouchTapInWorld:Connect(v_u_58)
 	else
-		v_u_49 = v_u_14:GetMouse().Button1Down:Connect(function()
-			-- upvalues: (ref) v_u_48, (ref) v_u_1
-			v_u_48(v_u_1:GetMouseLocation(), false)
+		v_u_59 = v_u_15:GetMouse().Button1Down:Connect(function()
+			-- upvalues: (ref) v_u_58, (ref) v_u_1
+			v_u_58(v_u_1:GetMouseLocation(), false)
 		end)
 	end
 end
-v_u_1.LastInputTypeChanged:Connect(v50)
-task.spawn(v50)
+v_u_1.LastInputTypeChanged:Connect(v60)
+task.spawn(v60)

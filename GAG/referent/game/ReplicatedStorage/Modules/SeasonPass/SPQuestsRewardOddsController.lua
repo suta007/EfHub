@@ -11,7 +11,7 @@ local v_u_10 = require(v1.Data.SeedPackData)
 local v_u_11 = v3.LocalPlayer.PlayerGui.Odds_UI
 local v_u_12 = v_u_11.Frame.Main.Items
 local v_u_13 = v7.new()
-local v58 = {
+local v57 = {
 	["Open"] = function(_, p_u_14, p15)
 		-- upvalues: (copy) v_u_10, (copy) v_u_6, (copy) v_u_5, (copy) v_u_11, (copy) v_u_13, (copy) v_u_12, (copy) v_u_9, (copy) v_u_4, (copy) v_u_8, (copy) v_u_2
 		local v16 = v_u_10.Packs["Season Pass Quests"]
@@ -160,14 +160,12 @@ local v58 = {
 			v_u_43.Odds.TextScaled = true
 			v_u_43.Parent = v_u_12.ScrollingFrame
 		end
-		local v56 = true
-		for _, v57 in v21 do
-			if v57.Reward.Type ~= "RainbowSeed" and not string.find(v57.Reward.RewardId, "Rainbow ") then
-				v56 = false
+		for _, v56 in v21 do
+			if v56.Reward.Type ~= "RainbowSeed" and not string.find(v56.Reward.RewardId, "Rainbow ") then
 				break
 			end
 		end
-		if v35 > 6 or v56 then
+		if v_u_12.ScrollingFrame.AbsoluteCanvasSize.X > v_u_12.ScrollingFrame.AbsoluteWindowSize.X then
 			v_u_12.ScrollingFrame.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 		else
 			v_u_12.ScrollingFrame.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -193,5 +191,5 @@ local v58 = {
 		v_u_5:UsePopupAnims(v_u_11)
 	end
 }
-task.spawn(v58.Start, v58)
-return v58
+task.spawn(v57.Start, v57)
+return v57

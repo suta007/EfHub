@@ -1,7 +1,7 @@
 local v_u_1 = game:GetService("MarketplaceService")
 local v2 = require(game.ReplicatedStorage.UserGenerated.Concurrency.Cache)
 local v_u_3 = require(game.ReplicatedStorage.UserGenerated.Lang.Asserts)
-local v4 = v_u_3.Table({
+local v4 = v_u_3.TablePermissive({
 	["PurchaseId"] = v_u_3.String,
 	["PlayerId"] = v_u_3.Integer,
 	["ProductId"] = v_u_3.Integer,

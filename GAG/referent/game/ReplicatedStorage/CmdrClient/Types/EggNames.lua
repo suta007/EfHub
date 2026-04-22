@@ -1,7 +1,7 @@
 local v1 = game:GetService("ReplicatedStorage")
 game:GetService("ServerStorage")
 local v2 = v1.Assets.Models.EggModels
-local v_u_3 = require(script.Parent.Parent.Shared.Util)
+local v_u_3 = require(game.ReplicatedStorage.Code.Util)
 require(v1.Data.PetEggData)
 local v_u_4 = {}
 for _, v5 in v2:GetChildren() do

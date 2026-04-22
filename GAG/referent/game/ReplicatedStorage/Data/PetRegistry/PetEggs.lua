@@ -5421,16 +5421,30 @@ local v764 = {
 	}
 }
 v427["Green Bean"] = v764
-v426.Items = v427
-v425.RarityData = v426
-v1["Fake Egg"] = v425
 local v765 = {
-	["Color"] = Color3.fromRGB(170, 85, 255),
-	["HatchTime"] = 1,
-	["EggRarity"] = "Divine"
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
 }
-local v766 = {}
-local v767 = {}
+v427["Chocolate Bunny"] = v765
+local v766 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Easter Egg Chick"] = v766
+local v767 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Marshmallow Lamb"] = v767
 local v768 = {
 	["ItemOdd"] = 1,
 	["GeneratedPetData"] = {
@@ -5438,8 +5452,530 @@ local v768 = {
 		["HugeChance"] = 0
 	}
 }
-v767.Lich = v768
-v766.Items = v767
-v765.RarityData = v766
-v1["Lich Crystal"] = v765
+v427["Easter Bunny"] = v768
+local v769 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gummy Bear"] = v769
+local v770 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Hootsie Roll"] = v770
+local v771 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gilded Choc Chocolate Bunny"] = v771
+local v772 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gilded Choc Easter Egg Chick"] = v772
+local v773 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gilded Choc Marshmallow Lamb"] = v773
+local v774 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gilded Choc Easter Bunny"] = v774
+local v775 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gilded Choc Gummy Bear"] = v775
+local v776 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Gilded Choc Hootsie Roll"] = v776
+local v777 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427.Beaver = v777
+local v778 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427.Stork = v778
+local v779 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Orchid Mantis"] = v779
+local v780 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Spring Bee"] = v780
+local v781 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427.Jerboa = v781
+local v782 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427.Nyala = v782
+local v783 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427.Peryton = v783
+local v784 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v427["Candy Squirrel"] = v784
+v426.Items = v427
+v425.RarityData = v426
+v1["Fake Egg"] = v425
+local v785 = {
+	["Color"] = Color3.fromRGB(170, 85, 255),
+	["HatchTime"] = 1,
+	["EggRarity"] = "Divine"
+}
+local v786 = {}
+local v787 = {}
+local v788 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v787.Lich = v788
+v786.Items = v787
+v785.RarityData = v786
+v1["Lich Crystal"] = v785
+local v789 = {
+	["Color"] = Color3.fromRGB(255, 170, 0),
+	["HatchTime"] = 1800,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://136258776547580"
+}
+local v790 = {}
+local v791 = {}
+local v792 = {
+	["ItemOdd"] = 55,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v791["Chocolate Bunny"] = v792
+local v793 = {
+	["ItemOdd"] = 35,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v791["Easter Egg Chick"] = v793
+local v794 = {
+	["ItemOdd"] = 9,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v791["Marshmallow Lamb"] = v794
+local v795 = {
+	["ItemOdd"] = 0.5,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v791["Easter Bunny"] = v795
+local v796 = {
+	["ItemOdd"] = 0.5,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 1, 1 },
+		["HugeChance"] = 0
+	}
+}
+v791["Egg/Gilded Choc Golden Egg"] = v796
+v790.Items = v791
+v789.RarityData = v790
+v1["Golden Egg"] = v789
+local v797 = {
+	["Color"] = Color3.fromRGB(255, 170, 0),
+	["HatchTime"] = 1800,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://138759086074667"
+}
+local v798 = {}
+local v799 = {}
+local v800 = {
+	["ItemOdd"] = 55,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v799["Gilded Choc Chocolate Bunny"] = v800
+local v801 = {
+	["ItemOdd"] = 35,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v799["Gilded Choc Easter Egg Chick"] = v801
+local v802 = {
+	["ItemOdd"] = 9,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v799["Gilded Choc Marshmallow Lamb"] = v802
+local v803 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v799["Gilded Choc Easter Bunny"] = v803
+v798.Items = v799
+v797.RarityData = v798
+v1["Gilded Choc Golden Egg"] = v797
+local v804 = {
+	["Color"] = Color3.fromRGB(255, 170, 0),
+	["HatchTime"] = 30,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://136258776547580"
+}
+local v805 = {}
+local v806 = {}
+local v807 = {
+	["ItemOdd"] = 54,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v806["Chocolate Bunny"] = v807
+local v808 = {
+	["ItemOdd"] = 35,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v806["Easter Egg Chick"] = v808
+local v809 = {
+	["ItemOdd"] = 9,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v806["Marshmallow Lamb"] = v809
+local v810 = {
+	["ItemOdd"] = 0.5,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v806["Easter Bunny"] = v810
+local v811 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 1, 1 },
+		["HugeChance"] = 0
+	}
+}
+v806["Egg/Gilded Choc Premium Golden Egg"] = v811
+v805.Items = v806
+v804.RarityData = v805
+v1["Premium Golden Egg"] = v804
+local v812 = {
+	["Color"] = Color3.fromRGB(255, 170, 0),
+	["HatchTime"] = 30,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://138759086074667"
+}
+local v813 = {}
+local v814 = {}
+local v815 = {
+	["ItemOdd"] = 45,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0.001
+	}
+}
+v814["Gilded Choc Chocolate Bunny"] = v815
+local v816 = {
+	["ItemOdd"] = 25,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0.001
+	}
+}
+v814["Gilded Choc Easter Egg Chick"] = v816
+local v817 = {
+	["ItemOdd"] = 18,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0.001
+	}
+}
+v814["Gilded Choc Marshmallow Lamb"] = v817
+local v818 = {
+	["ItemOdd"] = 12,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0.001
+	}
+}
+v814["Gilded Choc Easter Bunny"] = v818
+v813.Items = v814
+v812.RarityData = v813
+v1["Gilded Choc Premium Golden Egg"] = v812
+local v819 = {
+	["Color"] = Color3.fromRGB(248, 159, 227),
+	["HatchTime"] = 3600,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://130795732004338"
+}
+local v820 = {}
+local v821 = {}
+local v822 = {
+	["ItemOdd"] = 55,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v821["Spring Bee"] = v822
+local v823 = {
+	["ItemOdd"] = 35,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v821.Jerboa = v823
+local v824 = {
+	["ItemOdd"] = 9,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v821.Nyala = v824
+local v825 = {
+	["ItemOdd"] = 0.5,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v821.Peryton = v825
+local v826 = {
+	["ItemOdd"] = 0.5,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 1, 1 },
+		["HugeChance"] = 0
+	}
+}
+v821["Egg/Gilded Choc Springtide Egg"] = v826
+v820.Items = v821
+v819.RarityData = v820
+v1["Springtide Egg"] = v819
+local v827 = {
+	["Color"] = Color3.fromRGB(248, 159, 227),
+	["HatchTime"] = 3600,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://137106211162051"
+}
+local v828 = {}
+local v829 = {}
+local v830 = {
+	["ItemOdd"] = 55,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v829["Gilded Choc Spring Bee"] = v830
+local v831 = {
+	["ItemOdd"] = 35,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v829["Gilded Choc Jerboa"] = v831
+local v832 = {
+	["ItemOdd"] = 9,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v829["Gilded Choc Nyala"] = v832
+local v833 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v829["Gilded Choc Peryton"] = v833
+v828.Items = v829
+v827.RarityData = v828
+v1["Gilded Choc Springtide Egg"] = v827
+local v834 = {
+	["Color"] = Color3.fromRGB(248, 159, 227),
+	["HatchTime"] = 30,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://71295907366576"
+}
+local v835 = {}
+local v836 = {}
+local v837 = {
+	["ItemOdd"] = 54,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v836["Spring Bee"] = v837
+local v838 = {
+	["ItemOdd"] = 35,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v836.Jerboa = v838
+local v839 = {
+	["ItemOdd"] = 9,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v836.Nyala = v839
+local v840 = {
+	["ItemOdd"] = 0.5,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v836.Peryton = v840
+local v841 = {
+	["ItemOdd"] = 1,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 1, 1 },
+		["HugeChance"] = 0
+	}
+}
+v836["Egg/Gilded Choc Premium Springtide Egg"] = v841
+v835.Items = v836
+v834.RarityData = v835
+v1["Premium Springtide Egg"] = v834
+local v842 = {
+	["Color"] = Color3.fromRGB(248, 159, 227),
+	["HatchTime"] = 30,
+	["EggRarity"] = "Divine",
+	["Icon"] = "rbxassetid://137106211162051"
+}
+local v843 = {}
+local v844 = {}
+local v845 = {
+	["ItemOdd"] = 45,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v844["Gilded Choc Spring Bee"] = v845
+local v846 = {
+	["ItemOdd"] = 25,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v844["Gilded Choc Jerboa"] = v846
+local v847 = {
+	["ItemOdd"] = 18,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v844["Gilded Choc Nyala"] = v847
+local v848 = {
+	["ItemOdd"] = 12,
+	["GeneratedPetData"] = {
+		["WeightRange"] = { 0.8, 2 },
+		["HugeChance"] = 0
+	}
+}
+v844["Gilded Choc Peryton"] = v848
+v843.Items = v844
+v842.RarityData = v843
+v1["Gilded Choc Premium Springtide Egg"] = v842
 return v1

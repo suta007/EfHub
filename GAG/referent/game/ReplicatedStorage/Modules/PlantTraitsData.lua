@@ -1,5 +1,4 @@
-local v_u_1 = {}
-local v2 = {
+local v1 = {
 	["Berry"] = {
 		"Blueberry",
 		"Cranberry",
@@ -33,7 +32,10 @@ local v2 = {
 		"Gumdrop",
 		"Christmas Cracker",
 		"Crimson Cranberry",
-		"Hexberry"
+		"Hexberry",
+		"Chocolate Berry",
+		"Jelly Bean Sprout",
+		"Bunny Berry"
 	},
 	["Root"] = {
 		"Carrot",
@@ -67,11 +69,16 @@ local v2 = {
 		"Octobloom",
 		"Reindeer Root",
 		"Colorpop Crop",
-		"Kernel Curl"
+		"Kernel Curl",
+		"Candy Carrot",
+		"Egg Shroom",
+		"Marshmallow Root"
 	},
 	["Candy"] = {
 		"Blue Lollipop",
 		"Candy Blossom",
+		"Candy Blossom 2026",
+		"Elder Candy Blossom",
 		"Candy Sunflower",
 		"Chocolate Carrot",
 		"Easter Egg",
@@ -91,10 +98,23 @@ local v2 = {
 		"Sparkle Slice",
 		"Confetti Tula",
 		"Candlite",
-		"Kernel Curl"
+		"Kernel Curl",
+		"Candy Carrot",
+		"Gumball",
+		"Liquorice",
+		"Gummy Cactus",
+		"Blue Candypop",
+		"Egg Melon",
+		"Waddling Willow",
+		"Jelly Bean Sprout",
+		"Egg Shroom",
+		"Marshmallow Root",
+		"Bunny Berry"
 	},
 	["Flower"] = {
 		"Candy Blossom",
+		"Candy Blossom 2026",
+		"Elder Candy Blossom",
 		"Candy Sunflower",
 		"Cherry Blossom",
 		"Crocus",
@@ -203,7 +223,12 @@ local v2 = {
 		"Frosty Bite",
 		"Colorpop Crop",
 		"Blooming Cactus",
-		"Bonanza Bloom"
+		"Bonanza Bloom",
+		"Drowned Flower",
+		"Saskia",
+		"Waddling Willow",
+		"Bonnet Bloom",
+		"Basket Bouquet"
 	},
 	["Fruit"] = {
 		"Apple",
@@ -312,7 +337,11 @@ local v2 = {
 		"Sparkle Slice",
 		"Hexberry",
 		"Plumwillow",
-		"Yellow Core"
+		"Yellow Core",
+		"Boreal Orange",
+		"Chocolate Coconut",
+		"Mini Pumpkin",
+		"Egg Melon"
 	},
 	["Leafy"] = {
 		"Apple",
@@ -468,7 +497,13 @@ local v2 = {
 		"Blooming Cactus",
 		"Madcrown Vine",
 		"Bonanza Bloom",
-		"Amazon Feather Fern"
+		"Amazon Feather Fern",
+		"Jungle Cherry",
+		"Saskia",
+		"Waddling Willow",
+		"Frost Fern",
+		"Bonnet Bloom",
+		"Marshmallow Root"
 	},
 	["Sour"] = {
 		"Cranberry",
@@ -499,13 +534,17 @@ local v2 = {
 		"Asteris",
 		"Cryoshard",
 		"Crimson Cranberry",
-		"Hexberry"
+		"Hexberry",
+		"Sour Lemon",
+		"Jungle Cherry"
 	},
 	["Sweet"] = {
 		"Banana",
 		"Blue Lollipop",
 		"Blueberry",
 		"Candy Blossom",
+		"Candy Blossom 2026",
+		"Elder Candy Blossom",
 		"Candy Sunflower",
 		"Chocolate Carrot",
 		"Easter Egg",
@@ -575,7 +614,16 @@ local v2 = {
 		"Sparkle Slice",
 		"Confetti Tula",
 		"Candlite",
-		"Plumwillow"
+		"Plumwillow",
+		"Sugar Melon",
+		"DJ Delight",
+		"Jungle Cherry",
+		"Egg Melon",
+		"Waddling Willow",
+		"Jelly Bean Sprout",
+		"Egg Shroom",
+		"Marshmallow Root",
+		"Bunny Berry"
 	},
 	["Tropical"] = {
 		"Banana",
@@ -664,7 +712,9 @@ local v2 = {
 		"Coilvine",
 		"Sherrybloom",
 		"Frost Pepper",
-		"Magma Pepper"
+		"Magma Pepper",
+		"Mini Pumpkin",
+		"Jelly Bean Sprout"
 	},
 	["Woody"] = {
 		"Apple",
@@ -748,7 +798,13 @@ local v2 = {
 		"Christmas Tree",
 		"Plumwillow",
 		"Madcrown Vine",
-		"Bonanza Bloom"
+		"Bonanza Bloom",
+		"Chocolate Coconut",
+		"Purple Treeshroom",
+		"Jungle Cherry",
+		"Waddling Willow",
+		"Marshmallow Root",
+		"Basket Bouquet"
 	},
 	["Prickly"] = {
 		"Cactus",
@@ -788,7 +844,9 @@ local v2 = {
 		"Asteris",
 		"Firework Fern",
 		"Blooming Cactus",
-		"Bonanza Bloom"
+		"Bonanza Bloom",
+		"Gummy Cactus",
+		"Frost Fern"
 	},
 	["Toxic"] = {
 		"Foxglove",
@@ -835,7 +893,9 @@ local v2 = {
 		"Witch Cap",
 		"Frosty Bite",
 		"Asteris",
-		"Shimmersprout"
+		"Shimmersprout",
+		"Purple Treeshroom",
+		"Egg Shroom"
 	},
 	["Night"] = {
 		"Blood Banana",
@@ -895,6 +955,7 @@ local v2 = {
 		"Gingerbread Blossom",
 		"Heart Blossom",
 		"Firework Fern",
+		"Frost Fern",
 		"Frost Pepper",
 		"Magma Pepper"
 	},
@@ -988,7 +1049,13 @@ local v2 = {
 		"Madcrown Vine",
 		"Blooming Cactus",
 		"Kernel Curl",
-		"Bonanza Bloom"
+		"Bonanza Bloom",
+		"Eggsnapper",
+		"Purple Treeshroom",
+		"Waddling Willow",
+		"Frost Fern",
+		"Jelly Bean Sprout",
+		"Bonnet Bloom"
 	},
 	["Summer"] = {
 		"Carrot",
@@ -1102,7 +1169,9 @@ local v2 = {
 		"Christmas Tree",
 		"Shimmersprout",
 		"Confetti Tula",
-		"Hexberry"
+		"Hexberry",
+		"Waddling Willow",
+		"Marshmallow Root"
 	},
 	["Fall"] = {
 		"Corn",
@@ -1130,7 +1199,9 @@ local v2 = {
 		"Castor Bean",
 		"Christmas Cracker",
 		"Peanut",
-		"Crunchnut"
+		"Crunchnut",
+		"Chocolate Coconut",
+		"Basket Bouquet"
 	},
 	["Spooky"] = {
 		"Bloodred Mushroom",
@@ -1158,7 +1229,8 @@ local v2 = {
 		"Lumin Bloom",
 		"Asteris",
 		"Hexberry",
-		"Madcrown Vine"
+		"Madcrown Vine",
+		"Witches Hair"
 	},
 	["Safari"] = {
 		"Ackee",
@@ -1194,7 +1266,8 @@ local v2 = {
 		"Java Banana",
 		"Peacock Tail",
 		"Madras Thorn",
-		"Zebrazinkle"
+		"Zebrazinkle",
+		"Chocolate Coconut"
 	},
 	["Christmas"] = {
 		"Gingerbread Blossom",
@@ -1222,7 +1295,8 @@ local v2 = {
 		"Snowman Sprout",
 		"Christmas Tree",
 		"Candlite",
-		"Frost Pepper"
+		"Frost Pepper",
+		"Star Palm"
 	},
 	["Apple"] = {
 		"Apple",
@@ -1236,11 +1310,69 @@ local v2 = {
 		"Evo Apple IV",
 		"Poison Apple",
 		"Wild Pineapple"
+	},
+	["Easter"] = {
+		"Chocolate Carrot",
+		"Red Lollipop",
+		"Candy Sunflower",
+		"Easter Egg",
+		"Candy Blossom",
+		"Candy Blossom 2026",
+		"Candy Carrot",
+		"Chocolate Berry",
+		"Gumball",
+		"Liquorice",
+		"Sugar Melon",
+		"Chocolate Coconut",
+		"Gummy Cactus",
+		"Sour Lemon",
+		"Eggfruit",
+		"Easter Sprout",
+		"Easter Candy Carrot",
+		"Easter Chocolate Berry",
+		"Easter Gumball",
+		"Easter Liquorice",
+		"Easter Sugar Melon",
+		"Easter Chocolate Coconut",
+		"Easter Gummy Cactus",
+		"Easter Egg Melon",
+		"Easter Sour Lemon",
+		"Easter Eggfruit",
+		"Easter Easter Sprout",
+		"Eggsnapper",
+		"Blue Candypop",
+		"Egg Melon",
+		"Elder Candy Blossom",
+		"Waddling Willow",
+		"Jelly Bean Sprout",
+		"Egg Shroom",
+		"Bonnet Bloom",
+		"Marshmallow Root",
+		"Bunny Berry",
+		"Basket Bouquet"
+	},
+	["EasterSlot"] = {
+		"Easter Candy Carrot",
+		"Easter Chocolate Berry",
+		"Easter Gumball",
+		"Easter Liquorice",
+		"Easter Sugar Melon",
+		"Easter Chocolate Coconut",
+		"Easter Gummy Cactus",
+		"Easter Egg Melon",
+		"Easter Sour Lemon",
+		"Easter Eggfruit",
+		"Easter Easter Sprout"
 	}
 }
-v_u_1.Traits = v2
-local v3 = {}
-local v_u_4 = {
+local v2 = {}
+local v_u_3 = {}
+for v4, _ in v1 do
+	v2[v4] = v4
+end
+v_u_3.TraitNames = v2
+v_u_3.Traits = v1
+local v_u_5 = {
 	["Berry"] = { 142, 68, 173 },
 	["Root"] = { 179, 129, 72 },
 	["Flower"] = { 255, 105, 180 },
@@ -1264,24 +1396,22 @@ local v_u_4 = {
 	["Magical"] = { 186, 85, 211 },
 	["Nutty"] = { 199, 136, 60 },
 	["Spooky"] = { 88, 0, 153 },
-	["Safari"] = { 194, 178, 128 }
+	["Safari"] = { 194, 178, 128 },
+	["Easter"] = { 255, 152, 220 },
+	["EasterSlot"] = { 255, 152, 220 }
 }
-for v5, _ in v2 do
-	v3[v5] = v5
-end
-v_u_1.TraitNames = v3
-for v6, v7 in v2 do
+for v6, v7 in v1 do
 	local v8 = {}
 	for _, v9 in v7 do
 		v8[v9] = true
 	end
-	v_u_1[v6] = v8
+	v_u_3[v6] = v8
 end
-function v_u_1.HasTrait(p10, p11)
-	-- upvalues: (copy) v_u_1
+function v_u_3.HasTrait(p10, p11)
+	-- upvalues: (copy) v_u_3
 	if p10 and p10 ~= "" then
 		if p11 and p11 ~= "" then
-			local v12 = v_u_1[p11]
+			local v12 = v_u_3[p11]
 			return v12 and v12[p10] or false
 		else
 			warn("PlantTraitsData.HasTrait | No trait name given!")
@@ -1292,34 +1422,34 @@ function v_u_1.HasTrait(p10, p11)
 		return false
 	end
 end
-function v_u_1.GetTraits(p13)
-	-- upvalues: (copy) v_u_1
+function v_u_3.GetTraits(p13)
+	-- upvalues: (copy) v_u_3
 	if not p13 or p13 == "" then
 		warn("PlantTraitsData.GetTraits | No plant name given!")
 		return {}
 	end
 	local v14 = {}
-	for v15, v16 in v_u_1 do
+	for v15, v16 in v_u_3 do
 		if typeof(v16) == "table" and v16[p13] then
 			table.insert(v14, v15)
 		end
 	end
 	return v14
 end
-function v_u_1.GetTraitsAsString(p17)
-	-- upvalues: (copy) v_u_1, (copy) v_u_4
+function v_u_3.GetTraitsAsString(p17)
+	-- upvalues: (copy) v_u_3, (copy) v_u_5
 	if not p17 or p17 == "" then
 		warn("PlantTraitsData.GetTraitsAsString | No plant name given!")
 		return ""
 	end
 	local v18 = {}
-	for v19, v20 in v_u_1 do
-		if typeof(v20) == "table" and (v20[p17] and v_u_1.TraitNames[v19]) then
-			local v21 = v_u_4[v19] or { 255, 255, 255 }
+	for v19, v20 in v_u_3 do
+		if typeof(v20) == "table" and (v20[p17] and v_u_3.TraitNames[v19]) then
+			local v21 = v_u_5[v19] or { 255, 255, 255 }
 			local v22 = ("<font color=\"%*\">%*</font>"):format(string.format("#%02X%02X%02X", v21[1], v21[2], v21[3]), v19)
 			table.insert(v18, v22)
 		end
 	end
 	return table.concat(v18, ", ")
 end
-return v_u_1
+return v_u_3

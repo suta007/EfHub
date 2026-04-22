@@ -119,6 +119,9 @@ local function v_u_76(p63, p64)
 		}):Play()
 		local v70 = p63:FindFirstChild((("Premium%*"):format(p64)))
 		local v71 = p63:FindFirstChild((("Free%*"):format(p64)))
+		if not (v70 and v71) then
+			warn((("Missing RewardFrames for Premium and/or Free Tier %*"):format(p64)))
+		end
 		local v72 = v70.Claim
 		local v73 = v71.Claim
 		local v74 = table.find(v65.SeasonPass[v_u_9.CurrentSeason].ClaimedLevelPremiumRewards, p64)
@@ -377,7 +380,7 @@ function v_u_17.Start()
 	end
 end
 function v_u_17.UpdateRewardsTrack()
-	-- upvalues: (copy) v_u_21, (copy) v_u_34, (copy) v_u_32, (ref) v_u_38, (copy) v_u_4, (copy) v_u_9, (copy) v_u_17, (copy) v_u_18, (ref) v_u_36, (copy) v_u_116, (copy) v_u_5, (copy) v_u_31
+	-- upvalues: (copy) v_u_21, (copy) v_u_34, (copy) v_u_32, (ref) v_u_38, (copy) v_u_4, (copy) v_u_9, (copy) v_u_17, (copy) v_u_18, (ref) v_u_36, (copy) v_u_116, (copy) v_u_5, (copy) v_u_41, (copy) v_u_31
 	for _, v137 in v_u_21:GetChildren() do
 		if v137:IsA("Frame") and v137.Name ~= "InfReward" then
 			v137:Destroy()
@@ -399,97 +402,107 @@ function v_u_17.UpdateRewardsTrack()
 	end)
 	v_u_36 = 0
 	v_u_116()
-	v_u_5.ToggleButton(v_u_31.All, true, "Gold")
+	local v139 = v_u_4:GetData()
+	if v139 then
+		local v140 = v139.SeasonPass[v_u_9.CurrentSeason].TotalExperience
+		if v_u_5.CalculateLevel(v140) < v_u_41 then
+			v_u_5.ToggleButton(v_u_31.All, true, "Gold")
+		else
+			v_u_5.ToggleButton(v_u_31.All, false)
+		end
+	else
+		return
+	end
 end
-v15.OnClientEvent:Connect(function(p_u_139, p_u_140)
+v15.OnClientEvent:Connect(function(p_u_141, p_u_142)
 	-- upvalues: (copy) v_u_4, (copy) v_u_5, (copy) v_u_41, (copy) v_u_23, (copy) v_u_26, (copy) v_u_62, (copy) v_u_47, (copy) v_u_24, (copy) v_u_27, (copy) v_u_29, (copy) v_u_30, (copy) v_u_21, (copy) v_u_76
 	task.spawn(function()
-		-- upvalues: (ref) v_u_4, (ref) v_u_5, (copy) p_u_140, (copy) p_u_139, (ref) v_u_41, (ref) v_u_23, (ref) v_u_26, (ref) v_u_62, (ref) v_u_47, (ref) v_u_24, (ref) v_u_27, (ref) v_u_29, (ref) v_u_30, (ref) v_u_21, (ref) v_u_76
+		-- upvalues: (ref) v_u_4, (ref) v_u_5, (copy) p_u_142, (copy) p_u_141, (ref) v_u_41, (ref) v_u_23, (ref) v_u_26, (ref) v_u_62, (ref) v_u_47, (ref) v_u_24, (ref) v_u_27, (ref) v_u_29, (ref) v_u_30, (ref) v_u_21, (ref) v_u_76
 		if not v_u_4:GetData() then
 			warn("SeasonPassUIController | No player data")
 			return
 		end
-		local v141 = v_u_5.CalculateLevel(p_u_140)
-		local v142 = v_u_5.CalculateLevel(p_u_139)
-		local v143 = p_u_140 - p_u_139
-		local v144 = p_u_139
-		local function v148(p145)
+		local v143 = v_u_5.CalculateLevel(p_u_142)
+		local v144 = v_u_5.CalculateLevel(p_u_141)
+		local v145 = p_u_142 - p_u_141
+		local v146 = p_u_141
+		local function v150(p147)
 			-- upvalues: (ref) v_u_5, (ref) v_u_41, (ref) v_u_23, (ref) v_u_26
-			local v146 = v_u_5.CalculateXPForLevel(p145)
-			local v147 = v_u_5.CalculateXPForLevel(p145 + 1) - v146
-			if v_u_41 <= p145 then
+			local v148 = v_u_5.CalculateXPForLevel(p147)
+			local v149 = v_u_5.CalculateXPForLevel(p147 + 1) - v148
+			if v_u_41 <= p147 then
 				v_u_23.Exp.Text = "COMPLETED"
 				v_u_26.Exp.Text = v_u_23.Exp.Text
 			else
-				v_u_23.Exp.Text = ("0/%*"):format(v147)
+				v_u_23.Exp.Text = ("0/%*"):format(v149)
 				v_u_26.Exp.Text = v_u_23.Exp.Text
 			end
 		end
-		local v149 = v142
+		local v151 = v144
 		while true do
-			local v150 = v_u_5.GetXPEarnedCurrentLevel(v144)
-			local v151 = v_u_5.GetTotalXPForNextLevel(v144)
-			local v152 = v151 - v150
-			if v143 - v152 <= 0 then
-				v152 = v143
+			local v152 = v_u_5.GetXPEarnedCurrentLevel(v146)
+			local v153 = v_u_5.GetTotalXPForNextLevel(v146)
+			local v154 = v153 - v152
+			if v145 - v154 <= 0 then
+				v154 = v145
 			end
-			v144 = v144 + v152
-			v143 = v143 - v152
-			v148(v142)
-			local v153 = v_u_5.CalculateLevel(v144)
-			local v154 = v144 - v_u_5.CalculateXPForLevel(v_u_41)
-			if v154 >= 1 then
-				v_u_62(p_u_140)
+			v146 = v146 + v154
+			v145 = v145 - v154
+			v150(v144)
+			local v155 = v_u_5.CalculateLevel(v146)
+			local v156 = v146 - v_u_5.CalculateXPForLevel(v_u_41)
+			if v156 >= 1 then
+				v_u_62(p_u_142)
 				return
 			end
-			if v154 == 0 then
-				v_u_62(p_u_140)
+			if v156 == 0 then
+				v_u_62(p_u_142)
 			end
-			local v155 = (v150 + v152) / v151
-			local v156 = math.clamp(v155, 0, 1)
-			local v157 = v_u_47(v_u_24, v156, 1, v141)
-			local v158 = v_u_47(v_u_27, v156, 1, v153)
-			local v159 = v_u_47(v_u_29, (v153 + v_u_5.GetXPFractionOfCurrentLevel(v144)) / v_u_41 * v_u_30, v_u_30, v141)
-			v158:Play()
-			v157:Play()
-			local v160 = v_u_5.CalculateXPForLevel(v153)
-			local v161 = v_u_5.CalculateXPForLevel(v153 + 1) - v160
-			v_u_23.Exp.Text = ("%*/%*"):format(v150 + v152, v161)
-			v_u_26.Exp.Text = v_u_23.Exp.Text
+			local v157 = (v152 + v154) / v153
+			local v158 = math.clamp(v157, 0, 1)
+			local v159 = v_u_47(v_u_24, v158, 1, v143)
+			local v160 = v_u_47(v_u_27, v158, 1, v155)
+			local v161 = v_u_47(v_u_29, (v155 + v_u_5.GetXPFractionOfCurrentLevel(v146)) / v_u_41 * v_u_30, v_u_30, v143)
+			v160:Play()
 			v159:Play()
-			v159.Completed:Wait()
-			if v149 < v153 then
-				v148(v153)
-				v_u_76(v_u_21:FindFirstChild((("Tier%*RewardFrame"):format(v153))), v153)
-				v149 = v153
+			local v162 = v_u_5.CalculateXPForLevel(v155)
+			local v163 = v_u_5.CalculateXPForLevel(v155 + 1) - v162
+			v_u_23.Exp.Text = ("%*/%*"):format(v152 + v154, v163)
+			v_u_26.Exp.Text = v_u_23.Exp.Text
+			v161:Play()
+			v161.Completed:Wait()
+			if v151 < v155 then
+				v150(v155)
+				v_u_76(v_u_21:FindFirstChild((("Tier%*RewardFrame"):format(v155))), v155)
+				v151 = v155
 			end
-			local v162 = math.sqrt(v141) * 0.01
-			task.wait(v162 * 0.5)
-			if v_u_24.Size.X.Scale == 1 and v153 < 50 then
+			local v164 = math.sqrt(v143) * 0.01
+			task.wait(v164 * 0.5)
+			if v_u_24.Size.X.Scale == 1 and v155 < 50 then
 				v_u_24.Size = UDim2.fromScale(0, v_u_24.Size.Y.Scale)
 				v_u_27.Size = UDim2.fromScale(v_u_24.Size.X.Scale, v_u_27.Size.Y.Scale)
 			end
-			if v143 <= 0 then
+			if v145 <= 0 then
 				return
 			end
 		end
 	end)
 end)
-local v163 = v_u_4:GetPathSignal((("SeasonPass/%*/IsPremium/@"):format(v_u_9.CurrentSeason)))
-if v163 then
-	v_u_38 = v163:Connect(function(_, _, _)
+local v165 = v_u_4:GetPathSignal((("SeasonPass/%*/IsPremium/@"):format(v_u_9.CurrentSeason)))
+if v165 then
+	v_u_38 = v165:Connect(function(_, _, _)
 		-- upvalues: (copy) v_u_17
 		v_u_17.UpdateRewardsTrack()
 		v_u_17.Start()
 	end)
 end
-local v164 = v_u_4:GetPathSignal((("SeasonPass/%*/InfRewardsClaimed/@"):format(v_u_9.CurrentSeason)))
-if v164 then
-	v_u_37 = v164:Connect(function(_, _, _)
+local v166 = v_u_4:GetPathSignal((("SeasonPass/%*/InfRewardsClaimed/@"):format(v_u_9.CurrentSeason)))
+if v166 then
+	v_u_37 = v166:Connect(function(_, _, _)
 		-- upvalues: (copy) v_u_4, (copy) v_u_62, (copy) v_u_9
-		local v165 = v_u_4:GetData()
-		if v165 then
-			v_u_62(v165.SeasonPass[v_u_9.CurrentSeason].TotalExperience)
+		local v167 = v_u_4:GetData()
+		if v167 then
+			v_u_62(v167.SeasonPass[v_u_9.CurrentSeason].TotalExperience)
 		else
 			warn("No player data")
 		end

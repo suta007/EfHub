@@ -22,61 +22,37 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 50
-		},
-		{
-			["DisplayName"] = "Firework",
-			["Type"] = "Gear",
-			["Value"] = "Firework",
-			["Quantity"] = 5
-		},
-		{
-			["DisplayName"] = "Magnifying Glass",
-			["Type"] = "Gear",
-			["Value"] = "Magnifying Glass",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Trading Ticket",
-			["Type"] = "Gear",
-			["Value"] = "Trading Ticket",
-			["Quantity"] = 5
-		},
-		{
-			["DisplayName"] = "Event Lantern",
-			["Type"] = "Gear",
-			["Value"] = "Event Lantern",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Snowman Soldier",
+			["DisplayName"] = "Firemite",
 			["Type"] = "Pet",
-			["Value"] = "Snowman Soldier",
+			["Value"] = "Firemite",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Frosty Bite Seed",
+			["DisplayName"] = "Drowned Flower Seed",
 			["Type"] = "Seed",
-			["Value"] = "Frosty Bite",
+			["Value"] = "Drowned Flower",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Seed Pack",
+			["DisplayName"] = "Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Holiday Seed Pack",
+			["Value"] = "Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Ice Table",
+			["DisplayName"] = "Vials",
 			["Type"] = "Cosmetic",
-			["Value"] = "Ice Table",
+			["Value"] = "Vials",
 			["Quantity"] = 1
 		}
 	},
@@ -86,27 +62,21 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 50
-		},
-		{
-			["DisplayName"] = "Rare Egg",
-			["Type"] = "Egg",
-			["Value"] = "Rare Egg",
-			["Quantity"] = 2
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Cryo Rose Seed",
+			["DisplayName"] = "Saskia Seed",
 			["Type"] = "Seed",
-			["Value"] = "Cryo Rose",
+			["Value"] = "Saskia",
 			["Quantity"] = 1
 		}
 	},
@@ -116,21 +86,9 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 50
-		},
-		{
-			["DisplayName"] = "Harvest Tool",
-			["Type"] = "Gear",
-			["Value"] = "Harvest Tool",
-			["Quantity"] = 2
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Grandmaster Sprinkler",
-			["Type"] = "Gear",
-			["Value"] = "Grandmaster Sprinkler",
-			["Quantity"] = 1
-		},
 		{
 			["DisplayName"] = "Levelup Lollipop",
 			["Type"] = "Gear",
@@ -144,18 +102,6 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 75
-		},
-		{
-			["DisplayName"] = "Lightning Rod",
-			["Type"] = "Gear",
-			["Value"] = "Lightning Rod",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Trading Ticket",
-			["Type"] = "Gear",
-			["Value"] = "Trading Ticket",
-			["Quantity"] = 3
 		}
 	},
 	{
@@ -164,12 +110,6 @@ local v8 = {
 			["Type"] = "Gear",
 			["Value"] = "Watering Can",
 			["Quantity"] = 10
-		},
-		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 75
 		}
 	},
 	{
@@ -177,26 +117,14 @@ local v8 = {
 			["DisplayName"] = "Pass Points",
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
-			["Quantity"] = 50
-		},
-		{
-			["DisplayName"] = "Advanced Sprinkler",
-			["Type"] = "Gear",
-			["Value"] = "Advanced Sprinkler",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Super Leaf Blower",
-			["Type"] = "Gear",
-			["Value"] = "Super Leaf Blower",
-			["Quantity"] = 1
+			["Quantity"] = 125
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Bush Flake Seed",
+			["DisplayName"] = "Mini Pumpkin Seed",
 			["Type"] = "Seed",
-			["Value"] = "Bush Flake",
+			["Value"] = "Mini Pumpkin",
 			["Quantity"] = 1
 		}
 	},
@@ -206,19 +134,13 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 50
-		},
-		{
-			["DisplayName"] = "Legendary Egg",
-			["Type"] = "Egg",
-			["Value"] = "Legendary Egg",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Seed Pack",
+			["DisplayName"] = "Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Holiday Seed Pack",
+			["Value"] = "Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -228,27 +150,21 @@ local v8 = {
 			["Type"] = "Gear",
 			["Value"] = "Master Sprinkler",
 			["Quantity"] = 5
-		},
-		{
-			["DisplayName"] = "Watering Can",
-			["Type"] = "Gear",
-			["Value"] = "Watering Can",
-			["Quantity"] = 20
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Toy Horse",
+			["DisplayName"] = "Fire Lamp",
 			["Type"] = "Cosmetic",
-			["Value"] = "Toy Horse",
+			["Value"] = "Fire Lamp",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 1
 		}
 	},
@@ -261,12 +177,6 @@ local v8 = {
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Small Treat",
-			["Type"] = "Gear",
-			["Value"] = "Small Treat",
-			["Quantity"] = 2
-		},
 		{
 			["DisplayName"] = "Medium Treat",
 			["Type"] = "Gear",
@@ -280,12 +190,6 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 50
-		},
-		{
-			["DisplayName"] = "Small Toy",
-			["Type"] = "Gear",
-			["Value"] = "Small Toy",
-			["Quantity"] = 2
 		}
 	},
 	{
@@ -294,56 +198,38 @@ local v8 = {
 			["Type"] = "Gear",
 			["Value"] = "Lightning Rod",
 			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Tanning Mirror",
-			["Type"] = "Gear",
-			["Value"] = "Tanning Mirror",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Rosemary Seed",
+			["DisplayName"] = "Jungle Cherry Seed",
 			["Type"] = "Seed",
-			["Value"] = "Rosemary",
+			["Value"] = "Jungle Cherry",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Snowman Builder",
+			["DisplayName"] = "Ash Raven",
 			["Type"] = "Pet",
-			["Value"] = "Snowman Builder",
+			["Value"] = "Ash Raven",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Watering Can",
+			["DisplayName"] = "Super Watering Can",
 			["Type"] = "Gear",
-			["Value"] = "Watering Can",
-			["Quantity"] = 10
-		},
-		{
-			["DisplayName"] = "Reclaimer",
-			["Type"] = "Gear",
-			["Value"] = "Reclaimer",
-			["Quantity"] = 2
-		},
-		{
-			["DisplayName"] = "Harvest Tool",
-			["Type"] = "Gear",
-			["Value"] = "Harvest Tool",
-			["Quantity"] = 2
+			["Value"] = "Super Watering Can",
+			["Quantity"] = 1
 		}
 	},
 	{
@@ -360,25 +246,13 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 100
-		},
-		{
-			["DisplayName"] = "Recall Wrench",
-			["Type"] = "Gear",
-			["Value"] = "Recall Wrench",
-			["Quantity"] = 10
-		},
-		{
-			["DisplayName"] = "Pet Name Reroller",
-			["Type"] = "Gear",
-			["Value"] = "Pet Name Reroller",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Seed Pack",
+			["DisplayName"] = "Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Holiday Seed Pack",
+			["Value"] = "Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -387,16 +261,10 @@ local v8 = {
 			["DisplayName"] = "Pass Points",
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
-			["Quantity"] = 100
+			["Quantity"] = 175
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 75
-		},
 		{
 			["DisplayName"] = "Rare Egg",
 			["Type"] = "Egg",
@@ -422,17 +290,17 @@ local v8 = {
 	},
 	{
 		{
-			["DisplayName"] = "Winter Wheelbarrow",
+			["DisplayName"] = "Pool Table",
 			["Type"] = "Cosmetic",
-			["Value"] = "Winter Wheelbarrow",
+			["Value"] = "Pool Table",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 1
 		}
 	},
@@ -441,22 +309,10 @@ local v8 = {
 			["DisplayName"] = "Pass Points",
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
-			["Quantity"] = 100
-		},
-		{
-			["DisplayName"] = "Legendary Egg",
-			["Type"] = "Egg",
-			["Value"] = "Legendary Egg",
-			["Quantity"] = 1
+			["Quantity"] = 150
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 50
-		},
 		{
 			["DisplayName"] = "Harvest Tool",
 			["Type"] = "Gear",
@@ -470,27 +326,21 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 150
-		},
-		{
-			["DisplayName"] = "Super Watering Can",
-			["Type"] = "Gear",
-			["Value"] = "Super Watering Can",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Arctic Fox",
+			["DisplayName"] = "Hazehound",
 			["Type"] = "Pet",
-			["Value"] = "Arctic Fox",
+			["Value"] = "Hazehound",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Seed Pack",
+			["DisplayName"] = "Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Holiday Seed Pack",
+			["Value"] = "Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -500,21 +350,9 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 150
-		},
-		{
-			["DisplayName"] = "Evo Apple I Seed",
-			["Type"] = "Seed",
-			["Value"] = "Evo Apple I",
-			["Quantity"] = 1
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Levelup Lollipop",
-			["Type"] = "Gear",
-			["Value"] = "Levelup Lollipop",
-			["Quantity"] = 5
-		},
 		{
 			["DisplayName"] = "Grow All",
 			["Type"] = "Gear",
@@ -524,17 +362,17 @@ local v8 = {
 	},
 	{
 		{
-			["DisplayName"] = "Cryoshard Seed",
+			["DisplayName"] = "Amazon Feather Fern Seed",
 			["Type"] = "Seed",
-			["Value"] = "Cryoshard",
+			["Value"] = "Amazon Feather Fern",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Elder Strawberry Seed",
+			["DisplayName"] = "Burning Bud Seed",
 			["Type"] = "Seed",
-			["Value"] = "Elder Strawberry",
+			["Value"] = "Burning Bud",
 			["Quantity"] = 1
 		}
 	},
@@ -544,27 +382,21 @@ local v8 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 75
-		},
-		{
-			["DisplayName"] = "Jungle Egg",
-			["Type"] = "Egg",
-			["Value"] = "Jungle Egg",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Frost Dragon",
+			["DisplayName"] = "Cerberus",
 			["Type"] = "Pet",
-			["Value"] = "Frost Dragon",
+			["Value"] = "Cerberus",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Seed Pack",
+			["DisplayName"] = "Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Holiday Seed Pack",
+			["Value"] = "Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -578,9 +410,9 @@ local v8 = {
 	},
 	{
 		{
-			["DisplayName"] = "Frostwing Seed",
+			["DisplayName"] = "Boreal Orange Seed",
 			["Type"] = "Seed",
-			["Value"] = "Frostwing",
+			["Value"] = "Boreal Orange",
 			["Quantity"] = 1
 		}
 	}
@@ -593,61 +425,37 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 100
-		},
-		{
-			["DisplayName"] = "Firework",
-			["Type"] = "Gear",
-			["Value"] = "Firework",
-			["Quantity"] = 5
-		},
-		{
-			["DisplayName"] = "Levelup Lollipop",
-			["Type"] = "Gear",
-			["Value"] = "Levelup Lollipop",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Pet Name Reroller",
-			["Type"] = "Gear",
-			["Value"] = "Pet Name Reroller",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Super Leaf Blower",
-			["Type"] = "Gear",
-			["Value"] = "Super Leaf Blower",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Giant Snowman Soldier",
+			["DisplayName"] = "Giant Firemite",
 			["Type"] = "Pet",
-			["Value"] = "GIANT Snowman Soldier",
+			["Value"] = "GIANT Firemite",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Frosty Bite Seed",
+			["DisplayName"] = "Drowned Flower Seed",
 			["Type"] = "Seed",
-			["Value"] = "Frosty Bite",
+			["Value"] = "Drowned Flower",
 			["Quantity"] = 3
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Exotic Holiday Seed Pack",
+			["DisplayName"] = "Exotic Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Exotic Holiday Seed Pack",
+			["Value"] = "Exotic Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Christmas Lamp",
+			["DisplayName"] = "Cerberus Statue",
 			["Type"] = "Cosmetic",
-			["Value"] = "Christmas Lamp",
+			["Value"] = "Cerberus Statue",
 			["Quantity"] = 1
 		}
 	},
@@ -657,33 +465,21 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 100
-		},
-		{
-			["DisplayName"] = "Rare Egg",
-			["Type"] = "Egg",
-			["Value"] = "Rare Egg",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Legendary Egg",
-			["Type"] = "Egg",
-			["Value"] = "Legendary Egg",
-			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 2
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Cryo Rose Seed",
+			["DisplayName"] = "Saskia Seed",
 			["Type"] = "Seed",
-			["Value"] = "Cryo Rose",
+			["Value"] = "Saskia",
 			["Quantity"] = 2
 		}
 	},
@@ -693,27 +489,9 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 100
-		},
-		{
-			["DisplayName"] = "Reclaimer",
-			["Type"] = "Gear",
-			["Value"] = "Reclaimer",
-			["Quantity"] = 1
-		},
-		{
-			["DisplayName"] = "Harvest Tool",
-			["Type"] = "Gear",
-			["Value"] = "Harvest Tool",
-			["Quantity"] = 2
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Grandmaster Sprinkler",
-			["Type"] = "Gear",
-			["Value"] = "Grandmaster Sprinkler",
-			["Quantity"] = 1
-		},
 		{
 			["DisplayName"] = "Levelup Lollipop",
 			["Type"] = "Gear",
@@ -727,21 +505,9 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 125
-		},
-		{
-			["DisplayName"] = "Tanning Mirror",
-			["Type"] = "Gear",
-			["Value"] = "Tanning Mirror",
-			["Quantity"] = 1
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 100
-		},
 		{
 			["DisplayName"] = "Watering Can",
 			["Type"] = "Gear",
@@ -754,20 +520,14 @@ local v9 = {
 			["DisplayName"] = "Pass Points",
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
-			["Quantity"] = 100
-		},
-		{
-			["DisplayName"] = "Advanced Sprinkler",
-			["Type"] = "Gear",
-			["Value"] = "Advanced Sprinkler",
-			["Quantity"] = 2
+			["Quantity"] = 200
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Bush Flake",
+			["DisplayName"] = "Mini Pumpkin",
 			["Type"] = "Seed",
-			["Value"] = "Bush Flake",
+			["Value"] = "Mini Pumpkin",
 			["Quantity"] = 1,
 			["Variant"] = "Silver"
 		}
@@ -778,29 +538,17 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 125
-		},
-		{
-			["DisplayName"] = "Legendary Egg",
-			["Type"] = "Egg",
-			["Value"] = "Legendary Egg",
-			["Quantity"] = 2
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Exotic Holiday Seed Pack",
+			["DisplayName"] = "Exotic Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Exotic Holiday Seed Pack",
+			["Value"] = "Exotic Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Grandmaster Sprinkler",
-			["Type"] = "Gear",
-			["Value"] = "Grandmaster Sprinkler",
-			["Quantity"] = 2
-		},
 		{
 			["DisplayName"] = "Super Watering Can",
 			["Type"] = "Gear",
@@ -810,17 +558,17 @@ local v9 = {
 	},
 	{
 		{
-			["DisplayName"] = "Nutcracker",
+			["DisplayName"] = "Gear Lamp",
 			["Type"] = "Cosmetic",
-			["Value"] = "Nutcracker",
+			["Value"] = "Gear Lamp",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 2
 		}
 	},
@@ -846,12 +594,6 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 125
-		},
-		{
-			["DisplayName"] = "Medium Toy",
-			["Type"] = "Gear",
-			["Value"] = "Medium Toy",
-			["Quantity"] = 2
 		}
 	},
 	{
@@ -864,54 +606,42 @@ local v9 = {
 	},
 	{
 		{
-			["DisplayName"] = "Rosemary Seed",
+			["DisplayName"] = "Jungle Cherry Seed",
 			["Type"] = "Seed",
-			["Value"] = "Rosemary",
+			["Value"] = "Jungle Cherry",
 			["Quantity"] = 1,
 			["Variant"] = "Silver"
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Giant Snowman Builder",
+			["DisplayName"] = "Giant Ash Raven",
 			["Type"] = "Pet",
-			["Value"] = "GIANT Snowman Builder",
+			["Value"] = "GIANT Ash Raven",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 2
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Watering Can",
-			["Type"] = "Gear",
-			["Value"] = "Watering Can",
-			["Quantity"] = 20
-		},
 		{
 			["DisplayName"] = "Reclaimer",
 			["Type"] = "Gear",
 			["Value"] = "Reclaimer",
 			["Quantity"] = 4
-		},
-		{
-			["DisplayName"] = "Harvest Tool",
-			["Type"] = "Gear",
-			["Value"] = "Harvest Tool",
-			["Quantity"] = 4
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 1
 		}
 	},
@@ -921,19 +651,13 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 150
-		},
-		{
-			["DisplayName"] = "Pet Lead",
-			["Type"] = "Gear",
-			["Value"] = "Pet Lead",
-			["Quantity"] = 2
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Exotic Holiday Seed Pack",
+			["DisplayName"] = "Exotic Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Exotic Holiday Seed Pack",
+			["Value"] = "Exotic Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -942,16 +666,10 @@ local v9 = {
 			["DisplayName"] = "Pass Points",
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
-			["Quantity"] = 150
+			["Quantity"] = 300
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 150
-		},
 		{
 			["DisplayName"] = "Legendary Egg",
 			["Type"] = "Egg",
@@ -965,12 +683,6 @@ local v9 = {
 			["Type"] = "Gear",
 			["Value"] = "Godly Sprinkler",
 			["Quantity"] = 2
-		},
-		{
-			["DisplayName"] = "Trading Ticket",
-			["Type"] = "Gear",
-			["Value"] = "Trading Ticket",
-			["Quantity"] = 2
 		}
 	},
 	{
@@ -983,27 +695,21 @@ local v9 = {
 	},
 	{
 		{
-			["DisplayName"] = "Christmas Bench",
+			["DisplayName"] = "Hydro Pillar",
 			["Type"] = "Cosmetic",
-			["Value"] = "Christmas Bench",
+			["Value"] = "Hydro Pillar",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Holiday Crate",
+			["DisplayName"] = "Season 4 Crate",
 			["Type"] = "Crate",
-			["Value"] = "Holiday Crate",
+			["Value"] = "Season 4 Crate",
 			["Quantity"] = 2
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 125
-		},
 		{
 			["DisplayName"] = "Legendary Egg",
 			["Type"] = "Egg",
@@ -1016,8 +722,10 @@ local v9 = {
 			["DisplayName"] = "Pass Points",
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
-			["Quantity"] = 75
-		},
+			["Quantity"] = 200
+		}
+	},
+	{
 		{
 			["DisplayName"] = "Reclaimer",
 			["Type"] = "Gear",
@@ -1027,25 +735,17 @@ local v9 = {
 	},
 	{
 		{
-			["DisplayName"] = "Pass Points",
-			["Type"] = "Currency",
-			["Value"] = "PassPoints",
-			["Quantity"] = 200
-		}
-	},
-	{
-		{
-			["DisplayName"] = "Rainbow Arctic Fox",
+			["DisplayName"] = "Rainbow Hazehound",
 			["Type"] = "Pet",
-			["Value"] = "Rainbow Arctic Fox",
+			["Value"] = "Rainbow Hazehound",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Exotic Holiday Seed Pack",
+			["DisplayName"] = "Exotic Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Exotic Holiday Seed Pack",
+			["Value"] = "Exotic Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -1055,22 +755,9 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 200
-		},
-		{
-			["DisplayName"] = "Evo Apple I Seed",
-			["Type"] = "Seed",
-			["Value"] = "Evo Apple I",
-			["Quantity"] = 1,
-			["Variant"] = "Gold"
 		}
 	},
 	{
-		{
-			["DisplayName"] = "Grandmaster Sprinkler",
-			["Type"] = "Gear",
-			["Value"] = "Grandmaster Sprinkler",
-			["Quantity"] = 5
-		},
 		{
 			["DisplayName"] = "Grow All",
 			["Type"] = "Gear",
@@ -1080,18 +767,18 @@ local v9 = {
 	},
 	{
 		{
-			["DisplayName"] = "Cryoshard Seed",
+			["DisplayName"] = "Amazon Feather Fern Seed",
 			["Type"] = "Seed",
-			["Value"] = "Cryoshard",
+			["Value"] = "Amazon Feather Fern",
 			["Quantity"] = 1,
 			["Variant"] = "Gold"
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Elder Strawberry Seed",
+			["DisplayName"] = "Burning Bud Seed",
 			["Type"] = "Seed",
-			["Value"] = "Elder Strawberry",
+			["Value"] = "Burning Bud",
 			["Quantity"] = 1,
 			["Variant"] = "Silver"
 		}
@@ -1102,27 +789,21 @@ local v9 = {
 			["Type"] = "Currency",
 			["Value"] = "PassPoints",
 			["Quantity"] = 300
-		},
-		{
-			["DisplayName"] = "Bug Egg",
-			["Type"] = "Egg",
-			["Value"] = "Bug Egg",
-			["Quantity"] = 2
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Rainbow Frost Dragon",
+			["DisplayName"] = "Rainbow Cerberus",
 			["Type"] = "Pet",
-			["Value"] = "Rainbow Frost Dragon",
+			["Value"] = "Rainbow Cerberus",
 			["Quantity"] = 1
 		}
 	},
 	{
 		{
-			["DisplayName"] = "Exotic Holiday Seed Pack",
+			["DisplayName"] = "Exotic Season 4 Seed Pack",
 			["Type"] = "Seed Pack",
-			["Value"] = "Exotic Holiday Seed Pack",
+			["Value"] = "Exotic Season 4 Seed Pack",
 			["Quantity"] = 1
 		}
 	},
@@ -1136,9 +817,9 @@ local v9 = {
 	},
 	{
 		{
-			["DisplayName"] = "Frostwing Seed",
+			["DisplayName"] = "Boreal Orange Seed",
 			["Type"] = "Seed",
-			["Value"] = "Frostwing",
+			["Value"] = "Boreal Orange",
 			["Quantity"] = 1,
 			["Variant"] = "Gold"
 		}
@@ -1146,22 +827,22 @@ local v9 = {
 }
 v7.PremiumRewards = v9
 v7.IncludesItems = {
-	"Rainbow Frost Dragon!",
-	"Gold Frostwing!",
-	"Gold Cyroshard",
-	"Giant Snowman Soldier",
-	"Nutcracker"
+	"Rainbow Cerberus!",
+	"Gold Boreal Orange!",
+	"Gold Amazon Feather Fern",
+	"Giant Ash Raven",
+	"Hydro Pillar"
 }
 local v10 = {
-	["Holiday Crate"] = {
-		["DisplayName"] = "Holiday Crate",
+	["Season 4 Crate"] = {
+		["DisplayName"] = "Season 4 Crate",
 		["Rarity"] = "Common",
 		["Type"] = "Crate",
-		["ImageId"] = v6["Holiday Crate"].Icon,
+		["ImageId"] = v6["Season 4 Crate"].Icon,
 		["StockChance"] = 1,
 		["StockAmount"] = { 1, 2 },
 		["Price"] = 100,
-		["PurchaseID"] = 3471915270,
+		["PurchaseID"] = 3564957722,
 		["GiftPurchaseID"] = 0,
 		["LayoutOrder"] = 1,
 		["FallbackPrice"] = 179
@@ -1181,28 +862,28 @@ local v10 = {
 		["LayoutOrder"] = 2,
 		["FallbackPrice"] = 179
 	},
-	["Penguin Statue"] = {
-		["DisplayName"] = "Penguin Statue",
-		["Rarity"] = v5["Penguin Statue"].Rarity,
+	["Garden Basin"] = {
+		["DisplayName"] = "Garden Basin",
+		["Rarity"] = v5["Garden Basin"].Rarity,
 		["Type"] = "Cosmetic",
-		["ImageId"] = v5["Penguin Statue"].Icon,
+		["ImageId"] = v5["Garden Basin"].Icon,
 		["StockChance"] = 5,
 		["StockAmount"] = { 1, 1 },
 		["Price"] = 600,
-		["PurchaseID"] = 3471928442,
+		["PurchaseID"] = 3564957303,
 		["GiftPurchaseID"] = 0,
 		["LayoutOrder"] = 3,
-		["FallbackPrice"] = 239
+		["FallbackPrice"] = 119
 	},
-	["Holiday Seed Pack"] = {
-		["DisplayName"] = "Holiday Seed Pack",
+	["Season 4 Seed Pack"] = {
+		["DisplayName"] = "Season 4 Seed Pack",
 		["Rarity"] = "Divine",
 		["Type"] = "Seed Pack",
-		["ImageId"] = v4.Packs["Holiday Seed Pack"].Icon,
+		["ImageId"] = v4.Packs["Season 4 Seed Pack"].Icon,
 		["StockChance"] = 5,
 		["StockAmount"] = { 1, 2 },
 		["Price"] = 150,
-		["PurchaseID"] = 3471915500,
+		["PurchaseID"] = 3564957517,
 		["GiftPurchaseID"] = 0,
 		["LayoutOrder"] = 4,
 		["FallbackPrice"] = 199
@@ -1237,18 +918,18 @@ local v10 = {
 		["LayoutOrder"] = 6,
 		["FallbackPrice"] = 375
 	},
-	["Pollen Cone"] = {
-		["DisplayName"] = "Pollen Cone",
-		["Rarity"] = v3["Pollen Cone"].SeedRarity,
+	["Purple Treeshroom"] = {
+		["DisplayName"] = "Purple Treeshroom",
+		["Rarity"] = v3["Purple Treeshroom"].SeedRarity,
 		["Type"] = "Seed",
-		["ImageId"] = v3["Pollen Cone"].Asset,
+		["ImageId"] = v3["Purple Treeshroom"].Asset,
 		["StockChance"] = 300,
 		["StockAmount"] = { 1, 1 },
 		["Price"] = 3000,
-		["PurchaseID"] = 3471921586,
+		["PurchaseID"] = 3564958091,
 		["GiftPurchaseID"] = 0,
 		["LayoutOrder"] = 7,
-		["FallbackPrice"] = 779
+		["FallbackPrice"] = 819
 	}
 }
 v7.ShopItems = v10

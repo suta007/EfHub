@@ -150,14 +150,14 @@ return {
 			task.wait()
 		end
 		v_u_29 = true
-		local function v41()
+		local v_u_40 = false
+		local function v42()
 			-- upvalues: (copy) p_u_36, (ref) v_u_10
-			local v40 = p_u_36(v_u_10)
-			if v40 then
-				v_u_10.Position = UDim2.fromOffset(v40.X, v40.Y)
+			local v41 = p_u_36(v_u_10)
+			if v41 then
+				v_u_10.Position = UDim2.fromOffset(v41.X, v41.Y)
 			end
 		end
-		task.spawn(v41)
 		v_u_10.Image = p39 or "rbxassetid://7553620727"
 		v_u_10.Parent = p37 or v_u_9
 		v_u_10.UIScale.Scale = p38 or 1
@@ -165,27 +165,32 @@ return {
 		v_u_7(v_u_10, TweenInfo.new(0.3), {
 			["ImageTransparency"] = 0
 		})
-		local v_u_42 = v_u_7(v_u_10.UIScale, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+		local v_u_43 = v_u_7(v_u_10.UIScale, TweenInfo.new(1, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
 			["Scale"] = (p38 or 1) * 1.1
 		})
-		local v_u_43 = v_u_2.PreRender:Connect(v41)
+		local v_u_44 = v_u_2.PreRender:Connect(v42)
 		return function()
-			-- upvalues: (copy) v_u_43, (ref) v_u_7, (ref) v_u_10, (copy) v_u_42, (ref) v_u_9, (ref) v_u_29
-			if v_u_43.Connected then
-				v_u_43:Disconnect()
-				v_u_7(v_u_10, TweenInfo.new(0.3), {
+			-- upvalues: (ref) v_u_40, (ref) v_u_29, (copy) v_u_44, (copy) v_u_43, (ref) v_u_7, (ref) v_u_10, (ref) v_u_9
+			if not v_u_40 then
+				v_u_40 = true
+				v_u_29 = false
+				if v_u_44 then
+					v_u_44:Disconnect()
+				end
+				if v_u_43 then
+					v_u_43:Cancel()
+				end
+				v_u_7(v_u_10, TweenInfo.new(0.2), {
 					["ImageTransparency"] = 1
-				}).Completed:Wait()
-				v_u_42:Cancel()
+				})
 				v_u_10.Visible = false
 				v_u_10.Parent = v_u_9
-				v_u_29 = false
 			end
 		end
 	end,
 	["focusObject"] = v28,
-	["getDistanceTo"] = function(p44)
+	["getDistanceTo"] = function(p45)
 		-- upvalues: (copy) v_u_8
-		return not v_u_8.Character and (1 / 0) or v_u_8:DistanceFromCharacter(p44)
+		return not v_u_8.Character and (1 / 0) or v_u_8:DistanceFromCharacter(p45)
 	end
 }

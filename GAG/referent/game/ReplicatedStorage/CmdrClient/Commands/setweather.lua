@@ -1,11 +1,11 @@
 local v1 = {
 	["Name"] = "setweather",
-	["Aliases"] = { "w" },
+	["Aliases"] = { "w", "startweather", "startevent" },
 	["Description"] = "Changes the weather to a specified type.",
 	["Group"] = "GameCommands",
 	["Args"] = {
 		{
-			["Type"] = "weather",
+			["Type"] = "weathers",
 			["Name"] = "weather",
 			["Description"] = "The weather to spawn."
 		}

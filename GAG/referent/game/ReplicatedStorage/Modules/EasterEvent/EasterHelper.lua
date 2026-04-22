@@ -1,0 +1,27 @@
+local v1 = game:GetService("ReplicatedStorage")
+local v_u_2 = {}
+local v_u_3 = require(v1.Modules.IsDev)() and 300 or 28800
+function v_u_2.CalcGoldenEggMutli(_, p4)
+	return 2 ^ ((p4 or 0) / 1)
+end
+function v_u_2.GetGoldenEggBasePrice(_)
+	return 25000
+end
+function v_u_2.GetNextGoldenEggPrice(_, p5)
+	-- upvalues: (copy) v_u_2
+	local v6 = 25000 * v_u_2:CalcGoldenEggMutli(p5 or 0)
+	return math.floor(v6)
+end
+function v_u_2.GetGoldenEggResetTimes(_)
+	-- upvalues: (copy) v_u_3
+	local v7 = workspace:GetServerTimeNow()
+	local v8 = v7 % v_u_3
+	local v9 = v_u_3 - v8
+	return {
+		["TimeSincePrev"] = v8,
+		["TimeUntilNextReset"] = v9,
+		["PrevTime"] = v7 - v8,
+		["NextTime"] = v7 + v9
+	}
+end
+return v_u_2

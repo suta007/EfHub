@@ -4641,6 +4641,278 @@ local v6 = {
 		["Model"] = v4:FindFirstChild("Clover Statue"),
 		["Actions"] = {},
 		["Tags"] = { "MISC" }
+	},
+	["Golden Throne"] = {
+		["Description"] = "A regal seat made from pure gold. Perfect for ruling over your garden plots.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://105877034009358",
+		["Model"] = v4:FindFirstChild("Golden Throne"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Picnic Table"] = {
+		["Description"] = "A cozy picnic table for relaxing.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://105025670459365",
+		["Model"] = v4:FindFirstChild("Picnic Table"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Garden Basin"] = {
+		["Description"] = "Keep your garden plots feeling fresh.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://130284931152446",
+		["Model"] = v4:FindFirstChild("Garden Basin"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Vine Bench"] = {
+		["Description"] = "Leafy vine bench, perfect for resting.",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://97843511506024",
+		["Model"] = v4:FindFirstChild("Vine Bench"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Garden Shade"] = {
+		["Description"] = "Keeps you cool while you nurture your garden plots.",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://102223718437962",
+		["Model"] = v4:FindFirstChild("Garden Shade"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Lava Arch"] = {
+		["Description"] = "Fiery gateway that marks the path through molten gardens.",
+		["Rarity"] = "Mythical",
+		["Icon"] = "rbxassetid://84382700238502",
+		["Model"] = v4:FindFirstChild("Lava Arch"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Lava Fountain"] = {
+		["Description"] = "Blazing fountain of molten lava.",
+		["Rarity"] = "Mythical",
+		["Icon"] = "rbxassetid://136366934293320",
+		["Model"] = v4:FindFirstChild("Lava Fountain"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Pool Table"] = {
+		["Description"] = "Classic table for a friendly game, indoors or out.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://99417028609088",
+		["Model"] = v4:FindFirstChild("Pool Table"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Fire Lamp"] = {
+		["Description"] = "Keep your garden glowing, one flame at a time.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://96181837245115",
+		["Model"] = v4:FindFirstChild("Fire Lamp"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Vials"] = {
+		["Description"] = "Collect rare elixirs and enchanted brews in these delicate vials.",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://128022698282843",
+		["Model"] = v4:FindFirstChild("Vials"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Cerberus Statue"] = {
+		["Description"] = "A fearsome guardian with three heads, watching over your domain.",
+		["Rarity"] = "Mythical",
+		["Icon"] = "rbxassetid://117621526842802",
+		["Model"] = v4:FindFirstChild("Cerberus Statue"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Gear Lamp"] = {
+		["Description"] = "Turning gears and glowing light combine for a steampunk touch.",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://83193888394253",
+		["Model"] = v4:FindFirstChild("Gear Lamp"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Hydro Pillar"] = {
+		["Description"] = "A calming cascade captured in a striking pillar.",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://125512307952785",
+		["Model"] = v4:FindFirstChild("Hydro Pillar"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Ash Castle Wall"] = {
+		["Description"] = "Perfect for keeping ashened cannonballs on *their* side.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://71743855105491",
+		["Model"] = v4:FindFirstChild("Ash Castle Wall"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Ash Castle Staircase"] = {
+		["Description"] = "Rise above all, one coarse ashened step at a time.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://71531666579302",
+		["Model"] = v4:FindFirstChild("Ash Castle Staircase"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Ash Castle Tower"] = {
+		["Description"] = "Its over for these ashened monstrosities, I have the high ground!",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://87991071493713",
+		["Model"] = v4:FindFirstChild("Ash Castle Tower"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Ash Castle Banner"] = {
+		["Description"] = "Ashened fabric.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://139032943559136",
+		["Model"] = v4:FindFirstChild("Ash Castle Banner"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Ash Castle Gate"] = {
+		["Description"] = "Open wide the grand entrance to a ashened kingdom.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://100002258431163",
+		["Model"] = v4:FindFirstChild("Ash Castle Gate"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Ash Castle Lantern"] = {
+		["Description"] = "A cold glow in a warm world. Light up those late night sieges.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://123402445803627",
+		["Model"] = v4:FindFirstChild("Ash Castle Lantern"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Egg Lights"] = {
+		["Description"] = "Easter eggs that will light up your garden.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://81879823778004",
+		["Model"] = v4:FindFirstChild("Egg Lights"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Egg Lamp"] = {
+		["Description"] = "Is that an egg shaped lamp?",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://109953849556509",
+		["Model"] = v4:FindFirstChild("Egg Lamp"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Egg Basket"] = {
+		["Description"] = "Use this to collect all your Easter eggs.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://91464687991109",
+		["Model"] = v4:FindFirstChild("Egg Basket"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Easter Bunny Statue"] = {
+		["Description"] = "Big Easter Bunny overlooking your garden.",
+		["Rarity"] = "Mythical",
+		["Icon"] = "rbxassetid://107771512352539",
+		["Model"] = v4:FindFirstChild("Easter Bunny Statue"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Carrot Chair"] = {
+		["Description"] = "Cozy chair that looks like a... carrot...?",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://78938790520178",
+		["Model"] = v4:FindFirstChild("Carrot Chair"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Bunny Mat"] = {
+		["Description"] = "Hop into comfort on this mat!",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://137147944662174",
+		["Model"] = v4:FindFirstChild("Bunny Mat"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Easter Nest"] = {
+		["Description"] = "A nest that holds all your Easter eggs.",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://128025957608754",
+		["Model"] = v4:FindFirstChild("Easter Nest"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Easter Sign"] = {
+		["Description"] = "Easter Hunt begins!",
+		["Rarity"] = "Legendary",
+		["Icon"] = "rbxassetid://113597392808346",
+		["Model"] = v4:FindFirstChild("Easter Sign"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Bunny Stump"] = {
+		["Description"] = "A rabbit resting on a stump.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://134908608925316",
+		["Model"] = v4:FindFirstChild("Bunny Stump"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Wooden Wall With Door"] = {
+		["Description"] = "A wooden wall with a door.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://107378482389658",
+		["Model"] = v4:FindFirstChild("Wooden Wall With Door"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Wooden Floor"] = {
+		["Description"] = "A simple wooden floor.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://102852409467271",
+		["Model"] = v4:FindFirstChild("Wooden Floor"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Wooden Wall With Window"] = {
+		["Description"] = "A wooden wall with a window.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://99596569046069",
+		["Model"] = v4:FindFirstChild("Wooden Wall With Window"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Wooden Wall"] = {
+		["Description"] = "A simple wooden wall.",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://72327404006878",
+		["Model"] = v4:FindFirstChild("Wooden Wall"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Wooden Corner Log"] = {
+		["Description"] = "Connect your wooden walls with this log connector!",
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://114143520834365",
+		["Model"] = v4:FindFirstChild("Wooden Corner Log"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
+	},
+	["Wooden Roof Panel"] = {
+		["Description"] = "A wooden roof to take cover in.",
+		["Rarity"] = "Mythical",
+		["Icon"] = "rbxassetid://87427077517030",
+		["Model"] = v4:FindFirstChild("Wooden Roof Panel"),
+		["Actions"] = {},
+		["Tags"] = { "MISC" }
 	}
 }
 local v7 = {

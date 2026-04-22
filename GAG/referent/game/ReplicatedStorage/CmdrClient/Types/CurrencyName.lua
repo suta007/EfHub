@@ -1,7 +1,7 @@
 local v1 = game:GetService("ReplicatedStorage")
 game:GetService("ServerStorage")
 game:GetService("RunService")
-local v_u_2 = require(script.Parent.Parent.Shared.Util)
+local v_u_2 = require(game.ReplicatedStorage.Code.Util)
 local v_u_3 = require(v1.Data.CurrencyData)
 local v_u_10 = {
 	["Transform"] = function(p4)

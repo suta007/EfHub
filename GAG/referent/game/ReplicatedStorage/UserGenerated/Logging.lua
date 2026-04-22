@@ -7,52 +7,58 @@ local v_u_5 = {
 	["IndentChar"] = " ",
 	["IndentSize"] = 2
 }
-local function v_u_11(p6, ...)
-	local v7, v8, v9 = debug.info((p6 or 0) + 2, "sln")
-	local v10 = ("%*:%*"):format(v7, v8)
-	if v9 then
-		v10 = v10 .. (" %*"):format(v9)
-	end
-	return ("[%*]"):format(v10), ...
-end
-local function v_u_15(...)
+local function v_u_9(...)
 	-- upvalues: (copy) v_u_4, (copy) v_u_5
-	local v12 = table.pack(...)
-	for v13 = 1, v12.n do
-		local v14 = v12[v13]
-		if type(v14) ~= "string" then
-			if typeof(v14) == "Instance" then
-				v14 = ("%*[%*]"):format(v14.ClassName, (v14:GetFullName()))
+	local v6 = table.pack(...)
+	for v7 = 1, v6.n do
+		local v8 = v6[v7]
+		if type(v8) ~= "string" then
+			if typeof(v8) == "Instance" then
+				v8 = ("%*[%*]"):format(v8.ClassName, (v8:GetFullName()))
 			else
-				v14 = v_u_4.Serialize(v14, v_u_5)
+				v8 = v_u_4.Serialize(v8, v_u_5)
 			end
 		end
-		v12[v13] = v14
+		v6[v7] = v8
 	end
-	return table.unpack(v12)
+	return table.unpack(v6)
 end
-local v16, v17
+local v10, v11
 if v1:IsStudio() then
-	v16 = print
-	v17 = warn
+	v10 = print
+	v11 = warn
 else
-	v16 = function(...)
-		-- upvalues: (copy) v_u_11, (copy) v_u_15
-		task.spawn(function(...)
-			-- upvalues: (ref) v_u_11, (ref) v_u_15
-			print(v_u_11(1, v_u_15(...)))
-		end, ...)
+	v10 = function(...)
+		-- upvalues: (copy) v_u_9
+		local v12 = task.spawn
+		local function v14(p13, ...)
+			-- upvalues: (ref) v_u_9
+			print(p13, v_u_9(...))
+		end
+		local v15, v16, v17 = debug.info(2, "sln")
+		local v18 = ("%*:%*"):format(v15, v16)
+		if v17 then
+			v18 = v18 .. (" %*"):format(v17)
+		end
+		v12(v14, ("[%*]"):format(v18), ...)
 	end
-	v17 = function(...)
-		-- upvalues: (copy) v_u_11, (copy) v_u_15
-		task.spawn(function(...)
-			-- upvalues: (ref) v_u_11, (ref) v_u_15
-			warn(v_u_11(1, v_u_15(...)))
-		end, ...)
+	v11 = function(...)
+		-- upvalues: (copy) v_u_9
+		local v19 = task.spawn
+		local function v21(p20, ...)
+			-- upvalues: (ref) v_u_9
+			warn(p20, v_u_9(...))
+		end
+		local v22, v23, v24 = debug.info(2, "sln")
+		local v25 = ("%*:%*"):format(v22, v23)
+		if v24 then
+			v25 = v25 .. (" %*"):format(v24)
+		end
+		v19(v21, ("[%*]"):format(v25), ...)
 	end
 end
-local function v_u_18() end
-local v_u_19 = {
+local function v_u_26() end
+local v_u_27 = {
 	["Trace"] = 1,
 	["Debug"] = 2,
 	["Info"] = 3,
@@ -61,58 +67,58 @@ local v_u_19 = {
 	["Critical"] = 6,
 	["Off"] = 7
 }
-table.freeze(v_u_19)
-local v_u_20 = {
-	["Trace"] = v16,
-	["Debug"] = v16,
-	["Info"] = v16,
-	["Warn"] = v17,
-	["Error"] = v17,
-	["Critical"] = v17,
-	["Off"] = v_u_18
+table.freeze(v_u_27)
+local v_u_28 = {
+	["Trace"] = v10,
+	["Debug"] = v10,
+	["Info"] = v10,
+	["Warn"] = v11,
+	["Error"] = v11,
+	["Critical"] = v11,
+	["Off"] = v_u_26
 }
-table.freeze(v_u_20)
-local v21 = v3.Set(v2(v_u_19))
-local v_u_22 = table.clone(v_u_20)
-local v_u_23 = "Info"
-local function v_u_32(p24, p25)
-	-- upvalues: (copy) v_u_19, (ref) v_u_23, (copy) v_u_22, (copy) v_u_20, (copy) v_u_18
-	local v26 = v_u_19[p24]
-	assert(v26)
-	local v27 = p25 == nil and true or type(p25) == "boolean"
-	assert(v27)
-	if v_u_23 ~= p24 or p25 then
-		v_u_23 = p24
-		local v28 = v_u_19[p24]
-		local v29 = assert(v28)
-		for v30, v31 in pairs(v_u_19) do
-			if v29 <= v31 then
-				v_u_22[v30] = v_u_20[v30]
+table.freeze(v_u_28)
+local v29 = v3.Set(v2(v_u_27))
+local v_u_30 = table.clone(v_u_28)
+local v_u_31 = "Info"
+local function v_u_40(p32, p33)
+	-- upvalues: (copy) v_u_27, (ref) v_u_31, (copy) v_u_30, (copy) v_u_28, (copy) v_u_26
+	local v34 = v_u_27[p32]
+	assert(v34)
+	local v35 = p33 == nil and true or type(p33) == "boolean"
+	assert(v35)
+	if v_u_31 ~= p32 or p33 then
+		v_u_31 = p32
+		local v36 = v_u_27[p32]
+		local v37 = assert(v36)
+		for v38, v39 in pairs(v_u_27) do
+			if v37 <= v39 then
+				v_u_30[v38] = v_u_28[v38]
 			else
-				v_u_22[v30] = v_u_18
+				v_u_30[v38] = v_u_26
 			end
 		end
 	end
 end
-v_u_32(v_u_23, true)
-local v33 = {
-	["Levels"] = v_u_19,
-	["AssertLevel"] = v21
+v_u_40(v_u_31, true)
+local v41 = {
+	["Levels"] = v_u_27,
+	["AssertLevel"] = v29
 }
-setmetatable(v33, {
-	["__index"] = v_u_22
+setmetatable(v41, {
+	["__index"] = v_u_30
 })
-function v33.GetLevel()
-	-- upvalues: (ref) v_u_23
-	return v_u_23
+function v41.GetLevel()
+	-- upvalues: (ref) v_u_31
+	return v_u_31
 end
-function v33.SetLevel(p34)
-	-- upvalues: (copy) v_u_32
-	v_u_32(p34)
+function v41.SetLevel(p42)
+	-- upvalues: (copy) v_u_40
+	v_u_40(p42)
 end
-function v33.Sink(p35)
-	-- upvalues: (copy) v_u_22
-	local v36 = v_u_22[p35]
-	return assert(v36)
+function v41.Sink(p43)
+	-- upvalues: (copy) v_u_30
+	local v44 = v_u_30[p43]
+	return assert(v44)
 end
-return table.freeze(v33)
+return table.freeze(v41)

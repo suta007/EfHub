@@ -162,7 +162,8 @@ local v_u_38 = {
 	["SuperStorm"] = "Shooting_Stars",
 	["TropicalRain"] = "Tropical_Rain",
 	["SantaIsHereEvent"] = "Blizzard",
-	["ChristmasCrackersEvent"] = "Blizzard"
+	["ChristmasCrackersEvent"] = "Blizzard",
+	["JandelsLastStand"] = "Armageddon"
 }
 workspace.AttributeChanged:Connect(function(p39)
 	-- upvalues: (copy) v_u_38, (copy) v_u_6

@@ -1,521 +1,522 @@
-local v_u_1 = game:GetService("HttpService")
-local v_u_2 = game:GetService("AssetService")
-local v_u_3 = game:GetService("EncodingService")
+local v1 = not game:GetService("RunService"):IsClient()
+assert(v1)
+local v_u_2 = game:GetService("HttpService")
+local v_u_3 = game:GetService("AssetService")
+local v_u_4 = game:GetService("EncodingService")
 require(script.Types)
-local v_u_4 = require(script.Easing)
-local v_u_5 = Rect.new(64, 64, 192, 192)
-local v_u_6 = UDim2.fromScale(0, 0)
-local v_u_7 = UDim2.fromScale(1, 1)
-local v8, v_u_9 = pcall(require, script.PNG)
-if not v8 then
-	v_u_9 = nil
+local v_u_5 = require(script.Easing)
+local v_u_6 = Rect.new(64, 64, 192, 192)
+local v_u_7 = UDim2.fromScale(0, 0)
+local v_u_8 = UDim2.fromScale(1, 1)
+local v9, v_u_10 = pcall(require, script.PNG)
+if not v9 then
+	v_u_10 = nil
 end
-local function v_u_17(p10)
-	local v11 = string.sub(p10, 2, 3)
-	local v12 = tonumber(v11, 16) or 0
-	local v13 = string.sub(p10, 4, 5)
-	local v14 = tonumber(v13, 16) or 0
-	local v15 = string.sub(p10, 6, 7)
-	local v16 = tonumber(v15, 16) or 0
-	return Color3.fromRGB(v12, v14, v16)
+local function v_u_18(p11)
+	local v12 = string.sub(p11, 2, 3)
+	local v13 = tonumber(v12, 16) or 0
+	local v14 = string.sub(p11, 4, 5)
+	local v15 = tonumber(v14, 16) or 0
+	local v16 = string.sub(p11, 6, 7)
+	local v17 = tonumber(v16, 16) or 0
+	return Color3.fromRGB(v13, v15, v17)
 end
-local function v_u_36(p18, p19, p20, p21, p22, p23, p24, p25, p26, p27)
-	for v28 = 1, p26 do
-		local v29 = v28 / p26
-		local v30 = 1 - v29
-		local v31 = v30 * v30
-		local v32 = v31 * v30
-		local v33 = v29 * v29
-		local v34 = v33 * v29
-		local v35 = { v32 * p18 + v31 * 3 * v29 * p20 + v30 * 3 * v33 * p22 + v34 * p24, v32 * p19 + v31 * 3 * v29 * p21 + v30 * 3 * v33 * p23 + v34 * p25 }
-		table.insert(p27, v35)
+local function v_u_37(p19, p20, p21, p22, p23, p24, p25, p26, p27, p28)
+	for v29 = 1, p27 do
+		local v30 = v29 / p27
+		local v31 = 1 - v30
+		local v32 = v31 * v31
+		local v33 = v32 * v31
+		local v34 = v30 * v30
+		local v35 = v34 * v30
+		local v36 = { v33 * p19 + v32 * 3 * v30 * p21 + v31 * 3 * v34 * p23 + v35 * p25, v33 * p20 + v32 * 3 * v30 * p22 + v31 * 3 * v34 * p24 + v35 * p26 }
+		table.insert(p28, v36)
 	end
 end
-local function v_u_63(p37)
-	-- upvalues: (copy) v_u_36
-	local v38 = p37.v
-	local v39 = p37.i
-	local v40 = p37.o
-	local v41 = #v38
-	if v41 == 0 then
+local function v_u_64(p38)
+	-- upvalues: (copy) v_u_37
+	local v39 = p38.v
+	local v40 = p38.i
+	local v41 = p38.o
+	local v42 = #v39
+	if v42 == 0 then
 		return {}
 	end
-	local v42 = {
-		{ v38[1][1], v38[1][2] }
+	local v43 = {
+		{ v39[1][1], v39[1][2] }
 	}
-	local v43
-	if p37.c then
-		v43 = v41
+	local v44
+	if p38.c then
+		v44 = v42
 	else
-		v43 = v41 - 1
+		v44 = v42 - 1
 	end
-	for v44 = 1, v43 do
-		local v45 = v44 >= v41 and 1 or v44 + 1
-		local v46 = v38[v44]
-		local v47 = v38[v45]
-		local v48 = v40[v44]
-		local v49 = v39[v45]
-		local v50 = v46[1]
-		local v51 = v46[2]
-		local v52 = v50 + v48[1]
-		local v53 = v51 + v48[2]
-		local v54 = v47[1] + v49[1]
-		local v55 = v47[2] + v49[2]
-		local v56 = v47[1]
-		local v57 = v47[2]
-		local v58 = v48[1]
-		local v59
-		if math.abs(v58) < 0.01 then
-			local v60 = v48[2]
-			if math.abs(v60) < 0.01 then
-				local v61 = v49[1]
-				if math.abs(v61) < 0.01 then
-					local v62 = v49[2]
-					v59 = math.abs(v62) < 0.01
+	for v45 = 1, v44 do
+		local v46 = v45 >= v42 and 1 or v45 + 1
+		local v47 = v39[v45]
+		local v48 = v39[v46]
+		local v49 = v41[v45]
+		local v50 = v40[v46]
+		local v51 = v47[1]
+		local v52 = v47[2]
+		local v53 = v51 + v49[1]
+		local v54 = v52 + v49[2]
+		local v55 = v48[1] + v50[1]
+		local v56 = v48[2] + v50[2]
+		local v57 = v48[1]
+		local v58 = v48[2]
+		local v59 = v49[1]
+		local v60
+		if math.abs(v59) < 0.01 then
+			local v61 = v49[2]
+			if math.abs(v61) < 0.01 then
+				local v62 = v50[1]
+				if math.abs(v62) < 0.01 then
+					local v63 = v50[2]
+					v60 = math.abs(v63) < 0.01
 				else
-					v59 = false
+					v60 = false
 				end
 			else
-				v59 = false
+				v60 = false
 			end
 		else
-			v59 = false
+			v60 = false
 		end
-		if v59 then
-			table.insert(v42, { v56, v57 })
+		if v60 then
+			table.insert(v43, { v57, v58 })
 		else
-			v_u_36(v50, v51, v52, v53, v54, v55, v56, v57, 12, v42)
+			v_u_37(v51, v52, v53, v54, v55, v56, v57, v58, 12, v43)
 		end
 	end
-	return v42
+	return v43
 end
-local function v_u_75(p64, p65, p66, p67, p68, p69, p70, p71)
-	local v72 = (p66 - p64) * (p69 - p65) - (p67 - p65) * (p68 - p64)
-	local v73 = (p68 - p64) * (p71 - p65) - (p69 - p65) * (p70 - p64)
-	local v74 = (p70 - p64) * (p67 - p65) - (p71 - p65) * (p66 - p64)
-	return (v72 >= 0 and v73 >= 0 and v74 >= 0 or v72 <= 0 and v73 <= 0 and v74 <= 0) and true or false
+local function v_u_76(p65, p66, p67, p68, p69, p70, p71, p72)
+	local v73 = (p67 - p65) * (p70 - p66) - (p68 - p66) * (p69 - p65)
+	local v74 = (p69 - p65) * (p72 - p66) - (p70 - p66) * (p71 - p65)
+	local v75 = (p71 - p65) * (p68 - p66) - (p72 - p66) * (p67 - p65)
+	return (v73 >= 0 and v74 >= 0 and v75 >= 0 or v73 <= 0 and v74 <= 0 and v75 <= 0) and true or false
 end
-local function v_u_89(p76)
-	local v77 = #p76
-	if v77 < 3 then
+local function v_u_90(p77)
+	local v78 = #p77
+	if v78 < 3 then
 		return false
 	end
-	local v78 = 0
-	for v79 = 1, v77 do
-		local v80 = v79 >= v77 and 1 or v79 + 1
-		local v81 = v80 >= v77 and 1 or v80 + 1
-		local v82 = p76[v79][1]
-		local v83 = p76[v79][2]
-		local v84 = p76[v80][1]
-		local v85 = p76[v80][2]
-		local v86 = p76[v81][1]
-		local v87 = p76[v81][2]
-		local v88 = (v84 - v82) * (v87 - v83) - (v85 - v83) * (v86 - v82)
-		if v88 ~= 0 then
-			if v78 == 0 then
-				if v88 > 0 then
-					v78 = 1
+	local v79 = 0
+	for v80 = 1, v78 do
+		local v81 = v80 >= v78 and 1 or v80 + 1
+		local v82 = v81 >= v78 and 1 or v81 + 1
+		local v83 = p77[v80][1]
+		local v84 = p77[v80][2]
+		local v85 = p77[v81][1]
+		local v86 = p77[v81][2]
+		local v87 = p77[v82][1]
+		local v88 = p77[v82][2]
+		local v89 = (v85 - v83) * (v88 - v84) - (v86 - v84) * (v87 - v83)
+		if v89 ~= 0 then
+			if v79 == 0 then
+				if v89 > 0 then
+					v79 = 1
 				else
-					v78 = -1
+					v79 = -1
 				end
-			elseif v88 > 0 and v78 < 0 or v88 < 0 and v78 > 0 then
+			elseif v89 > 0 and v79 < 0 or v89 < 0 and v79 > 0 then
 				return false
 			end
 		end
 	end
 	return true
 end
-local function v_u_94(p90)
-	local v91 = {}
-	for v92 = 2, #p90 - 1 do
-		local v93 = { p90[1], p90[v92], p90[v92 + 1] }
-		table.insert(v91, v93)
+local function v_u_95(p91)
+	local v92 = {}
+	for v93 = 2, #p91 - 1 do
+		local v94 = { p91[1], p91[v93], p91[v93 + 1] }
+		table.insert(v92, v94)
 	end
-	return v91
+	return v92
 end
-local function v_u_121(p95)
-	-- upvalues: (copy) v_u_89, (copy) v_u_94, (copy) v_u_75
-	local v96 = #p95
-	if v96 < 3 then
+local function v_u_122(p96)
+	-- upvalues: (copy) v_u_90, (copy) v_u_95, (copy) v_u_76
+	local v97 = #p96
+	if v97 < 3 then
 		return {}
 	end
-	if v96 == 3 then
+	if v97 == 3 then
 		return {
-			{ p95[1], p95[2], p95[3] }
+			{ p96[1], p96[2], p96[3] }
 		}
 	end
-	if v_u_89(p95) then
-		return v_u_94(p95)
+	if v_u_90(p96) then
+		return v_u_95(p96)
 	end
-	local v97 = table.create(v96)
-	local v98 = 0
-	for v99 = 1, v96 do
-		v97[v99] = v99
-		local v100 = v99 >= v96 and 1 or v99 + 1
-		v98 = v98 + (p95[v100][1] - p95[v99][1]) * (p95[v100][2] + p95[v99][2])
+	local v98 = table.create(v97)
+	local v99 = 0
+	for v100 = 1, v97 do
+		v98[v100] = v100
+		local v101 = v100 >= v97 and 1 or v100 + 1
+		v99 = v99 + (p96[v101][1] - p96[v100][1]) * (p96[v101][2] + p96[v100][2])
 	end
-	local v101
-	if v98 > 0 then
-		v101 = table.create(v96)
-		for v102 = 1, v96 do
-			v101[v102] = v97[v96 - v102 + 1]
+	local v102
+	if v99 > 0 then
+		v102 = table.create(v97)
+		for v103 = 1, v97 do
+			v102[v103] = v98[v97 - v103 + 1]
 		end
 	else
-		v101 = v97
+		v102 = v98
 	end
-	local v103 = #v101
-	local v104 = v103 * v103
-	local v105 = 0
-	local v106 = 1
-	local v107 = {}
+	local v104 = #v102
+	local v105 = v104 * v104
+	local v106 = 0
+	local v107 = 1
+	local v108 = {}
 	while true do
 		while true do
-			if v103 <= 2 or v105 >= v104 then
-				return v107
+			if v104 <= 2 or v106 >= v105 then
+				return v108
 			end
-			v105 = v105 + 1
-			v106 = v103 < v106 and 1 or v106
-			local v108
-			if v106 > 1 then
-				v108 = v106 - 1
+			v106 = v106 + 1
+			v107 = v104 < v107 and 1 or v107
+			local v109
+			if v107 > 1 then
+				v109 = v107 - 1
 			else
-				v108 = v103
+				v109 = v104
 			end
-			local v109 = v106 >= v103 and 1 or v106 + 1
-			local v110 = p95[v101[v108]]
-			local v111 = p95[v101[v106]]
-			local v112 = p95[v101[v109]]
-			local v113 = v110[1]
-			local v114 = v110[2]
-			local v115 = v111[1]
-			local v116 = v111[2]
-			local v117 = v112[1]
-			local v118 = v112[2]
-			if (v115 - v113) * (v118 - v114) - (v116 - v114) * (v117 - v113) <= 0 then
+			local v110 = v107 >= v104 and 1 or v107 + 1
+			local v111 = p96[v102[v109]]
+			local v112 = p96[v102[v107]]
+			local v113 = p96[v102[v110]]
+			local v114 = v111[1]
+			local v115 = v111[2]
+			local v116 = v112[1]
+			local v117 = v112[2]
+			local v118 = v113[1]
+			local v119 = v113[2]
+			if (v116 - v114) * (v119 - v115) - (v117 - v115) * (v118 - v114) <= 0 then
 				break
 			end
-			local v119 = true
-			for v120 = 1, v103 do
-				if v120 ~= v108 and (v120 ~= v106 and (v120 ~= v109 and v_u_75(p95[v101[v120]][1], p95[v101[v120]][2], v110[1], v110[2], v111[1], v111[2], v112[1], v112[2]))) then
-					v119 = false
+			local v120 = true
+			for v121 = 1, v104 do
+				if v121 ~= v109 and (v121 ~= v107 and (v121 ~= v110 and v_u_76(p96[v102[v121]][1], p96[v102[v121]][2], v111[1], v111[2], v112[1], v112[2], v113[1], v113[2]))) then
+					v120 = false
 					break
 				end
 			end
-			if not v119 then
+			if not v120 then
 				goto l30
 			end
-			table.insert(v107, { v110, v111, v112 })
-			table.remove(v101, v106)
-			v103 = v103 - 1
-			if v103 < v106 then
-				v106 = 1
+			table.insert(v108, { v111, v112, v113 })
+			table.remove(v102, v107)
+			v104 = v104 - 1
+			if v104 < v107 then
+				v107 = 1
 			end
 		end
 		::l30::
-		v106 = v106 + 1
+		v107 = v107 + 1
 	end
 end
-local function v_u_152(p122, p123, p124, p125, p126, p127, p128, p129, p130)
-	local v131 = p125 - p123
+local function v_u_153(p123, p124, p125, p126, p127, p128, p129, p130, p131)
 	local v132 = p126 - p124
-	local v133 = p127 - p123
+	local v133 = p127 - p125
 	local v134 = p128 - p124
-	if v131 * v134 - v132 * v133 < 0 then
-		v131 = p127 - p123
+	local v135 = p129 - p125
+	if v132 * v135 - v133 * v134 < 0 then
 		v132 = p128 - p124
-		v133 = p125 - p123
+		v133 = p129 - p125
 		v134 = p126 - p124
+		v135 = p127 - p125
 	end
-	local v135 = v131 * v131 + v132 * v132
-	local v136 = math.sqrt(v135)
-	local v137 = v133 * v133 + v134 * v134
-	local v138 = math.sqrt(v137)
-	if v136 < 1e-6 or v138 < 1e-6 then
-		p122.A.Visible = false
-		p122.B.Visible = false
+	local v136 = v132 * v132 + v133 * v133
+	local v137 = math.sqrt(v136)
+	local v138 = v134 * v134 + v135 * v135
+	local v139 = math.sqrt(v138)
+	if v137 < 1e-6 or v139 < 1e-6 then
+		p123.A.Visible = false
+		p123.B.Visible = false
 		return
 	else
-		local v139 = v131 / v136
-		local v140 = v132 / v136
-		local v141 = v133 * v139 + v134 * v140
-		local v142 = v133 - v139 * v141
-		local v143 = v134 - v140 * v141
-		local v144 = v142 * v142 + v143 * v143
-		local v145 = math.sqrt(v144)
-		if v145 < 1e-6 then
-			p122.A.Visible = false
-			p122.B.Visible = false
+		local v140 = v132 / v137
+		local v141 = v133 / v137
+		local v142 = v134 * v140 + v135 * v141
+		local v143 = v134 - v140 * v142
+		local v144 = v135 - v141 * v142
+		local v145 = v143 * v143 + v144 * v144
+		local v146 = math.sqrt(v145)
+		if v146 < 1e-6 then
+			p123.A.Visible = false
+			p123.B.Visible = false
 		else
-			local v146 = math.atan2(v140, v139) * 57.29577951308232
-			local v147 = p122.A
-			v147.Visible = true
-			v147.Position = UDim2.fromScale(p123, p124)
-			v147.Size = UDim2.fromScale(math.max(v141, 0.0001), v145)
-			v147.Rotation = v146
-			v147.AnchorPoint = Vector2.zero
-			v147.ImageColor3 = p129
-			v147.ImageTransparency = p130
-			local v148 = p122.B
-			local v149 = v136 - v141
-			v148.Visible = v149 > 1e-6
-			if v148.Visible then
-				local v150 = p123 + v139 * v136
-				local v151 = p124 + v140 * v136
-				v148.Position = UDim2.fromScale(v150, v151)
-				v148.Size = UDim2.fromScale(math.max(v149, 0.0001), v145)
-				v148.Rotation = v146 + 180
-				v148.AnchorPoint = Vector2.zero
-				v148.ImageColor3 = p129
-				v148.ImageTransparency = p130
+			local v147 = math.atan2(v141, v140) * 57.29577951308232
+			local v148 = p123.A
+			v148.Visible = true
+			v148.Position = UDim2.fromScale(p124, p125)
+			v148.Size = UDim2.fromScale(math.max(v142, 0.0001), v146)
+			v148.Rotation = v147
+			v148.AnchorPoint = Vector2.zero
+			v148.ImageColor3 = p130
+			v148.ImageTransparency = p131
+			local v149 = p123.B
+			local v150 = v137 - v142
+			v149.Visible = v150 > 1e-6
+			if v149.Visible then
+				local v151 = p124 + v140 * v137
+				local v152 = p125 + v141 * v137
+				v149.Position = UDim2.fromScale(v151, v152)
+				v149.Size = UDim2.fromScale(math.max(v150, 0.0001), v146)
+				v149.Rotation = v147 + 180
+				v149.AnchorPoint = Vector2.zero
+				v149.ImageColor3 = p130
+				v149.ImageTransparency = p131
 			end
 		end
 	end
 end
-local function v_u_172(p153, p154, p155, p156, p157, p158, p159)
-	-- upvalues: (copy) v_u_63, (copy) v_u_121, (copy) v_u_152
-	local v160 = v_u_63(p154)
-	if #v160 >= 3 then
-		local v161 = table.create(#v160)
-		for v162, v163 in v160 do
-			v161[v162] = { v163[1] / p156, v163[2] / p157 }
+local function v_u_173(p154, p155, p156, p157, p158, p159, p160)
+	-- upvalues: (copy) v_u_64, (copy) v_u_122, (copy) v_u_153
+	local v161 = v_u_64(p155)
+	if #v161 >= 3 then
+		local v162 = table.create(#v161)
+		for v163, v164 in v161 do
+			v162[v163] = { v164[1] / p157, v164[2] / p158 }
 		end
-		local v164 = v_u_121(v161)
-		local v165 = p153.Triangles or {}
-		for v166, v167 in v164 do
-			local v168
-			if v166 <= #v165 then
-				v168 = v165[v166]
+		local v165 = v_u_122(v162)
+		local v166 = p154.Triangles or {}
+		for v167, v168 in v165 do
+			local v169
+			if v167 <= #v166 then
+				v169 = v166[v167]
 			else
-				v168 = {}
-				local v169 = Instance.new("ImageLabel")
-				v169.Image = "rbxassetid://83051256678409"
-				v169.BackgroundTransparency = 1
-				v169.BorderSizePixel = 0
-				v169.Size = UDim2.fromScale(1, 1)
-				v169.Parent = p155
-				v168.A = v169
+				v169 = {}
 				local v170 = Instance.new("ImageLabel")
 				v170.Image = "rbxassetid://83051256678409"
 				v170.BackgroundTransparency = 1
 				v170.BorderSizePixel = 0
 				v170.Size = UDim2.fromScale(1, 1)
-				v170.Parent = p155
-				v168.B = v170
-				table.insert(v165, v168)
+				v170.Parent = p156
+				v169.A = v170
+				local v171 = Instance.new("ImageLabel")
+				v171.Image = "rbxassetid://83051256678409"
+				v171.BackgroundTransparency = 1
+				v171.BorderSizePixel = 0
+				v171.Size = UDim2.fromScale(1, 1)
+				v171.Parent = p156
+				v169.B = v171
+				table.insert(v166, v169)
 			end
-			v_u_152(v168, v167[1][1], v167[1][2], v167[2][1], v167[2][2], v167[3][1], v167[3][2], p158, p159)
+			v_u_153(v169, v168[1][1], v168[1][2], v168[2][1], v168[2][2], v168[3][1], v168[3][2], p159, p160)
 		end
-		for v171 = #v164 + 1, #v165 do
-			v165[v171].A.Visible = false
-			v165[v171].B.Visible = false
+		for v172 = #v165 + 1, #v166 do
+			v166[v172].A.Visible = false
+			v166[v172].B.Visible = false
 		end
-		p153.Triangles = v165
+		p154.Triangles = v166
 	end
 end
-local function v_u_223(p173, p174, p175, p176, p177, p178, p179, p180, p181, p182, p183, p184)
-	-- upvalues: (copy) v_u_63, (copy) v_u_4
-	local v185 = v_u_63(p174)
-	if #v185 < 2 then
+local function v_u_224(p174, p175, p176, p177, p178, p179, p180, p181, p182, p183, p184, p185)
+	-- upvalues: (copy) v_u_64, (copy) v_u_5
+	local v186 = v_u_64(p175)
+	if #v186 < 2 then
 		return
 	end
-	local v186 = p173.Segments or {}
-	local v187 = 0
-	local v188 = { 0 }
-	local v189 = p183 or 100
-	local v190 = p184 or 0
-	local v191 = p182 or 0
-	for v192 = 2, #v185 do
-		local v193 = v185[v192][1] - v185[v192 - 1][1]
-		local v194 = v185[v192][2] - v185[v192 - 1][2]
-		local v195 = v193 * v193 + v194 * v194
-		v187 = v187 + math.sqrt(v195)
-		v188[v192] = v187
+	local v187 = p174.Segments or {}
+	local v188 = 0
+	local v189 = { 0 }
+	local v190 = p184 or 100
+	local v191 = p185 or 0
+	local v192 = p183 or 0
+	for v193 = 2, #v186 do
+		local v194 = v186[v193][1] - v186[v193 - 1][1]
+		local v195 = v186[v193][2] - v186[v193 - 1][2]
+		local v196 = v194 * v194 + v195 * v195
+		v188 = v188 + math.sqrt(v196)
+		v189[v193] = v188
 	end
-	local v196 = nil
-	local v197
-	if p181 then
-		v197 = {}
-		for _, v198 in p181 do
-			if v198.v then
-				local v199 = v_u_4.EvaluateScalar
-				local v200 = v198.v
-				table.insert(v197, v199(v200, 0))
+	local v197 = nil
+	local v198
+	if p182 then
+		v198 = {}
+		for _, v199 in p182 do
+			if v199.v then
+				local v200 = v_u_5.EvaluateScalar
+				local v201 = v199.v
+				table.insert(v198, v200(v201, 0))
 			end
 		end
-		if #v197 <= 0 then
-			v197 = v196
+		if #v198 <= 0 then
+			v198 = v197
 		end
 	else
-		v197 = v196
+		v198 = v197
 	end
-	local v201 = p180 / math.min(p176, p177)
-	local v202 = 0
-	for v203 = 2, #v185 do
-		local v204 = v185[v203 - 1]
-		local v205 = v185[v203]
-		local v206 = v205[1] - v204[1]
-		local v207 = v205[2] - v204[2]
-		local v208 = v206 * v206 + v207 * v207
-		local v209 = math.sqrt(v208)
-		if v209 >= 0.01 then
-			local v210 = ((v188[v203 - 1] + v188[v203]) * 0.5 / math.max(v187, 1e-6) * 100 + v190) % 100
-			if v210 >= v191 and v189 >= v210 then
-				local v211 = true
-				if v197 then
-					local v212 = v188[v203 - 1]
-					local v213 = 0
-					for _, v214 in v197 do
-						v213 = v213 + v214
+	local v202 = p181 / math.min(p177, p178)
+	local v203 = 0
+	for v204 = 2, #v186 do
+		local v205 = v186[v204 - 1]
+		local v206 = v186[v204]
+		local v207 = v206[1] - v205[1]
+		local v208 = v206[2] - v205[2]
+		local v209 = v207 * v207 + v208 * v208
+		local v210 = math.sqrt(v209)
+		if v210 >= 0.01 then
+			local v211 = ((v189[v204 - 1] + v189[v204]) * 0.5 / math.max(v188, 1e-6) * 100 + v191) % 100
+			if v211 >= v192 and v190 >= v211 then
+				local v212 = true
+				if v198 then
+					local v213 = v189[v204 - 1]
+					local v214 = 0
+					for _, v215 in v198 do
+						v214 = v214 + v215
 					end
-					if v213 > 0 then
-						local v215 = v212 % v213
-						local v216 = 0
-						for v217, v218 in v197 do
-							v216 = v216 + v218
-							if v215 < v216 then
-								v211 = v217 % 2 == 1
+					if v214 > 0 then
+						local v216 = v213 % v214
+						local v217 = 0
+						for v218, v219 in v198 do
+							v217 = v217 + v219
+							if v216 < v217 then
+								v212 = v218 % 2 == 1
 								break
 							end
 						end
 					end
 				end
-				v202 = v202 + 1
-				local v219
-				if v202 <= #v186 then
-					v219 = v186[v202]
+				v203 = v203 + 1
+				local v220
+				if v203 <= #v187 then
+					v220 = v187[v203]
 				else
-					v219 = Instance.new("Frame")
-					v219.BorderSizePixel = 0
-					v219.AnchorPoint = Vector2.new(0, 0.5)
-					v219.Parent = p175
-					table.insert(v186, v219)
+					v220 = Instance.new("Frame")
+					v220.BorderSizePixel = 0
+					v220.AnchorPoint = Vector2.new(0, 0.5)
+					v220.Parent = p176
+					table.insert(v187, v220)
 				end
-				v219.Visible = v211
-				if v211 then
-					local v220 = math.atan2(v207, v206) * 57.29577951308232
-					local v221 = v209 / p176
-					v219.Position = UDim2.fromScale(v204[1] / p176, v204[2] / p177)
-					v219.Size = UDim2.fromScale(v221, v201)
-					v219.Rotation = v220
-					v219.BackgroundColor3 = p178
-					v219.BackgroundTransparency = p179
+				v220.Visible = v212
+				if v212 then
+					local v221 = math.atan2(v208, v207) * 57.29577951308232
+					local v222 = v210 / p177
+					v220.Position = UDim2.fromScale(v205[1] / p177, v205[2] / p178)
+					v220.Size = UDim2.fromScale(v222, v202)
+					v220.Rotation = v221
+					v220.BackgroundColor3 = p179
+					v220.BackgroundTransparency = p180
 				end
 			end
 		end
 	end
-	for v222 = v202 + 1, #v186 do
-		v186[v222].Visible = false
+	for v223 = v203 + 1, #v187 do
+		v187[v223].Visible = false
 	end
-	p173.Segments = v186
+	p174.Segments = v187
 end
-local function v_u_249(p224, p225, p226, p227, p228)
-	-- upvalues: (copy) v_u_4
-	local v229 = Instance.new("UIGradient")
-	local v230 = p225.p
-	local v231 = p225.k
-	local v232 = v_u_4.EvaluateVector(v231, p228, {})
-	local v233 = {}
-	for v234 = 0, v230 - 1 do
-		local v235 = v234 * 4
-		local v236 = v232[v235 + 1]
-		if not v236 then
-			local v237 = v230 - 1
-			v236 = v234 / math.max(v237, 1)
+local function v_u_250(p225, p226, p227, p228, p229)
+	-- upvalues: (copy) v_u_5
+	local v230 = Instance.new("UIGradient")
+	local v231 = p226.p
+	local v232 = p226.k
+	local v233 = v_u_5.EvaluateVector(v232, p229, {})
+	local v234 = {}
+	for v235 = 0, v231 - 1 do
+		local v236 = v235 * 4
+		local v237 = v233[v236 + 1]
+		if not v237 then
+			local v238 = v231 - 1
+			v237 = v235 / math.max(v238, 1)
 		end
-		local v238 = v232[v235 + 2] or 1
-		local v239 = v232[v235 + 3] or 1
-		local v240 = v232[v235 + 4] or 1
-		local v241 = ColorSequenceKeypoint.new
-		local v242 = math.clamp(v236, 0, 1)
-		local v243 = Color3.new
-		table.insert(v233, v241(v242, v243(v238, v239, v240)))
+		local v239 = v233[v236 + 2] or 1
+		local v240 = v233[v236 + 3] or 1
+		local v241 = v233[v236 + 4] or 1
+		local v242 = ColorSequenceKeypoint.new
+		local v243 = math.clamp(v237, 0, 1)
+		local v244 = Color3.new
+		table.insert(v234, v242(v243, v244(v239, v240, v241)))
 	end
-	local v244 = #v233 < 2 and { ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)), ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1)) } or v233
-	v229.Color = ColorSequence.new(v244)
-	local v245 = v_u_4.EvaluateVector(p226, p228, { 0, 0 })
-	local v246 = v_u_4.EvaluateVector(p227, p228, { 1, 0 })
-	local v247 = v246[1] - v245[1]
-	local v248 = v246[2] - v245[2]
-	v229.Rotation = math.atan2(v248, v247) * 57.29577951308232
-	v229.Parent = p224
-	return v229
+	local v245 = #v234 < 2 and { ColorSequenceKeypoint.new(0, Color3.new(1, 1, 1)), ColorSequenceKeypoint.new(1, Color3.new(1, 1, 1)) } or v234
+	v230.Color = ColorSequence.new(v245)
+	local v246 = v_u_5.EvaluateVector(p227, p229, { 0, 0 })
+	local v247 = v_u_5.EvaluateVector(p228, p229, { 1, 0 })
+	local v248 = v247[1] - v246[1]
+	local v249 = v247[2] - v246[2]
+	v230.Rotation = math.atan2(v249, v248) * 57.29577951308232
+	v230.Parent = p225
+	return v230
 end
-local function v_u_281(p250, p251, p252, p253, p254, p255, p256)
-	-- upvalues: (copy) v_u_4
-	local v257 = p251.p
-	local v258 = v_u_4.EvaluateVector(p251.k, p254, {})
-	local v259 = v_u_4.EvaluateVector(p252, p254, { p255 / 2, p256 / 2 })
-	local v260 = v_u_4.EvaluateVector(p253, p254, { p255, p256 / 2 })
-	local v261 = v259[1]
-	local v262 = v259[2]
-	local v263 = v260[1] - v261
-	local v264 = v260[2] - v262
-	local v265 = v263 * v263 + v264 * v264
-	local v266 = math.sqrt(v265)
-	local v267 = math.min(v257, 6)
-	local v268 = {}
-	for v269 = v267, 1, -1 do
-		local v270 = v269 / v267
-		local v271 = v270 * (v257 - 1)
-		local v272 = math.floor(v271)
-		local v273 = v257 - 1
-		local v274 = math.min(v272, v273) * 4
-		local v275 = v258[v274 + 2] or 1
-		local v276 = v258[v274 + 3] or 1
-		local v277 = v258[v274 + 4] or 1
-		local v278 = v266 * 2 * v270
-		local v279 = Instance.new("Frame")
-		v279.AnchorPoint = Vector2.new(0.5, 0.5)
-		v279.Position = UDim2.fromScale(v261 / p255, v262 / p256)
-		v279.Size = UDim2.fromScale(v278 / p255, v278 / p256)
-		v279.BackgroundColor3 = Color3.new(v275, v276, v277)
-		v279.BackgroundTransparency = 0
-		v279.BorderSizePixel = 0
-		local v280 = Instance.new("UICorner")
-		v280.CornerRadius = UDim.new(0.5, 0)
-		v280.Parent = v279
-		v279.Parent = p250
-		table.insert(v268, v279)
+local function v_u_282(p251, p252, p253, p254, p255, p256, p257)
+	-- upvalues: (copy) v_u_5
+	local v258 = p252.p
+	local v259 = v_u_5.EvaluateVector(p252.k, p255, {})
+	local v260 = v_u_5.EvaluateVector(p253, p255, { p256 / 2, p257 / 2 })
+	local v261 = v_u_5.EvaluateVector(p254, p255, { p256, p257 / 2 })
+	local v262 = v260[1]
+	local v263 = v260[2]
+	local v264 = v261[1] - v262
+	local v265 = v261[2] - v263
+	local v266 = v264 * v264 + v265 * v265
+	local v267 = math.sqrt(v266)
+	local v268 = math.min(v258, 6)
+	local v269 = {}
+	for v270 = v268, 1, -1 do
+		local v271 = v270 / v268
+		local v272 = v271 * (v258 - 1)
+		local v273 = math.floor(v272)
+		local v274 = v258 - 1
+		local v275 = math.min(v273, v274) * 4
+		local v276 = v259[v275 + 2] or 1
+		local v277 = v259[v275 + 3] or 1
+		local v278 = v259[v275 + 4] or 1
+		local v279 = v267 * 2 * v271
+		local v280 = Instance.new("Frame")
+		v280.AnchorPoint = Vector2.new(0.5, 0.5)
+		v280.Position = UDim2.fromScale(v262 / p256, v263 / p257)
+		v280.Size = UDim2.fromScale(v279 / p256, v279 / p257)
+		v280.BackgroundColor3 = Color3.new(v276, v277, v278)
+		v280.BackgroundTransparency = 0
+		v280.BorderSizePixel = 0
+		local v281 = Instance.new("UICorner")
+		v281.CornerRadius = UDim.new(0.5, 0)
+		v281.Parent = v280
+		v280.Parent = p251
+		table.insert(v269, v280)
 	end
-	return v268
+	return v269
 end
-local function v_u_304(p282, p283, p284, p285, p286, p287, p288, p289)
-	-- upvalues: (copy) v_u_4
-	if p283 ~= nil then
-		local v290 = p283.p
-		local v291
-		if v290 == nil or type(v290) ~= "table" then
-			v291 = { 0, 0 }
-		elseif v290.s == true then
-			v291 = { v_u_4.EvaluateScalarAtFrame(v290.x, p284, 0), (v_u_4.EvaluateScalarAtFrame(v290.y, p284, 0)) }
+local function v_u_305(p283, p284, p285, p286, p287, p288, p289, p290)
+	-- upvalues: (copy) v_u_5
+	if p284 ~= nil then
+		local v291 = p284.p
+		local v292
+		if v291 == nil or type(v291) ~= "table" then
+			v292 = { 0, 0 }
+		elseif v291.s == true then
+			v292 = { v_u_5.EvaluateScalarAtFrame(v291.x, p285, 0), (v_u_5.EvaluateScalarAtFrame(v291.y, p285, 0)) }
 		else
-			v291 = v_u_4.EvaluateVector(v290, p284, { 0, 0 })
+			v292 = v_u_5.EvaluateVector(v291, p285, { 0, 0 })
 		end
-		local v292 = v_u_4.EvaluateVector(p283.s, p284, { 100, 100 })
-		local v293 = v_u_4.EvaluateScalarAtFrame(p283.r, p284, 0)
-		local v294 = v_u_4.EvaluateScalarAtFrame(p283.o, p284, 100)
-		local v295 = v_u_4.EvaluateVector(p283.a, p284, { 0, 0 })
-		local v296 = v292[1] / 100
-		local v297 = v292[2] / 100
-		p282.Position = UDim2.fromScale(v291[1] / p285, v291[2] / p286)
-		p282.Rotation = v293
-		p282.Size = UDim2.fromScale(p288 * v296, p289 * v297)
-		if p287 then
-			p282.GroupTransparency = 1 - v294 / 100
+		local v293 = v_u_5.EvaluateVector(p284.s, p285, { 100, 100 })
+		local v294 = v_u_5.EvaluateScalarAtFrame(p284.r, p285, 0)
+		local v295 = v_u_5.EvaluateScalarAtFrame(p284.o, p285, 100)
+		local v296 = v_u_5.EvaluateVector(p284.a, p285, { 0, 0 })
+		local v297 = v293[1] / 100
+		local v298 = v293[2] / 100
+		p283.Position = UDim2.fromScale(v292[1] / p286, v292[2] / p287)
+		p283.Rotation = v294
+		p283.Size = UDim2.fromScale(p289 * v297, p290 * v298)
+		if p288 then
+			p283.GroupTransparency = 1 - v295 / 100
 		end
-		local v298 = p288 * v296 * p285
 		local v299 = p289 * v297 * p286
-		if (v295[1] ~= 0 or v295[2] ~= 0) and (v298 > 0 and v299 > 0) then
-			local v300 = Vector2.new
-			local v301 = v295[1] / v298
-			local v302 = math.clamp(v301, 0, 1)
-			local v303 = v295[2] / v299
-			p282.AnchorPoint = v300(v302, (math.clamp(v303, 0, 1)))
+		local v300 = p290 * v298 * p287
+		if (v296[1] ~= 0 or v296[2] ~= 0) and (v299 > 0 and v300 > 0) then
+			local v301 = Vector2.new
+			local v302 = v296[1] / v299
+			local v303 = math.clamp(v302, 0, 1)
+			local v304 = v296[2] / v300
+			p283.AnchorPoint = v301(v303, (math.clamp(v304, 0, 1)))
 		end
 	end
 end
-local function v_u_321(p305)
-	local v306 = nil
+local function v_u_322(p306)
 	local v307 = nil
 	local v308 = nil
 	local v309 = nil
@@ -528,257 +529,258 @@ local function v_u_321(p305)
 	local v316 = nil
 	local v317 = nil
 	local v318 = nil
-	for _, v319 in p305 do
-		if not v319.hd then
-			local v320 = v319.ty
-			if v320 == "fl" then
-				v311 = v319.c
-				v312 = v319.o
-			elseif v320 == "st" then
-				v313 = v319.c
-				v314 = v319.o
-				v315 = v319.w
-				v317 = v319.da
-			elseif v320 == "sh" then
-				v316 = v319.ks
-			elseif v320 == "tr" then
-				v309 = v319
-			elseif v320 == "tm" then
-				v318 = v319.s
-				v306 = v319.e
-				v307 = v319.o
-				v308 = v319.m
-			elseif v320 == "mm" then
-				v310 = v319.mm
+	local v319 = nil
+	for _, v320 in p306 do
+		if not v320.hd then
+			local v321 = v320.ty
+			if v321 == "fl" then
+				v312 = v320.c
+				v313 = v320.o
+			elseif v321 == "st" then
+				v314 = v320.c
+				v315 = v320.o
+				v316 = v320.w
+				v318 = v320.da
+			elseif v321 == "sh" then
+				v317 = v320.ks
+			elseif v321 == "tr" then
+				v310 = v320
+			elseif v321 == "tm" then
+				v319 = v320.s
+				v307 = v320.e
+				v308 = v320.o
+				v309 = v320.m
+			elseif v321 == "mm" then
+				v311 = v320.mm
 			end
 		end
 	end
-	return v311, v312, v313, v314, v315, v316, v317, v318, v306, v307, v308, v309, v310
+	return v312, v313, v314, v315, v316, v317, v318, v319, v307, v308, v309, v310, v311
 end
-local function v_u_395(p322, p323, p324, p325, p326)
-	-- upvalues: (copy) v_u_321, (copy) v_u_7, (copy) v_u_6, (copy) v_u_304, (copy) v_u_4, (copy) v_u_172, (copy) v_u_223, (copy) v_u_249, (copy) v_u_281, (copy) v_u_395
-	local v327 = p322.it or {}
-	local v328, v329, v330, v331, v332, v333, v334, v335, v336, v337, _, v338, _ = v_u_321(v327)
-	local v339 = false
-	for _, v340 in v327 do
-		if v340.ty == "tr" then
-			local v341 = v340.o
-			local v342
-			if v341 == nil then
-				v342 = false
+local function v_u_396(p323, p324, p325, p326, p327)
+	-- upvalues: (copy) v_u_322, (copy) v_u_8, (copy) v_u_7, (copy) v_u_305, (copy) v_u_5, (copy) v_u_173, (copy) v_u_224, (copy) v_u_250, (copy) v_u_282, (copy) v_u_396
+	local v328 = p323.it or {}
+	local v329, v330, v331, v332, v333, v334, v335, v336, v337, v338, _, v339, _ = v_u_322(v328)
+	local v340 = false
+	for _, v341 in v328 do
+		if v341.ty == "tr" then
+			local v342 = v341.o
+			local v343
+			if v342 == nil then
+				v343 = false
 			else
-				v342 = v341.a == 1
+				v343 = v342.a == 1
 			end
-			if v342 then
-				v339 = true
+			if v343 then
+				v340 = true
 				break
 			end
 		end
 	end
-	local v343
+	local v344
+	if v340 then
+		v344 = Instance.new("CanvasGroup")
+	else
+		v344 = Instance.new("Frame")
+	end
+	v344.BackgroundTransparency = 1
+	v344.BorderSizePixel = 0
+	v344.Size = v_u_8
+	v344.Position = v_u_7
+	v344.Parent = p324
 	if v339 then
-		v343 = Instance.new("CanvasGroup")
-	else
-		v343 = Instance.new("Frame")
+		v_u_305(v344, {
+			["a"] = v339.a,
+			["p"] = v339.p,
+			["s"] = v339.s,
+			["r"] = v339.r,
+			["o"] = v339.o
+		}, p327, p325, p326, v340, 1, 1)
 	end
-	v343.BackgroundTransparency = 1
-	v343.BorderSizePixel = 0
-	v343.Size = v_u_7
-	v343.Position = v_u_6
-	v343.Parent = p323
-	if v338 then
-		v_u_304(v343, {
-			["a"] = v338.a,
-			["p"] = v338.p,
-			["s"] = v338.s,
-			["r"] = v338.r,
-			["o"] = v338.o
-		}, p326, p324, p325, v339, 1, 1)
-	end
-	local v344 = {
-		["Shape"] = p322,
-		["Frame"] = v343,
+	local v345 = {
+		["Shape"] = p323,
+		["Frame"] = v344,
 		["Children"] = {},
-		["FillColor"] = v328,
-		["FillOpacity"] = v329,
-		["StrokeColor"] = v330,
-		["StrokeOpacity"] = v331,
-		["StrokeWidth"] = v332,
-		["PathData"] = v333
+		["FillColor"] = v329,
+		["FillOpacity"] = v330,
+		["StrokeColor"] = v331,
+		["StrokeOpacity"] = v332,
+		["StrokeWidth"] = v333,
+		["PathData"] = v334
 	}
-	local v345
-	if v333 == nil then
-		v345 = false
+	local v346
+	if v334 == nil then
+		v346 = false
 	else
-		v345 = v333.a == 1
+		v346 = v334.a == 1
 	end
-	v344.IsAnimatedPath = v345
-	local v346 = v_u_4.EvaluateColor(v328, p326)
-	local v347 = 1 - v_u_4.EvaluateScalarAtFrame(v329, p326, 100) / 100
-	local v348 = v_u_4.EvaluateColor(v330, p326)
-	local v349 = 1 - v_u_4.EvaluateScalarAtFrame(v331, p326, 100) / 100
-	local v350 = v_u_4.EvaluateScalarAtFrame(v332, p326, 0)
-	local v351 = v_u_4.EvaluateScalarAtFrame(v335, p326, 0)
-	local v352 = v_u_4.EvaluateScalarAtFrame(v336, p326, 100)
-	local v353 = v_u_4.EvaluateScalarAtFrame(v337, p326, 0)
-	local v354 = 0
-	for _, v355 in v327 do
-		if v355.ty == "op" and v355.a then
-			v354 = v_u_4.EvaluateScalarAtFrame(v355.a, p326, 0)
+	v345.IsAnimatedPath = v346
+	local v347 = v_u_5.EvaluateColor(v329, p327)
+	local v348 = 1 - v_u_5.EvaluateScalarAtFrame(v330, p327, 100) / 100
+	local v349 = v_u_5.EvaluateColor(v331, p327)
+	local v350 = 1 - v_u_5.EvaluateScalarAtFrame(v332, p327, 100) / 100
+	local v351 = v_u_5.EvaluateScalarAtFrame(v333, p327, 0)
+	local v352 = v_u_5.EvaluateScalarAtFrame(v336, p327, 0)
+	local v353 = v_u_5.EvaluateScalarAtFrame(v337, p327, 100)
+	local v354 = v_u_5.EvaluateScalarAtFrame(v338, p327, 0)
+	local v355 = 0
+	for _, v356 in v328 do
+		if v356.ty == "op" and v356.a then
+			v355 = v_u_5.EvaluateScalarAtFrame(v356.a, p327, 0)
 		end
 	end
-	for _, v356 in v327 do
-		if not v356.hd then
-			local v357 = v356.ty
-			if v357 == "sh" then
-				local v358 = v_u_4.EvaluateBezierShape(v356.ks, p326)
-				if v358 and v354 ~= 0 then
-					local v359 = 0
+	for _, v357 in v328 do
+		if not v357.hd then
+			local v358 = v357.ty
+			if v358 == "sh" then
+				local v359 = v_u_5.EvaluateBezierShape(v357.ks, p327)
+				if v359 and v355 ~= 0 then
 					local v360 = 0
-					for _, v361 in v358.v do
-						v359 = v359 + v361[1]
-						v360 = v360 + v361[2]
+					local v361 = 0
+					for _, v362 in v359.v do
+						v360 = v360 + v362[1]
+						v361 = v361 + v362[2]
 					end
-					local v362 = v359 / #v358.v
-					local v363 = v360 / #v358.v
-					local v364 = (v358.v[1][1] - v362) ^ 2 + (v358.v[1][2] - v363) ^ 2
-					local v365 = math.sqrt(v364)
-					local v366 = v354 / math.max(v365, 1) + 1
-					local v367 = table.create(#v358.v)
-					for v368, v369 in v358.v do
-						v367[v368] = { v362 + (v369[1] - v362) * v366, v363 + (v369[2] - v363) * v366 }
+					local v363 = v360 / #v359.v
+					local v364 = v361 / #v359.v
+					local v365 = (v359.v[1][1] - v363) ^ 2 + (v359.v[1][2] - v364) ^ 2
+					local v366 = math.sqrt(v365)
+					local v367 = v355 / math.max(v366, 1) + 1
+					local v368 = table.create(#v359.v)
+					for v369, v370 in v359.v do
+						v368[v369] = { v363 + (v370[1] - v363) * v367, v364 + (v370[2] - v364) * v367 }
 					end
-					v358 = {
-						["v"] = v367,
-						["i"] = v358.i,
-						["o"] = v358.o,
-						["c"] = v358.c
+					v359 = {
+						["v"] = v368,
+						["i"] = v359.i,
+						["o"] = v359.o,
+						["c"] = v359.c
 					}
 				end
-				if v358 then
-					if v328 then
-						v_u_172(v344, v358, v343, p324, p325, v346, v347)
+				if v359 then
+					if v329 then
+						v_u_173(v345, v359, v344, p325, p326, v347, v348)
 					end
-					if v330 and v350 > 0 then
-						v_u_223(v344, v358, v343, p324, p325, v348, v349, v350, v334, v351, v352, v353)
+					if v331 and v351 > 0 then
+						v_u_224(v345, v359, v344, p325, p326, v349, v350, v351, v335, v352, v353, v354)
 					end
 				end
-			elseif v357 == "rc" then
-				local v370 = Instance.new("Frame")
-				v370.BorderSizePixel = 0
-				local v371 = v_u_4.EvaluateVector(v356.s, p326, { 100, 100 })
-				local v372 = v_u_4.EvaluateVector(v356.p, p326, { 0, 0 })
-				local v373 = v_u_4.EvaluateScalarAtFrame(v356.r, p326, 0)
-				v370.Size = UDim2.fromScale(v371[1] / p324, v371[2] / p325)
-				v370.Position = UDim2.fromScale(v372[1] / p324, v372[2] / p325)
-				v370.AnchorPoint = Vector2.new(0.5, 0.5)
-				if v328 then
-					v370.BackgroundColor3 = v346
-					v370.BackgroundTransparency = v347
+			elseif v358 == "rc" then
+				local v371 = Instance.new("Frame")
+				v371.BorderSizePixel = 0
+				local v372 = v_u_5.EvaluateVector(v357.s, p327, { 100, 100 })
+				local v373 = v_u_5.EvaluateVector(v357.p, p327, { 0, 0 })
+				local v374 = v_u_5.EvaluateScalarAtFrame(v357.r, p327, 0)
+				v371.Size = UDim2.fromScale(v372[1] / p325, v372[2] / p326)
+				v371.Position = UDim2.fromScale(v373[1] / p325, v373[2] / p326)
+				v371.AnchorPoint = Vector2.new(0.5, 0.5)
+				if v329 then
+					v371.BackgroundColor3 = v347
+					v371.BackgroundTransparency = v348
 				else
-					v370.BackgroundTransparency = 1
+					v371.BackgroundTransparency = 1
 				end
-				if v373 > 0 then
-					local v374 = Instance.new("UICorner")
-					v374.CornerRadius = UDim.new(0, v373)
-					v374.Parent = v370
-					v344.UICorner = v374
+				if v374 > 0 then
+					local v375 = Instance.new("UICorner")
+					v375.CornerRadius = UDim.new(0, v374)
+					v375.Parent = v371
+					v345.UICorner = v375
 				end
-				if v330 and v350 > 0 then
-					local v_u_375 = Instance.new("UIStroke")
-					v_u_375.Color = v348
-					v_u_375.Transparency = v349
-					v_u_375.Thickness = v350 / math.min(p324, p325)
-					v_u_375.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+				if v331 and v351 > 0 then
+					local v_u_376 = Instance.new("UIStroke")
+					v_u_376.Color = v349
+					v_u_376.Transparency = v350
+					v_u_376.Thickness = v351 / math.min(p325, p326)
+					v_u_376.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 					if not pcall(function()
-						-- upvalues: (copy) v_u_375
-						v_u_375.StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize
+						-- upvalues: (copy) v_u_376
+						v_u_376.StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize
 					end) then
-						v_u_375.Thickness = v350
+						v_u_376.Thickness = v351
 					end
-					v_u_375.Parent = v370
-					v344.UIStroke = v_u_375
+					v_u_376.Parent = v371
+					v345.UIStroke = v_u_376
 				end
-				v370.Parent = v343
-				v344.Frame = v370
-			elseif v357 == "el" then
-				local v376 = Instance.new("Frame")
-				v376.BorderSizePixel = 0
-				local v377 = v_u_4.EvaluateVector(v356.s, p326, { 100, 100 })
-				local v378 = v_u_4.EvaluateVector(v356.p, p326, { 0, 0 })
-				v376.Size = UDim2.fromScale(v377[1] / p324, v377[2] / p325)
-				v376.Position = UDim2.fromScale(v378[1] / p324, v378[2] / p325)
-				v376.AnchorPoint = Vector2.new(0.5, 0.5)
-				if v328 then
-					v376.BackgroundColor3 = v346
-					v376.BackgroundTransparency = v347
+				v371.Parent = v344
+				v345.Frame = v371
+			elseif v358 == "el" then
+				local v377 = Instance.new("Frame")
+				v377.BorderSizePixel = 0
+				local v378 = v_u_5.EvaluateVector(v357.s, p327, { 100, 100 })
+				local v379 = v_u_5.EvaluateVector(v357.p, p327, { 0, 0 })
+				v377.Size = UDim2.fromScale(v378[1] / p325, v378[2] / p326)
+				v377.Position = UDim2.fromScale(v379[1] / p325, v379[2] / p326)
+				v377.AnchorPoint = Vector2.new(0.5, 0.5)
+				if v329 then
+					v377.BackgroundColor3 = v347
+					v377.BackgroundTransparency = v348
 				else
-					v376.BackgroundTransparency = 1
+					v377.BackgroundTransparency = 1
 				end
-				local v379 = Instance.new("UICorner")
-				v379.CornerRadius = UDim.new(0.5, 0)
-				v379.Parent = v376
-				v344.UICorner = v379
-				if v330 and v350 > 0 then
-					local v_u_380 = Instance.new("UIStroke")
-					v_u_380.Color = v348
-					v_u_380.Transparency = v349
-					v_u_380.Thickness = v350 / math.min(p324, p325)
-					v_u_380.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+				local v380 = Instance.new("UICorner")
+				v380.CornerRadius = UDim.new(0.5, 0)
+				v380.Parent = v377
+				v345.UICorner = v380
+				if v331 and v351 > 0 then
+					local v_u_381 = Instance.new("UIStroke")
+					v_u_381.Color = v349
+					v_u_381.Transparency = v350
+					v_u_381.Thickness = v351 / math.min(p325, p326)
+					v_u_381.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 					pcall(function()
-						-- upvalues: (copy) v_u_380
-						v_u_380.StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize
+						-- upvalues: (copy) v_u_381
+						v_u_381.StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize
 					end)
-					v_u_380.Parent = v376
-					v344.UIStroke = v_u_380
+					v_u_381.Parent = v377
+					v345.UIStroke = v_u_381
 				end
-				v376.Parent = v343
-				v344.Frame = v376
-			elseif v357 == "gf" or v357 == "gs" then
-				local v381 = v356.t or 1
-				if v356.g then
-					if v381 == 1 then
-						v344.UIGradient = v_u_249(v343, v356.g, v356.s, v356.e, p326)
-					elseif v381 == 2 then
-						v_u_281(v343, v356.g, v356.s, v356.e, p326, p324, p325)
+				v377.Parent = v344
+				v345.Frame = v377
+			elseif v358 == "gf" or v358 == "gs" then
+				local v382 = v357.t or 1
+				if v357.g then
+					if v382 == 1 then
+						v345.UIGradient = v_u_250(v344, v357.g, v357.s, v357.e, p327)
+					elseif v382 == 2 then
+						v_u_282(v344, v357.g, v357.s, v357.e, p327, p325, p326)
 					end
 				end
-			elseif v357 == "gr" then
-				local v382 = v_u_395(v356, v343, p324, p325, p326)
-				if v344.Children then
-					local v383 = v344.Children
-					table.insert(v383, v382)
+			elseif v358 == "gr" then
+				local v383 = v_u_396(v357, v344, p325, p326, p327)
+				if v345.Children then
+					local v384 = v345.Children
+					table.insert(v384, v383)
 				end
-			elseif v357 == "rp" then
-				local v384 = v_u_4.EvaluateScalarAtFrame(v356.c, p326, 1)
-				local v385 = v356.tr
-				if v385 and v384 > 1 then
-					local v386 = v_u_4.EvaluateScalarAtFrame(v385.so, p326, 100)
-					local v387 = v_u_4.EvaluateScalarAtFrame(v385.eo, p326, 100)
-					for v388 = 0, math.floor(v384) - 1 do
-						local v389 = Instance.new("Frame")
-						v389.BackgroundTransparency = 1
-						v389.BorderSizePixel = 0
-						v389.Size = v_u_7
-						local v390 = v384 - 1
-						local v391 = v388 / math.max(v390, 1)
-						v389.BackgroundTransparency = 1 - math.lerp(v386, v387, v391) / 100
+			elseif v358 == "rp" then
+				local v385 = v_u_5.EvaluateScalarAtFrame(v357.c, p327, 1)
+				local v386 = v357.tr
+				if v386 and v385 > 1 then
+					local v387 = v_u_5.EvaluateScalarAtFrame(v386.so, p327, 100)
+					local v388 = v_u_5.EvaluateScalarAtFrame(v386.eo, p327, 100)
+					for v389 = 0, math.floor(v385) - 1 do
+						local v390 = Instance.new("Frame")
+						v390.BackgroundTransparency = 1
+						v390.BorderSizePixel = 0
+						v390.Size = v_u_8
+						local v391 = v385 - 1
+						local v392 = v389 / math.max(v391, 1)
+						v390.BackgroundTransparency = 1 - math.lerp(v387, v388, v392) / 100
 						local _ = {
-							["p"] = v385.p,
-							["s"] = v385.s,
-							["r"] = v385.r,
-							["a"] = v385.a,
-							["o"] = v385.o
+							["p"] = v386.p,
+							["s"] = v386.s,
+							["r"] = v386.r,
+							["a"] = v386.a,
+							["o"] = v386.o
 						}
-						local v392 = v_u_4.EvaluateVector(v385.p, p326, { 0, 0 })
-						v_u_4.EvaluateVector(v385.s, p326, { 100, 100 })
-						local v393 = v_u_4.EvaluateScalarAtFrame(v385.r, p326, 0)
-						v389.Position = UDim2.fromScale(v392[1] * v388 / p324, v392[2] * v388 / p325)
-						v389.Rotation = v393 * v388
-						v389.Parent = v343
-						for _, v394 in v327 do
-							if v394.ty == "gr" and v394 ~= p322 then
-								v_u_395(v394, v389, p324, p325, p326)
+						local v393 = v_u_5.EvaluateVector(v386.p, p327, { 0, 0 })
+						v_u_5.EvaluateVector(v386.s, p327, { 100, 100 })
+						local v394 = v_u_5.EvaluateScalarAtFrame(v386.r, p327, 0)
+						v390.Position = UDim2.fromScale(v393[1] * v389 / p325, v393[2] * v389 / p326)
+						v390.Rotation = v394 * v389
+						v390.Parent = v344
+						for _, v395 in v328 do
+							if v395.ty == "gr" and v395 ~= p323 then
+								v_u_396(v395, v390, p325, p326, p327)
 							end
 						end
 					end
@@ -786,402 +788,402 @@ local function v_u_395(p322, p323, p324, p325, p326)
 			end
 		end
 	end
-	return v344
+	return v345
 end
-local function v_u_406(p396, p397, p398, p399, p400)
-	-- upvalues: (copy) v_u_395
-	local v401 = p396.shapes
-	if v401 == nil then
+local function v_u_407(p397, p398, p399, p400, p401)
+	-- upvalues: (copy) v_u_396
+	local v402 = p397.shapes
+	if v402 == nil then
 		return {}
 	end
-	local v402 = {}
-	for v403 = #v401, 1, -1 do
-		local v404 = v401[v403]
-		if not v404.hd and v404.ty == "gr" then
-			local v405 = v_u_395(v404, p397, p398, p399, p400)
-			table.insert(v402, v405)
+	local v403 = {}
+	for v404 = #v402, 1, -1 do
+		local v405 = v402[v404]
+		if not v405.hd and v405.ty == "gr" then
+			local v406 = v_u_396(v405, p398, p399, p400, p401)
+			table.insert(v403, v406)
 		end
 	end
-	return v402
+	return v403
 end
-local function v_u_421(p407, p408, _, p409, p410)
-	-- upvalues: (copy) v_u_7
-	local v411 = p407.t
-	if v411 == nil then
-		return nil
-	end
-	local v412 = v411.d
+local function v_u_422(p408, p409, _, p410, p411)
+	-- upvalues: (copy) v_u_8
+	local v412 = p408.t
 	if v412 == nil then
 		return nil
 	end
-	local v413 = v412.k
-	if v413 == nil or #v413 == 0 then
+	local v413 = v412.d
+	if v413 == nil then
 		return nil
 	end
-	local v_u_414 = nil
-	for _, v415 in v413 do
-		if v415.t == nil or v415.t <= p410 then
-			v_u_414 = v415.s
+	local v414 = v413.k
+	if v414 == nil or #v414 == 0 then
+		return nil
+	end
+	local v_u_415 = nil
+	for _, v416 in v414 do
+		if v416.t == nil or v416.t <= p411 then
+			v_u_415 = v416.s
 		end
 	end
-	if v_u_414 == nil then
-		v_u_414 = v413[1].s
+	if v_u_415 == nil then
+		v_u_415 = v414[1].s
 	end
-	if v_u_414 == nil then
+	if v_u_415 == nil then
 		return nil
 	end
-	local v416 = Instance.new("TextLabel")
-	v416.BackgroundTransparency = 1
-	v416.BorderSizePixel = 0
-	v416.Size = v_u_7
-	v416.Text = v_u_414.t or ""
-	v416.TextScaled = false
-	v416.RichText = false
-	v416.TextSize = (v_u_414.s or 24) / p409 * 100
-	if v_u_414.fc then
-		local v417 = v_u_414.fc
-		v416.TextColor3 = Color3.new(v417[1] or 1, v417[2] or 1, v417[3] or 1)
+	local v417 = Instance.new("TextLabel")
+	v417.BackgroundTransparency = 1
+	v417.BorderSizePixel = 0
+	v417.Size = v_u_8
+	v417.Text = v_u_415.t or ""
+	v417.TextScaled = false
+	v417.RichText = false
+	v417.TextSize = (v_u_415.s or 24) / p410 * 100
+	if v_u_415.fc then
+		local v418 = v_u_415.fc
+		v417.TextColor3 = Color3.new(v418[1] or 1, v418[2] or 1, v418[3] or 1)
 	end
-	local v418 = v_u_414.j or 0
-	if v418 == 0 then
-		v416.TextXAlignment = Enum.TextXAlignment.Left
-	elseif v418 == 1 then
-		v416.TextXAlignment = Enum.TextXAlignment.Right
+	local v419 = v_u_415.j or 0
+	if v419 == 0 then
+		v417.TextXAlignment = Enum.TextXAlignment.Left
+	elseif v419 == 1 then
+		v417.TextXAlignment = Enum.TextXAlignment.Right
 	else
-		v416.TextXAlignment = Enum.TextXAlignment.Center
+		v417.TextXAlignment = Enum.TextXAlignment.Center
 	end
-	v416.TextYAlignment = Enum.TextYAlignment.Top
-	if v_u_414.f then
-		local v419, v420 = pcall(function()
-			-- upvalues: (ref) v_u_414
-			return Enum.Font[v_u_414.f]
+	v417.TextYAlignment = Enum.TextYAlignment.Top
+	if v_u_415.f then
+		local v420, v421 = pcall(function()
+			-- upvalues: (ref) v_u_415
+			return Enum.Font[v_u_415.f]
 		end)
-		if v419 and v420 then
-			v416.Font = v420
+		if v420 and v421 then
+			v417.Font = v421
 		else
-			v416.Font = Enum.Font.GothamMedium
+			v417.Font = Enum.Font.GothamMedium
 		end
 	end
-	v416.Parent = p408
-	return v416
+	v417.Parent = p409
+	return v417
 end
-local function v_u_435(p422, p423, p424, _, _)
-	-- upvalues: (copy) v_u_7, (ref) v_u_9, (copy) v_u_3, (copy) v_u_2
-	local v425 = p422.refId
-	if v425 == nil then
-		return nil
-	end
-	local v426 = p424[v425]
+local function v_u_436(p423, p424, p425, _, _)
+	-- upvalues: (copy) v_u_8, (ref) v_u_10, (copy) v_u_4, (copy) v_u_3
+	local v426 = p423.refId
 	if v426 == nil then
 		return nil
 	end
-	local v427 = Instance.new("ImageLabel")
-	v427.BackgroundTransparency = 1
-	v427.BorderSizePixel = 0
-	v427.Size = v_u_7
-	v427.ScaleType = Enum.ScaleType.Stretch
-	if v426.e == 1 and v426.p then
-		local v428 = v426.p
-		if string.sub(v428, 1, 22) == "data:image/png;base64," then
-			local v_u_429 = string.sub(v428, 23)
-			if v_u_9 then
-				local v431, v_u_432 = pcall(function()
-					-- upvalues: (ref) v_u_3, (copy) v_u_429, (ref) v_u_9
-					local v430 = v_u_3:Base64Decode(buffer.fromstring(v_u_429))
-					return v_u_9.decode(v430)
+	local v427 = p425[v426]
+	if v427 == nil then
+		return nil
+	end
+	local v428 = Instance.new("ImageLabel")
+	v428.BackgroundTransparency = 1
+	v428.BorderSizePixel = 0
+	v428.Size = v_u_8
+	v428.ScaleType = Enum.ScaleType.Stretch
+	if v427.e == 1 and v427.p then
+		local v429 = v427.p
+		if string.sub(v429, 1, 22) == "data:image/png;base64," then
+			local v_u_430 = string.sub(v429, 23)
+			if v_u_10 then
+				local v432, v_u_433 = pcall(function()
+					-- upvalues: (ref) v_u_4, (copy) v_u_430, (ref) v_u_10
+					local v431 = v_u_4:Base64Decode(buffer.fromstring(v_u_430))
+					return v_u_10.decode(v431)
 				end)
-				if v431 and v_u_432 then
-					local v433, v_u_434 = pcall(function()
-						-- upvalues: (ref) v_u_2, (copy) v_u_432
-						return v_u_2:CreateEditableImage({
-							["Size"] = Vector2.new(v_u_432.width, v_u_432.height)
+				if v432 and v_u_433 then
+					local v434, v_u_435 = pcall(function()
+						-- upvalues: (ref) v_u_3, (copy) v_u_433
+						return v_u_3:CreateEditableImage({
+							["Size"] = Vector2.new(v_u_433.width, v_u_433.height)
 						})
 					end)
-					if v433 and (v_u_434 and pcall(function()
-						-- upvalues: (copy) v_u_434, (copy) v_u_432
-						v_u_434:WritePixelsBuffer(Vector2.zero, Vector2.new(v_u_432.width, v_u_432.height), v_u_432.pixels)
+					if v434 and (v_u_435 and pcall(function()
+						-- upvalues: (copy) v_u_435, (copy) v_u_433
+						v_u_435:WritePixelsBuffer(Vector2.zero, Vector2.new(v_u_433.width, v_u_433.height), v_u_433.pixels)
 					end)) then
-						v427.ImageContent = Content.fromObject(v_u_434)
+						v428.ImageContent = Content.fromObject(v_u_435)
 					end
 				end
 			end
-		elseif string.sub(v428, 1, 23) == "data:image/jpeg;base64," then
-			warn("[Lottie] Embedded JPEG not supported, skipping image layer:", p422.nm or "")
+		elseif string.sub(v429, 1, 23) == "data:image/jpeg;base64," then
+			warn("[Lottie] Embedded JPEG not supported, skipping image layer:", p423.nm or "")
 		end
-	elseif v426.p and not v426.e then
-		v427.Image = v426.p
+	elseif v427.p and not v427.e then
+		v428.Image = v427.p
 	end
-	v427.Parent = p423
-	return v427
+	v428.Parent = p424
+	return v428
 end
-local function v_u_457(p436, p437, p438, p439, p440)
-	-- upvalues: (copy) v_u_4, (copy) v_u_5
-	local v441 = p436.ef
-	if v441 ~= nil then
-		for _, v442 in v441 do
-			if v442.ty == 25 then
-				local v443 = v442.ef
-				if v443 ~= nil then
-					local v444 = Color3.new(0, 0, 0)
-					local v445 = 0
-					local v446 = 5
+local function v_u_458(p437, p438, p439, p440, p441)
+	-- upvalues: (copy) v_u_5, (copy) v_u_6
+	local v442 = p437.ef
+	if v442 ~= nil then
+		for _, v443 in v442 do
+			if v443.ty == 25 then
+				local v444 = v443.ef
+				if v444 ~= nil then
+					local v445 = Color3.new(0, 0, 0)
+					local v446 = 0
 					local v447 = 5
-					local v448 = 0.5
-					for _, v449 in v443 do
-						local v450 = v449.ty
-						if v450 ~= nil then
-							if v450 == 1 then
-								v444 = v_u_4.EvaluateColor(v449.v, p440)
-							elseif v450 == 0 then
-								v448 = v_u_4.EvaluateScalarAtFrame(v449.v, p440, 128) / 255
-							elseif v450 == 3 then
-								v445 = v_u_4.EvaluateScalarAtFrame(v449.v, p440, 0)
-							elseif v450 == 2 then
-								v446 = v_u_4.EvaluateScalarAtFrame(v449.v, p440, 5)
-							elseif v450 == 4 then
-								v447 = v_u_4.EvaluateScalarAtFrame(v449.v, p440, 5)
+					local v448 = 5
+					local v449 = 0.5
+					for _, v450 in v444 do
+						local v451 = v450.ty
+						if v451 ~= nil then
+							if v451 == 1 then
+								v445 = v_u_5.EvaluateColor(v450.v, p441)
+							elseif v451 == 0 then
+								v449 = v_u_5.EvaluateScalarAtFrame(v450.v, p441, 128) / 255
+							elseif v451 == 3 then
+								v446 = v_u_5.EvaluateScalarAtFrame(v450.v, p441, 0)
+							elseif v451 == 2 then
+								v447 = v_u_5.EvaluateScalarAtFrame(v450.v, p441, 5)
+							elseif v451 == 4 then
+								v448 = v_u_5.EvaluateScalarAtFrame(v450.v, p441, 5)
 							end
 						end
 					end
-					local v451 = v445 + 180
-					local v452 = math.rad(v451)
-					local v453 = math.cos(v452) * v446 / p438
-					local v454 = math.sin(v452) * v446 / p439
-					local v455 = (v447 * 2 + math.max(p438, p439)) / math.max(p438, p439)
-					local v456 = Instance.new("ImageLabel")
-					v456.Image = "rbxassetid://100849323991833"
-					v456.ScaleType = Enum.ScaleType.Slice
-					v456.SliceCenter = v_u_5
-					v456.ImageColor3 = v444
-					v456.ImageTransparency = 1 - v448
-					v456.BackgroundTransparency = 1
-					v456.BorderSizePixel = 0
-					v456.AnchorPoint = Vector2.new(0.5, 0.5)
-					v456.Position = UDim2.fromScale(v453 + 0.5, v454 + 0.5)
-					v456.Size = UDim2.fromScale(v455, v455)
-					v456.ZIndex = -1
-					v456.Parent = p437
+					local v452 = v446 + 180
+					local v453 = math.rad(v452)
+					local v454 = math.cos(v453) * v447 / p439
+					local v455 = math.sin(v453) * v447 / p440
+					local v456 = (v448 * 2 + math.max(p439, p440)) / math.max(p439, p440)
+					local v457 = Instance.new("ImageLabel")
+					v457.Image = "rbxassetid://100849323991833"
+					v457.ScaleType = Enum.ScaleType.Slice
+					v457.SliceCenter = v_u_6
+					v457.ImageColor3 = v445
+					v457.ImageTransparency = 1 - v449
+					v457.BackgroundTransparency = 1
+					v457.BorderSizePixel = 0
+					v457.AnchorPoint = Vector2.new(0.5, 0.5)
+					v457.Position = UDim2.fromScale(v454 + 0.5, v455 + 0.5)
+					v457.Size = UDim2.fromScale(v456, v456)
+					v457.ZIndex = -1
+					v457.Parent = p438
 					return
 				end
 			end
 		end
 	end
 end
-local function v_u_513(p458, p459, p460, p461, p462, p463)
-	-- upvalues: (copy) v_u_17, (copy) v_u_7, (copy) v_u_406, (copy) v_u_421, (copy) v_u_435, (copy) v_u_513, (copy) v_u_457, (copy) v_u_4, (copy) v_u_304
-	local v464 = {}
+local function v_u_514(p459, p460, p461, p462, p463, p464)
+	-- upvalues: (copy) v_u_18, (copy) v_u_8, (copy) v_u_407, (copy) v_u_422, (copy) v_u_436, (copy) v_u_514, (copy) v_u_458, (copy) v_u_5, (copy) v_u_305
 	local v465 = {}
-	for v466 = #p458, 1, -1 do
-		local v467 = p458[v466]
-		if not v467.hd then
-			local v468 = v467.ty
-			local v469 = v467.ks
-			local v470
-			if v469 == nil then
-				v470 = false
+	local v466 = {}
+	for v467 = #p459, 1, -1 do
+		local v468 = p459[v467]
+		if not v468.hd then
+			local v469 = v468.ty
+			local v470 = v468.ks
+			local v471
+			if v470 == nil then
+				v471 = false
 			else
-				local v471 = v469.o
-				if v471 == nil then
-					v470 = false
+				local v472 = v470.o
+				if v472 == nil then
+					v471 = false
 				else
-					v470 = v471.a == 1
+					v471 = v472.a == 1
 				end
 			end
-			local v472
-			if v468 == 1 then
-				v472 = Instance.new("Frame")
-				v472.BorderSizePixel = 0
-				local v473
-				if v467.sc then
-					v473 = v_u_17(v467.sc)
+			local v473
+			if v469 == 1 then
+				v473 = Instance.new("Frame")
+				v473.BorderSizePixel = 0
+				local v474
+				if v468.sc then
+					v474 = v_u_18(v468.sc)
 				else
-					v473 = Color3.new(0, 0, 0)
+					v474 = Color3.new(0, 0, 0)
 				end
-				v472.BackgroundColor3 = v473
-				v472.BackgroundTransparency = 0
-				v472.Size = UDim2.fromScale((v467.sw or p461) / p461, (v467.sh or p462) / p462)
-			elseif v470 then
-				v472 = Instance.new("CanvasGroup")
-				v472.BackgroundTransparency = 1
-				v472.BorderSizePixel = 0
-				v472.Size = v_u_7
+				v473.BackgroundColor3 = v474
+				v473.BackgroundTransparency = 0
+				v473.Size = UDim2.fromScale((v468.sw or p462) / p462, (v468.sh or p463) / p463)
+			elseif v471 then
+				v473 = Instance.new("CanvasGroup")
+				v473.BackgroundTransparency = 1
+				v473.BorderSizePixel = 0
+				v473.Size = v_u_8
 			else
-				v472 = Instance.new("Frame")
-				v472.BackgroundTransparency = 1
-				v472.BorderSizePixel = 0
-				v472.Size = v_u_7
+				v473 = Instance.new("Frame")
+				v473.BackgroundTransparency = 1
+				v473.BorderSizePixel = 0
+				v473.Size = v_u_8
 			end
-			v472.Name = v467.nm or ("Layer_%*"):format(v467.ind or v466)
-			local v474 = v472.Size.X.Scale
-			local v475 = v472.Size.Y.Scale
-			local v476 = {
-				["Layer"] = v467,
-				["Frame"] = v472,
-				["BaseSizeX"] = v474,
-				["BaseSizeY"] = v475
+			v473.Name = v468.nm or ("Layer_%*"):format(v468.ind or v467)
+			local v475 = v473.Size.X.Scale
+			local v476 = v473.Size.Y.Scale
+			local v477 = {
+				["Layer"] = v468,
+				["Frame"] = v473,
+				["BaseSizeX"] = v475,
+				["BaseSizeY"] = v476
 			}
-			if v467.ind then
-				v465[v467.ind] = v476
+			if v468.ind then
+				v466[v468.ind] = v477
 			end
-			if v468 == 4 then
-				v476.Shapes = v_u_406(v467, v472, p461, p462, p463)
-			elseif v468 == 5 then
-				v476.TextLabel = v_u_421(v467, v472, p461, p462, p463)
-			elseif v468 == 2 then
-				v476.ImageLabel = v_u_435(v467, v472, p460, p461, p462)
-			elseif v468 == 0 then
-				local v477 = v467.refId
-				if v477 and p460[v477] then
-					local v478 = p460[v477]
-					if v478.layers then
-						local v479 = v467.w or (v478.w or p461)
-						local v480 = v467.h or (v478.h or p462)
-						v472.ClipsDescendants = true
-						v472.Size = UDim2.fromScale(v479 / p461, v480 / p462)
-						v476.Children = v_u_513(v478.layers, v472, p460, v479, v480, p463)
+			if v469 == 4 then
+				v477.Shapes = v_u_407(v468, v473, p462, p463, p464)
+			elseif v469 == 5 then
+				v477.TextLabel = v_u_422(v468, v473, p462, p463, p464)
+			elseif v469 == 2 then
+				v477.ImageLabel = v_u_436(v468, v473, p461, p462, p463)
+			elseif v469 == 0 then
+				local v478 = v468.refId
+				if v478 and p461[v478] then
+					local v479 = p461[v478]
+					if v479.layers then
+						local v480 = v468.w or (v479.w or p462)
+						local v481 = v468.h or (v479.h or p463)
+						v473.ClipsDescendants = true
+						v473.Size = UDim2.fromScale(v480 / p462, v481 / p463)
+						v477.Children = v_u_514(v479.layers, v473, p461, v480, v481, p464)
 					end
 				end
 			end
-			v_u_457(v467, v472, p461, p462, p463)
-			if v467.masksProperties then
-				for _, v481 in v467.masksProperties do
-					if v481.mode == "a" or v481.mode == nil then
-						local v482 = v_u_4.EvaluateBezierShape(v481.pt, p463)
-						if v482 then
-							local v483 = (1 / 0)
+			v_u_458(v468, v473, p462, p463, p464)
+			if v468.masksProperties then
+				for _, v482 in v468.masksProperties do
+					if v482.mode == "a" or v482.mode == nil then
+						local v483 = v_u_5.EvaluateBezierShape(v482.pt, p464)
+						if v483 then
 							local v484 = (1 / 0)
-							local v485 = (-1 / 0)
+							local v485 = (1 / 0)
 							local v486 = (-1 / 0)
-							for _, v487 in v482.v do
-								local v488 = v487[1]
-								v483 = math.min(v483, v488)
-								local v489 = v487[2]
+							local v487 = (-1 / 0)
+							for _, v488 in v483.v do
+								local v489 = v488[1]
 								v484 = math.min(v484, v489)
-								local v490 = v487[1]
-								v485 = math.max(v485, v490)
-								local v491 = v487[2]
+								local v490 = v488[2]
+								v485 = math.min(v485, v490)
+								local v491 = v488[1]
 								v486 = math.max(v486, v491)
+								local v492 = v488[2]
+								v487 = math.max(v487, v492)
 							end
-							local v492 = Instance.new("Frame")
-							v492.BackgroundTransparency = 1
-							v492.BorderSizePixel = 0
-							v492.ClipsDescendants = true
-							v492.Position = UDim2.fromScale(v483 / p461, v484 / p462)
-							v492.Size = UDim2.fromScale((v485 - v483) / p461, (v486 - v484) / p462)
-							v492.Parent = p459
-							v472.Parent = v492
-							v476.MatteClip = v492
+							local v493 = Instance.new("Frame")
+							v493.BackgroundTransparency = 1
+							v493.BorderSizePixel = 0
+							v493.ClipsDescendants = true
+							v493.Position = UDim2.fromScale(v484 / p462, v485 / p463)
+							v493.Size = UDim2.fromScale((v486 - v484) / p462, (v487 - v485) / p463)
+							v493.Parent = p460
+							v473.Parent = v493
+							v477.MatteClip = v493
 						end
 					end
 				end
 			end
-			v_u_304(v472, v467.ks, p463, p461, p462, v470, v474, v475)
-			local v493 = p463 - (v467.st or 0)
-			local v494
-			if v467.ip <= v493 then
-				v494 = v493 < v467.op
+			v_u_305(v473, v468.ks, p464, p462, p463, v471, v475, v476)
+			local v494 = p464 - (v468.st or 0)
+			local v495
+			if v468.ip <= v494 then
+				v495 = v494 < v468.op
 			else
-				v494 = false
+				v495 = false
 			end
-			v472.Visible = v494
-			table.insert(v464, v476)
+			v473.Visible = v495
+			table.insert(v465, v477)
 		end
 	end
-	for _, v495 in v464 do
-		local v496 = v495.Layer
-		if v496.parent and v465[v496.parent] then
-			local v497 = v465[v496.parent]
-			v495.Frame.Parent = v497.Frame
-		elseif v495.MatteClip == nil then
-			v495.Frame.Parent = p459
+	for _, v496 in v465 do
+		local v497 = v496.Layer
+		if v497.parent and v466[v497.parent] then
+			local v498 = v466[v497.parent]
+			v496.Frame.Parent = v498.Frame
+		elseif v496.MatteClip == nil then
+			v496.Frame.Parent = p460
 		end
 	end
-	for v498 = 1, #v464 - 1 do
-		local v499 = v464[v498]
-		local v500 = v464[v498 + 1]
-		if v500.Layer.tt then
-			local v501 = nil
-			for _, v502 in v499.Shapes or {} do
-				if v502.PathData then
-					v501 = v_u_4.EvaluateBezierShape(v502.PathData, p463)
+	for v499 = 1, #v465 - 1 do
+		local v500 = v465[v499]
+		local v501 = v465[v499 + 1]
+		if v501.Layer.tt then
+			local v502 = nil
+			for _, v503 in v500.Shapes or {} do
+				if v503.PathData then
+					v502 = v_u_5.EvaluateBezierShape(v503.PathData, p464)
 					break
 				end
 			end
-			if v501 then
-				local v503 = (1 / 0)
+			if v502 then
 				local v504 = (1 / 0)
-				local v505 = (-1 / 0)
+				local v505 = (1 / 0)
 				local v506 = (-1 / 0)
-				for _, v507 in v501.v do
-					local v508 = v507[1]
-					v503 = math.min(v503, v508)
-					local v509 = v507[2]
+				local v507 = (-1 / 0)
+				for _, v508 in v502.v do
+					local v509 = v508[1]
 					v504 = math.min(v504, v509)
-					local v510 = v507[1]
-					v505 = math.max(v505, v510)
-					local v511 = v507[2]
+					local v510 = v508[2]
+					v505 = math.min(v505, v510)
+					local v511 = v508[1]
 					v506 = math.max(v506, v511)
+					local v512 = v508[2]
+					v507 = math.max(v507, v512)
 				end
-				local v512 = Instance.new("Frame")
-				v512.BackgroundTransparency = 1
-				v512.BorderSizePixel = 0
-				v512.ClipsDescendants = true
-				v512.Position = UDim2.fromScale(v503 / p461, v504 / p462)
-				v512.Size = UDim2.fromScale((v505 - v503) / p461, (v506 - v504) / p462)
-				v512.Parent = p459
-				v500.Frame.Parent = v512
-				v500.MatteClip = v512
-				v499.Frame.Visible = false
+				local v513 = Instance.new("Frame")
+				v513.BackgroundTransparency = 1
+				v513.BorderSizePixel = 0
+				v513.ClipsDescendants = true
+				v513.Position = UDim2.fromScale(v504 / p462, v505 / p463)
+				v513.Size = UDim2.fromScale((v506 - v504) / p462, (v507 - v505) / p463)
+				v513.Parent = p460
+				v501.Frame.Parent = v513
+				v501.MatteClip = v513
+				v500.Frame.Visible = false
 			end
 		end
 	end
-	return v464
+	return v465
 end
-local v_u_514 = nil
-local function v_u_531(p515, p516, p517, p518)
-	-- upvalues: (copy) v_u_304, (ref) v_u_514, (copy) v_u_4, (copy) v_u_531
-	for _, v519 in p515 do
-		local v520 = v519.Layer
-		local v521 = p516 - (v520.st or 0)
-		local v522
-		if v520.ip <= v521 then
-			v522 = v521 < v520.op
+local v_u_515 = nil
+local function v_u_532(p516, p517, p518, p519)
+	-- upvalues: (copy) v_u_305, (ref) v_u_515, (copy) v_u_5, (copy) v_u_532
+	for _, v520 in p516 do
+		local v521 = v520.Layer
+		local v522 = p517 - (v521.st or 0)
+		local v523
+		if v521.ip <= v522 then
+			v523 = v522 < v521.op
 		else
-			v522 = false
+			v523 = false
 		end
-		v519.Frame.Visible = v522
-		if v522 then
-			local v523 = v519.Frame:IsA("CanvasGroup")
-			v_u_304(v519.Frame, v520.ks, v521, p517, p518, v523, v519.BaseSizeX, v519.BaseSizeY)
-			if v519.Shapes then
-				for _, v524 in v519.Shapes do
-					v_u_514(v524, v521, p517, p518)
+		v520.Frame.Visible = v523
+		if v523 then
+			local v524 = v520.Frame:IsA("CanvasGroup")
+			v_u_305(v520.Frame, v521.ks, v522, p518, p519, v524, v520.BaseSizeX, v520.BaseSizeY)
+			if v520.Shapes then
+				for _, v525 in v520.Shapes do
+					v_u_515(v525, v522, p518, p519)
 				end
 			end
-			if v519.Children then
-				local v525 = v520.w or p517
-				local v526 = v520.h or p518
-				local v527
-				if v520.tm then
-					v527 = v_u_4.EvaluateScalarAtFrame(v520.tm, v521, 0) * (v520.op - v520.ip)
+			if v520.Children then
+				local v526 = v521.w or p518
+				local v527 = v521.h or p519
+				local v528
+				if v521.tm then
+					v528 = v_u_5.EvaluateScalarAtFrame(v521.tm, v522, 0) * (v521.op - v521.ip)
 				else
-					v527 = v521
+					v528 = v522
 				end
-				v_u_531(v519.Children, v527, v525, v526)
+				v_u_532(v520.Children, v528, v526, v527)
 			end
-			if v519.TextLabel and v520.t then
-				local v528 = v520.t.d
-				if v528 and v528.k then
-					local v529 = nil
-					for _, v530 in v528.k do
-						if v530.t == nil or v530.t <= v521 then
-							v529 = v530.s
+			if v520.TextLabel and v521.t then
+				local v529 = v521.t.d
+				if v529 and v529.k then
+					local v530 = nil
+					for _, v531 in v529.k do
+						if v531.t == nil or v531.t <= v522 then
+							v530 = v531.s
 						end
 					end
-					if v529 then
-						v519.TextLabel.Text = v529.t or ""
-						if v529.fc then
-							v519.TextLabel.TextColor3 = Color3.new(v529.fc[1] or 1, v529.fc[2] or 1, v529.fc[3] or 1)
+					if v530 then
+						v520.TextLabel.Text = v530.t or ""
+						if v530.fc then
+							v520.TextLabel.TextColor3 = Color3.new(v530.fc[1] or 1, v530.fc[2] or 1, v530.fc[3] or 1)
 						end
 					end
 				end
@@ -1189,132 +1191,132 @@ local function v_u_531(p515, p516, p517, p518)
 		end
 	end
 end
-v_u_514 = function(p532, p533, p534, p535)
-	-- upvalues: (ref) v_u_514, (copy) v_u_4, (copy) v_u_172, (copy) v_u_223
-	if p532.Children then
-		for _, v536 in p532.Children do
-			v_u_514(v536, p533, p534, p535)
+v_u_515 = function(p533, p534, p535, p536)
+	-- upvalues: (ref) v_u_515, (copy) v_u_5, (copy) v_u_173, (copy) v_u_224
+	if p533.Children then
+		for _, v537 in p533.Children do
+			v_u_515(v537, p534, p535, p536)
 		end
 	end
-	if p532.IsAnimatedPath and p532.PathData then
-		local v537 = v_u_4.EvaluateBezierShape(p532.PathData, p533)
-		if v537 and p532.Frame then
-			local v538 = v_u_4.EvaluateColor(p532.FillColor, p533)
-			local v539 = v_u_4.EvaluateScalarAtFrame(p532.FillOpacity, p533, 100)
-			if p532.FillColor then
-				v_u_172(p532, v537, p532.Frame, p534, p535, v538, 1 - v539 / 100)
+	if p533.IsAnimatedPath and p533.PathData then
+		local v538 = v_u_5.EvaluateBezierShape(p533.PathData, p534)
+		if v538 and p533.Frame then
+			local v539 = v_u_5.EvaluateColor(p533.FillColor, p534)
+			local v540 = v_u_5.EvaluateScalarAtFrame(p533.FillOpacity, p534, 100)
+			if p533.FillColor then
+				v_u_173(p533, v538, p533.Frame, p535, p536, v539, 1 - v540 / 100)
 			end
-			if p532.StrokeColor then
-				local v540 = v_u_4.EvaluateColor(p532.StrokeColor, p533)
-				local v541 = v_u_4.EvaluateScalarAtFrame(p532.StrokeOpacity, p533, 100)
-				local v542 = v_u_4.EvaluateScalarAtFrame(p532.StrokeWidth, p533, 0)
-				if v542 > 0 then
-					v_u_223(p532, v537, p532.Frame, p534, p535, v540, 1 - v541 / 100, v542)
+			if p533.StrokeColor then
+				local v541 = v_u_5.EvaluateColor(p533.StrokeColor, p534)
+				local v542 = v_u_5.EvaluateScalarAtFrame(p533.StrokeOpacity, p534, 100)
+				local v543 = v_u_5.EvaluateScalarAtFrame(p533.StrokeWidth, p534, 0)
+				if v543 > 0 then
+					v_u_224(p533, v538, p533.Frame, p535, p536, v541, 1 - v542 / 100, v543)
 				end
 			end
 		end
-	elseif p532.FillColor then
-		local v543 = p532.FillColor
-		local v544
-		if v543 == nil then
-			v544 = false
+	elseif p533.FillColor then
+		local v544 = p533.FillColor
+		local v545
+		if v544 == nil then
+			v545 = false
 		else
-			v544 = v543.a == 1
+			v545 = v544.a == 1
 		end
-		if v544 then
-			local v545 = v_u_4.EvaluateColor(p532.FillColor, p533)
-			local v546 = 1 - v_u_4.EvaluateScalarAtFrame(p532.FillOpacity, p533, 100) / 100
-			if p532.Triangles then
-				for _, v547 in p532.Triangles do
-					if v547.A.Visible then
-						v547.A.ImageColor3 = v545
-						v547.A.ImageTransparency = v546
+		if v545 then
+			local v546 = v_u_5.EvaluateColor(p533.FillColor, p534)
+			local v547 = 1 - v_u_5.EvaluateScalarAtFrame(p533.FillOpacity, p534, 100) / 100
+			if p533.Triangles then
+				for _, v548 in p533.Triangles do
+					if v548.A.Visible then
+						v548.A.ImageColor3 = v546
+						v548.A.ImageTransparency = v547
 					end
-					if v547.B.Visible then
-						v547.B.ImageColor3 = v545
-						v547.B.ImageTransparency = v546
+					if v548.B.Visible then
+						v548.B.ImageColor3 = v546
+						v548.B.ImageTransparency = v547
 					end
 				end
 			end
-			if p532.Frame and p532.Frame.BackgroundTransparency < 1 then
-				p532.Frame.BackgroundColor3 = v545
-				p532.Frame.BackgroundTransparency = v546
+			if p533.Frame and p533.Frame.BackgroundTransparency < 1 then
+				p533.Frame.BackgroundColor3 = v546
+				p533.Frame.BackgroundTransparency = v547
 			end
 		end
 	end
-	if p532.StrokeColor then
-		local v548 = p532.StrokeColor
-		local v549
-		if v548 == nil then
-			v549 = false
+	if p533.StrokeColor then
+		local v549 = p533.StrokeColor
+		local v550
+		if v549 == nil then
+			v550 = false
 		else
-			v549 = v548.a == 1
+			v550 = v549.a == 1
 		end
-		if v549 then
-			local v550 = v_u_4.EvaluateColor(p532.StrokeColor, p533)
-			local v551 = v_u_4.EvaluateScalarAtFrame(p532.StrokeOpacity, p533, 100)
-			if p532.Segments then
-				for _, v552 in p532.Segments do
-					if v552.Visible then
-						v552.BackgroundColor3 = v550
-						v552.BackgroundTransparency = 1 - v551 / 100
+		if v550 then
+			local v551 = v_u_5.EvaluateColor(p533.StrokeColor, p534)
+			local v552 = v_u_5.EvaluateScalarAtFrame(p533.StrokeOpacity, p534, 100)
+			if p533.Segments then
+				for _, v553 in p533.Segments do
+					if v553.Visible then
+						v553.BackgroundColor3 = v551
+						v553.BackgroundTransparency = 1 - v552 / 100
 					end
 				end
 			end
-			if p532.UIStroke then
-				p532.UIStroke.Color = v550
-				p532.UIStroke.Transparency = 1 - v551 / 100
+			if p533.UIStroke then
+				p533.UIStroke.Color = v551
+				p533.UIStroke.Transparency = 1 - v552 / 100
 			end
 		end
 	end
 end
 return table.freeze({
-	["Parse"] = function(p553)
-		-- upvalues: (copy) v_u_1
-		return v_u_1:JSONDecode(p553)
+	["Parse"] = function(p554)
+		-- upvalues: (copy) v_u_2
+		return v_u_2:JSONDecode(p554)
 	end,
-	["Create"] = function(p554)
-		-- upvalues: (copy) v_u_7, (copy) v_u_513
-		local v555 = p554.w
-		local v556 = p554.h
-		local v557 = p554.ip
-		local v558 = p554.op
-		local v559 = p554.fr
-		local v560 = Instance.new("Frame")
-		v560.Name = p554.nm or "LottieAnimation"
-		v560.BackgroundTransparency = 1
-		v560.BorderSizePixel = 0
-		v560.ClipsDescendants = true
-		v560.Size = v_u_7
-		local v561 = {}
-		if p554.assets then
-			for _, v562 in p554.assets do
-				v561[v562.id] = v562
+	["Create"] = function(p555)
+		-- upvalues: (copy) v_u_8, (copy) v_u_514
+		local v556 = p555.w
+		local v557 = p555.h
+		local v558 = p555.ip
+		local v559 = p555.op
+		local v560 = p555.fr
+		local v561 = Instance.new("Frame")
+		v561.Name = p555.nm or "LottieAnimation"
+		v561.BackgroundTransparency = 1
+		v561.BorderSizePixel = 0
+		v561.ClipsDescendants = true
+		v561.Size = v_u_8
+		local v562 = {}
+		if p555.assets then
+			for _, v563 in p555.assets do
+				v562[v563.id] = v563
 			end
 		end
 		return {
-			["Animation"] = p554,
-			["Root"] = v560,
-			["Layers"] = v_u_513(p554.layers, v560, v561, v555, v556, v557),
-			["AssetMap"] = v561,
-			["Duration"] = (v558 - v557) / v559,
-			["Width"] = v555,
-			["Height"] = v556
+			["Animation"] = p555,
+			["Root"] = v561,
+			["Layers"] = v_u_514(p555.layers, v561, v562, v556, v557, v558),
+			["AssetMap"] = v562,
+			["Duration"] = (v559 - v558) / v560,
+			["Width"] = v556,
+			["Height"] = v557
 		}
 	end,
-	["Render"] = function(p563, p564)
-		-- upvalues: (copy) v_u_531
-		local v565 = p563.Animation
-		local v566 = v565.ip
-		local v567 = v565.op
-		local v568 = v565.fr
-		local v569 = v567 - v566
-		local v570 = v566 + p564 * v568 % v569
-		v_u_531(p563.Layers, v570, p563.Width, p563.Height)
+	["Render"] = function(p564, p565)
+		-- upvalues: (copy) v_u_532
+		local v566 = p564.Animation
+		local v567 = v566.ip
+		local v568 = v566.op
+		local v569 = v566.fr
+		local v570 = v568 - v567
+		local v571 = v567 + p565 * v569 % v570
+		v_u_532(p564.Layers, v571, p564.Width, p564.Height)
 	end,
-	["Destroy"] = function(p571)
-		p571.Root:Destroy()
-		table.clear(p571.Layers)
-		table.clear(p571.AssetMap)
+	["Destroy"] = function(p572)
+		p572.Root:Destroy()
+		table.clear(p572.Layers)
+		table.clear(p572.AssetMap)
 	end
 })

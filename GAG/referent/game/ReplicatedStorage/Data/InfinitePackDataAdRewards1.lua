@@ -160,7 +160,6 @@ for _, v52 in ipairs(v_u_48) do
 	table.insert(v53, v52)
 end
 for _, v54 in ipairs(v_u_47) do
-	print("High Value Items: ", v_u_47, v54)
 	local v55 = v49.Paid
 	table.insert(v55, v54)
 end

@@ -333,6 +333,15 @@ local v_u_4 = {
 		},
 		["Results"] = { "Fierywork" },
 		["ResultsOverwrite"] = v_u_2:MakeTable("Fiery", "Firework")
+	},
+	["Confection"] = {
+		["Requires"] = {
+			{ "Choc" },
+			{ "Gummy" },
+			{ "Candy" }
+		},
+		["Results"] = { "Confection" },
+		["ResultsOverwrite"] = v_u_2:MakeTable("Choc", "Gummy", "Candy")
 	}
 }
 local v_u_5 = {}

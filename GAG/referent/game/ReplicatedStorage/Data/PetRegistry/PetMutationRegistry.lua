@@ -180,36 +180,6 @@ v2.Tranquil = {
 	["ValueMulti"] = 100,
 	["Color"] = Color3.fromRGB(94, 247, 247)
 }
-local v9 = {
-	["EnumId"] = "Z",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
-	},
-	["Passives"] = { "Alienated Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(49, 255, 63)
-}
-v2.Alienated = v9
-local v10 = {
-	["EnumId"] = "Y",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
-	},
-	["Passives"] = { "UFO Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(11, 163, 0)
-}
-v2.UFO = v10
 v2.Corrupted = {
 	["EnumId"] = "p",
 	["Boosts"] = {},
@@ -237,7 +207,7 @@ v2.Aromatic = {
 	["ValueMulti"] = 100,
 	["Color"] = Color3.fromRGB(162, 145, 57)
 }
-local v11 = {
+local v9 = {
 	["EnumId"] = "s",
 	["Boosts"] = {
 		{
@@ -251,8 +221,8 @@ local v11 = {
 	["ValueMulti"] = 10,
 	["Color"] = Color3.fromRGB(222, 222, 222)
 }
-v2.Silver = v11
-local v12 = {
+v2.Silver = v9
+local v10 = {
 	["EnumId"] = "t",
 	["Boosts"] = {
 		{
@@ -266,7 +236,7 @@ local v12 = {
 	["ValueMulti"] = 1,
 	["Color"] = Color3.fromRGB(102, 153, 51)
 }
-v2.GiantBean = v12
+v2.GiantBean = v10
 v2.Glimmering = {
 	["EnumId"] = "u",
 	["Boosts"] = {},
@@ -303,7 +273,7 @@ v2.Dreadbound = {
 	["ValueMulti"] = 1,
 	["Color"] = Color3.fromRGB(140, 45, 175)
 }
-local v13 = {
+local v11 = {
 	["EnumId"] = "y",
 	["Boosts"] = {
 		{
@@ -317,8 +287,8 @@ local v13 = {
 	["ValueMulti"] = 1,
 	["Color"] = Color3.fromRGB(255, 85, 40)
 }
-v2.Soulflame = v13
-local v14 = {
+v2.Soulflame = v11
+local v12 = {
 	["EnumId"] = "z",
 	["Boosts"] = {
 		{
@@ -332,8 +302,8 @@ local v14 = {
 	["ValueMulti"] = 1,
 	["Color"] = Color3.fromRGB(90, 200, 255)
 }
-v2.Spectral = v14
-local v15 = {
+v2.Spectral = v12
+local v13 = {
 	["EnumId"] = "A",
 	["Boosts"] = {
 		{
@@ -351,7 +321,7 @@ local v15 = {
 	["ValueMulti"] = 1,
 	["Color"] = Color3.fromRGB(255, 0, 100)
 }
-v2.Nightmare = v15
+v2.Nightmare = v13
 v2.Tethered = {
 	["EnumId"] = "B",
 	["Boosts"] = {},
@@ -372,7 +342,7 @@ v2.Aurora = {
 	["ValueMulti"] = 10,
 	["Color"] = Color3.fromRGB(165, 105, 255)
 }
-local v16 = {
+local v14 = {
 	["EnumId"] = "I",
 	["Boosts"] = {
 		{
@@ -390,8 +360,8 @@ local v16 = {
 	["ValueMulti"] = 10,
 	["Color"] = Color3.fromRGB(255, 170, 0)
 }
-v2.JUMBO = v16
-local v17 = {
+v2.JUMBO = v14
+local v15 = {
 	["EnumId"] = "J",
 	["Boosts"] = {
 		{
@@ -405,8 +375,8 @@ local v17 = {
 	["ValueMulti"] = 1,
 	["Color"] = Color3.fromRGB(170, 0, 0)
 }
-v2.Oxpecker = v17
-local v18 = {
+v2.Oxpecker = v15
+local v16 = {
 	["EnumId"] = "K",
 	["Boosts"] = {
 		{
@@ -420,8 +390,8 @@ local v18 = {
 	["ValueMulti"] = 5,
 	["Color"] = Color3.fromRGB(255, 215, 0)
 }
-v2.Giraffe = v18
-local v19 = {
+v2.Giraffe = v16
+local v17 = {
 	["EnumId"] = "L",
 	["Boosts"] = {
 		{
@@ -435,8 +405,8 @@ local v19 = {
 	["ValueMulti"] = 10,
 	["Color"] = Color3.fromRGB(211, 211, 211)
 }
-v2.Rhino = v19
-local v20 = {
+v2.Rhino = v17
+local v18 = {
 	["EnumId"] = "M",
 	["Boosts"] = {
 		{
@@ -450,8 +420,8 @@ local v20 = {
 	["ValueMulti"] = 15,
 	["Color"] = Color3.fromRGB(85, 170, 0)
 }
-v2.Crocodile = v20
-local v21 = {
+v2.Crocodile = v18
+local v19 = {
 	["EnumId"] = "N",
 	["Boosts"] = {
 		{
@@ -465,8 +435,8 @@ local v21 = {
 	["ValueMulti"] = 20,
 	["Color"] = Color3.fromRGB(255, 255, 102)
 }
-v2.Lion = v21
-local v22 = {
+v2.Lion = v19
+local v20 = {
 	["EnumId"] = "O",
 	["Boosts"] = {
 		{
@@ -480,8 +450,8 @@ local v22 = {
 	["ValueMulti"] = 10,
 	["Color"] = Color3.fromRGB(150, 150, 150)
 }
-v2.Forger = v22
-local v23 = {
+v2.Forger = v20
+local v21 = {
 	["EnumId"] = "P",
 	["Boosts"] = {
 		{
@@ -495,7 +465,7 @@ local v23 = {
 	["ValueMulti"] = 100,
 	["Color"] = Color3.fromRGB(255, 255, 0)
 }
-v2.HyperHunger = v23
+v2.HyperHunger = v21
 v2.Nocturnal = {
 	["EnumId"] = "Q",
 	["Boosts"] = {
@@ -562,7 +532,7 @@ v2.JollyDecorator = {
 	["ValueMulti"] = 50,
 	["Color"] = Color3.fromRGB(200, 0, 0)
 }
-local v24 = {
+local v22 = {
 	["EnumId"] = "V",
 	["Boosts"] = {
 		{
@@ -580,7 +550,7 @@ local v24 = {
 	["ValueMulti"] = 100,
 	["Color"] = Color3.fromRGB(120, 180, 255)
 }
-v2.GiantGolem = v24
+v2.GiantGolem = v22
 v2.Fiery = {
 	["EnumId"] = "W",
 	["Boosts"] = {},
@@ -590,7 +560,7 @@ v2.Fiery = {
 	["ValueMulti"] = 100,
 	["Color"] = Color3.fromRGB(255, 128, 0)
 }
-local v25 = {
+local v23 = {
 	["EnumId"] = "X",
 	["Boosts"] = {
 		{
@@ -604,40 +574,100 @@ local v25 = {
 	["ValueMulti"] = 100,
 	["Color"] = Color3.fromRGB(149, 0, 255)
 }
-v2.Venom = v25
-local v_u_26 = nil
-function RollRandomMutation(p27)
-	-- upvalues: (ref) v_u_26
-	local v28 = v_u_26 or 1
-	local v29 = Random.new():NextNumber() * v28
-	local v30 = 0
-	for v31, v32 in p27 do
-		v30 = v30 + v32.Chance
-		if v30 >= v29 then
-			return v31
+v2.Venom = v23
+local v24 = {
+	["EnumId"] = "Y",
+	["Boosts"] = {
+		{
+			["BoostType"] = "PASSIVE_BOOST",
+			["BoostAmount"] = 0.3
+		}
+	},
+	["Passives"] = { "UFO Pet Mutation" },
+	["AvaliableFromMutationMachine"] = false,
+	["Chance"] = 0,
+	["ValueMulti"] = 100,
+	["Color"] = Color3.fromRGB(11, 163, 0)
+}
+v2.UFO = v24
+local v25 = {
+	["EnumId"] = "Z",
+	["Boosts"] = {
+		{
+			["BoostType"] = "PASSIVE_BOOST",
+			["BoostAmount"] = 0.3
+		}
+	},
+	["Passives"] = { "Alienated Pet Mutation" },
+	["AvaliableFromMutationMachine"] = false,
+	["Chance"] = 0,
+	["ValueMulti"] = 1,
+	["Color"] = Color3.fromRGB(49, 255, 63)
+}
+v2.Alienated = v25
+local v26 = {
+	["EnumId"] = "@",
+	["Boosts"] = {
+		{
+			["BoostType"] = "PASSIVE_BOOST",
+			["BoostAmount"] = 0.23
+		}
+	},
+	["Passives"] = { "Blossoming Pet Mutation" },
+	["AvaliableFromMutationMachine"] = false,
+	["Chance"] = 0,
+	["ValueMulti"] = 50,
+	["Color"] = Color3.fromRGB(236, 128, 255)
+}
+v2.Blossoming = v26
+local v27 = {
+	["EnumId"] = "EV",
+	["Boosts"] = {
+		{
+			["BoostType"] = "PASSIVE_BOOST",
+			["BoostAmount"] = 0.3
+		}
+	},
+	["Passives"] = { "Everchanted Pet Mutation", "Everchanted Pet Mutation Bonus" },
+	["AvaliableFromMutationMachine"] = false,
+	["Chance"] = 0,
+	["ValueMulti"] = 25,
+	["Color"] = Color3.fromRGB(0, 255, 127)
+}
+v2.Everchanted = v27
+local v_u_28 = nil
+function RollRandomMutation(p29)
+	-- upvalues: (ref) v_u_28
+	local v30 = v_u_28 or 1
+	local v31 = Random.new():NextNumber() * v30
+	local v32 = 0
+	for v33, v34 in p29 do
+		v32 = v32 + v34.Chance
+		if v32 >= v31 then
+			return v33
 		end
 	end
 	return nil
 end
-local v33 = {}
-local v34 = {}
 local v35 = {}
-for v36, v37 in v2 do
-	v33[v37.EnumId] = v36
-	v34[v36] = v37.EnumId
-	if v37.AvaliableFromMutationMachine then
-		v35[v36] = v37
+local v36 = {}
+local v37 = {}
+for v38, v39 in v2 do
+	v35[v39.EnumId] = v38
+	v36[v38] = v39.EnumId
+	if v39.AvaliableFromMutationMachine then
+		v37[v38] = v39
 	end
 end
-local v38 = 0
-for _, v39 in v35 do
-	v38 = v38 + v39.Chance
+local v40 = 0
+for _, v41 in v37 do
+	v40 = v40 + v41.Chance
 end
-v_u_26 = v38
+v_u_28 = v40
 return {
-	["PetMutationToEnum"] = v34,
-	["EnumToPetMutation"] = v33,
-	["MachineMutationTypes"] = v35,
+	["PetMutationToEnum"] = v36,
+	["EnumToPetMutation"] = v35,
+	["MachineMutationTypes"] = v37,
 	["PetMutationRegistry"] = v2,
 	["RollRandomMutation"] = RollRandomMutation
 }

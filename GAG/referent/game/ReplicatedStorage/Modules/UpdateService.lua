@@ -12,21 +12,34 @@ if v6() and v_u_3:IsServer() then
 	if v_u_3:IsStudio() or game.PlaceId == 108890465381067 then
 		v_u_1.GlobalUpdateTime.Value = workspace:GetServerTimeNow() + 20
 	else
-		v_u_1.GlobalUpdateTime.Value = workspace:GetServerTimeNow() + 120
+		v_u_1.GlobalUpdateTime.Value = workspace:GetServerTimeNow() + 180
 	end
 end
 local v_u_9 = v5.new()
 v_u_8.OnUpdated = v_u_9
 local v_u_10 = {
-	"Event Shop Restock",
-	"Shop UI Rework",
-	"Shop Exotic Buttercup Chest",
-	"KOH Event",
-	"Shop Premium Bird Egg",
-	"SaintPatricksPack"
+	"Egg Shroom",
+	"Waddling Willow",
+	"Bunny Berry",
+	"Bonnet Bloom",
+	"Marshmallow Root",
+	"Egg Melon",
+	"Candy Squirrel",
+	"Spring Bee",
+	"Jerboa",
+	"Nyala",
+	"Peryton",
+	"Gilded Choc Spring Bee",
+	"Gilded Choc Jerboa",
+	"Gilded Choc Nyala",
+	"Gilded Choc Peryton",
+	"Springtide Egg",
+	"EASTER_2026",
+	"Egg War",
+	"Premium Springtide Egg"
 }
-local v_u_11 = { "Event Shop Restock", "Shop UI Rework", "Leprechaun Event" }
-local v_u_12 = { workspace.Interaction:FindFirstChild("LeprechaunStand") }
+local v_u_11 = { "Egg Hunt", "EASTER_2026" }
+local v_u_12 = {}
 local v_u_13 = workspace.Interaction.UpdateItems:GetChildren()
 local v_u_14 = false
 function v_u_8.IsActive(_, p15)

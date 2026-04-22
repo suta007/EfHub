@@ -2663,6 +2663,138 @@ local v4 = table.freeze({
 			}
 		}
 	},
+	["Season 4 Seed Pack"] = {
+		["DisplayName"] = "Season 4 Seed Pack",
+		["Icon"] = "rbxassetid://86848065126412",
+		["Items"] = {
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Drowned Flower",
+				["Icon"] = "rbxassetid://139458729221824",
+				["Chance"] = 40
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Saskia",
+				["Icon"] = "rbxassetid://129768676686477",
+				["Chance"] = 25
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Mini Pumpkin",
+				["Icon"] = "rbxassetid://77089311487267",
+				["Chance"] = 20
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Jungle Cherry",
+				["Icon"] = "rbxassetid://117045891284570",
+				["Chance"] = 10
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Amazon Feather Fern",
+				["Icon"] = "rbxassetid://74446239808073",
+				["Chance"] = 4.5
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Boreal Orange",
+				["Icon"] = "rbxassetid://93303765808655",
+				["Chance"] = 0.5
+			}
+		}
+	},
+	["Exotic Season 4 Seed Pack"] = {
+		["DisplayName"] = "Exotic Season 4 Seed Pack",
+		["Icon"] = "rbxassetid://111507069439237",
+		["Items"] = {
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Drowned Flower",
+				["Icon"] = "rbxassetid://139458729221824",
+				["Chance"] = 39
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Saskia",
+				["Icon"] = "rbxassetid://129768676686477",
+				["Chance"] = 25
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Mini Pumpkin",
+				["Icon"] = "rbxassetid://77089311487267",
+				["Chance"] = 20
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Jungle Cherry",
+				["Icon"] = "rbxassetid://117045891284570",
+				["Chance"] = 10
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Amazon Feather Fern",
+				["Icon"] = "rbxassetid://74446239808073",
+				["Chance"] = 4.5
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Boreal Orange",
+				["Icon"] = "rbxassetid://93303765808655",
+				["Chance"] = 0.5
+			},
+			{
+				["Type"] = "Pack",
+				["RewardId"] = "Rainbow Exotic Prime Seed Pack",
+				["Icon"] = "rbxassetid://90419259772348",
+				["Chance"] = 1
+			}
+		}
+	},
+	["Rainbow Exotic Season 4 Seed Pack"] = {
+		["DisplayName"] = "Rainbow Exotic Season 4 Seed Pack",
+		["Icon"] = "rbxassetid://90419259772348",
+		["Items"] = {
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Drowned Flower",
+				["Icon"] = "rbxassetid://139458729221824",
+				["Chance"] = 30
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Saskia",
+				["Icon"] = "rbxassetid://129768676686477",
+				["Chance"] = 25
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Mini Pumpkin",
+				["Icon"] = "rbxassetid://77089311487267",
+				["Chance"] = 20
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Jungle Cherry",
+				["Icon"] = "rbxassetid://117045891284570",
+				["Chance"] = 10
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Amazon Feather Fern",
+				["Icon"] = "rbxassetid://74446239808073",
+				["Chance"] = 8
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Boreal Orange",
+				["Icon"] = "rbxassetid://93303765808655",
+				["Chance"] = 7
+			}
+		}
+	},
 	["Nutty Chest"] = {
 		["DisplayName"] = "Nutty Chest",
 		["Icon"] = "rbxassetid://107461364188242",
@@ -4436,6 +4568,193 @@ local v4 = table.freeze({
 				["RewardId"] = "Octobloom",
 				["Icon"] = "AUTOMATIC_SEED_ICON",
 				["Chance"] = 0.01
+			}
+		}
+	},
+	["Easter Seed Pack"] = {
+		["DisplayName"] = "Easter Seed Pack",
+		["Icon"] = "rbxassetid://71178703811950",
+		["Items"] = {
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Candy Carrot",
+				["Icon"] = "rbxassetid://103789872431604",
+				["Chance"] = 31
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Chocolate Berry",
+				["Icon"] = "rbxassetid://102387828269945",
+				["Chance"] = 20
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Gumball",
+				["Icon"] = "rbxassetid://105517298469321",
+				["Chance"] = 15
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Sugar Melon",
+				["Icon"] = "rbxassetid://108731244332988",
+				["Chance"] = 10
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Liquorice",
+				["Icon"] = "rbxassetid://87512076978193",
+				["Chance"] = 8
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Chocolate Coconut",
+				["Icon"] = "rbxassetid://101588775475466",
+				["Chance"] = 7
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Gummy Cactus",
+				["Icon"] = "rbxassetid://129716679636430",
+				["Chance"] = 5
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Sour Lemon",
+				["Icon"] = "rbxassetid://112345513860988",
+				["Chance"] = 3.5
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Eggfruit",
+				["Icon"] = "rbxassetid://102516543124826",
+				["Chance"] = 0.5
+			}
+		}
+	},
+	["Exotic Easter Seed Pack"] = {
+		["DisplayName"] = "Exotic Easter Seed Pack",
+		["Icon"] = "rbxassetid://106253859430622",
+		["Items"] = {
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Candy Carrot",
+				["Icon"] = "rbxassetid://103789872431604",
+				["Chance"] = 30
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Chocolate Berry",
+				["Icon"] = "rbxassetid://102387828269945",
+				["Chance"] = 20
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Gumball",
+				["Icon"] = "rbxassetid://105517298469321",
+				["Chance"] = 15
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Sugar Melon",
+				["Icon"] = "rbxassetid://108731244332988",
+				["Chance"] = 10
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Liquorice",
+				["Icon"] = "rbxassetid://87512076978193",
+				["Chance"] = 8
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Chocolate Coconut",
+				["Icon"] = "rbxassetid://101588775475466",
+				["Chance"] = 7
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Gummy Cactus",
+				["Icon"] = "rbxassetid://129716679636430",
+				["Chance"] = 5
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Sour Lemon",
+				["Icon"] = "rbxassetid://112345513860988",
+				["Chance"] = 3.5
+			},
+			{
+				["Type"] = "Seed",
+				["RewardId"] = "Eggfruit",
+				["Icon"] = "rbxassetid://102516543124826",
+				["Chance"] = 0.5
+			},
+			{
+				["Type"] = "Pack",
+				["DisplayName"] = "Rainbow Pack",
+				["RewardId"] = "Rainbow Exotic Easter Seed Pack",
+				["Icon"] = "rbxassetid://92542235146045",
+				["Chance"] = 1
+			}
+		}
+	},
+	["Rainbow Exotic Easter Seed Pack"] = {
+		["DisplayName"] = "Rainbow Exotic Easter Seed Pack",
+		["Icon"] = "rbxassetid://92542235146045",
+		["Items"] = {
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Candy Carrot",
+				["Icon"] = "rbxassetid://103789872431604",
+				["Chance"] = 21
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Chocolate Berry",
+				["Icon"] = "rbxassetid://102387828269945",
+				["Chance"] = 16
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Gumball",
+				["Icon"] = "rbxassetid://105517298469321",
+				["Chance"] = 13
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Sugar Melon",
+				["Icon"] = "rbxassetid://108731244332988",
+				["Chance"] = 11
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Liquorice",
+				["Icon"] = "rbxassetid://87512076978193",
+				["Chance"] = 10
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Chocolate Coconut",
+				["Icon"] = "rbxassetid://101588775475466",
+				["Chance"] = 9
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Gummy Cactus",
+				["Icon"] = "rbxassetid://129716679636430",
+				["Chance"] = 8
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Sour Lemon",
+				["Icon"] = "rbxassetid://112345513860988",
+				["Chance"] = 7
+			},
+			{
+				["Type"] = "RainbowSeed",
+				["RewardId"] = "Eggfruit",
+				["Icon"] = "rbxassetid://102516543124826",
+				["Chance"] = 5
 			}
 		}
 	}

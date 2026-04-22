@@ -1,4 +1,4 @@
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local v_u_2 = Enum.UserInputType:GetEnumItems()
 for _, v3 in pairs(Enum.KeyCode:GetEnumItems()) do
 	v_u_2[#v_u_2 + 1] = v3

@@ -6,7 +6,7 @@ if v1:IsServer() then
 else
 	v3 = require(v2.Modules.SelectiveAssetReplication):GetAssetAsync("Assets", "CrateModels")
 end
-local v_u_4 = require(script.Parent.Parent.Shared.Util)
+local v_u_4 = require(game.ReplicatedStorage.Code.Util)
 local v_u_5 = {}
 for _, v6 in v3:GetChildren() do
 	local v7 = v6.Name

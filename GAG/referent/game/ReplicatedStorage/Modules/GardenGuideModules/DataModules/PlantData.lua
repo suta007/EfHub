@@ -168,9 +168,7 @@ local function v_u_55()
 	task.spawn(function()
 		-- upvalues: (copy) v_u_51, (ref) v_u_14
 		for _, v54 in v_u_51 do
-			if not v_u_14.Data[v54] then
-				warn((("Missing from PlantData.Data: %*"):format(v54)))
-			end
+			local _ = v_u_14.Data[v54]
 		end
 	end)
 end

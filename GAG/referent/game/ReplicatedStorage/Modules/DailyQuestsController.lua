@@ -175,6 +175,9 @@ function v23.Start(_)
 			local v62 = #v_u_61 - 1
 			local v63 = v_u_15.Rewards
 			local v64 = v_u_15.ProgressBar.IncrementLines
+			if v64.AbsoluteSize.X == 0 then
+				v64:GetPropertyChangedSignal("AbsoluteSize"):Wait()
+			end
 			local v65 = v64.AbsoluteSize.X * 0.85
 			local v66 = v_u_20.AbsoluteSize.X
 			local v67 = v66 * v62 - v65

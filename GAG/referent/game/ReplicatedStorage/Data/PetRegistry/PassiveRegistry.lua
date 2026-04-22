@@ -5522,7 +5522,7 @@ local v677 = {
 v676.States = v677
 v1["Arctic Scoundrel"] = v676
 local v678 = {
-	["Description"] = "Every <Cooldown>m, converts all Frozen mutation within <Range> studs to Glacial mutation. For every mutation converted: <XPAmount> XP is added to all other pets in your garden. (Max 10,000 XP)"
+	["Description"] = "Every <Cooldown>m, converts all Frozen mutation within <Range> studs to Glacial mutation. For every mutation converted: <XPAmount> XP is added to all other pets in your garden. (Max 10,000 XP) Ignores favorited fruit"
 }
 local v679 = {
 	["Cooldown"] = {
@@ -5606,7 +5606,7 @@ local v687 = {
 v686.States = v687
 v1["Rainbow Arctic Scoundrel"] = v686
 local v688 = {
-	["Description"] = "Every <Cooldown>m, converts all Frozen mutation within <Range> studs to Glacial mutation. For every mutation converted: <XPAmount> XP is added to all other pets in your garden. (Max 10,000 XP)"
+	["Description"] = "Every <Cooldown>m, converts all Frozen mutation within <Range> studs to Glacial mutation. For every mutation converted: <XPAmount> XP is added to all other pets in your garden. (Max 10,000 XP) Ignores favorited fruit"
 }
 local v689 = {
 	["Cooldown"] = {
@@ -7031,7 +7031,7 @@ local v849 = {
 v848.States = v849
 v1["Opulent Bird"] = v848
 local v850 = {
-	["Description"] = "Every <Cooldown>m, fans its feathers and all active pets within <Range> studs will advance cooldown for their abilities by <Amount>s and advance Cooldown by half that amount!"
+	["Description"] = "Every <Cooldown>m, fans its feathers and all active pets within <Range> studs will advance cooldown for their abilities by <Amount>s and gain XP equal to half that amount!"
 }
 local v851 = {
 	["Cooldown"] = {
@@ -7169,20 +7169,660 @@ local v865 = {
 v864.States = v865
 v1["Honest Labor"] = v864
 local v866 = {
-	["Description"] = "<Chance>% chance fruit gets Plasma mutation after collecting!"
+	["Description"] = "Every <Cooldown>m, stings a random pet and advances its ability cooldown by <Amount>s! Extra <AmountBonus>s cooldown advanced for every other Firemite in your garden!"
 }
 local v867 = {
+	["Cooldown"] = {
+		["Min"] = 60,
+		["Base"] = 602,
+		["Scale"] = -6,
+		["Formatter"] = "ColonTime"
+	},
+	["Amount"] = {
+		["Max"] = 80,
+		["Base"] = 40,
+		["Scale"] = 0.4
+	},
+	["AmountBonus"] = {
+		["Max"] = 40,
+		["Base"] = 20,
+		["Scale"] = 0.2
+	}
+}
+v866.States = v867
+v1["Light Up"] = v866
+local v868 = {
+	["Description"] = "Every <Cooldown>m, consumes Fruits with Ash and/or Burnt mutation and grants an Ash-Castle based cosmetic reward! Ignores favorited fruit."
+}
+local v869 = {
+	["Cooldown"] = {
+		["Min"] = 150,
+		["Base"] = 300,
+		["Scale"] = -3,
+		["Formatter"] = "ColonTime"
+	}
+}
+v868.States = v869
+v1["Ashened Furnishing"] = v868
+local v870 = {
+	["Description"] = "Every <Cooldown>m, applies Ash mutation to a random fruit!"
+}
+local v871 = {
+	["Cooldown"] = {
+		["Min"] = 400,
+		["Base"] = 800,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	}
+}
+v870.States = v871
+v1["Hound of Ash"] = v870
+local v872 = {
+	["Description"] = "Every <Cooldown>m, applies Haze mutation to a random fruit!"
+}
+local v873 = {
+	["Cooldown"] = {
+		["Min"] = 500,
+		["Base"] = 1000,
+		["Scale"] = -5,
+		["Formatter"] = "ColonTime"
+	}
+}
+v872.States = v873
+v1["Hound of Haze"] = v872
+local v874 = {
+	["Description"] = "Every <Cooldown>m, devours a fruit with Ash, Haze, Burnt & Flaming mutations, applying Smoldering mutation to another fruit, also has a <Chance>% chance to increase the level of pet in your garden."
+}
+local v875 = {
+	["Cooldown"] = {
+		["Min"] = 1100,
+		["Base"] = 2200,
+		["Scale"] = -12,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 6,
+		["Base"] = 3,
+		["Scale"] = 0.3
+	}
+}
+v874.States = v875
+v1["Trial by Fire"] = v874
+local v876 = {
+	["Description"] = "When selling Fruits with Smoldering Mutation, <Chance>% chance a random mutation from that fruit will be applied to the fruits in your garden!"
+}
+local v877 = {
+	["Chance"] = {
+		["Max"] = 12,
+		["Base"] = 6,
+		["Scale"] = 0.1
+	}
+}
+v876.States = v877
+v1["Flame Diety"] = v876
+local v878 = {
+	["Description"] = "Every <Cooldown>m, stings a random pet and advances its ability cooldown by <Amount>s! Extra <AmountBonus>s cooldown advanced for every other Firemite in your garden!"
+}
+local v879 = {
+	["Cooldown"] = {
+		["Min"] = 50,
+		["Base"] = 502,
+		["Scale"] = -6,
+		["Formatter"] = "ColonTime"
+	},
+	["Amount"] = {
+		["Max"] = 100,
+		["Base"] = 50,
+		["Scale"] = 0.4
+	},
+	["AmountBonus"] = {
+		["Max"] = 50,
+		["Base"] = 30,
+		["Scale"] = 0.3
+	}
+}
+v878.States = v879
+v1["GIANT Light Up"] = v878
+local v880 = {
+	["Description"] = "Every <Cooldown>m, consumes Fruits with Ash and/or Burnt mutation and grants an Ash-Castle based cosmetic reward! Ignores favorited fruit."
+}
+local v881 = {
+	["Cooldown"] = {
+		["Min"] = 100,
+		["Base"] = 200,
+		["Scale"] = -3,
+		["Formatter"] = "ColonTime"
+	}
+}
+v880.States = v881
+v1["GIANT Ashened Furnishing"] = v880
+local v882 = {
+	["Description"] = "Every <Cooldown>m, applies Ash mutation to a random fruit!"
+}
+local v883 = {
+	["Cooldown"] = {
+		["Min"] = 300,
+		["Base"] = 600,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	}
+}
+v882.States = v883
+v1["Rainbow Hound of Ash"] = v882
+local v884 = {
+	["Description"] = "Every <Cooldown>m, applies Haze mutation to a random fruit!"
+}
+local v885 = {
+	["Cooldown"] = {
+		["Min"] = 400,
+		["Base"] = 800,
+		["Scale"] = -5,
+		["Formatter"] = "ColonTime"
+	}
+}
+v884.States = v885
+v1["Rainbow Hound of Haze"] = v884
+local v886 = {
+	["Description"] = "Every <Cooldown>m, devours a fruit with Ash, Haze, Burnt & Flaming mutations, applying Smoldering mutation to another fruit, also has a <Chance>% chance to increase the level of pet in your garden."
+}
+local v887 = {
+	["Cooldown"] = {
+		["Min"] = 900,
+		["Base"] = 1800,
+		["Scale"] = -12,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 8,
+		["Base"] = 4,
+		["Scale"] = 0.3
+	}
+}
+v886.States = v887
+v1["Rainbow Trial by Fire"] = v886
+local v888 = {
+	["Description"] = "When selling Fruits with Smoldering Mutation, <Chance>% chance a random mutation from that fruit will be applied to the fruits in your garden!"
+}
+local v889 = {
+	["Chance"] = {
+		["Max"] = 16,
+		["Base"] = 8,
+		["Scale"] = 0.1
+	}
+}
+v888.States = v889
+v1["Rainbow Flame Diety"] = v888
+local v890 = {
+	["Description"] = "Every <Cooldown>m, Eats any Carrot plant with Choc mutation and spreads it to two other random fruits in your garden. Ignores favorited fruit."
+}
+local v891 = {
+	["Cooldown"] = {
+		["Min"] = 240,
+		["Base"] = 480,
+		["Scale"] = -4.8,
+		["Formatter"] = "ColonTime"
+	}
+}
+v890.States = v891
+v1["Choc Chomper"] = v890
+local v892 = {
+	["Description"] = "Every <Cooldown>m, goes to a random un-hatched egg, and reduces its hatch time by <Amount>s! Bonus <AmountBonus>s for every other Easter Egg Chick in your garden!"
+}
+local v893 = {
+	["Cooldown"] = {
+		["Min"] = 100,
+		["Base"] = 180,
+		["Scale"] = -1.8,
+		["Formatter"] = "ColonTime"
+	},
+	["Amount"] = {
+		["Max"] = 60,
+		["Base"] = 25,
+		["Scale"] = 0.25
+	},
+	["AmountBonus"] = {
+		["Max"] = 40,
+		["Base"] = 20,
+		["Scale"] = 0.2
+	}
+}
+v892.States = v893
+v1["Easter Eggcelerator"] = v892
+local v894 = {
+	["Description"] = "Every <Cooldown>m, grants another pet in your garden either <XPAmount> XP OR advances its ability cooldown by <CDAmount>s! Marshmallow Lamb gains whichever bonus was not given."
+}
+local v895 = {
+	["Cooldown"] = {
+		["Min"] = 360,
+		["Base"] = 720,
+		["Scale"] = -7,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 800,
+		["Base"] = 400,
+		["Scale"] = 20
+	},
+	["CDAmount"] = {
+		["Max"] = 160,
+		["Base"] = 80,
+		["Scale"] = 0.8
+	}
+}
+v894.States = v895
+v1["The Smore You Know"] = v894
+local v896 = {
+	["Description"] = "Every <Cooldown>m hides an Easter Egg reward in a random spot. Finding the Easter Egg grants great rewards/very positive effects!"
+}
+local v897 = {
+	["Cooldown"] = {
+		["Min"] = 722,
+		["Base"] = 1444,
+		["Scale"] = -14,
+		["Formatter"] = "ColonTime"
+	}
+}
+v896.States = v897
+v1["Egg Hunt"] = v896
+local v898 = {
+	["Description"] = "Every <Cooldown>m, Eats any Carrot plant with Choc mutation and spreads it to two other random fruits in your garden. Ignores favorited fruit."
+}
+local v899 = {
+	["Cooldown"] = {
+		["Min"] = 150,
+		["Base"] = 300,
+		["Scale"] = -4.8,
+		["Formatter"] = "ColonTime"
+	}
+}
+v898.States = v899
+v1["Gilded Choc Choc Chomper"] = v898
+local v900 = {
+	["Description"] = "Every <Cooldown>m, goes to a random un-hatched egg, and reduces its hatch time by <Amount>s! Bonus <AmountBonus>s for every other Easter Egg Chick in your garden!"
+}
+local v901 = {
+	["Cooldown"] = {
+		["Min"] = 60,
+		["Base"] = 110,
+		["Scale"] = -1.8,
+		["Formatter"] = "ColonTime"
+	},
+	["Amount"] = {
+		["Max"] = 70,
+		["Base"] = 35,
+		["Scale"] = 0.25
+	},
+	["AmountBonus"] = {
+		["Max"] = 50,
+		["Base"] = 25,
+		["Scale"] = 0.2
+	}
+}
+v900.States = v901
+v1["Gilded Choc Easter Eggcelerator"] = v900
+local v902 = {
+	["Description"] = "Every <Cooldown>m, grants another pet in your garden either <XPAmount> XP OR advances its ability cooldown by <CDAmount>s! Marshmallow Lamb gains whichever bonus was not given."
+}
+local v903 = {
+	["Cooldown"] = {
+		["Min"] = 260,
+		["Base"] = 520,
+		["Scale"] = -7,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 1000,
+		["Base"] = 500,
+		["Scale"] = 20
+	},
+	["CDAmount"] = {
+		["Max"] = 160,
+		["Base"] = 100,
+		["Scale"] = 0.8
+	}
+}
+v902.States = v903
+v1["Gilded Choc The Smore You Know"] = v902
+local v904 = {
+	["Description"] = "Every <Cooldown>m hides an Easter Egg reward in a random spot. Finding the Easter Egg grants great rewards/very positive effects!"
+}
+local v905 = {
+	["Cooldown"] = {
+		["Min"] = 500,
+		["Base"] = 1000,
+		["Scale"] = -14,
+		["Formatter"] = "ColonTime"
+	}
+}
+v904.States = v905
+v1["Gilded Choc Egg Hunt"] = v904
+local v906 = {
+	["Description"] = "Every <Cooldown>s, <Chance>% chance a nearby fruit gets the Gummy mutation!"
+}
+local v907 = {
+	["Cooldown"] = {
+		["Min"] = 60,
+		["Base"] = 120,
+		["Scale"] = -1
+	},
+	["Chance"] = {
+		["Max"] = 20,
+		["Base"] = 10,
+		["Scale"] = 0.1
+	}
+}
+v906.States = v907
+v1["Gummy Express"] = v906
+local v908 = {
+	["Description"] = "All active Easter type pets gain an additional <Chance> XP/s!"
+}
+local v909 = {
+	["Chance"] = {
+		["Base"] = 0.6,
+		["Scale"] = 0.06
+	}
+}
+v908.States = v909
+v1["Hootsie Experience"] = v908
+local v910 = {
+	["Description"] = "All active pets gain an additional <Chance> XP/s!"
+}
+local v911 = {
+	["Chance"] = {
+		["Base"] = 0.6,
+		["Scale"] = 0.06
+	}
+}
+v910.States = v911
+v1["Hootsie Effect"] = v910
+local v912 = {
+	["Description"] = "Every <Cooldown>m, goes to a Woody type fruit in your garden to convert it into a random wooden-based building cosmetic! Ignores favorited fruit."
+}
+local v913 = {
+	["Cooldown"] = {
+		["Min"] = 240,
+		["Base"] = 480,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	}
+}
+v912.States = v913
+v1["The Wood Works"] = v912
+local v914 = {
+	["Description"] = "Every <Cooldown>m, grabs a random fruit in your garden and delivers it to another player\'s pet: to give <XPAmount>XP, or a Small Passive Boost! Ignores favorited fruit."
+}
+local v915 = {
+	["Cooldown"] = {
+		["Min"] = 300,
+		["Base"] = 600,
+		["Scale"] = -6,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 1000,
+		["Base"] = 500,
+		["Scale"] = 25
+	}
+}
+v914.States = v915
+v1["Stork Delivery"] = v914
+local v916 = {
+	["Description"] = "Every <Cooldown>m, prays for <Duration>s & each second a fruit within <Range> studs has a <Chance>% chance to gain the Floral mutation. Fruit with Floral turn Gold, and Gold fruit with Floral convert to Rainbow!"
+}
+local v917 = {
+	["Cooldown"] = {
+		["Min"] = 390,
+		["Base"] = 780,
+		["Scale"] = -7.8,
+		["Formatter"] = "ColonTime"
+	},
+	["Duration"] = {
+		["Max"] = 20,
+		["Base"] = 10,
+		["Scale"] = 0.1
+	},
+	["Range"] = {
+		["Max"] = 30,
+		["Base"] = 15,
+		["Scale"] = 0.15
+	},
+	["Chance"] = {
+		["Max"] = 6,
+		["Base"] = 3,
+		["Scale"] = 0.03
+	}
+}
+v916.States = v917
+v1["Orchid Zone"] = v916
+local v918 = {
+	["Description"] = "Every <Cooldown>m, has <Chance>% chance to apply the Candy mutation!"
+}
+local v919 = {
+	["Cooldown"] = {
+		["Min"] = 540,
+		["Base"] = 1080,
+		["Scale"] = -4.5,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 25,
+		["Base"] = 15,
+		["Scale"] = 0.3
+	}
+}
+v918.States = v919
+v1["Candy Craze"] = v918
+local v920 = {
+	["Description"] = "Every <Cooldown>m, <Chance>% chance for a nearby fruit to get the Bloom mutation!"
+}
+local v921 = {
+	["Cooldown"] = {
+		["Min"] = 202,
+		["Base"] = 404,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 30,
+		["Base"] = 15,
+		["Scale"] = 0.15
+	}
+}
+v920.States = v921
+v1["Bloom Bee"] = v920
+local v922 = {
+	["Description"] = "Every <Cooldown>m, hops in place: gaining <XPAmount> XP and advances growth for a random plant in your garden by <AdvancementAmount>m! The Jerboa has a <Chance>% chance to do it again each hop."
+}
+local v923 = {
+	["Cooldown"] = {
+		["Min"] = 225,
+		["Base"] = 450,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 600,
+		["Base"] = 300,
+		["Scale"] = 3
+	},
+	["AdvancementAmount"] = {
+		["Max"] = 600,
+		["Base"] = 300,
+		["Scale"] = 3,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 20,
+		["Base"] = 10,
+		["Scale"] = 0.1
+	}
+}
+v922.States = v923
+v1["Hop Streak"] = v922
+local v924 = {
+	["Description"] = "Every <Cooldown>m, eats fruit with atleast 4 mutations (Ignores favorited). Fruits and pets within <Range> studs get Bonuses: Fruits have a <Chance>% chance to get the Lush mutation & pets have a chance <Chance>% to gain <XPAmount>XP!"
+}
+local v925 = {
+	["Cooldown"] = {
+		["Min"] = 480,
+		["Base"] = 960,
+		["Scale"] = -9.6,
+		["Formatter"] = "ColonTime"
+	},
+	["Range"] = {
+		["Max"] = 50,
+		["Base"] = 25,
+		["Scale"] = 0.25
+	},
+	["Chance"] = {
+		["Max"] = 40,
+		["Base"] = 20,
+		["Scale"] = 0.2
+	},
+	["XPAmount"] = {
+		["Max"] = 2400,
+		["Base"] = 1200,
+		["Scale"] = 12
+	}
+}
+v924.States = v925
+v1["Spring Grazer"] = v924
+local v926 = {
+	["Description"] = "Every <Cooldown>m, blesses all pets in your garden, granting <XPAmount>XP each! There is a <Chance>% chance for one of the blessed pet to get the Everchanted Pet Mutation!"
+}
+local v927 = {
+	["Cooldown"] = {
+		["Min"] = 750,
+		["Base"] = 1500,
+		["Scale"] = -15,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 22000,
+		["Base"] = 11000,
+		["Scale"] = 80
+	},
+	["Chance"] = {
+		["Max"] = 3,
+		["Base"] = 1.5,
+		["Scale"] = 0.015
+	}
+}
+v926.States = v927
+v1["Everchanting Spring"] = v926
+local v928 = {
+	["Description"] = "Every <Cooldown>m, <Chance>% chance for a nearby fruit to get the Bloom mutation!"
+}
+local v929 = {
+	["Cooldown"] = {
+		["Min"] = 150,
+		["Base"] = 303,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 40,
+		["Base"] = 20,
+		["Scale"] = 0.15
+	}
+}
+v928.States = v929
+v1["Gilded Choc Bloom Bee"] = v928
+local v930 = {
+	["Description"] = "Every <Cooldown>m, hops in place: gaining <XPAmount> XP and advances growth for a random plant in your garden by <AdvancementAmount>m! The Jerboa has a <Chance>% chance to do it again each hop."
+}
+local v931 = {
+	["Cooldown"] = {
+		["Min"] = 175,
+		["Base"] = 350,
+		["Scale"] = -4,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 800,
+		["Base"] = 400,
+		["Scale"] = 3
+	},
+	["AdvancementAmount"] = {
+		["Max"] = 800,
+		["Base"] = 400,
+		["Scale"] = 3,
+		["Formatter"] = "ColonTime"
+	},
+	["Chance"] = {
+		["Max"] = 30,
+		["Base"] = 15,
+		["Scale"] = 0.1
+	}
+}
+v930.States = v931
+v1["Gilded Choc Hop Streak"] = v930
+local v932 = {
+	["Description"] = "Every <Cooldown>m, eats fruit with atleast 4 mutations (Ignores favorited). Fruits and pets within <Range> studs get Bonuses: Fruits have a <Chance>% chance to get the Lush mutation & pets have a chance <Chance>% to gain <XPAmount>XP!"
+}
+local v933 = {
+	["Cooldown"] = {
+		["Min"] = 380,
+		["Base"] = 760,
+		["Scale"] = -9.6,
+		["Formatter"] = "ColonTime"
+	},
+	["Range"] = {
+		["Max"] = 60,
+		["Base"] = 30,
+		["Scale"] = 0.25
+	},
+	["Chance"] = {
+		["Max"] = 25,
+		["Base"] = 25,
+		["Scale"] = 0.2
+	},
+	["XPAmount"] = {
+		["Max"] = 3000,
+		["Base"] = 1500,
+		["Scale"] = 12
+	}
+}
+v932.States = v933
+v1["Gilded Choc Spring Grazer"] = v932
+local v934 = {
+	["Description"] = "Every <Cooldown>m, blesses all pets in your garden, granting <XPAmount>XP each! There is a <Chance>% chance for one of the blessed pet to get the Everchanted Pet Mutation!"
+}
+local v935 = {
+	["Cooldown"] = {
+		["Min"] = 600,
+		["Base"] = 1200,
+		["Scale"] = -15,
+		["Formatter"] = "ColonTime"
+	},
+	["XPAmount"] = {
+		["Max"] = 300000,
+		["Base"] = 15000,
+		["Scale"] = 80
+	},
+	["Chance"] = {
+		["Max"] = 5,
+		["Base"] = 2.5,
+		["Scale"] = 0.015
+	}
+}
+v934.States = v935
+v1["Gilded Choc Everchanting Spring"] = v934
+local v936 = {
+	["Description"] = "<Chance>% chance fruit gets Plasma mutation after collecting!"
+}
+local v937 = {
 	["Chance"] = {
 		["Base"] = 10,
 		["Scale"] = 0.2
 	}
 }
-v866.States = v867
-v1["Radioactive Lizard"] = v866
-local v868 = {
+v936.States = v937
+v1["Radioactive Lizard"] = v936
+local v938 = {
 	["Description"] = "Every <Cooldown>s, <Chance>% chance nearby fruit becomes Burnt!"
 }
-local v869 = {
+local v939 = {
 	["Cooldown"] = {
 		["Min"] = 5,
 		["Base"] = 80,
@@ -7193,24 +7833,24 @@ local v869 = {
 		["Scale"] = 0.2
 	}
 }
-v868.States = v869
-v1["Scorched Soil"] = v868
-local v870 = {
+v938.States = v939
+v1["Scorched Soil"] = v938
+local v940 = {
 	["Description"] = "<Chance>% chance harvested fruit becomes Gold on h\tarvest! Rarer crops have less chance to turn gold!"
 }
-local v871 = {
+local v941 = {
 	["Chance"] = {
 		["Max"] = 35,
 		["Base"] = 1,
 		["Scale"] = 0.1
 	}
 }
-v870.States = v871
-v1["Golden Harvest"] = v870
-local v872 = {
+v940.States = v941
+v1["Golden Harvest"] = v940
+local v942 = {
 	["Description"] = "Every <Cooldown>m, lays a random pet egg from the pet egg shop. Will not lay eggs if you have no free egg equip slot"
 }
-local v873 = {
+local v943 = {
 	["Cooldown"] = {
 		["Min"] = 15,
 		["Base"] = 15,
@@ -7218,24 +7858,24 @@ local v873 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v872.States = v873
-v1["Egg Laying"] = v872
-local v874 = {
+v942.States = v943
+v1["Egg Laying"] = v942
+local v944 = {
 	["Description"] = "Each time you feed a pet, <Chance>% of the hunger points restored are also awarded as experience for that pet! (Only the hunger that is successfully restored counts toward XP)."
 }
-local v875 = {
+local v945 = {
 	["Chance"] = {
 		["Max"] = 50,
 		["Base"] = 14.65,
 		["Scale"] = 0.35
 	}
 }
-v874.States = v875
-v1["Helpy Herbivore"] = v874
-local v876 = {
+v944.States = v945
+v1["Helpy Herbivore"] = v944
+local v946 = {
 	["Description"] = "Every <Cooldown>m, eats a random fruit in your garden, and has a <Chance>% chance to spit out a Horsetail seed! Ignores favorited fruit."
 }
-local v877 = {
+local v947 = {
 	["Cooldown"] = {
 		["Min"] = 10,
 		["Base"] = 82,
@@ -7246,12 +7886,12 @@ local v877 = {
 		["Scale"] = 0.8
 	}
 }
-v876.States = v877
-v1["Horsetail Herbivore"] = v876
-local v878 = {
+v946.States = v947
+v1["Horsetail Herbivore"] = v946
+local v948 = {
 	["Description"] = "Every <Cooldown>m, has <Chance>% chance to apply the Jackpot mutation!"
 }
-local v879 = {
+local v949 = {
 	["Cooldown"] = {
 		["Min"] = 30,
 		["Base"] = 220,
@@ -7264,12 +7904,12 @@ local v879 = {
 		["Scale"] = 0.3
 	}
 }
-v878.States = v879
-v1["RAINBOW CHA-CHING"] = v878
-local v880 = {
+v948.States = v949
+v1["RAINBOW CHA-CHING"] = v948
+local v950 = {
 	["Description"] = "<font color=\"rgb(255, 255, 100)\">SHOCKED: During a Thunderstorm: Every <Cooldown>s, has a <Chance>% chance to attract lightning, shocking nearby fruits!</font>"
 }
-local v881 = {
+local v951 = {
 	["Cooldown"] = {
 		["Min"] = 45,
 		["Base"] = 60,
@@ -7281,12 +7921,12 @@ local v881 = {
 		["Scale"] = 0.02
 	}
 }
-v880.States = v881
-v1["Shocked Pet Mutation"] = v880
-local v882 = {
+v950.States = v951
+v1["Shocked Pet Mutation"] = v950
+local v952 = {
 	["Description"] = "<font color=\"rgb(108, 184, 255)\">FROZEN: Every <Cooldown>m, <Chance>% chance a nearby fruit becomes Frozen!</font>"
 }
-local v883 = {
+local v953 = {
 	["Cooldown"] = {
 		["Min"] = 30,
 		["Base"] = 300,
@@ -7299,12 +7939,12 @@ local v883 = {
 		["Scale"] = 0.03
 	}
 }
-v882.States = v883
-v1["Frozen Pet Mutation"] = v882
-local v884 = {
+v952.States = v953
+v1["Frozen Pet Mutation"] = v952
+local v954 = {
 	["Description"] = "<font color=\"rgb(162, 185, 209)\">WINDY: Every <Cooldown>m, <Chance>% chance a nearby fruit becomes Windstruck!</font>"
 }
-local v885 = {
+local v955 = {
 	["Cooldown"] = {
 		["Min"] = 30,
 		["Base"] = 300,
@@ -7317,24 +7957,24 @@ local v885 = {
 		["Scale"] = 0.03
 	}
 }
-v884.States = v885
-v1["Windy Pet Mutation"] = v884
-local v886 = {
+v954.States = v955
+v1["Windy Pet Mutation"] = v954
+local v956 = {
 	["Description"] = "<font color=\"rgb(206, 206, 206)\">IRONSKIN: When another player steals fruit from you, grants a <Chance>% chance you get the stolen fruit as well!</font>"
 }
-local v887 = {
+local v957 = {
 	["Chance"] = {
 		["Max"] = 45,
 		["Base"] = 35,
 		["Scale"] = 0.2
 	}
 }
-v886.States = v887
-v1["IronSkin Pet Mutation"] = v886
-local v888 = {
+v956.States = v957
+v1["IronSkin Pet Mutation"] = v956
+local v958 = {
 	["Description"] = "<font color=\"rgb(248, 108, 38)\">RADIANT: Every <Cooldown>m, emits sunshine at a random nearby plant and advances their growth by 24 hours!</font>"
 }
-local v889 = {
+local v959 = {
 	["Cooldown"] = {
 		["Min"] = 1200,
 		["Base"] = 1800,
@@ -7342,12 +7982,12 @@ local v889 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v888.States = v889
-v1["Radiant Pet Mutation"] = v888
-local v890 = {
+v958.States = v959
+v1["Radiant Pet Mutation"] = v958
+local v960 = {
 	["Description"] = "<font color=\"rgb(247, 245, 184)\">ASCENDED: Every <Cooldown>m, a nearby fruit ascends to a higher realm, with a <Chance>% chance to apply the Dawnbound mutation!</font>"
 }
-local v891 = {
+local v961 = {
 	["Cooldown"] = {
 		["Min"] = 18000,
 		["Base"] = 21621,
@@ -7360,54 +8000,54 @@ local v891 = {
 		["Scale"] = 0.03
 	}
 }
-v890.States = v891
-v1["Ascended Pet Mutation"] = v890
-local v892 = {
+v960.States = v961
+v1["Ascended Pet Mutation"] = v960
+local v962 = {
 	["Description"] = "<font color=\"rgb(173, 216, 230)\">TINY: Pet is very tiny! Has 20% slower hunger rate.</font>"
 }
-local v893 = {
+local v963 = {
 	["Amount"] = {
 		["Base"] = -0.2,
 		["Scale"] = 0
 	}
 }
-v892.States = v893
-v1["Tiny Pet Mutation"] = v892
-local v894 = {
+v962.States = v963
+v1["Tiny Pet Mutation"] = v962
+local v964 = {
 	["Description"] = "<font color=\"rgb(173, 216, 230)\">TINY: Gains an additional <Amount> xp per second!</font>"
 }
-local v895 = {
+local v965 = {
 	["Amount"] = {
 		["Max"] = 30,
 		["Base"] = 5,
 		["Scale"] = 0.15
 	}
 }
-v894.States = v895
-v1["Tiny Pet Mutation Bonus"] = v894
-local v896 = {
+v964.States = v965
+v1["Tiny Pet Mutation Bonus"] = v964
+local v966 = {
 	["Description"] = "<font color=\"rgb(255, 90, 90)\">MEGA: Pet is gigantic! Has 20% faster hunger rate.</font>"
 }
-local v897 = {
+local v967 = {
 	["Amount"] = {
 		["Base"] = 0.2,
 		["Scale"] = 0
 	}
 }
-v896.States = v897
-v1["Mega Pet Mutation"] = v896
-local v898 = {
+v966.States = v967
+v1["Mega Pet Mutation"] = v966
+local v968 = {
 	["Description"] = "<font color=\"rgb(255, 90, 90)\">MEGA: Gains an additional <Amount> xp per second!</font>"
 }
-local v899 = {
+local v969 = {
 	["Amount"] = {
 		["Max"] = 40,
 		["Base"] = 10,
 		["Scale"] = 0.15
 	}
 }
-v898.States = v899
-v1["Mega Pet Mutation Bonus"] = v898
+v968.States = v969
+v1["Mega Pet Mutation Bonus"] = v968
 v1["Golden Pet Mutation"] = {
 	["Description"] = "<font color=\"rgb(255, 225, 0)\">GOLDEN: Provides a big increase to the pet\'s passive!</font>",
 	["States"] = {}
@@ -7429,10 +8069,10 @@ v1["Inverted Pet Mutation"] = {
 	["Description"] = "<font color=\"rgb(128, 128, 128)\">INVERTED: Provides an additional 30% boost to the pet\'s xp per second!</font>",
 	["States"] = {}
 }
-local v900 = {
+local v970 = {
 	["Description"] = "<font color=\"rgb(247, 245, 184)\">TRANQUIL: Every <Cooldown>m, a nearby fruit finds inner peace, with a <Chance>% chance to apply the Tranquil mutation!</font>"
 }
-local v901 = {
+local v971 = {
 	["Cooldown"] = {
 		["Min"] = 1000,
 		["Base"] = 1500,
@@ -7445,12 +8085,12 @@ local v901 = {
 		["Scale"] = 0.03
 	}
 }
-v900.States = v901
-v1["Tranquil Pet Mutation"] = v900
-local v902 = {
+v970.States = v971
+v1["Tranquil Pet Mutation"] = v970
+local v972 = {
 	["Description"] = "<font color=\"rgb(49, 255, 63)\">ALIENATED: SMALL boost to passive but drains <Amount>% xp per second!</font>"
 }
-local v903 = {
+local v973 = {
 	["Amount"] = {
 		["Max"] = 0.07,
 		["Base"] = 0.07,
@@ -7458,12 +8098,12 @@ local v903 = {
 		["Scale"] = 0
 	}
 }
-v902.States = v903
-v1["Alienated Pet Mutation"] = v902
-local v904 = {
+v972.States = v973
+v1["Alienated Pet Mutation"] = v972
+local v974 = {
 	["Description"] = "<font color=\"rgb(11, 163, 0)\">UFO: MEDIUM boost to passive but drains <Amount>% xp per second!</font>"
 }
-local v905 = {
+local v975 = {
 	["Amount"] = {
 		["Max"] = 0.04,
 		["Base"] = 0.04,
@@ -7471,12 +8111,12 @@ local v905 = {
 		["Scale"] = 0
 	}
 }
-v904.States = v905
-v1["UFO Pet Mutation"] = v904
-local v906 = {
+v974.States = v975
+v1["UFO Pet Mutation"] = v974
+local v976 = {
 	["Description"] = "<font color=\"rgb(176, 23, 26)\">Corrupted: Every <Cooldown>m, a nearby fruit embraces the corruption, with a <Chance>% chance to apply the Corrupted mutation!</font>"
 }
-local v907 = {
+local v977 = {
 	["Cooldown"] = {
 		["Min"] = 1000,
 		["Base"] = 1500,
@@ -7489,12 +8129,12 @@ local v907 = {
 		["Scale"] = 0.03
 	}
 }
-v906.States = v907
-v1["Corrupted Pet Mutation"] = v906
-local v908 = {
+v976.States = v977
+v1["Corrupted Pet Mutation"] = v976
+local v978 = {
 	["Description"] = "<font color=\"rgb(209, 139, 0)\">Fried: Every <Cooldown>m, a nearby fruit is sizzled up, with a <Chance>% chance to apply the Fried mutation!</font>"
 }
-local v909 = {
+local v979 = {
 	["Cooldown"] = {
 		["Min"] = 500,
 		["Base"] = 1000,
@@ -7507,12 +8147,12 @@ local v909 = {
 		["Scale"] = 0.1
 	}
 }
-v908.States = v909
-v1["Fried Pet Mutation"] = v908
-local v910 = {
+v978.States = v979
+v1["Fried Pet Mutation"] = v978
+local v980 = {
 	["Description"] = "<font color=\"rgb(162, 145, 57)\">AROMATIC: Every <Cooldown>m, a nearby fruit is infused with a pungent aroma, with a <Chance>% chance to apply the Aromatic mutation!</font>"
 }
-local v911 = {
+local v981 = {
 	["Cooldown"] = {
 		["Min"] = 1000,
 		["Base"] = 1500,
@@ -7525,35 +8165,35 @@ local v911 = {
 		["Scale"] = 0.03
 	}
 }
-v910.States = v911
-v1["Aromatic Pet Mutation"] = v910
-local v912 = {
+v980.States = v981
+v1["Aromatic Pet Mutation"] = v980
+local v982 = {
 	["Description"] = "<font color=\"rgb(102, 153, 51)\">GIANT BEAN: Pet is a GIANT BEAN! Has 15% faster hunger rate.</font>"
 }
-local v913 = {
+local v983 = {
 	["Amount"] = {
 		["Base"] = 0.15,
 		["Scale"] = 0
 	}
 }
-v912.States = v913
-v1["GiantBean Pet Mutation"] = v912
-local v914 = {
+v982.States = v983
+v1["GiantBean Pet Mutation"] = v982
+local v984 = {
 	["Description"] = "<font color=\"rgb(102, 153, 51)\">Gains an additional <Amount>xp/s for each Beanstalk planted in your garden!</font>"
 }
-local v915 = {
+local v985 = {
 	["Amount"] = {
 		["Max"] = 0.5,
 		["Base"] = 0.1,
 		["Scale"] = 0.005
 	}
 }
-v914.States = v915
-v1["GiantBean Pet Mutation Bonus"] = v914
-local v916 = {
+v984.States = v985
+v1["GiantBean Pet Mutation Bonus"] = v984
+local v986 = {
 	["Description"] = "<font color=\"rgb(246, 142, 255)\">Glimmering: Every <Cooldown>m, a nearby fruit is sprinkled with fairy dust, with a <Chance>% chance to apply the Glimmering mutation!</font>"
 }
-local v917 = {
+local v987 = {
 	["Cooldown"] = {
 		["Min"] = 800,
 		["Base"] = 1500,
@@ -7566,12 +8206,12 @@ local v917 = {
 		["Scale"] = 0.03
 	}
 }
-v916.States = v917
-v1["Glimmering Pet Mutation"] = v916
-local v918 = {
+v986.States = v987
+v1["Glimmering Pet Mutation"] = v986
+local v988 = {
 	["Description"] = "<font color=\"rgb(85, 170, 255)\">Luminous: Every <Cooldown>m, a nearby fruit is imbued with fairy power, with a <Chance>% chance to apply the Luminous mutation!</font>"
 }
-local v919 = {
+local v989 = {
 	["Cooldown"] = {
 		["Min"] = 1000,
 		["Base"] = 2000,
@@ -7584,12 +8224,12 @@ local v919 = {
 		["Scale"] = 0.03
 	}
 }
-v918.States = v919
-v1["Luminous Pet Mutation"] = v918
-local v920 = {
+v988.States = v989
+v1["Luminous Pet Mutation"] = v988
+local v990 = {
 	["Description"] = "<font color=\"rgb(161, 117, 29)\">Nutty: Every <Cooldown> minutes, the pet\226\128\153s next ability use has a <Chance>% chance to activate twice. Otherwise, this pet loses a level.</font>"
 }
-local v921 = {
+local v991 = {
 	["Cooldown"] = {
 		["Min"] = 120,
 		["Base"] = 1200,
@@ -7602,24 +8242,24 @@ local v921 = {
 		["Scale"] = 0.1
 	}
 }
-v920.States = v921
-v1["Nutty Pet Mutation"] = v920
-local v922 = {
+v990.States = v991
+v1["Nutty Pet Mutation"] = v990
+local v992 = {
 	["Description"] = "<font color=\"rgb(140, 45, 175)\">DREADBOUND: Gains an additional <Amount> xp per second!</font>"
 }
-local v923 = {
+local v993 = {
 	["Amount"] = {
 		["Max"] = 30,
 		["Base"] = 6.5,
 		["Scale"] = 0.15
 	}
 }
-v922.States = v923
-v1["Dreadbound Pet Mutation"] = v922
-local v924 = {
+v992.States = v993
+v1["Dreadbound Pet Mutation"] = v992
+local v994 = {
 	["Description"] = "<font color=\"rgb(255, 85, 40)\">SOULFLAME: Provides an additional 60% boost to the pet\'s xp per second. Every <Cooldown>m, a nearby fruit has a <Chance>% chance to get mutated with Burnt - lower chance for Flaming!</font>"
 }
-local v925 = {
+local v995 = {
 	["Cooldown"] = {
 		["Min"] = 300,
 		["Base"] = 912,
@@ -7632,8 +8272,8 @@ local v925 = {
 		["Scale"] = 0.03
 	}
 }
-v924.States = v925
-v1["Soulflame Pet Mutation"] = v924
+v994.States = v995
+v1["Soulflame Pet Mutation"] = v994
 v1["Spectral Pet Mutation"] = {
 	["Description"] = "<font color=\"rgb(90, 200, 255)\">SPECTRAL: Provides a small increase to the pet\'s passive!</font>",
 	["States"] = {}
@@ -7646,10 +8286,10 @@ v1["Tethered Pet Mutation"] = {
 	["Description"] = "<font color=\"rgb(210, 171, 136)\">TETHERED: Constantly wanders around the player!</font>",
 	["States"] = {}
 }
-local v926 = {
+local v996 = {
 	["Description"] = "<font color=\"rgb(165, 105, 255)\">AURORA: Every <Cooldown>m, <Chance>% chance a nearby fruit becomes Aurora!</font>"
 }
-local v927 = {
+local v997 = {
 	["Cooldown"] = {
 		["Min"] = 1000,
 		["Base"] = 2525,
@@ -7662,16 +8302,16 @@ local v927 = {
 		["Scale"] = 0.3
 	}
 }
-v926.States = v927
-v1["Aurora Pet Mutation"] = v926
+v996.States = v997
+v1["Aurora Pet Mutation"] = v996
 v1["JUMBO Pet Mutation"] = {
 	["Description"] = "<font color=\"rgb(255, 170, 0)\">JUMBO:</font> Pet is Jumbo and gains <font color=\"rgb(255, 255, 0)\">+50% XP BOOST!</font>",
 	["States"] = {}
 }
-local v928 = {
+local v998 = {
 	["Description"] = "<font color=\"rgb(255, 170, 0)\">JUMBO:</font> All nearby plants within <font color=\"rgb(170, 255, 255)\"><Range></font> studs will have an increased <font color=\"rgb(170, 255, 255)\"><Multiplier>x</font> size bonus for every Safari-type plant planted in your garden! <font color=\"rgb(255, 255, 255)\">(Max 300)</font>"
 }
-local v929 = {
+local v999 = {
 	["Range"] = {
 		["Max"] = 35,
 		["Base"] = 14.75,
@@ -7684,24 +8324,24 @@ local v929 = {
 		["Formatter"] = "NoPrecision"
 	}
 }
-v928.States = v929
-v1["JUMBO Pet Mutation Bonus"] = v928
-local v930 = {
+v998.States = v999
+v1["JUMBO Pet Mutation Bonus"] = v998
+local v1000 = {
 	["Description"] = "<font color=\"rgb(255, 170, 0)\">OXPECKER:</font> When Safari type pets finish their abilities, they start their cooldown with <Chance> seconds less! Gains <font color=\"rgb(255, 170, 0)\">tiny</font> increase to passives!"
 }
-local v931 = {
+local v1001 = {
 	["Chance"] = {
 		["Max"] = 7.5,
 		["Base"] = 3.5,
 		["Scale"] = 0.1
 	}
 }
-v930.States = v931
-v1["Oxpecker Pet Mutation"] = v930
-local v932 = {
+v1000.States = v1001
+v1["Oxpecker Pet Mutation"] = v1000
+local v1002 = {
 	["Description"] = "<font color=\"rgb(255, 215, 0)\">GIRAFFE:</font> Every <Cooldown>m, eats fruit that are atleast 10 studs high for <Multiplier>x sell value. The plant the fruit came from advances growth by <Amount>m! Also applies Arid mutation to all other fruits on that plant. Gains <font color=\"rgb(255, 215, 0)\">small</font> increase to passives!"
 }
-local v933 = {
+local v1003 = {
 	["Cooldown"] = {
 		["Min"] = 583,
 		["Base"] = 1554,
@@ -7720,12 +8360,12 @@ local v933 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v932.States = v933
-v1["Giraffe Pet Mutation"] = v932
-local v934 = {
+v1002.States = v1003
+v1["Giraffe Pet Mutation"] = v1002
+local v1004 = {
 	["Description"] = "<font color=\"rgb(211, 211, 211)\">RHINO:</font> Every <Cooldown>m, charges into a random egg or random fruit in your garden: Rammed eggs have hatch time halved, rammed fruits get Mirage mutation! Cannot be mimicked or refreshed. Gains <font color=\"rgb(211, 211, 211)\">medium</font> increase to passives!"
 }
-local v935 = {
+local v1005 = {
 	["Cooldown"] = {
 		["Min"] = 777,
 		["Base"] = 1554,
@@ -7733,12 +8373,12 @@ local v935 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v934.States = v935
-v1["Rhino Pet Mutation"] = v934
-local v936 = {
+v1004.States = v1005
+v1["Rhino Pet Mutation"] = v1004
+local v1006 = {
 	["Description"] = "<font color=\"rgb(0, 200, 120)\">CROCODILE:</font> Every <Cooldown>m, bites on to a random Plant or Pet for <Duration>s and performs a roll. Plants grow an additional <AmountPlant>s/s and Pets get additional <AmountXP> XP/s. Gains <font color=\"rgb(0, 200, 120)\">sizable</font> increase to passives!"
 }
-local v937 = {
+local v1007 = {
 	["Cooldown"] = {
 		["Min"] = 1050,
 		["Base"] = 2100,
@@ -7761,12 +8401,12 @@ local v937 = {
 		["Scale"] = 0.025
 	}
 }
-v936.States = v937
-v1["Crocodile Pet Mutation"] = v936
-local v938 = {
+v1006.States = v1007
+v1["Crocodile Pet Mutation"] = v1006
+local v1008 = {
 	["Description"] = "<font color=\"rgb(255, 255, 102)\">LION:</font> Every <Cooldown>m, roars and calls all pets in your garden to move toward it. <Amount> total cooldown advancement is shared across each pet (max <MaxAmount> seconds per pet). Gains <font color=\"rgb(255, 255, 102)\">big</font> increase to passives!"
 }
-local v939 = {
+local v1009 = {
 	["Cooldown"] = {
 		["Min"] = 350,
 		["Base"] = 1400,
@@ -7784,12 +8424,12 @@ local v939 = {
 		["Scale"] = 0.15
 	}
 }
-v938.States = v939
-v1["Lion Pet Mutation"] = v938
-local v940 = {
+v1008.States = v1009
+v1["Lion Pet Mutation"] = v1008
+local v1010 = {
 	["Description"] = "<font color=\"rgb(255, 215, 0)\">FORGER:</font> Every <Cooldown>m goes to an active crafting table and advances its crafting time by <Amount>s!"
 }
-local v941 = {
+local v1011 = {
 	["Cooldown"] = {
 		["Min"] = 400,
 		["Base"] = 800,
@@ -7802,16 +8442,16 @@ local v941 = {
 		["Scale"] = 0.4
 	}
 }
-v940.States = v941
-v1["Forger Pet Mutation"] = v940
+v1010.States = v1011
+v1["Forger Pet Mutation"] = v1010
 v1["HyperHunger Pet Mutation"] = {
 	["Description"] = "<font color=\"rgb(255, 255, 0)\">HYPER HUNGER:</font> BIG boost to passive but hunger drains SUPER DUPER FAST! Boost is disabled when hunger is less than 25%",
 	["States"] = {}
 }
-local v942 = {
+local v1012 = {
 	["Description"] = "<font color=\"rgb(85, 85, 255)\">NOCTURNAL:</font> Every <Cooldown>m, a random fruit gets advanced by 12h! Cooldown ticks down twice as fast during the night!"
 }
-local v943 = {
+local v1013 = {
 	["Cooldown"] = {
 		["Min"] = 700,
 		["Base"] = 1414,
@@ -7819,12 +8459,12 @@ local v943 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v942.States = v943
-v1["Nocturnal Pet Mutation"] = v942
-local v944 = {
+v1012.States = v1013
+v1["Nocturnal Pet Mutation"] = v1012
+local v1014 = {
 	["Description"] = "<font color=\"rgb(255, 0, 0)\">P</font><font color=\"rgb(255, 255, 255)\">E</font><font color=\"rgb(255, 0, 0)\">P</font><font color=\"rgb(255, 255, 255)\">P</font><font color=\"rgb(255, 0, 0)\">E</font><font color=\"rgb(255, 255, 255)\">R</font><font color=\"rgb(255, 0, 0)\">M</font><font color=\"rgb(255, 255, 255)\">I</font><font color=\"rgb(255, 0, 0)\">N</font><font color=\"rgb(255, 255, 255)\">T</font><font color=\"rgb(255, 0, 0)\">:</font> Every <Cooldown>m, sacrifices 12 random Christmas-type fruit in your garden to instantly activate this pet\'s ability!"
 }
-local v945 = {
+local v1015 = {
 	["Cooldown"] = {
 		["Min"] = 500,
 		["Base"] = 966,
@@ -7832,24 +8472,24 @@ local v945 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v944.States = v945
-v1["Peppermint Pet Mutation"] = v944
-local v946 = {
+v1014.States = v1015
+v1["Peppermint Pet Mutation"] = v1014
+local v1016 = {
 	["Description"] = "<font color=\"rgb(0, 200, 0)\">CHRISTMAS RALLY:</font> All Christmas-themed pets gain an additional <font color=\"rgb(255,215,0)\"><Chance></font>XP per second!"
 }
-local v947 = {
+local v1017 = {
 	["Chance"] = {
 		["Max"] = 7.5,
 		["Base"] = 3.5,
 		["Scale"] = 0.1
 	}
 }
-v946.States = v947
-v1["Christmas Rally Pet Mutation"] = v946
-local v948 = {
+v1016.States = v1017
+v1["Christmas Rally Pet Mutation"] = v1016
+local v1018 = {
 	["Description"] = "<font color=\"rgb(255,0,0)\">J</font><font color=\"rgb(0,200,0)\">O</font><font color=\"rgb(255,0,0)\">L</font><font color=\"rgb(0,200,0)\">L</font><font color=\"rgb(255,0,0)\">Y</font> <font color=\"rgb(0,200,0)\">D</font><font color=\"rgb(255,0,0)\">E</font><font color=\"rgb(0,200,0)\">C</font><font color=\"rgb(255,0,0)\">O</font><font color=\"rgb(0,200,0)\">R</font><font color=\"rgb(255,0,0)\">A</font><font color=\"rgb(0,200,0)\">T</font><font color=\"rgb(255,0,0)\">O</font><font color=\"rgb(0,200,0)\">R</font><font color=\"rgb(255,0,0)\">:</font> Every <font color=\"rgb(255,215,0)\"><Cooldown></font>m, applies Ornamented mutation to a random fruit!"
 }
-local v949 = {
+local v1019 = {
 	["Cooldown"] = {
 		["Min"] = 250,
 		["Base"] = 505,
@@ -7857,12 +8497,12 @@ local v949 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v948.States = v949
-v1["Jolly Decorator Pet Mutation"] = v948
-local v950 = {
+v1018.States = v1019
+v1["Jolly Decorator Pet Mutation"] = v1018
+local v1020 = {
 	["Description"] = "<font color=\"rgb(255,215,0)\">MERRY NURSERY:</font> Every <font color=\"rgb(255,215,0)\"><Cooldown></font>s, goes to the unhatched egg with the highest hatch time and reduces it by <font color=\"rgb(255,215,0)\"><Amount></font>s with a bonus <font color=\"rgb(255,215,0)\"><AmountBonus></font>s for every Christmas-type plant in your garden!"
 }
-local v951 = {
+local v1021 = {
 	["Cooldown"] = {
 		["Min"] = 20,
 		["Base"] = 80,
@@ -7880,12 +8520,12 @@ local v951 = {
 		["Formatter"] = "NoPrecision"
 	}
 }
-v950.States = v951
-v1["Merry Nursery Pet Mutation"] = v950
-local v952 = {
+v1020.States = v1021
+v1["Merry Nursery Pet Mutation"] = v1020
+local v1022 = {
 	["Description"] = "<font color=\"rgb(50,120,255)\">GIANT</font> <font color=\"rgb(120,180,255)\">GOLEM:</font> Pet is a giant golem! Has a big increase to passive, slightly bigger & gains bonus <font color=\"rgb(255,215,0)\"><Amount></font>XP/s for every Christmas-type plant in your garden!"
 }
-local v953 = {
+local v1023 = {
 	["Amount"] = {
 		["Max"] = 0.15,
 		["Base"] = 0.15,
@@ -7893,12 +8533,12 @@ local v953 = {
 		["Formatter"] = "NoPrecision"
 	}
 }
-v952.States = v953
-v1["Giant Golem Pet Mutation"] = v952
-local v954 = {
+v1022.States = v1023
+v1["Giant Golem Pet Mutation"] = v1022
+local v1024 = {
 	["Description"] = "<font color=\"rgb(217, 244, 255)\">SPIRIT SPARKLE:</font> Every <Cooldown>m, your pet either ages up once, or ages down once."
 }
-local v955 = {
+local v1025 = {
 	["Cooldown"] = {
 		["Min"] = 1200,
 		["Base"] = 1500,
@@ -7906,12 +8546,12 @@ local v955 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v954.States = v955
-v1["Spirit Sparkle Pet Mutation"] = v954
-local v956 = {
+v1024.States = v1025
+v1["Spirit Sparkle Pet Mutation"] = v1024
+local v1026 = {
 	["Description"] = "<font color=\"rgb(255, 128, 0)\">FIERY:</font> Every <Cooldown>m, consumes a random fruit to mutate fruits around it with the Fiery mutation!"
 }
-local v957 = {
+local v1027 = {
 	["Cooldown"] = {
 		["Min"] = 300,
 		["Base"] = 600,
@@ -7919,12 +8559,12 @@ local v957 = {
 		["Formatter"] = "ColonTime"
 	}
 }
-v956.States = v957
-v1["Fiery Pet Mutation"] = v956
-local v958 = {
+v1026.States = v1027
+v1["Fiery Pet Mutation"] = v1026
+local v1028 = {
 	["Description"] = "<font color=\"rgb(149, 0, 255)\">VENOM: BIG boost to passive but drains <Amount>% xp per second!</font>"
 }
-local v959 = {
+local v1029 = {
 	["Amount"] = {
 		["Max"] = 0.02,
 		["Base"] = 0.02,
@@ -7932,6 +8572,35 @@ local v959 = {
 		["Scale"] = 0
 	}
 }
-v958.States = v959
-v1["Venom Pet Mutation"] = v958
+v1028.States = v1029
+v1["Venom Pet Mutation"] = v1028
+local v1030 = {
+	["Description"] = "<font color=\"rgb(105, 158, 255)\">B</font><font color=\"rgb(236, 128, 255)\">L</font><font color=\"rgb(255, 129, 211)\">O</font><font color=\"rgb(105, 158, 255)\">S</font><font color=\"rgb(236, 128, 255)\">S</font><font color=\"rgb(255, 129, 211)\">O</font><font color=\"rgb(105, 158, 255)\">M</font><font color=\"rgb(236, 128, 255)\">I</font><font color=\"rgb(255, 129, 211)\">N</font><font color=\"rgb(105, 158, 255)\">G</font><font color=\"rgb(255, 129, 211)\">: Provides a bigger increase to the pet\'s passive and gains an additional <Amount> XP per second!</font>"
+}
+local v1031 = {
+	["Amount"] = {
+		["Max"] = 25,
+		["Base"] = 7,
+		["Scale"] = 0.15
+	}
+}
+v1030.States = v1031
+v1["Blossoming Pet Mutation"] = v1030
+v1["Everchanted Pet Mutation"] = {
+	["Description"] = "<font color=\"rgb(255, 215, 0)\">E</font><font color=\"rgb(0, 255, 127)\">V</font><font color=\"rgb(255, 215, 0)\">E</font><font color=\"rgb(0, 255, 127)\">R</font><font color=\"rgb(255, 215, 0)\">C</font><font color=\"rgb(0, 255, 127)\">H</font><font color=\"rgb(255, 215, 0)\">A</font><font color=\"rgb(0, 255, 127)\">N</font><font color=\"rgb(255, 215, 0)\">T</font><font color=\"rgb(0, 255, 127)\">E</font><font color=\"rgb(255, 215, 0)\">D</font><font color=\"rgb(0, 255, 127)\">:</font> BIG boost to passive!",
+	["States"] = {}
+}
+local v1032 = {
+	["Description"] = "<font color=\"rgb(255, 215, 0)\">E</font><font color=\"rgb(0, 255, 127)\">V</font><font color=\"rgb(255, 215, 0)\">E</font><font color=\"rgb(0, 255, 127)\">R</font><font color=\"rgb(255, 215, 0)\">C</font><font color=\"rgb(0, 255, 127)\">H</font><font color=\"rgb(255, 215, 0)\">A</font><font color=\"rgb(0, 255, 127)\">N</font><font color=\"rgb(255, 215, 0)\">T</font><font color=\"rgb(0, 255, 127)\">E</font><font color=\"rgb(255, 215, 0)\">D</font><font color=\"rgb(0, 255, 127)\">:</font> Every <Cooldown>m, consumes a fruit (ignores favorited) with 7+ mutations and applies Medium Passive Boost to a random pet in your garden!"
+}
+local v1033 = {
+	["Cooldown"] = {
+		["Min"] = 500,
+		["Base"] = 1000,
+		["Scale"] = -5,
+		["Formatter"] = "ColonTime"
+	}
+}
+v1032.States = v1033
+v1["Everchanted Pet Mutation Bonus"] = v1032
 return v1

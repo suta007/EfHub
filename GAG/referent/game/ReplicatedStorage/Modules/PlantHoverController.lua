@@ -45,7 +45,8 @@ local v_u_31 = {
 	["Sparkle Slice"] = Vector3.new(50, 0.1, 50),
 	["Colorpop Crop"] = Vector3.new(50, 0.1, 50),
 	["Kernel Curl"] = Vector3.new(70, 0.1, 70),
-	["Bonanza Bloom"] = Vector3.new(70, 0.1, 70)
+	["Bonanza Bloom"] = Vector3.new(70, 0.1, 70),
+	["Elder Candy Blossom"] = Vector3.new(70, 0.1, 70)
 }
 local v_u_32 = {
 	["CurrentPlant"] = nil,
@@ -358,7 +359,7 @@ local function v185(p114)
 							v_u_11.TextColor3 = v_u_141
 						end)
 					end
-					local v143 = v_u_36.Name
+					local v143 = v_u_36:GetAttribute("DisplayName") or v_u_36.Name
 					local v144 = v143 == "Four Leaf Clover" and "EGG LUCK BOOST\240\159\141\128" or v143
 					local v145 = v_u_17[v144]
 					local v146 = v145

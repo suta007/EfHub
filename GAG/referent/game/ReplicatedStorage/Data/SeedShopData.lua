@@ -406,6 +406,19 @@ local v3 = {
 		["FallbackPrice"] = 1700,
 		["RebirthRequirement"] = 3
 	},
+	["Eggsnapper"] = {
+		["Seed"] = v2.Eggsnapper,
+		["StockChance"] = 700,
+		["StockAmount"] = { 1, 1 },
+		["Price"] = 1000000000000,
+		["PurchaseID"] = 3568823262,
+		["GiftPurchaseID"] = 3568823592,
+		["DisplayInShop"] = true,
+		["LayoutOrder"] = 410,
+		["GrowthTime"] = 1,
+		["FallbackPrice"] = 1599,
+		["IsLimited"] = true
+	},
 	["Broccoli"] = {
 		["Seed"] = v2.Broccoli,
 		["StockChance"] = 1,

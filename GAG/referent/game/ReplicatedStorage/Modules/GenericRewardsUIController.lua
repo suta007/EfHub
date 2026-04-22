@@ -15,123 +15,140 @@ local v_u_9 = require(v1.Modules.ReplicationClass.DeepClone)
 require(v1.Modules.GiveServiceCommon.RewardDataTypes)
 local v_u_10 = require(v1.Modules.GiveServiceCommon)
 v5.Return_All_Seed_Rarities()
-local v_u_11 = v2.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("GenericRewards_UI")
-local v_u_12 = v4.new()
-local v45 = {
-	["Open"] = function(_, p13)
-		-- upvalues: (copy) v_u_11, (copy) v_u_3, (copy) v_u_12, (copy) v_u_9, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8, (copy) v_u_10
-		local v14 = p13.DisplayOdds
-		local v15 = v14 == nil and true or v14
-		local v16 = p13.RewardTemplate or nil
-		local v17 = p13.Title or "Rewards"
-		local v18 = p13.RewardData
-		local v19 = p13.RewardFrameCreatedCallback
-		local v_u_20 = p13.Breadcrumb
-		local v21 = p13.ChanceDisplayMode or "Percentage"
-		local v_u_22 = p13.RewardsUIOverride or v_u_11
-		local v23 = v_u_22.Frame.Main.Holder
-		local v24 = p13.RewardsUIBuiltCallback
-		local v25 = p13.RewardsUIPreBuildCallback
-		v_u_3:GetStateForGui(v_u_22)
-		v_u_12:Destroy()
-		local v26 = v16 or v23.RewardScrollingFrame.UIListLayout.REWARDTRACK_TEMPLATE
-		v23.Header.Title.Text = v17
-		for _, v27 in v23.RewardScrollingFrame:GetChildren() do
-			if v27:IsA("GuiObject") and v27.Name ~= "UIListLayout" then
-				v27:Destroy()
+local v11 = v2.LocalPlayer
+assert(v11, "LocalPlayer not found")
+local v_u_12 = v11:WaitForChild("PlayerGui"):WaitForChild("GenericRewards_UI")
+local v_u_13 = v4.new()
+local v50 = {
+	["Open"] = function(_, p14)
+		-- upvalues: (copy) v_u_12, (copy) v_u_3, (copy) v_u_13, (copy) v_u_9, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8, (copy) v_u_10
+		local v15 = p14.DisplayOdds
+		local v16 = v15 == nil and true or v15
+		local v17 = p14.RewardTemplate or nil
+		local v18 = p14.Title or "Rewards"
+		local v19 = p14.RewardData
+		local v20 = p14.RewardFrameCreatedCallback
+		local v_u_21 = p14.Breadcrumb
+		local v22 = p14.ChanceDisplayMode or "Percentage"
+		local v_u_23 = p14.RewardsUIOverride or v_u_12
+		local v24 = v_u_23.Frame.Main.Holder
+		local v25 = p14.RewardsUIBuiltCallback
+		local v26 = p14.RewardsUIPreBuildCallback
+		local v27 = p14.Information
+		v_u_3:GetStateForGui(v_u_23)
+		v_u_13:Destroy()
+		local v28 = v17 or v24.RewardScrollingFrame.UIListLayout.REWARDTRACK_TEMPLATE
+		v24.Header.Title.Text = v18
+		local v29 = v_u_23.Frame.Main:FindFirstChild("Information")
+		if v29 and v29:IsA("Frame") then
+			local v30
+			if v27 == nil then
+				v30 = false
+			else
+				v30 = v27 ~= ""
+			end
+			v29.Visible = v30
+			local v31 = v29:FindFirstChild("Text")
+			if v31 and v31:IsA("TextLabel") then
+				v31.Text = v27 or ""
 			end
 		end
-		local _ = #v18
-		local v28 = v_u_9(v18)
-		table.sort(v28, function(p29, p30)
-			return (p29.Chance or 1) > (p30.Chance or 1)
+		for _, v32 in v24.RewardScrollingFrame:GetChildren() do
+			if v32:IsA("GuiObject") and v32.Name ~= "UIListLayout" then
+				v32:Destroy()
+			end
+		end
+		local _ = #v19
+		local v33 = v_u_9(v19)
+		table.sort(v33, function(p34, p35)
+			return (p34.Weight or 1) > (p35.Weight or 1)
 		end)
-		local v31 = 0
-		local v32 = 0
-		for _, v33 in v28 do
-			v31 = v31 + (v33.Chance or 0)
+		local v36 = 0
+		local v37 = 0
+		for _, v38 in v33 do
+			v36 = v36 + (v38.Weight or 0)
+		end
+		if v26 then
+			v26(v_u_23, v24.ScrollingFrame)
+		end
+		for v39, v_u_40 in v33 do
+			v37 = v37 + 1
+			local v41 = v_u_13:Clone(v28)
+			local v42 = v41.Frame.RewardName
+			local v43 = v41.Frame.Odds
+			local v44 = v41.Frame.ITEM_IMAGE
+			if v_u_40.Reward.Type == "Seed Pack" then
+				v41.Frame.OddsButton.Visible = true
+				v41.Frame.OddsButton.Activated:Connect(function()
+					-- upvalues: (ref) v_u_6, (copy) v_u_40, (copy) v_u_23
+					v_u_6:Open(v_u_40.Reward.Value, v_u_23)
+				end)
+			elseif v_u_40.Reward.Type == "Egg" then
+				v41.Frame.OddsButton.Visible = true
+				v41.Frame.OddsButton.Activated:Connect(function()
+					-- upvalues: (ref) v_u_7, (copy) v_u_40, (copy) v_u_23
+					v_u_7:Open(v_u_40.Reward.Value, v_u_23)
+				end)
+			elseif v_u_40.Reward.Type == "Crate" then
+				v41.Frame.OddsButton.Visible = true
+				v41.Frame.OddsButton.Activated:Connect(function()
+					-- upvalues: (ref) v_u_8, (copy) v_u_40, (copy) v_u_23
+					v_u_8:Open(v_u_40.Reward.Value, v_u_23)
+				end)
+			else
+				v41.Frame.OddsButton.Visible = false
+			end
+			v42.Text = v_u_10:Format(v_u_40.Reward)
+			if v16 then
+				local v45 = v_u_40.Weight / v36
+				if v22 == "Percentage" then
+					v43.Text = string.format("%.2f", v45 * 100) .. "%"
+				else
+					v43.Text = ("1 in %*"):format((string.format("%.2f", 1 / v45)))
+				end
+				v43.Visible = true
+			else
+				v43.Visible = false
+			end
+			v44.Image = v_u_10:GetImage(v_u_40.Reward)
+			v42.TextColor3 = Color3.new(1, 1, 1)
+			local v46 = v41.Frame.RewardName.UIStroke
+			if v46 then
+				local v47, v48, v49 = v_u_10:GetRarityColor(v_u_40.Reward):ToHSV()
+				v46.Color = Color3.fromHSV(v47, v48, v49 / 3)
+			end
+			if v20 then
+				v20(v41, v_u_40, v39)
+			end
+			v41.LayoutOrder = v37 + 1000 + 1
+			v41.Parent = v24.RewardScrollingFrame
 		end
 		if v25 then
-			v25(v_u_22, v23.ScrollingFrame)
+			v25(v_u_23, v24.ScrollingFrame)
 		end
-		for v34, v_u_35 in v28 do
-			v32 = v32 + 1
-			local v36 = v_u_12:Clone(v26)
-			local v37 = v36.Frame.RewardName
-			local v38 = v36.Frame.Odds
-			local v39 = v36.Frame.ITEM_IMAGE
-			if v_u_35.Reward.Type == "Seed Pack" then
-				v36.Frame.OddsButton.Visible = true
-				v36.Frame.OddsButton.Activated:Connect(function()
-					-- upvalues: (ref) v_u_6, (copy) v_u_35, (copy) v_u_22
-					v_u_6:Open(v_u_35.Reward.Value, v_u_22)
-				end)
-			elseif v_u_35.Reward.Type == "Egg" then
-				v36.Frame.OddsButton.Visible = true
-				v36.Frame.OddsButton.Activated:Connect(function()
-					-- upvalues: (ref) v_u_7, (copy) v_u_35, (copy) v_u_22
-					v_u_7:Open(v_u_35.Reward.Value, v_u_22)
-				end)
-			elseif v_u_35.Reward.Type == "Crate" then
-				v36.Frame.OddsButton.Visible = true
-				v36.Frame.OddsButton.Activated:Connect(function()
-					-- upvalues: (ref) v_u_8, (copy) v_u_35, (copy) v_u_22
-					v_u_8:Open(v_u_35.Reward.Value, v_u_22)
-				end)
-			else
-				v36.Frame.OddsButton.Visible = false
-			end
-			v37.Text = v_u_10:Format(v_u_35.Reward)
-			if v15 then
-				local v40 = v_u_35.Chance / v31
-				if v21 == "Percentage" then
-					v38.Text = string.format("%.2f", v40 * 100) .. "%"
-				else
-					v38.Text = ("1 in %*"):format((string.format("%.2f", 1 / v40)))
-				end
-				v38.Visible = true
-			else
-				v38.Visible = false
-			end
-			v39.Image = v_u_10:GetImage(v_u_35.Reward)
-			v37.TextColor3 = Color3.new(1, 1, 1)
-			local v41 = v36.Frame.RewardName.UIStroke
-			if v41 then
-				local v42, v43, v44 = v_u_10:GetRarityColor(v_u_35.Reward):ToHSV()
-				v41.Color = Color3.fromHSV(v42, v43, v44 / 3)
-			end
-			if v19 then
-				v19(v36, v_u_35, v34)
-			end
-			v36.LayoutOrder = v32 + 1000 + 1
-			v36.Parent = v23.RewardScrollingFrame
-		end
-		if v24 then
-			v24(v_u_22, v23.ScrollingFrame)
-		end
-		v_u_3:Open(v_u_22)
-		if v_u_20 then
-			v_u_12:Add(v_u_22.Frame.ExitButton.Activated:Once(function()
-				-- upvalues: (ref) v_u_3, (copy) v_u_22, (copy) v_u_20, (ref) v_u_12
-				v_u_3:Close(v_u_22)
-				v_u_3:Open(v_u_20)
-				v_u_12:Clean()
+		v_u_3:Open(v_u_23)
+		if v_u_21 then
+			v_u_13:Add(v_u_23.Frame.ExitButton.Activated:Once(function()
+				-- upvalues: (ref) v_u_3, (copy) v_u_23, (copy) v_u_21, (ref) v_u_13
+				v_u_3:Close(v_u_23)
+				v_u_3:Open(v_u_21)
+				v_u_13:Clean()
 			end))
 		else
-			v_u_12:Add(v_u_22.Frame.ExitButton.Activated:Once(function()
-				-- upvalues: (ref) v_u_3, (copy) v_u_22, (ref) v_u_12
-				v_u_3:Close(v_u_22)
-				v_u_12:Clean()
+			v_u_13:Add(v_u_23.Frame.ExitButton.Activated:Once(function()
+				-- upvalues: (ref) v_u_3, (copy) v_u_23, (ref) v_u_13
+				v_u_3:Close(v_u_23)
+				v_u_13:Clean()
 			end))
 		end
 	end,
 	["Start"] = function(_)
-		-- upvalues: (copy) v_u_11, (copy) v_u_3
-		if v_u_11:FindFirstChild("Frame") then
-			v_u_11.Frame.Active = true
+		-- upvalues: (copy) v_u_12, (copy) v_u_3
+		if v_u_12:FindFirstChild("Frame") then
+			v_u_12.Frame.Active = true
 		end
-		v_u_3:UsePopupAnims(v_u_11)
+		v_u_3:UsePopupAnims(v_u_12)
 	end
 }
-task.spawn(v45.Start, v45)
-return v45
+task.spawn(v50.Start, v50)
+return v50

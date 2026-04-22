@@ -1,5 +1,5 @@
 game:GetService("ReplicatedStorage")
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local v_u_2 = game:GetService("HttpService")
 local v_u_3 = v_u_2:JSONDecode(workspace:GetAttribute("AllEvents") or "[]")
 workspace:GetAttributeChangedSignal("AllEvents"):Connect(function()

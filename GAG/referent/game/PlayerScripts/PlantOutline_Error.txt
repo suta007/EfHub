@@ -1,1 +1,1 @@
--- แกะโค้ดไม่ได้ (อาจเข้ารหัส หรือเป็น Server Script ที่ Client เข้าไม่ถึง)
+-- Cannot decompile or Empty Source

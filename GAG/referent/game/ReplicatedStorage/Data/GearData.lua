@@ -255,6 +255,20 @@ local v3 = {
 		["Asset"] = "rbxassetid://86602672756084",
 		["GearDescription"] = "A plant booster"
 	},
+	["Egg Booster"] = {
+		["GearName"] = "Egg Booster",
+		["GearRarity"] = "Legendary",
+		["Stack"] = 1,
+		["Asset"] = "rbxassetid://86602672756084",
+		["GearDescription"] = "Boosts Rare Pet Chances!"
+	},
+	["Elder Candy Blossom Upgrader"] = {
+		["GearName"] = "Elder Candy Blossom Upgrader",
+		["GearRarity"] = "Legendary",
+		["Stack"] = 1,
+		["Asset"] = "rbxassetid://86602672756084",
+		["GearDescription"] = "Converts Candy Blossoms into Elder Candy Blossoms!"
+	},
 	["Pet Shard Tranquil"] = {
 		["GearName"] = "Pet Shard Tranquil",
 		["GearRarity"] = "Divine",
@@ -1388,6 +1402,20 @@ local v3 = {
 		["Stack"] = 5,
 		["Asset"] = "rbxassetid://138401486124989",
 		["GearDescription"] = "Celebrate the New Year! 5x uses"
+	},
+	["Candy Blossom Shard"] = {
+		["GearName"] = "Candy Blossom Shard",
+		["GearRarity"] = "Mythical",
+		["Stack"] = 1,
+		["Asset"] = "rbxassetid://119645052909664",
+		["GearDescription"] = "An urban legend says this can be used to bring back the Candy Blossom Seed..."
+	},
+	["Rainbow Coil"] = {
+		["GearName"] = "Rainbow Coil",
+		["GearRarity"] = "Divine",
+		["Stack"] = 1,
+		["Asset"] = "",
+		["GearDescription"] = "Speed coil!"
 	}
 }
 return v3

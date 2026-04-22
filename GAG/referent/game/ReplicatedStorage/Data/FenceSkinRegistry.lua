@@ -226,6 +226,12 @@ local v1 = {
 		["Rarity"] = "Divine",
 		["Description"] = "Hold your defenses!",
 		["Icon"] = "124314791889128"
+	},
+	["EASTER_2026"] = {
+		["DisplayName"] = "Easter 2026",
+		["Rarity"] = "Divine",
+		["Description"] = "A fence exclusive to the EASTER 2026 event!",
+		["Icon"] = "86440126328636"
 	}
 }
 return v1

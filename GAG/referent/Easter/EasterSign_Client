@@ -1,8 +1,0 @@
--- game:GetService("ReplicatedStorage").Modules.UpdateService.Easter2026.EasterSign.Sign_Part.EasterSign_Client
-
-local v_u_1 = game:GetService("ReplicatedStorage")
-script.Parent.ProximityPrompt.Triggered:Connect(function()
-	-- upvalues: (copy) v_u_1
-	v_u_1.GameEvents.EasterEvent.EasterSignBE:Fire()
-end)
-

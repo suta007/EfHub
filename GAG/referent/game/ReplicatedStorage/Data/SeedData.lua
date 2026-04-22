@@ -314,7 +314,7 @@ local v2 = {
 		["SeedRarity"] = "Transcendent",
 		["Asset"] = "rbxassetid://89711566497807",
 		["FruitIcon"] = "rbxassetid://116031273402219",
-		["AbilityDescription"] = "Occasionally mutates nearby fruits with 1 of 5 Safari mutations!"
+		["AbilityDescription"] = "Increases egg luck, including egg recovery chance, pet weight, and pet age!"
 	},
 	["Zebrazinkle"] = {
 		["SeedName"] = "Zebrazinkle Seed",
@@ -636,6 +636,13 @@ local v2 = {
 	},
 	["Candy Blossom"] = {
 		["SeedName"] = "Candy Blossom Seed",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://115186921746919",
+		["FruitIcon"] = "rbxassetid://92481076509069"
+	},
+	["Candy Blossom 2026"] = {
+		["SeedName"] = "Candy Blossom 2026 Seed",
+		["DisplayName"] = "Candy Blossom Seed",
 		["SeedRarity"] = "Divine",
 		["Asset"] = "rbxassetid://115186921746919",
 		["FruitIcon"] = "rbxassetid://92481076509069"
@@ -2072,6 +2079,12 @@ local v2 = {
 		["Asset"] = "rbxassetid://101478506938024",
 		["FruitIcon"] = "rbxassetid://111672725208240"
 	},
+	["Frost Fern"] = {
+		["SeedName"] = "Frost Fern Seed",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://75851538193802",
+		["FruitIcon"] = "rbxassetid://73221277935079"
+	},
 	["Noble Flower"] = {
 		["SeedName"] = "Noble Flower",
 		["SeedRarity"] = "Rare",
@@ -2251,12 +2264,6 @@ local v2 = {
 		["SeedRarity"] = "Uncommon",
 		["Asset"] = "rbxassetid://",
 		["FruitIcon"] = "rbxassetid://"
-	},
-	["Mini Pumpkin"] = {
-		["SeedName"] = "Mini Pumpkin Seed",
-		["SeedRarity"] = "Uncommon",
-		["Asset"] = "rbxassetid://132481570007847",
-		["FruitIcon"] = "rbxassetid://106786793709484"
 	},
 	["Witch Cap"] = {
 		["SeedName"] = "Witch Cap Seed",
@@ -2462,20 +2469,8 @@ local v2 = {
 		["Asset"] = "rbxassetid://93336144839405",
 		["FruitIcon"] = "rbxassetid://97731922214866"
 	},
-	["Frost Fern"] = {
-		["SeedName"] = "Frost Fern Seed",
-		["SeedRarity"] = "Divine",
-		["Asset"] = "rbxassetid://",
-		["FruitIcon"] = "rbxassetid://"
-	},
 	["Frost Bush"] = {
 		["SeedName"] = "Frost Bush Seed",
-		["SeedRarity"] = "Divine",
-		["Asset"] = "rbxassetid://",
-		["FruitIcon"] = "rbxassetid://"
-	},
-	["Saskia"] = {
-		["SeedName"] = "Saskia Seed",
 		["SeedRarity"] = "Divine",
 		["Asset"] = "rbxassetid://",
 		["FruitIcon"] = "rbxassetid://"
@@ -2528,29 +2523,264 @@ local v2 = {
 		["Asset"] = "rbxassetid://",
 		["FruitIcon"] = "rbxassetid://"
 	},
-	["Purple Treeshroom"] = {
-		["SeedName"] = "Purple Treeshroom",
-		["SeedRarity"] = "Transcendent",
-		["Asset"] = "rbxassetid://",
-		["FruitIcon"] = "rbxassetid://"
-	},
-	["Amazon Feather Fern"] = {
-		["SeedName"] = "Amazon Feather Fern",
-		["SeedRarity"] = "Transcendent",
-		["Asset"] = "rbxassetid://",
-		["FruitIcon"] = "rbxassetid://"
-	},
-	["Jungle Cherry"] = {
-		["SeedName"] = "Jungle Cherry",
-		["SeedRarity"] = "Transcendent",
-		["Asset"] = "rbxassetid://",
-		["FruitIcon"] = "rbxassetid://"
-	},
 	["Luminova"] = {
 		["SeedName"] = "Luminova",
 		["SeedRarity"] = "Transcendent",
 		["Asset"] = "rbxassetid://",
 		["FruitIcon"] = "rbxassetid://"
+	},
+	["Jungle Kiwano"] = {
+		["SeedName"] = "Jungle Kiwano",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://97176977797141",
+		["FruitIcon"] = "rbxassetid://104067455048190"
+	},
+	["Birds Nest"] = {
+		["SeedName"] = "Birds Nest",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://97176977797141",
+		["FruitIcon"] = "rbxassetid://104067455048190"
+	},
+	["Candy Carrot"] = {
+		["SeedName"] = "Candy Carrot",
+		["SeedRarity"] = "Common",
+		["Asset"] = "rbxassetid://104781928123112",
+		["FruitIcon"] = "rbxassetid://103789872431604"
+	},
+	["Chocolate Berry"] = {
+		["SeedName"] = "Chocolate Berry",
+		["SeedRarity"] = "Uncommon",
+		["Asset"] = "rbxassetid://89911788872299",
+		["FruitIcon"] = "rbxassetid://102387828269945"
+	},
+	["Gumball"] = {
+		["SeedName"] = "Gumball",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://104637583936549",
+		["FruitIcon"] = "rbxassetid://105517298469321"
+	},
+	["Liquorice"] = {
+		["SeedName"] = "Liquorice",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://84105676059013",
+		["FruitIcon"] = "rbxassetid://87512076978193"
+	},
+	["Sugar Melon"] = {
+		["SeedName"] = "Sugar Melon",
+		["SeedRarity"] = "Legendary",
+		["Asset"] = "rbxassetid://122677116579544",
+		["FruitIcon"] = "rbxassetid://108731244332988"
+	},
+	["Chocolate Coconut"] = {
+		["SeedName"] = "Chocolate Coconut",
+		["SeedRarity"] = "Legendary",
+		["Asset"] = "rbxassetid://125137082861622",
+		["FruitIcon"] = "rbxassetid://101588775475466"
+	},
+	["Gummy Cactus"] = {
+		["SeedName"] = "Gummy Cactus",
+		["SeedRarity"] = "Mythical",
+		["Asset"] = "rbxassetid://106676600610156",
+		["FruitIcon"] = "rbxassetid://129716679636430"
+	},
+	["Sour Lemon"] = {
+		["SeedName"] = "Sour Lemon",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://76516010970267",
+		["FruitIcon"] = "rbxassetid://112345513860988"
+	},
+	["Eggfruit"] = {
+		["SeedName"] = "Eggfruit",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://76729722861438",
+		["FruitIcon"] = "rbxassetid://102516543124826"
+	},
+	["Easter Sprout"] = {
+		["SeedName"] = "Easter Sprout",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://79667088146520",
+		["FruitIcon"] = "rbxassetid://128082309366156"
+	},
+	["Easter Candy Carrot"] = {
+		["SeedName"] = "Easter Candy Carrot",
+		["SeedRarity"] = "Common",
+		["Asset"] = "rbxassetid://104781928123112",
+		["FruitIcon"] = "rbxassetid://103789872431604"
+	},
+	["Easter Chocolate Berry"] = {
+		["SeedName"] = "Easter Chocolate Berry",
+		["SeedRarity"] = "Uncommon",
+		["Asset"] = "rbxassetid://89911788872299",
+		["FruitIcon"] = "rbxassetid://102387828269945"
+	},
+	["Easter Gumball"] = {
+		["SeedName"] = "Easter Gumball",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://104637583936549",
+		["FruitIcon"] = "rbxassetid://105517298469321"
+	},
+	["Easter Liquorice"] = {
+		["SeedName"] = "Easter Liquorice",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://84105676059013",
+		["FruitIcon"] = "rbxassetid://87512076978193"
+	},
+	["Easter Sugar Melon"] = {
+		["SeedName"] = "Easter Sugar Melon",
+		["SeedRarity"] = "Legendary",
+		["Asset"] = "rbxassetid://122677116579544",
+		["FruitIcon"] = "rbxassetid://108731244332988"
+	},
+	["Easter Chocolate Coconut"] = {
+		["SeedName"] = "Chocolate Coconut",
+		["SeedRarity"] = "Legendary",
+		["Asset"] = "rbxassetid://125137082861622",
+		["FruitIcon"] = "rbxassetid://101588775475466"
+	},
+	["Easter Gummy Cactus"] = {
+		["SeedName"] = "Easter Gummy Cactus",
+		["SeedRarity"] = "Mythical",
+		["Asset"] = "rbxassetid://106676600610156",
+		["FruitIcon"] = "rbxassetid://129716679636430"
+	},
+	["Easter Egg Melon"] = {
+		["SeedName"] = "Easter Egg Melon",
+		["SeedRarity"] = "Mythical",
+		["Asset"] = "rbxassetid://122994179894050",
+		["FruitIcon"] = "rbxassetid://105162308640246"
+	},
+	["Easter Sour Lemon"] = {
+		["SeedName"] = "Easter Sour Lemon",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://76516010970267",
+		["FruitIcon"] = "rbxassetid://112345513860988"
+	},
+	["Easter Eggfruit"] = {
+		["SeedName"] = "Easter Eggfruit",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://76729722861438",
+		["FruitIcon"] = "rbxassetid://102516543124826"
+	},
+	["Easter Easter Sprout"] = {
+		["SeedName"] = "Easter Easter Sprout",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://79667088146520",
+		["FruitIcon"] = "rbxassetid://128082309366156"
+	},
+	["Drowned Flower"] = {
+		["SeedName"] = "Drowned Flower",
+		["SeedRarity"] = "Uncommon",
+		["Asset"] = "rbxassetid://81546420608772",
+		["FruitIcon"] = "rbxassetid://139458729221824"
+	},
+	["Saskia"] = {
+		["SeedName"] = "Saskia Seed",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://135484161371464",
+		["FruitIcon"] = "rbxassetid://129768676686477"
+	},
+	["Mini Pumpkin"] = {
+		["SeedName"] = "Mini Pumpkin Seed",
+		["SeedRarity"] = "Legendary",
+		["Asset"] = "rbxassetid://101606810447779",
+		["FruitIcon"] = "rbxassetid://77089311487267"
+	},
+	["Amazon Feather Fern"] = {
+		["SeedName"] = "Amazon Feather Fern",
+		["SeedRarity"] = "Mythical",
+		["Asset"] = "rbxassetid://99437186111581",
+		["FruitIcon"] = "rbxassetid://74446239808073"
+	},
+	["Jungle Cherry"] = {
+		["SeedName"] = "Jungle Cherry",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://106379614155853",
+		["FruitIcon"] = "rbxassetid://117045891284570"
+	},
+	["Boreal Orange"] = {
+		["SeedName"] = "Boreal Orange",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://87530938853248",
+		["FruitIcon"] = "rbxassetid://93303765808655"
+	},
+	["Purple Treeshroom"] = {
+		["SeedName"] = "Purple Treeshroom",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://90889907425461",
+		["FruitIcon"] = "rbxassetid://85919427685747"
+	},
+	["Eggsnapper"] = {
+		["SeedName"] = "Eggsnapper",
+		["SeedRarity"] = "Transcendent",
+		["Asset"] = "rbxassetid://97176977797141",
+		["FruitIcon"] = "rbxassetid://104067455048190"
+	},
+	["DJ Delight"] = {
+		["SeedName"] = "DJ Delight",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://96269281732847",
+		["FruitIcon"] = "rbxassetid://134572866470443"
+	},
+	["Blue Candypop"] = {
+		["SeedName"] = "Blue Candypop",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://120469174263680",
+		["FruitIcon"] = "rbxassetid://97309359261326"
+	},
+	["Egg Melon"] = {
+		["SeedName"] = "Egg Melon",
+		["SeedRarity"] = "Mythical",
+		["Asset"] = "rbxassetid://122994179894050",
+		["FruitIcon"] = "rbxassetid://105162308640246"
+	},
+	["Elder Candy Blossom"] = {
+		["SeedName"] = "Elder Candy Blossom",
+		["SeedRarity"] = "Prismatic",
+		["Asset"] = "rbxassetid://81875683638954",
+		["FruitIcon"] = "rbxassetid://113745141829057",
+		["AbilityDescription"] = "Occasionally mutates nearby fruit with Blossoming mutation & grants a chance for nearby pet eggs to hatch with the Blossoming pet mutation!"
+	},
+	["Bunny Berry"] = {
+		["SeedName"] = "Bunny Berry",
+		["SeedRarity"] = "Uncommon",
+		["Asset"] = "rbxassetid://113886093174465",
+		["FruitIcon"] = "rbxassetid://85019342476607"
+	},
+	["Bonnet Bloom"] = {
+		["SeedName"] = "Bonnet Bloom",
+		["SeedRarity"] = "Legendary",
+		["Asset"] = "rbxassetid://124930131406415",
+		["FruitIcon"] = "rbxassetid://130707513062373"
+	},
+	["Egg Shroom"] = {
+		["SeedName"] = "Egg Shroom",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://124264190160520",
+		["FruitIcon"] = "rbxassetid://106858356421932"
+	},
+	["Waddling Willow"] = {
+		["SeedName"] = "Waddling Willow",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://111740202381573",
+		["FruitIcon"] = "rbxassetid://116195446790833"
+	},
+	["Marshmallow Root"] = {
+		["SeedName"] = "Marshmallow Root",
+		["SeedRarity"] = "Divine",
+		["Asset"] = "rbxassetid://86522988108349",
+		["FruitIcon"] = "rbxassetid://104664392714607"
+	},
+	["Jelly Bean Sprout"] = {
+		["SeedName"] = "Jelly Bean Sprout",
+		["SeedRarity"] = "Rare",
+		["Asset"] = "rbxassetid://131070596820333",
+		["FruitIcon"] = "rbxassetid://122622962908728"
+	},
+	["Basket Bouquet"] = {
+		["SeedName"] = "Basket Bouquet",
+		["SeedRarity"] = "Mythical",
+		["Asset"] = "rbxassetid://124344220763559",
+		["FruitIcon"] = "rbxassetid://138158500556433"
 	}
 }
 return v2

@@ -6,61 +6,67 @@ local v_u_4 = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):W
 local v_u_5 = v_u_4:WaitForChild("CanvasGroup")
 local v_u_6 = v_u_5:WaitForChild("EggName")
 local v_u_7 = v_u_5:WaitForChild("EggHatchTime")
-local v_u_8 = require(v1.Modules.GetFarmAncestor)
-local v9 = require(v1.Modules.CreateTagHandler)
+local v_u_8 = v_u_5:WaitForChild("EggBoost")
+local v_u_9 = require(v1.Modules.GetFarmAncestor)
+local v10 = require(v1.Modules.CreateTagHandler)
 require(v1.Modules.GetMouseToWorld)
-local v_u_10 = require(v1.Modules.TimeHelper)
-local v11 = require(v1.Data.PetRegistry)
+local v_u_11 = require(v1.Modules.TimeHelper)
+local v12 = require(v1.Data.PetRegistry)
 require(v1.Data.EnumRegistry.InventoryServiceEnums)
-local v_u_12 = v11.PetEggs
-local v_u_13 = {}
-v9({
+local v_u_13 = v12.PetEggs
+local v_u_14 = {}
+v10({
 	["Tag"] = "PetEggLocalHitBox",
-	["OnInstanceAdded"] = function(p14)
-		-- upvalues: (copy) v_u_13
-		local v15 = v_u_13
-		table.insert(v15, p14)
+	["OnInstanceAdded"] = function(p15)
+		-- upvalues: (copy) v_u_14
+		local v16 = v_u_14
+		table.insert(v16, p15)
 	end,
-	["OnInstanceRemoved"] = function(p16)
-		-- upvalues: (copy) v_u_13
-		local v17 = table.find(v_u_13, p16)
-		if not v17 then
-			return warn((("%* hitbox not tracked!"):format(p16.Name)))
+	["OnInstanceRemoved"] = function(p17)
+		-- upvalues: (copy) v_u_14
+		local v18 = table.find(v_u_14, p17)
+		if not v18 then
+			return warn((("%* hitbox not tracked!"):format(p17.Name)))
 		end
-		table.remove(v_u_13, v17)
+		table.remove(v_u_14, v18)
 	end
 })
-local v_u_18 = workspace.CurrentCamera
+local v_u_19 = workspace.CurrentCamera
 workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(function()
-	-- upvalues: (ref) v_u_18
-	v_u_18 = workspace.CurrentCamera
+	-- upvalues: (ref) v_u_19
+	v_u_19 = workspace.CurrentCamera
 end)
-local v_u_19 = nil
+local v_u_20 = nil
 v2.RenderStepped:Connect(function()
-	-- upvalues: (ref) v_u_19, (ref) v_u_18, (copy) v_u_4
-	if v_u_19 then
-		local v20 = v_u_18:WorldToScreenPoint(v_u_19:GetPivot().Position + Vector3.new(0, 0, 0))
-		v_u_4.Position = UDim2.new(0, v20.X, 0, v20.Y)
+	-- upvalues: (ref) v_u_20, (ref) v_u_19, (copy) v_u_4
+	if v_u_20 then
+		local v21 = v_u_19:WorldToScreenPoint(v_u_20:GetPivot().Position + Vector3.new(0, 0, 0))
+		v_u_4.Position = UDim2.new(0, v21.X, 0, v21.Y)
 	end
 end)
-local function v_u_26()
-	-- upvalues: (ref) v_u_19, (copy) v_u_12, (copy) v_u_3, (copy) v_u_6, (copy) v_u_10, (copy) v_u_7
-	if v_u_19 then
-		local v21 = v_u_19:FindFirstAncestor("PetEgg")
-		if v21 then
-			local v22 = v21:GetAttribute("EggName")
-			local v23 = v21:GetAttribute("TimeToHatch")
-			local v24 = v21:GetAttribute("GrowthMultiplier")
-			if v24 then
-				v24 = v24 > 0
+local function v_u_30()
+	-- upvalues: (ref) v_u_20, (copy) v_u_13, (copy) v_u_3, (copy) v_u_6, (copy) v_u_11, (copy) v_u_7, (copy) v_u_8
+	if v_u_20 then
+		local v22 = v_u_20:FindFirstAncestor("PetEgg")
+		if v22 then
+			local v23 = v22:GetAttribute("EggName")
+			local v24 = v22:GetAttribute("TimeToHatch")
+			local v25 = v22:GetAttribute("GrowthMultiplier")
+			local v26 = v22:GetAttribute("EggBoostAmount") or 0
+			if v25 then
+				v25 = v25 > 0
 			end
-			local v25 = v_u_12[v22]
+			local v27 = v_u_13[v23]
 			v_u_3:Create(v_u_6, TweenInfo.new(0.2), {
-				["TextColor3"] = v25.Color
+				["TextColor3"] = v27.Color
 			}):Play()
-			v_u_7.Text = v23 == 0 and "Ready" or v_u_10:GenerateColonFormatFromTime(v23)
-			v_u_6.Text = v22
-			if v24 and v23 ~= 0 then
+			v_u_7.Text = v24 == 0 and "Ready" or v_u_11:GenerateColonFormatFromTime(v24)
+			v_u_6.Text = v23
+			v_u_8.Visible = v26 > 0
+			local v28 = v_u_8
+			local v29 = v26 * 10
+			v28.Text = ("%*%% Boost"):format(math.floor(v29) / 10)
+			if v25 and v24 ~= 0 then
 				v_u_7.TextColor3 = Color3.new(0, 0.666667, 0)
 			else
 				v_u_7.TextColor3 = Color3.new(1, 1, 1)
@@ -73,51 +79,51 @@ local function v_u_26()
 	end
 end
 task.spawn(function()
-	-- upvalues: (copy) v_u_13, (copy) v_u_8, (ref) v_u_19, (copy) v_u_26, (copy) v_u_3, (copy) v_u_5
+	-- upvalues: (copy) v_u_14, (copy) v_u_9, (ref) v_u_20, (copy) v_u_30, (copy) v_u_3, (copy) v_u_5
 	while true do
-		local v27, v28
+		local v31, v32
 		repeat
 			task.wait(0.25)
-			local v29 = RaycastParams.new()
-			v29.FilterDescendantsInstances = { v_u_13 }
-			v29.FilterType = Enum.RaycastFilterType.Include
-			v27 = nil
-			v28 = nil
-			local v30 = game.Players.LocalPlayer.Character
-		until v30 and v30:IsDescendantOf(workspace)
-		local v31 = v30:GetPivot().p
-		for _, v32 in game.CollectionService:GetTagged("PetEggServer") do
-			if v_u_8(v32) then
-				local v33 = (v31 - v32:GetPivot().p).Magnitude
-				if v33 < 9 and (v28 == nil or v33 < v27) then
-					v28 = v32:FindFirstChild("HitBox", true)
-					v27 = v33
+			local v33 = RaycastParams.new()
+			v33.FilterDescendantsInstances = { v_u_14 }
+			v33.FilterType = Enum.RaycastFilterType.Include
+			v31 = nil
+			v32 = nil
+			local v34 = game.Players.LocalPlayer.Character
+		until v34 and v34:IsDescendantOf(workspace)
+		local v35 = v34:GetPivot().p
+		for _, v36 in game.CollectionService:GetTagged("PetEggServer") do
+			if v_u_9(v36) then
+				local v37 = (v35 - v36:GetPivot().p).Magnitude
+				if v37 < 9 and (v32 == nil or v37 < v31) then
+					v32 = v36:FindFirstChild("HitBox", true)
+					v31 = v37
 				end
 			end
 		end
-		if v_u_8(v28) then
-			v_u_19 = v28
-			v_u_26()
+		if v_u_9(v32) then
+			v_u_20 = v32
+			v_u_30()
 		else
-			v_u_19 = nil
+			v_u_20 = nil
 		end
-		local v34
-		if v_u_19 then
-			v34 = v_u_19.Parent.Parent:GetAttribute("ShowTime")
+		local v38
+		if v_u_20 then
+			v38 = v_u_20.Parent.Parent:GetAttribute("ShowTime")
 		else
-			v34 = nil
+			v38 = nil
 		end
-		local v35 = {
-			["GroupTransparency"] = (not v34 and true or v34 <= workspace:GetServerTimeNow()) and v_u_19 and 0 or 1
+		local v39 = {
+			["GroupTransparency"] = (not v38 and true or v38 <= workspace:GetServerTimeNow()) and v_u_20 and 0 or 1
 		}
-		v_u_3:Create(v_u_5, TweenInfo.new(0.25), v35):Play()
+		v_u_3:Create(v_u_5, TweenInfo.new(0.25), v39):Play()
 	end
 end)
 task.spawn(function()
-	-- upvalues: (copy) v_u_26
+	-- upvalues: (copy) v_u_30
 	while true do
 		task.wait(1)
-		v_u_26()
+		v_u_30()
 	end
 end)
 return {}

@@ -496,6 +496,12 @@ local v_u_4 = {
 		40
 	},
 	{
+		"Candy Blossom 2026",
+		3,
+		100000,
+		40
+	},
+	{
 		"Peach",
 		2,
 		300,
@@ -2098,6 +2104,12 @@ local v_u_4 = {
 		166
 	},
 	{
+		"Frost Fern",
+		4.5,
+		130130,
+		200
+	},
+	{
 		"Mega Mushroom",
 		70,
 		500,
@@ -2264,12 +2276,6 @@ local v_u_4 = {
 		1,
 		28575,
 		90
-	},
-	{
-		"Mini Pumpkin",
-		2,
-		50000,
-		120
 	},
 	{
 		"Witch Cap",
@@ -2494,22 +2500,10 @@ local v_u_4 = {
 		100
 	},
 	{
-		"Frost Fern",
-		4.5,
-		20000,
-		100
-	},
-	{
 		"Frost Bush",
 		3,
 		20000,
 		120
-	},
-	{
-		"Saskia",
-		1.5,
-		20000,
-		100
 	},
 	{
 		"Tinsel",
@@ -2560,22 +2554,256 @@ local v_u_4 = {
 		180
 	},
 	{
-		"Purple Treeshroom",
-		3,
-		35000,
-		180
+		"Jungle Kiwano",
+		3.5,
+		5000,
+		70
 	},
 	{
-		"Amazon Feather Fern",
+		"Birds Nest",
+		5,
+		5000,
+		250
+	},
+	{
+		"Candy Carrot",
+		0.4,
+		8000,
+		100
+	},
+	{
+		"Chocolate Berry",
 		1,
+		8000,
+		100
+	},
+	{
+		"Gumball",
+		2,
+		12000,
+		100
+	},
+	{
+		"Liquorice",
+		6,
+		20000,
+		250
+	},
+	{
+		"Sugar Melon",
+		7,
+		40000,
+		250
+	},
+	{
+		"Chocolate Coconut",
+		14,
+		55000,
+		1200
+	},
+	{
+		"Gummy Cactus",
+		1.5,
+		100000,
+		2400
+	},
+	{
+		"Egg Melon",
+		6,
+		100000,
+		3800
+	},
+	{
+		"Sour Lemon",
+		2,
+		250000,
+		5600
+	},
+	{
+		"Eggfruit",
+		3,
+		444444,
+		8000
+	},
+	{
+		"Easter Sprout",
+		4,
+		650000,
+		10000
+	},
+	{
+		"Easter Candy Carrot",
+		0.4,
+		8000,
+		100
+	},
+	{
+		"Easter Chocolate Berry",
+		1,
+		8000,
+		100
+	},
+	{
+		"Easter Gumball",
+		2,
+		12000,
+		100
+	},
+	{
+		"Easter Liquorice",
+		6,
+		20000,
+		250
+	},
+	{
+		"Easter Sugar Melon",
+		7,
+		40000,
+		250
+	},
+	{
+		"Easter Chocolate Coconut",
+		14,
+		55000,
+		1200
+	},
+	{
+		"Easter Gummy Cactus",
+		1.5,
+		100000,
+		2400
+	},
+	{
+		"Easter Egg Melon",
+		6,
+		100000,
+		3800
+	},
+	{
+		"Easter Sour Lemon",
+		2,
+		250000,
+		5600
+	},
+	{
+		"Easter Eggfruit",
+		3,
+		444444,
+		8000
+	},
+	{
+		"Easter Easter Sprout",
+		4,
+		650000,
+		10000
+	},
+	{
+		"Eggsnapper",
+		8,
+		175000,
+		200
+	},
+	{
+		"Drowned Flower",
+		0.5,
+		25000,
+		75
+	},
+	{
+		"Saskia",
+		1.5,
 		35000,
-		180
+		100
+	},
+	{
+		"Mini Pumpkin",
+		2,
+		65000,
+		150
 	},
 	{
 		"Jungle Cherry",
 		3,
-		35000,
-		180
+		99000,
+		250
+	},
+	{
+		"Amazon Feather Fern",
+		1,
+		125125,
+		350
+	},
+	{
+		"Boreal Orange",
+		3,
+		222000,
+		400
+	},
+	{
+		"Purple Treeshroom",
+		3,
+		144000,
+		200
+	},
+	{
+		"DJ Delight",
+		1,
+		67676,
+		150
+	},
+	{
+		"Blue Candypop",
+		1.5,
+		45000,
+		100
+	},
+	{
+		"Elder Candy Blossom",
+		3,
+		150000,
+		40
+	},
+	{
+		"Bunny Berry",
+		2,
+		30000,
+		100
+	},
+	{
+		"Bonnet Bloom",
+		3.5,
+		90000,
+		250
+	},
+	{
+		"Egg Shroom",
+		5,
+		110000,
+		200
+	},
+	{
+		"Waddling Willow",
+		3,
+		200000,
+		250
+	},
+	{
+		"Marshmallow Root",
+		2,
+		165000,
+		400
+	},
+	{
+		"Jelly Bean Sprout",
+		1,
+		150000,
+		100
+	},
+	{
+		"Basket Bouquet",
+		3,
+		150000,
+		170
 	}
 }
 for _, v5 in v_u_3 do
@@ -2857,6 +3085,16 @@ local v_u_9 = {
 	{
 		"Candy Blossom Seed",
 		"Candy Blossom",
+		10,
+		"Divine",
+		3268187638,
+		8000,
+		0,
+		nil
+	},
+	{
+		"Candy Blossom 2026 Seed",
+		"Candy Blossom 2026",
 		10,
 		"Divine",
 		3268187638,
@@ -6557,6 +6795,376 @@ local v_u_9 = {
 	{
 		"Jungle Cherry Seed",
 		"Jungle Cherry",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Drowned Flower Seed",
+		"Drowned Flower",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Boreal Orange Seed",
+		"Boreal Orange",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Candy Carrot Seed",
+		"Candy Carrot",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Sugar Melon Seed",
+		"Sugar Melon",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Liquorice Seed",
+		"Liquorice",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Gumball Seed",
+		"Gumball",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Chocolate Berry Seed",
+		"Chocolate Berry",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Gummy Cactus Seed",
+		"Gummy Cactus",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Sour Lemon Seed",
+		"Sour Lemon",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Eggfruit Seed",
+		"Eggfruit",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Eggsnapper Seed",
+		"Eggsnapper",
+		10,
+		"Rare",
+		3568823262,
+		100,
+		0,
+		3568823592
+	},
+	{
+		"DJ Delight Seed",
+		"DJ Delight",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Jungle Kiwano Seed",
+		"Jungle Kiwano",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Birds Nest Seed",
+		"Birds Nest",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Candy Carrot Seed",
+		"Easter Candy Carrot",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Sugar Melon Seed",
+		"Easter Sugar Melon",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Liquorice Seed",
+		"Easter Liquorice",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Gumball Seed",
+		"Easter Gumball",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Chocolate Berry Seed",
+		"Easter Chocolate Berry",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Gummy Cactus Seed",
+		"Easter Gummy Cactus",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Sour Lemon Seed",
+		"Easter Sour Lemon",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Eggfruit Seed",
+		"Easter Eggfruit",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Chocolate Coconut Seed",
+		"Chocolate Coconut",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Chocolate Coconut Seed",
+		"Easter Chocolate Coconut",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Sprout Seed",
+		"Easter Sprout",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Easter Sprout Seed",
+		"Easter Easter Sprout",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Waddling Willow Seed",
+		"Waddling Willow",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Egg Melon Seed",
+		"Egg Melon",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Easter Egg Melon Seed",
+		"Easter Egg Melon",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Blue Candypop Seed",
+		"Blue Candypop",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Elder Candy Blossom Seed",
+		"Elder Candy Blossom",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Jelly Bean Sprout Seed",
+		"Jelly Bean Sprout",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Egg Shroom Seed",
+		"Egg Shroom",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Bonnet Bloom Seed",
+		"Bonnet Bloom",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Marshmallow Root Seed",
+		"Marshmallow Root",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Bunny Berry Seed",
+		"Bunny Berry",
+		10,
+		"Rare",
+		0,
+		100,
+		0,
+		nil
+	},
+	{
+		"Basket Bouquet Seed",
+		"Basket Bouquet",
 		10,
 		"Rare",
 		0,

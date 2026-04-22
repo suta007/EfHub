@@ -1,5 +1,5 @@
 local v1 = game:GetService("ReplicatedStorage")
-local v_u_2 = require(script.Parent.Parent.Shared.Util)
+local v_u_2 = require(game.ReplicatedStorage.Code.Util)
 local v3 = require(v1.Modules.MutationHandler)
 local v4 = require(v1.Item_Module)
 require(v1.Data.GearData)

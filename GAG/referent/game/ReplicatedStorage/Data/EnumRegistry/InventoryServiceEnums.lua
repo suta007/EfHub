@@ -24,5 +24,6 @@ return {
 	["FertilizerType"] = "w",
 	["FertilizerVariantName"] = "x",
 	["PowerRemaining"] = "y",
-	["PlantVersion"] = "z"
+	["PlantVersion"] = "z",
+	["EggBoostAmount"] = "A"
 }

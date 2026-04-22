@@ -144,6 +144,21 @@ local v_u_1 = {
 		"Festive Wendigo",
 		"Summer Kiwi",
 		"Christmas Spirit"
+	},
+	["Easter"] = {
+		"Chocolate Bunny",
+		"Easter Egg Chick",
+		"Marshmallow Lamb",
+		"Easter Bunny",
+		"Gilded Choc Chocolate Bunny",
+		"Gilded Choc Easter Egg Chick",
+		"Gilded Choc Marshmallow Lamb",
+		"Gilded Choc Easter Bunny",
+		"Gummy Bear",
+		"Hootsie Roll",
+		"Beaver",
+		"Stork",
+		"Orchid Mantis"
 	}
 }
 local v_u_2 = {}
@@ -195,5 +210,19 @@ function v_u_2.HasTrait(p13, p14)
 		warn("PetTraitsData.HasTrait | No pet name given!")
 		return false
 	end
+end
+function v_u_2.GetTraitsAsString(p16)
+	-- upvalues: (copy) v_u_1, (copy) v_u_2
+	if not p16 or p16 == "" then
+		warn("PetTraitsData.GetTraitsAsString | No pet name given!")
+		return ""
+	end
+	local v17 = {}
+	for v18, _ in v_u_1 do
+		if v_u_2.HasTrait(p16, v18) then
+			table.insert(v17, v18)
+		end
+	end
+	return table.concat(v17, ", ")
 end
 return v_u_2

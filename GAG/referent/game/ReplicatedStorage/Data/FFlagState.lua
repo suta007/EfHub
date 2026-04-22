@@ -6,5 +6,6 @@ return {
 	["SecretLoggerThingy"] = false,
 	["GrowTimeOffset"] = 0,
 	["NewPlayersServersEnabled"] = true,
-	["NewTradingTokensEnabled"] = true
+	["NewTradingTokensEnabled"] = true,
+	["EnableFlameThrower"] = true
 }

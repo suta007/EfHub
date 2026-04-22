@@ -1,6 +1,7 @@
 local v1 = game:GetService("Players")
 local v_u_2 = game:GetService("RunService")
 local v3 = v1.LocalPlayer
+assert(v3, "LocalPlayer is nil")
 local _ = game.ReplicatedStorage.GameEvents.ConfirmationPromptOpen
 local _ = game.ReplicatedStorage.GameEvents.ConfirmationPromptClose
 local _ = game.ReplicatedStorage.GameEvents.ConfirmationPromptUpdateText
@@ -9,181 +10,188 @@ local v5 = v_u_4:WaitForChild("Main", 30)
 local v_u_6 = v5:WaitForChild("HeaderText", 30)
 local v_u_7 = v5:WaitForChild("MiddleText", 30)
 local v_u_8 = v5:WaitForChild("FooterText", 30)
-local v_u_9 = v5:WaitForChild("Confirm", 30)
-local v_u_10 = v5:WaitForChild("Cancel", 30)
-local v11 = v5:WaitForChild("HeaderContainer", 30)
-local v_u_12 = v11:WaitForChild("Title", 30)
-local v_u_13 = v11:WaitForChild("Exit", 30):WaitForChild("ExitButton", 30)
-local v_u_14 = {}
+local v9 = v5:WaitForChild("Buttons", 30)
+local v_u_10 = v9:WaitForChild("Confirm", 30)
+local v_u_11 = v9:WaitForChild("Cancel", 30)
+local v12 = v5:WaitForChild("HeaderContainer", 30)
+local v_u_13 = v12:WaitForChild("Title", 30)
+local v_u_14 = v12:WaitForChild("Exit", 30):WaitForChild("ExitButton", 30)
 local v_u_15 = {}
-local v_u_16 = {
+local v_u_16 = {}
+local v_u_17 = {
 	["Prismatic"] = true,
 	["Transcendent"] = true
 }
-local v_u_17 = {}
-local function v_u_20()
-	-- upvalues: (copy) v_u_14, (copy) v_u_15
-	for _, v18 in v_u_14 do
-		v18:Disconnect()
-	end
-	table.clear(v_u_14)
+local v_u_18 = {}
+local function v_u_21()
+	-- upvalues: (copy) v_u_15, (copy) v_u_16
 	for _, v19 in v_u_15 do
 		v19:Disconnect()
 	end
 	table.clear(v_u_15)
+	for _, v20 in v_u_16 do
+		v20:Disconnect()
+	end
+	table.clear(v_u_16)
 end
-local function v_u_21()
-	-- upvalues: (copy) v_u_20, (copy) v_u_4
-	v_u_20()
+local function v_u_22()
+	-- upvalues: (copy) v_u_21, (copy) v_u_4
+	v_u_21()
 	v_u_4.Enabled = false
 end
-local function v_u_35(p_u_22, p_u_23)
-	-- upvalues: (copy) v_u_16, (copy) v_u_2
-	p_u_22.RichText = true
-	local v_u_24 = p_u_22.Text
-	local v25 = false
-	for _, v26 in pairs(p_u_23) do
-		if v_u_16[v26] then
-			v25 = true
+local function v_u_36(p_u_23, p_u_24)
+	-- upvalues: (copy) v_u_17, (copy) v_u_2
+	p_u_23.RichText = true
+	local v_u_25 = p_u_23.Text
+	local v26 = false
+	for _, v27 in pairs(p_u_24) do
+		if v_u_17[v27] then
+			v26 = true
 			break
 		end
 	end
-	if v25 then
-		local v_u_27 = nil
-		v_u_27 = v_u_2.Heartbeat:Connect(function()
-			-- upvalues: (copy) p_u_22, (ref) v_u_27, (copy) v_u_24, (copy) p_u_23
-			if not p_u_22.Parent then
-				v_u_27:Disconnect()
+	if v26 then
+		local v_u_28 = nil
+		v_u_28 = v_u_2.Heartbeat:Connect(function()
+			-- upvalues: (copy) p_u_23, (ref) v_u_28, (copy) v_u_25, (copy) p_u_24
+			if not p_u_23.Parent then
+				v_u_28:Disconnect()
 				return
 			end
-			local v28 = v_u_24
-			for v29, v30 in pairs(p_u_23) do
-				local v31
-				if v30 == "Prismatic" then
-					v31 = os.clock() * 0.1 % 1
+			local v29 = v_u_25
+			for v30, v31 in pairs(p_u_24) do
+				local v32
+				if v31 == "Prismatic" then
+					v32 = os.clock() * 0.1 % 1
 					::l7::
-					local v32 = Color3.fromHSV(v31, 1, 1)
-					local v33 = string.format("%02X%02X%02X", v32.R * 255, v32.G * 255, v32.B * 255)
-					v28 = v28:gsub(v29:gsub("(%W)", "%%%1"), string.format("<font color=\"#%s\">%s</font>", v33, v29))
-				elseif v30 == "Transcendent" then
-					local v34 = os.clock() * 1.5
-					v31 = math.sin(v34) * 0.03 + 0.72
+					local v33 = Color3.fromHSV(v32, 1, 1)
+					local v34 = string.format("%02X%02X%02X", v33.R * 255, v33.G * 255, v33.B * 255)
+					v29 = v29:gsub(v30:gsub("(%W)", "%%%1"), string.format("<font color=\"#%s\">%s</font>", v34, v30))
+				elseif v31 == "Transcendent" then
+					local v35 = os.clock() * 1.5
+					v32 = math.sin(v35) * 0.03 + 0.72
 					goto l7
 				end
 			end
-			p_u_22.Text = v28
+			p_u_23.Text = v29
 		end)
-		return v_u_27
+		return v_u_28
 	end
 end
-function v_u_17.Open(_, p36, p_u_37)
-	-- upvalues: (copy) v_u_20, (copy) v_u_12, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8, (copy) v_u_35, (copy) v_u_14, (copy) v_u_9, (copy) v_u_21, (copy) v_u_15, (copy) v_u_13, (copy) v_u_10, (copy) v_u_4
-	v_u_20()
-	v_u_12.Text = p36.Title or "Confirmation Prompt"
-	v_u_6.Text = p36.Header or "Are you sure?"
-	v_u_7.Text = p36.Middle or "Action"
-	v_u_8.Text = p36.Footer or "This action is irreversible."
-	if p36.AnimatedWords then
-		if p36.TextLabel then
-			local v38 = p36.TextLabel
-			local v39 = v_u_7
-			if v38 == "Title" then
-				v39 = v_u_12
-			elseif v38 == "Header" then
-				v39 = v_u_6
-			elseif v38 == "Footer" then
-				v39 = v_u_8
+function v_u_18.Open(_, p37, p38)
+	-- upvalues: (copy) v_u_21, (copy) v_u_13, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8, (copy) v_u_36, (copy) v_u_15, (copy) v_u_10, (copy) v_u_11, (copy) v_u_22, (copy) v_u_16, (copy) v_u_14, (copy) v_u_4
+	v_u_21()
+	local v39 = p37 or {}
+	local v_u_40 = p38 or {}
+	v_u_13.Text = v39.Title or "Confirmation Prompt"
+	v_u_6.Text = v39.Header or "Are you sure?"
+	v_u_7.Text = v39.Middle or "Action"
+	v_u_8.Text = v39.Footer or "This action is irreversible."
+	if v39.AnimatedWords then
+		if v39.TextLabel then
+			local v41 = v39.TextLabel
+			local v42 = v_u_7
+			if v41 == "Title" then
+				v42 = v_u_13
+			elseif v41 == "Header" then
+				v42 = v_u_6
+			elseif v41 == "Footer" then
+				v42 = v_u_8
 			end
-			local v40 = v_u_35(v39, p36.AnimatedWords)
-			local v41 = v_u_14
-			table.insert(v41, v40)
+			local v43 = v_u_36(v42, v39.AnimatedWords)
+			local v44 = v_u_15
+			table.insert(v44, v43)
 		else
-			local v42 = v_u_35(v_u_7, p36.AnimatedWords)
-			local v43 = v_u_14
-			table.insert(v43, v42)
+			local v45 = v_u_36(v_u_7, v39.AnimatedWords)
+			local v46 = v_u_15
+			table.insert(v46, v45)
 		end
 	end
-	if p_u_37.ConfirmEvent then
-		local v44 = v_u_14
-		local v45 = v_u_9.Activated
-		table.insert(v44, v45:Connect(function()
-			-- upvalues: (copy) p_u_37
-			local v46 = p_u_37.ConfirmEvent
-			local v47 = p_u_37.ConfirmEventData or {}
-			v46:FireServer(unpack(v47))
+	v_u_10.TextLabel.Text = v39.ConfirmText or "Confirm"
+	v_u_11.TextLabel.Text = v39.RejectText or "Cancel"
+	v_u_10.Visible = not v39.HideConfirm
+	v_u_11.Visible = not v39.HideReject
+	if v_u_40.ConfirmEvent then
+		local v47 = v_u_15
+		local v48 = v_u_10.Activated
+		table.insert(v47, v48:Connect(function()
+			-- upvalues: (ref) v_u_40
+			local v49 = v_u_40.ConfirmEvent
+			local v50 = v_u_40.ConfirmEventData or {}
+			v49:FireServer(unpack(v50))
 		end))
 	end
-	if p_u_37.ConfirmCallback then
-		local v48 = v_u_14
-		local v49 = v_u_9.Activated
-		table.insert(v48, v49:Connect(function()
-			-- upvalues: (copy) p_u_37
-			local v50 = p_u_37.ConfirmCallback
-			local v51 = p_u_37.ConfirmCallbackData or {}
-			v50(unpack(v51))
+	if v_u_40.ConfirmCallback then
+		local v51 = v_u_15
+		local v52 = v_u_10.Activated
+		table.insert(v51, v52:Connect(function()
+			-- upvalues: (ref) v_u_40
+			local v53 = v_u_40.ConfirmCallback
+			local v54 = v_u_40.ConfirmCallbackData or {}
+			v53(unpack(v54))
 		end))
 	end
-	local v52 = v_u_14
-	local v53 = v_u_9.Activated
-	local function v54()
-		-- upvalues: (ref) v_u_21
-		task.defer(v_u_21)
+	local v55 = v_u_15
+	local v56 = v_u_10.Activated
+	local function v57()
+		-- upvalues: (ref) v_u_22
+		task.defer(v_u_22)
 	end
-	table.insert(v52, v53:Connect(v54))
-	if p_u_37.RejectEvent then
-		local function v57()
-			-- upvalues: (copy) p_u_37
-			local v55 = p_u_37.RejectEvent
-			local v56 = p_u_37.RejectEventData or {}
-			v55:FireServer(unpack(v56))
+	table.insert(v55, v56:Connect(v57))
+	if v_u_40.RejectEvent then
+		local function v60()
+			-- upvalues: (ref) v_u_40
+			local v58 = v_u_40.RejectEvent
+			local v59 = v_u_40.RejectEventData or {}
+			v58:FireServer(unpack(v59))
 		end
-		local v58 = v_u_15
-		local v59 = v_u_13.Activated
-		table.insert(v58, v59:Connect(v57))
-		local v60 = v_u_15
-		local v61 = v_u_10.Activated
-		table.insert(v60, v61:Connect(v57))
+		local v61 = v_u_16
+		local v62 = v_u_14.Activated
+		table.insert(v61, v62:Connect(v60))
+		local v63 = v_u_16
+		local v64 = v_u_11.Activated
+		table.insert(v63, v64:Connect(v60))
 	end
-	if p_u_37.RejectCallback then
-		local function v64()
-			-- upvalues: (copy) p_u_37
-			local v62 = p_u_37.RejectCallback
-			local v63 = p_u_37.RejectCallbackData or {}
-			v62(unpack(v63))
+	if v_u_40.RejectCallback then
+		local function v67()
+			-- upvalues: (ref) v_u_40
+			local v65 = v_u_40.RejectCallback
+			local v66 = v_u_40.RejectCallbackData or {}
+			v65(unpack(v66))
 		end
-		local v65 = v_u_15
-		local v66 = v_u_13.Activated
-		table.insert(v65, v66:Connect(v64))
-		local v67 = v_u_15
-		local v68 = v_u_10.Activated
-		table.insert(v67, v68:Connect(v64))
+		local v68 = v_u_16
+		local v69 = v_u_14.Activated
+		table.insert(v68, v69:Connect(v67))
+		local v70 = v_u_16
+		local v71 = v_u_11.Activated
+		table.insert(v70, v71:Connect(v67))
 	end
 	v_u_4.Enabled = true
 end
-function v_u_17.Close(_, p69)
-	-- upvalues: (copy) v_u_12, (copy) v_u_20, (copy) v_u_4
-	if not p69 or v_u_12.Text == p69 then
-		v_u_20()
+function v_u_18.Close(_, p72)
+	-- upvalues: (copy) v_u_13, (copy) v_u_21, (copy) v_u_4
+	if not p72 or v_u_13.Text == p72 then
+		v_u_21()
 		v_u_4.Enabled = false
 	end
 end
-function v_u_17.UpdateText(_, p70, p71)
-	-- upvalues: (copy) v_u_17, (copy) v_u_12, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8
-	if p70 then
-		if v_u_17:IsThisOpen(p71 or p70.Title) then
-			v_u_12.Text = p70.Title or v_u_12.Text
-			v_u_6.Text = p70.Header or v_u_6.Text
-			v_u_7.Text = p70.Middle or v_u_7.Text
-			v_u_8.Text = p70.Footer or v_u_8.Text
+function v_u_18.UpdateText(_, p73, p74)
+	-- upvalues: (copy) v_u_18, (copy) v_u_13, (copy) v_u_6, (copy) v_u_7, (copy) v_u_8
+	if p73 then
+		if v_u_18:IsThisOpen(p74 or p73.Title) then
+			v_u_13.Text = p73.Title or v_u_13.Text
+			v_u_6.Text = p73.Header or v_u_6.Text
+			v_u_7.Text = p73.Middle or v_u_7.Text
+			v_u_8.Text = p73.Footer or v_u_8.Text
 		end
 	else
 		return
 	end
 end
-function v_u_17.IsThisOpen(_, p72)
-	-- upvalues: (copy) v_u_4, (copy) v_u_12
-	return v_u_4.Enabled and v_u_12.Text == p72 and true or v_u_4.Enabled
+function v_u_18.IsThisOpen(_, p75)
+	-- upvalues: (copy) v_u_4, (copy) v_u_13
+	return v_u_4.Enabled and v_u_13.Text == p75 and true or v_u_4.Enabled
 end
-v_u_13.Activated:Connect(v_u_21)
-v_u_10.Activated:Connect(v_u_21)
-return v_u_17
+v_u_14.Activated:Connect(v_u_22)
+v_u_11.Activated:Connect(v_u_22)
+return v_u_18

@@ -140,6 +140,27 @@ local v1 = {
 	["SeedSackPreemEggsBuy10"] = {
 		["PurchaseID"] = 3282157312
 	},
+	["BuyGoldenEgg"] = {
+		["PurchaseID"] = 3567508898
+	},
+	["EasterPackExoticBuy1"] = {
+		["PurchaseID"] = 3563673213
+	},
+	["EasterPackExoticBuy3"] = {
+		["PurchaseID"] = 3563673776
+	},
+	["EasterPackExoticBuy10"] = {
+		["PurchaseID"] = 3563674024
+	},
+	["EasterPackExoticBuy50"] = {
+		["PurchaseID"] = 3570335691
+	},
+	["AngryPlantQuest"] = {
+		["PurchaseID"] = 3573196597
+	},
+	["AngryPlantAllQuest"] = {
+		["PurchaseID"] = 3575874559
+	},
 	["SkipFairyQuests"] = {
 		["PurchaseID"] = 3386155727
 	},
@@ -163,6 +184,9 @@ local v1 = {
 	},
 	["BuySeasonPassPremium"] = {
 		["PurchaseID"] = 3411693833
+	},
+	["SkipSeasonPassQuest"] = {
+		["PurchaseID"] = 3570325960
 	},
 	["WitchesBrewFillCauldron"] = {
 		["PurchaseID"] = 3427289392
@@ -328,6 +352,15 @@ local v1 = {
 	},
 	["ForceStartRainbowEvent"] = {
 		["PurchaseID"] = 3555612448
+	},
+	["RainbowShovelPack"] = {
+		["PurchaseID"] = 3560653460
+	},
+	["SkipEvilBunnyQuest"] = {
+		["PurchaseID"] = 3575441063
+	},
+	["SkipPackagingCooldown"] = {
+		["PurchaseID"] = 3576770716
 	}
 }
 return v1

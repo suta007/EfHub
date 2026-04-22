@@ -1751,6 +1751,167 @@ local v_u_3 = {
 		["FlyDown"] = "rbxassetid://73670628853664",
 		["FlyUp"] = "rbxassetid://94502358646601",
 		["Breathe"] = "rbxassetid://130760149861766"
+	},
+	["Firemite"] = {
+		["Idle"] = "rbxassetid://134102069484376",
+		["Walk"] = "rbxassetid://134102069484376",
+		["Zap"] = "rbxassetid://100164836309395"
+	},
+	["Ash Raven"] = {
+		["Idle"] = "rbxassetid://98519985813095",
+		["Walk"] = "rbxassetid://126204755611802",
+		["Fly"] = "rbxassetid://120628386657802",
+		["FlyDown"] = "rbxassetid://95783055449423",
+		["FlyUp"] = "rbxassetid://132476910449834"
+	},
+	["Hazehound"] = {
+		["Idle"] = "rbxassetid://102720496713959",
+		["Walk"] = "rbxassetid://97932653282338",
+		["Bark"] = "rbxassetid://102720496713959"
+	},
+	["Cerberus"] = {
+		["Idle"] = "rbxassetid://79052433360664",
+		["Walk"] = "rbxassetid://135877576192587",
+		["Triple"] = "rbxassetid://113089579377393"
+	},
+	["GIANT Firemite"] = {
+		["Idle"] = "rbxassetid://134102069484376",
+		["Walk"] = "rbxassetid://134102069484376",
+		["Zap"] = "rbxassetid://100164836309395"
+	},
+	["GIANT Ash Raven"] = {
+		["Idle"] = "rbxassetid://98519985813095",
+		["Walk"] = "rbxassetid://126204755611802",
+		["Fly"] = "rbxassetid://120628386657802",
+		["FlyDown"] = "rbxassetid://95783055449423",
+		["FlyUp"] = "rbxassetid://132476910449834"
+	},
+	["Rainbow Hazehound"] = {
+		["Idle"] = "rbxassetid://102720496713959",
+		["Walk"] = "rbxassetid://97932653282338",
+		["Bark"] = "rbxassetid://102720496713959"
+	},
+	["Rainbow Cerberus"] = {
+		["Idle"] = "rbxassetid://79052433360664",
+		["Walk"] = "rbxassetid://135877576192587",
+		["Triple"] = "rbxassetid://113089579377393"
+	},
+	["Chocolate Bunny"] = {
+		["Idle"] = "rbxassetid://80830019163546",
+		["Walk"] = "rbxassetid://117228920028311",
+		["Chomp"] = "rbxassetid://91545917920155"
+	},
+	["Easter Egg Chick"] = {
+		["Idle"] = "rbxassetid://82465422567517",
+		["Walk"] = "rbxassetid://118517007627299",
+		["Panic"] = "rbxassetid://101960802097425"
+	},
+	["Marshmallow Lamb"] = {
+		["Idle"] = "rbxassetid://86278199448313",
+		["Walk"] = "rbxassetid://118517007627299",
+		["Play"] = "rbxassetid://84877059114826"
+	},
+	["Easter Bunny"] = {
+		["Idle"] = "rbxassetid://112923996241477",
+		["Walk"] = "rbxassetid://71277102842499",
+		["Run"] = "rbxassetid://121162114980794"
+	},
+	["Gilded Choc Chocolate Bunny"] = {
+		["Idle"] = "rbxassetid://80830019163546",
+		["Walk"] = "rbxassetid://117228920028311",
+		["Chomp"] = "rbxassetid://91545917920155"
+	},
+	["Gilded Choc Easter Egg Chick"] = {
+		["Idle"] = "rbxassetid://82465422567517",
+		["Walk"] = "rbxassetid://118517007627299",
+		["Panic"] = "rbxassetid://101960802097425"
+	},
+	["Gilded Choc Marshmallow Lamb"] = {
+		["Idle"] = "rbxassetid://86278199448313",
+		["Walk"] = "rbxassetid://118517007627299",
+		["Play"] = "rbxassetid://84877059114826"
+	},
+	["Gilded Choc Easter Bunny"] = {
+		["Idle"] = "rbxassetid://112923996241477",
+		["Walk"] = "rbxassetid://71277102842499",
+		["Run"] = "rbxassetid://121162114980794"
+	},
+	["Gummy Bear"] = {
+		["Idle"] = "rbxassetid://100399217826845",
+		["Walk"] = "rbxassetid://100399217826845",
+		["Roar"] = "rbxassetid://100918889424478"
+	},
+	["Hootise Roll"] = {
+		["Idle"] = "rbxassetid://129074703805811",
+		["Walk"] = "rbxassetid://72938304206168",
+		["Fly"] = "rbxassetid://103608467045533",
+		["FlyDown"] = "rbxassetid://126267742639216",
+		["FlyUp"] = "rbxassetid://113660155265682"
+	},
+	["Beaver"] = {
+		["Idle"] = "rbxassetid://125110758440513",
+		["Walk"] = "rbxassetid://94960793853786",
+		["Carve"] = "rbxassetid://70369650746251"
+	},
+	["Stork"] = {
+		["Idle"] = "rbxassetid://82305951303457",
+		["Walk"] = "rbxassetid://92777857718180",
+		["Fly"] = "rbxassetid://106292804465704"
+	},
+	["Orchid Mantis"] = {
+		["Walk"] = "rbxassetid://84713477229850",
+		["Idle"] = "rbxassetid://97641683064349",
+		["Pray"] = "rbxassetid://73332209725156"
+	},
+	["Candy Squirrel"] = {
+		["Idle"] = "rbxassetid://92747344416384",
+		["Walk"] = "rbxassetid://73793157974906"
+	},
+	["Bloom Bee"] = {
+		["Idle"] = "rbxassetid://100424552289454",
+		["Walk"] = "rbxassetid://100424552289454",
+		["Pollinate"] = "rbxassetid://99031845745055"
+	},
+	["Jerboa"] = {
+		["Idle"] = "rbxassetid://136068604115329",
+		["Walk"] = "rbxassetid://126163627579981",
+		["Hop"] = "rbxassetid://127784013290128"
+	},
+	["Nyala"] = {
+		["Idle"] = "rbxassetid://120871790954077",
+		["Walk"] = "rbxassetid://112017219694466",
+		["Feed"] = "rbxassetid://90421283536087"
+	},
+	["Peryton"] = {
+		["Idle"] = "rbxassetid://131615429435113",
+		["Walk"] = "rbxassetid://71804276472695",
+		["Fly"] = "rbxassetid://129843153738853",
+		["FlyDown"] = "rbxassetid://100787854072194",
+		["FlyUp"] = "rbxassetid://100787854072194",
+		["Screech"] = "rbxassetid://120728735583575"
+	},
+	["Gilded Choc Bloom Bee"] = {
+		["Idle"] = "rbxassetid://100424552289454",
+		["Walk"] = "rbxassetid://100424552289454",
+		["Pollinate"] = "rbxassetid://99031845745055"
+	},
+	["Gilded Choc Jerboa"] = {
+		["Idle"] = "rbxassetid://136068604115329",
+		["Walk"] = "rbxassetid://126163627579981",
+		["Hop"] = "rbxassetid://127784013290128"
+	},
+	["Gilded Choc Nyala"] = {
+		["Idle"] = "rbxassetid://120871790954077",
+		["Walk"] = "rbxassetid://112017219694466",
+		["Feed"] = "rbxassetid://90421283536087"
+	},
+	["Gilded Choc Peryton"] = {
+		["Idle"] = "rbxassetid://131615429435113",
+		["Walk"] = "rbxassetid://71804276472695",
+		["Fly"] = "rbxassetid://129843153738853",
+		["FlyDown"] = "rbxassetid://100787854072194",
+		["FlyUp"] = "rbxassetid://100787854072194",
+		["Screech"] = "rbxassetid://120728735583575"
 	}
 }
 local v_u_4 = {}
@@ -1780,7 +1941,6 @@ function v_u_1.playSound(p10, p11)
 				v14.RollOffMode = Enum.RollOffMode.Inverse
 				v14.RollOffMaxDistance = 100
 				v14.RollOffMinDistance = 5
-				v14.EmitterSize = 10
 				v_u_4[v13] = v14
 			end
 			local v_u_15 = v_u_4[v13]:Clone()

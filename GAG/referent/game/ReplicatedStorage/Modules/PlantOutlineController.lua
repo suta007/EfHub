@@ -74,7 +74,7 @@ local function v_u_61(p30)
 		end
 		v_u_17.Adornee = p30
 		v_u_10.Visible = true
-		local v_u_33 = p30.Name
+		local v_u_33 = p30:GetAttribute("DisplayName") or p30.Name
 		local v34 = v_u_14[v_u_33]
 		if v34 then
 			v34 = v34.SeedRarity

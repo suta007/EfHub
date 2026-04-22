@@ -9,7 +9,8 @@ local v_u_8 = require(v5.Modules.Settings.SettingsService)
 local v_u_9 = v_u_3.LocalPlayer
 local v_u_10 = v_u_9:WaitForChild("PlayerGui")
 local v_u_11 = v_u_9.Character or v_u_9.CharacterAdded:Wait()
-local v_u_12 = v5.GameEvents.PlayerTeleportTriggered
+local _ = v5.GameEvents.PlayerTeleportTriggered
+local v_u_12 = require(v5.Modules.TeleportPlayer)
 v_u_9.CharacterAdded:Connect(function(p13)
 	-- upvalues: (ref) v_u_11
 	v_u_11 = p13
@@ -22,7 +23,10 @@ local v_u_18 = script:WaitForChild("OwnerTag")
 local v_u_19 = game.SoundService.Hover
 local v_u_20 = game.SoundService.Click
 local function v_u_44(p_u_21, p_u_22)
-	-- upvalues: (copy) v_u_18, (copy) v_u_10, (copy) v_u_3, (copy) v_u_9, (ref) v_u_17, (copy) v_u_4, (copy) v_u_19, (copy) v_u_7, (ref) v_u_11, (copy) v_u_12, (copy) v_u_20
+	-- upvalues: (copy) v_u_18, (copy) v_u_10, (copy) v_u_3, (copy) v_u_9, (ref) v_u_17, (copy) v_u_4, (copy) v_u_19, (copy) v_u_12, (copy) v_u_7, (copy) v_u_20, (ref) v_u_11
+	if p_u_21:GetAttribute("CommunityGarden") then
+		return
+	end
 	local v23 = v_u_18:Clone()
 	local v24 = p_u_21:WaitForChild("Owner_Tag")
 	v23:PivotTo(v24:GetPivot())
@@ -100,14 +104,12 @@ local function v_u_44(p_u_21, p_u_22)
 		v_u_26.ImageColor3 = Color3.new(1, 1, 1)
 	end)
 	v27.MouseButton1Click:Connect(function()
-		-- upvalues: (ref) v_u_30, (copy) p_u_22, (ref) v_u_9, (ref) v_u_7, (ref) v_u_11, (ref) v_u_12, (copy) p_u_21, (copy) v_u_29, (copy) v_u_26, (ref) v_u_20
+		-- upvalues: (ref) v_u_30, (copy) p_u_22, (ref) v_u_9, (ref) v_u_12, (ref) v_u_7, (copy) p_u_21, (copy) v_u_29, (copy) v_u_26, (ref) v_u_20
 		if v_u_30 then
 			if p_u_22 == v_u_9 then
-				v_u_11:PivotTo(v_u_7(v_u_9).Spawn_Point.CFrame)
-				v_u_12:FireServer("Farm")
+				v_u_12(v_u_9, v_u_7(v_u_9).Spawn_Point.CFrame, "Farm")
 			else
-				v_u_11:PivotTo(p_u_21.Spawn_Point.CFrame)
-				v_u_12:FireServer("Farm")
+				v_u_12(v_u_9, p_u_21.Spawn_Point.CFrame, "Farm")
 			end
 			v_u_29.ImageColor3 = Color3.new(1, 1, 1)
 			v_u_26.ImageColor3 = Color3.new(1, 1, 1)
@@ -142,12 +144,12 @@ local function v_u_44(p_u_21, p_u_22)
 			local v43 = (Vector3.new(v41, 0, v42) - v39).Magnitude >= 80
 			v33(v43)
 			v34.LastState = v43
-			::l20::
+			::l22::
 			return v34
 		end
 	end
 	v33(false)
-	goto l20
+	goto l22
 end
 local function v_u_52(p_u_45)
 	-- upvalues: (copy) v_u_14, (copy) v_u_3, (copy) v_u_44, (copy) v_u_15

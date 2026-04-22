@@ -1456,6 +1456,72 @@ local v1 = {
 				}
 			}
 		}
+	},
+	["Season 4 Crate"] = {
+		["Color"] = Color3.fromRGB(170, 255, 255),
+		["Icon"] = "rbxassetid://118362223804255",
+		["OpenTime"] = 3600,
+		["CosmeticRolls"] = {
+			["Items"] = {
+				["Garden Shade"] = {
+					["ItemOdd"] = 20,
+					["Name"] = "Garden Shade"
+				},
+				["Golden Throne"] = {
+					["ItemOdd"] = 20,
+					["Name"] = "Golden Throne"
+				},
+				["Vine Bench"] = {
+					["ItemOdd"] = 20,
+					["Name"] = "Vine Bench"
+				},
+				["Picnic Table"] = {
+					["ItemOdd"] = 10,
+					["Name"] = "Picnic Table"
+				},
+				["Lava Arch"] = {
+					["ItemOdd"] = 5,
+					["Name"] = "Lava Arch"
+				},
+				["Lava Fountain"] = {
+					["ItemOdd"] = 5,
+					["Name"] = "Lava Fountain"
+				}
+			}
+		}
+	},
+	["Easter Crate"] = {
+		["Color"] = Color3.fromRGB(170, 255, 255),
+		["Icon"] = "rbxassetid://128490379573652",
+		["OpenTime"] = 3600,
+		["CosmeticRolls"] = {
+			["Items"] = {
+				["Egg Basket"] = {
+					["ItemOdd"] = 20,
+					["Name"] = "Egg Basket"
+				},
+				["Egg Lights"] = {
+					["ItemOdd"] = 20,
+					["Name"] = "Egg Lights"
+				},
+				["Egg Lamp"] = {
+					["ItemOdd"] = 20,
+					["Name"] = "Egg Lamp"
+				},
+				["Carrot Chair"] = {
+					["ItemOdd"] = 10,
+					["Name"] = "Carrot Chair"
+				},
+				["Bunny Mat"] = {
+					["ItemOdd"] = 5,
+					["Name"] = "Bunny Mat"
+				},
+				["Easter Bunny Statue"] = {
+					["ItemOdd"] = 5,
+					["Name"] = "Easter Bunny Statue"
+				}
+			}
+		}
 	}
 }
 local function v8(p2)

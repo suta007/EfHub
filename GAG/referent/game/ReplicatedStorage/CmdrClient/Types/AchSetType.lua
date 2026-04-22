@@ -1,5 +1,6 @@
 local v1 = game:GetService("ReplicatedStorage")
-local v_u_2 = require(script.Parent.Parent.Shared.Util)
+game:GetService("ServerScriptService")
+local v_u_2 = require(game.ReplicatedStorage.Code.Util)
 local v_u_3 = {}
 for _, v4 in v1.Data.AchievementsData.Seasons:GetChildren() do
 	for v5, _ in require(v4).Sets do

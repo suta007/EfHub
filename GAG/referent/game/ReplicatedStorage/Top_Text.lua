@@ -37,225 +37,231 @@ function effect(p7, p8, p9)
 		end
 	end
 end
-function v2.NpcText(p13, p14, p15)
+function v2.NpcText(p13, p14, p15, p16, p17)
 	-- upvalues: (copy) v_u_3
-	local v16 = p13.Head:FindFirstChild(v_u_3.Name)
-	if v16 ~= nil then
+	local v18 = p13.Head:FindFirstChild(v_u_3.Name)
+	if v18 ~= nil then
 		if p15 == true then
-			for _, v17 in pairs(v16:GetDescendants()) do
-				if v17:IsA("LocalScript") or v17:IsA("Script") then
-					v17:Destroy()
+			for _, v19 in pairs(v18:GetDescendants()) do
+				if v19:IsA("LocalScript") or v19:IsA("Script") then
+					v19:Destroy()
 				end
 			end
 		end
-		v16.TextLabel.Text = p14
-		effect(v16.TextLabel, true, p13.Name)
+		v18.TextLabel.Text = p14
+		effect(v18.TextLabel, true, p13.Name)
 		if p15 == true then
-			for _, v18 in pairs(v_u_3:GetDescendants()) do
-				if v18:IsA("LocalScript") or v18:IsA("Script") then
-					for _, v19 in pairs(v16:GetDescendants()) do
-						if v19.Name == v18.Parent.Name then
-							local v20 = v18:Clone()
-							v20.Parent = v19
-							v20.Enabled = true
+			for _, v20 in pairs(v_u_3:GetDescendants()) do
+				if v20:IsA("LocalScript") or v20:IsA("Script") then
+					for _, v21 in pairs(v18:GetDescendants()) do
+						if v21.Name == v20.Parent.Name then
+							local v22 = v20:Clone()
+							v22.Parent = v21
+							v22.Enabled = true
 						end
 					end
 				end
 			end
 		end
-		return v16
+		return v18
 	end
-	local v21 = v_u_3:Clone()
-	v21.Parent = p13.Head
-	v21.TextLabel.Text = p14
-	effect(v21.TextLabel, true, p13.Name)
+	local v23 = v_u_3:Clone()
+	v23.Parent = p13.Head
+	v23.TextLabel.Text = p14
+	if p16 then
+		v23.Size = UDim2.fromScale(v23.Size.X.Scale * p16, v23.Size.Y.Scale * p16)
+	end
+	if p17 then
+		v23.StudsOffset = v23.StudsOffset + p17
+	end
+	effect(v23.TextLabel, true, p13.Name)
 	if p15 == true then
-		for _, v22 in pairs(v21:GetDescendants()) do
-			if v22:IsA("LocalScript") or v22:IsA("Script") then
-				v22.Enabled = true
+		for _, v24 in pairs(v23:GetDescendants()) do
+			if v24:IsA("LocalScript") or v24:IsA("Script") then
+				v24.Enabled = true
 			end
 		end
 	end
-	return v21
+	return v23
 end
-local v_u_23 = {}
-function v2.TakeAwayNPCText(p24)
+local v_u_25 = {}
+function v2.TakeAwayNPCText(p26)
 	-- upvalues: (copy) v_u_3
-	if p24 ~= nil then
-		local v25 = p24.Head:FindFirstChild(v_u_3.Name)
-		if v25 then
-			v25:Destroy()
+	if p26 ~= nil then
+		local v27 = p26.Head:FindFirstChild(v_u_3.Name)
+		if v27 then
+			v27:Destroy()
 		end
 	end
 end
-local v_u_26 = game:GetService("TweenService")
-function v2.ShowChoices(p27, p28)
-	-- upvalues: (copy) v_u_23, (copy) v_u_5, (copy) v_u_1, (copy) v_u_26
-	if v_u_23[p27] then
-		v_u_23[p27].Cancelled = true
+local v_u_28 = game:GetService("TweenService")
+function v2.ShowChoices(p29, p30)
+	-- upvalues: (copy) v_u_25, (copy) v_u_5, (copy) v_u_1, (copy) v_u_28
+	if v_u_25[p29] then
+		v_u_25[p29].Cancelled = true
 	end
-	local v29 = {
+	local v31 = {
 		["Cancelled"] = false
 	}
-	v_u_23[p27] = v29
-	local v30 = 0
-	local v31 = {}
-	for _, v32 in pairs(p28) do
-		if v29.Cancelled then
+	v_u_25[p29] = v31
+	local v32 = 0
+	local v33 = {}
+	for _, v34 in pairs(p30) do
+		if v31.Cancelled then
 			break
 		end
-		v30 = v30 + 1
-		local v33 = v_u_5:Clone()
-		v33.Frame.Frame.Text_Element.Text = "[\"" .. v32 .. "\"]"
-		v33.Frame.Frame.TextLabel.Text = "#" .. tostring(v30)
+		v32 = v32 + 1
+		local v35 = v_u_5:Clone()
+		v35.Frame.Frame.Text_Element.Text = "[\"" .. v34 .. "\"]"
+		v35.Frame.Frame.TextLabel.Text = "#" .. tostring(v32)
 		if v_u_1.PreferredInput == Enum.PreferredInput.Touch then
-			local v34 = Instance.new("UIScale")
-			v34.Scale = 1.3
-			v34.Parent = v33
+			local v36 = Instance.new("UIScale")
+			v36.Scale = 1.3
+			v36.Parent = v35
 		end
-		v33.Parent = p27.PlayerGui.Billboard_UI.Objects
-		local v35 = v33.Frame.Frame.Text_Element.UIPadding
-		local v36 = TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-		v35.PaddingLeft = UDim.new(string.len(v32) * 0.001 + 0.04, 0)
-		local v37 = v_u_26:Create(v35, v36, {
+		v35.Parent = p29.PlayerGui.Billboard_UI.Objects
+		local v37 = v35.Frame.Frame.Text_Element.UIPadding
+		local v38 = TweenInfo.new(0.5, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+		v37.PaddingLeft = UDim.new(string.len(v34) * 0.001 + 0.04, 0)
+		local v39 = v_u_28:Create(v37, v38, {
 			["PaddingLeft"] = UDim.new(0, 0)
 		})
-		v37:Play()
-		game.Debris:AddItem(v37, v36.Time)
-		table.insert(v31, v33)
-		v33.Frame.Frame.Text_Element:SetAttribute("Text", v32)
+		v39:Play()
+		game.Debris:AddItem(v39, v38.Time)
+		table.insert(v33, v35)
+		v35.Frame.Frame.Text_Element:SetAttribute("Text", v34)
 		task.wait(0.075)
 	end
-	if not v29.Cancelled and v31[1] then
-		game:GetService("GamepadService"):EnableGamepadCursor(v31[1])
+	if not v31.Cancelled and v33[1] then
+		game:GetService("GamepadService"):EnableGamepadCursor(v33[1])
 	end
-	return v31
+	return v33
 end
-function v2.TakeAwayResponses(p38, p39)
-	-- upvalues: (copy) v_u_23, (copy) v_u_26
-	if v_u_23[p39] then
-		v_u_23[p39].Cancelled = true
+function v2.TakeAwayResponses(p40, p41)
+	-- upvalues: (copy) v_u_25, (copy) v_u_28
+	if v_u_25[p41] then
+		v_u_25[p41].Cancelled = true
 	end
-	for _, v40 in pairs(p39.PlayerGui.Billboard_UI.Objects:GetChildren()) do
-		if v40.Name ~= "UIListLayout" then
-			v40:Destroy()
+	for _, v42 in pairs(p41.PlayerGui.Billboard_UI.Objects:GetChildren()) do
+		if v42.Name ~= "UIListLayout" then
+			v42:Destroy()
 		end
 	end
-	if p38 and p38:FindFirstChild("Head") then
-		for _, v41 in pairs(p38.Head:GetChildren()) do
-			if v41:IsA("BillboardGui") and (v41.Name == "Response_UI" or v41.Name == "Talk_UI") then
-				for _, v42 in pairs(v41:GetChildren()) do
-					if v42:IsA("TextLabel") then
-						v_u_26:Create(v42, TweenInfo.new(0.25), {
+	if p40 and p40:FindFirstChild("Head") then
+		for _, v43 in pairs(p40.Head:GetChildren()) do
+			if v43:IsA("BillboardGui") and (v43.Name == "Response_UI" or v43.Name == "Talk_UI") then
+				for _, v44 in pairs(v43:GetChildren()) do
+					if v44:IsA("TextLabel") then
+						v_u_28:Create(v44, TweenInfo.new(0.25), {
 							["TextTransparency"] = 1
 						}):Play()
-					elseif v42:IsA("ImageLabel") then
-						v_u_26:Create(v42, TweenInfo.new(0.25), {
+					elseif v44:IsA("ImageLabel") then
+						v_u_28:Create(v44, TweenInfo.new(0.25), {
 							["ImageTransparency"] = 1
 						}):Play()
 					end
 				end
-				game.Debris:AddItem(v41, 0.25)
+				game.Debris:AddItem(v43, 0.25)
 			end
 		end
 	end
 end
-function v2.RemovePlayerSideFrame(p43)
-	-- upvalues: (copy) v_u_23
-	if v_u_23[p43] then
-		v_u_23[p43].Cancelled = true
+function v2.RemovePlayerSideFrame(p45)
+	-- upvalues: (copy) v_u_25
+	if v_u_25[p45] then
+		v_u_25[p45].Cancelled = true
 	end
-	for _, v44 in pairs(p43.PlayerGui.Billboard_UI.Objects:GetChildren()) do
-		if v44.Name ~= "UIListLayout" then
-			v44:Destroy()
+	for _, v46 in pairs(p45.PlayerGui.Billboard_UI.Objects:GetChildren()) do
+		if v46.Name ~= "UIListLayout" then
+			v46:Destroy()
 		end
 	end
 	game:GetService("GamepadService"):DisableGamepadCursor()
 end
-function v2.ShowResponse(p45, p46, p47)
+function v2.ShowResponse(p47, p48, p49)
 	-- upvalues: (copy) v_u_3
-	local v48 = p45.Head:FindFirstChild(v_u_3.Name)
-	if v48 ~= nil then
-		if p47 == true then
-			for _, v49 in pairs(v48:GetDescendants()) do
-				if v49:IsA("LocalScript") or v49:IsA("Script") then
-					v49:Destroy()
+	local v50 = p47.Head:FindFirstChild(v_u_3.Name)
+	if v50 ~= nil then
+		if p49 == true then
+			for _, v51 in pairs(v50:GetDescendants()) do
+				if v51:IsA("LocalScript") or v51:IsA("Script") then
+					v51:Destroy()
 				end
 			end
 		end
-		v48.TextLabel.Text = p46
-		effect(v48.TextLabel, true)
-		if p47 == true then
-			for _, v50 in pairs(v_u_3:GetDescendants()) do
-				if v50:IsA("LocalScript") or v50:IsA("Script") then
-					for _, v51 in pairs(v48:GetDescendants()) do
-						if v51.Name == v50.Parent.Name then
-							v50.Enabled = false
-							local v52 = v50:Clone()
-							v52.Parent = v51
-							v52.Enabled = true
+		v50.TextLabel.Text = p48
+		effect(v50.TextLabel, true)
+		if p49 == true then
+			for _, v52 in pairs(v_u_3:GetDescendants()) do
+				if v52:IsA("LocalScript") or v52:IsA("Script") then
+					for _, v53 in pairs(v50:GetDescendants()) do
+						if v53.Name == v52.Parent.Name then
+							v52.Enabled = false
+							local v54 = v52:Clone()
+							v54.Parent = v53
+							v54.Enabled = true
 						end
 					end
 				end
 			end
 		end
-		return v48
+		return v50
 	end
-	local v53 = v_u_3:Clone()
-	v53.Parent = p45.Head
-	v53.TextLabel.Text = p46
-	effect(v53.TextLabel, true)
-	if p47 == true then
-		for _, v54 in pairs(v53:GetDescendants()) do
-			if v54:IsA("LocalScript") or v54:IsA("Script") then
-				v54.Enabled = true
+	local v55 = v_u_3:Clone()
+	v55.Parent = p47.Head
+	v55.TextLabel.Text = p48
+	effect(v55.TextLabel, true)
+	if p49 == true then
+		for _, v56 in pairs(v55:GetDescendants()) do
+			if v56:IsA("LocalScript") or v56:IsA("Script") then
+				v56.Enabled = true
 			end
 		end
 	end
-	return v53
+	return v55
 end
-function v2.PlayerResponse(p55, p56, p57)
+function v2.PlayerResponse(p57, p58, p59)
 	-- upvalues: (copy) v_u_3, (copy) v_u_4
-	if p56 ~= nil then
-		local v58 = p55.Head:FindFirstChild(v_u_3.Name)
-		if v58 ~= nil then
-			if p57 == true then
-				for _, v59 in pairs(v58:GetDescendants()) do
-					if v59:IsA("LocalScript") or v59:IsA("Script") then
-						v59:Destroy()
+	if p58 ~= nil then
+		local v60 = p57.Head:FindFirstChild(v_u_3.Name)
+		if v60 ~= nil then
+			if p59 == true then
+				for _, v61 in pairs(v60:GetDescendants()) do
+					if v61:IsA("LocalScript") or v61:IsA("Script") then
+						v61:Destroy()
 					end
 				end
 			end
-			v58.TextLabel.Text = p56
-			effect(v58.TextLabel, false)
-			if p57 == true then
-				for _, v60 in pairs(v_u_4:GetDescendants()) do
-					if v60:IsA("LocalScript") or v60:IsA("Script") then
-						for _, v61 in pairs(v58:GetDescendants()) do
-							if v61.Name == v60.Parent.Name then
-								v60.Enabled = false
-								local v62 = v60:Clone()
-								v62.Parent = v61
-								v62.Enabled = true
+			v60.TextLabel.Text = p58
+			effect(v60.TextLabel, false)
+			if p59 == true then
+				for _, v62 in pairs(v_u_4:GetDescendants()) do
+					if v62:IsA("LocalScript") or v62:IsA("Script") then
+						for _, v63 in pairs(v60:GetDescendants()) do
+							if v63.Name == v62.Parent.Name then
+								v62.Enabled = false
+								local v64 = v62:Clone()
+								v64.Parent = v63
+								v64.Enabled = true
 							end
 						end
 					end
 				end
 			end
-			return v58
+			return v60
 		end
-		local v63 = v_u_4:Clone()
-		v63.Parent = p55.Head
-		v63.TextLabel.Text = p56
-		effect(v63.TextLabel, false)
-		if p57 == true then
-			for _, v64 in pairs(v63:GetDescendants()) do
-				if v64:IsA("LocalScript") or v64:IsA("Script") then
-					v64.Enabled = true
+		local v65 = v_u_4:Clone()
+		v65.Parent = p57.Head
+		v65.TextLabel.Text = p58
+		effect(v65.TextLabel, false)
+		if p59 == true then
+			for _, v66 in pairs(v65:GetDescendants()) do
+				if v66:IsA("LocalScript") or v66:IsA("Script") then
+					v66.Enabled = true
 				end
 			end
 		end
-		return v63
+		return v65
 	end
 end
 return v2

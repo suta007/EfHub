@@ -25,7 +25,7 @@ function FindItemName(p10, p11)
 	elseif p11 == "Seed" then
 		local v13 = v_u_3[p10]
 		if v13 then
-			return v13.SeedName
+			return v13.DisplayName or v13.SeedName
 		else
 			return p10
 		end
@@ -47,22 +47,26 @@ function FindItemName(p10, p11)
 			return p10
 		end
 	elseif p11 == "Fruit" or p11 == "Holdable" then
-		return p10
+		if p10 == "Candy Blossom 2026" then
+			return "Candy Blossom"
+		end
+		local v15 = v_u_3[p10]
+		return v15 and v15.DisplayName or p10
 	elseif p11 == "Pet" then
 		return p10
 	elseif p11 == "Currency" then
-		local v15 = v_u_9[p10]
-		if v15 then
-			return v15.CurrencyName
+		local v16 = v_u_9[p10]
+		if v16 then
+			return v16.CurrencyName
 		else
 			return p10
 		end
 	elseif p11 == "Crate" then
 		return p10
 	elseif p11 == "TradeBoothSkin" then
-		local v16 = v_u_7[p10]
-		if v16 then
-			return v16.DisplayName
+		local v17 = v_u_7[p10]
+		if v17 then
+			return v17.DisplayName
 		else
 			return p10
 		end

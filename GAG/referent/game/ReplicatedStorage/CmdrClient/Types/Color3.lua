@@ -1,4 +1,4 @@
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local v_u_4 = v_u_1.MakeSequenceType({
 	["Prefixes"] = "# hexColor3 ! brickColor3",
 	["ValidateEach"] = function(p2, p3)

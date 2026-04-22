@@ -122,7 +122,7 @@ local v50 = {
 			v_u_39.Parent = v_u_9.ScrollingFrame
 			table.insert(v32, v_u_39)
 		end
-		if v31 > 6 then
+		if v_u_9.ScrollingFrame.AbsoluteCanvasSize.X > v_u_9.ScrollingFrame.AbsoluteWindowSize.X then
 			v_u_9.ScrollingFrame.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 		else
 			v_u_9.ScrollingFrame.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center

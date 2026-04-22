@@ -71,6 +71,12 @@ local v1 = {
 		["Color"] = Color3.fromRGB(255, 39, 219),
 		["Rarity"] = "Rare",
 		["Icon"] = "rbxassetid://117141263371092"
+	},
+	["ChocCoins"] = {
+		["CurrencyName"] = "Choc Coins",
+		["Color"] = Color3.fromRGB(255, 170, 0),
+		["Rarity"] = "Rare",
+		["Icon"] = "rbxassetid://130109349395235"
 	}
 }
 return v1

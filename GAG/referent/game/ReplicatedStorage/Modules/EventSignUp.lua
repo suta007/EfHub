@@ -3,7 +3,7 @@ local v_u_2 = game:GetService("SocialService")
 local v_u_3 = require(v1.Modules.Icon)
 local _ = game.Players.LocalPlayer.PlayerGui
 local v_u_7 = {
-	["NextEventId"] = "3782520981822374541",
+	["NextEventId"] = "3723457354830840373",
 	["_getRsvpStatus"] = function(_)
 		-- upvalues: (copy) v_u_2, (copy) v_u_7
 		local v4, v5 = pcall(function()

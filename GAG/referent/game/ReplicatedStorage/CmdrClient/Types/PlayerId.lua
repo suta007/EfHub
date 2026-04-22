@@ -1,4 +1,4 @@
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local v_u_2 = game:GetService("Players")
 local v_u_3 = {}
 local v_u_13 = {

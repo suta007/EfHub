@@ -242,9 +242,149 @@ local v39 = {
 	["EndTime"] = DateTime.fromUniversalTime(2026, 2, 7, 18),
 	["Pity"] = "Exotic Buttercup Chest"
 }
+local v51 = {
+	["Products"] = {
+		[1] = 3568827015,
+		[3] = 3568827227,
+		[10] = 3568827595,
+		[50] = 3570157250
+	},
+	["GiftProducts"] = {
+		[1] = 3568827750,
+		[3] = 3568828285,
+		[10] = 3568828441,
+		[50] = 3570157336
+	},
+	["FallbackPrices"] = {
+		[1] = 149,
+		[3] = 429,
+		[10] = 1249,
+		[50] = 4999
+	},
+	["Title"] = "PREMIUM GOLDEN EGG!",
+	["Vector"] = "rbxassetid://139402975557026",
+	["VectorPosition"] = UDim2.fromScale(0.111, 0.613),
+	["VectorSize"] = UDim2.fromScale(0.31, 0.942),
+	["Display"] = "Egg",
+	["DisplayPlural"] = "Eggs",
+	["BackgroundImage"] = "rbxassetid://78289594972654",
+	["Items"] = (function()
+		-- upvalues: (copy) v_u_1
+		local v40 = require(v_u_1.Data.PetRegistry)
+		local v41 = {}
+		for v42, v43 in v40.PetEggs["Premium Golden Egg"].RarityData.Items do
+			local v44 = v42:match("Egg/(.-)$")
+			local v45 = {
+				["Chance"] = v43.ItemOdd,
+				["Type"] = v44 and "Egg" or "Pet",
+				["RewardId"] = v44 or v42
+			}
+			local v46
+			if v44 then
+				v46 = v40.PetEggs[v44].Icon or ""
+			else
+				v46 = v40.PetList[v42] and (v40.PetList[v42].Icon or "") or ""
+			end
+			v45.Icon = v46
+			table.insert(v41, v45)
+		end
+		table.sort(v41, function(p47, p48)
+			if p47.Type == "Egg" then
+				return false
+			elseif p48.Type == "Egg" then
+				return true
+			else
+				local v49 = p47.Chance
+				local v50 = p48.Chance
+				if v49 == v50 then
+					return p47.RewardId > p48.RewardId
+				else
+					return v50 < v49
+				end
+			end
+		end)
+		return v41
+	end)(),
+	["BiggerTemplateIndex"] = 4,
+	["MidTemplateIndex"] = 3,
+	["ReleaseTime"] = DateTime.fromUniversalTime(2026, 4, 3, 0),
+	["EndTime"] = DateTime.fromUniversalTime(2026, 4, 25, 19),
+	["Pity"] = "Premium Golden Egg"
+}
+local v63 = {
+	["Products"] = {
+		[1] = 3576524674,
+		[3] = 3576524780,
+		[10] = 3576524860,
+		[50] = 3576525035
+	},
+	["GiftProducts"] = {
+		[1] = 3576525092,
+		[3] = 3576525196,
+		[10] = 3576525248,
+		[50] = 3576525311
+	},
+	["FallbackPrices"] = {
+		[1] = 149,
+		[3] = 429,
+		[10] = 1249,
+		[50] = 4999
+	},
+	["Title"] = "PREMIUM SPRINGTIDE EGG!",
+	["Vector"] = "rbxassetid://105201345566503",
+	["VectorPosition"] = UDim2.fromScale(0.111, 0.613),
+	["VectorSize"] = UDim2.fromScale(0.31, 0.942),
+	["Display"] = "Egg",
+	["DisplayPlural"] = "Eggs",
+	["BackgroundImage"] = "rbxassetid://138776814412466",
+	["Items"] = (function()
+		-- upvalues: (copy) v_u_1
+		local v52 = require(v_u_1.Data.PetRegistry)
+		local v53 = {}
+		for v54, v55 in v52.PetEggs["Premium Springtide Egg"].RarityData.Items do
+			local v56 = v54:match("Egg/(.-)$")
+			local v57 = {
+				["Chance"] = v55.ItemOdd,
+				["Type"] = v56 and "Egg" or "Pet",
+				["RewardId"] = v56 or v54
+			}
+			local v58
+			if v56 then
+				v58 = v52.PetEggs[v56].Icon or ""
+			else
+				v58 = v52.PetList[v54] and (v52.PetList[v54].Icon or "") or ""
+			end
+			v57.Icon = v58
+			table.insert(v53, v57)
+		end
+		table.sort(v53, function(p59, p60)
+			if p59.Type == "Egg" then
+				return false
+			elseif p60.Type == "Egg" then
+				return true
+			else
+				local v61 = p59.Chance
+				local v62 = p60.Chance
+				if v61 == v62 then
+					return p59.RewardId > p60.RewardId
+				else
+					return v62 < v61
+				end
+			end
+		end)
+		return v53
+	end)(),
+	["BiggerTemplateIndex"] = 4,
+	["MidTemplateIndex"] = 3,
+	["ReleaseTime"] = DateTime.fromUniversalTime(2026, 4, 18, 15),
+	["EndTime"] = DateTime.fromUniversalTime(2026, 4, 25, 15),
+	["Pity"] = "Premium Springtide Egg"
+}
 return {
 	["PREMIUM_NEW_YEARS_EGG"] = v14,
 	["PREMIUM_CARNIVAL_EGG"] = v26,
 	["PREMIUM_BIRD_EGG"] = v38,
-	["EXOTIC_BUTTERCUP_CHEST"] = v39
+	["EXOTIC_BUTTERCUP_CHEST"] = v39,
+	["PREMIUM_GOLDEN_EGG"] = v51,
+	["PREMIUM_SPRINGTIDE_EGG"] = v63
 }

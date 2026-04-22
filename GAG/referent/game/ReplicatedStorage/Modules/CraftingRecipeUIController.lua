@@ -76,8 +76,8 @@ local function v_u_47(p44, p45)
 		return nil
 	end
 end
-local function v_u_93(p48)
-	-- upvalues: (copy) v_u_29, (copy) v_u_41, (copy) v_u_42, (copy) v_u_4, (copy) v_u_2, (copy) v_u_9, (copy) v_u_38, (copy) v_u_10, (copy) v_u_18, (copy) v_u_27, (copy) v_u_13, (copy) v_u_11, (copy) v_u_47, (copy) v_u_37, (copy) v_u_39, (copy) v_u_7, (copy) v_u_31, (ref) v_u_40, (copy) v_u_19, (copy) v_u_24, (copy) v_u_6, (copy) v_u_25, (copy) v_u_14, (copy) v_u_36, (copy) v_u_23, (copy) v_u_15, (copy) v_u_28, (copy) v_u_16, (ref) v_u_34, (copy) v_u_35, (copy) v_u_17, (copy) v_u_12
+local function v_u_94(p48)
+	-- upvalues: (copy) v_u_29, (copy) v_u_41, (copy) v_u_42, (copy) v_u_4, (copy) v_u_2, (copy) v_u_9, (copy) v_u_38, (copy) v_u_10, (copy) v_u_18, (copy) v_u_27, (copy) v_u_13, (copy) v_u_11, (copy) v_u_47, (copy) v_u_37, (copy) v_u_39, (copy) v_u_31, (ref) v_u_40, (copy) v_u_7, (copy) v_u_19, (copy) v_u_24, (copy) v_u_6, (copy) v_u_25, (copy) v_u_14, (copy) v_u_36, (copy) v_u_23, (copy) v_u_15, (copy) v_u_28, (copy) v_u_16, (ref) v_u_34, (copy) v_u_35, (copy) v_u_17, (copy) v_u_12
 	local v49 = v_u_29.RecipiesSortedByMachineType[p48]
 	if not v49 then
 		return warn("CraftingRecipeUIController:SetupFrames| Cannot find valid Crafting Station Type")
@@ -175,83 +175,87 @@ local function v_u_93(p48)
 					local v76 = v_u_42
 					table.insert(v76, v_u_75)
 					local v_u_77 = v_u_60.Frame
-					v_u_77.Robux_Buy.Activated:Connect(function()
-						-- upvalues: (ref) v_u_7, (copy) v_u_53
-						v_u_7:PromptPurchase(v_u_53.PurchaseID, Enum.InfoType.Product)
-					end)
 					v_u_77.CraftButton.Activated:Connect(function()
 						-- upvalues: (ref) v_u_31, (ref) v_u_40, (copy) v_u_52, (copy) v_u_53
 						v_u_31:Fire(v_u_40, v_u_52, v_u_53)
 					end)
-					local v78 = v_u_19:NormalizeRecipeName(v_u_52)
-					local v_u_79 = v_u_18(v78, v59)
-					local v_u_80
-					if v59 == "Seed" then
-						v_u_80 = v_u_24[v78].FruitIcon
-					else
-						v_u_80 = nil
+					local v_u_78 = v_u_53.PurchaseID ~= 0
+					v_u_77.Robux_Buy.Visible = v_u_78
+					if v_u_78 then
+						v_u_77.Robux_Buy.Activated:Connect(function()
+							-- upvalues: (ref) v_u_7, (copy) v_u_53
+							v_u_7:PromptPurchase(v_u_53.PurchaseID, Enum.InfoType.Product)
+						end)
 					end
-					if v_u_79 then
-						v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Image = v_u_79
+					local v79 = v_u_19:NormalizeRecipeName(v_u_52)
+					local v_u_80 = v_u_18(v79, v59)
+					local v_u_81
+					if v59 == "Seed" then
+						v_u_81 = v_u_24[v79].FruitIcon
+					else
+						v_u_81 = nil
+					end
+					if v_u_80 then
+						v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Image = v_u_80
 					end
 					if v56.ItemType == "Seed" then
-						local v_u_81 = nil
 						local v_u_82 = nil
+						local v_u_83 = nil
 						v_u_69.MouseEnter:Connect(function()
-							-- upvalues: (ref) v_u_81, (ref) v_u_6, (copy) v_u_60, (ref) v_u_82, (ref) v_u_80
-							v_u_81 = v_u_6(v_u_60.Main_Frame.CanvasGroup.ShopItem_Image, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1, true, 0), {
+							-- upvalues: (ref) v_u_82, (ref) v_u_6, (copy) v_u_60, (ref) v_u_83, (ref) v_u_81
+							v_u_82 = v_u_6(v_u_60.Main_Frame.CanvasGroup.ShopItem_Image, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, -1, true, 0), {
 								["Rotation"] = v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Rotation + 10
 							})
-							v_u_82 = v_u_6(v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.UIScale, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
+							v_u_83 = v_u_6(v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.UIScale, TweenInfo.new(0.5, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
 								["Scale"] = 1.5
 							})
-							v_u_82.Completed:Connect(function(p83)
-								-- upvalues: (ref) v_u_60, (ref) v_u_80
-								if p83 == Enum.PlaybackState.Completed then
+							v_u_83.Completed:Connect(function(p84)
+								-- upvalues: (ref) v_u_60, (ref) v_u_81
+								if p84 == Enum.PlaybackState.Completed then
 									if not v_u_60:IsDescendantOf(game) then
 										return
 									end
-									v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Image = v_u_80
+									v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Image = v_u_81
 								end
 							end)
 						end)
 						v_u_69.MouseLeave:Connect(function()
-							-- upvalues: (ref) v_u_81, (copy) v_u_60, (copy) v_u_79, (ref) v_u_6
-							if v_u_81 then
-								v_u_81:Cancel()
+							-- upvalues: (ref) v_u_82, (copy) v_u_60, (copy) v_u_80, (ref) v_u_6
+							if v_u_82 then
+								v_u_82:Cancel()
 							end
 							v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Rotation = 0
-							v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Image = v_u_79
+							v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.Image = v_u_80
 							v_u_6(v_u_60.Main_Frame.CanvasGroup.ShopItem_Image.UIScale, TweenInfo.new(0.25, Enum.EasingStyle.Linear, Enum.EasingDirection.Out, 0, false, 0), {
 								["Scale"] = 1
 							})
 						end)
 					end
-					local v_u_84 = v56.ItemData.ItemName
-					local v85 = v_u_69:FindFirstChild("OddsButton")
-					if v85 then
-						v85.Visible = false
-						if v56.ItemType == "Seed Pack" and v_u_25.Packs[v_u_84] then
-							v85.Visible = true
-							v85.Activated:Connect(function()
-								-- upvalues: (ref) v_u_14, (copy) v_u_84, (ref) v_u_36
-								v_u_14:Open(v_u_84, v_u_36)
+					local v_u_85 = v56.ItemData.ItemName
+					local v86 = v_u_69:FindFirstChild("OddsButton")
+					if v86 then
+						v86.Visible = false
+						if v56.ItemType == "Seed Pack" and v_u_25.Packs[v_u_85] then
+							v86.Visible = true
+							v86.Activated:Connect(function()
+								-- upvalues: (ref) v_u_14, (copy) v_u_85, (ref) v_u_36
+								v_u_14:Open(v_u_85, v_u_36)
 							end)
-						elseif v56.ItemType == "PetEgg" and v_u_23[v_u_84] then
-							v85.Visible = true
-							v85.Activated:Connect(function()
-								-- upvalues: (ref) v_u_15, (copy) v_u_84, (ref) v_u_36
-								v_u_15:Open(v_u_84, v_u_36)
+						elseif v56.ItemType == "PetEgg" and v_u_23[v_u_85] then
+							v86.Visible = true
+							v86.Activated:Connect(function()
+								-- upvalues: (ref) v_u_15, (copy) v_u_85, (ref) v_u_36
+								v_u_15:Open(v_u_85, v_u_36)
 							end)
-						elseif v56.ItemType == "CosmeticCrate" and v_u_28[v_u_84] then
-							v85.Visible = true
-							v85.Activated:Connect(function()
-								-- upvalues: (ref) v_u_16, (copy) v_u_84, (ref) v_u_36
-								v_u_16:Open(v_u_84, v_u_36)
+						elseif v56.ItemType == "CosmeticCrate" and v_u_28[v_u_85] then
+							v86.Visible = true
+							v86.Activated:Connect(function()
+								-- upvalues: (ref) v_u_16, (copy) v_u_85, (ref) v_u_36
+								v_u_16:Open(v_u_85, v_u_36)
 							end)
 						end
 					end
-					local function v86()
+					local function v87()
 						-- upvalues: (ref) v_u_34, (copy) v_u_52, (copy) v_u_77, (ref) v_u_6, (copy) v_u_75
 						if v_u_34 == v_u_52 then
 							v_u_77.Visible = true
@@ -276,23 +280,23 @@ local function v_u_93(p48)
 							})
 						end
 					end
-					v_u_35:Connect(v86)
-					task.spawn(v86)
-					local v_u_87 = false
+					v_u_35:Connect(v87)
+					task.spawn(v87)
+					local v_u_88 = false
 					v_u_69.Activated:Connect(function()
-						-- upvalues: (ref) v_u_6, (ref) v_u_37, (copy) v_u_60, (ref) v_u_41, (ref) v_u_34, (copy) v_u_52, (ref) v_u_35, (ref) v_u_87, (ref) v_u_17, (copy) v_u_53, (copy) v_u_77, (ref) v_u_7, (ref) v_u_12
+						-- upvalues: (ref) v_u_6, (ref) v_u_37, (copy) v_u_60, (ref) v_u_41, (ref) v_u_34, (copy) v_u_52, (ref) v_u_35, (ref) v_u_88, (copy) v_u_78, (ref) v_u_17, (copy) v_u_53, (copy) v_u_77, (ref) v_u_7, (ref) v_u_12
 						v_u_6(v_u_37, TweenInfo.new(0.35), {
 							["CanvasPosition"] = Vector2.new(0, v_u_60.AbsoluteSize.Y * (table.find(v_u_41, v_u_60) - 1))
 						})
-						local v88
+						local v89
 						if v_u_34 == v_u_52 then
-							v88 = nil
+							v89 = nil
 						else
-							v88 = v_u_52
+							v89 = v_u_52
 						end
-						v_u_34 = v88
+						v_u_34 = v89
 						v_u_35:Fire()
-						if not v_u_87 then
+						if not v_u_88 and v_u_78 then
 							if v_u_17 or v_u_53.RobuxPrice == nil then
 								if not v_u_17 then
 									warn((("%* is using Dynamic Pricing because there is no Fallback Price set"):format((v_u_77:GetFullName()))))
@@ -301,20 +305,20 @@ local function v_u_93(p48)
 							else
 								v_u_77.Robux_Buy.Price.Text = ("%*%*"):format(utf8.char(57346), (v_u_12.Comma(v_u_53.RobuxPrice)))
 							end
-							v_u_87 = true
+							v_u_88 = true
 						end
 					end)
 				end
 			end
 		end
 	end
-	table.sort(v_u_41, function(p89, p90)
-		local v91 = p89.LayoutOrder
+	table.sort(v_u_41, function(p90, p91)
 		local v92 = p90.LayoutOrder
-		if v91 == v92 then
-			return p89.Name < p90.Name
+		local v93 = p91.LayoutOrder
+		if v92 == v93 then
+			return p90.Name < p91.Name
 		else
-			return v91 < v92
+			return v92 < v93
 		end
 	end)
 end
@@ -326,21 +330,21 @@ function v43.Start(_)
 		v_u_8:Close(v_u_36)
 	end)
 end
-v32.Event:Connect(function(p94)
-	-- upvalues: (copy) v_u_8, (copy) v_u_36, (copy) v_u_9, (ref) v_u_33, (copy) v_u_93, (ref) v_u_40
+v32.Event:Connect(function(p95)
+	-- upvalues: (copy) v_u_8, (copy) v_u_36, (copy) v_u_9, (ref) v_u_33, (copy) v_u_94, (ref) v_u_40
 	v_u_8:Open(v_u_36)
-	local v_u_95 = p94:GetAttribute("CraftingObjectType")
-	if not v_u_95 or typeof(v_u_95) ~= "string" then
+	local v_u_96 = p95:GetAttribute("CraftingObjectType")
+	if not v_u_96 or typeof(v_u_96) ~= "string" then
 		return warn("CraftingObjectType is not valid")
 	end
 	if not (v_u_9:IsUpdateDone() or v_u_33) then
 		v_u_33 = task.delay(v_u_9:GetRemainingTimeUntilUpdate() + 1, function()
-			-- upvalues: (ref) v_u_93, (copy) v_u_95
-			v_u_93(v_u_95)
+			-- upvalues: (ref) v_u_94, (copy) v_u_96
+			v_u_94(v_u_96)
 		end)
 	end
-	v_u_93(v_u_95)
-	v_u_40 = p94
+	v_u_94(v_u_96)
+	v_u_40 = p95
 end)
 task.spawn(v43.Start, v43)
 return v43

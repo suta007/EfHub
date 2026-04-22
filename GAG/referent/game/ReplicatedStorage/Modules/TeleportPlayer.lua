@@ -7,7 +7,7 @@ return function(p_u_4, p_u_5, p_u_6)
 	if v_u_7 then
 		local v_u_8 = v_u_7:WaitForChild("Humanoid", 1)
 		if v_u_8 then
-			if game.Workspace:GetAttribute("Stoplight") then
+			if workspace:GetAttribute("Stoplight") or v_u_7:GetAttribute("EasterEggHunt_CARRYING") then
 				return
 			elseif v_u_8.Sit then
 				v_u_8.Sit = false

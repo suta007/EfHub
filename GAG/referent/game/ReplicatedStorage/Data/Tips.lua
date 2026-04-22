@@ -50,5 +50,29 @@ return {
 	{
 		["Message"] = "Feed food to Sam to increase his friendship and unlock new seeds!",
 		["Color"] = Color3.fromRGB(2, 175, 255)
+	},
+	{
+		["Message"] = "Currently, the only variants you can grow naturally are Gold and Rainbow! These increase the Fruit\'s base value, and mutations stack on top of that value.",
+		["Color"] = Color3.fromRGB(255, 215, 0)
+	},
+	{
+		["Message"] = "Every 3 to 6 hours, a random traveling merchant can arrive next to the seed shop with exclusive items!",
+		["Color"] = Color3.fromRGB(255, 140, 0)
+	},
+	{
+		["Message"] = "Rarer seeds in the seed shop have a lower chance to appear in stock!",
+		["Color"] = Color3.fromRGB(180, 100, 255)
+	},
+	{
+		["Message"] = "Use the portal next to the cosmetic shop to enter the trading world and list plants or pets for other Gardeners!",
+		["Color"] = Color3.fromRGB(0, 200, 200)
+	},
+	{
+		["Message"] = "Tokens can be used to buy items that normally cost Robux. You can earn them by trading or purchasing them.",
+		["Color"] = Color3.fromRGB(0, 255, 120)
+	},
+	{
+		["Message"] = "Collect fruits to progress XP in the Season Pass. Fruits with more mutations give more XP!",
+		["Color"] = Color3.fromRGB(255, 100, 150)
 	}
 }

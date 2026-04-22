@@ -1,3 +1,5 @@
+game:GetService("ContentProvider")
+game:GetService("ReplicatedFirst")
 local v_u_1 = require(game.ReplicatedStorage.Modules.CutsceneService)
 local function v2()
 	-- upvalues: (copy) v_u_1

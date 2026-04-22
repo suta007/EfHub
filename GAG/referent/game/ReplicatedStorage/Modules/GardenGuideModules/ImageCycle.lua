@@ -35,11 +35,9 @@ local function v_u_22(p12, p13)
 			if p13 then
 				if v16.Type == "Pet" then
 					if v_u_5[v16.Value] then
-						v17 = v_u_5[v16.Value].SeasonPassIcon
-					else
-						v17 = v_u_5[v16.Value].Icon
+						v17 = v_u_5[v16.Value].SeasonPassIcon or v_u_5[v16.Value].Icon
 					end
-				elseif v16.Type == "Seed" then
+				elseif v16.Type == "Seed" and v_u_6[v16.Value] then
 					v17 = v_u_6[v16.Value].FruitIcon
 				end
 			end
@@ -125,7 +123,7 @@ function v8.CycleRewardImages(p23, p24, p25, p_u_26, p27, p28)
 						end
 					end
 				else
-					task.wait(5)
+					task.wait(1)
 				end
 			end
 		end)
@@ -196,7 +194,7 @@ function v8.CycleRewardImages(p23, p24, p25, p_u_26, p27, p28)
 								end
 							end
 						else
-							task.wait(5)
+							task.wait(1)
 						end
 					end
 				end)
@@ -267,7 +265,7 @@ function v8.CycleRewardImages(p23, p24, p25, p_u_26, p27, p28)
 								end
 							end
 						else
-							task.wait(5)
+							task.wait(1)
 						end
 					end
 				end)

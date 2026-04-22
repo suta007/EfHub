@@ -42,7 +42,6 @@ return {
 	"Gigi",
 	"Cappy",
 	"Jaeda",
-	"Georgie",
 	"Jackie",
 	"Jazzy",
 	"Keana",

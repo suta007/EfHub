@@ -10,162 +10,166 @@ local v_u_9 = require(v1.Modules.TradeTokens.TokenRAPController)
 local v_u_10 = require(v1.Modules.TradeTokens.TokenRAPUtil)
 require(v1.Data.TradeData)
 local v_u_11 = require(v1.Modules.UpdateService)
-local v12 = v1.GameEvents.GardenGuide.GetGGBlacklist:InvokeServer()
+local v_u_12 = require(v1.Modules.StringUtils)
+local v13 = v1.GameEvents.GardenGuide.GetGGBlacklist:InvokeServer()
 local _ = v2.LocalPlayer.PlayerGui
 local _ = v1.Data.TradePlaza.IndexTemplates.ItemTemplate
-local v_u_13 = v8.RarityLayoutMap
-local v_u_14 = {
+local v_u_14 = v8.RarityLayoutMap
+local v_u_15 = {
 	["Seeds"] = {
 		["Data"] = v4,
 		["TP"] = v7.SeedBlacklist,
-		["GG"] = v12.PlantBlacklist
+		["GG"] = v13.PlantBlacklist
 	},
 	["Plants"] = {
 		["Data"] = v4,
 		["TP"] = v7.PlantBlacklist,
-		["GG"] = v12.PlantBlacklist
+		["GG"] = v13.PlantBlacklist
 	},
 	["Pets"] = {
 		["Data"] = v5,
 		["TP"] = v7.PetBlacklist,
-		["GG"] = v12.PetBlacklist
+		["GG"] = v13.PetBlacklist
 	},
 	["Crates"] = {
 		["Data"] = v6,
 		["TP"] = v7.CrateBlacklist,
-		["GG"] = v12.CosmeticBlacklist
+		["GG"] = v13.CosmeticBlacklist
 	}
 }
-local v15 = {
+local v16 = {
 	["Data"] = v3,
 	["TP"] = {
 		["Default"] = true
 	},
 	["GG"] = {}
 }
-v_u_14.TradeBoothSkins = v15
-local v16 = {}
-local function v_u_31(p17, p18, p19)
+v_u_15.TradeBoothSkins = v16
+local v17 = {}
+local function v_u_32(p18, p19, p20)
 	-- upvalues: (copy) v_u_10, (copy) v_u_9
-	local v20 = {
+	local v21 = {
 		["id"] = "-",
 		["type"] = "Holdable"
 	}
-	if p17 == "Seeds" then
-		return v20
+	if p18 == "Seeds" then
+		return v21
 	end
-	if p17 == "Plants" then
-		local v21 = v_u_10.GetItemId("Holdable", {
+	if p18 == "Plants" then
+		local v22 = v_u_10.GetItemId("Holdable", {
 			["MutationString"] = "",
-			["ItemName"] = p18
+			["ItemName"] = p19
 		})
-		local v22 = v_u_9:GetRAPById("Holdable", v21) or 0
-		local v23 = {
-			["id"] = v21,
+		local v23 = v_u_9:GetRAPById("Holdable", v22) or 0
+		local v24 = {
+			["id"] = v22,
 			["type"] = "Holdable",
 			["data"] = {
-				["ItemName"] = p18,
-				["ImageId"] = p19.FruitIcon,
-				["Rarity"] = p19.SeedRarity,
-				["RAPValue"] = v22,
+				["ItemName"] = p19,
+				["ImageId"] = p20.FruitIcon,
+				["Rarity"] = p20.SeedRarity,
+				["RAPValue"] = v23,
 				["MutationString"] = "",
 				["Variant"] = "Normal",
 				["FakeItem"] = true
 			}
 		}
-		return v23
+		return v24
 	end
-	if p17 ~= "Pets" then
-		if p17 == "Crates" then
-			return v20
+	if p18 ~= "Pets" then
+		if p18 == "Crates" then
+			return v21
 		end
-		if p17 == "TradeBoothSkins" then
-			local v24 = v_u_10.GetItemId("TradeBoothSkin", {
-				["SkinID"] = p18
+		if p18 == "TradeBoothSkins" then
+			local v25 = v_u_10.GetItemId("TradeBoothSkin", {
+				["SkinID"] = p19
 			})
-			local v25 = v_u_9:GetRAPById("TradeBoothSkin", v24) or 0
-			v20 = {
-				["id"] = v24,
+			local v26 = v_u_9:GetRAPById("TradeBoothSkin", v25) or 0
+			v21 = {
+				["id"] = v25,
 				["type"] = "TradeBoothSkin",
 				["data"] = {
-					["ItemName"] = p18,
-					["ImageId"] = p19.Icon,
-					["Rarity"] = p19.Rarity,
-					["RAPValue"] = v25,
-					["SkinID"] = p18,
+					["ItemName"] = p19,
+					["ImageId"] = p20.Icon,
+					["Rarity"] = p20.Rarity,
+					["RAPValue"] = v26,
+					["SkinID"] = p19,
 					["FakeItem"] = true
 				}
 			}
 		end
-		return v20
+		return v21
 	end
-	local v26 = {
-		["PetType"] = p18,
+	local v27 = {
+		["PetType"] = p19,
 		["PetData"] = {
 			["MutationType"] = "",
 			["Level"] = 0
 		}
 	}
-	local v27 = v_u_10.GetItemId("Pet", v26)
-	local v28 = v_u_9:GetRAPById("Pet", v27) or 0
-	local v29 = {
-		["id"] = v27,
+	local v28 = v_u_10.GetItemId("Pet", v27)
+	local v29 = v_u_9:GetRAPById("Pet", v28) or 0
+	local v30 = {
+		["id"] = v28,
 		["type"] = "Pet"
 	}
-	local v30 = {
-		["ItemName"] = p18,
-		["ImageId"] = p19.Icon,
-		["Rarity"] = p19.Rarity,
-		["RAPValue"] = v28,
-		["PetType"] = p18,
+	local v31 = {
+		["ItemName"] = p19,
+		["ImageId"] = p20.Icon,
+		["Rarity"] = p20.Rarity,
+		["RAPValue"] = v29,
+		["PetType"] = p19,
 		["PetData"] = {
 			["MutationType"] = "Normal",
 			["Level"] = 1
 		},
 		["FakeItem"] = true
 	}
-	v29.data = v30
-	return v29
+	v30.data = v31
+	return v30
 end
-function v16.GetItemsForCategory(p32, p33)
-	-- upvalues: (copy) v_u_14, (copy) v_u_11, (copy) v_u_31
-	local v34 = v_u_14[p32].Data
-	local v35 = v_u_14[p32].TP
-	local v36 = v_u_14[p32].GG
-	local v37 = {}
-	for v38, v39 in v34 do
-		if not v_u_11:IsHiddenFromUpdate(v38) and (not v35[v38] and (not v36[v38] and string.find(string.lower(v38), string.lower(p33 or "")))) then
-			local v40 = v_u_31(p32, v38, v39)
-			table.insert(v37, v40)
+function v17.GetItemsForCategory(p33, p34)
+	-- upvalues: (copy) v_u_15, (copy) v_u_11, (copy) v_u_12, (copy) v_u_32
+	local v35 = v_u_15[p33].Data
+	local v36 = v_u_15[p33].TP
+	local v37 = v_u_15[p33].GG
+	local v38 = {}
+	for v39, v40 in v35 do
+		if not v_u_11:IsHiddenFromUpdate(v39) then
+			local v41 = v_u_12:StipFlavourText(v39)
+			if not v36[v39] and (not v36[v41] and (not v37[v39] and (not v37[v41] and string.find(string.lower(v39), string.lower(p34 or ""))))) then
+				local v42 = v_u_32(p33, v39, v40)
+				table.insert(v38, v42)
+			end
 		end
 	end
-	return v37
+	return v38
 end
-function v16.SortItems(p41, p_u_42)
-	-- upvalues: (copy) v_u_13
-	table.sort(p41, function(p43, p44)
-		-- upvalues: (copy) p_u_42, (ref) v_u_13
-		if p_u_42 == "RAP Value Desc" then
-			if p43.data.RAPValue == p44.data.RAPValue then
-				return p43.data.ItemName < p44.data.ItemName
+function v17.SortItems(p43, p_u_44)
+	-- upvalues: (copy) v_u_14
+	table.sort(p43, function(p45, p46)
+		-- upvalues: (copy) p_u_44, (ref) v_u_14
+		if p_u_44 == "RAP Value Desc" then
+			if p45.data.RAPValue == p46.data.RAPValue then
+				return p45.data.ItemName < p46.data.ItemName
 			else
-				return p43.data.RAPValue > p44.data.RAPValue
+				return p45.data.RAPValue > p46.data.RAPValue
 			end
-		elseif p_u_42 == "Rarity Asc" then
-			if v_u_13[p43.data.Rarity] == v_u_13[p44.data.Rarity] then
-				return p43.data.ItemName < p44.data.ItemName
+		elseif p_u_44 == "Rarity Asc" then
+			if v_u_14[p45.data.Rarity] == v_u_14[p46.data.Rarity] then
+				return p45.data.ItemName < p46.data.ItemName
 			else
-				return v_u_13[p43.data.Rarity] < v_u_13[p44.data.Rarity]
+				return v_u_14[p45.data.Rarity] < v_u_14[p46.data.Rarity]
 			end
-		elseif p_u_42 == "Rarity Desc" then
-			if v_u_13[p43.data.Rarity] == v_u_13[p44.data.Rarity] then
-				return p43.data.ItemName < p44.data.ItemName
+		elseif p_u_44 == "Rarity Desc" then
+			if v_u_14[p45.data.Rarity] == v_u_14[p46.data.Rarity] then
+				return p45.data.ItemName < p46.data.ItemName
 			else
-				return v_u_13[p43.data.Rarity] > v_u_13[p44.data.Rarity]
+				return v_u_14[p45.data.Rarity] > v_u_14[p46.data.Rarity]
 			end
 		else
-			return p43.data.RAPValue < p44.data.RAPValue
+			return p45.data.RAPValue < p46.data.RAPValue
 		end
 	end)
 end
-return v16
+return v17

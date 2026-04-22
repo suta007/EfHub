@@ -44,7 +44,6 @@ function v_u_5.Initialize(p_u_16)
 					return
 				end
 			end
-			print((("[EventService] [%*] Starting up..."):format(p_u_16.ServiceName)))
 			p_u_16.IsRunning = true
 			p_u_16:OnStarted()
 			v_u_3.OnUpdated:Wait()

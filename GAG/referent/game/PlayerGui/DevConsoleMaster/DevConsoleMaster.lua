@@ -6,20 +6,21 @@ local v4 = game:GetService("ReplicatedStorage")
 local v5 = game:GetService("Players")
 game:GetService("CollectionService")
 if game:GetService("ReplicatedFirst").EnableServerConsole.Value then
-	local v6 = require(v4.Data.AuthorizedRolesQAGame)
+	local v6 = require(v4.Modules.GameConfigController)
 	local v7 = require(v4.Modules.ModernInputNotificationUserInterfaceService)
 	local v8 = require(v4.Modules.Icon)
-	if v6[v5.LocalPlayer:GetRankInGroup(35789249)] then
-		local v_u_9 = v8.new()
-		v_u_9:setName("SERVER CONSOLE")
-		v_u_9:setOrder(4)
-		v_u_9:setLabel("SERVER CONSOLE")
-		v_u_9:align("Right")
-		v_u_9:setCaption("Toggle the server console.")
-		v_u_9.deselectWhenOtherIconSelected = false
-		local v10 = v4:WaitForChild("DevConsoleReplicator")
-		v10:FireServer()
-		local v11 = {
+	local v9 = v5.LocalPlayer:GetRankInGroup(35789249)
+	if table.find(v6:GetConfig("AuthorizedRolesQAGame") or {}, v9) then
+		local v_u_10 = v8.new()
+		v_u_10:setName("SERVER CONSOLE")
+		v_u_10:setOrder(4)
+		v_u_10:setLabel("SERVER CONSOLE")
+		v_u_10:align("Right")
+		v_u_10:setCaption("Toggle the server console.")
+		v_u_10.deselectWhenOtherIconSelected = false
+		local v11 = v4:WaitForChild("DevConsoleReplicator")
+		v11:FireServer()
+		v7:CreateNotification({
 			["Text"] = "You have access to the server console! Press [C] to toggle!",
 			["Icon"] = "rbxassetid://0",
 			["EnabledComponents"] = {
@@ -29,8 +30,7 @@ if game:GetService("ReplicatedFirst").EnableServerConsole.Value then
 				["IconSet"] = true
 			},
 			["Lifetime"] = 3
-		}
-		v7:CreateNotification(v11)
+		})
 		local v_u_12 = script.Parent
 		local v_u_13 = v_u_12:WaitForChild("DevConsoleWindow")
 		local v14 = v_u_13.DevConsoleUI
@@ -181,7 +181,7 @@ if game:GetService("ReplicatedFirst").EnableServerConsole.Value then
 			-- upvalues: (copy) v_u_45, (copy) v_u_19
 			v_u_45:Search(v_u_19.Text)
 		end)
-		v10.OnClientEvent:Connect(function(p64, p65)
+		v11.OnClientEvent:Connect(function(p64, p65)
 			-- upvalues: (copy) v_u_45
 			local v66 = v_u_45[p65]
 			if v66 then
@@ -240,12 +240,12 @@ if game:GetService("ReplicatedFirst").EnableServerConsole.Value then
 		local v_u_74 = {
 			[Enum.KeyCode.C] = {
 				["TOGGLE"] = function()
-					-- upvalues: (copy) v_u_45, (copy) v_u_9
+					-- upvalues: (copy) v_u_45, (copy) v_u_10
 					v_u_45.ConsoleActiveState = not v_u_45.ConsoleActiveState
 					if v_u_45.ConsoleActiveState then
-						v_u_9:select()
+						v_u_10:select()
 					else
-						v_u_9:deselect()
+						v_u_10:deselect()
 					end
 				end
 			}
@@ -319,11 +319,11 @@ if game:GetService("ReplicatedFirst").EnableServerConsole.Value then
 				end
 			end
 		end)
-		v_u_9.selected:Connect(function(_)
+		v_u_10.selected:Connect(function(_)
 			-- upvalues: (copy) v_u_45
 			v_u_45:Toggle(true)
 		end)
-		v_u_9.deselected:Connect(function(_)
+		v_u_10.deselected:Connect(function(_)
 			-- upvalues: (copy) v_u_45
 			v_u_45:Toggle(false)
 		end)

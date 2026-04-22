@@ -151,22 +151,24 @@ end
 function v_u_19.RegisterCommandsIn(p40, p41, p42)
 	local v43 = {}
 	local v44 = {}
-	for _, v45 in pairs(p41:GetChildren()) do
-		if v45:IsA("ModuleScript") then
-			if v45.Name:find("Server") then
-				v43[v45] = true
-			else
-				local v46 = p41:FindFirstChild(v45.Name .. "Server")
-				if v46 then
-					v44[v46] = true
+	for _, v45 in p41:GetDescendants() do
+		if not v45:IsA("Folder") then
+			if v45:IsA("ModuleScript") then
+				if v45.Name:find("Server") then
+					v43[v45] = true
+				else
+					local v46 = p41:FindFirstChild(v45.Name .. "Server", true)
+					if v46 then
+						v44[v46] = true
+					end
+					p40:RegisterCommand(v45, v46, p42)
 				end
-				p40:RegisterCommand(v45, v46, p42)
+			else
+				p40:RegisterCommandsIn(v45, p42)
 			end
-		else
-			p40:RegisterCommandsIn(v45, p42)
 		end
 	end
-	for v47 in pairs(v43) do
+	for v47 in v43 do
 		if not v44[v47] then
 			warn("Command script " .. v47.Name .. " was skipped because it has \'Server\' in its name, and has no equivalent shared script.")
 		end

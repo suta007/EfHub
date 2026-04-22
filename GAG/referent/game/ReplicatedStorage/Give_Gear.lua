@@ -29,7 +29,7 @@ else
 end
 local v20 = v13.MutationNames
 local v21 = v15.MutationNames
-local v_u_119 = {
+local v_u_125 = {
 	["Watering Can"] = function(p22, _, p23)
 		-- upvalues: (copy) v_u_10
 		local v24 = p23 or 1
@@ -246,734 +246,785 @@ local v_u_119 = {
 			["PlantBoostAmount"] = 10
 		})
 	end,
-	["Trading Ticket"] = function(p113, _, p114)
+	["Egg Booster"] = function(p113, _, p114)
 		-- upvalues: (copy) v_u_10
 		local v115 = p114 or 1
-		local v116 = v_u_10:Find(p113, "Trading Ticket")
+		local v116 = v_u_10:Find(p113, "Egg Booster")
 		local _, v117 = next(v116)
 		if v117 then
 			local v118 = v117.ItemData
 			v118.Uses = v118.Uses + v115
 		else
-			v_u_10:CreateItem(p113, "Trading Ticket", {
-				["Uses"] = v115
+			v_u_10:CreateItem(p113, "Egg Booster", {
+				["Uses"] = v115,
+				["EggBoostAmount"] = 10
+			})
+		end
+	end,
+	["Elder Candy Blossom Upgrader"] = function(p119, _, p120)
+		-- upvalues: (copy) v_u_10
+		local v121 = p120 or 1
+		local v122 = v_u_10:Find(p119, "Elder Candy Blossom Upgrader")
+		local _, v123 = next(v122)
+		if v123 then
+			local v124 = v123.ItemData
+			v124.Uses = v124.Uses + v121
+		else
+			v_u_10:CreateItem(p119, "Elder Candy Blossom Upgrader", {
+				["Uses"] = v121
 			})
 		end
 	end
 }
-local v_u_120 = 1
-v_u_119["Fairy Summoner"] = function(p121, p122, p123)
-	-- upvalues: (copy) v_u_120, (copy) v_u_10
-	local v124 = p123 or (v_u_120 or 1)
-	local v125 = v_u_10:Find(p121, p122)
-	local _, v126 = next(v125)
-	if v126 then
-		local v127 = v126.ItemData
-		v127.Uses = v127.Uses + v124
+local v_u_126 = 1
+v_u_125["Candy Blossom Shard"] = function(p127, p128, p129)
+	-- upvalues: (copy) v_u_126, (copy) v_u_10
+	local v130 = p129 or (v_u_126 or 1)
+	local v131 = v_u_10:Find(p127, p128)
+	local _, v132 = next(v131)
+	if v132 then
+		local v133 = v132.ItemData
+		v133.Uses = v133.Uses + v130
 	else
-		v_u_10:CreateItem(p121, p122, {
-			["Uses"] = v124
+		v_u_10:CreateItem(p127, p128, {
+			["Uses"] = v130
 		})
 	end
 end
-local v_u_128 = 1
-v_u_119["Fairy Power Extender"] = function(p129, p130, p131)
-	-- upvalues: (copy) v_u_128, (copy) v_u_10
-	local v132 = p131 or (v_u_128 or 1)
-	local v133 = v_u_10:Find(p129, p130)
-	local _, v134 = next(v133)
-	if v134 then
-		local v135 = v134.ItemData
-		v135.Uses = v135.Uses + v132
-	else
-		v_u_10:CreateItem(p129, p130, {
-			["Uses"] = v132
-		})
-	end
-end
-local v_u_136 = 1
-v_u_119["Fairy Caller"] = function(p137, p138, p139)
-	-- upvalues: (copy) v_u_136, (copy) v_u_10
-	local v140 = p139 or (v_u_136 or 1)
-	local v141 = v_u_10:Find(p137, p138)
-	local _, v142 = next(v141)
-	if v142 then
-		local v143 = v142.ItemData
-		v143.Uses = v143.Uses + v140
-	else
-		v_u_10:CreateItem(p137, p138, {
-			["Uses"] = v140
-		})
-	end
-end
-local v_u_144 = 1
-v_u_119["Luminous Wand"] = function(p145, p146, p147)
-	-- upvalues: (copy) v_u_144, (copy) v_u_10
-	local v148 = p147 or (v_u_144 or 1)
-	local v149 = v_u_10:Find(p145, p146)
-	local _, v150 = next(v149)
-	if v150 then
-		local v151 = v150.ItemData
-		v151.Uses = v151.Uses + v148
-	else
-		v_u_10:CreateItem(p145, p146, {
-			["Uses"] = v148
-		})
-	end
-end
-local v_u_152 = 1
-v_u_119["Fairy Net"] = function(p153, p154, p155)
-	-- upvalues: (copy) v_u_152, (copy) v_u_10
-	local v156 = p155 or (v_u_152 or 1)
-	local v157 = v_u_10:Find(p153, p154)
-	local _, v158 = next(v157)
-	if v158 then
-		local v159 = v158.ItemData
-		v159.Uses = v159.Uses + v156
-	else
-		v_u_10:CreateItem(p153, p154, {
-			["Uses"] = v156
-		})
-	end
-end
-local v_u_160 = 1
-v_u_119["Fairy Jar"] = function(p161, p162, p163)
-	-- upvalues: (copy) v_u_160, (copy) v_u_10
-	local v164 = p163 or (v_u_160 or 1)
-	local v165 = v_u_10:Find(p161, p162)
-	local _, v166 = next(v165)
-	if v166 then
-		local v167 = v166.ItemData
-		v167.Uses = v167.Uses + v164
-	else
-		v_u_10:CreateItem(p161, p162, {
-			["Uses"] = v164
-		})
-	end
-end
-local v_u_168 = 1
-v_u_119["Pet Name Reroller"] = function(p169, p170, p171)
-	-- upvalues: (copy) v_u_168, (copy) v_u_10
-	local v172 = p171 or (v_u_168 or 1)
-	local v173 = v_u_10:Find(p169, p170)
-	local _, v174 = next(v173)
-	if v174 then
-		local v175 = v174.ItemData
-		v175.Uses = v175.Uses + v172
-	else
-		v_u_10:CreateItem(p169, p170, {
-			["Uses"] = v172
-		})
-	end
-end
-local v_u_176 = 1
-v_u_119["Grow All"] = function(p177, p178, p179)
-	-- upvalues: (copy) v_u_176, (copy) v_u_10
-	local v180 = p179 or (v_u_176 or 1)
-	local v181 = v_u_10:Find(p177, p178)
-	local _, v182 = next(v181)
-	if v182 then
-		local v183 = v182.ItemData
-		v183.Uses = v183.Uses + v180
-	else
-		v_u_10:CreateItem(p177, p178, {
-			["Uses"] = v180
-		})
-	end
-end
-local v_u_184 = 1
-function v_u_119.Steal(p185, p186, p187)
-	-- upvalues: (copy) v_u_184, (copy) v_u_10
-	local v188 = p187 or (v_u_184 or 1)
-	local v189 = v_u_10:Find(p185, p186)
-	local _, v190 = next(v189)
-	if v190 then
-		local v191 = v190.ItemData
-		v191.Uses = v191.Uses + v188
-	else
-		v_u_10:CreateItem(p185, p186, {
-			["Uses"] = v188
-		})
-	end
-end
-local v_u_192 = 1
-v_u_119["Firefly Jar"] = function(p193, p194, p195)
-	-- upvalues: (copy) v_u_192, (copy) v_u_10
-	local v196 = p195 or (v_u_192 or 1)
-	local v197 = v_u_10:Find(p193, p194)
-	local _, v198 = next(v197)
-	if v198 then
-		local v199 = v198.ItemData
-		v199.Uses = v199.Uses + v196
-	else
-		v_u_10:CreateItem(p193, p194, {
-			["Uses"] = v196
-		})
-	end
-end
-local v_u_200 = 1
-v_u_119["Sky Lantern"] = function(p201, p202, p203)
-	-- upvalues: (copy) v_u_200, (copy) v_u_10
-	local v204 = p203 or (v_u_200 or 1)
-	local v205 = v_u_10:Find(p201, p202)
-	local _, v206 = next(v205)
-	if v206 then
-		local v207 = v206.ItemData
-		v207.Uses = v207.Uses + v204
-	else
-		v_u_10:CreateItem(p201, p202, {
-			["Uses"] = v204
-		})
-	end
-end
-local v_u_208 = 1
-v_u_119["Maple Leaf Kite"] = function(p209, p210, p211)
-	-- upvalues: (copy) v_u_208, (copy) v_u_10
-	local v212 = p211 or (v_u_208 or 1)
-	local v213 = v_u_10:Find(p209, p210)
-	local _, v214 = next(v213)
-	if v214 then
-		local v215 = v214.ItemData
-		v215.Uses = v215.Uses + v212
-	else
-		v_u_10:CreateItem(p209, p210, {
-			["Uses"] = v212
-		})
-	end
-end
-local v_u_216 = 1
-v_u_119["Maple Syrup"] = function(p217, p218, p219)
-	-- upvalues: (copy) v_u_216, (copy) v_u_10
-	local v220 = p219 or (v_u_216 or 1)
-	local v221 = v_u_10:Find(p217, p218)
-	local _, v222 = next(v221)
-	if v222 then
-		local v223 = v222.ItemData
-		v223.Uses = v223.Uses + v220
-	else
-		v_u_10:CreateItem(p217, p218, {
-			["Uses"] = v220
-		})
-	end
-end
-local v_u_224 = 1
-v_u_119["Maple Leaf Charm"] = function(p225, p226, p227)
-	-- upvalues: (copy) v_u_224, (copy) v_u_10
-	local v228 = p227 or (v_u_224 or 1)
-	local v229 = v_u_10:Find(p225, p226)
-	local _, v230 = next(v229)
-	if v230 then
-		local v231 = v230.ItemData
-		v231.Uses = v231.Uses + v228
-	else
-		v_u_10:CreateItem(p225, p226, {
-			["Uses"] = v228
-		})
-	end
-end
-local v_u_232 = 1
-v_u_119["Maple Sprinkler"] = function(p233, p234, p235)
-	-- upvalues: (copy) v_u_232, (copy) v_u_10
-	local v236 = p235 or (v_u_232 or 1)
-	local v237 = v_u_10:Find(p233, p234)
-	local _, v238 = next(v237)
-	if v238 then
-		local v239 = v238.ItemData
-		v239.Uses = v239.Uses + v236
-	else
-		v_u_10:CreateItem(p233, p234, {
-			["Uses"] = v236
-		})
-	end
-end
-local v_u_240 = 1
-function v_u_119.Bonfire(p241, p242, p243)
-	-- upvalues: (copy) v_u_240, (copy) v_u_10
-	local v244 = p243 or (v_u_240 or 1)
-	local v245 = v_u_10:Find(p241, p242)
-	local _, v246 = next(v245)
-	if v246 then
-		local v247 = v246.ItemData
-		v247.Uses = v247.Uses + v244
-	else
-		v_u_10:CreateItem(p241, p242, {
-			["Uses"] = v244
-		})
-	end
-end
-local v_u_248 = 1
-v_u_119["Harvest Basket"] = function(p249, p250, p251)
-	-- upvalues: (copy) v_u_248, (copy) v_u_10
-	local v252 = p251 or (v_u_248 or 1)
-	local v253 = v_u_10:Find(p249, p250)
-	local _, v254 = next(v253)
-	if v254 then
-		local v255 = v254.ItemData
-		v255.Uses = v255.Uses + v252
-	else
-		v_u_10:CreateItem(p249, p250, {
-			["Uses"] = v252
-		})
-	end
-end
-local v_u_256 = 1
-v_u_119["Golden Acorn"] = function(p257, p258, p259)
-	-- upvalues: (copy) v_u_256, (copy) v_u_10
-	local v260 = p259 or (v_u_256 or 1)
-	local v261 = v_u_10:Find(p257, p258)
-	local _, v262 = next(v261)
-	if v262 then
-		local v263 = v262.ItemData
-		v263.Uses = v263.Uses + v260
-	else
-		v_u_10:CreateItem(p257, p258, {
-			["Uses"] = v260
-		})
-	end
-end
-local v_u_264 = 1
-function v_u_119.Rake(p265, p266, p267)
-	-- upvalues: (copy) v_u_264, (copy) v_u_10
-	local v268 = p267 or (v_u_264 or 1)
-	local v269 = v_u_10:Find(p265, p266)
-	local _, v270 = next(v269)
-	if v270 then
-		local v271 = v270.ItemData
-		v271.Uses = v271.Uses + v268
-	else
-		v_u_10:CreateItem(p265, p266, {
-			["Uses"] = v268
-		})
-	end
-end
-local v_u_272 = 1
-v_u_119["Acorn Bell"] = function(p273, p274, p275)
-	-- upvalues: (copy) v_u_272, (copy) v_u_10
-	local v276 = p275 or (v_u_272 or 1)
-	local v277 = v_u_10:Find(p273, p274)
-	local _, v278 = next(v277)
-	if v278 then
-		local v279 = v278.ItemData
-		v279.Uses = v279.Uses + v276
-	else
-		v_u_10:CreateItem(p273, p274, {
-			["Uses"] = v276
-		})
-	end
-end
-local v_u_280 = 1
-v_u_119["Super Watering Can"] = function(p281, p282, p283)
-	-- upvalues: (copy) v_u_280, (copy) v_u_10
-	local v284 = p283 or (v_u_280 or 1)
-	local v285 = v_u_10:Find(p281, p282)
-	local _, v286 = next(v285)
-	if v286 then
-		local v287 = v286.ItemData
-		v287.Uses = v287.Uses + v284
-	else
-		v_u_10:CreateItem(p281, p282, {
-			["Uses"] = v284
-		})
-	end
-end
-local v_u_288 = 1
-function v_u_119.Frightwork(p289, p290, p291)
-	-- upvalues: (copy) v_u_288, (copy) v_u_10
-	local v292 = p291 or (v_u_288 or 1)
-	local v293 = v_u_10:Find(p289, p290)
-	local _, v294 = next(v293)
-	if v294 then
-		local v295 = v294.ItemData
-		v295.Uses = v295.Uses + v292
-	else
-		v_u_10:CreateItem(p289, p290, {
-			["Uses"] = v292
-		})
-	end
-end
-local v_u_296 = 1
-v_u_119["Christmas Firework"] = function(p297, p298, p299)
-	-- upvalues: (copy) v_u_296, (copy) v_u_10
-	local v300 = p299 or (v_u_296 or 1)
-	local v301 = v_u_10:Find(p297, p298)
-	local _, v302 = next(v301)
-	if v302 then
-		local v303 = v302.ItemData
-		v303.Uses = v303.Uses + v300
-	else
-		v_u_10:CreateItem(p297, p298, {
-			["Uses"] = v300
-		})
-	end
-end
-local v_u_304 = 1
-v_u_119["New Year\'s Firework"] = function(p305, p306, p307)
-	-- upvalues: (copy) v_u_304, (copy) v_u_10
-	local v308 = p307 or (v_u_304 or 1)
-	local v309 = v_u_10:Find(p305, p306)
-	local _, v310 = next(v309)
-	if v310 then
-		local v311 = v310.ItemData
-		v311.Uses = v311.Uses + v308
-	else
-		v_u_10:CreateItem(p305, p306, {
-			["Uses"] = v308
-		})
-	end
-end
-v_u_119["Leaf Blower"] = function(p312, _, p313)
+v_u_125["Trading Ticket"] = function(p134, _, p135)
 	-- upvalues: (copy) v_u_10
-	local v314 = p313 or 1
-	local v315 = v_u_10:Find(p312, "Leaf Blower")
-	local _, v316 = next(v315)
-	if v316 then
-		local v317 = v316.ItemData
-		v317.Uses = v317.Uses + v314
+	local v136 = p135 or 1
+	local v137 = v_u_10:Find(p134, "Trading Ticket")
+	local _, v138 = next(v137)
+	if v138 then
+		local v139 = v138.ItemData
+		v139.Uses = v139.Uses + v136
 	else
-		v_u_10:CreateItem(p312, "Leaf Blower", {
-			["Uses"] = v314,
-			["PowerRemaining"] = 100
+		v_u_10:CreateItem(p134, "Trading Ticket", {
+			["Uses"] = v136
 		})
 	end
 end
-v_u_119["Super Leaf Blower"] = function(p318, _, p319)
-	-- upvalues: (copy) v_u_10
-	local v320 = p319 or 1
-	local v321 = v_u_10:Find(p318, "Super Leaf Blower")
+local v_u_140 = 1
+v_u_125["Fairy Summoner"] = function(p141, p142, p143)
+	-- upvalues: (copy) v_u_140, (copy) v_u_10
+	local v144 = p143 or (v_u_140 or 1)
+	local v145 = v_u_10:Find(p141, p142)
+	local _, v146 = next(v145)
+	if v146 then
+		local v147 = v146.ItemData
+		v147.Uses = v147.Uses + v144
+	else
+		v_u_10:CreateItem(p141, p142, {
+			["Uses"] = v144
+		})
+	end
+end
+local v_u_148 = 1
+v_u_125["Fairy Power Extender"] = function(p149, p150, p151)
+	-- upvalues: (copy) v_u_148, (copy) v_u_10
+	local v152 = p151 or (v_u_148 or 1)
+	local v153 = v_u_10:Find(p149, p150)
+	local _, v154 = next(v153)
+	if v154 then
+		local v155 = v154.ItemData
+		v155.Uses = v155.Uses + v152
+	else
+		v_u_10:CreateItem(p149, p150, {
+			["Uses"] = v152
+		})
+	end
+end
+local v_u_156 = 1
+v_u_125["Fairy Caller"] = function(p157, p158, p159)
+	-- upvalues: (copy) v_u_156, (copy) v_u_10
+	local v160 = p159 or (v_u_156 or 1)
+	local v161 = v_u_10:Find(p157, p158)
+	local _, v162 = next(v161)
+	if v162 then
+		local v163 = v162.ItemData
+		v163.Uses = v163.Uses + v160
+	else
+		v_u_10:CreateItem(p157, p158, {
+			["Uses"] = v160
+		})
+	end
+end
+local v_u_164 = 1
+v_u_125["Luminous Wand"] = function(p165, p166, p167)
+	-- upvalues: (copy) v_u_164, (copy) v_u_10
+	local v168 = p167 or (v_u_164 or 1)
+	local v169 = v_u_10:Find(p165, p166)
+	local _, v170 = next(v169)
+	if v170 then
+		local v171 = v170.ItemData
+		v171.Uses = v171.Uses + v168
+	else
+		v_u_10:CreateItem(p165, p166, {
+			["Uses"] = v168
+		})
+	end
+end
+local v_u_172 = 1
+v_u_125["Fairy Net"] = function(p173, p174, p175)
+	-- upvalues: (copy) v_u_172, (copy) v_u_10
+	local v176 = p175 or (v_u_172 or 1)
+	local v177 = v_u_10:Find(p173, p174)
+	local _, v178 = next(v177)
+	if v178 then
+		local v179 = v178.ItemData
+		v179.Uses = v179.Uses + v176
+	else
+		v_u_10:CreateItem(p173, p174, {
+			["Uses"] = v176
+		})
+	end
+end
+local v_u_180 = 1
+v_u_125["Fairy Jar"] = function(p181, p182, p183)
+	-- upvalues: (copy) v_u_180, (copy) v_u_10
+	local v184 = p183 or (v_u_180 or 1)
+	local v185 = v_u_10:Find(p181, p182)
+	local _, v186 = next(v185)
+	if v186 then
+		local v187 = v186.ItemData
+		v187.Uses = v187.Uses + v184
+	else
+		v_u_10:CreateItem(p181, p182, {
+			["Uses"] = v184
+		})
+	end
+end
+local v_u_188 = 1
+v_u_125["Pet Name Reroller"] = function(p189, p190, p191)
+	-- upvalues: (copy) v_u_188, (copy) v_u_10
+	local v192 = p191 or (v_u_188 or 1)
+	local v193 = v_u_10:Find(p189, p190)
+	local _, v194 = next(v193)
+	if v194 then
+		local v195 = v194.ItemData
+		v195.Uses = v195.Uses + v192
+	else
+		v_u_10:CreateItem(p189, p190, {
+			["Uses"] = v192
+		})
+	end
+end
+local v_u_196 = 1
+v_u_125["Grow All"] = function(p197, p198, p199)
+	-- upvalues: (copy) v_u_196, (copy) v_u_10
+	local v200 = p199 or (v_u_196 or 1)
+	local v201 = v_u_10:Find(p197, p198)
+	local _, v202 = next(v201)
+	if v202 then
+		local v203 = v202.ItemData
+		v203.Uses = v203.Uses + v200
+	else
+		v_u_10:CreateItem(p197, p198, {
+			["Uses"] = v200
+		})
+	end
+end
+local v_u_204 = 1
+function v_u_125.Steal(p205, p206, p207)
+	-- upvalues: (copy) v_u_204, (copy) v_u_10
+	local v208 = p207 or (v_u_204 or 1)
+	local v209 = v_u_10:Find(p205, p206)
+	local _, v210 = next(v209)
+	if v210 then
+		local v211 = v210.ItemData
+		v211.Uses = v211.Uses + v208
+	else
+		v_u_10:CreateItem(p205, p206, {
+			["Uses"] = v208
+		})
+	end
+end
+local v_u_212 = 1
+v_u_125["Firefly Jar"] = function(p213, p214, p215)
+	-- upvalues: (copy) v_u_212, (copy) v_u_10
+	local v216 = p215 or (v_u_212 or 1)
+	local v217 = v_u_10:Find(p213, p214)
+	local _, v218 = next(v217)
+	if v218 then
+		local v219 = v218.ItemData
+		v219.Uses = v219.Uses + v216
+	else
+		v_u_10:CreateItem(p213, p214, {
+			["Uses"] = v216
+		})
+	end
+end
+local v_u_220 = 1
+v_u_125["Sky Lantern"] = function(p221, p222, p223)
+	-- upvalues: (copy) v_u_220, (copy) v_u_10
+	local v224 = p223 or (v_u_220 or 1)
+	local v225 = v_u_10:Find(p221, p222)
+	local _, v226 = next(v225)
+	if v226 then
+		local v227 = v226.ItemData
+		v227.Uses = v227.Uses + v224
+	else
+		v_u_10:CreateItem(p221, p222, {
+			["Uses"] = v224
+		})
+	end
+end
+local v_u_228 = 1
+v_u_125["Maple Leaf Kite"] = function(p229, p230, p231)
+	-- upvalues: (copy) v_u_228, (copy) v_u_10
+	local v232 = p231 or (v_u_228 or 1)
+	local v233 = v_u_10:Find(p229, p230)
+	local _, v234 = next(v233)
+	if v234 then
+		local v235 = v234.ItemData
+		v235.Uses = v235.Uses + v232
+	else
+		v_u_10:CreateItem(p229, p230, {
+			["Uses"] = v232
+		})
+	end
+end
+local v_u_236 = 1
+v_u_125["Maple Syrup"] = function(p237, p238, p239)
+	-- upvalues: (copy) v_u_236, (copy) v_u_10
+	local v240 = p239 or (v_u_236 or 1)
+	local v241 = v_u_10:Find(p237, p238)
+	local _, v242 = next(v241)
+	if v242 then
+		local v243 = v242.ItemData
+		v243.Uses = v243.Uses + v240
+	else
+		v_u_10:CreateItem(p237, p238, {
+			["Uses"] = v240
+		})
+	end
+end
+local v_u_244 = 1
+v_u_125["Maple Leaf Charm"] = function(p245, p246, p247)
+	-- upvalues: (copy) v_u_244, (copy) v_u_10
+	local v248 = p247 or (v_u_244 or 1)
+	local v249 = v_u_10:Find(p245, p246)
+	local _, v250 = next(v249)
+	if v250 then
+		local v251 = v250.ItemData
+		v251.Uses = v251.Uses + v248
+	else
+		v_u_10:CreateItem(p245, p246, {
+			["Uses"] = v248
+		})
+	end
+end
+local v_u_252 = 1
+v_u_125["Maple Sprinkler"] = function(p253, p254, p255)
+	-- upvalues: (copy) v_u_252, (copy) v_u_10
+	local v256 = p255 or (v_u_252 or 1)
+	local v257 = v_u_10:Find(p253, p254)
+	local _, v258 = next(v257)
+	if v258 then
+		local v259 = v258.ItemData
+		v259.Uses = v259.Uses + v256
+	else
+		v_u_10:CreateItem(p253, p254, {
+			["Uses"] = v256
+		})
+	end
+end
+local v_u_260 = 1
+function v_u_125.Bonfire(p261, p262, p263)
+	-- upvalues: (copy) v_u_260, (copy) v_u_10
+	local v264 = p263 or (v_u_260 or 1)
+	local v265 = v_u_10:Find(p261, p262)
+	local _, v266 = next(v265)
+	if v266 then
+		local v267 = v266.ItemData
+		v267.Uses = v267.Uses + v264
+	else
+		v_u_10:CreateItem(p261, p262, {
+			["Uses"] = v264
+		})
+	end
+end
+local v_u_268 = 1
+v_u_125["Harvest Basket"] = function(p269, p270, p271)
+	-- upvalues: (copy) v_u_268, (copy) v_u_10
+	local v272 = p271 or (v_u_268 or 1)
+	local v273 = v_u_10:Find(p269, p270)
+	local _, v274 = next(v273)
+	if v274 then
+		local v275 = v274.ItemData
+		v275.Uses = v275.Uses + v272
+	else
+		v_u_10:CreateItem(p269, p270, {
+			["Uses"] = v272
+		})
+	end
+end
+local v_u_276 = 1
+v_u_125["Golden Acorn"] = function(p277, p278, p279)
+	-- upvalues: (copy) v_u_276, (copy) v_u_10
+	local v280 = p279 or (v_u_276 or 1)
+	local v281 = v_u_10:Find(p277, p278)
+	local _, v282 = next(v281)
+	if v282 then
+		local v283 = v282.ItemData
+		v283.Uses = v283.Uses + v280
+	else
+		v_u_10:CreateItem(p277, p278, {
+			["Uses"] = v280
+		})
+	end
+end
+local v_u_284 = 1
+function v_u_125.Rake(p285, p286, p287)
+	-- upvalues: (copy) v_u_284, (copy) v_u_10
+	local v288 = p287 or (v_u_284 or 1)
+	local v289 = v_u_10:Find(p285, p286)
+	local _, v290 = next(v289)
+	if v290 then
+		local v291 = v290.ItemData
+		v291.Uses = v291.Uses + v288
+	else
+		v_u_10:CreateItem(p285, p286, {
+			["Uses"] = v288
+		})
+	end
+end
+local v_u_292 = 1
+v_u_125["Acorn Bell"] = function(p293, p294, p295)
+	-- upvalues: (copy) v_u_292, (copy) v_u_10
+	local v296 = p295 or (v_u_292 or 1)
+	local v297 = v_u_10:Find(p293, p294)
+	local _, v298 = next(v297)
+	if v298 then
+		local v299 = v298.ItemData
+		v299.Uses = v299.Uses + v296
+	else
+		v_u_10:CreateItem(p293, p294, {
+			["Uses"] = v296
+		})
+	end
+end
+local v_u_300 = 1
+v_u_125["Super Watering Can"] = function(p301, p302, p303)
+	-- upvalues: (copy) v_u_300, (copy) v_u_10
+	local v304 = p303 or (v_u_300 or 1)
+	local v305 = v_u_10:Find(p301, p302)
+	local _, v306 = next(v305)
+	if v306 then
+		local v307 = v306.ItemData
+		v307.Uses = v307.Uses + v304
+	else
+		v_u_10:CreateItem(p301, p302, {
+			["Uses"] = v304
+		})
+	end
+end
+local v_u_308 = 1
+function v_u_125.Frightwork(p309, p310, p311)
+	-- upvalues: (copy) v_u_308, (copy) v_u_10
+	local v312 = p311 or (v_u_308 or 1)
+	local v313 = v_u_10:Find(p309, p310)
+	local _, v314 = next(v313)
+	if v314 then
+		local v315 = v314.ItemData
+		v315.Uses = v315.Uses + v312
+	else
+		v_u_10:CreateItem(p309, p310, {
+			["Uses"] = v312
+		})
+	end
+end
+local v_u_316 = 1
+v_u_125["Christmas Firework"] = function(p317, p318, p319)
+	-- upvalues: (copy) v_u_316, (copy) v_u_10
+	local v320 = p319 or (v_u_316 or 1)
+	local v321 = v_u_10:Find(p317, p318)
 	local _, v322 = next(v321)
 	if v322 then
 		local v323 = v322.ItemData
 		v323.Uses = v323.Uses + v320
 	else
-		v_u_10:CreateItem(p318, "Super Leaf Blower", {
-			["Uses"] = v320,
-			["PowerRemaining"] = 125
+		v_u_10:CreateItem(p317, p318, {
+			["Uses"] = v320
 		})
 	end
 end
-v_u_119["Sheckles Gun"] = function(p324, _, p325)
-	-- upvalues: (copy) v_u_10
-	local v326 = p325 or 1
-	local v327 = v_u_10:Find(p324, "Sheckles Gun")
-	local _, v328 = next(v327)
-	if v328 then
-		local v329 = v328.ItemData
-		v329.Uses = v329.Uses + v326
+local v_u_324 = 1
+v_u_125["New Year\'s Firework"] = function(p325, p326, p327)
+	-- upvalues: (copy) v_u_324, (copy) v_u_10
+	local v328 = p327 or (v_u_324 or 1)
+	local v329 = v_u_10:Find(p325, p326)
+	local _, v330 = next(v329)
+	if v330 then
+		local v331 = v330.ItemData
+		v331.Uses = v331.Uses + v328
 	else
-		v_u_10:CreateItem(p324, "Sheckles Gun", {
-			["Uses"] = v326,
-			["PowerRemaining"] = 100
+		v_u_10:CreateItem(p325, p326, {
+			["Uses"] = v328
 		})
 	end
 end
-v_u_119["Garden Guide"] = function(p330, _, _)
+v_u_125["Leaf Blower"] = function(p332, _, p333)
 	-- upvalues: (copy) v_u_10
-	local v331 = v_u_10:Find(p330, "Firework")
-	local _, _ = next(v331)
-	v_u_10:CreateItem(p330, "Garden Guide", {})
-end
-v_u_119["Bean Speaker"] = function(p332, _, p333)
-	-- upvalues: (copy) v_u_10
-	local v334 = p333 or 5
-	local v335 = v_u_10:Find(p332, "Bean Speaker")
+	local v334 = p333 or 1
+	local v335 = v_u_10:Find(p332, "Leaf Blower")
 	local _, v336 = next(v335)
 	if v336 then
 		local v337 = v336.ItemData
 		v337.Uses = v337.Uses + v334
 	else
-		v_u_10:CreateItem(p332, "Bean Speaker", {
-			["Uses"] = v334
+		v_u_10:CreateItem(p332, "Leaf Blower", {
+			["Uses"] = v334,
+			["PowerRemaining"] = 100
 		})
 	end
 end
-function v_u_119.Beanworks(p338, _, p339)
+v_u_125["Super Leaf Blower"] = function(p338, _, p339)
 	-- upvalues: (copy) v_u_10
 	local v340 = p339 or 1
-	local v341 = v_u_10:Find(p338, "Beanworks")
+	local v341 = v_u_10:Find(p338, "Super Leaf Blower")
 	local _, v342 = next(v341)
 	if v342 then
 		local v343 = v342.ItemData
 		v343.Uses = v343.Uses + v340
 	else
-		v_u_10:CreateItem(p338, "Beanworks", {
-			["Uses"] = v340
+		v_u_10:CreateItem(p338, "Super Leaf Blower", {
+			["Uses"] = v340,
+			["PowerRemaining"] = 125
 		})
 	end
 end
-v_u_119["Can Of Beans"] = function(p344, _, p345)
+v_u_125["Sheckles Gun"] = function(p344, _, p345)
 	-- upvalues: (copy) v_u_10
 	local v346 = p345 or 1
-	local v347 = v_u_10:Find(p344, "Can Of Beans")
+	local v347 = v_u_10:Find(p344, "Sheckles Gun")
 	local _, v348 = next(v347)
 	if v348 then
 		local v349 = v348.ItemData
 		v349.Uses = v349.Uses + v346
 	else
-		v_u_10:CreateItem(p344, "Can Of Beans", {
-			["Uses"] = v346
+		v_u_10:CreateItem(p344, "Sheckles Gun", {
+			["Uses"] = v346,
+			["PowerRemaining"] = 100
 		})
 	end
 end
-v_u_119["Pet Lead"] = function(p350, _, p351)
+v_u_125["Garden Guide"] = function(p350, _, _)
 	-- upvalues: (copy) v_u_10
-	local v352 = p351 or 1
-	local v353 = v_u_10:Find(p350, "Pet Lead")
-	local _, v354 = next(v353)
-	if v354 then
-		local v355 = v354.ItemData
-		v355.Uses = v355.Uses + v352
+	local v351 = v_u_10:Find(p350, "Firework")
+	local _, _ = next(v351)
+	v_u_10:CreateItem(p350, "Garden Guide", {})
+end
+v_u_125["Bean Speaker"] = function(p352, _, p353)
+	-- upvalues: (copy) v_u_10
+	local v354 = p353 or 5
+	local v355 = v_u_10:Find(p352, "Bean Speaker")
+	local _, v356 = next(v355)
+	if v356 then
+		local v357 = v356.ItemData
+		v357.Uses = v357.Uses + v354
 	else
-		v_u_10:CreateItem(p350, "Pet Lead", {
-			["Uses"] = v352
+		v_u_10:CreateItem(p352, "Bean Speaker", {
+			["Uses"] = v354
 		})
 	end
 end
-local v356 = {}
-for v357, v358 in require(v_u_3.Modules.Gears.GenericGearService).GearCallbacks do
-	if not v_u_119[v357] then
-		if v358.GearType == "SingleUse" then
-			local v_u_359 = v358.DefaultIncrease or 1
-			v_u_119[v357] = function(p360, p361, p362)
-				-- upvalues: (copy) v_u_359, (copy) v_u_10
-				local v363 = p362 or (v_u_359 or 1)
-				local v364 = v_u_10:Find(p360, p361)
-				local _, v365 = next(v364)
-				if v365 then
-					local v366 = v365.ItemData
-					v366.Uses = v366.Uses + v363
+function v_u_125.Beanworks(p358, _, p359)
+	-- upvalues: (copy) v_u_10
+	local v360 = p359 or 1
+	local v361 = v_u_10:Find(p358, "Beanworks")
+	local _, v362 = next(v361)
+	if v362 then
+		local v363 = v362.ItemData
+		v363.Uses = v363.Uses + v360
+	else
+		v_u_10:CreateItem(p358, "Beanworks", {
+			["Uses"] = v360
+		})
+	end
+end
+v_u_125["Can Of Beans"] = function(p364, _, p365)
+	-- upvalues: (copy) v_u_10
+	local v366 = p365 or 1
+	local v367 = v_u_10:Find(p364, "Can Of Beans")
+	local _, v368 = next(v367)
+	if v368 then
+		local v369 = v368.ItemData
+		v369.Uses = v369.Uses + v366
+	else
+		v_u_10:CreateItem(p364, "Can Of Beans", {
+			["Uses"] = v366
+		})
+	end
+end
+v_u_125["Pet Lead"] = function(p370, _, p371)
+	-- upvalues: (copy) v_u_10
+	local v372 = p371 or 1
+	local v373 = v_u_10:Find(p370, "Pet Lead")
+	local _, v374 = next(v373)
+	if v374 then
+		local v375 = v374.ItemData
+		v375.Uses = v375.Uses + v372
+	else
+		v_u_10:CreateItem(p370, "Pet Lead", {
+			["Uses"] = v372
+		})
+	end
+end
+v_u_125["Rainbow Coil"] = function(p376, _, _)
+	-- upvalues: (copy) v_u_10
+	local v377 = v_u_10:Find(p376, "Rainbow Coil")
+	if not next(v377) then
+		v_u_10:CreateItem(p376, "Rainbow Coil", {})
+	end
+end
+local v378 = {}
+for v379, v380 in require(v_u_3.Modules.Gears.GenericGearService).GearCallbacks do
+	if not v_u_125[v379] then
+		if v380.GearType == "SingleUse" then
+			local v_u_381 = v380.DefaultIncrease or 1
+			v_u_125[v379] = function(p382, p383, p384)
+				-- upvalues: (copy) v_u_381, (copy) v_u_10
+				local v385 = p384 or (v_u_381 or 1)
+				local v386 = v_u_10:Find(p382, p383)
+				local _, v387 = next(v386)
+				if v387 then
+					local v388 = v387.ItemData
+					v388.Uses = v388.Uses + v385
 				else
-					v_u_10:CreateItem(p360, p361, {
-						["Uses"] = v363
+					v_u_10:CreateItem(p382, p383, {
+						["Uses"] = v385
 					})
 				end
 			end
-		elseif v358.GearType == "HoldUse" then
-			local v_u_367 = v358.DefaultIncrease or 1
-			local v_u_368 = v358.StartingPower or 100
-			v_u_119[v357] = function(p369, p370, p371)
-				-- upvalues: (copy) v_u_367, (ref) v_u_368, (copy) v_u_10
-				local v372 = p371 or (v_u_367 or 1)
-				v_u_368 = v_u_368 or 100
-				local v373 = v_u_10:Find(p369, p370)
-				local _, v374 = next(v373)
-				if v374 then
-					local v375 = v374.ItemData
-					v375.Uses = v375.Uses + v372
+		elseif v380.GearType == "HoldUse" then
+			local v_u_389 = v380.DefaultIncrease or 1
+			local v_u_390 = v380.StartingPower or 100
+			v_u_125[v379] = function(p391, p392, p393)
+				-- upvalues: (copy) v_u_389, (ref) v_u_390, (copy) v_u_10
+				local v394 = p393 or (v_u_389 or 1)
+				v_u_390 = v_u_390 or 100
+				local v395 = v_u_10:Find(p391, p392)
+				local _, v396 = next(v395)
+				if v396 then
+					local v397 = v396.ItemData
+					v397.Uses = v397.Uses + v394
 				else
-					v_u_10:CreateItem(p369, p370, {
-						["Uses"] = v372,
-						["PowerRemaining"] = v_u_368
+					v_u_10:CreateItem(p391, p392, {
+						["Uses"] = v394,
+						["PowerRemaining"] = v_u_390
 					})
 				end
 			end
-		elseif v358.GearType == "Placeable" then
-			local v_u_376 = v358.DefaultIncrease or 1
-			v_u_119[v357] = function(p377, p378, p379)
-				-- upvalues: (copy) v_u_376, (copy) v_u_10
-				local v380 = p379 or (v_u_376 or 1)
-				local v381 = v_u_10:Find(p377, p378)
-				local _, v382 = next(v381)
-				if v382 then
-					local v383 = v382.ItemData
-					v383.Uses = v383.Uses + v380
+		elseif v380.GearType == "Placeable" then
+			local v_u_398 = v380.DefaultIncrease or 1
+			v_u_125[v379] = function(p399, p400, p401)
+				-- upvalues: (copy) v_u_398, (copy) v_u_10
+				local v402 = p401 or (v_u_398 or 1)
+				local v403 = v_u_10:Find(p399, p400)
+				local _, v404 = next(v403)
+				if v404 then
+					local v405 = v404.ItemData
+					v405.Uses = v405.Uses + v402
 				else
-					v_u_10:CreateItem(p377, p378, {
-						["ItemName"] = p378,
-						["Uses"] = v380
+					v_u_10:CreateItem(p399, p400, {
+						["ItemName"] = p400,
+						["Uses"] = v402
 					})
 				end
 			end
 		end
 	end
 end
-for _, v384 in v5:GetChildren() do
-	local v_u_385 = v384.Name
-	local v386 = v_u_385:find("Sprinkler")
-	local v387 = v_u_385:find("Lightning Rod")
-	local v388 = v_u_385:find("Night Staff")
-	local v389 = v_u_385:find("Tranquil Staff")
-	local v390 = v_u_385:find("Corrupt Staff")
-	local v391 = v_u_385:find("Star Caller")
-	local v392 = v_u_385:find("Nectar Staff")
-	local v393 = v_u_385:find("Fairy Targeter")
-	local v394 = v_u_385:find("Bonfire")
-	if v386 then
-		v_u_119[v_u_385] = function(p395, p_u_396, p397)
+for _, v406 in v5:GetChildren() do
+	local v_u_407 = v406.Name
+	local v408 = v_u_407:find("Sprinkler")
+	local v409 = v_u_407:find("Lightning Rod")
+	local v410 = v_u_407:find("Night Staff")
+	local v411 = v_u_407:find("Tranquil Staff")
+	local v412 = v_u_407:find("Corrupt Staff")
+	local v413 = v_u_407:find("Star Caller")
+	local v414 = v_u_407:find("Nectar Staff")
+	local v415 = v_u_407:find("Fairy Targeter")
+	local v416 = v_u_407:find("Bonfire")
+	if v408 then
+		v_u_125[v_u_407] = function(p417, p_u_418, p419)
 			-- upvalues: (copy) v_u_10
-			local v398 = p397 or 1
-			local v400 = v_u_10:Find(p395, "Sprinkler", function(p399)
-				-- upvalues: (copy) p_u_396
-				return p399.ItemName and p399.ItemName == p_u_396 and true or false
+			local v420 = p419 or 1
+			local v422 = v_u_10:Find(p417, "Sprinkler", function(p421)
+				-- upvalues: (copy) p_u_418
+				return p421.ItemName and p421.ItemName == p_u_418 and true or false
 			end)
-			local _, v401 = next(v400)
-			if v401 then
-				if not v401.ItemData.Uses then
-					v401.ItemData.Uses = 1
+			local _, v423 = next(v422)
+			if v423 then
+				if not v423.ItemData.Uses then
+					v423.ItemData.Uses = 1
 				end
-				local v402 = v401.ItemData
-				v402.Uses = v402.Uses + v398
+				local v424 = v423.ItemData
+				v424.Uses = v424.Uses + v420
 			else
-				v_u_10:CreateItem(p395, "Sprinkler", {
-					["ItemName"] = p_u_396,
-					["Uses"] = v398
+				v_u_10:CreateItem(p417, "Sprinkler", {
+					["ItemName"] = p_u_418,
+					["Uses"] = v420
 				})
 			end
 		end
-	elseif v387 then
-		v_u_119[v_u_385] = function(p403)
-			-- upvalues: (copy) v_u_10, (copy) v_u_385
-			v_u_10:CreateItem(p403, "Lightning Rod", {
-				["ItemName"] = v_u_385
+	elseif v409 then
+		v_u_125[v_u_407] = function(p425)
+			-- upvalues: (copy) v_u_10, (copy) v_u_407
+			v_u_10:CreateItem(p425, "Lightning Rod", {
+				["ItemName"] = v_u_407
 			})
 		end
-	elseif v392 then
-		v_u_119[v_u_385] = function(p404, p405, p406)
+	elseif v414 then
+		v_u_125[v_u_407] = function(p426, p427, p428)
 			-- upvalues: (copy) v_u_10
-			for _ = 1, p406 do
-				v_u_10:CreateItem(p404, "Nectar Staff", {
-					["ItemName"] = p405
+			for _ = 1, p428 do
+				v_u_10:CreateItem(p426, "Nectar Staff", {
+					["ItemName"] = p427
 				})
 			end
 		end
-	elseif v388 then
-		v_u_119[v_u_385] = function(p407, p408, p409)
+	elseif v410 then
+		v_u_125[v_u_407] = function(p429, p430, p431)
 			-- upvalues: (copy) v_u_10
-			for _ = 1, p409 do
-				v_u_10:CreateItem(p407, "Night Staff", {
-					["ItemName"] = p408
+			for _ = 1, p431 do
+				v_u_10:CreateItem(p429, "Night Staff", {
+					["ItemName"] = p430
 				})
 			end
 		end
-	elseif v389 then
-		v_u_119[v_u_385] = function(p410, p411, p412)
+	elseif v411 then
+		v_u_125[v_u_407] = function(p432, p433, p434)
 			-- upvalues: (copy) v_u_10
-			for _ = 1, p412 do
-				v_u_10:CreateItem(p410, "Tranquil Staff", {
-					["ItemName"] = p411
+			for _ = 1, p434 do
+				v_u_10:CreateItem(p432, "Tranquil Staff", {
+					["ItemName"] = p433
 				})
 			end
 		end
-	elseif v390 then
-		v_u_119[v_u_385] = function(p413, p414, p415)
+	elseif v412 then
+		v_u_125[v_u_407] = function(p435, p436, p437)
 			-- upvalues: (copy) v_u_10
-			for _ = 1, p415 do
-				v_u_10:CreateItem(p413, "Corrupt Staff", {
-					["ItemName"] = p414
+			for _ = 1, p437 do
+				v_u_10:CreateItem(p435, "Corrupt Staff", {
+					["ItemName"] = p436
 				})
 			end
 		end
-	elseif v391 then
-		v_u_119[v_u_385] = function(p416, p417)
+	elseif v413 then
+		v_u_125[v_u_407] = function(p438, p439)
 			-- upvalues: (copy) v_u_10
-			v_u_10:CreateItem(p416, "Star Caller", {
-				["ItemName"] = p417
+			v_u_10:CreateItem(p438, "Star Caller", {
+				["ItemName"] = p439
 			})
 		end
-	elseif v393 then
-		v_u_119[v_u_385] = function(p418, p419, p420)
+	elseif v415 then
+		v_u_125[v_u_407] = function(p440, p441, p442)
 			-- upvalues: (copy) v_u_10
-			for _ = 1, p420 do
-				v_u_10:CreateItem(p418, "Fairy Targeter", {
-					["ItemName"] = p419
+			for _ = 1, p442 do
+				v_u_10:CreateItem(p440, "Fairy Targeter", {
+					["ItemName"] = p441
 				})
 			end
 		end
-	elseif v394 then
-		v_u_119[v_u_385] = function(p421, p422, p423)
+	elseif v416 then
+		v_u_125[v_u_407] = function(p443, p444, p445)
 			-- upvalues: (copy) v_u_10
-			for _ = 1, p423 do
-				v_u_10:CreateItem(p421, "Bonfire", {
-					["ItemName"] = p422
+			for _ = 1, p445 do
+				v_u_10:CreateItem(p443, "Bonfire", {
+					["ItemName"] = p444
 				})
 			end
 		end
 	end
 end
-for _, v_u_424 in v6:GetChildren() do
-	v_u_119[v_u_424.Name] = function(p425, _, p426)
-		-- upvalues: (copy) v_u_11, (copy) v_u_424
-		v_u_11:GivePot(p425, v_u_424.Name, p426)
+for _, v_u_446 in v6:GetChildren() do
+	v_u_125[v_u_446.Name] = function(p447, _, p448)
+		-- upvalues: (copy) v_u_11, (copy) v_u_446
+		v_u_11:GivePot(p447, v_u_446.Name, p448)
 	end
 end
-for _, v_u_427 in v7:GetChildren() do
-	if v_u_427.Name == "Mutation Spray" then
-		for v_u_428, _ in v20 do
-			v_u_119[("%* %*"):format(v_u_427.Name, v_u_428)] = function(p429, _, p430)
-				-- upvalues: (copy) v_u_12, (copy) v_u_427, (copy) v_u_428
-				local v431 = {
-					["SprayMutationName"] = v_u_428
+for _, v_u_449 in v7:GetChildren() do
+	if v_u_449.Name == "Mutation Spray" then
+		for v_u_450, _ in v20 do
+			v_u_125[("%* %*"):format(v_u_449.Name, v_u_450)] = function(p451, _, p452)
+				-- upvalues: (copy) v_u_12, (copy) v_u_449, (copy) v_u_450
+				local v453 = {
+					["SprayMutationName"] = v_u_450
 				}
-				v_u_12:GiveSpray(p429, v_u_427.Name, p430, v431)
+				v_u_12:GiveSpray(p451, v_u_449.Name, p452, v453)
 			end
 		end
 	else
-		v_u_119[v_u_427.Name] = function(p432, _, p433)
-			-- upvalues: (copy) v_u_12, (copy) v_u_427
-			v_u_12:GiveSpray(p432, v_u_427.Name, p433)
+		v_u_125[v_u_449.Name] = function(p454, _, p455)
+			-- upvalues: (copy) v_u_12, (copy) v_u_449
+			v_u_12:GiveSpray(p454, v_u_449.Name, p455)
 		end
 	end
 end
-for _, v_u_434 in v17.VariantNames do
-	if v_u_434 ~= "Normal" and v_u_434 ~= "" then
-		v_u_119[("%* Fertilizer"):format(v_u_434)] = function(p435, _, p436)
-			-- upvalues: (copy) v_u_18, (copy) v_u_434
-			v_u_18:GiveFertilizer(p435, "Variant", p436, {
-				["FertilizerVariantName"] = v_u_434
+for _, v_u_456 in v17.VariantNames do
+	if v_u_456 ~= "Normal" and v_u_456 ~= "" then
+		v_u_125[("%* Fertilizer"):format(v_u_456)] = function(p457, _, p458)
+			-- upvalues: (copy) v_u_18, (copy) v_u_456
+			v_u_18:GiveFertilizer(p457, "Variant", p458, {
+				["FertilizerVariantName"] = v_u_456
 			})
 		end
 	end
 end
-for _, v_u_437 in v19:GetChildren() do
-	v_u_119[("Food %*"):format(v_u_437.Name)] = function(p438, _, _)
-		-- upvalues: (copy) v_u_10, (copy) v_u_437
-		v_u_10:CreateItem(p438, "Food", {
-			["ItemName"] = v_u_437.Name
+for _, v_u_459 in v19:GetChildren() do
+	v_u_125[("Food %*"):format(v_u_459.Name)] = function(p460, _, _)
+		-- upvalues: (copy) v_u_10, (copy) v_u_459
+		v_u_10:CreateItem(p460, "Food", {
+			["ItemName"] = v_u_459.Name
 		})
 	end
 end
-for _, v439 in v8:GetChildren() do
-	local v_u_440 = v439:GetAttribute("PetBoostType")
-	local v_u_441 = v439:GetAttribute("PetBoostCapacity")
-	if not v_u_440 then
+for _, v461 in v8:GetChildren() do
+	local v_u_462 = v461:GetAttribute("PetBoostType")
+	local v_u_463 = v461:GetAttribute("PetBoostCapacity")
+	if not v_u_462 then
 		error("Give_Gear [petboost] | invalid pet boost type")
 	end
-	if not v_u_441 then
+	if not v_u_463 then
 		error("Give_Gear [petboost] | invalid capacity")
 	end
-	v_u_119[("%* %*"):format(v_u_441, v14.BoostTypeToPetModelName[v_u_440])] = function(p442, _, p443)
-		-- upvalues: (copy) v_u_3, (copy) v_u_440, (copy) v_u_441
-		require(v_u_3.Modules.PetsServices.PetBoostService):GivePetBoost(p442, v_u_440, v_u_441, p443)
+	v_u_125[("%* %*"):format(v_u_463, v14.BoostTypeToPetModelName[v_u_462])] = function(p464, _, p465)
+		-- upvalues: (copy) v_u_3, (copy) v_u_462, (copy) v_u_463
+		require(v_u_3.Modules.PetsServices.PetBoostService):GivePetBoost(p464, v_u_462, v_u_463, p465)
 	end
 end
-for _, v_u_444 in v9:GetChildren() do
-	if v_u_444.Name == "Cleansing Pet Shard" then
-		v_u_119[v_u_444.Name] = function(p445, _, p446)
-			-- upvalues: (copy) v_u_16, (copy) v_u_444
-			v_u_16:GiveShard(p445, v_u_444.Name, p446)
+for _, v_u_466 in v9:GetChildren() do
+	if v_u_466.Name == "Cleansing Pet Shard" then
+		v_u_125[v_u_466.Name] = function(p467, _, p468)
+			-- upvalues: (copy) v_u_16, (copy) v_u_466
+			v_u_16:GiveShard(p467, v_u_466.Name, p468)
 		end
 	else
-		for v_u_447, _ in v21 do
-			v_u_119[("%* %*"):format(v_u_444.Name, v_u_447)] = function(p448, _, p449)
-				-- upvalues: (copy) v_u_16, (copy) v_u_444, (copy) v_u_447
-				local v450 = {
-					["ShardMutationName"] = v_u_447
+		for v_u_469, _ in v21 do
+			v_u_125[("%* %*"):format(v_u_466.Name, v_u_469)] = function(p470, _, p471)
+				-- upvalues: (copy) v_u_16, (copy) v_u_466, (copy) v_u_469
+				local v472 = {
+					["ShardMutationName"] = v_u_469
 				}
-				v_u_16:GiveShard(p448, v_u_444.Name, p449, v450)
+				v_u_16:GiveShard(p470, v_u_466.Name, p471, v472)
 			end
 		end
 	end
 end
-function v356.Give_Gear(p451, p452, p453)
-	-- upvalues: (copy) v_u_4, (copy) v_u_119
-	while not (p451.Character and p451.Character.PrimaryPart) do
-		if not p451:IsDescendantOf(v_u_4) then
+function v378.Give_Gear(p473, p474, p475)
+	-- upvalues: (copy) v_u_4, (copy) v_u_125
+	while not (p473.Character and p473.Character.PrimaryPart) do
+		if not p473:IsDescendantOf(v_u_4) then
 			return
 		end
 		task.wait()
 	end
-	local v454 = v_u_119[p452]
-	if v454 then
-		v454(p451, p452, p453)
+	local v476 = v_u_125[p474]
+	if v476 then
+		v476(p473, p474, p475)
 	end
 end
-return v356
+return v378

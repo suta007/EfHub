@@ -11,6 +11,7 @@ local v_u_10 = require(v_u_1.Data.EnumRegistry.InventoryServiceEnums)
 local v_u_11 = require(v_u_1.Modules.TimeHelper)
 local v_u_12 = require(v_u_1.Modules.FoodService)
 require(v_u_1.Modules.PetTraitsData)
+require(v_u_1.Modules.ReplicationClass.DeepClone)
 local v_u_13 = v7.SpottedEffect
 local v14 = v8.PetConfig
 local v_u_15 = v8.PetList
@@ -257,180 +258,229 @@ for _, v100 in v16 do
 	}
 	v_u_28:NormalizeOdds(v100.RarityData)
 end
-function v_u_28.GetRandomPet(_, p101, p102)
-	if not p102 then
+function v_u_28.CalcBoostTotal(_, p101, p102)
+	local v103 = math.clamp(p101, 0, 100)
+	local v104 = math.clamp(p102, 0, 100)
+	local v105 = v103 + (100 - v103) / 100 * v104
+	return math.clamp(v105, 0, 100)
+end
+function v_u_28.GetBoostedRarityData(_, p106, p107)
+	-- upvalues: (copy) v_u_23
+	local v108 = v_u_23(p106)
+	if p107 <= 0 then
+		return v108
+	end
+	local v109 = 0
+	for _ in v108.Items do
+		v109 = v109 + 1
+	end
+	local v110 = 1 / v109 * 100
+	local v111 = p107 / 100
+	local v112 = math.clamp(v111, 0, 1)
+	for _, v113 in v108.Items do
+		local v114 = v113.NormalizedOdd
+		local v115 = math.lerp(v114, v110, v112)
+		local v116 = math.clamp(v115, 0, 100)
+		v113.NormalizedOdd = v116
+		v113.ItemOdd = v116
+	end
+	return v108
+end
+function v_u_28.GetRandomPet(_, p_u_117, p118, p119)
+	-- upvalues: (copy) v_u_28
+	if not p118 then
 		warn("PetUtilities:GetRandomPet | RandomObject was not passed, replacing with random Random object!")
 	end
-	local v103 = p102 or Random.new()
-	if not (p101 and (p101.TotalOdds and p101.Items)) then
-		return warn((("GetRandomPet | %* is nil or invalid!"):format(p101)))
+	local v120 = p118 or Random.new()
+	if not (p_u_117 and (p_u_117.TotalOdds and p_u_117.Items)) then
+		return warn("GetRandomPet | RarityData is nil or invalid!")
 	end
-	local v104 = p101.TotalOdds
-	local v105 = p101.Items
-	local v106 = v103:NextNumber() * v104
-	local v107 = 0
-	for _, v108 in v105 do
-		v107 = v107 + v108.ItemOdd
-		if v107 >= v106 then
-			return v108
+	local v121 = v_u_28:GetBoostedRarityData(p_u_117, p119 or 0)
+	local v122 = v121.TotalOdds
+	local v123 = v121.Items
+	local v124 = v120:NextNumber() * v122
+	local v125 = {}
+	for v126, _ in v123 do
+		table.insert(v125, v126)
+	end
+	table.sort(v125, function(p127, p128)
+		-- upvalues: (copy) p_u_117
+		local v129 = p_u_117.Items[p127]
+		local v130 = p_u_117.Items[p128]
+		if v129.ItemOdd == v130.ItemOdd then
+			return p128 < p127
+		else
+			return v129.ItemOdd > v130.ItemOdd
+		end
+	end)
+	local v131 = 0
+	for _, v132 in v125 do
+		local v133 = v123[v132]
+		if v133 then
+			v131 = v131 + v133.ItemOdd
+			if v131 >= v124 then
+				return v133
+			end
+		else
+			warn((("No item data found for key: %*"):format(v132)))
 		end
 	end
 end
-function v_u_28.GetLookAt(_, p109, p110)
-	local v111 = CFrame.new
-	local v112 = p110.X
-	local v113 = p109.Y
-	local v114 = p110.Z
-	return v111(p109, (Vector3.new(v112, v113, v114)))
+function v_u_28.GetLookAt(_, p134, p135)
+	local v136 = CFrame.new
+	local v137 = p135.X
+	local v138 = p134.Y
+	local v139 = p135.Z
+	return v136(p134, (Vector3.new(v137, v138, v139)))
 end
-function v_u_28.GetGeneratedEclipsePositions(_, p115)
-	local v116 = p115.TargetCFrame
-	if not v116 then
-		return warn("GetGeneratedEclipsePositions: There is no TargetCFrame in Config:", p115, debug.traceback())
+function v_u_28.GetGeneratedEclipsePositions(_, p140)
+	local v141 = p140.TargetCFrame
+	if not v141 then
+		return warn("GetGeneratedEclipsePositions: There is no TargetCFrame in Config:", p140, debug.traceback())
 	end
-	local v117 = p115.TotalPositions
-	if not v117 then
-		return warn("GetGeneratedEclipsePositions: There is no TotalPositions in Config:", p115, debug.traceback())
+	local v142 = p140.TotalPositions
+	if not v142 then
+		return warn("GetGeneratedEclipsePositions: There is no TotalPositions in Config:", p140, debug.traceback())
 	end
-	local v118 = p115.StartingRowAmount or 5
-	local v119 = p115.RadiusIncrementX or 3
-	local v120 = p115.RadiusIncrementZ or 3
-	local v121 = p115.Angle or 0.39269908169872414
-	local v122 = {}
-	local v123 = 1
-	while #v122 < v117 do
-		local v124 = v117 - #v122
-		local v125 = math.min(v118, v124)
-		local v126 = v125 == 1 and 0 or v121 * (v125 - 1) / 2
-		for v127 = 1, v125 do
-			local v128 = v121 * (v127 - 1) - v126
-			local v129 = math.sin(v128) * v123 * v119
-			local v130 = math.cos(v128) * v123 * v120
-			local v131 = (v116 * CFrame.new(v129, 0, v130)).Position
-			table.insert(v122, v131)
+	local v143 = p140.StartingRowAmount or 5
+	local v144 = p140.RadiusIncrementX or 3
+	local v145 = p140.RadiusIncrementZ or 3
+	local v146 = p140.Angle or 0.39269908169872414
+	local v147 = {}
+	local v148 = 1
+	while #v147 < v142 do
+		local v149 = v142 - #v147
+		local v150 = math.min(v143, v149)
+		local v151 = v150 == 1 and 0 or v146 * (v150 - 1) / 2
+		for v152 = 1, v150 do
+			local v153 = v146 * (v152 - 1) - v151
+			local v154 = math.sin(v153) * v148 * v144
+			local v155 = math.cos(v153) * v148 * v145
+			local v156 = (v141 * CFrame.new(v154, 0, v155)).Position
+			table.insert(v147, v156)
 		end
-		v123 = v123 + 1
-		v118 = v118 + 1
+		v148 = v148 + 1
+		v143 = v143 + 1
 	end
-	return v122
+	return v147
 end
-function v_u_28.GetPetsSortedByAge(_, p132, p133, p134, p135)
+function v_u_28.GetPetsSortedByAge(_, p157, p158, p159, p160)
 	-- upvalues: (copy) v_u_3, (copy) v_u_4, (copy) v_u_23, (copy) v_u_1
-	local v136 = p134 or false
-	local v137 = p135 or false
-	local v138 = p133 or 0
+	local v161 = p159 or false
+	local v162 = p160 or false
+	local v163 = p158 or 0
 	if not v_u_3:IsServer() then
 		if not v_u_3:IsClient() then
 			return
 		end
-		local v139 = require(v_u_1.Modules.PetServices.ActivePetsService):GetPlayerDatastorePetData(p132.Name)
-		local v140 = v139.PetInventory.Data
-		local v141 = v139.EquippedPets
-		local v142 = {}
-		for v143, v144 in v140 do
-			if v144.PetData.Level >= v138 then
-				if v137 then
-					if table.find(v141, v143) then
+		local v164 = require(v_u_1.Modules.PetServices.ActivePetsService):GetPlayerDatastorePetData(p157.Name)
+		local v165 = v164.PetInventory.Data
+		local v166 = v164.EquippedPets
+		local v167 = {}
+		for v168, v169 in v165 do
+			if v169.PetData.Level >= v163 then
+				if v162 then
+					if table.find(v166, v168) then
 						::l22::
-						local v145 = v_u_23(v144)
-						v145.UUID = v143
-						table.insert(v142, v145)
+						local v170 = v_u_23(v169)
+						v170.UUID = v168
+						table.insert(v167, v170)
 					end
-				elseif not (v136 and table.find(v141, v143)) then
+				elseif not (v161 and table.find(v166, v168)) then
 					goto l22
 				end
 			end
 		end
-		table.sort(v142, function(p146, p147)
-			return p146.PetData.Level > p147.PetData.Level
+		table.sort(v167, function(p171, p172)
+			return p171.PetData.Level > p172.PetData.Level
 		end)
-		return v142
+		return v167
 	end
-	local v148 = require(v_u_4.Modules.DataService):GetPlayerDataAsync(p132)
-	if not v148 then
+	local v173 = require(v_u_4.Modules.DataService):GetPlayerDataAsync(p157)
+	if not v173 then
 		return
 	end
-	local v149 = v148.PetsData.PetInventory.Data
-	local v150 = v148.PetsData.EquippedPets
-	local v151 = {}
-	for v152, v153 in v149 do
-		if v153.PetData.Level >= v138 then
-			if v137 then
-				if table.find(v150, v152) then
+	local v174 = v173.PetsData.PetInventory.Data
+	local v175 = v173.PetsData.EquippedPets
+	local v176 = {}
+	for v177, v178 in v174 do
+		if v178.PetData.Level >= v163 then
+			if v162 then
+				if table.find(v175, v177) then
 					::l11::
-					local v154 = v_u_23(v153)
-					v154.UUID = v152
-					table.insert(v151, v154)
+					local v179 = v_u_23(v178)
+					v179.UUID = v177
+					table.insert(v176, v179)
 				end
-			elseif not (v136 and table.find(v150, v152)) then
+			elseif not (v161 and table.find(v175, v177)) then
 				goto l11
 			end
 		end
 	end
-	table.sort(v151, function(p155, p156)
-		return p155.PetData.Level > p156.PetData.Level
+	table.sort(v176, function(p180, p181)
+		return p180.PetData.Level > p181.PetData.Level
 	end)
-	return v151
+	return v176
 end
-function v_u_28.HasActivePetOfType(p157, p158, p159)
-	if not (p158 and p159) then
+function v_u_28.HasActivePetOfType(p182, p183, p184)
+	if not (p183 and p184) then
 		return false
 	end
-	local v160 = p157:GetPetsSortedByAge(p158, 0, false, true)
-	if not v160 then
+	local v185 = p182:GetPetsSortedByAge(p183, 0, false, true)
+	if not v185 then
 		return false
 	end
-	for _, v161 in v160 do
-		if v161 and (v161.PetData and v161.PetType == p159) then
+	for _, v186 in v185 do
+		if v186 and (v186.PetData and v186.PetType == p184) then
 			return true
 		end
 	end
 	return false
 end
-function v_u_28.GetPetByUUID(_, p162, p163)
+function v_u_28.GetPetByUUID(_, p187, p188)
 	-- upvalues: (copy) v_u_3, (copy) v_u_4, (copy) v_u_23, (copy) v_u_1
-	if not (p162 and p163) then
+	if not (p187 and p188) then
 		return nil
 	end
 	if v_u_3:IsServer() then
-		local v164 = require(v_u_4.Modules.DataService):GetPlayerDataAsync(p162)
-		if not v164 then
+		local v189 = require(v_u_4.Modules.DataService):GetPlayerDataAsync(p187)
+		if not v189 then
 			return nil
 		end
-		local v165 = v164.PetsData.PetInventory.Data[p163]
-		if not v165 then
+		local v190 = v189.PetsData.PetInventory.Data[p188]
+		if not v190 then
 			return nil
 		end
-		local v166 = v_u_23(v165)
-		v166.UUID = p163
-		return v166
+		local v191 = v_u_23(v190)
+		v191.UUID = p188
+		return v191
 	end
 	if v_u_3:IsClient() then
-		local v167 = require(v_u_1.Modules.PetServices.ActivePetsService):GetPlayerDatastorePetData(p162.Name)
-		if not v167 then
+		local v192 = require(v_u_1.Modules.PetServices.ActivePetsService):GetPlayerDatastorePetData(p187.Name)
+		if not v192 then
 			return nil
 		end
-		local v168 = v167.PetInventory.Data[p163]
-		if not v168 then
+		local v193 = v192.PetInventory.Data[p188]
+		if not v193 then
 			return nil
 		end
-		local v169 = v_u_23(v168)
-		v169.UUID = p163
-		return v169
+		local v194 = v_u_23(v193)
+		v194.UUID = p188
+		return v194
 	end
 end
-function v_u_28.AbilityFX(_, p170, p171)
+function v_u_28.AbilityFX(_, p195, p196)
 	-- upvalues: (copy) v_u_3, (copy) v_u_13, (copy) v_u_2
-	local v172
+	local v197
 	if v_u_3:IsServer() then
-		v172 = require(game.ServerScriptService.Modules.PetsServices.ActivePetsService)
+		v197 = require(game.ServerScriptService.Modules.PetsServices.ActivePetsService)
 	else
-		v172 = require(game.ReplicatedStorage.Modules.PetServices.ActivePetsService)
+		v197 = require(game.ReplicatedStorage.Modules.PetServices.ActivePetsService)
 	end
-	local v173 = v_u_13:Clone()
-	v173.CFrame = CFrame.new(v172:GetRealPosition(p170, p171)) * CFrame.new(0, 3, 0)
-	v173.Parent = workspace
-	v173.SpottedFX.SpotParticle:Emit(1)
-	v_u_2:AddItem(v173, 3)
+	local v198 = v_u_13:Clone()
+	v198.CFrame = CFrame.new(v197:GetRealPosition(p195, p196)) * CFrame.new(0, 3, 0)
+	v198.Parent = workspace
+	v198.SpottedFX.SpotParticle:Emit(1)
+	v_u_2:AddItem(v198, 3)
 end
 return v_u_28

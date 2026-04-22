@@ -1,6 +1,6 @@
 game:GetService("ReplicatedStorage")
 game:GetService("ServerStorage")
-local v_u_1 = require(script.Parent.Parent.Shared.Util)
+local v_u_1 = require(game.ReplicatedStorage.Code.Util)
 local v_u_6 = {
 	["Transform"] = function(p2)
 		-- upvalues: (copy) v_u_1

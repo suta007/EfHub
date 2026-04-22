@@ -17,7 +17,7 @@ local v1 = {
 		["Lush Sprinkler"] = Vector3.new(20, 500, 20),
 		["Geode Sprinkler"] = Vector3.new(20, 500, 20),
 		["Charcoal Sprinkler"] = Vector3.new(20, 500, 20),
-		["Christmas Sprinkler"] = Vector3.new(40, 500, 40),
+		["Christmas Sprinkler"] = Vector3.new(40, 500, 40)
 	}),
 	["SprinklerDurations"] = table.freeze({
 		["Basic Sprinkler"] = 300,
@@ -37,7 +37,7 @@ local v1 = {
 		["Lush Sprinkler"] = 60,
 		["Geode Sprinkler"] = 60,
 		["Charcoal Sprinkler"] = 60,
-		["Christmas Sprinkler"] = 600,
+		["Christmas Sprinkler"] = 600
 	}),
 	["SprinklerOffsets"] = table.freeze({
 		["Basic Sprinkler"] = CFrame.new(0, -0.85, 0),
@@ -57,7 +57,7 @@ local v1 = {
 		["Lush Sprinkler"] = CFrame.new(0, 0, 0),
 		["Geode Sprinkler"] = CFrame.new(0, -1.5, 0),
 		["Charcoal Sprinkler"] = CFrame.new(0, 0, 0),
-		["Christmas Sprinkler"] = CFrame.new(0, -0.85, 0),
-	}),
+		["Christmas Sprinkler"] = CFrame.new(0, -0.85, 0)
+	})
 }
 return table.freeze(v1)

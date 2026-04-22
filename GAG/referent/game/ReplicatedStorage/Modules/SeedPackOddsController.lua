@@ -11,7 +11,7 @@ local v_u_9 = require(v1.Modules.ItemImageFinder)
 local v_u_10 = v3.LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("Odds_UI")
 local v_u_11 = v_u_10.Frame.Main.Items
 local v_u_12 = v8.new()
-local v57 = {
+local v56 = {
 	["Open"] = function(_, p13, p_u_14, p15)
 		-- upvalues: (copy) v_u_6, (copy) v_u_7, (copy) v_u_5, (copy) v_u_10, (copy) v_u_12, (copy) v_u_11, (copy) v_u_4, (copy) v_u_9, (copy) v_u_2
 		local v16 = v_u_6.Packs[p13]
@@ -159,14 +159,12 @@ local v57 = {
 			v_u_43.Odds.TextScaled = true
 			v_u_43.Parent = v_u_11.ScrollingFrame
 		end
-		local v55 = true
-		for _, v56 in v21 do
-			if v56.Reward.Type ~= "RainbowSeed" and not (string.find(v56.Reward.RewardId, "Rainbow ") or string.find(p13, "Special ")) then
-				v55 = false
+		for _, v55 in v21 do
+			if v55.Reward.Type ~= "RainbowSeed" and not (string.find(v55.Reward.RewardId, "Rainbow ") or string.find(p13, "Special ")) then
 				break
 			end
 		end
-		if v35 > 6 or v55 then
+		if v_u_11.ScrollingFrame.AbsoluteCanvasSize.X > v_u_11.ScrollingFrame.AbsoluteWindowSize.X then
 			v_u_11.ScrollingFrame.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 		else
 			v_u_11.ScrollingFrame.UIListLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -192,5 +190,5 @@ local v57 = {
 		v_u_5:UsePopupAnims(v_u_10)
 	end
 }
-task.spawn(v57.Start, v57)
-return v57
+task.spawn(v56.Start, v56)
+return v56

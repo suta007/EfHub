@@ -240,339 +240,347 @@ return {
 					return nil
 				end)
 			end
-			v_u_21.Text = v_u_77.ItemName
-			v_u_22.Text = v_u_77.ItemName
+			local v83 = v78.DisplayName
+			if v_u_76 ~= "Fruit" then
+				v83 = v83:gsub("Seed", "")
+			end
+			v_u_21.Text = v83 or v_u_77.ItemName
+			v_u_22.Text = v_u_21.Text
 			v_u_25.Image = v78.FruitIcon
 			v_u_23.Text = v78.SeedRarity
 			v_u_24.Text = v78.SeedRarity
-			local v83 = v_u_11.Return_Rarity_Data(v78.SeedRarity)
-			local v84 = v_u_3
-			local v85 = v_u_23
-			local v86 = TweenInfo.new(0.2)
-			local v87 = {}
-			local v88
-			if v83 then
-				v88 = v83[2]
+			local v84 = v_u_11.Return_Rarity_Data(v78.SeedRarity)
+			local v85 = v_u_3
+			local v86 = v_u_23
+			local v87 = TweenInfo.new(0.2)
+			local v88 = {}
+			local v89
+			if v84 then
+				v89 = v84[2]
 			else
-				v88 = Color3.fromRGB(255, 255, 255)
+				v89 = Color3.fromRGB(255, 255, 255)
 			end
-			v87.TextColor3 = v88
-			v84:Create(v85, v86, v87):Play()
-			for _, v89 in v_u_20:GetChildren() do
-				if v89:IsA("Frame") then
-					local v90 = v_u_3
-					local v91 = TweenInfo.new(0.2)
-					local v92 = {}
-					local v93
-					if v83 then
-						v93 = v83[2]
+			v88.TextColor3 = v89
+			v85:Create(v86, v87, v88):Play()
+			for _, v90 in v_u_20:GetChildren() do
+				if v90:IsA("Frame") then
+					local v91 = v_u_3
+					local v92 = TweenInfo.new(0.2)
+					local v93 = {}
+					local v94
+					if v84 then
+						v94 = v84[2]
 					else
-						v93 = Color3.fromRGB(43, 13, 0)
+						v94 = Color3.fromRGB(43, 13, 0)
 					end
-					v92.BackgroundColor3 = v93
-					v90:Create(v89, v91, v92):Play()
+					v93.BackgroundColor3 = v94
+					v91:Create(v90, v92, v93):Play()
 				end
 			end
 			if v80 then
-				local v94 = string.format("%0.2fkg", v_u_14.Calculate_Weight(v_u_77.Seed, v_u_77.ItemName) * (v_u_77.WeightMultiplier or 1))
-				local v95 = v_u_29:Clone()
-				v95.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-				local v96 = v_u_30
-				table.insert(v96, v95)
-				v95.LayoutOrder = #v_u_30
-				v95.Visible = true
-				v95.Parent = v_u_27
-				v95.ITEM_STAT_NAME.Text = "Weight"
-				v95.ITEM_STAT_NAME_SHADOW.Text = "Weight"
-				v95.STAT_VALUE.Text = v94
-				v95.STAT_VALUE_SHADOW.Text = v94
-				local v97 = v_u_29:Clone()
-				v97.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-				local v98 = v_u_30
-				table.insert(v98, v97)
-				v97.LayoutOrder = #v_u_30
-				v97.Visible = true
-				v97.Parent = v_u_27
-				v97.ITEM_STAT_NAME.Text = "Sheckles"
-				v97.ITEM_STAT_NAME_SHADOW.Text = "Sheckles"
-				v97.STAT_VALUE.Text = v_u_5.DisplaySheckles(v80)
-				v97.STAT_VALUE_SHADOW.Text = v_u_5.DisplaySheckles(v80)
+				local v95 = string.format("%0.2fkg", v_u_14.Calculate_Weight(v_u_77.Seed, v_u_77.ItemName) * (v_u_77.WeightMultiplier or 1))
+				local v96 = v_u_29:Clone()
+				v96.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+				local v97 = v_u_30
+				table.insert(v97, v96)
+				v96.LayoutOrder = #v_u_30
+				v96.Visible = true
+				v96.Parent = v_u_27
+				v96.ITEM_STAT_NAME.Text = "Weight"
+				v96.ITEM_STAT_NAME_SHADOW.Text = "Weight"
+				v96.STAT_VALUE.Text = v95
+				v96.STAT_VALUE_SHADOW.Text = v95
+				local v98 = v_u_29:Clone()
+				v98.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+				local v99 = v_u_30
+				table.insert(v99, v98)
+				v98.LayoutOrder = #v_u_30
+				v98.Visible = true
+				v98.Parent = v_u_27
+				v98.ITEM_STAT_NAME.Text = "Sheckles"
+				v98.ITEM_STAT_NAME_SHADOW.Text = "Sheckles"
+				v98.STAT_VALUE.Text = v_u_5.DisplaySheckles(v80)
+				v98.STAT_VALUE_SHADOW.Text = v_u_5.DisplaySheckles(v80)
 			end
 			if v_u_77.MutationString ~= "" or v_u_77.Variant ~= "Normal" then
-				local v99 = v_u_29:Clone()
-				v99.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-				local v100 = v_u_30
-				table.insert(v100, v99)
-				v99.LayoutOrder = #v_u_30
-				v99.Visible = true
-				v99.Parent = v_u_27
-				v99.ITEM_STAT_NAME.Text = "Mutations"
-				v99.ITEM_STAT_NAME_SHADOW.Text = "Mutations"
-				v99.STAT_VALUE.Visible = false
-				v99.STAT_VALUE_SHADOW.Visible = false
+				local v100 = v_u_29:Clone()
+				v100.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+				local v101 = v_u_30
+				table.insert(v101, v100)
+				v100.LayoutOrder = #v_u_30
+				v100.Visible = true
+				v100.Parent = v_u_27
+				v100.ITEM_STAT_NAME.Text = "Mutations"
+				v100.ITEM_STAT_NAME_SHADOW.Text = "Mutations"
+				v100.STAT_VALUE.Visible = false
+				v100.STAT_VALUE_SHADOW.Visible = false
 				if v_u_77.Variant ~= "Normal" then
-					local v101 = v_u_29:Clone()
-					v101.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-					local v102 = v_u_30
-					table.insert(v102, v101)
-					v101.LayoutOrder = #v_u_30
-					v101.Visible = true
-					v101.Parent = v_u_27
-					v101.ITEM_STAT_NAME.Text = ("\t%*"):format(v_u_77.Variant)
-					v101.ITEM_STAT_NAME_SHADOW.Text = ("\t%*"):format(v_u_77.Variant)
-					v101.STAT_VALUE.Visible = false
-					v101.STAT_VALUE_SHADOW.Visible = false
+					local v102 = v_u_29:Clone()
+					v102.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+					local v103 = v_u_30
+					table.insert(v103, v102)
+					v102.LayoutOrder = #v_u_30
+					v102.Visible = true
+					v102.Parent = v_u_27
+					v102.ITEM_STAT_NAME.Text = ("\t%*"):format(v_u_77.Variant)
+					v102.ITEM_STAT_NAME_SHADOW.Text = ("\t%*"):format(v_u_77.Variant)
+					v102.STAT_VALUE.Visible = false
+					v102.STAT_VALUE_SHADOW.Visible = false
 					if v_u_77.Variant == "Rainbow" then
-						v101.ITEM_STAT_NAME:AddTag("RainbowText")
+						v102.ITEM_STAT_NAME:AddTag("RainbowText")
 					elseif v_u_77.Variant == "Gold" then
-						v101.ITEM_STAT_NAME.TextColor3 = Color3.fromHex("#FFD700")
+						v102.ITEM_STAT_NAME.TextColor3 = Color3.fromHex("#FFD700")
 					end
 				end
-				for _, v103 in v_u_16:ExtractMutationsFromString(v_u_77.MutationString) do
-					local v104 = v_u_29:Clone()
-					v104.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-					local v105 = v_u_30
-					table.insert(v105, v104)
-					v104.LayoutOrder = #v_u_30
-					v104.Visible = true
-					v104.Parent = v_u_27
-					v104.ITEM_STAT_NAME.Text = ("\t%*"):format(v103.Name)
-					v104.ITEM_STAT_NAME_SHADOW.Text = ("\t%*"):format(v103.Name)
-					v104.ITEM_STAT_NAME.TextColor3 = v103.Color
-					v104.STAT_VALUE.Visible = false
-					v104.STAT_VALUE_SHADOW.Visible = false
+				for _, v104 in v_u_16:ExtractMutationsFromString(v_u_77.MutationString) do
+					local v105 = v_u_29:Clone()
+					v105.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+					local v106 = v_u_30
+					table.insert(v106, v105)
+					v105.LayoutOrder = #v_u_30
+					v105.Visible = true
+					v105.Parent = v_u_27
+					v105.ITEM_STAT_NAME.Text = ("\t%*"):format(v104.Name)
+					v105.ITEM_STAT_NAME_SHADOW.Text = ("\t%*"):format(v104.Name)
+					v105.ITEM_STAT_NAME.TextColor3 = v104.Color
+					v105.STAT_VALUE.Visible = false
+					v105.STAT_VALUE_SHADOW.Visible = false
 				end
 			end
 			v_u_26.Visible = false
-			local v106 = p_u_75.tradeLock
-			if v106 then
-				local v107 = v106.Type
-				local v108 = v106.Value
-				local v109 = v_u_29:Clone()
-				v109.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-				local v110 = v_u_30
-				table.insert(v110, v109)
-				v109.LayoutOrder = #v_u_30
-				v109.Visible = true
-				v109.Parent = v_u_27
-				v109.ITEM_STAT_NAME.Text = "Trade Cooldown"
-				v109.ITEM_STAT_NAME_SHADOW.Text = "Trade Cooldown"
-				if v107 == "Permanent" then
-					v109.STAT_VALUE.Text = "Untradable"
-					v109.STAT_VALUE_SHADOW.Text = "Untradable"
+			local v107 = p_u_75.tradeLock
+			if v107 then
+				local v108 = v107.Type
+				local v109 = v107.Value
+				local v110 = v_u_29:Clone()
+				v110.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+				local v111 = v_u_30
+				table.insert(v111, v110)
+				v110.LayoutOrder = #v_u_30
+				v110.Visible = true
+				v110.Parent = v_u_27
+				v110.ITEM_STAT_NAME.Text = "Trade Cooldown"
+				v110.ITEM_STAT_NAME_SHADOW.Text = "Trade Cooldown"
+				if v108 == "Permanent" then
+					v110.STAT_VALUE.Text = "Untradable"
+					v110.STAT_VALUE_SHADOW.Text = "Untradable"
 					v_u_26.Visible = true
 					return
 				end
-				if v107 == "Date" then
-					local v111 = workspace:GetServerTimeNow()
-					local v112 = v108 - math.ceil(v111)
-					v109.STAT_VALUE.Text = ("Tradable in %*"):format((v_u_5.compactFormat(v112)))
-					v109.STAT_VALUE_SHADOW.Text = ("Tradable in %*"):format((v_u_5.compactFormat(v112)))
+				if v108 == "Date" then
+					local v112 = workspace:GetServerTimeNow()
+					local v113 = v109 - math.ceil(v112)
+					v110.STAT_VALUE.Text = ("Tradable in %*"):format((v_u_5.compactFormat(v113)))
+					v110.STAT_VALUE_SHADOW.Text = ("Tradable in %*"):format((v_u_5.compactFormat(v113)))
 					v_u_26.Visible = true
 					return
 				end
-				if v107 == "Listing" then
-					v109.STAT_VALUE.Text = ("%*"):format(v108)
-					v109.STAT_VALUE_SHADOW.Text = ("%*"):format(v108)
+				if v108 == "Listing" then
+					v110.STAT_VALUE.Text = ("%*"):format(v109)
+					v110.STAT_VALUE_SHADOW.Text = ("%*"):format(v109)
 					v_u_26.Visible = false
 				end
 			end
 		end,
-		["Packaged Seed"] = function(p113)
+		["Packaged Seed"] = function(p114)
 			-- upvalues: (copy) v_u_15, (copy) v_u_4, (copy) v_u_21, (copy) v_u_22, (copy) v_u_25, (copy) v_u_23, (copy) v_u_24, (copy) v_u_11, (copy) v_u_3, (copy) v_u_20, (copy) v_u_29, (copy) v_u_30, (copy) v_u_27
-			local v114 = p113.type
-			local _ = p113.id
-			local v115 = p113.data
-			local v116 = v_u_15[v115.ItemName]
-			local v117 = v_u_4[v114]
-			if v117 then
-				v117(p113)
-			end
-			v_u_21.Text = v116.SeedName
-			v_u_22.Text = v116.SeedName
-			v_u_25.Image = v116.Asset
-			v_u_23.Text = v116.SeedRarity
-			v_u_24.Text = v116.SeedRarity
-			local v118 = v_u_11.Return_Rarity_Data(v116.SeedRarity)
-			local v119 = v_u_3
-			local v120 = v_u_23
-			local v121 = TweenInfo.new(0.2)
-			local v122 = {}
-			local v123
+			local v115 = p114.type
+			local _ = p114.id
+			local v116 = p114.data
+			local v117 = v_u_15[v116.ItemName]
+			local v118 = v_u_4[v115]
 			if v118 then
-				v123 = v118[2]
-			else
-				v123 = Color3.fromRGB(255, 255, 255)
+				v118(p114)
 			end
-			v122.TextColor3 = v123
-			v119:Create(v120, v121, v122):Play()
-			for _, v124 in v_u_20:GetChildren() do
-				if v124:IsA("Frame") then
-					local v125 = v_u_3
-					local v126 = TweenInfo.new(0.2)
-					local v127 = {}
-					local v128
-					if v118 then
-						v128 = v118[2]
+			v_u_21.Text = v117.SeedName
+			v_u_22.Text = v117.SeedName
+			v_u_25.Image = v117.Asset
+			v_u_23.Text = v117.SeedRarity
+			v_u_24.Text = v117.SeedRarity
+			local v119 = v_u_11.Return_Rarity_Data(v117.SeedRarity)
+			local v120 = v_u_3
+			local v121 = v_u_23
+			local v122 = TweenInfo.new(0.2)
+			local v123 = {}
+			local v124
+			if v119 then
+				v124 = v119[2]
+			else
+				v124 = Color3.fromRGB(255, 255, 255)
+			end
+			v123.TextColor3 = v124
+			v120:Create(v121, v122, v123):Play()
+			for _, v125 in v_u_20:GetChildren() do
+				if v125:IsA("Frame") then
+					local v126 = v_u_3
+					local v127 = TweenInfo.new(0.2)
+					local v128 = {}
+					local v129
+					if v119 then
+						v129 = v119[2]
 					else
-						v128 = Color3.fromRGB(43, 13, 0)
+						v129 = Color3.fromRGB(43, 13, 0)
 					end
-					v127.BackgroundColor3 = v128
-					v125:Create(v124, v126, v127):Play()
+					v128.BackgroundColor3 = v129
+					v126:Create(v125, v127, v128):Play()
 				end
 			end
-			if v115.Variant ~= "Normal" then
-				local v129 = v_u_29:Clone()
-				v129.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
-				local v130 = v_u_30
-				table.insert(v130, v129)
-				v129.LayoutOrder = #v_u_30
-				v129.Visible = true
-				v129.Parent = v_u_27
-				v129.ITEM_STAT_NAME.Text = ("\t%*"):format(v115.Variant)
-				v129.ITEM_STAT_NAME_SHADOW.Text = ("\t%*"):format(v115.Variant)
-				v129.STAT_VALUE.Visible = false
-				v129.STAT_VALUE_SHADOW.Visible = false
-				if v115.Variant == "Rainbow" then
-					v129.ITEM_STAT_NAME:AddTag("RainbowText")
+			if v116.Variant ~= "Normal" then
+				local v130 = v_u_29:Clone()
+				v130.BackgroundTransparency = #v_u_30 % 2 == 0 and 0.96 or 0.9
+				local v131 = v_u_30
+				table.insert(v131, v130)
+				v130.LayoutOrder = #v_u_30
+				v130.Visible = true
+				v130.Parent = v_u_27
+				v130.ITEM_STAT_NAME.Text = ("\t%*"):format(v116.Variant)
+				v130.ITEM_STAT_NAME_SHADOW.Text = ("\t%*"):format(v116.Variant)
+				v130.STAT_VALUE.Visible = false
+				v130.STAT_VALUE_SHADOW.Visible = false
+				if v116.Variant == "Rainbow" then
+					v130.ITEM_STAT_NAME:AddTag("RainbowText")
 					return
 				end
-				if v115.Variant == "Gold" then
-					v129.ITEM_STAT_NAME.TextColor3 = Color3.fromHex("#FFD700")
+				if v116.Variant == "Gold" then
+					v130.ITEM_STAT_NAME.TextColor3 = Color3.fromHex("#FFD700")
 				end
 			end
 		end,
-		["TradeBoothSkin"] = function(p_u_131)
+		["TradeBoothSkin"] = function(p_u_132)
 			-- upvalues: (copy) v_u_13, (copy) v_u_31, (copy) v_u_28, (copy) v_u_17, (copy) v_u_6, (copy) v_u_21, (copy) v_u_22, (copy) v_u_8, (copy) v_u_25, (copy) v_u_7, (copy) v_u_23, (copy) v_u_24, (copy) v_u_11, (copy) v_u_3, (copy) v_u_20
-			local v_u_132 = p_u_131.type
-			local _ = p_u_131.id
-			local v_u_133 = p_u_131.data
-			local _ = v_u_13[v_u_133.SkinID]
-			v_u_31.TradeBoothSkin = p_u_131
-			local v134 = v_u_17:GetRAP(v_u_132, v_u_133)
-			if v_u_31.TradeBoothSkin == p_u_131 then
-				v_u_28.Price.Text = not v134 and "???" or ("%*"):format(v134)
+			local v_u_133 = p_u_132.type
+			local _ = p_u_132.id
+			local v_u_134 = p_u_132.data
+			local _ = v_u_13[v_u_134.SkinID]
+			v_u_31.TradeBoothSkin = p_u_132
+			local v135 = v_u_17:GetRAP(v_u_133, v_u_134)
+			if v_u_31.TradeBoothSkin == p_u_132 then
+				v_u_28.Price.Text = not v135 and "???" or ("%*"):format(v135)
 			end
-			if not v134 then
+			if not v135 then
 				task.defer(function()
-					-- upvalues: (ref) v_u_17, (copy) v_u_132, (copy) v_u_133, (ref) v_u_31, (copy) p_u_131, (ref) v_u_28
-					local v135 = v_u_17:GetRAPAsync(v_u_132, v_u_133)
-					if v_u_31.TradeBoothSkin == p_u_131 then
-						v_u_28.Price.Text = not v135 and "???" or ("%*"):format(v135)
+					-- upvalues: (ref) v_u_17, (copy) v_u_133, (copy) v_u_134, (ref) v_u_31, (copy) p_u_132, (ref) v_u_28
+					local v136 = v_u_17:GetRAPAsync(v_u_133, v_u_134)
+					if v_u_31.TradeBoothSkin == p_u_132 then
+						v_u_28.Price.Text = not v136 and "???" or ("%*"):format(v136)
 					end
 					return nil
 				end)
 			end
-			local v136 = v_u_6(v_u_133.SkinID, v_u_132)
-			v_u_21.Text = v136
-			v_u_22.Text = v136
-			v_u_25.Image = v_u_8(v_u_133.SkinID, v_u_132)
-			local v137 = v_u_7(v_u_133.SkinID, v_u_132)
-			v_u_23.Text = v137
-			v_u_24.Text = v137
-			local v138 = v_u_11.Return_Rarity_Data(v137)
-			local v139 = v_u_3
-			local v140 = v_u_23
-			local v141 = TweenInfo.new(0.2)
-			local v142 = {}
-			local v143
-			if v138 then
-				v143 = v138[2]
+			local v137 = v_u_6(v_u_134.SkinID, v_u_133)
+			v_u_21.Text = v137
+			v_u_22.Text = v137
+			v_u_25.Image = v_u_8(v_u_134.SkinID, v_u_133)
+			local v138 = v_u_7(v_u_134.SkinID, v_u_133)
+			v_u_23.Text = v138
+			v_u_24.Text = v138
+			local v139 = v_u_11.Return_Rarity_Data(v138)
+			local v140 = v_u_3
+			local v141 = v_u_23
+			local v142 = TweenInfo.new(0.2)
+			local v143 = {}
+			local v144
+			if v139 then
+				v144 = v139[2]
 			else
-				v143 = Color3.fromRGB(255, 255, 255)
+				v144 = Color3.fromRGB(255, 255, 255)
 			end
-			v142.TextColor3 = v143
-			v139:Create(v140, v141, v142):Play()
-			for _, v144 in v_u_20:GetChildren() do
-				if v144:IsA("Frame") then
-					local v145 = v_u_3
-					local v146 = TweenInfo.new(0.2)
-					local v147 = {}
-					local v148
-					if v138 then
-						v148 = v138[2]
+			v143.TextColor3 = v144
+			v140:Create(v141, v142, v143):Play()
+			for _, v145 in v_u_20:GetChildren() do
+				if v145:IsA("Frame") then
+					local v146 = v_u_3
+					local v147 = TweenInfo.new(0.2)
+					local v148 = {}
+					local v149
+					if v139 then
+						v149 = v139[2]
 					else
-						v148 = Color3.fromRGB(43, 13, 0)
+						v149 = Color3.fromRGB(43, 13, 0)
 					end
-					v147.BackgroundColor3 = v148
-					v145:Create(v144, v146, v147):Play()
+					v148.BackgroundColor3 = v149
+					v146:Create(v145, v147, v148):Play()
 				end
 			end
 		end
 	},
 	["ItemRenderTypes"] = {
-		["Pet"] = function(p149, p150)
+		["Pet"] = function(p150, p151)
 			-- upvalues: (copy) v_u_9, (copy) v_u_10, (copy) v_u_11
-			local v151 = p149.Title
-			local v152 = p149.Weight
-			local v153 = p149.Vector
-			local _ = p150.type
-			local _ = p150.id
-			local v154 = p150.data
-			local v155 = v_u_9.PetList[v154.PetType]
-			v151.Text = v154.PetType
-			v152.Text = string.format("%0.2fkg", v_u_10:CalculateWeight(v154.PetData.BaseWeight, v154.PetData.Level))
-			v153.Image = not v155 and "rbxassetid://6937742258" or v155.Icon
-			local v156 = not v155 and "No Rarity" or v155.Rarity
-			local v157 = v_u_11.Return_Rarity_Data(v156)
-			local v158 = p149.Stroke
-			local v159
-			if v157 then
-				v159 = v157[2]
+			local v152 = p150.Title
+			local v153 = p150.Weight
+			local v154 = p150.Vector
+			local _ = p151.type
+			local _ = p151.id
+			local v155 = p151.data
+			local v156 = v_u_9.PetList[v155.PetType]
+			v152.Text = v155.PetType
+			v153.Text = string.format("%0.2fkg", v_u_10:CalculateWeight(v155.PetData.BaseWeight, v155.PetData.Level))
+			v154.Image = not v156 and "rbxassetid://6937742258" or v156.Icon
+			local v157 = not v156 and "No Rarity" or v156.Rarity
+			local v158 = v_u_11.Return_Rarity_Data(v157)
+			local v159 = p150.Stroke
+			local v160
+			if v158 then
+				v160 = v158[2]
 			else
-				v159 = Color3.fromRGB(56, 23, 8)
+				v160 = Color3.fromRGB(56, 23, 8)
 			end
-			v158.ImageColor3 = v159
+			v159.ImageColor3 = v160
 		end,
-		["Holdable"] = function(p160, p161)
+		["Holdable"] = function(p161, p162)
 			-- upvalues: (copy) v_u_15, (copy) v_u_14, (copy) v_u_11
-			local v162 = p160.Title
-			local v163 = p160.Weight
-			local v164 = p160.Vector
-			local _ = p161.type
-			local _ = p161.id
-			local v165 = p161.data
-			local v166 = v_u_15[v165.ItemName]
-			v162.Text = v165.ItemName
-			v163.Text = string.format("%0.2fkg", (v_u_14.Calculate_Weight(v165.Seed, v165.ItemName) or 0) * (v165.WeightMultiplier or 1))
-			v164.Image = v166.FruitIcon
-			local v167 = v_u_11.Return_Rarity_Data(v166.SeedRarity)
-			local v168 = p160.Stroke
-			local v169
-			if v167 then
-				v169 = v167[2]
-			else
-				v169 = Color3.fromRGB(56, 23, 8)
+			local v163 = p161.Title
+			local v164 = p161.Weight
+			local v165 = p161.Vector
+			local v166 = p162.type
+			local _ = p162.id
+			local v167 = p162.data
+			local v168 = v_u_15[v167.ItemName]
+			local v169 = v168.DisplayName
+			if v166 ~= "Fruit" and v169 then
+				v169 = v169:gsub("Seed", "")
 			end
-			v168.ImageColor3 = v169
+			v163.Text = v169 or v167.ItemName
+			v164.Text = string.format("%0.2fkg", (v_u_14.Calculate_Weight(v167.Seed, v167.ItemName) or 0) * (v167.WeightMultiplier or 1))
+			v165.Image = v168.FruitIcon
+			local v170 = v_u_11.Return_Rarity_Data(v168.SeedRarity)
+			local v171 = p161.Stroke
+			local v172
+			if v170 then
+				v172 = v170[2]
+			else
+				v172 = Color3.fromRGB(56, 23, 8)
+			end
+			v171.ImageColor3 = v172
 		end,
-		["Packaged Seed"] = function(p170, p171)
+		["Packaged Seed"] = function(p173, p174)
 			-- upvalues: (copy) v_u_15, (copy) v_u_11
-			local v172 = p170.Title
-			local v173 = p170.Weight
-			local v174 = p170.Vector
-			local _ = p171.type
-			local _ = p171.id
-			local v175 = p171.data
-			local v176 = v_u_15[v175.ItemName]
-			v172.Text = v175.ItemName
-			v173.Text = "Seed"
-			v174.Image = v176.Asset
-			local v177 = v_u_11.Return_Rarity_Data(v176.SeedRarity)
-			local v178 = p170.Stroke
-			local v179
-			if v177 then
-				v179 = v177[2]
+			local v175 = p173.Title
+			local v176 = p173.Weight
+			local v177 = p173.Vector
+			local _ = p174.type
+			local _ = p174.id
+			local v178 = p174.data
+			local v179 = v_u_15[v178.ItemName]
+			v175.Text = v178.ItemName
+			v176.Text = "Seed"
+			v177.Image = v179.Asset
+			local v180 = v_u_11.Return_Rarity_Data(v179.SeedRarity)
+			local v181 = p173.Stroke
+			local v182
+			if v180 then
+				v182 = v180[2]
 			else
-				v179 = Color3.fromRGB(56, 23, 8)
+				v182 = Color3.fromRGB(56, 23, 8)
 			end
-			v178.ImageColor3 = v179
+			v181.ImageColor3 = v182
 		end
 	},
 	["CleanUpAllSegments"] = function()
 		-- upvalues: (copy) v_u_30
-		for _, v180 in v_u_30 do
-			v180:Destroy()
+		for _, v183 in v_u_30 do
+			v183:Destroy()
 		end
 		table.clear(v_u_30)
 	end
