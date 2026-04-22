@@ -9,3 +9,7 @@ for _, player in ipairs(allPlayers) do
 end
 
 print(tostring(friendTable))
+
+
+
+GAG\referent\game\ReplicatedStorage\Modules\TradeControllers\TradeRequestController\TradeRequest\Wrapper\Canvas\Segment\Buttons\ACCEPT_BUTTON

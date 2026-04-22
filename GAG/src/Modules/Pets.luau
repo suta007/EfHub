@@ -1109,5 +1109,39 @@ function Pets.GiftPets()
 		end
 	end
 end
+local AcceptGiftPetsDriver = nil
+function Pets.AcceptGiftPets(Value)
+	if Value then
+		local GiftPetEvent = sData.GameEvents:WaitForChild("GiftPet")
+		local AcceptPetGiftEvent = sData.GameEvents:WaitForChild("AcceptPetGift")
+		if AcceptGiftPetsDriver then
+			return
+		end
+		AcceptGiftPetsDriver = GiftPetEvent.OnClientEvent:Connect(function(giftId, petName, _senderName)
+			task.wait(1)
+			AcceptPetGiftEvent:FireServer(true, giftId)
+
+			pcall(function()
+				local giftNotificationFolder = sData.PlayerGui:FindFirstChild("Gift_Notification")
+				if giftNotificationFolder and giftNotificationFolder:FindFirstChild("Frame") then
+					for _, uiElement in ipairs(giftNotificationFolder.Frame:GetChildren()) do
+						if uiElement:IsA("Frame") and uiElement:FindFirstChild("Holder") then
+							if uiElement.Holder.TextLabel.Text == petName then
+								uiElement:Destroy()
+							end
+						end
+					end
+				end
+			end)
+		end)
+	else
+		pcall(function()
+			if AcceptGiftPetsDriver then
+				AcceptGiftPetsDriver:Disconnect()
+				AcceptGiftPetsDriver = nil
+			end
+		end)
+	end
+end
 
 return Pets

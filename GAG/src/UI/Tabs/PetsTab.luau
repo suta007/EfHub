@@ -557,6 +557,16 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+	GiftPetSection:AddDivider()
+
+	GiftPetSection:AddToggle("tgAcceptGiftPetsEn", {
+		Title = "Enable Auto Accept Gift Pet",
+		Default = false,
+		Callback = function(Value)
+			Pets.AcceptGiftPets(Value)
+			QuickSave()
+		end,
+	})
 
 	--#endregion
 end
