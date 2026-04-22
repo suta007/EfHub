@@ -1121,7 +1121,7 @@ function Pets.AcceptGiftPets(Value)
 			task.wait(1)
 			AcceptPetGiftEvent:FireServer(true, giftId)
 			task.spawn(function()
-				task.wait(2)
+				task.wait(4)
 				pcall(function()
 					local giftNotificationFolder = sData.PlayerGui:FindFirstChild("Gift_Notification")
 					if giftNotificationFolder and giftNotificationFolder:FindFirstChild("Frame") then
