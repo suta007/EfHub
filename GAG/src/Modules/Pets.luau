@@ -1113,7 +1113,6 @@ local AcceptGiftPetsDriver = nil
 function Pets.AcceptGiftPets(Value)
 	if Value then
 		local GiftPetEvent = sData.GameEvents:WaitForChild("GiftPet")
-		--local AcceptPetGiftEvent = sData.GameEvents:WaitForChild("AcceptPetGift")
 		if AcceptGiftPetsDriver then
 			return
 		end
@@ -1123,23 +1122,13 @@ function Pets.AcceptGiftPets(Value)
 				task.wait(1.5)
 
 				pcall(function()
-					local giftNotificationFolder = sData.PlayerGui:FindFirstChild("Gift_Notification")
-					if giftNotificationFolder and giftNotificationFolder:FindFirstChild("Frame") then
-						for _, uiElement in ipairs(giftNotificationFolder.Frame:GetChildren()) do
-							if uiElement:IsA("Frame") and uiElement:FindFirstChild("Holder") then
-								-- เช็คชื่อให้ตรงกับของขวัญที่ส่งมา เพื่อไม่ให้เผลอไปกดกล่องอื่น
-								if uiElement.Holder.TextLabel.Text == petName then
-									local acceptBtn = uiElement.Holder.Frame.Accept
-
-									-- ใช้ฟังก์ชันของ Executor เพื่อสั่งคลิกปุ่ม
-									if getconnections then
-										for _, connection in pairs(getconnections(acceptBtn.MouseButton1Click)) do
-											-- สั่งรันโค้ดที่เกมผูกไว้กับปุ่ม (เกมจะ FireServer และ Destroy UI เอง)
-											connection.Function()
-										end
-									end
-								end
-							end
+					local notiFrame = sData.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
+					for _, obj in pairs(notiFrame:GetChildren()) do
+						if obj.Name == "Gift_Notification" then
+							local acceptBtn = obj.Holder.Frame.Accept
+							pcall(function()
+								firesignal(acceptBtn.Activated)
+							end)
 						end
 					end
 				end)
