@@ -1135,6 +1135,7 @@ function Pets.AcceptGiftPets(Value)
 							print("Accept Button Found", acceptBtn)
 							if firesignal then
 								firesignal(acceptBtn.MouseButton1Click)
+								firesignal(acceptBtn.Activated)
 							elseif getconnections then
 								for _, connection in pairs(getconnections(acceptBtn.MouseButton1Click)) do
 									print("Accept Button Connection", connection)
