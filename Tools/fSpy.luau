@@ -6,7 +6,9 @@ local UserInputService = game:GetService("UserInputService")
 local LogService = game:GetService("LogService")
 
 local guiName = "EfCustomSpyUI"
-if CoreGui:FindFirstChild(guiName) then CoreGui[guiName]:Destroy() end
+if CoreGui:FindFirstChild(guiName) then
+	CoreGui[guiName]:Destroy()
+end
 
 local IsPaused = false
 local MaxLines = 150
@@ -21,7 +23,9 @@ ScreenGui.Name = guiName
 local success = pcall(function()
 	ScreenGui.Parent = gethui and gethui() or CoreGui
 end)
-if not success then ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui") end
+if not success then
+	ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+end
 
 local MainFrame = Instance.new("Frame")
 MainFrame.Size = UDim2.new(0, 450, 0, 350)
@@ -82,7 +86,9 @@ ListLayout.Parent = ScrollFrame
 
 -- ✨ Auto-Scroll ทำงานทุกครั้งที่ความสูงรวมของบรรทัดเปลี่ยนไป
 ListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
-	if not IsPaused then ScrollFrame.CanvasPosition = Vector2.new(0, ListLayout.AbsoluteContentSize.Y) end
+	if not IsPaused then
+		ScrollFrame.CanvasPosition = Vector2.new(0, ListLayout.AbsoluteContentSize.Y)
+	end
 end)
 
 local ButtonContainer = Instance.new("Frame")
@@ -133,7 +139,9 @@ TitleBar.InputBegan:Connect(function(input)
 		dragStart = input.Position
 		startPos = MainFrame.Position
 		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then dragging = false end
+			if input.UserInputState == Enum.UserInputState.End then
+				dragging = false
+			end
 		end)
 	end
 end)
@@ -146,7 +154,9 @@ ResizeHandle.InputBegan:Connect(function(input)
 		resizeStart = input.Position
 		startSize = MainFrame.AbsoluteSize
 		input.Changed:Connect(function()
-			if input.UserInputState == Enum.UserInputState.End then resizing = false end
+			if input.UserInputState == Enum.UserInputState.End then
+				resizing = false
+			end
 		end)
 	end
 end)
@@ -195,7 +205,9 @@ end)
 ClearBtn.MouseButton1Click:Connect(function()
 	-- ทำลายกล่องข้อความทิ้งให้หมดเพื่อเคลียร์หน้าจอ
 	for _, lbl in ipairs(DisplayLogLabels) do
-		if lbl then lbl:Destroy() end
+		if lbl then
+			lbl:Destroy()
+		end
 	end
 	table.clear(DisplayLogLabels)
 	table.clear(LogHistory)
@@ -215,7 +227,9 @@ end)
 -- 📡 ระบบดักฟังและสร้างบรรทัด (แบบใหม่)
 -- ==========================================
 local function AddLogToUI(message)
-	if IsPaused then return end
+	if IsPaused then
+		return
+	end
 	table.insert(LogHistory, message)
 
 	-- ✨ สร้างบรรทัดใหม่แทนการจับมัดรวมกัน
@@ -247,12 +261,16 @@ local function AddLogToUI(message)
 	-- ถ้าเกิน MaxLines ให้ลบบรรทัดบนสุดทิ้ง
 	if #DisplayLogLabels > MaxLines then
 		local oldestLine = table.remove(DisplayLogLabels, 1)
-		if oldestLine then oldestLine:Destroy() end
+		if oldestLine then
+			oldestLine:Destroy()
+		end
 	end
 end
 
 LogService.MessageOut:Connect(function(message)
-	if string.find(message, "🚀") or string.find(message, "➡️") or string.find(message, "📥") then AddLogToUI(message) end
+	if string.find(message, "🚀") or string.find(message, "➡️") or string.find(message, "📥") then
+		AddLogToUI(message)
+	end
 	--AddLogToUI(message)
 end)
 
@@ -312,15 +330,19 @@ oldNamecall = hookmetamethod(
 )
 
 -- ขาเข้า
-local BacklistRemote = { "WeatherEvent", "GrowthUpdate", "CellDataUpdate", "MutationNotification", "WeatherController", "UpdateInventoryPosition" }
+local BacklistRemote = {} -- { "WeatherEvent", "GrowthUpdate", "CellDataUpdate", "MutationNotification", "WeatherController", "UpdateInventoryPosition" }
 
 local function hookIncoming(remote)
 	if remote:IsA("RemoteEvent") then
 		remote.OnClientEvent:Connect(function(...)
-			if table.find(BacklistRemote, remote.Name) then return end
+			--[[if table.find(BacklistRemote, remote.Name) then
+				return
+			end]]
 
 			local args = { ... }
-			if type(args[2]) == "table" and args[2][1] == "FloraBook" then return end
+			--[[if type(args[2]) == "table" and args[2][1] == "FloraBook" then
+				return
+			end]]
 
 			print(string.format("📥 [รับจาก Server] Remote: %s", tostring(remote.Name)))
 			for i, v in ipairs(args) do

@@ -402,6 +402,8 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 	textLabel1.TextSize = 16
 	textLabel1.Font = Enum.Font.FredokaOne
 	textLabel1.Text = txt1
+	textLabel1.TextStrokeTransparency = 0.3
+	textLabel1.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
 
 	if hasTxt2 then
 		local textLabel2 = Instance.new("TextLabel")
@@ -418,6 +420,8 @@ function Misc.CreatESP(espfolder, obj, uuid, txt1, txt2, arg)
 		textLabel2.Text = txt2
 		textLabel2.Font = Enum.Font.FredokaOne
 		textLabel2.TextColor3 = Color3.fromRGB(200, 200, 200)
+		textLabel2.TextStrokeTransparency = 0.3
+		textLabel2.TextStrokeColor3 = Color3.fromRGB(50, 50, 50)
 	end
 
 	if priority == 3 then

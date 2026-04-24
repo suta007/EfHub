@@ -329,12 +329,12 @@ function Pets.FarmLevel()
 	if Method == "Mutation" then
 		local serviceData = sData.DataService:GetData()
 		local machineData = serviceData.PetMutationMachine
-		reg.Log("machineData")
+		--reg.Log("machineData")
 		if machineData then
-			reg.Log("เจอ machineData")
+			--reg.Log("เจอ machineData")
 
 			if machineData.PetReady then
-				reg.Log("เจอ PetReady")
+				--reg.Log("เจอ PetReady")
 				MutantUUID = machineData.SubmittedPet.UUID
 				fVar.IsMutating = false
 				Pets.ClaimMutationPet()
@@ -342,7 +342,7 @@ function Pets.FarmLevel()
 			end
 
 			if machineData.IsRunning then
-				reg.Log("เจอ IsRunning")
+				--reg.Log("เจอ IsRunning")
 				MutantUUID = machineData.SubmittedPet.UUID
 
 				if type(TaskMutantReady) == "thread" then
@@ -359,7 +359,7 @@ function Pets.FarmLevel()
 			end
 
 			if machineData.SubmittedPet and not machineData.IsRunning then
-				reg.Log("เจอ SubmittedPet")
+				--reg.Log("เจอ SubmittedPet")
 				MutantUUID = machineData.SubmittedPet.UUID
 				sData.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
 				task.wait(1)
@@ -813,13 +813,13 @@ function Pets.PlaceEggs()
 			local selectEgg = placeEggList[rng:NextInteger(1, #placeEggList)]
 			local egg = Utils.FindToolByPattern(sData.Backpack, selectEgg)
 			Utils.EquipTool(egg)
-			task.wait(0.3)
+			task.wait(0.2) --0.3
 			--local finalPos = Vector3.new(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
 			local finalPos = vector.create(eggCFrame.Position.X, 0.1355266571044922, eggCFrame.Position.Z)
-			reg.Log("PlaceEgg: " .. tostring(finalPos))
+			--reg.Log("PlaceEgg: " .. tostring(finalPos))
 
 			sData.PetEggService:FireServer("CreateEgg", finalPos)
-			task.wait(0.3)
+			task.wait(0.2) --0.3
 			if placeMethod == "Set" then
 				plotPos = Utils.GetSetPlotPos(plotPos[2], plotPos[3], plotPos[4])
 				eggCFrame = plotPos[1]
