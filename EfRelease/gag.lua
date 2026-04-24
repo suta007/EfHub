@@ -1676,23 +1676,26 @@ end
 
 return b end function a.g():typeof(__modImpl())local b=a.cache.g if not b then b={c=__modImpl()}a.cache.g=b end return b.c end end do local function __modImpl()
 
-local b={}
-local c
-local d
+local b=(getfenv()::any).getconnections
+local c=(getfenv()::any).firesignal
+
+local d={}
 local e
 local f
 local g
-local h=nil
-local i=nil
+local h
+local i
 local j=nil
+local k=nil
+local l=nil
 
-function b.Initialize(k)
-c=k
-d=c.fVar
-e=c.sData
-f=c.Utils
+function d.Initialize(m)
+e=m
+f=e.fVar
+g=e.sData
+h=e.Utils
 
-g=f.GetSelectedItems
+i=h.GetSelectedItems
 
 
 
@@ -1702,150 +1705,150 @@ g=f.GetSelectedItems
 end
 
 local function GetPetInventory()
-local k=e.DataService:GetData()
-local l=k and k.PetsData and k.PetsData.PetInventory
-return l
+local m=g.DataService:GetData()
+local n=m and m.PetsData and m.PetsData.PetInventory
+return n
 end
 
-local function FindDupePet(k,l)
-local m=c.Options
-local n=m.ddAgeBreakAgeCond.Value
-local o=tonumber(m.inpAgeBreakAgeVal.Value)or 50
-local p=m.ddAgeBreakWeightCond.Value
-local q=tonumber(m.inpAgeBreakWeightVal.Value)or 38
+local function FindDupePet(m,n)
+local o=e.Options
+local p=o.ddAgeBreakAgeCond.Value
+local q=tonumber(o.inpAgeBreakAgeVal.Value)or 50
+local r=o.ddAgeBreakWeightCond.Value
+local s=tonumber(o.inpAgeBreakWeightVal.Value)or 38
 
-local r=GetPetInventory()
-if not r then
+local t=GetPetInventory()
+if not t then
 return
 end
 
-for s,t in pairs(r)do
-if type(t)~="table"then
-continue
-end
 for u,v in pairs(t)do
 if type(v)~="table"then
 continue
 end
-local w=v.PetType
-if not w then
+for w,x in pairs(v)do
+if type(x)~="table"then
 continue
 end
-local x=v.UUID
-local y=tonumber(v.PetData.Level)
-local z=tonumber(v.PetData.BaseWeight)
-if x==k then
+local y=x.PetType
+if not y then
 continue
 end
-if w~=l then
+local z=x.UUID
+local A=tonumber(x.PetData.Level)
+local B=tonumber(x.PetData.BaseWeight)
+if z==m then
 continue
 end
-if o~=0 and n=="Below"and y>=o then
+if y~=n then
 continue
 end
-if o~=0 and n=="Above"and y<=o then
+if q~=0 and p=="Below"and A>=q then
 continue
 end
-if q~=0 and p=="Below"and z>=q then
+if q~=0 and p=="Above"and A<=q then
 continue
 end
-if q~=0 and p=="Above"and z<=q then
+if s~=0 and r=="Below"and B>=s then
 continue
 end
-return x
+if s~=0 and r=="Above"and B<=s then
+continue
+end
+return z
 end
 end
 return nil
 end
 
 local function FindMainPet()
-local k=c.Options
-local l=k.ddAgeBreakPetType.Value
-local m=tonumber(k.inpAgeBreakTargetAge.Value)or 115
-local n=GetPetInventory()
-if not n then
+local m=e.Options
+local n=m.ddAgeBreakPetType.Value
+local o=tonumber(m.inpAgeBreakTargetAge.Value)or 115
+local p=GetPetInventory()
+if not p then
 return
 end
 
-for o,p in pairs(n)do
-if type(p)~="table"then
-continue
-end
 for q,r in pairs(p)do
 if type(r)~="table"then
 continue
 end
-local s=r.PetType
-if not s then
+for s,t in pairs(r)do
+if type(t)~="table"then
 continue
 end
-local t=r.UUID
-local u=tonumber(r.PetData.Level)
-if s==l and(u>=100 and u<m)and r.PetData.IsFavorite~=true then
-return t
+local u=t.PetType
+if not u then
+continue
+end
+local v=t.UUID
+local w=tonumber(t.PetData.Level)
+if u==n and(w>=100 and w<o)and t.PetData.IsFavorite~=true then
+return v
 end
 end
 end
 return nil
 end
 
-function b.RawData(k)
-return e.PetUtils:GetPetByUUID(e.LocalPlayer,k)
+function d.RawData(m)
+return g.PetUtils:GetPetByUUID(g.LocalPlayer,m)
 end
 
-function b.GetPetType(k)
-local l=b.RawData(k)
-if l then
-return l.PetType or"Unknown"
+function d.GetPetType(m)
+local n=d.RawData(m)
+if n then
+return n.PetType or"Unknown"
 end
 return"Unknown"
 end
 
-function b.Level(k)
-local l=b.RawData(k)
+function d.Level(m)
+local n=d.RawData(m)
 
-if l and l.PetData then
-return l.PetData.Level or 1
+if n and n.PetData then
+return n.PetData.Level or 1
 end
 return 1
 end
 
-function b.Favorited(k)
-local l=b.RawData(k)
+function d.Favorited(m)
+local n=d.RawData(m)
 
-if l and l.PetData then
-return l.PetData.IsFavorite or false
+if n and n.PetData then
+return n.PetData.IsFavorite or false
 end
 return false
 end
 
-function b.MakePetFavorite(k)
-local l=e.GameEvents:WaitForChild("Favorite_Item")
-if not b.Favorited(k)then
-local m=5
-local n=tick()
+function d.MakePetFavorite(m)
+local n=g.GameEvents:WaitForChild("Favorite_Item")
+if not d.Favorited(m)then
+local o=5
+local p=tick()
 task.spawn(function()
-while tick()-n<m do
-local o=nil
+while tick()-p<o do
+local q=nil
 
-for p,q in ipairs(e.Backpack:GetChildren())do
-if q:GetAttribute("ItemType")=="Pet"and q:GetAttribute("PET_UUID")==k then
-o=q
+for r,s in ipairs(g.Backpack:GetChildren())do
+if s:GetAttribute("ItemType")=="Pet"and s:GetAttribute("PET_UUID")==m then
+q=s
 break
 end
 end
 
-if not o and e.LocalPlayer.Character then
-for p,q in ipairs(e.LocalPlayer.Character:GetChildren())do
-if q:GetAttribute("ItemType")=="Pet"and q:GetAttribute("PET_UUID")==k then
-o=q
+if not q and g.LocalPlayer.Character then
+for r,s in ipairs(g.LocalPlayer.Character:GetChildren())do
+if s:GetAttribute("ItemType")=="Pet"and s:GetAttribute("PET_UUID")==m then
+q=s
 break
 end
 end
 end
 
-if o then
-l:FireServer(o)
+if q then
+n:FireServer(q)
 task.wait(0.3)
 return true
 end
@@ -1857,30 +1860,30 @@ end
 return false
 end
 
-function b.Weight(k)
-local l=b.RawData(k)
+function d.Weight(m)
+local n=d.RawData(m)
 
-if l and l.PetData then
-return tonumber(l.PetData.BaseWeight)or 1
+if n and n.PetData then
+return tonumber(n.PetData.BaseWeight)or 1
 end
 return 1
 end
 
-function b.HeldPet(k)
+function d.HeldPet(m)
 
-local l=e.Backpack
+local n=g.Backpack
 pcall(function()
-e.Humanoid:UnequipTool()
+g.Humanoid:UnequipTool()
 task.wait(0.1)
 end)
-for m,n in pairs(l:GetChildren())do
-if n:GetAttribute("ItemType")=="Pet"and n:GetAttribute("PET_UUID")==k then
-local o,p=pcall(function()
-e.Humanoid:EquipTool(n)
+for o,p in pairs(n:GetChildren())do
+if p:GetAttribute("ItemType")=="Pet"and p:GetAttribute("PET_UUID")==m then
+local q,r=pcall(function()
+g.Humanoid:EquipTool(p)
 task.wait(0.3)
 return true
 end)
-if o and p then
+if q and r then
 return true
 end
 end
@@ -1888,620 +1891,620 @@ end
 return false
 end
 
-function b.AgeBreak()
-local k=c.Options
+function d.AgeBreak()
+local m=e.Options
 
-if not k.tgAgeBreakEnabled.Value or d.IsAgeBreaking then
+if not m.tgAgeBreakEnabled.Value or f.IsAgeBreaking then
 return
 end
-local l=e.DataService:GetData()
-if not l then
+local n=g.DataService:GetData()
+if not n then
 return
 end
-local m=l.PetAgeBreakMachine
-if not m then
+local o=n.PetAgeBreakMachine
+if not o then
 return
 end
-d.IsAgeBreaking=true
+f.IsAgeBreaking=true
 
-local n=k.ddAgeBreakPetType.Value
-local o=tonumber(k.inpAgeBreakTargetAge.Value)or 115
+local p=m.ddAgeBreakPetType.Value
+local q=tonumber(m.inpAgeBreakTargetAge.Value)or 115
 
-if m.PetReady then
-h=m.SubmittedPet.UUID
-e.GameEvents.PetAgeLimitBreak_Claim:FireServer()
+if o.PetReady then
+j=o.SubmittedPet.UUID
+g.GameEvents.PetAgeLimitBreak_Claim:FireServer()
 task.wait(1.5)
-d.IsAgeBreaking=false
+f.IsAgeBreaking=false
 return
 end
 
-if m.IsRunning then
-h=m.SubmittedPet.UUID
-d.IsAgeBreaking=false
+if o.IsRunning then
+j=o.SubmittedPet.UUID
+f.IsAgeBreaking=false
 return
 end
 
-local p=m.SubmittedPet
-local q=p and type(p)=="table"and p.UUID~=nil
+local r=o.SubmittedPet
+local s=r and type(r)=="table"and r.UUID~=nil
 
-if not q then
-if h then
-local r=b.Level(h)
-if r and r>=o then
-h=nil
+if not s then
+if j then
+local t=d.Level(j)
+if t and t>=q then
+j=nil
 end
 end
 
-if not h then
-h=FindMainPet()
+if not j then
+j=FindMainPet()
 end
 
-if h then
-if b.HeldPet(h)then
+if j then
+if d.HeldPet(j)then
 task.wait(0.1)
-e.GameEvents.PetAgeLimitBreak_SubmitHeld:FireServer()
+g.GameEvents.PetAgeLimitBreak_SubmitHeld:FireServer()
 task.wait(2)
 end
 end
-elseif q and not m.IsRunning then
-local r=p.PetType
-local s=p.PetData.Level
-h=p.UUID
+elseif s and not o.IsRunning then
+local t=r.PetType
+local u=r.PetData.Level
+j=r.UUID
 
-if r~=n or s>=o then
-c.Log("Cancel Pet: "..tostring(r).." Level: "..tostring(s))
-e.GameEvents.PetAgeLimitBreak_Cancel:FireServer()
-h=nil
+if t~=p or u>=q then
+e.Log("Cancel Pet: "..tostring(t).." Level: "..tostring(u))
+g.GameEvents.PetAgeLimitBreak_Cancel:FireServer()
+j=nil
 task.wait(1.5)
-d.IsAgeBreaking=false
+f.IsAgeBreaking=false
 return
 end
-local t=FindDupePet(h,n)
-if t then
-e.GameEvents.PetAgeLimitBreak_Submit:FireServer({t})
+local v=FindDupePet(j,p)
+if v then
+g.GameEvents.PetAgeLimitBreak_Submit:FireServer({v})
 task.wait(2)
 end
 end
 end
-function b.EquipPet(k)
-e.PetsServiceEvent:FireServer("EquipPet",k)
+function d.EquipPet(m)
+g.PetsServiceEvent:FireServer("EquipPet",m)
 end
 
-function b.UnequipPet(k)
-e.PetsServiceEvent:FireServer("UnequipPet",k)
+function d.UnequipPet(m)
+g.PetsServiceEvent:FireServer("UnequipPet",m)
 end
 
-function b.SwapPetLoadout(k)
-if k==2 then
-k=3
-elseif k==3 then
-k=2
+function d.SwapPetLoadout(m)
+if m==2 then
+m=3
+elseif m==3 then
+m=2
 end
-local l=e.DataService:GetData().PetsData.SelectedPetLoadout
-if l==k then
+local n=g.DataService:GetData().PetsData.SelectedPetLoadout
+if n==m then
 return
 end
-e.PetsServiceEvent:FireServer("SwapPetLoadout",k)
+g.PetsServiceEvent:FireServer("SwapPetLoadout",m)
 task.wait(9)
 end
 
-function b.FarmLevel()
-local k=c.Options
-if not k.tgMutantEnabled.Value or d.IsMutating then
+function d.FarmLevel()
+local m=e.Options
+if not m.tgMutantEnabled.Value or f.IsMutating then
 return
 end
 
-f.ClickButton(f.GardenButton)
+h.ClickButton(h.GardenButton)
 task.wait(0.5)
-local l=tonumber(k.ddLevelLoadout.Value)
-b.SwapPetLoadout(l)
+local n=tonumber(m.ddLevelLoadout.Value)
+d.SwapPetLoadout(n)
 
-d.IsMutating=true
-local m,n
+f.IsMutating=true
+local o,p
 
-local o=k.ddMutantMethod.Value::string
+local q=m.ddMutantMethod.Value::string
 
-if o=="Mutation"then
-local p=e.DataService:GetData()
-local q=p.PetMutationMachine
-c.Log("machineData")
-if q then
-c.Log("เจอ machineData")
+if q=="Mutation"then
+local r=g.DataService:GetData()
+local s=r.PetMutationMachine
 
-if q.PetReady then
-c.Log("เจอ PetReady")
-i=q.SubmittedPet.UUID
-d.IsMutating=false
-b.ClaimMutationPet()
+if s then
+
+
+if s.PetReady then
+
+k=s.SubmittedPet.UUID
+f.IsMutating=false
+d.ClaimMutationPet()
 return
 end
 
-if q.IsRunning then
-c.Log("เจอ IsRunning")
-i=q.SubmittedPet.UUID
+if s.IsRunning then
 
-if type(j)=="thread"then
-task.cancel(j)
-j=nil
+k=s.SubmittedPet.UUID
+
+if type(l)=="thread"then
+task.cancel(l)
+l=nil
 end
-j=task.spawn(function()
+l=task.spawn(function()
 while task.wait(60)do
-b.CheckMutantReady()
+d.CheckMutantReady()
 end
 end)
-d.IsMutating=false
+f.IsMutating=false
 return
 end
 
-if q.SubmittedPet and not q.IsRunning then
-c.Log("เจอ SubmittedPet")
-i=q.SubmittedPet.UUID
-e.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
+if s.SubmittedPet and not s.IsRunning then
+
+k=s.SubmittedPet.UUID
+g.GameEvents.PetMutationMachineService_RE:FireServer("CancelMachine")
 task.wait(1)
-d.IsMutating=false
-b.MutatePet()
+f.IsMutating=false
+d.MutatePet()
 return
 end
 end
 end
 
-if i then
-local p=b.RawData(i)
-m=p.PetType
-n=false
-local q=e.PetUtils:GetPetsSortedByAge(e.LocalPlayer,0,true,true)
-if q then
-for r,s in ipairs(q)do
-if s.UUID==i then
-n=true
+if k then
+local r=d.RawData(k)
+o=r.PetType
+p=false
+local s=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
+if s then
+for t,u in ipairs(s)do
+if u.UUID==k then
+p=true
 break
 end
 end
 end
 else
-i,m,n=b.FindFarmPet()
+k,o,p=d.FindFarmPet()
 end
-if not i then
-c.Log("🔴 FarmLevel: No Pet Found")
-d.IsMutating=false
+if not k then
+e.Log("🔴 FarmLevel: No Pet Found")
+f.IsMutating=false
 return
 end
 
-if n then
-c.Log("🔵 FarmLevel: "..tostring(m).." is already equipped")
-d.IsMutating=false
+if p then
+e.Log("🔵 FarmLevel: "..tostring(o).." is already equipped")
+f.IsMutating=false
 return
 end
 
-task.wait(tonumber(k.LoadOutDelay.Value)or 8)
-local p=e.PetUtils:GetPetsSortedByAge(e.LocalPlayer,0,true,true)
-if p and#p>=8 then
-c.Log("🔴 FarmLevel: Equip pet full")
-d.IsMutating=false
+task.wait(tonumber(m.LoadOutDelay.Value)or 8)
+local r=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
+if r and#r>=8 then
+e.Log("🔴 FarmLevel: Equip pet full")
+f.IsMutating=false
 
 return
 end
 
-b.EquipPet(i)
+d.EquipPet(k)
 task.wait(0.1)
-c.Log("🔵 FarmLevel: Found Pet "..tostring(i).." Type: "..tostring(m))
-d.IsMutating=false
+e.Log("🔵 FarmLevel: Found Pet "..tostring(k).." Type: "..tostring(o))
+f.IsMutating=false
 end
 
-function b.FindFarmPet()
-local k=c.Options
-local l=k.ddMutantMethod.Value::string
-local m=k.tgFavoritePet.Value::boolean
-local n=g(k.ddMutantPetType.Value)
-local o=g(k.ddTargetMutant.Value)
-local p=tonumber(k.ddLevelLoadout.Value)
-b.SwapPetLoadout(p)
-local q={}
-if l=="Nightmare"then
-q={"Nightmare"}
-elseif l=="Mutation"then
-q=o
-elseif l=="Level"then
-q={"NONE"}
-elseif l=="Venom"then
-q={"Venom"}
+function d.FindFarmPet()
+local m=e.Options
+local n=m.ddMutantMethod.Value::string
+local o=m.tgFavoritePet.Value::boolean
+local p=i(m.ddMutantPetType.Value)
+local q=i(m.ddTargetMutant.Value)
+local r=tonumber(m.ddLevelLoadout.Value)
+d.SwapPetLoadout(r)
+local s={}
+if n=="Nightmare"then
+s={"Nightmare"}
+elseif n=="Mutation"then
+s=q
+elseif n=="Level"then
+s={"NONE"}
+elseif n=="Venom"then
+s={"Venom"}
 end
 
-local function checkPet(r)
-for s,t in ipairs(r)do
-if not table.find(n,t.PetType)then
+local function checkPet(t)
+for u,v in ipairs(t)do
+if not table.find(p,v.PetType)then
 continue
 end
-local u=t.PetData.IsFavorite or false
-if m~=u then
+local w=v.PetData.IsFavorite or false
+if o~=w then
 continue
 end
-local v=e.EnumToNameCache[t.PetData.MutationType]or"Normal"
-if table.find(q,v)then
+local x=g.EnumToNameCache[v.PetData.MutationType]or"Normal"
+if table.find(s,x)then
 continue
 end
-if l=="Elephant"and tonumber(t.PetData.BaseWeight)>=3.5 and tonumber(t.PetData.Level)>=100 then
+if n=="Elephant"and tonumber(v.PetData.BaseWeight)>=3.5 and tonumber(v.PetData.Level)>=100 then
 continue
 end
-if l=="Level"and tonumber(t.PetData.Level)>=100 then
+if n=="Level"and tonumber(v.PetData.Level)>=100 then
 continue
 end
-return t.UUID,t.PetType
+return v.UUID,v.PetType
 end
 return nil,nil
 end
-task.wait(tonumber(k.LoadOutDelay.Value)or 8)
-local r=e.PetUtils:GetPetsSortedByAge(e.LocalPlayer,0,true,true)
-if r then
-local s,t=checkPet(r)
-if s then
-return s,t,true
-end
-end
-local s=e.PetUtils:GetPetsSortedByAge(e.LocalPlayer,0,true,false)
-if s then
-local t,u=checkPet(s)
+task.wait(tonumber(m.LoadOutDelay.Value)or 8)
+local t=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
 if t then
-return t,u,false
+local u,v=checkPet(t)
+if u then
+return u,v,true
+end
+end
+local u=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,false)
+if u then
+local v,w=checkPet(u)
+if v then
+return v,w,false
 end
 end
 return nil,nil,nil
 end
 
-function b.TargetPetLevelCheck()
-local k=c.Options
-if not k.tgMutantEnabled.Value or d.IsMutating then
+function d.TargetPetLevelCheck()
+local m=e.Options
+if not m.tgMutantEnabled.Value or f.IsMutating then
 return
 end
-d.IsMutating=true
-if not i then
-c.Log("🟠 CheckLevel: No UUID Run FarmLevel()")
-d.IsMutating=false
-b.FarmLevel()
+f.IsMutating=true
+if not k then
+e.Log("🟠 CheckLevel: No UUID Run FarmLevel()")
+f.IsMutating=false
+d.FarmLevel()
 return
 end
 
-local l=tonumber(k.inpMutantTargetAge.Value)or 100
-local m=b.RawData(i)
-if not m or not m.PetData then
+local n=tonumber(m.inpMutantTargetAge.Value)or 100
+local o=d.RawData(k)
+if not o or not o.PetData then
 
-i=nil
-d.IsMutating=false
-b.FarmLevel()
+k=nil
+f.IsMutating=false
+d.FarmLevel()
 return
 end
-c.Log("🔵 CheckLevel: "..tostring(m.PetType).." Level: "..tostring(m.PetData.Level))
-local n=k.ddMutantMethod.Value::string
-local o=e.EnumToNameCache[m.PetData.MutationType]or"Normal"
+e.Log("🔵 CheckLevel: "..tostring(o.PetType).." Level: "..tostring(o.PetData.Level))
+local p=m.ddMutantMethod.Value::string
+local q=g.EnumToNameCache[o.PetData.MutationType]or"Normal"
 
-if n=="Nightmare"then
-if o=="Nightmare"then
-b.UnequipPet(i)
+if p=="Nightmare"then
+if q=="Nightmare"then
+d.UnequipPet(k)
 task.wait(0.5)
-c.Log("🟢 CheckLevel: "..tostring(i).." finished Nightmare")
-c.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
-b.MakePetFavorite(i)
-i=nil
-d.IsMutating=false
-b.FarmLevel()
+e.Log("🟢 CheckLevel: "..tostring(k).." finished Nightmare")
+e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+d.MakePetFavorite(k)
+k=nil
+f.IsMutating=false
+d.FarmLevel()
 return
-elseif o~="Normal"and o~="Nightmare"then
-b.PetShard("Cleansing Pet Shard")
-d.IsMutating=false
+elseif q~="Normal"and q~="Nightmare"then
+d.PetShard("Cleansing Pet Shard")
+f.IsMutating=false
 return
 end
-elseif n=="Venom"then
-if o=="Venom"then
-b.UnequipPet(i)
+elseif p=="Venom"then
+if q=="Venom"then
+d.UnequipPet(k)
 task.wait(0.5)
-c.Log("🟢 CheckLevel: "..tostring(i).." finished Venom")
-c.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
-b.MakePetFavorite(i)
-i=nil
-d.IsMutating=false
-b.FarmLevel()
+e.Log("🟢 CheckLevel: "..tostring(k).." finished Venom")
+e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+d.MakePetFavorite(k)
+k=nil
+f.IsMutating=false
+d.FarmLevel()
 return
 end
-elseif n=="Level"or n=="Elephant"then
-if m.PetData.Level>=l then
-b.UnequipPet(i)
+elseif p=="Level"or p=="Elephant"then
+if o.PetData.Level>=n then
+d.UnequipPet(k)
 task.wait(0.5)
-c.Log("🟢 CheckLevel: "..tostring(i).." finished Level")
-c.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
-b.MakePetFavorite(i)
-i=nil
-d.IsMutating=false
-b.FarmLevel()
+e.Log("🟢 CheckLevel: "..tostring(k).." finished Level")
+e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+d.MakePetFavorite(k)
+k=nil
+f.IsMutating=false
+d.FarmLevel()
 return
 end
-elseif n=="Mutation"then
-local p=e.DataService:GetData()
-local q=p.PetMutationMachine
-if q and(q.SubmittedPet or q.IsRunning or q.PetReady)then
-d.IsMutating=false
+elseif p=="Mutation"then
+local r=g.DataService:GetData()
+local s=r.PetMutationMachine
+if s and(s.SubmittedPet or s.IsRunning or s.PetReady)then
+f.IsMutating=false
 return
 end
-if m.PetData.Level>=l then
-b.UnequipPet(i)
+if o.PetData.Level>=n then
+d.UnequipPet(k)
 task.wait(0.5)
-c.Log("🟢 CheckLevel: "..tostring(i).." go to mutation machine")
-b.MakePetFavorite(i)
-d.IsMutating=false
-b.MutatePet()
+e.Log("🟢 CheckLevel: "..tostring(k).." go to mutation machine")
+d.MakePetFavorite(k)
+f.IsMutating=false
+d.MutatePet()
 return
 end
-d.IsMutating=false
+f.IsMutating=false
 end
-d.IsMutating=false
+f.IsMutating=false
 end
 
-function b.MutatePet()
-local k=c.Options
-if not k.tgMutantEnabled.Value or d.IsMutating then
+function d.MutatePet()
+local m=e.Options
+if not m.tgMutantEnabled.Value or f.IsMutating then
 return
 end
-d.IsMutating=true
-local l=k.ddMutantMethod.Value::string
-if l~="Mutation"then
-c.Log("🟠 MutatePet: Method is not Mutation")
-d.IsMutating=false
-b.FarmLevel()
+f.IsMutating=true
+local n=m.ddMutantMethod.Value::string
+if n~="Mutation"then
+e.Log("🟠 MutatePet: Method is not Mutation")
+f.IsMutating=false
+d.FarmLevel()
 return
 end
-if not i then
-c.Log("🟠 MutatePet: No UUID Run FarmLevel()")
-d.IsMutating=false
-b.FarmLevel()
+if not k then
+e.Log("🟠 MutatePet: No UUID Run FarmLevel()")
+f.IsMutating=false
+d.FarmLevel()
 return
 end
-local m=tonumber(k.ddTimeLoadout.Value)
-b.SwapPetLoadout(m)
-task.wait(tonumber(k.LoadOutDelay.Value)or 8)
-pcall(b.UnequipPet,i)
-e.Character:PivotTo(CFrame.new(-236.17,4.50,14.36))
+local o=tonumber(m.ddTimeLoadout.Value)
+d.SwapPetLoadout(o)
+task.wait(tonumber(m.LoadOutDelay.Value)or 8)
+pcall(d.UnequipPet,k)
+g.Character:PivotTo(CFrame.new(-236.17,4.50,14.36))
 task.wait(0.2)
 
-if b.HeldPet(i)then
+if d.HeldPet(k)then
 task.wait(0.5)
-e.GameEvents.PetMutationMachineService_RE:FireServer("SubmitHeldPet")
+g.GameEvents.PetMutationMachineService_RE:FireServer("SubmitHeldPet")
 task.wait(0.5)
-e.GameEvents.ReplicationChannel:FireServer("PetAssets",b.GetPetType(i))
+g.GameEvents.ReplicationChannel:FireServer("PetAssets",d.GetPetType(k))
 task.wait(1)
-e.GameEvents.PetMutationMachineService_RE:FireServer("StartMachine")
+g.GameEvents.PetMutationMachineService_RE:FireServer("StartMachine")
 
-if type(j)=="thread"then
-task.cancel(j)
-j=nil
+if type(l)=="thread"then
+task.cancel(l)
+l=nil
 end
-j=task.spawn(function()
+l=task.spawn(function()
 while task.wait(60)do
-local n,o=pcall(function()
-b.CheckMutantReady()
+local p,q=pcall(function()
+d.CheckMutantReady()
 end)
-if not n then
-c.Log("CheckMutantReady failed: "..tostring(o))
+if not p then
+e.Log("CheckMutantReady failed: "..tostring(q))
 end
 end
 end)
-d.IsMutating=false
+f.IsMutating=false
 return
 end
-d.IsMutating=false
+f.IsMutating=false
 end
 
-function b.ClaimMutationPet()
-local k=c.Options
-if not k.tgMutantEnabled.Value or d.IsMutating then
+function d.ClaimMutationPet()
+local m=e.Options
+if not m.tgMutantEnabled.Value or f.IsMutating then
 return
 end
-d.IsMutating=true
+f.IsMutating=true
 pcall(function()
-if type(j)=="thread"then
-task.cancel(j)
-j=nil
+if type(l)=="thread"then
+task.cancel(l)
+l=nil
 end
 end)
-c.Log("🟢 ClaimMutationPet: Run ClaimMutationPet")
+e.Log("🟢 ClaimMutationPet: Run ClaimMutationPet")
 
-local l=tonumber(k.ddClaimLoadout.Value)
-b.SwapPetLoadout(l)
-if not i then
-local m=e.DataService:GetData()
-local n=m.PetMutationMachine
-local o=n.SubmittedPet
-if o then
-i=o.UUID
-else
-c.Log("🟠 ClaimMutationPet: No UUID Run FarmLevel() and MutatePet() first")
-i=nil
-d.IsMutating=false
-b.FarmLevel()
-return
-end
-end
-task.wait(tonumber(k.LoadOutDelay.Value)or 8)
-e.GameEvents.PetMutationMachineService_RE:FireServer("ClaimMutatedPet")
-task.wait(1.5)
-local m=b.RawData(i)
-if not m or not m.PetData then
-c.Log("🟠 ClaimMutationPet: รอข้อมูล Pet จาก Server...")
-task.wait(1)
-m=b.RawData(i)
-if not m or not m.PetData then
-c.Log("🔴 ClaimMutationPet: โหลดข้อมูลล้มเหลว รัน FarmLevel ใหม่")
-d.IsMutating=false
-b.FarmLevel()
-return
-end
-end
-local n=g(k.ddTargetMutant.Value)
-local o=e.EnumToNameCache[m.PetData.MutationType]
-if table.find(n,o)then
-c.Log("🟢 ClaimMutationPet: "..tostring(i).." finished Mutation : "..tostring(o))
-c.Log("🟣 ClaimMutationPet: Run FarmLevel() to get new Pet")
-i=nil
-d.IsMutating=false
-b.FarmLevel()
-return
-else
-c.Log("🔴 ClaimMutationPet: "..tostring(i).." finished Mutation : "..tostring(o))
-c.Log("🟣 ClaimMutationPet: Rerun FarmLevel() UUID : "..tostring(i))
-d.IsMutating=false
-b.FarmLevel()
-return
-end
-end
-
-function b.CheckMutantReady()
-local k=e.DataService:GetData()
-local l=k.PetMutationMachine
-c.Log("🔵 CheckMutantReady: "..tostring(l.PetReady))
-if l.PetReady then
-i=l.SubmittedPet.UUID
-d.IsMutating=false
-c.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
-task.spawn(function()
-local m,n=pcall(function()
-b.ClaimMutationPet()
-end)
-if not m then
-c.Log("ClaimMutationPet failed: "..tostring(n))
-end
-end)
-return
-end
-end
-
-function b.PetShard(k)
-local l=e.Backpack
-local m=f.FindToolByPattern(l,k)
-if m then
-local n=e.Workspace:WaitForChild("PetsPhysical")
-for o,p in ipairs(n:GetChildren())do
-local q=p:FindFirstChild(i)
-if q then
-f.EquipTool(m)
-task.wait(0.5)
-local r,s=pcall(function()
-e.PetShardService_RE:FireServer("ApplyShard",q)
-end)
-if not r then
-c.Log("ApplyShard failed: "..tostring(s))
-end
-task.wait(1)
-f.UnequipTool()
-return
-end
-end
-end
-end
-
-function b.FeedPets()
-local k=c.Options
-if not k.tgFeedPetsEnabled.Value or d.IsFeeding then
-return
-end
-d.IsFeeding=true
-local l=tonumber(k.inpFeedPetsHunger.Value)or 50
-local m=e.PetUtils:GetPetsSortedByAge(e.LocalPlayer,0,true,true)
-local n=e.Backpack
-local o=g(k.ddFeedCropsType.Value)
-if m and#m>0 then
-for p,q in ipairs(m)do
-local r=q.PetType
-local s=q.UUID
-local t=e.HungerDataTable[r]or 10000
-local u=100*(q.PetData.Hunger/t)
-if u<=l then
-for v,w in ipairs(n:GetChildren())do
-local x=w:GetAttribute("b")
-if x=="j"or x=="u"then
-local y=w:GetAttribute("f")
-local z=w:GetAttribute("d")
-if y and(table.find(o,"ALL")or table.find(o,y))and not z then
-f.EquipTool(w)
-task.wait(0.5)
-local A,B=pcall(function()
-e.GameEvents:WaitForChild("ActivePetService"):FireServer("Feed",s)
-end)
-if not A then
-c.Log("FeedPet failed: "..tostring(B))
-end
-task.wait(1)
-break
-end
-end
-end
-end
-end
-end
-d.IsFeeding=false
-end
-
-function b.EggInFarm()
-local k=f.GetObjectsFolder()
+local n=tonumber(m.ddClaimLoadout.Value)
+d.SwapPetLoadout(n)
 if not k then
-return
-end
-local l={}
-for m,n in ipairs(k:GetChildren())do
-if n and n:GetAttribute("OBJECT_TYPE")=="PetEgg"then
-table.insert(l,n)
-end
-end
-return l
-end
-
-function b.PlaceEggs()
-local k=c.Options
-if not k.tgPlaceEggsEn or not k.tgPlaceEggsEn.Value then
-return
-end
-
-local l=g(k.ddPlaceEgg.Value)
-if#l==0 then
-c.Log("🟠 PlaceEggs: No Egg Selected")
-return
-end
-local m=tonumber(k.ipMaxEggs.Value)
-if m==0 then
-c.Log("🟠 PlaceEggs: Max Egg must be greater than 0")
-return
-end
-local n=tonumber(k.ddSpeedLoadout.Value)or 1
-pcall(b.SwapPetLoadout,n)
-local o=tonumber(k.ddPlaceSlot.Value)or 1
-local p=k.ddPlaceMethod.Value
-local q
-local r
-
-if p=="Set"then
-q=f.GetSetPlotPos(o)
-r=q[1]
+local o=g.DataService:GetData()
+local p=o.PetMutationMachine
+local q=p.SubmittedPet
+if q then
+k=q.UUID
 else
-r=f.GetRandomPlotPos()
+e.Log("🟠 ClaimMutationPet: No UUID Run FarmLevel() and MutatePet() first")
+k=nil
+f.IsMutating=false
+d.FarmLevel()
+return
 end
-local s=Random.new()
-while k.tgPlaceEggsEn.Value do
-local t=b.EggInFarm()
-if t and type(t)=="table"and#t<m then
-local u=l[s:NextInteger(1,#l)]
-local v=f.FindToolByPattern(e.Backpack,u)
-f.EquipTool(v)
-task.wait(0.3)
-
-local w=vector.create(r.Position.X,0.1355266571044922,r.Position.Z)
-c.Log("PlaceEgg: "..tostring(w))
-
-e.PetEggService:FireServer("CreateEgg",w)
-task.wait(0.3)
-if p=="Set"then
-q=f.GetSetPlotPos(q[2],q[3],q[4])
-r=q[1]
+end
+task.wait(tonumber(m.LoadOutDelay.Value)or 8)
+g.GameEvents.PetMutationMachineService_RE:FireServer("ClaimMutatedPet")
+task.wait(1.5)
+local o=d.RawData(k)
+if not o or not o.PetData then
+e.Log("🟠 ClaimMutationPet: รอข้อมูล Pet จาก Server...")
+task.wait(1)
+o=d.RawData(k)
+if not o or not o.PetData then
+e.Log("🔴 ClaimMutationPet: โหลดข้อมูลล้มเหลว รัน FarmLevel ใหม่")
+f.IsMutating=false
+d.FarmLevel()
+return
+end
+end
+local p=i(m.ddTargetMutant.Value)
+local q=g.EnumToNameCache[o.PetData.MutationType]
+if table.find(p,q)then
+e.Log("🟢 ClaimMutationPet: "..tostring(k).." finished Mutation : "..tostring(q))
+e.Log("🟣 ClaimMutationPet: Run FarmLevel() to get new Pet")
+k=nil
+f.IsMutating=false
+d.FarmLevel()
+return
 else
-r=f.GetRandomPlotPos()
+e.Log("🔴 ClaimMutationPet: "..tostring(k).." finished Mutation : "..tostring(q))
+e.Log("🟣 ClaimMutationPet: Rerun FarmLevel() UUID : "..tostring(k))
+f.IsMutating=false
+d.FarmLevel()
+return
 end
-f.UnequipTool()
+end
+
+function d.CheckMutantReady()
+local m=g.DataService:GetData()
+local n=m.PetMutationMachine
+e.Log("🔵 CheckMutantReady: "..tostring(n.PetReady))
+if n.PetReady then
+k=n.SubmittedPet.UUID
+f.IsMutating=false
+e.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
+task.spawn(function()
+local o,p=pcall(function()
+d.ClaimMutationPet()
+end)
+if not o then
+e.Log("ClaimMutationPet failed: "..tostring(p))
+end
+end)
+return
+end
+end
+
+function d.PetShard(m)
+local n=g.Backpack
+local o=h.FindToolByPattern(n,m)
+if o then
+local p=g.Workspace:WaitForChild("PetsPhysical")
+for q,r in ipairs(p:GetChildren())do
+local s=r:FindFirstChild(k)
+if s then
+h.EquipTool(o)
+task.wait(0.5)
+local t,u=pcall(function()
+g.PetShardService_RE:FireServer("ApplyShard",s)
+end)
+if not t then
+e.Log("ApplyShard failed: "..tostring(u))
+end
+task.wait(1)
+h.UnequipTool()
+return
+end
+end
+end
+end
+
+function d.FeedPets()
+local m=e.Options
+if not m.tgFeedPetsEnabled.Value or f.IsFeeding then
+return
+end
+f.IsFeeding=true
+local n=tonumber(m.inpFeedPetsHunger.Value)or 50
+local o=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
+local p=g.Backpack
+local q=i(m.ddFeedCropsType.Value)
+if o and#o>0 then
+for r,s in ipairs(o)do
+local t=s.PetType
+local u=s.UUID
+local v=g.HungerDataTable[t]or 10000
+local w=100*(s.PetData.Hunger/v)
+if w<=n then
+for x,y in ipairs(p:GetChildren())do
+local z=y:GetAttribute("b")
+if z=="j"or z=="u"then
+local A=y:GetAttribute("f")
+local B=y:GetAttribute("d")
+if A and(table.find(q,"ALL")or table.find(q,A))and not B then
+h.EquipTool(y)
+task.wait(0.5)
+local C,D=pcall(function()
+g.GameEvents:WaitForChild("ActivePetService"):FireServer("Feed",u)
+end)
+if not C then
+e.Log("FeedPet failed: "..tostring(D))
+end
+task.wait(1)
+break
+end
+end
+end
+end
+end
+end
+f.IsFeeding=false
+end
+
+function d.EggInFarm()
+local m=h.GetObjectsFolder()
+if not m then
+return
+end
+local n={}
+for o,p in ipairs(m:GetChildren())do
+if p and p:GetAttribute("OBJECT_TYPE")=="PetEgg"then
+table.insert(n,p)
+end
+end
+return n
+end
+
+function d.PlaceEggs()
+local m=e.Options
+if not m.tgPlaceEggsEn or not m.tgPlaceEggsEn.Value then
+return
+end
+
+local n=i(m.ddPlaceEgg.Value)
+if#n==0 then
+e.Log("🟠 PlaceEggs: No Egg Selected")
+return
+end
+local o=tonumber(m.ipMaxEggs.Value)
+if o==0 then
+e.Log("🟠 PlaceEggs: Max Egg must be greater than 0")
+return
+end
+local p=tonumber(m.ddSpeedLoadout.Value)or 1
+pcall(d.SwapPetLoadout,p)
+local q=tonumber(m.ddPlaceSlot.Value)or 1
+local r=m.ddPlaceMethod.Value
+local s
+local t
+
+if r=="Set"then
+s=h.GetSetPlotPos(q)
+t=s[1]
+else
+t=h.GetRandomPlotPos()
+end
+local u=Random.new()
+while m.tgPlaceEggsEn.Value do
+local v=d.EggInFarm()
+if v and type(v)=="table"and#v<o then
+local w=n[u:NextInteger(1,#n)]
+local x=h.FindToolByPattern(g.Backpack,w)
+h.EquipTool(x)
+task.wait(0.2)
+
+local y=vector.create(t.Position.X,0.1355266571044922,t.Position.Z)
+
+
+g.PetEggService:FireServer("CreateEgg",y)
+task.wait(0.2)
+if r=="Set"then
+s=h.GetSetPlotPos(s[2],s[3],s[4])
+t=s[1]
+else
+t=h.GetRandomPlotPos()
+end
+h.UnequipTool()
 task.wait(0.1)
 else
 break
@@ -2510,83 +2513,81 @@ task.wait(0.1)
 end
 end
 
-local function ValidEggs(k,l)
-local m=c.Options
-local n=g(m.ddSpecialHatchPet.Value)or{}
-local o=tonumber(m.inpSpecialHatchWeight.Value)or 3.5
+local function ValidEggs(m,n)
+local o=e.Options
+local p=i(o.ddSpecialHatchPet.Value)or{}
+local q=tonumber(o.inpSpecialHatchWeight.Value)or 3.5
 
-local p={}
-local q={}
-if not k or not l then
+local r={}
+local s={}
+if not m or not n then
 return nil,nil
 end
 
-for r,s in l do
-local t=k[s:GetAttribute("OBJECT_UUID")]
-if t then
-local u=t.Data.BaseWeight*1.1
-local v=t.Data.Type
-if o~=0 and u>=o then
-table.insert(p,s)
-elseif#n>0 and table.find(n,v)then
-table.insert(p,s)
+for t,u in n do
+local v=m[u:GetAttribute("OBJECT_UUID")]
+if v then
+local w=v.Data.BaseWeight*1.1
+local x=v.Data.Type
+if(q~=0 and w>=q)or(#p>0 and table.find(p,x))then
+table.insert(r,u)
 else
-table.insert(q,s)
+table.insert(s,u)
 end
 end
 end
-return q,p
+return s,r
 end
 
-function b.HatchEgg()
-local k=c.Options
-if not k.tgAutoHatchEn or not k.tgAutoHatchEn.Value then
+function d.HatchEgg()
+local m=e.Options
+if not m.tgAutoHatchEn or not m.tgAutoHatchEn.Value then
 return
 end
 
-while k.tgAutoHatchEn.Value do
-local l=e.DataService:GetData()
-local m={}
-local n={}
-local o=b.EggInFarm()
-local p=l.SaveSlots.SelectedSlot
-local q=l.SaveSlots.AllSlots[p].SavedObjects
-if not q or type(q)~="table"then
+while m.tgAutoHatchEn.Value do
+local n=g.DataService:GetData()
+local o={}
+local p={}
+local q=d.EggInFarm()
+local r=n.SaveSlots.SelectedSlot
+local s=n.SaveSlots.AllSlots[r].SavedObjects
+if not s or type(s)~="table"then
 task.wait(5)
 continue
 end
-local r=0
-for s,t in pairs(q)do
-if t.ObjectType=="PetEgg"then
-n[s]=t
-r=r+1
+local t=0
+for u,v in pairs(s)do
+if v.ObjectType=="PetEgg"then
+p[u]=v
+t=t+1
 end
 end
 
-for s,t in pairs(o)do
-if t:GetAttribute("READY")==true then
-table.insert(m,t)
+for u,v in pairs(q)do
+if v:GetAttribute("READY")==true then
+table.insert(o,v)
 end
 end
 
-if r~=#m then
+if t~=#o then
 task.wait(5)
 continue
 end
-local s,t=ValidEggs(n,m)
+local u,v=ValidEggs(p,o)
 
-if#t>0 then
-pcall(b.SwapPetLoadout,tonumber(k.ddSpecialHatchLoadout.Value)or 4)
-for u,v in pairs(t)do
-e.PetEggService:FireServer("HatchPet",v)
+if#v>0 then
+pcall(d.SwapPetLoadout,tonumber(m.ddSpecialHatchLoadout.Value)or 4)
+for w,x in pairs(v)do
+g.PetEggService:FireServer("HatchPet",x)
 task.wait(0.2)
 end
 end
 task.wait(2)
-if#s>0 then
-pcall(b.SwapPetLoadout,tonumber(k.ddHatchLoadout.Value)or 2)
-for u,v in pairs(s)do
-e.PetEggService:FireServer("HatchPet",v)
+if#u>0 then
+pcall(d.SwapPetLoadout,tonumber(m.ddHatchLoadout.Value)or 2)
+for w,x in pairs(u)do
+g.PetEggService:FireServer("HatchPet",x)
 task.wait(0.2)
 end
 end
@@ -2595,112 +2596,250 @@ break
 end
 end
 
-local function IsValidSellPet(k)
-if not k or type(k)~="table"then
+local function IsValidSellPet(m)
+if not m or type(m)~="table"then
 return false
 end
-local l=c.Options
-local m=g(l.ddSellPet.Value)
-local n=l.ddSellPetThreshold.Value
-local o=tonumber(l.inpSellPetWeight.Value)
+local n=e.Options
+local o=i(n.ddSellPet.Value)
+local p=n.ddSellPetThreshold.Value
+local q=tonumber(n.inpSellPetWeight.Value)
 
-local p=k.PetType
-local q=k.PetData.BaseWeight
-local r=k.PetData.MutationType or"m"
-local s=k.PetData.IsFavorite
-if s then
+local r=m.PetType
+local s=m.PetData.BaseWeight
+local t=m.PetData.MutationType or"m"
+
+local u=m.PetData.IsFavorite
+if u then
 return false
 end
-if r~="m"then
+if t~="m"then
 return false
 end
-if not table.find(m,p)then
+if not table.find(o,r)then
 return false
 end
-if o>0 then
-if n=="Below"and q>=o then
+if q>0 then
+if p=="Below"and s>=q then
 return false
 end
-if n=="Above"and q<=o then
+if p=="Above"and s<=q then
 return false
 end
 end
 return true
 end
 local function scanSellPetList()
-local k={}
-local l=e.DataService:GetData()
-local m=l.PetsData.PetInventory
-if m then
-for n,o in pairs(m)do
-if type(o)=="table"then
+local m={}
+local n=g.DataService:GetData()
+local o=n.PetsData.PetInventory
+if o then
 for p,q in pairs(o)do
-if type(q)=="table"and IsValidSellPet(q)then
-table.insert(k,q.UUID)
+if type(q)=="table"then
+for r,s in pairs(q)do
+if type(s)=="table"and IsValidSellPet(s)then
+table.insert(m,s.UUID)
 end
 end
 end
 end
 end
-return k
+return m
 end
-function b.SellPet()
-local k=c.Options
-if not k.tgSellPetEn or not k.tgSellPetEn.Value then
+function d.SellPet()
+local m=e.Options
+if not m.tgSellPetEn or not m.tgSellPetEn.Value then
 return
 end
 
-local l=scanSellPetList()
-if#l>0 then
-pcall(b.SwapPetLoadout,tonumber(k.ddSellLoadout.Value)or 3)
-for m,n in pairs(l)do
-if b.HeldPet(n)then
+local n=scanSellPetList()
+if#n>0 then
+pcall(d.SwapPetLoadout,tonumber(m.ddSellLoadout.Value)or 3)
+for o,p in pairs(n)do
+if d.HeldPet(p)then
 task.wait()
-e.GameEvents:WaitForChild("SellPet_RE"):FireServer()
+g.GameEvents:WaitForChild("SellPet_RE"):FireServer()
 end
 task.wait(0.2)
 end
 end
 end
-local k=nil
-function b.RunHatchSet()
-local l=c.Options
+local m=nil
+function d.RunHatchSet()
+local n=e.Options
 
-if not k then
-k=task.spawn(function()
+if not m then
+m=task.spawn(function()
 while true do
 pcall(function()
-local m=l.inpDelayPlaceEgg and tonumber(l.inpDelayPlaceEgg.Value)or 2
-local n=l.inpDelayHatchEgg and tonumber(l.inpDelayHatchEgg.Value)or 2
-local o=l.inpDelaySellPet and tonumber(l.inpDelaySellPet.Value)or 2
-task.wait(m)
-b.PlaceEggs()
-
-task.wait(n)
-b.HatchEgg()
-
+local o=n.inpDelayPlaceEgg and tonumber(n.inpDelayPlaceEgg.Value)or 2
+local p=n.inpDelayHatchEgg and tonumber(n.inpDelayHatchEgg.Value)or 2
+local q=n.inpDelaySellPet and tonumber(n.inpDelaySellPet.Value)or 2
 task.wait(o)
-b.SellPet()
+d.PlaceEggs()
+
+task.wait(p)
+d.HatchEgg()
+
+task.wait(q)
+d.SellPet()
 end)
 task.wait(1)
 end
 end)
 end
-local m=l.tgPlaceEggsEn and l.tgPlaceEggsEn.Value
-local n=l.tgAutoHatchEn and l.tgAutoHatchEn.Value
-local o=l.tgSellPetEn and l.tgSellPetEn.Value
+local o=n.tgPlaceEggsEn and n.tgPlaceEggsEn.Value
+local p=n.tgAutoHatchEn and n.tgAutoHatchEn.Value
+local q=n.tgSellPetEn and n.tgSellPetEn.Value
 
-if not(m or n or o)then
+if not(o or p or q)then
 pcall(function()
-if k then
-task.cancel(k)
-k=nil
+if m then
+task.cancel(m)
+m=nil
 end
 end)
 end
 end
 
-return b end function a.h():typeof(__modImpl())local b=a.cache.h if not b then b={c=__modImpl()}a.cache.h=b end return b.c end end do local function __modImpl()
+local function IsValidGiftPet(n)
+if not n or type(n)~="table"then
+return false
+end
+local o=e.Options
+
+local p=i(o.ddGiftPet.Value)
+local q=o.ddGiftPetThreshold.Value
+local r=tonumber(o.inpGiftPetWeight.Value)
+local s=i(o.ddGiftPetMutant.Value)
+
+local t=n.PetType
+local u=n.PetData.BaseWeight
+local v=g.EnumToNameCache[n.PetData.MutationType]or"Normal"
+local w=n.PetData.IsFavorite
+if w then
+return false
+end
+if not table.find(p,t)then
+return false
+end
+if r>0 then
+if q=="Below"and u>=r then
+return false
+end
+if q=="Above"and u<=r then
+return false
+end
+end
+if not table.find(s,"ALL")and not table.find(s,v)then
+return false
+end
+
+return true
+end
+
+function d.GiftPets()
+local n=e.Options
+if not n.tgGiftPetEn or not n.tgGiftPetEn.Value then
+return
+end
+local o=n.ddGiftFriends.Value
+local p=i(n.ddGiftPet.Value)
+local q=tonumber(n.inpGiftPetWeight.Value)
+if not o or o==""then
+e.Log("Invalid Friend Name")
+return
+end
+if not p or#p==0 then
+e.Log("Invalid Gift Pet Settings")
+return
+end
+
+local r=game:GetService("Players"):FindFirstChild(o)
+if not r then
+e.Log("Invalid Friend Name")
+return
+end
+
+if q==nil or type(q)~="number"then
+e.Log("Invalid Base Weight")
+return
+end
+
+local s=g.DataService:GetData()
+local t=s and s.PetsData and s.PetsData.PetInventory
+if t then
+for u,v in pairs(t)do
+if type(v)=="table"then
+for w,x in pairs(v)do
+if type(x)=="table"then
+if IsValidGiftPet(x)then
+local y=x.UUID or w
+if d.HeldPet(y)then
+local z={
+"GivePet",
+r,
+}
+g.GameEvents:WaitForChild("PetGiftingService"):FireServer(unpack(z))
+task.wait(7)
+end
+end
+end
+end
+end
+end
+end
+end
+local n=nil
+
+function d.AcceptGiftPets(o)
+local p=g.PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
+if o then
+
+
+if n then
+return
+end
+
+n=p.ChildAdded:Connect(function(q)
+task.spawn(function()
+task.wait(2)
+
+pcall(function()
+
+for r,s in pairs(p:GetChildren())do
+if s.Name=="Gift_Notification"then
+local t=s.Holder.Frame.Accept
+print("Accept Button Found",t)
+if c then
+c(t.MouseButton1Click)
+c(t.Activated)
+elseif b then
+for u,v in pairs(b(t.MouseButton1Click))do
+print("Accept Button Connection",v)
+if v.Fire then
+v:Fire()
+else
+v.Function()
+end
+end
+end
+end
+end
+end)
+end)
+end)
+else
+pcall(function()
+if n then
+n:Disconnect()
+n=nil
+end
+end)
+end
+end
+
+return d end function a.h():typeof(__modImpl())local b=a.cache.h if not b then b={c=__modImpl()}a.cache.h=b end return b.c end end do local function __modImpl()
 
 local b=game:GetService("ReplicatedStorage")
 local c=require(b:WaitForChild("Item_Module")::any)
@@ -3106,6 +3245,8 @@ K.RichText=true
 K.TextSize=16
 K.Font=Enum.Font.FredokaOne
 K.Text=D
+K.TextStrokeTransparency=0.3
+K.TextStrokeColor3=Color3.fromRGB(50,50,50)
 
 if H then
 local L=Instance.new("TextLabel")
@@ -3122,6 +3263,8 @@ L.TextSize=14
 L.Text=E
 L.Font=Enum.Font.FredokaOne
 L.TextColor3=Color3.fromRGB(200,200,200)
+L.TextStrokeTransparency=0.3
+L.TextStrokeColor3=Color3.fromRGB(50,50,50)
 end
 
 if G==3 then
@@ -3525,7 +3668,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.20-15.15",
+SubTitle="2569.04.24-18.40",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -4798,6 +4941,101 @@ Default=2,
 Numeric=true,
 Finished=true,
 Callback=function()
+i()
+end,
+})
+
+
+local r=g.Pets:AddCollapsibleSection("Gift Pets",false)
+
+r:AddButton({
+Title="Refresh Gift Friends",
+Callback=function()
+local s=game:GetService("Players")
+local t=s.LocalPlayer
+local u=s:GetPlayers()
+local v={}
+for w,x in ipairs(u)do
+if x.Name~=t.Name then
+table.insert(v,x.Name)
+end
+end
+h.ddGiftFriends:SetValues(v)
+end,
+})
+r:AddDropdown("ddGiftFriends",{
+Title="Select Friends",
+Values={},
+Default="",
+Callback=function()
+i()
+end,
+})
+
+r:AddButton({
+Title="Clear Selected Gift Pet",
+Callback=function()
+h.ddGiftPet:SetValue({})
+end,
+})
+
+r:AddDropdown("ddGiftPet",{
+Title="Select Gift Pet Type",
+Values=j.PetsDataTable,
+Default={},
+Multi=true,
+Searchable=true,
+Callback=function()
+i()
+end,
+})
+local s=table.clone(j.PetMutationDataTable)
+table.insert(s,2,"ALL")
+r:AddDropdown("ddGiftPetMutant",{
+Title="Select Mutant Pet",
+Values=s,
+Default={"ALL"},
+Multi=true,
+Searchable=true,
+Callback=function()
+i()
+end,
+})
+r:AddDropdown("ddGiftPetThreshold",{
+Title="Select Weight Threshold",
+Values={"Below","Above"},
+Default="Below",
+Callback=function()
+i()
+end,
+})
+r:AddInput("inpGiftPetWeight",{
+Title="Base Weight",
+Default=0,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+r:AddToggle("tgGiftPetEn",{
+Title="Enable Auto Gift Pet",
+Default=false,
+Callback=function(t)
+k.ToggleTask("GiftPet",t,function()
+l.GiftPets()
+task.wait(1)
+end)
+i()
+end,
+})
+r:AddDivider()
+
+r:AddToggle("tgAcceptGiftPetsEn",{
+Title="Enable Auto Accept Gift Pet",
+Default=false,
+Callback=function(t)
+l.AcceptGiftPets(t)
 i()
 end,
 })
