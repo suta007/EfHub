@@ -32,6 +32,7 @@ function ShopTab.Initialize(Registry)
 				local notiStr = args[1]
 				task.spawn(function()
 					if notiStr:find("restocked") then
+						task.wait(0.15)
 						local GetData_result = sData.DataService:GetData()
 						if notiStr:find("seed") then
 							local SeedStocks = GetData_result.SeedStocks.Shop.Stocks
