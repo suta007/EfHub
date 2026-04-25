@@ -43,7 +43,7 @@ function ShopTab.Initialize(Registry)
 							if not Utils.IsTableEmpty(GearStocks) then
 								Shop.BuyItem(Shop.ShopKey.Gear, GearStocks)
 							end
-						elseif notiStr:find("egg") then
+						elseif notiStr:find("Egg") then
 							local EggStocks = GetData_result.PetEggStock.Stocks
 							if not Utils.IsTableEmpty(EggStocks) then
 								Shop.BuyItem(Shop.ShopKey.Egg, EggStocks)
