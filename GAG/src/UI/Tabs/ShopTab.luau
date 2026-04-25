@@ -30,25 +30,27 @@ function ShopTab.Initialize(Registry)
 			adminAbuseConn = Notification.OnClientEvent:Connect(function(...)
 				local args = { ... }
 				local notiStr = args[1]
-				if notiStr:find("restocked") then
-					local GetData_result = sData.DataService:GetData()
-					if notiStr:find("seed") then
-						local SeedStocks = GetData_result.SeedStocks.Shop.Stocks
-						if not Utils.IsTableEmpty(SeedStocks) then
-							Shop.BuyItem(Shop.ShopKey.Seed, SeedStocks)
-						end
-					elseif notiStr:find("gear") then
-						local GearStocks = GetData_result.GearStock.Stocks
-						if not Utils.IsTableEmpty(GearStocks) then
-							Shop.BuyItem(Shop.ShopKey.Gear, GearStocks)
-						end
-					elseif notiStr:find("egg") then
-						local EggStocks = GetData_result.PetEggStock.Stocks
-						if not Utils.IsTableEmpty(EggStocks) then
-							Shop.BuyItem(Shop.ShopKey.Egg, EggStocks)
+				task.spawn(function()
+					if notiStr:find("restocked") then
+						local GetData_result = sData.DataService:GetData()
+						if notiStr:find("seed") then
+							local SeedStocks = GetData_result.SeedStocks.Shop.Stocks
+							if not Utils.IsTableEmpty(SeedStocks) then
+								Shop.BuyItem(Shop.ShopKey.Seed, SeedStocks)
+							end
+						elseif notiStr:find("gear") then
+							local GearStocks = GetData_result.GearStock.Stocks
+							if not Utils.IsTableEmpty(GearStocks) then
+								Shop.BuyItem(Shop.ShopKey.Gear, GearStocks)
+							end
+						elseif notiStr:find("egg") then
+							local EggStocks = GetData_result.PetEggStock.Stocks
+							if not Utils.IsTableEmpty(EggStocks) then
+								Shop.BuyItem(Shop.ShopKey.Egg, EggStocks)
+							end
 						end
 					end
-				end
+				end)
 			end)
 		end
 	end

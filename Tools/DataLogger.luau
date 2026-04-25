@@ -113,50 +113,6 @@ end
 AddLog("Script initialized successfully.")
 task.wait(0.5)
 
-pcall(function()
-	local playerGui = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-	local targetUI = playerGui:FindFirstChild("Gift_Notification")
-
-	if targetUI then
-		AddLog("🔍 เริ่มสแกนหาปุ่มที่ซ่อนสคริปต์ใน: " .. tostring(targetUI.Name))
-		local foundScript = false
-
-		-- ค้นหาทุกชิ้นส่วนที่อยู่ข้างใน (รวมถึงลูกหลานทั้งหมด)
-		for _, obj in pairs(targetUI:GetDescendants()) do
-			-- กรณีที่ 1: เป็นปุ่ม (TextButton, ImageButton)
-			if obj:IsA("GuiButton") and getconnections then
-				local clickConns = getconnections(obj.MouseButton1Click)
-				local actConns = getconnections(obj.Activated)
-
-				if #clickConns > 0 then
-					AddLog("🎯 เจอแล้ว! [MouseButton1Click] อยู่ที่: " .. tostring(clickConns.Function))
-					foundScript = true
-				end
-				if #actConns > 0 then
-					AddLog("🎯 เจอแล้ว! [Activated] อยู่ที่: " .. tostring(actConns.Function))
-					foundScript = true
-				end
-			end
-
-			-- กรณีที่ 2: เป็น Frame หรือรูปภาพ แต่ใช้ InputBegan ดักจับ
-			if (obj:IsA("Frame") or obj:IsA("ImageLabel")) and getconnections then
-				local inputConns = getconnections(obj.InputBegan)
-				if #inputConns > 0 then
-					AddLog("🕵️ น่าสงสัย! มี [InputBegan] ซ่อนอยู่ที่: " .. tostring(inputConns.Function))
-					foundScript = true
-				end
-			end
-		end
-
-		if not foundScript then
-			AddLog("❌ ไม่พบ Event กดปุ่มใดๆ ใน UI นี้เลย (อาจจะใช้ระบบคลิกจากหน้าจอรวมแทน)")
-		end
-		AddLog("✅ สแกนเสร็จสิ้น!")
-	else
-		AddLog("❌ หากล่องของขวัญไม่เจอ กรุณารันตอนกล่องเปิดอยู่ค่ะ")
-	end
-end)
-
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
 	local spacing = string.rep("  ", lclIndent)
