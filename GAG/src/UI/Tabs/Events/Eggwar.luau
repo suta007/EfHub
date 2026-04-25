@@ -59,7 +59,7 @@ function Eggwar.checktime()
 		return
 	end
 	local currentMinute = os.date("!*t").min
-	if currentMinute < 2 then
+	if currentMinute < 3 then
 		if not isWarLaunched then
 			isWarLaunched = true
 			Eggwar.autoEggwar()

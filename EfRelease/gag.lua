@@ -906,12 +906,21 @@ SeasonPass="SeasonPass/"..h.."/Stocks",
 
 for i,j in pairs(b.ShopKey)do
 local k=e.DataService:GetPathSignal(j.."/@")
+local l=e.DataService:GetPathSignal(j)
 
-k:Connect(function(l,m)
-if type(m)=="table"then
+k:Connect(function(m,n)
+if type(n)=="table"then
 task.spawn(function()
 task.wait(0.5)
-b.BuyItem(j,m)
+b.BuyItem(j,n)
+end)
+end
+end)
+l:Connect(function(m,n)
+if type(n)=="table"then
+task.spawn(function()
+task.wait(0.5)
+b.BuyItem(j,n)
 end)
 end
 end)
@@ -2108,6 +2117,8 @@ elseif n=="Level"then
 s={"NONE"}
 elseif n=="Venom"then
 s={"Venom"}
+elseif n=="Everchanted"then
+s={"Everchanted"}
 end
 
 local function checkPet(t)
@@ -2198,6 +2209,18 @@ if q=="Venom"then
 d.UnequipPet(k)
 task.wait(0.5)
 e.Log("🟢 CheckLevel: "..tostring(k).." finished Venom")
+e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+d.MakePetFavorite(k)
+k=nil
+f.IsMutating=false
+d.FarmLevel()
+return
+end
+elseif p=="Everchanted"then
+if q=="Everchanted"and(o.PetData.Level>=n or n==0)then
+d.UnequipPet(k)
+task.wait(0.5)
+e.Log("🟢 CheckLevel: "..tostring(k).." finished Everchanted")
 e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 d.MakePetFavorite(k)
 k=nil
@@ -3668,7 +3691,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.24-18.40",
+SubTitle="2569.04.25-19.00",
 TabWidth=100,
 Size=UDim2.fromOffset(600,340),
 Resize=false,
@@ -4163,44 +4186,75 @@ local l=c.Utils
 k.UIShopLoaded=false
 
 f.Shop=e:AddTab({Title="Shop",Icon="shopping-cart"})
+local m=nil
+local function BuyAdminAbuse(n)
+pcall(function()
+if m then
+m:Disconnect()
+m=nil
+end
+end)
+if n then
+local o=game:GetService("ReplicatedStorage")
+local p=o.GameEvents.Notification
+
+m=p.OnClientEvent:Connect(function(...)
+local q={...}
+local r=q[1]
+task.spawn(function()
+if r:find("restocked")then
+task.wait(0.15)
+local s=i.DataService:GetData()
+if r:find("seed")then
+local t=s.SeedStocks.Shop.Stocks
+if not l.IsTableEmpty(t)then
+j.BuyItem(j.ShopKey.Seed,t)
+end
+elseif r:find("gear")then
+local t=s.GearStock.Stocks
+if not l.IsTableEmpty(t)then
+j.BuyItem(j.ShopKey.Gear,t)
+end
+elseif r:find("Egg")then
+local t=s.PetEggStock.Stocks
+if not l.IsTableEmpty(t)then
+j.BuyItem(j.ShopKey.Egg,t)
+end
+end
+end
+end)
+end)
+end
+end
+
+local n=f.Shop:AddCollapsibleSection("Auto Buy Admin Abuse",false)
+n:AddToggle("tgBuyHardCoreEnable",{
+Title="Buy Hardcore",
+Default=false,
+Callback=function(o)
+BuyAdminAbuse(o)
+h()
+end,
+})
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-local m=f.Shop:AddCollapsibleSection("Seed Shop",false)
-m:AddToggle("tgBuySeedEnable",{
+local o=f.Shop:AddCollapsibleSection("Seed Shop",false)
+o:AddToggle("tgBuySeedEnable",{
 Title="Buy Seeds",
 Default=false,
-Callback=function(n)
+Callback=function(p)
 j.UpdateBuyList()
 h()
-if n then
-local o=i.DataService:GetData()
-local p=o.SeedStocks.Shop.Stocks
-if not l.IsTableEmpty(p)then
-j.BuyItem(j.ShopKey.Seed,p)
+if p then
+local q=i.DataService:GetData()
+local r=q.SeedStocks.Shop.Stocks
+if not l.IsTableEmpty(r)then
+j.BuyItem(j.ShopKey.Seed,r)
 end
 end
 end,
 })
-m:AddDropdown("ddBuySeeds",{
+o:AddDropdown("ddBuySeeds",{
 Title="Seeds",
 Description="Select seeds to buy",
 Values=i.SeedShopTable,
@@ -4214,24 +4268,24 @@ end,
 })
 
 
-local n=f.Shop:AddCollapsibleSection("Daily Seed Shop",false)
-n:AddToggle("tgBuyDailyEnable",{
+local p=f.Shop:AddCollapsibleSection("Daily Seed Shop",false)
+p:AddToggle("tgBuyDailyEnable",{
 Title="Buy Daily Seed",
 Default=false,
-Callback=function(o)
+Callback=function(q)
 j.UpdateBuyList()
 h()
-if o then
-local p=i.DataService:GetData()
-local q=p.SeedStocks["Daily Deals"].Stocks
-if not l.IsTableEmpty(q)then
-j.BuyItem(j.ShopKey.Daily,q)
+if q then
+local r=i.DataService:GetData()
+local s=r.SeedStocks["Daily Deals"].Stocks
+if not l.IsTableEmpty(s)then
+j.BuyItem(j.ShopKey.Daily,s)
 end
 end
 end,
 })
 
-n:AddDropdown("ddBuyDaily",{
+p:AddDropdown("ddBuyDaily",{
 Title="Daily Seeds",
 Description="Select daily seeds to buy",
 Values=i.DailySeedShopTable,
@@ -4245,23 +4299,23 @@ end,
 })
 
 
-local o=f.Shop:AddCollapsibleSection("Gear Shop",false)
-o:AddToggle("tgBuyGearEnable",{
+local q=f.Shop:AddCollapsibleSection("Gear Shop",false)
+q:AddToggle("tgBuyGearEnable",{
 Title="Buy Gear",
 Default=false,
-Callback=function(p)
+Callback=function(r)
 j.UpdateBuyList()
 h()
-if p then
-local q=i.DataService:GetData()
-local r=q.GearStock.Stocks
-if not l.IsTableEmpty(r)then
-j.BuyItem(j.ShopKey.Gear,r)
+if r then
+local s=i.DataService:GetData()
+local t=s.GearStock.Stocks
+if not l.IsTableEmpty(t)then
+j.BuyItem(j.ShopKey.Gear,t)
 end
 end
 end,
 })
-o:AddDropdown("ddBuyGear",{
+q:AddDropdown("ddBuyGear",{
 Title="Gear",
 Description="Select gear to buy",
 Values=i.GearShopTable,
@@ -4275,24 +4329,24 @@ end,
 })
 
 
-local p=f.Shop:AddCollapsibleSection("Pet Eggs Shop",false)
-p:AddToggle("tgBuyEggEnable",{
+local r=f.Shop:AddCollapsibleSection("Pet Eggs Shop",false)
+r:AddToggle("tgBuyEggEnable",{
 Title="Buy Pet Eggs",
 Default=false,
-Callback=function(q)
+Callback=function(s)
 j.UpdateBuyList()
 h()
-if q then
-local r=i.DataService:GetData()
-local s=r.PetEggStock.Stocks
-if not l.IsTableEmpty(s)then
-j.BuyItem(j.ShopKey.Egg,s)
+if s then
+local t=i.DataService:GetData()
+local u=t.PetEggStock.Stocks
+if not l.IsTableEmpty(u)then
+j.BuyItem(j.ShopKey.Egg,u)
 end
 end
 end,
 })
 
-p:AddDropdown("ddBuyEggs",{
+r:AddDropdown("ddBuyEggs",{
 Title="Pet Eggs",
 Description="Select pet eggs to buy",
 Values=i.EggShopTable,
@@ -4306,23 +4360,23 @@ end,
 })
 
 
-local q=f.Shop:AddCollapsibleSection("Traveling Merchant Shop",false)
-q:AddToggle("tgBuyTravelingEnable",{
+local s=f.Shop:AddCollapsibleSection("Traveling Merchant Shop",false)
+s:AddToggle("tgBuyTravelingEnable",{
 Title="Buy Traveling Merchant Items",
 Default=false,
-Callback=function(r)
+Callback=function(t)
 j.UpdateBuyList()
 h()
-if r then
-local s=i.DataService:GetData()
-local t=s.TravelingMerchantShopStock.Stocks
-if not l.IsTableEmpty(t)then
-j.BuyItem(j.ShopKey.Traveling,t)
+if t then
+local u=i.DataService:GetData()
+local v=u.TravelingMerchantShopStock.Stocks
+if not l.IsTableEmpty(v)then
+j.BuyItem(j.ShopKey.Traveling,v)
 end
 end
 end,
 })
-q:AddToggle("tgBuyTravelingAll",{
+s:AddToggle("tgBuyTravelingAll",{
 Title="Buy All",
 Default=false,
 Callback=function()
@@ -4331,11 +4385,11 @@ h()
 end,
 })
 
-for r,s in pairs(i.TravelingMerchantTable)do
-q:AddDropdown("ddTraveling_"..r,{
-Title=r.." Items",
+for t,u in pairs(i.TravelingMerchantTable)do
+s:AddDropdown("ddTraveling_"..t,{
+Title=t.." Items",
 Description="Select items to buy",
-Values=s,
+Values=u,
 Multi=true,
 Default={},
 Searchable=true,
@@ -4347,7 +4401,7 @@ end,
 end
 
 
-local r=f.Shop:AddCollapsibleSection("Events Shop",false)
+local t=f.Shop:AddCollapsibleSection("Events Shop",false)
 
 
 
@@ -4408,22 +4462,22 @@ local r=f.Shop:AddCollapsibleSection("Events Shop",false)
 
 
 
-r:AddToggle("tgBuyEasterEnable",{
+t:AddToggle("tgBuyEasterEnable",{
 Title="Buy Easter Shop Items",
 Default=false,
-Callback=function(s)
+Callback=function(u)
 j.UpdateBuyList()
 h()
-if s then
-local t=i.DataService:GetData()
-local u=t.EventShopStock["Easter Seed Shop"].Stocks
-if not l.IsTableEmpty(u)then
-j.BuyItem(j.ShopKey.Easter,u)
+if u then
+local v=i.DataService:GetData()
+local w=v.EventShopStock["Easter Seed Shop"].Stocks
+if not l.IsTableEmpty(w)then
+j.BuyItem(j.ShopKey.Easter,w)
 end
 end
 end,
 })
-r:AddDropdown("ddBuyEaster",{
+t:AddDropdown("ddBuyEaster",{
 Title="Easter Shop Items",
 Description="Select items to buy",
 Values=i.EasterShopTable,
@@ -4436,23 +4490,23 @@ h()
 end,
 })
 
-local s=f.Shop:AddCollapsibleSection("Season Pass",false)
-s:AddToggle("tgBuySeasonPassEnable",{
+local u=f.Shop:AddCollapsibleSection("Season Pass",false)
+u:AddToggle("tgBuySeasonPassEnable",{
 Title="Buy Season Pass",
 Default=false,
-Callback=function(t)
+Callback=function(v)
 j.UpdateBuyList()
 h()
-if t then
-local u=i.DataService:GetData()
-local v=u.SeasonPass[i.SeasonPassData.CurrentSeason].Stocks
-if not l.IsTableEmpty(v)then
-j.BuyItem(j.ShopKey.SeasonPass,v)
+if v then
+local w=i.DataService:GetData()
+local x=w.SeasonPass[i.SeasonPassData.CurrentSeason].Stocks
+if not l.IsTableEmpty(x)then
+j.BuyItem(j.ShopKey.SeasonPass,x)
 end
 end
 end,
 })
-s:AddDropdown("ddBuySeasonPass",{
+u:AddDropdown("ddBuySeasonPass",{
 Title="Season Pass",
 Description="Select items to buy",
 Values=i.SeasonPassShopTable,
@@ -4615,7 +4669,7 @@ end,
 })
 o:AddDropdown("ddMutantMethod",{
 Title="Select Mutant Method",
-Values={"None","Nightmare","Mutation","Level","Elephant","Venom"},
+Values={"None","Nightmare","Mutation","Level","Elephant","Venom","Everchanted"},
 Default="None",
 Callback=function()
 i()
