@@ -143,7 +143,7 @@ function PetsTab.Initialize(registry)
 	})
 	MutantSection:AddDropdown("ddMutantMethod", {
 		Title = "Select Mutant Method",
-		Values = { "None", "Nightmare", "Mutation", "Level", "Elephant", "Venom" },
+		Values = { "None", "Nightmare", "Mutation", "Level", "Elephant", "Venom", "Everchanted" },
 		Default = "None",
 		Callback = function()
 			QuickSave()
