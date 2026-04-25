@@ -26,8 +26,17 @@ function Shop.Initialize(Registry)
 	--table.clear(AutoBuyConnections)
 	for _, BasePath in pairs(Shop.ShopKey) do
 		local Signal = sData.DataService:GetPathSignal(BasePath .. "/@")
+		local Signal2 = sData.DataService:GetPathSignal(BasePath)
 		--local Connection = Signal:Connect(function(Key, StockData)
 		Signal:Connect(function(_, StockData)
+			if type(StockData) == "table" then
+				task.spawn(function()
+					task.wait(0.5)
+					Shop.BuyItem(BasePath, StockData)
+				end)
+			end
+		end)
+		Signal2:Connect(function(_, StockData)
 			if type(StockData) == "table" then
 				task.spawn(function()
 					task.wait(0.5)

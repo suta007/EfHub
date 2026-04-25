@@ -15,25 +15,53 @@ function ShopTab.Initialize(Registry)
 	fVar.UIShopLoaded = false
 
 	Tabs.Shop = Interface:AddTab({ Title = "Shop", Icon = "shopping-cart" })
+	local adminAbuseConn = nil
+	local function BuyAdminAbuse(state)
+		pcall(function()
+			if adminAbuseConn then
+				adminAbuseConn:Disconnect()
+				adminAbuseConn = nil
+			end
+		end)
+		if state then
+			local ReplicatedStorage = game:GetService("ReplicatedStorage")
+			local Notification = ReplicatedStorage.GameEvents.Notification
 
+			adminAbuseConn = Notification.OnClientEvent:Connect(function(...)
+				local args = { ... }
+				local notiStr = args[1]
+				if notiStr:find("restocked") then
+					local GetData_result = sData.DataService:GetData()
+					if notiStr:find("Seed") then
+						local SeedStocks = GetData_result.SeedStocks.Shop.Stocks
+						if not Utils.IsTableEmpty(SeedStocks) then
+							Shop.BuyItem(Shop.ShopKey.Seed, SeedStocks)
+						end
+					elseif notiStr:find("Gear") then
+						local GearStocks = GetData_result.GearStock.Stocks
+						if not Utils.IsTableEmpty(GearStocks) then
+							Shop.BuyItem(Shop.ShopKey.Gear, GearStocks)
+						end
+					elseif notiStr:find("Egg") then
+						local EggStocks = GetData_result.PetEggStock.Stocks
+						if not Utils.IsTableEmpty(EggStocks) then
+							Shop.BuyItem(Shop.ShopKey.Egg, EggStocks)
+						end
+					end
+				end
+			end)
+		end
+	end
 	-- [[ Auto Buy Hardcore ]]
-	--[[ 	local HardCoreSection = Tabs.Shop:AddCollapsibleSection("Auto Buy Hardcore", false)
+	local HardCoreSection = Tabs.Shop:AddCollapsibleSection("Auto Buy Admin Abuse", false)
 	HardCoreSection:AddToggle("tgBuyHardCoreEnable", {
 		Title = "Buy Hardcore",
 		Default = false,
-		Callback = function()
+		Callback = function(state)
+			BuyAdminAbuse(state)
 			QuickSave()
 		end,
 	})
-	HardCoreSection:AddInput("ipBuyHardCoreDelay", {
-		Title = "Delay (Seconds)",
-		Default = 0.3,
-		Numeric = true,
-		Finished = false,
-		Callback = function()
-			QuickSave()
-		end,
-	}) ]]
 
 	-- [[ Auto Buy Seeds ]]
 	local BuySeedSection = Tabs.Shop:AddCollapsibleSection("Seed Shop", false)
