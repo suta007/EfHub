@@ -3,8 +3,8 @@ local Notification = ReplicatedStorage.GameEvents.Notification
 
 Notification.OnClientEvent:Connect(function(...)
 	local args = { ... }
-	for i, v in pairs(args) do
-		print(i, v)
+	for i, v in ipairs(args) do
+		print("Arg[" .. tostring(i) .. "]:", v)
 	end
 end)
 

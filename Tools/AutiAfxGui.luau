@@ -1,8 +1,10 @@
+local getconnections = (getfenv() :: any).getconnections
+local firesignal = (getfenv() :: any).firesignal
 local statusGUI = Instance.new("ScreenGui")
 local statusText = Instance.new("TextLabel")
 
 local LocalPlayer = game:GetService("Players").LocalPlayer
---local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local VirtualUser = game:GetService("VirtualUser")
 local getgenv = (getfenv() :: any).getgenv
 
@@ -40,3 +42,37 @@ LocalPlayer.Idled:Connect(function()
 	VirtualUser:CaptureController()
 	VirtualUser:ClickButton2(Vector2.new())
 end)
+
+function AcceptGiftPets()
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+	local notiFrame = PlayerGui:FindFirstChild("Gift_Notification"):FindFirstChild("Frame")
+
+	local GiftPetEvent = GameEvents:WaitForChild("GiftPet")
+	GiftPetEvent.OnClientEvent:Connect(function(...)
+		task.spawn(function()
+			task.wait(2)
+			pcall(function()
+				for _, obj in pairs(notiFrame:GetChildren()) do
+					if obj.Name == "Gift_Notification" then
+						local acceptBtn = obj.Holder.Frame.Accept
+						if firesignal then
+							firesignal(acceptBtn.MouseButton1Click)
+							firesignal(acceptBtn.Activated)
+						elseif getconnections then
+							for _, connection in pairs(getconnections(acceptBtn.MouseButton1Click)) do
+								if connection.Fire then
+									connection:Fire()
+								else
+									connection.Function()
+								end
+							end
+						end
+					end
+				end
+			end)
+		end)
+	end)
+end
+
+AcceptGiftPets()
