@@ -5,11 +5,12 @@ local targets = {
 	--ReplicatedStorage = game:GetService("ReplicatedStorage"),
 	--ReplicatedFirst = game:GetService("ReplicatedFirst"),
 	--PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts"),
-	PlayerGui = LocalPlayer:WaitForChild("PlayerGui"),
+	--PlayerGui = LocalPlayer:WaitForChild("PlayerGui"),
 	--Workspace = game:GetService("Workspace"),
+	TeamEventControllers = game:GetService("ReplicatedStorage").Modules.TeamEventControllers,
 }
 
-local baseFolderName = "GAG_Ref"
+local baseFolderName = "GAG_event"
 if not isfolder(baseFolderName) then
 	makefolder(baseFolderName)
 end

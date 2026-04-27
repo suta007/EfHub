@@ -209,9 +209,9 @@ function Auto.Reclaim()
 				if MatchesPlantFilter(plant, reclaimPlantsList, plantsWeightThreshold, plantsWeightValue) then
 					Utils.EquipTool(reclaimer)
 					sData.ReclaimerEvent:FireServer("TryReclaim", plant)
-					Utils.UnequipTool()
+					--Utils.UnequipTool()
+					task.wait(0.1)
 				end
-				task.wait(0.1)
 			end
 		end
 
