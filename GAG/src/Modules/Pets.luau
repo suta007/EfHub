@@ -266,6 +266,7 @@ function Pets.AgeBreak()
 				task.wait(0.1)
 				sData.GameEvents.PetAgeLimitBreak_SubmitHeld:FireServer()
 				task.wait(2)
+				fVar.IsAgeBreaking = false
 			end
 		end
 	elseif hasPetInMachine and not AgeBreakData.IsRunning then
@@ -287,6 +288,7 @@ function Pets.AgeBreak()
 			task.wait(2)
 		end
 	end
+	fVar.IsAgeBreaking = false
 end
 function Pets.EquipPet(uuid)
 	sData.PetsServiceEvent:FireServer("EquipPet", uuid)
