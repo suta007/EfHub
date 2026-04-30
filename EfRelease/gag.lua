@@ -1275,9 +1275,9 @@ end
 if MatchesPlantFilter(p,i,j,k)then
 f.EquipTool(n)
 e.ReclaimerEvent:FireServer("TryReclaim",p)
-f.UnequipTool()
-end
+
 task.wait(0.1)
+end
 end
 end
 
@@ -1953,6 +1953,7 @@ if d.HeldPet(j)then
 task.wait(0.1)
 g.GameEvents.PetAgeLimitBreak_SubmitHeld:FireServer()
 task.wait(2)
+f.IsAgeBreaking=false
 end
 end
 elseif s and not o.IsRunning then
@@ -1974,6 +1975,7 @@ g.GameEvents.PetAgeLimitBreak_Submit:FireServer({v})
 task.wait(2)
 end
 end
+f.IsAgeBreaking=false
 end
 function d.EquipPet(m)
 g.PetsServiceEvent:FireServer("EquipPet",m)
@@ -1995,6 +1997,11 @@ return
 end
 g.PetsServiceEvent:FireServer("SwapPetLoadout",m)
 task.wait(9)
+end
+
+function d.resetFarmUUID()
+k=nil
+e.Log("🔴 Reset Farm Pet UUID")
 end
 
 function d.FarmLevel()
@@ -3691,9 +3698,9 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.04.25-19.00",
+SubTitle="2569.04.27-14.00",
 TabWidth=100,
-Size=UDim2.fromOffset(600,340),
+Size=UDim2.fromOffset(580,300),
 Resize=false,
 
 Acrylic=true,
@@ -4667,6 +4674,14 @@ end
 i()
 end,
 })
+
+o:AddButton({
+Title="Reset Farm Pet UUID",
+Callback=function()
+l.resetFarmUUID()
+end,
+})
+
 o:AddDropdown("ddMutantMethod",{
 Title="Select Mutant Method",
 Values={"None","Nightmare","Mutation","Level","Elephant","Venom","Everchanted"},
@@ -6808,7 +6823,7 @@ if not m.tgEggwarEnable.Value or d.IsHuntEgg then
 return
 end
 local n=os.date("!*t").min
-if n<2 then
+if n<3 then
 if not l then
 l=true
 b.autoEggwar()
