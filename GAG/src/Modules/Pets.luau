@@ -312,6 +312,11 @@ function Pets.SwapPetLoadout(Loadout)
 	task.wait(9)
 end
 
+function Pets.resetFarmUUID()
+	MutantUUID = nil
+	reg.Log("🔴 Reset Farm Pet UUID")
+end
+
 function Pets.FarmLevel()
 	local Options = reg.Options
 	if not Options.tgMutantEnabled.Value or fVar.IsMutating then

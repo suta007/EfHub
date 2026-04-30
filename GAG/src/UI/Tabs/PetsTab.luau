@@ -141,6 +141,14 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+
+	MutantSection:AddButton({
+		Title = "Reset Farm Pet UUID",
+		Callback = function()
+			Pets.resetFarmUUID()
+		end,
+	})
+
 	MutantSection:AddDropdown("ddMutantMethod", {
 		Title = "Select Mutant Method",
 		Values = { "None", "Nightmare", "Mutation", "Level", "Elephant", "Venom", "Everchanted" },
