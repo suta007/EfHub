@@ -312,9 +312,49 @@ function Misc.HideFruit(state)
 end
 
 local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+
+local blackScreenGui = Instance.new("ScreenGui")
+blackScreenGui.Name = "BlackoutUI"
+blackScreenGui.DisplayOrder = 999999
+blackScreenGui.Enabled = false
+blackScreenGui.IgnoreGuiInset = true
+blackScreenGui.Parent = gethui and gethui() or CoreGui
+
+local blackFrame = Instance.new("Frame")
+blackFrame.Size = UDim2.new(1, 0, 1, 0)
+blackFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+blackFrame.BorderSizePixel = 0
+blackFrame.Parent = blackScreenGui
+
+local exitBtn = Instance.new("TextButton")
+exitBtn.Size = UDim2.new(0, 50, 0, 50)
+exitBtn.Position = UDim2.new(0.5, 0, 0.5, 0)
+exitBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+exitBtn.Text = "X"
+exitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+exitBtn.TextSize = 20
+exitBtn.Parent = blackFrame
+
+exitBtn.Activated:Connect(function()
+	blackScreenGui.Enabled = false
+end)
+
+local DisableRendering = false
+
 function Misc.Disable3D(state)
-	if RunService:Is3dRenderingEnabled() ~= state then
-		RunService:Set3dRenderingEnabled(state)
+	DisableRendering = state
+	if DisableRendering then
+		blackScreenGui.Enabled = true
+		task.wait(0.1)
+		pcall(function()
+			RunService:Set3dRenderingEnabled(false)
+		end)
+	else
+		blackScreenGui.Enabled = false
+		pcall(function()
+			RunService:Set3dRenderingEnabled(true)
+		end)
 	end
 end
 
