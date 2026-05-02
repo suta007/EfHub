@@ -329,7 +329,7 @@ blackFrame.Parent = blackScreenGui
 
 local exitBtn = Instance.new("TextButton")
 exitBtn.Size = UDim2.new(0, 50, 0, 50)
-exitBtn.Position = UDim2.new(0.5, 0, 0.5, 0)
+exitBtn.Position = UDim2.new(0.5, -5, 0.5, -5)
 exitBtn.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 exitBtn.Text = "X"
 exitBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
