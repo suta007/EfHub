@@ -174,6 +174,22 @@ function Window.myMenu()
 	txtBtn2.Activated:Connect(function()
 		Character:PivotTo(ageBreakPos)
 	end)
+
+	local txtBtn3 = Instance.new("TextButton", myFrame)
+	txtBtn3.Size = UDim2.new(0, 44, 0, 44)
+	txtBtn3.Text = "💎"
+	txtBtn3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	txtBtn3.BorderSizePixel = 0
+	txtBtn3.TextSize = 14
+	txtBtn3.TextXAlignment = Enum.TextXAlignment.Center
+	txtBtn3.TextYAlignment = Enum.TextYAlignment.Center
+	txtBtn3.LayoutOrder = 3
+	local btn3Conner = Instance.new("UICorner", txtBtn3)
+	btn3Conner.CornerRadius = UDim.new(0, 22)
+	txtBtn3.Activated:Connect(function()
+		local Options = reg.Options
+		Options.tgDisable3D:SetValue(true)
+	end)
 end
 
 return Window
