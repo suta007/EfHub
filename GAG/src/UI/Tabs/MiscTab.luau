@@ -50,6 +50,16 @@ function MiscTab.Initialize(Registry)
 		end,
 	})
 
+	AntiLagSection:AddDivider()
+	AntiLagSection:AddToggle("tgDisable3D", {
+		Title = "Disable 3D",
+		Default = false,
+		Callback = function(Value)
+			Misc.Disable3D(Value)
+			QuickSave()
+		end,
+	})
+
 	local EspSection = Tabs.MiscTab:AddCollapsibleSection("Esp", false)
 	EspSection:AddToggle("tgEspCrops", {
 		Title = "Esp Crops",

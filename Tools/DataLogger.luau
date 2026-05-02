@@ -132,9 +132,8 @@ local function ShowData(tbl, indent)
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Notification = ReplicatedStorage.GameEvents.Notification
-
-Notification.OnClientEvent:Connect(function(...)
-	local args = { ... }
-	ShowData(args)
-end)
+local Modules = ReplicatedStorage:WaitForChild("Modules") :: any
+local DataService = require(Modules.DataService)
+local GetData_result = DataService:GetData()
+local Data = GetData_result.SeedStocks.Shop.Stocks
+ShowData(Data)

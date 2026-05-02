@@ -132,7 +132,7 @@ function Window.myMenu()
 
 	local myFrame = Instance.new("Frame", myGUI)
 	myFrame.Size = UDim2.new(0.4, 0, 0, 100)
-	myFrame.Position = UDim2.new(0.55, 0, 0, 12)
+	myFrame.Position = UDim2.new(0.6, 0, 0, 12)
 
 	myFrame.BackgroundTransparency = 1
 	myFrame.BorderSizePixel = 0

@@ -311,6 +311,13 @@ function Misc.HideFruit(state)
 	Misc.UpdatePlantTracker()
 end
 
+local RunService = game:GetService("RunService")
+function Misc.Disable3D(state)
+	if RunService:Is3dRenderingEnabled() ~= state then
+		RunService:Set3dRenderingEnabled(state)
+	end
+end
+
 function Misc.UpdatePlantTracker()
 	local Options = reg.Options
 	local isHideActive = (Options.tgHideFruits and Options.tgHideFruits.Value) or (Options.tgHidePlants and Options.tgHidePlants.Value)
