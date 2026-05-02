@@ -337,7 +337,8 @@ exitBtn.TextSize = 20
 exitBtn.Parent = blackFrame
 
 exitBtn.Activated:Connect(function()
-	blackScreenGui.Enabled = false
+	local Options = reg.Options
+	Options.tgDisable3D:SetValue(false)
 end)
 
 local DisableRendering = false
