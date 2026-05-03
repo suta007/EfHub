@@ -213,4 +213,5 @@ local function startPollingTimer()
 end
 
 AcceptGiftPets()
+startAutoBuy()
 task.spawn(startPollingTimer)
