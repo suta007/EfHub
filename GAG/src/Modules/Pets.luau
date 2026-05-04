@@ -571,7 +571,7 @@ function Pets.TargetPetLevelCheck()
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " go to mutation machine")
-			Pets.MakePetFavorite(MutantUUID)
+			--Pets.MakePetFavorite(MutantUUID)
 			fVar.IsMutating = false
 			Pets.MutatePet()
 			return
