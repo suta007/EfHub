@@ -31,6 +31,7 @@ b.PetsServiceEvent=b.GameEvents:WaitForChild("PetsService")
 b.SeedPackEvent=b.GameEvents:WaitForChild("SeedPack")
 b.PetEggService=b.GameEvents:WaitForChild("PetEggService")
 b.CraftingEvent=b.GameEvents:WaitForChild("CraftingGlobalObjectService")
+b.PetBoostService=b.GameEvents:WaitForChild("PetBoostService")
 
 b.ClaimSeasonPassRewardRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
 b.ClaimSeasonPassInfRewardRemote=b.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward")
@@ -2258,7 +2259,7 @@ if o.PetData.Level>=n then
 d.UnequipPet(k)
 task.wait(0.5)
 e.Log("🟢 CheckLevel: "..tostring(k).." go to mutation machine")
-d.MakePetFavorite(k)
+
 f.IsMutating=false
 d.MutatePet()
 return
@@ -2316,7 +2317,7 @@ e.Log("CheckMutantReady failed: "..tostring(q))
 end
 end
 end)
-f.IsMutating=false
+
 return
 end
 f.IsMutating=false
@@ -2324,10 +2325,10 @@ end
 
 function d.ClaimMutationPet()
 local m=e.Options
-if not m.tgMutantEnabled.Value or f.IsMutating then
+if not m.tgMutantEnabled.Value then
 return
 end
-f.IsMutating=true
+
 pcall(function()
 if type(l)=="thread"then
 task.cancel(l)
@@ -2370,6 +2371,7 @@ end
 local p=i(m.ddTargetMutant.Value)
 local q=g.EnumToNameCache[o.PetData.MutationType]
 if table.find(p,q)then
+d.MakePetFavorite(k)
 e.Log("🟢 ClaimMutationPet: "..tostring(k).." finished Mutation : "..tostring(q))
 e.Log("🟣 ClaimMutationPet: Run FarmLevel() to get new Pet")
 k=nil
@@ -2391,7 +2393,7 @@ local n=m.PetMutationMachine
 e.Log("🔵 CheckMutantReady: "..tostring(n.PetReady))
 if n.PetReady then
 k=n.SubmittedPet.UUID
-f.IsMutating=false
+
 e.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
 task.spawn(function()
 local o,p=pcall(function()
@@ -2866,6 +2868,64 @@ n:Disconnect()
 n=nil
 end
 end)
+end
+end
+
+function d.BoostPet()
+local o=e.Options
+if not o.tgBoostPetEn.Value then
+return
+end
+local p=i(o.ddToyPetType.Value)
+if not p or#p==0 then
+e.Log("Do not have selected pet type to boost","ERROR")
+return
+end
+
+local function GiveToy(q,r)
+if not r then
+return
+end
+if not r:HasTag("PetBoost")then
+e.Log("Toy do not have tag PetBoost","ERROR")
+return
+end
+if h.EquipTool(r)then
+task.wait(0.1)
+g.PetBoostService:FireServer("ApplyBoost",q)
+else
+e.Log("Equip toy failed","ERROR")
+end
+end
+
+local q=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
+if q and#q>0 then
+local r=g.Backpack
+local s=h.FindToolByPattern(r,"Small Pet Toy")
+local t=h.FindToolByPattern(r,"Medium Pet Toy")
+local u=h.FindToolByPattern(r,"Large Pet Toy")
+for v,w in ipairs(q)do
+local x=w.PetType
+if table.find(p,x)then
+local y=w.UUID
+local z=w.PetData.Boosts
+local A={}
+for B,C in pairs(z)do
+if type(C)=="table"then
+table.insert(A,C.BoostAmount)
+end
+end
+if o.tgSmToy.Value and not table.find(A,0.1)then
+GiveToy(y,s)
+end
+if o.tgMdToy.Value and not table.find(A,0.2)then
+GiveToy(y,t)
+end
+if o.tgLgToy.Value and not table.find(A,0.3)then
+GiveToy(y,u)
+end
+end
+end
 end
 end
 
@@ -3746,7 +3806,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.02-16.35",
+SubTitle="2569.05.04-17.45",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -4787,14 +4847,9 @@ end
 task.wait(2)
 d=task.spawn(function()
 while task.wait(60)do
-local t,u=pcall(function()
+pcall(function()
 l.TargetPetLevelCheck()
 end)
-if not t then
-c.Log("TargetPetLevelCheck failed: "..tostring(u))
-else
-c.Log("Loop TargetPetLevelCheck Success!")
-end
 end
 end)
 else
@@ -5238,6 +5293,58 @@ Title="Enable Auto Accept Gift Pet",
 Default=false,
 Callback=function(u)
 l.AcceptGiftPets(u)
+i()
+end,
+})
+
+
+
+
+local u=g.Pets:AddCollapsibleSection("Boost Pets",false)
+
+u:AddDropdown("ddToyPetType",{
+Title="Select Toy Pet Type",
+Values=j.PetsDataTable,
+Default={},
+Multi=true,
+Searchable=true,
+Callback=function()
+i()
+end,
+})
+
+u:AddToggle("tgSmToy",{
+Title="Enable Auto Small Pet Toy",
+Default=false,
+Callback=function()
+i()
+end,
+})
+
+u:AddToggle("tgMdToy",{
+Title="Enable Auto Medium Pet Toy",
+Default=false,
+Callback=function()
+i()
+end,
+})
+
+u:AddToggle("tgLgToy",{
+Title="Enable Auto Large Pet Toy",
+Default=false,
+Callback=function()
+i()
+end,
+})
+
+u:AddToggle("tgBoostPetEn",{
+Title="Enable Auto Boost Pet",
+Default=false,
+Callback=function(v)
+k.ToggleTask("BoostPet",v,function()
+l.BoostPet()
+task.wait(1)
+end)
 i()
 end,
 })
