@@ -629,7 +629,7 @@ function Pets.MutatePet()
 				end
 			end
 		end)
-		fVar.IsMutating = false
+		--fVar.IsMutating = false
 		return
 	end
 	fVar.IsMutating = false
@@ -637,10 +637,10 @@ end
 
 function Pets.ClaimMutationPet()
 	local Options = reg.Options
-	if not Options.tgMutantEnabled.Value or fVar.IsMutating then
+	if not Options.tgMutantEnabled.Value then -- or fVar.IsMutating then
 		return
 	end
-	fVar.IsMutating = true
+	--fVar.IsMutating = true
 	pcall(function()
 		if type(TaskMutantReady) == "thread" then
 			task.cancel(TaskMutantReady)
@@ -704,7 +704,7 @@ function Pets.CheckMutantReady()
 	reg.Log("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
 	if machineData.PetReady then
 		MutantUUID = machineData.SubmittedPet.UUID
-		fVar.IsMutating = false
+		--fVar.IsMutating = false
 		reg.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
 		task.spawn(function()
 			local success, err = pcall(function()
