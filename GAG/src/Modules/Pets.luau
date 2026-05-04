@@ -1182,4 +1182,62 @@ function Pets.AcceptGiftPets(Value)
 	end
 end
 
+function Pets.BoostPet()
+	local Options = reg.Options
+	if not Options.tgBoostPetEn.Value then
+		return
+	end
+	local boostPetTypes = GetSelectedItems(Options.ddToyPetType.Value)
+	if not boostPetTypes or #boostPetTypes == 0 then
+		reg.Log("Do not have selected pet type to boost", "ERROR")
+		return
+	end
+
+	local function GiveToy(petUUID, toy)
+		if not toy then
+			return
+		end
+		if not toy:HasTag("PetBoost") then
+			reg.Log("Toy do not have tag PetBoost", "ERROR")
+			return
+		end
+		if Utils.EquipTool(toy) then
+			task.wait(0.1)
+			sData.PetBoostService:FireServer("ApplyBoost", petUUID)
+		else
+			reg.Log("Equip toy failed", "ERROR")
+		end
+	end
+
+	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
+	if EquipPets and #EquipPets > 0 then
+		local Backpack = sData.Backpack
+		local smToy = Utils.FindToolByPattern(Backpack, "Small Pet Toy")
+		local mdToy = Utils.FindToolByPattern(Backpack, "Medium Pet Toy")
+		local lgToy = Utils.FindToolByPattern(Backpack, "Large Pet Toy")
+		for _, pet in ipairs(EquipPets) do
+			local petType = pet.PetType
+			if table.find(boostPetTypes, petType) then
+				local petUUID = pet.UUID
+				local Boosts = pet.PetData.Boosts
+				local ActiveBoosts = {}
+				for _i, v in pairs(Boosts) do
+					if type(v) == "table" then
+						table.insert(ActiveBoosts, v.BoostAmount)
+					end
+				end
+				if Options.tgSmToy.Value and not table.find(ActiveBoosts, 0.1) then
+					GiveToy(petUUID, smToy)
+				end
+				if Options.tgMdToy.Value and not table.find(ActiveBoosts, 0.2) then
+					GiveToy(petUUID, mdToy)
+				end
+				if Options.tgLgToy.Value and not table.find(ActiveBoosts, 0.3) then
+					GiveToy(petUUID, lgToy)
+				end
+			end
+		end
+	end
+end
+
 return Pets

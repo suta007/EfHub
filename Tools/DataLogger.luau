@@ -131,9 +131,10 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Modules = ReplicatedStorage:WaitForChild("Modules") :: any
-local DataService = require(Modules.DataService)
-local GetData_result = DataService:GetData()
-local Data = GetData_result.SeedStocks.Shop.Stocks
-ShowData(Data)
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Backpack = LocalPlayer.Backpack
+for _i, obj in pairs(Backpack:GetChildren()) do
+	if obj:HasTag("PetBoost") then
+		ShowData(obj)
+	end
+end

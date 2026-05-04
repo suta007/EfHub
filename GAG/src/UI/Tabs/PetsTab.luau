@@ -577,6 +577,58 @@ function PetsTab.Initialize(registry)
 	})
 
 	--#endregion
+
+	--#region Boost Pet Section
+	local BoostPetSection = Tabs.Pets:AddCollapsibleSection("Boost Pets", false)
+
+	BoostPetSection:AddDropdown("ddToyPetType", {
+		Title = "Select Toy Pet Type",
+		Values = sData.PetsDataTable,
+		Default = {},
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Small Pet Toy
+	BoostPetSection:AddToggle("tgSmToy", {
+		Title = "Enable Auto Small Pet Toy",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Medium Pet Toy
+	BoostPetSection:AddToggle("tgMdToy", {
+		Title = "Enable Auto Medium Pet Toy",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Large Pet Toy
+	BoostPetSection:AddToggle("tgLgToy", {
+		Title = "Enable Auto Large Pet Toy",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	BoostPetSection:AddToggle("tgBoostPetEn", {
+		Title = "Enable Auto Boost Pet",
+		Default = false,
+		Callback = function(Value)
+			EfTasks.ToggleTask("BoostPet", Value, function()
+				Pets.BoostPet()
+				task.wait(1)
+			end)
+			QuickSave()
+		end,
+	})
+
+	--#endregion
 end
 
 return PetsTab
