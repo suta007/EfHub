@@ -683,6 +683,7 @@ function Pets.ClaimMutationPet()
 	local targetMutant = GetSelectedItems(Options.ddTargetMutant.Value)
 	local petMutant = sData.EnumToNameCache[TargetPet.PetData.MutationType]
 	if table.find(targetMutant, petMutant) then
+		Pets.MakePetFavorite(MutantUUID)
 		reg.Log("🟢 ClaimMutationPet: " .. tostring(MutantUUID) .. " finished Mutation : " .. tostring(petMutant))
 		reg.Log("🟣 ClaimMutationPet: Run FarmLevel() to get new Pet")
 		MutantUUID = nil

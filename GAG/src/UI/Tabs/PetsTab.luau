@@ -121,14 +121,9 @@ function PetsTab.Initialize(registry)
 				task.wait(2)
 				CheckLevelTask = task.spawn(function()
 					while task.wait(60) do
-						local success2, err2 = pcall(function()
+						pcall(function()
 							Pets.TargetPetLevelCheck()
 						end)
-						if not success2 then
-							reg.Log("TargetPetLevelCheck failed: " .. tostring(err2))
-						else
-							reg.Log("Loop TargetPetLevelCheck Success!")
-						end
 					end
 				end)
 			else
