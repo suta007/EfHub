@@ -131,10 +131,10 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Notification = ReplicatedStorage.GameEvents.Notification
-
-Notification.OnClientEvent:Connect(function(...)
-	local args = { ... }
-	ShowData(args)
-end)
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Backpack = LocalPlayer.Backpack
+for _i, obj in pairs(Backpack:GetChildren()) do
+	if obj:HasTag("PetBoost") then
+		ShowData(obj)
+	end
+end

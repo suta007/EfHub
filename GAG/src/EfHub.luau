@@ -112,6 +112,7 @@ function EfHub.Initialize()
 
 	Registry.Window.Finalize()
 	Registry.Utils.ViewButton()
+	Registry.Window.myMenu()
 
 	--Registry.test.init(Registry)
 	return Registry
