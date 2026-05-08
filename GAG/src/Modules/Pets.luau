@@ -503,6 +503,11 @@ function Pets.TargetPetLevelCheck()
 
 	if Method == "Nightmare" then
 		if petMutant == "Nightmare" then
+			if TargetAge > 0 and TargetPet.PetData.Level < TargetAge then
+				--reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " Level: " .. tostring(TargetPet.PetData.Level) .. " not reach target age")
+				fVar.IsMutating = false
+				return
+			end
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Nightmare")
