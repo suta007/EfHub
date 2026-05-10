@@ -3812,7 +3812,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.10-15.40",
+SubTitle="2569.05.10-19.25",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6082,6 +6082,31 @@ task.wait(1)
 end
 end
 
+local function KeepPos()
+local f=c.Options
+local g=c.Utils
+if not f.tgKeepPosEnable or not f.tgKeepPosEnable.Value then
+return
+end
+local h=f.ipKeepPos.Value
+if h==""then
+c.Log("Please set position.")
+return
+end
+local i=g.ParseVector3(h)
+if not i then
+c.Log("Invalid position format.")
+return
+end
+
+local j=e.Character
+local k=j.PrimaryPart.Position
+local l=(k-i).Magnitude
+if l>10 then
+j:PivotTo(CFrame.new(i))
+end
+end
+
 function b.Initialize(f,g)
 c=f
 local h=c.Options
@@ -6115,6 +6140,49 @@ task.wait(10)
 end)
 end,
 })
+
+local m=j:AddCollapsibleSection("Keep Position",false)
+m:AddButton({
+Title="Set Position",
+Callback=function()
+local n=e.Character:GetPivot().Position
+local o=string.format("%.3f, %.3f, %.3f",n.X,n.Y,n.Z)
+h.ipKeepPos:SetValue(o)
+i()
+end,
+})
+m:AddInput("ipKeepPos",{
+Title="Position",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function()
+i()
+end,
+})
+m:AddInput("ipKeepPosDelay",{
+Title="Delay Check Time (s)",
+Default=60,
+Numeric=true,
+Finished=true,
+Callback=function()
+i()
+end,
+})
+
+m:AddToggle("tgKeepPosEnable",{
+Title="Keep Position Enable",
+Default=false,
+Callback=function(n)
+i()
+k.ToggleTask("AutoKeepPos",n,function()
+local o=tonumber(h.ipKeepPosDelay.Value)or 60
+KeepPos()
+task.wait(o)
+end)
+end,
+})
 end
 
 return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
@@ -6125,91 +6193,153 @@ local d
 local e
 local f
 local g
+local h=nil
 
-function b.Initialize(h,i)
-c=h
-local j=c.Options
-_=j
-local k=c.Window.QuickSave
-local l=i
+local function BuyBeeEgg()
+local i=c.Options
+local j=c.Utils.GetSelectedItems
+local k=e.DataService:GetData()
+local l=k.BeeEggShopStock.Stocks
+if not f.IsTableEmpty(l)then
+local m=j(i.ddBuyBeeEgg.Value)
+for n,o in pairs(l)do
+if table.find(m,n)then
+local p=tonumber(o.Stock)or 0
+for q=1,p do
+e.GameEvents:WaitForChild("BeeColonyEggShopService"):WaitForChild("BuyBeeEggStock"):InvokeServer(n)
+end
+end
+end
+end
+end
+
+function b.Initialize(i,j)
+c=i
+local k=c.Options
+_=k
+local l=c.Window.QuickSave
+local m=j
 e=c.sData
-local m=c.EfTasks
+local n=c.EfTasks
 f=c.Utils
 g=c.Shop
 
-local n={"ALL"}
-for o,p in pairs(c.EVENT_DATA["Honey Coin Shop"])do
-table.insert(n,o)
-end
-
 local o={"ALL"}
-for p,q in pairs(c.EVENT_DATA["Honey Seed Shop"])do
+for p,q in pairs(c.EVENT_DATA["Honey Coin Shop"])do
 table.insert(o,p)
 end
 
-local p=e.DataService:GetData()
+local p={"ALL"}
+for q,r in pairs(c.EVENT_DATA["Honey Seed Shop"])do
+table.insert(p,q)
+end
 
-local q=l:AddCollapsibleSection("Honey Coin Shop",false)
-q:AddDropdown("ddBuyHoneyCoin",{
+local q=e.DataService:GetData()
+
+local r=m:AddCollapsibleSection("Honey Coin Shop",false)
+r:AddDropdown("ddBuyHoneyCoin",{
 Title="Honey Coin Shop Items",
-Values=n,
-Multi=true,
-Default={},
-Searchable=true,
-Callback=function()
-g.UpdateBuyList()
-k()
-end,
-})
-q:AddButton({
-Title="Clear Honey Coin Shop Items",
-Callback=function()
-j.ddBuyHoneyCoin:SetValue({})
-end,
-})
-q:AddToggle("tgBuyHoneyCoinEnable",{
-Title="Buy Honey Coin Shop Items",
-Default=false,
-Callback=function(r)
-g.UpdateBuyList()
-k()
-if r then
-local t=p.EventShopStock["Honey Coin Shop"].Stocks
-if not f.IsTableEmpty(t)then
-g.BuyItem(g.ShopKey.HoneyCoin,t)
-end
-end
-end,
-})
-
-local r=l:AddCollapsibleSection("HoneySeed",false)
-r:AddDropdown("ddBuyHoneySeed",{
-Title="Honey Seed Shop Items",
 Values=o,
 Multi=true,
 Default={},
 Searchable=true,
 Callback=function()
 g.UpdateBuyList()
-k()
+l()
 end,
 })
 r:AddButton({
-Title="Clear Honey Seed Shop Items",
+Title="Clear Honey Coin Shop Items",
 Callback=function()
-j.ddBuyHoneySeed:SetValue({})
+k.ddBuyHoneyCoin:SetValue({})
 end,
 })
-r:AddToggle("tgBuyHoneySeedEnable",{
-Title="Buy Honey Seed Shop Items",
+r:AddToggle("tgBuyHoneyCoinEnable",{
+Title="Buy Honey Coin Shop Items",
 Default=false,
 Callback=function(t)
 g.UpdateBuyList()
-k()
+l()
 if t then
-local u=p.EventShopStock["Honey Seed Shop"].Stocks
+local u=q.EventShopStock["Honey Coin Shop"].Stocks
 if not f.IsTableEmpty(u)then
-g.BuyItem(g.ShopKey.HoneySeed,u)
+g.BuyItem(g.ShopKey.HoneyCoin,u)
+end
+end
+end,
+})
+
+local t=m:AddCollapsibleSection("HoneySeed",false)
+t:AddDropdown("ddBuyHoneySeed",{
+Title="Honey Seed Shop Items",
+Values=p,
+Multi=true,
+Default={},
+Searchable=true,
+Callback=function()
+g.UpdateBuyList()
+l()
+end,
+})
+t:AddButton({
+Title="Clear Honey Seed Shop Items",
+Callback=function()
+k.ddBuyHoneySeed:SetValue({})
+end,
+})
+t:AddToggle("tgBuyHoneySeedEnable",{
+Title="Buy Honey Seed Shop Items",
+Default=false,
+Callback=function(u)
+g.UpdateBuyList()
+l()
+if u then
+local v=q.EventShopStock["Honey Seed Shop"].Stocks
+if not f.IsTableEmpty(v)then
+g.BuyItem(g.ShopKey.HoneySeed,v)
+end
+end
+end,
+})
+
+local u=m:AddCollapsibleSection("Bee Egg Shop",false)
+local v={"Common Bee Egg","Rare Bee Egg","Mythical Bee Egg"}
+u:AddDropdown("ddBuyBeeEgg",{
+Title="Bee Egg Shop Items",
+Values=v,
+Multi=true,
+Default={},
+
+Callback=function()
+g.UpdateBuyList()
+l()
+end,
+})
+u:AddButton({
+Title="Clear Bee Egg Shop Items",
+Callback=function()
+k.ddBuyBeeEgg:SetValue({})
+end,
+})
+local w=e.DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
+u:AddToggle("tgBuyBeeEggEnable",{
+Title="Buy Bee Egg Shop Items",
+Default=false,
+Callback=function(x)
+l()
+if x then
+pcall(function()
+task.spawn(BuyBeeEgg)
+end)
+h=w:Connect(function(y,z)
+pcall(function()
+task.spawn(BuyBeeEgg)
+end)
+end)
+else
+if h then
+h:Disconnect()
+h=nil
 end
 end
 end,
