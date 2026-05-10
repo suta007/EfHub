@@ -312,6 +312,11 @@ function Pets.SwapPetLoadout(Loadout)
 	task.wait(9)
 end
 
+function Pets.resetFarmUUID()
+	MutantUUID = nil
+	reg.Log("🔴 Reset Farm Pet UUID")
+end
+
 function Pets.FarmLevel()
 	local Options = reg.Options
 	if not Options.tgMutantEnabled.Value or fVar.IsMutating then
@@ -505,6 +510,11 @@ function Pets.TargetPetLevelCheck()
 
 	if Method == "Nightmare" then
 		if petMutant == "Nightmare" then
+			if TargetAge > 0 and TargetPet.PetData.Level < TargetAge then
+				--reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " Level: " .. tostring(TargetPet.PetData.Level) .. " not reach target age")
+				fVar.IsMutating = false
+				return
+			end
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Nightmare")
@@ -566,7 +576,7 @@ function Pets.TargetPetLevelCheck()
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " go to mutation machine")
-			Pets.MakePetFavorite(MutantUUID)
+			--Pets.MakePetFavorite(MutantUUID)
 			fVar.IsMutating = false
 			Pets.MutatePet()
 			return
@@ -624,7 +634,7 @@ function Pets.MutatePet()
 				end
 			end
 		end)
-		fVar.IsMutating = false
+		--fVar.IsMutating = false
 		return
 	end
 	fVar.IsMutating = false
@@ -632,10 +642,10 @@ end
 
 function Pets.ClaimMutationPet()
 	local Options = reg.Options
-	if not Options.tgMutantEnabled.Value or fVar.IsMutating then
+	if not Options.tgMutantEnabled.Value then -- or fVar.IsMutating then
 		return
 	end
-	fVar.IsMutating = true
+	--fVar.IsMutating = true
 	pcall(function()
 		if type(TaskMutantReady) == "thread" then
 			task.cancel(TaskMutantReady)
@@ -678,6 +688,7 @@ function Pets.ClaimMutationPet()
 	local targetMutant = GetSelectedItems(Options.ddTargetMutant.Value)
 	local petMutant = sData.EnumToNameCache[TargetPet.PetData.MutationType]
 	if table.find(targetMutant, petMutant) then
+		Pets.MakePetFavorite(MutantUUID)
 		reg.Log("🟢 ClaimMutationPet: " .. tostring(MutantUUID) .. " finished Mutation : " .. tostring(petMutant))
 		reg.Log("🟣 ClaimMutationPet: Run FarmLevel() to get new Pet")
 		MutantUUID = nil
@@ -699,7 +710,7 @@ function Pets.CheckMutantReady()
 	reg.Log("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
 	if machineData.PetReady then
 		MutantUUID = machineData.SubmittedPet.UUID
-		fVar.IsMutating = false
+		--fVar.IsMutating = false
 		reg.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
 		task.spawn(function()
 			local success, err = pcall(function()
@@ -1174,6 +1185,64 @@ function Pets.AcceptGiftPets(Value)
 				AcceptGiftPetsDriver = nil
 			end
 		end)
+	end
+end
+
+function Pets.BoostPet()
+	local Options = reg.Options
+	if not Options.tgBoostPetEn.Value then
+		return
+	end
+	local boostPetTypes = GetSelectedItems(Options.ddToyPetType.Value)
+	if not boostPetTypes or #boostPetTypes == 0 then
+		reg.Log("Do not have selected pet type to boost", "ERROR")
+		return
+	end
+
+	local function GiveToy(petUUID, toy)
+		if not toy then
+			return
+		end
+		if not toy:HasTag("PetBoost") then
+			reg.Log("Toy do not have tag PetBoost", "ERROR")
+			return
+		end
+		if Utils.EquipTool(toy) then
+			task.wait(0.1)
+			sData.PetBoostService:FireServer("ApplyBoost", petUUID)
+		else
+			reg.Log("Equip toy failed", "ERROR")
+		end
+	end
+
+	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
+	if EquipPets and #EquipPets > 0 then
+		local Backpack = sData.Backpack
+		local smToy = Utils.FindToolByPattern(Backpack, "Small Pet Toy")
+		local mdToy = Utils.FindToolByPattern(Backpack, "Medium Pet Toy")
+		local lgToy = Utils.FindToolByPattern(Backpack, "Large Pet Toy")
+		for _, pet in ipairs(EquipPets) do
+			local petType = pet.PetType
+			if table.find(boostPetTypes, petType) then
+				local petUUID = pet.UUID
+				local Boosts = pet.PetData.Boosts
+				local ActiveBoosts = {}
+				for _i, v in pairs(Boosts) do
+					if type(v) == "table" then
+						table.insert(ActiveBoosts, v.BoostAmount)
+					end
+				end
+				if Options.tgSmToy.Value and not table.find(ActiveBoosts, 0.1) then
+					GiveToy(petUUID, smToy)
+				end
+				if Options.tgMdToy.Value and not table.find(ActiveBoosts, 0.2) then
+					GiveToy(petUUID, mdToy)
+				end
+				if Options.tgLgToy.Value and not table.find(ActiveBoosts, 0.3) then
+					GiveToy(petUUID, lgToy)
+				end
+			end
+		end
 	end
 end
 

@@ -131,8 +131,18 @@ local function ShowData(tbl, indent)
 	end
 end
 
+<<<<<<< HEAD
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
 local GetData_result = DataService:GetData()
 local HoneyMachine2026 = GetData_result.HoneyMachine2026
 ShowData(HoneyMachine2026)
+=======
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local Backpack = LocalPlayer.Backpack
+for _i, obj in pairs(Backpack:GetChildren()) do
+	if obj:HasTag("PetBoost") then
+		ShowData(obj)
+	end
+end
+>>>>>>> 6d6457fbc58cf9595ba23bc3e4ce37a6b399aac8

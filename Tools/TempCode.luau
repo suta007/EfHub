@@ -1,4 +1,6 @@
+local LocalPlayer = game:GetService("Players").LocalPlayer
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+<<<<<<< HEAD
 local GiftData = require(ReplicatedStorage.Data.GiftData)
 local MarketplaceService = game:GetService("MarketplaceService")
 local infoType = Enum.InfoType.Product
@@ -39,3 +41,18 @@ if success and productInfo then
 else
 	warn("เกิดข้อผิดพลาด: ไม่สามารถดึงข้อมูลของสินค้า ID " .. tostring(productId) .. " ได้")
 end
+=======
+local PetUtils = require(ReplicatedStorage.Modules.PetServices.PetUtilities)
+
+local equipPets = PetUtils:GetPetsSortedByAge(LocalPlayer, 0, true, true)
+
+for i, pet in ipairs(equipPets) do
+	print(i, pet.UUID)
+end
+
+local Backpack = LocalPlayer.Backpack
+for _i, obj in pairs(Backpack:GetChildren()) do
+	if obj:HasTag("PetBoost") then
+	end
+end
+>>>>>>> 6d6457fbc58cf9595ba23bc3e4ce37a6b399aac8

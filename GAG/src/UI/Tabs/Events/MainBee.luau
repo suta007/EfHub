@@ -29,6 +29,25 @@ local function HarvestHoneyFruits()
 	end
 end
 
+local function CompressHoney()
+	local Options = reg.Options
+	if not Options.tgCompressHoneyEnable or not Options.tgCompressHoneyEnable.Value then
+		return
+	end
+	local GetData_result = sData.DataService:GetData()
+	local HoneyMachine2026 = GetData_result.HoneyMachine2026
+	local HoneyStored = HoneyMachine2026.HoneyStored
+	local IsRunning = HoneyMachine2026.IsRunning
+	if tonumber(HoneyStored) > 0 then
+		sData.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("CollectHoney")
+		task.wait(1)
+	end
+	if not IsRunning then
+		sData.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("SubmitAll")
+		task.wait(1)
+	end
+end
+
 function MainBee.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
@@ -47,6 +66,18 @@ function MainBee.Initialize(registry, tab)
 			EfTasks.ToggleTask("AutoHarvestHoney", Value, function()
 				HarvestHoneyFruits()
 				task.wait(1)
+			end)
+		end,
+	})
+
+	MainBeeSection:AddToggle("tgCompressHoneyEnable", {
+		Title = "Compress Honey Enable",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+			EfTasks.ToggleTask("AutoCompressHoney", Value, function()
+				CompressHoney()
+				task.wait(10)
 			end)
 		end,
 	})

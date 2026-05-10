@@ -121,14 +121,9 @@ function PetsTab.Initialize(registry)
 				task.wait(2)
 				CheckLevelTask = task.spawn(function()
 					while task.wait(60) do
-						local success2, err2 = pcall(function()
+						pcall(function()
 							Pets.TargetPetLevelCheck()
 						end)
-						if not success2 then
-							reg.Log("TargetPetLevelCheck failed: " .. tostring(err2))
-						else
-							reg.Log("Loop TargetPetLevelCheck Success!")
-						end
 					end
 				end)
 			else
@@ -141,6 +136,14 @@ function PetsTab.Initialize(registry)
 			QuickSave()
 		end,
 	})
+
+	MutantSection:AddButton({
+		Title = "Reset Farm Pet UUID",
+		Callback = function()
+			Pets.resetFarmUUID()
+		end,
+	})
+
 	MutantSection:AddDropdown("ddMutantMethod", {
 		Title = "Select Mutant Method",
 		Values = { "None", "Nightmare", "Mutation", "Level", "Elephant", "Venom", "Everchanted" },
@@ -564,6 +567,58 @@ function PetsTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			Pets.AcceptGiftPets(Value)
+			QuickSave()
+		end,
+	})
+
+	--#endregion
+
+	--#region Boost Pet Section
+	local BoostPetSection = Tabs.Pets:AddCollapsibleSection("Boost Pets", false)
+
+	BoostPetSection:AddDropdown("ddToyPetType", {
+		Title = "Select Toy Pet Type",
+		Values = sData.PetsDataTable,
+		Default = {},
+		Multi = true,
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Small Pet Toy
+	BoostPetSection:AddToggle("tgSmToy", {
+		Title = "Enable Auto Small Pet Toy",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Medium Pet Toy
+	BoostPetSection:AddToggle("tgMdToy", {
+		Title = "Enable Auto Medium Pet Toy",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	--Large Pet Toy
+	BoostPetSection:AddToggle("tgLgToy", {
+		Title = "Enable Auto Large Pet Toy",
+		Default = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	BoostPetSection:AddToggle("tgBoostPetEn", {
+		Title = "Enable Auto Boost Pet",
+		Default = false,
+		Callback = function(Value)
+			EfTasks.ToggleTask("BoostPet", Value, function()
+				Pets.BoostPet()
+				task.wait(1)
+			end)
 			QuickSave()
 		end,
 	})

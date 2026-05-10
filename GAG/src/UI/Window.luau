@@ -19,7 +19,7 @@ function Window.Initialize(Registry)
 
 	Registry.Interface = Fluent:CreateWindow({
 		Title = "Grow a Garden",
-		SubTitle = "2569.04.27-14.00",
+		SubTitle = "2569.05.08-20.20",
 		TabWidth = 100,
 		Size = UDim2.fromOffset(580, 300),
 		Resize = false,
@@ -105,6 +105,91 @@ function Window.QuickSave()
 	if not reg.IsLoading then
 		reg.SaveManager:Save("GrowAGarden")
 	end
+end
+
+function Window.myMenu()
+	local Player = game:GetService("Players")
+	local LocalPlayer = Player.LocalPlayer
+	local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+	local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	local myGUIParent = PlayerGui
+
+	local Utils = reg.Utils
+	local myFarm = Utils.GetMyFarm()
+
+	local spawnPoint
+	if myFarm then
+		if myFarm:FindFirstChild("Spawn_Point") then
+			spawnPoint = myFarm.Spawn_Point.CFrame
+		end
+	end
+
+	local ageBreakPos = CFrame.new(-287.182, 5, 168.304)
+
+	local myGUI = Instance.new("ScreenGui", myGUIParent)
+	myGUI.Name = "EfHubGUI"
+	myGUI.IgnoreGuiInset = true
+
+	local myFrame = Instance.new("Frame", myGUI)
+	myFrame.Size = UDim2.new(0.4, 0, 0, 100)
+	myFrame.Position = UDim2.new(0.6, 0, 0, 12)
+
+	myFrame.BackgroundTransparency = 1
+	myFrame.BorderSizePixel = 0
+
+	local lstLayout = Instance.new("UIListLayout", myFrame)
+	lstLayout.FillDirection = Enum.FillDirection.Horizontal
+	lstLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+	lstLayout.VerticalAlignment = Enum.VerticalAlignment.Top
+	lstLayout.SortOrder = Enum.SortOrder.LayoutOrder
+	lstLayout.Padding = UDim.new(0, 8)
+
+	local txtBtn1 = Instance.new("TextButton", myFrame)
+	txtBtn1.Size = UDim2.new(0, 44, 0, 44)
+	txtBtn1.Text = "🏠"
+	txtBtn1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	txtBtn1.BorderSizePixel = 0
+	txtBtn1.TextSize = 14
+	txtBtn1.TextXAlignment = Enum.TextXAlignment.Center
+	txtBtn1.TextYAlignment = Enum.TextYAlignment.Center
+	txtBtn1.LayoutOrder = 1
+	local btn1Conner = Instance.new("UICorner", txtBtn1)
+	btn1Conner.CornerRadius = UDim.new(0, 22)
+	txtBtn1.Activated:Connect(function()
+		Character:PivotTo(spawnPoint)
+	end)
+
+	local txtBtn2 = Instance.new("TextButton", myFrame)
+	txtBtn2.Size = UDim2.new(0, 44, 0, 44)
+	txtBtn2.Text = "🐙"
+	txtBtn2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	txtBtn2.BorderSizePixel = 0
+	txtBtn2.TextSize = 14
+	txtBtn2.TextXAlignment = Enum.TextXAlignment.Center
+	txtBtn2.TextYAlignment = Enum.TextYAlignment.Center
+	txtBtn2.LayoutOrder = 2
+	local btn2Conner = Instance.new("UICorner", txtBtn2)
+	btn2Conner.CornerRadius = UDim.new(0, 22)
+
+	txtBtn2.Activated:Connect(function()
+		Character:PivotTo(ageBreakPos)
+	end)
+
+	local txtBtn3 = Instance.new("TextButton", myFrame)
+	txtBtn3.Size = UDim2.new(0, 44, 0, 44)
+	txtBtn3.Text = "💎"
+	txtBtn3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+	txtBtn3.BorderSizePixel = 0
+	txtBtn3.TextSize = 14
+	txtBtn3.TextXAlignment = Enum.TextXAlignment.Center
+	txtBtn3.TextYAlignment = Enum.TextYAlignment.Center
+	txtBtn3.LayoutOrder = 3
+	local btn3Conner = Instance.new("UICorner", txtBtn3)
+	btn3Conner.CornerRadius = UDim.new(0, 22)
+	txtBtn3.Activated:Connect(function()
+		local Options = reg.Options
+		Options.tgDisable3D:SetValue(true)
+	end)
 end
 
 return Window

@@ -8,6 +8,14 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 local VirtualUser = game:GetService("VirtualUser")
 local getgenv = (getfenv() :: any).getgenv
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Modules = ReplicatedStorage:WaitForChild("Modules") :: any
+local DataService = require(Modules.DataService)
+
+local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+
+local autoBuy = true
+
 local TargetFolder = getgenv().GetHUI and getgenv().GetHUI() or game:GetService("CoreGui")
 local oldFolder = TargetFolder:FindFirstChild("AutoAfxGUI")
 if oldFolder then
@@ -75,4 +83,135 @@ function AcceptGiftPets()
 	end)
 end
 
+local buySeedData = {
+	"Orange Tulip",
+	"Daffodil",
+	"Watermelon",
+	"Pumpkin",
+	"Apple",
+	"Bamboo",
+	"Coconut",
+	"Cactus",
+	"Dragon Fruit",
+	"Mango",
+	"Grape",
+	"Mushroom",
+	"Pepper",
+	"Cacao",
+	"Sunflower",
+	"Beanstalk",
+	"Ember Lily",
+	"Sugar Apple",
+	"Burning Bud",
+	"Giant Pinecone",
+	"Elder Strawberry",
+	"Romanesco",
+	"Crimson Thorn",
+	"Zebrazinkle",
+	"Octobloom",
+	"Alien Apple",
+	"Eggsnapper",
+}
+
+local buyGearData = {
+	"Watering Can",
+	"Trading Ticket",
+	"Trowel",
+	"Recall Wrench",
+	"Basic Sprinkler",
+	"Advanced Sprinkler",
+	"Medium Toy",
+	"Pet Lead",
+	"Medium Treat",
+	"Godly Sprinkler",
+	"Magnifying Glass",
+	"Master Sprinkler",
+	"Cleaning Spray",
+	"Favorite Tool",
+	"Harvest Tool",
+	"Grandmaster Sprinkler",
+	"Levelup Lollipop",
+	"Cleansing Pet Shard",
+}
+
+local buyEasterData = { "Springtide Egg" }
+local function startAutoBuy()
+	if not autoBuy then
+		return
+	end
+	local GetData_result = DataService:GetData()
+	local SeedStocks = GetData_result.SeedStocks.Shop.Stocks
+	task.spawn(function()
+		pcall(function()
+			for itemId, itemInfo in pairs(SeedStocks) do
+				local ItemName = itemId
+				local StockAmount = tonumber(itemInfo.Stock) or 0
+				if table.find(buySeedData, ItemName) then
+					if StockAmount > 0 then
+						for _i = 1, StockAmount do
+							GameEvents.BuySeedStock:FireServer("Shop", ItemName)
+							task.wait()
+						end
+					end
+				end
+			end
+		end)
+	end)
+
+	local GearStocks = GetData_result.GearStock.Stocks
+	task.spawn(function()
+		pcall(function()
+			for itemId, itemInfo in pairs(GearStocks) do
+				local ItemName = itemId
+				local StockAmount = tonumber(itemInfo.Stock) or 0
+				if table.find(buyGearData, ItemName) then
+					if StockAmount > 0 then
+						for _i = 1, StockAmount do
+							GameEvents.BuyGearStock:FireServer(ItemName)
+							task.wait()
+						end
+					end
+				end
+			end
+		end)
+	end)
+
+	local EasterStocks = GetData_result.EventShopStock["Easter Seed Shop"].Stocks
+	task.spawn(function()
+		pcall(function()
+			for itemId, itemInfo in pairs(EasterStocks) do
+				local ItemName = itemId
+				local StockAmount = tonumber(itemInfo.Stock) or 0
+				if table.find(buyEasterData, ItemName) then
+					if StockAmount > 0 then
+						for _i = 1, StockAmount do
+							GameEvents.BuyEventShopStock:FireServer(ItemName, "Easter Seed Shop")
+							task.wait()
+						end
+					end
+				end
+			end
+		end)
+	end)
+end
+
+local function startPollingTimer()
+	local lastExecutedMinute = -1
+
+	while true do
+		local currentMin = os.date("*t").min
+
+		-- ถ้านาทีปัจจุบันหาร 5 ลงตัว และยังไม่เคยทำงานในนาทีนี้
+		if currentMin % 5 == 0 and currentMin ~= lastExecutedMinute then
+			lastExecutedMinute = currentMin
+			task.spawn(startAutoBuy)
+		end
+
+		-- เช็คเวลาใหม่ทุกๆ 1 วินาที
+		task.wait(1)
+	end
+end
+
 AcceptGiftPets()
+startAutoBuy()
+task.spawn(startPollingTimer)

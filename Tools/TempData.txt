@@ -1,4 +1,5 @@
 Script initialized successfully.
+<<<<<<< HEAD
 [13:18:32] ROOT/HoneyMachine2026/SubmittedPlants
 [13:18:32] ROOT/HoneyMachine2026/HoneyStored
 
@@ -342,3 +343,71 @@ Script initialized successfully.
     [MaxStock] : 0
 [13:23:05] ROOT/GardenCoinShopStock/LastRefreshed
   1778394185.165792
+=======
+[UUID] : {b642c68f-f55a-4e0b-b064-0a6e6ccd501a}
+[PetData] : (Table)
+  [HatchedFrom] : Fake Egg
+  [LevelProgress] : 76.25904391517227
+  [Name] : Climmy
+  [Level] : 4
+  [EggName] : Common
+  [Boosts] : (Table)
+    [1] : (Table)
+      [BoostAmount] : 0.1
+      [Time] : 167.5
+      [BoostType] : PASSIVE_BOOST
+    [2] : (Table)
+      [BoostAmount] : 0.2
+      [Time] : 215.5
+      [BoostType] : PASSIVE_BOOST
+    [3] : (Table)
+      [BoostAmount] : 0.3
+      [Time] : 378.5
+      [BoostType] : PASSIVE_BOOST
+  [BaseWeight] : 1.0414611957073674
+  [Hunger] : 19665.393910473624
+[PetType] : Gummy Bear
+[UUID] : {fce4fd96-062e-42a0-ada9-b3f4fc2f8c66}
+[PetData] : (Table)
+  [HatchedFrom] : Fake Egg
+  [LevelProgress] : 78.29218833267228
+  [Name] : Katie
+  [Level] : 4
+  [EggName] : Common
+  [Boosts] : (Table)
+    [1] : (Table)
+      [BoostAmount] : 0.3
+      [Time] : 380.5
+      [BoostType] : PASSIVE_BOOST
+  [BaseWeight] : 1.1484539189285552
+  [Hunger] : 32444.793759421416
+[PetType] : Beaver
+[UUID] : {4b6ef0b2-f9aa-4139-bedd-d0a1c978c145}
+[PetData] : (Table)
+  [HatchedFrom] : Fake Egg
+  [LevelProgress] : 63.04365732967213
+  [Name] : Jackie
+  [Level] : 4
+  [EggName] : Common
+  [Boosts] : (Table)
+  [BaseWeight] : 0.8122900943962059
+  [Hunger] : 65591.44534410164
+[PetType] : Hazehound
+
+
+############
+
+
+Script initialized successfully.
+Pumpkin Lollipop x5
+Mega Lollipop x1
+Energy Chew x1
+Medium Pet Treat x6884[XP Boost]
+Levelup Lollipop x1789
+Small Pet Toy x14858[Passive Boost]
+Gold Lollipop x2
+Small Pet Treat x16019[XP Boost]
+Medium Pet Toy x4987[Passive Boost]
+Silver Lollipop x18
+Large Pet Toy x503[Passive Boost]
+>>>>>>> 6d6457fbc58cf9595ba23bc3e4ce37a6b399aac8
