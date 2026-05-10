@@ -100,14 +100,14 @@ function Shop.UpdateBuyList()
 		},
 		[Shop.ShopKey.HoneyCoin] = {
 			Enabled = Options.tgBuyHoneyCoinEnable.Value,
-			Items = GetSelectedItems(Options.ddBuyHoneyCoin.Value),
+			Items = Options.ddBuyHoneyCoin and GetSelectedItems(Options.ddBuyHoneyCoin.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "Honey Coin Shop",
 		},
 		[Shop.ShopKey.HoneySeed] = {
 			Enabled = Options.tgBuyHoneySeedEnable.Value,
-			Items = GetSelectedItems(Options.ddBuyHoneySeed.Value),
+			Items = Options.ddBuyHoneySeed and GetSelectedItems(Options.ddBuyHoneySeed.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "Honey Seed Shop",
