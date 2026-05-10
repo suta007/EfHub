@@ -1,4 +1,4 @@
-Script initialized successfully.
+game:GetService("ReplicatedStorage").Data.EventShopData
 [Honey Coin Shop] : (Table)
   [Hive Crate] : (Table)
     [LayoutOrder] : 55

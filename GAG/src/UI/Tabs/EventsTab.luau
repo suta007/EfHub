@@ -27,7 +27,7 @@ function EventsTab.Initialize(registry)
 	reg.IsEasterHarvesting = false
 	reg.IsHuntEgg = false
 	Tabs.Events = Interface:AddTab({ Title = "Events", Icon = "calendar" })
-
+	reg.EVENT_DATA = require(reg.sData.Data:WaitForChild("EventShopData") :: any)
 	local Events = LoadEvents()
 	--Events.Egghunt.Initialize(reg, Tabs.Events)
 	Events.MainBee.Initialize(reg, Tabs.Events)
