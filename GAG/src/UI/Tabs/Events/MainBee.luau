@@ -48,6 +48,31 @@ local function CompressHoney()
 	end
 end
 
+local function KeepPos()
+	local Options = reg.Options
+	local Utils = reg.Utils
+	if not Options.tgKeepPosEnable or not Options.tgKeepPosEnable.Value then
+		return
+	end
+	local posStr = Options.ipKeepPos.Value
+	if posStr == "" then
+		reg.Log("Please set position.")
+		return
+	end
+	local targetPos = Utils.ParseVector3(posStr)
+	if not targetPos then
+		reg.Log("Invalid position format.")
+		return
+	end
+
+	local character = sData.Character
+	local currentPos = character.PrimaryPart.Position
+	local distance = (currentPos - targetPos).Magnitude
+	if distance > 10 then
+		character:PivotTo(CFrame.new(targetPos))
+	end
+end
+
 function MainBee.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
@@ -78,6 +103,49 @@ function MainBee.Initialize(registry, tab)
 			EfTasks.ToggleTask("AutoCompressHoney", Value, function()
 				CompressHoney()
 				task.wait(10)
+			end)
+		end,
+	})
+
+	local KeepPosSection = EventsTab:AddCollapsibleSection("MainBee", false)
+	KeepPosSection:AddButton({
+		Title = "Set Position",
+		Callback = function()
+			local Pos = sData.Character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipKeepPos:SetValue(formattedPos)
+			QuickSave()
+		end,
+	})
+	KeepPosSection:AddInput("ipKeepPos", {
+		Title = "Position",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	KeepPosSection:AddInput("ipKeepPosDelay", {
+		Title = "Delay Check Time (s)",
+		Default = 60,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	KeepPosSection:AddToggle("tgKeepPosEnable", {
+		Title = "Keep Position Enable",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+			EfTasks.ToggleTask("AutoKeepPos", Value, function()
+				local delay = tonumber(Options.ipKeepPosDelay.Value) or 60
+				KeepPos()
+				task.wait(delay)
 			end)
 		end,
 	})
