@@ -107,7 +107,7 @@ function MainBee.Initialize(registry, tab)
 		end,
 	})
 
-	local KeepPosSection = EventsTab:AddCollapsibleSection("MainBee", false)
+	local KeepPosSection = EventsTab:AddCollapsibleSection("Keep Position", false)
 	KeepPosSection:AddButton({
 		Title = "Set Position",
 		Callback = function()
