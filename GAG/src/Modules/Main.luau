@@ -108,6 +108,7 @@ function Main.AutoPlant()
 				end
 			end
 		end
+		Utils.UnequipTool()
 	end)
 end
 
