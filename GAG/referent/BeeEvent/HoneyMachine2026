@@ -1,0 +1,212 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
+local GetData_result = DataService:GetData()
+local HoneyMachine2026 = GetData_result.HoneyMachine2026
+ShowData(HoneyMachine2026)
+
+
+Script initialized successfully.
+[SubmittedPlants] : (Table)
+[HoneyStored] : 0
+[IsRunning] : false
+[TimeLeft] : 0
+[PlantWeight] : 0
+
+
+
+Script initialized successfully.
+[SubmittedPlants] : (Table)
+  [{f30ce4a7-713e-4809-be65-5881f0130a0e}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 3462858
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Gold
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+[HoneyStored] : 0
+[IsRunning] : false
+[TimeLeft] : 0
+[PlantWeight] : 0.32725
+
+
+-------------
+
+Script initialized successfully.
+[SubmittedPlants] : (Table)
+  [{bc3c6ca7-e206-47af-95fa-b8654192c057}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 7012742
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{5013a1fd-0f54-4016-804b-f14d2ab9f0d8}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 9756371
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{e0b06ad7-faf8-46b5-b829-ff897ba0596a}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 897595
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{f53d23c8-9091-4337-b105-d7dc37c4b912}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 302037
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{e1c298dc-bd58-46f5-9ed1-84fdea08a196}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 5474870
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{4af74a2b-4c00-467d-899f-c713e2d72b01}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 5681092
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{b3eac823-ab4e-4991-8b67-60db99e9929b}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 561127
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{06271928-b8ee-4c37-8bbb-e04638366cf9}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 8719198
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{f30ce4a7-713e-4809-be65-5881f0130a0e}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 3462858
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Gold
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{f4e5b588-8a84-4bf6-938f-2e50348af098}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 9755158
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+[HoneyStored] : 0
+[IsRunning] : true
+[TimeLeft] : 47.9862275200021
+[PlantWeight] : 3
+
+
+----
+
+
+
+Script initialized successfully.
+[SubmittedPlants] : (Table)
+  [{bc3c6ca7-e206-47af-95fa-b8654192c057}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 7012742
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{5013a1fd-0f54-4016-804b-f14d2ab9f0d8}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 9756371
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{e0b06ad7-faf8-46b5-b829-ff897ba0596a}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 897595
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{f53d23c8-9091-4337-b105-d7dc37c4b912}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 302037
+    [PollinationTier] : Pollinated_Poor
+    [Variant] : Normal
+    [MutationString] : Pollinated (Poor)
+    [WeightMultiplier] : 1
+  [{e1c298dc-bd58-46f5-9ed1-84fdea08a196}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 5474870
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{4af74a2b-4c00-467d-899f-c713e2d72b01}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 5681092
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{b3eac823-ab4e-4991-8b67-60db99e9929b}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 561127
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{06271928-b8ee-4c37-8bbb-e04638366cf9}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 8719198
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{f30ce4a7-713e-4809-be65-5881f0130a0e}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 3462858
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Gold
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+  [{f4e5b588-8a84-4bf6-938f-2e50348af098}] : (Table)
+    [ItemName] : Honey Carrot
+    [IsFavorite] : false
+    [Seed] : 9755158
+    [PollinationTier] : Pollinated_Fair
+    [Variant] : Normal
+    [MutationString] : Pollinated (Fair)
+    [WeightMultiplier] : 1
+[HoneyStored] : 4
+[IsRunning] : false
+[TimeLeft] : 0
+[PlantWeight] : 0

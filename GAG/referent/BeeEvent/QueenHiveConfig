@@ -1,0 +1,91 @@
+--game:GetService("ReplicatedStorage").Data.BeeEvent.QueenHiveConfig
+
+Script initialized successfully.
+[SeedConversionTimes] : (Table)
+  [Honey Giant Pinecone] : 64800
+  [Honey Watermelon] : 10800
+  [Honey Corn] : 3600
+  [Honey Zebrazinkle] : 86400
+  [Honey Bamboo] : 10800
+  [Honey Grape] : 43200
+  [Honey Hive Petal] : 43200
+  [Honey Mango] : 43200
+  [Honey Ambercomb] : 3600
+  [Honey Strawberry] : 300
+  [Honey Carrot] : 300
+  [Honey Buttercup] : 1200
+  [Honey Stingpetal] : 1200
+  [Honey Honey Daisy] : 900
+  [Honey Elder Strawberry] : 64800
+  [Honey Crimson Thorn] : 86400
+  [Honey Daffodil] : 3600
+  [Honey Bee Bell] : 21600
+  [Honey Burning Bud] : 64800
+  [Honey Bumble Bulb] : 64800
+  [Honey Ember Lily] : 64800
+  [Honey Tomato] : 3600
+  [Honey Alien Apple] : 86400
+  [Honey Blueberry] : 1200
+  [Honey Romanesco] : 86400
+  [Honey Octobloom] : 86400
+  [Honey Sunflower] : 43200
+  [Honey Honey Dipper] : 10800
+  [Honey Pepper] : 43200
+  [Honey Beanstalk] : 64800
+  [Honey Pumpkin] : 10800
+  [Honey Mushroom] : 43200
+  [Honey Coneflower] : 10800
+  [Honey Cacao] : 43200
+  [Honey Pollenvine] : 86400
+  [Honey Dragon Fruit] : 21600
+  [Honey Cactus] : 21600
+  [Honey Apple] : 10800
+  [Honey Coconut] : 21600
+  [Honey Sugar Apple] : 64800
+  [Honey Honey Dew] : 1200
+  [Honey Birds of Paradise] : 21600
+  [Honey Woodbine] : 3600
+[RequiredHoneyCoinCosts] : (Table)
+  [Honey Giant Pinecone] : 29750
+  [Honey Watermelon] : 175
+  [Honey Corn] : 263
+  [Honey Zebrazinkle] : 56000
+  [Honey Bamboo] : 140
+  [Honey Grape] : 7875
+  [Honey Hive Petal] : 25000
+  [Honey Mango] : 6125
+  [Honey Ambercomb] : 3500
+  [Honey Strawberry] : 88
+  [Honey Carrot] : 25
+  [Honey Buttercup] : 438
+  [Honey Stingpetal] : 500
+  [Honey Honey Daisy] : 350
+  [Honey Elder Strawberry] : 31500
+  [Honey Crimson Thorn] : 45500
+  [Honey Daffodil] : 700
+  [Honey Bee Bell] : 10000
+  [Honey Burning Bud] : 28000
+  [Honey Bumble Bulb] : 50000
+  [Honey Ember Lily] : 24500
+  [Honey Tomato] : 175
+  [Honey Alien Apple] : 105000
+  [Honey Blueberry] : 131
+  [Honey Romanesco] : 38500
+  [Honey Octobloom] : 66500
+  [Honey Sunflower] : 21000
+  [Honey Honey Dipper] : 4000
+  [Honey Pepper] : 8750
+  [Honey Beanstalk] : 15750
+  [Honey Pumpkin] : 263
+  [Honey Mushroom] : 2625
+  [Honey Coneflower] : 7000
+  [Honey Cacao] : 11375
+  [Honey Pollenvine] : 35000
+  [Honey Dragon Fruit] : 4813
+  [Honey Cactus] : 3500
+  [Honey Apple] : 1050
+  [Honey Coconut] : 2625
+  [Honey Sugar Apple] : 19250
+  [Honey Honey Dew] : 1250
+  [Honey Birds of Paradise] : 12500
+  [Honey Woodbine] : 2000

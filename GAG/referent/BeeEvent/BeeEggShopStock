@@ -1,0 +1,16 @@
+--[[
+    
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local DataService = require(ReplicatedStorage.Modules.DataService)
+    local GetData_result = DataService:GetData()
+    local BeeEggShopStock = GetData_result.BeeEggShopStock
+    
+]]
+[Egg] : 5927975
+[Stocks] : (Table)
+  [Common Bee Egg] : (Table)
+    [Stock] : 4
+    [MaxStock] : 4
+  [Rare Bee Egg] : (Table)
+    [Stock] : 2
+    [MaxStock] : 2

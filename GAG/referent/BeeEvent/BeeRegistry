@@ -1,0 +1,162 @@
+--game:GetService("ReplicatedStorage").Data.BeeEvent.BeeRegistry
+
+Script initialized successfully.
+[Pollen Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 8
+    [PollinationRate] : 0.5
+    [PollinationQuality] : 2
+  [Name] : Pollen Bee
+  [Description] : Slow and steady. Leaves better pollen behind
+  [Rarity] : Common
+  [Icon] : rbxassetid://77018495554376
+  [DisplayName] : Pollen Bee
+[Turbo Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 20
+    [PollinationRate] : 4
+    [PollinationQuality] : 2
+  [Name] : Turbo Bee
+  [Description] : Extremely fast and productive, but less precise than royal bees
+  [Rarity] : Mythical
+  [Icon] : rbxassetid://119538782041708
+  [DisplayName] : Turbo Bee
+[Illusion Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 10
+    [PollinationRate] : 3
+    [PollinationQuality] : 3
+  [Name] : Illusion Bee
+  [Description] : Every ~60 seconds creates a illusion copy of a random bee for 20 seconds
+  [Ability] : IllusionCopy
+  [Rarity] : Mythical
+  [Icon] : rbxassetid://128874392069355
+  [DisplayName] : Illusion Bee
+[Clockwork Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 10
+    [PollinationRate] : 1
+    [PollinationQuality] : 1
+  [Name] : Clockwork Bee
+  [Description] : Every ~30 seconds increases the speed of 2 random bees by 10 for 10 seconds
+  [Ability] : ClockworkWindup
+  [Rarity] : Rare
+  [Icon] : rbxassetid://137877257089260
+  [DisplayName] : Clockwork Bee
+[Jester Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 16
+    [PollinationRate] : 5
+    [PollinationQuality] : 2
+  [Name] : Jester Bee
+  [Description] : Every ~60 seconds increases the pollination quality of the worst (rarity, stats) bee by 4 for 15 seconds
+  [Ability] : JesterFoolishBlessing
+  [Rarity] : Rare
+  [Icon] : rbxassetid://105546286970640
+  [DisplayName] : Jester Bee
+[Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 10
+    [PollinationRate] : 1
+    [PollinationQuality] : 1
+  [Name] : Bee
+  [Description] : A reliable all-rounder. Nothing fancy, gets the job done
+  [Rarity] : Common
+  [Icon] : rbxassetid://129524260927125
+  [DisplayName] : Bee
+[Princess Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 8
+    [PollinationRate] : 2
+    [PollinationQuality] : 5
+  [Name] : Princess Bee
+  [Description] : Every ~60 seconds increases the pollination quality of the strongest (rarity, stats) bee by 4 for 15 seconds
+  [Ability] : PrincessRoyalBlessing
+  [Rarity] : Mythical
+  [Icon] : rbxassetid://140542533276967
+  [DisplayName] : Princess Bee
+[Treasure Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 7
+    [PollinationRate] : 1
+    [PollinationQuality] : 1
+  [Name] : Treasure Bee
+  [Description] : Freshly pollinated plants have a 10% chance to increase in quality
+  [Ability] : TreasureQualityUpgrade
+  [Rarity] : Mythical
+  [Icon] : rbxassetid://73782624306318
+  [DisplayName] : Treasure Bee
+[Panic Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 5
+    [PollinationRate] : 1
+    [PollinationQuality] : 1
+  [Name] : Panic Bee
+  [Description] : Weak normally, but every ~60 seconds enters Panic Mode and multiplies all its stats by 6 for 10 seconds
+  [Ability] : PanicMode
+  [Rarity] : Rare
+  [Icon] : rbxassetid://78474711153726
+  [DisplayName] : Panic Bee
+[Swift Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 15
+    [PollinationRate] : 2
+    [PollinationQuality] : 0.5
+  [Name] : Swift Bee
+  [Description] : Quick and light. Pollinates fast, but with weaker quality
+  [Rarity] : Common
+  [Icon] : rbxassetid://110402269718567
+  [DisplayName] : Swift Bee
+[Baby Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 8
+    [CanPollinate] : false
+    [PollinationRate] : 0
+    [PollinationQuality] : 0
+  [Name] : Baby Bee
+  [Description] : Does not pollinate, but makes hive eggs hatch 1.5x faster
+  [Ability] : BabyHatchBoost
+  [Rarity] : Rare
+  [Icon] : rbxassetid://125135334452740
+  [DisplayName] : Baby Bee
+[Merchant Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 12
+    [PollinationRate] : 0.75
+    [PollinationQuality] : 0.5
+  [Name] : Merchant Bee
+  [Description] : Pollinated plants converted to honey coins give a 1.1x bonus
+  [Ability] : MerchantHoneyCoinBonus
+  [Rarity] : Rare
+  [Icon] : rbxassetid://99060244598419
+  [DisplayName] : Merchant Bee
+[Busy Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 12
+    [PollinationRate] : 2.5
+    [PollinationQuality] : 1
+  [Name] : Busy Bee
+  [Description] : Works at a frantic pace, but its pollen is less refined
+  [Rarity] : Rare
+  [Icon] : rbxassetid://86126594673303
+  [DisplayName] : Busy Bee
+[Royal Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 12
+    [PollinationRate] : 1.5
+    [PollinationQuality] : 5
+  [Name] : Royal Bee
+  [Description] : Graceful and powerful. High quality pollen at a steady pace
+  [Rarity] : Mythical
+  [Icon] : rbxassetid://134899676615349
+  [DisplayName] : Royal Bee
+[Rumble Bee] : (Table)
+  [Stats] : (Table)
+    [Speed] : 6
+    [PollinationRate] : 1
+    [PollinationQuality] : 2.5
+  [Name] : Rumble Bee
+  [Description] : Heavy and slow, but pollinates with excellent quality
+  [Rarity] : Rare
+  [Icon] : rbxassetid://120045298285832
+  [DisplayName] : Rumble Bee

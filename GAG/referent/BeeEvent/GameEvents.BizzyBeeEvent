@@ -1,0 +1,12 @@
+--game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent
+
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.BeeColonyAbilityEffectsService
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.BizzyBeeEventPopupSeenRE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.BizzyBeeHidePopupRE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.BizzyBeeShowPopupRE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.BizzyBeeSignBE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.DestroyBeeRE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.HatchBeeSwarmEgg
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.PlaceBeeEggRE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.ReplaceBeeRE
+game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent.SkipBeeEggHatchTime

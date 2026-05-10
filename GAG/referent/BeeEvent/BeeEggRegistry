@@ -1,0 +1,84 @@
+--game:GetService("ReplicatedStorage").Data.BeeEvent.BeeEggRegistry
+
+Script initialized successfully.
+[BeeNames] : (Table)
+  [Common Bee Egg] : Common Bee Egg
+  [Rare Bee Egg] : Rare Bee Egg
+  [Mythical Bee Egg] : Mythical Bee Egg
+[RarityNameColors] : (Table)
+  [Mythical] : 0.662745, 0.329412, 1
+  [Rare] : 0.0156863, 0.466667, 0.992157
+  [Common] : 0.780392, 0.780392, 0.780392
+[Entries] : (Table)
+  [Common Bee Egg] : (Table)
+    [Price] : 10
+    [BeeWeights] : (Table)
+      [1] : (Table)
+        [Weight] : 30
+        [BeeName] : Bee
+      [2] : (Table)
+        [Weight] : 15
+        [BeeName] : Swift Bee
+      [3] : (Table)
+        [Weight] : 15
+        [BeeName] : Pollen Bee
+      [4] : (Table)
+        [Weight] : 5
+        [BeeName] : Clockwork Bee
+      [5] : (Table)
+        [Weight] : 3
+        [BeeName] : Baby Bee
+    [Rarity] : Common
+    [NameColor] : 0.780392, 0.780392, 0.780392
+    [Color] : 0.780392, 0.780392, 0.780392
+    [HatchTime] : 300
+    [Icon] : rbxassetid://95209902180915
+    [StockChance] : 1
+  [Rare Bee Egg] : (Table)
+    [Price] : 100
+    [BeeWeights] : (Table)
+      [1] : (Table)
+        [Weight] : 30
+        [BeeName] : Busy Bee
+      [2] : (Table)
+        [Weight] : 30
+        [BeeName] : Rumble Bee
+      [3] : (Table)
+        [Weight] : 10
+        [BeeName] : Merchant Bee
+      [4] : (Table)
+        [Weight] : 3
+        [BeeName] : Jester Bee
+      [5] : (Table)
+        [Weight] : 1
+        [BeeName] : Panic Bee
+    [Rarity] : Rare
+    [NameColor] : 0.0156863, 0.466667, 0.992157
+    [Color] : 0.0156863, 0.466667, 0.992157
+    [HatchTime] : 1800
+    [Icon] : rbxassetid://105215475946278
+    [StockChance] : 3
+  [Mythical Bee Egg] : (Table)
+    [Price] : 500
+    [BeeWeights] : (Table)
+      [1] : (Table)
+        [Weight] : 30
+        [BeeName] : Royal Bee
+      [2] : (Table)
+        [Weight] : 30
+        [BeeName] : Turbo Bee
+      [3] : (Table)
+        [Weight] : 10
+        [BeeName] : Treasure Bee
+      [4] : (Table)
+        [Weight] : 3
+        [BeeName] : Princess Bee
+      [5] : (Table)
+        [Weight] : 1
+        [BeeName] : Illusion Bee
+    [Rarity] : Mythical
+    [NameColor] : 0.662745, 0.329412, 1
+    [Color] : 0.662745, 0.329412, 1
+    [HatchTime] : 3600
+    [Icon] : rbxassetid://72198514955680
+    [StockChance] : 10

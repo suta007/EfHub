@@ -1,0 +1,957 @@
+Script initialized successfully.
++50 Premium Springtide Egg
+  ProductId: 3576525035
+  PriceInRobux: 4999
+  IsForSale: true
+Cactus Seed
+  ProductId: 3260940714
+  PriceInRobux: 497
+  IsForSale: true
++10 Artisan Containers
+  ProductId: 3467103687
+  PriceInRobux: 1249
+  IsForSale: true
+Elder Strawberry Seed
+  ProductId: 3345148119
+  PriceInRobux: 957
+  IsForSale: true
++3 Exclusive Cosmetic Crates
+  ProductId: 3290672712
+  PriceInRobux: 575
+  IsForSale: true
+Banana Seed
+  ProductId: 3269001250
+  PriceInRobux: 459
+  IsForSale: true
++1 Premium Bird Egg
+  ProductId: 3512151971
+  PriceInRobux: 149
+  IsForSale: true
++10 Elemental Containers
+  ProductId: 3467110145
+  PriceInRobux: 1249
+  IsForSale: true
++10 Premium Winter Eggs
+  ProductId: 3483801744
+  PriceInRobux: 1249
+  IsForSale: true
++10 Exotic Nutty Chests
+  ProductId: 3420021044
+  PriceInRobux: 1699
+  IsForSale: true
+Legendary Egg
+  ProductId: 3276346676
+  PriceInRobux: 129
+  IsForSale: true
++10 Premium Spooky Eggs
+  ProductId: 3427163853
+  PriceInRobux: 9999999
+  IsForSale: true
+Medium Toy
+  ProductId: 3329526686
+  PriceInRobux: 189
+  IsForSale: true
++10 Exotic Safari Seed Packs
+  ProductId: 3449810471
+  PriceInRobux: 1699
+  IsForSale: true
++1 Premium Safari Egg
+  ProductId: 3444449487
+  PriceInRobux: 9999999
+  IsForSale: true
++3 Premium Christmas Eggs
+  ProductId: 3477922697
+  PriceInRobux: 429
+  IsForSale: true
++3 Premium Bird Eggs
+  ProductId: 3512151973
+  PriceInRobux: 429
+  IsForSale: true
+Carrot Seed
+  ProductId: 3248692171
+  PriceInRobux: 7
+  IsForSale: true
++3 Exotic Ancient Seed Packs
+  ProductId: 3323657547
+  PriceInRobux: 575
+  IsForSale: true
++10 Premium Primal Egg
+  ProductId: 3330286148
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Premium Fall Eggs
+  ProductId: 3401426984
+  PriceInRobux: 1249
+  IsForSale: true
+Kiwi Seed
+  ProductId: 3312011732
+  PriceInRobux: 529
+  IsForSale: true
+10 Premium Night Eggs
+  ProductId: 3282157312
+  PriceInRobux: 999999999
+  IsForSale: true
+Jungle Egg
+  ProductId: 3414586855
+  PriceInRobux: 149
+  IsForSale: true
+Favorite Tool
+  ProductId: 3281679093
+  PriceInRobux: 119
+  IsForSale: true
+Rafflesia Seed
+  ProductId: 3317729900
+  PriceInRobux: 215
+  IsForSale: true
++10 Festive Containers
+  ProductId: 3478031941
+  PriceInRobux: 1249
+  IsForSale: true
++10 Exotic Gourmet Seed Packs
+  ProductId: 3354839817
+  PriceInRobux: 999999999
+  IsForSale: true
++5000 Trade Tokens
+  ProductId: 3460379424
+  PriceInRobux: 5000
+  IsForSale: true
++50 Trade Tokens
+  ProductId: 3460376533
+  PriceInRobux: 50
+  IsForSale: true
+Prickly Pear Seed
+  ProductId: 3312013208
+  PriceInRobux: 599
+  IsForSale: true
+10 Premium Seed Packs
+  ProductId: 3273679012
+  PriceInRobux: 999999999
+  IsForSale: true
+Godly Sprinkler
+  ProductId: 3265889948
+  PriceInRobux: 149
+  IsForSale: true
++1 Premium Christmas Egg
+  ProductId: 3477922698
+  PriceInRobux: 149
+  IsForSale: true
++3 Premium Springtide Egg
+  ProductId: 3576524780
+  PriceInRobux: 429
+  IsForSale: true
+Artisan Container
+  ProductId: 3460380041
+  PriceInRobux: 149
+  IsForSale: true
+Open 10 - Exotic Seed Pack
+  ProductId: 3267548161
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Exclusive Cosmetic Crates
+  ProductId: 3290672848
+  PriceInRobux: 1699
+  IsForSale: true
++1 Exotic Ancient Seed Pack
+  ProductId: 3323657553
+  PriceInRobux: 999999999
+  IsForSale: true
+Eggplant
+  ProductId: 3273006109
+  PriceInRobux: 459
+  IsForSale: true
++1 Exotic Gem Chest
+  ProductId: 3460600740
+  PriceInRobux: 199
+  IsForSale: true
++1 Exotic Zen Seed Pack
+  ProductId: 3338826792
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Exotic Corrupt Chests
+  ProductId: 3345819472
+  PriceInRobux: 999999999
+  IsForSale: true
++1 Exotic Crafters Seed Pack
+  ProductId: 3306352279
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Exotic Fall Seed Packs
+  ProductId: 3407391666
+  PriceInRobux: 1699
+  IsForSale: true
+Beanstalk Seed
+  ProductId: 3284390402
+  PriceInRobux: 715
+  IsForSale: true
++3 Exotic Fall Seed Packs
+  ProductId: 3407391663
+  PriceInRobux: 575
+  IsForSale: true
++10 Premium Safari Eggs
+  ProductId: 3444449486
+  PriceInRobux: 9999999
+  IsForSale: true
+1,000¢
+  ProductId: 3250137355
+  PriceInRobux: 325
+  IsForSale: true
++50 Exotic Santa's Surprise Present
+  ProductId: 3472461584
+  PriceInRobux: 7450
+  IsForSale: true
+10 Premium Night Seed Packs
+  ProductId: 3282157462
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Iconic Gnome Crate
+  ProductId: 3300962950
+  PriceInRobux: 8000
+  IsForSale: true
+Crimson Thorn Seed
+  ProductId: 3414035789
+  PriceInRobux: 1149
+  IsForSale: true
++10 Exotic Sprout Seed Packs
+  ProductId: 3371226363
+  PriceInRobux: 999999999
+  IsForSale: true
++50 Exotic Easter Seed Pack
+  ProductId: 3570335691
+  PriceInRobux: 6999
+  IsForSale: true
++10 Exotic Spooky Chests
+  ProductId: 3438653517
+  PriceInRobux: 1699
+  IsForSale: true
++1 Exotic Summer Seed Pack
+  ProductId: 3311388942
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Exotic Easter Seed Pack
+  ProductId: 3563674024
+  PriceInRobux: 1699
+  IsForSale: true
+Beast Buttercup
+  ProductId: 3519865801
+  PriceInRobux: 799
+  IsForSale: true
+Pumpkin Seed
+  ProductId: 3248695199
+  PriceInRobux: 210
+  IsForSale: true
++10 Premium Christmas Eggs
+  ProductId: 3477922700
+  PriceInRobux: 1249
+  IsForSale: true
+Cacao Seed
+  ProductId: 3282870834
+  PriceInRobux: 679
+  IsForSale: true
+Pepper
+  ProductId: 3277675404
+  PriceInRobux: 629
+  IsForSale: true
++3 Premium New Year's Eggs
+  ProductId: 3489363338
+  PriceInRobux: 429
+  IsForSale: true
++250 Trade Tokens
+  ProductId: 3460378135
+  PriceInRobux: 250
+  IsForSale: true
++3 Exotic Crafters Seed Pack
+  ProductId: 3306352283
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Premium Oasis Egg
+  ProductId: 3317459188
+  PriceInRobux: 999999999
+  IsForSale: true
+Bell Pepper Seed
+  ProductId: 3312012483
+  PriceInRobux: 589
+  IsForSale: true
++1 Premium Primal Egg
+  ProductId: 3330286154
+  PriceInRobux: 99999
+  IsForSale: true
+Reindeer Root Seed
+  ProductId: 3482980939
+  PriceInRobux: 1699
+  IsForSale: true
++10 Exotic Flower Seed Pack
+  ProductId: 3295548781
+  PriceInRobux: 1699
+  IsForSale: true
++1 Premium Golden Egg
+  ProductId: 3568827015
+  PriceInRobux: 149
+  IsForSale: true
++3 Exotic Enchanted Chests
+  ProductId: 3394224239
+  PriceInRobux: 999999999
+  IsForSale: true
+100¢
+  ProductId: 3250137172
+  PriceInRobux: 49
+  IsForSale: true
+Mango Seed
+  ProductId: 3259333414
+  PriceInRobux: 580
+  IsForSale: true
++50 Premium Bird Eggs
+  ProductId: 3512151977
+  PriceInRobux: 4999
+  IsForSale: true
++10 Iconic Gnome Crate
+  ProductId: 3300962952
+  PriceInRobux: 8000
+  IsForSale: true
+Tomato Seed
+  ProductId: 3248696942
+  PriceInRobux: 79
+  IsForSale: true
++10 Exotic Enchanted Seed Pack
+  ProductId: 3387753638
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Premium Carnival Eggs
+  ProductId: 3497475846
+  PriceInRobux: 429
+  IsForSale: true
+3 Bug Eggs
+  ProductId: 3277814538
+  PriceInRobux: 575
+  IsForSale: true
+Giant Pinecone Seed
+  ProductId: 3330562080
+  PriceInRobux: 929
+  IsForSale: true
++1 Premium Carnival Egg
+  ProductId: 3497475839
+  PriceInRobux: 149
+  IsForSale: true
++10 Exotic Crafters Seed Pack
+  ProductId: 3306352284
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Exotic Santa's Surprise Present
+  ProductId: 3472461579
+  PriceInRobux: 1899
+  IsForSale: true
++10 Exotic Gem Chests
+  ProductId: 3460600736
+  PriceInRobux: 1699
+  IsForSale: true
+Sunflower Seed
+  ProductId: 3455804869
+  PriceInRobux: 699
+  IsForSale: true
++3 Premium Spooky Eggs
+  ProductId: 3427163854
+  PriceInRobux: 999999999
+  IsForSale: true
+Firework Fern
+  ProductId: 3490207231
+  PriceInRobux: 1299
+  IsForSale: true
+Feijoa Seed
+  ProductId: 3312013874
+  PriceInRobux: 679
+  IsForSale: true
+Buttercup Seed
+  ProductId: 3445155701
+  PriceInRobux: 14
+  IsForSale: true
+Avocado Seed
+  ProductId: 3312011056
+  PriceInRobux: 419
+  IsForSale: true
++50 Premium Golden Egg
+  ProductId: 3570157250
+  PriceInRobux: 4999
+  IsForSale: true
++10 Exotic Skyroot Chests
+  ProductId: 3379038159
+  PriceInRobux: 999999999
+  IsForSale: true
++50 Premium Christmas Egg
+  ProductId: 3478043835
+  PriceInRobux: 4999
+  IsForSale: true
+Blacksmith Bundle
+  ProductId: 3456989527
+  PriceInRobux: 375
+  IsForSale: true
++10 Exotic Enchanted Chests
+  ProductId: 3394224237
+  PriceInRobux: 999999999
+  IsForSale: true
+Potato Seed
+  ProductId: 3388363390
+  PriceInRobux: 839
+  IsForSale: true
+Peppermint Vine
+  ProductId: 3471911127
+  PriceInRobux: 1627
+  IsForSale: true
+Exotic Santa's Surprise Present
+  ProductId: 3472461585
+  PriceInRobux: 219
+  IsForSale: true
++1 Exotic Enchanted Seed Pack
+  ProductId: 3387753641
+  PriceInRobux: 199
+  IsForSale: true
++50 Trade Tokens
+  ProductId: 3460376533
+  PriceInRobux: 50
+  IsForSale: true
++1 Exotic Fall Seed Pack
+  ProductId: 3407391662
+  PriceInRobux: 199
+  IsForSale: true
++3 Exotic Safari Seed Packs
+  ProductId: 3449810472
+  PriceInRobux: 575
+  IsForSale: true
++3 Premium Oasis Egg
+  ProductId: 3317459186
+  PriceInRobux: 99999
+  IsForSale: true
++1 Premium Winter Egg
+  ProductId: 3483801741
+  PriceInRobux: 149
+  IsForSale: true
++1000 Trade Tokens
+  ProductId: 3460378800
+  PriceInRobux: 1000
+  IsForSale: true
+Common Egg
+  ProductId: 3276346455
+  PriceInRobux: 19
+  IsForSale: true
+Rare Egg
+  ProductId: 3276346557
+  PriceInRobux: 89
+  IsForSale: true
++3 Premium Winter Eggs
+  ProductId: 3483801745
+  PriceInRobux: 429
+  IsForSale: true
++1 Super Seed
+  ProductId: 3482199602
+  PriceInRobux: 199
+  IsForSale: true
+1 Bug Egg
+  ProductId: 3277000452
+  PriceInRobux: 149
+  IsForSale: true
+Corn Seed
+  ProductId: 3248692845
+  PriceInRobux: 135
+  IsForSale: true
++3 Exotic Summer Seed Pack
+  ProductId: 3311388951
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Exotic Culinarian Chests
+  ProductId: 3362680917
+  PriceInRobux: 999999999
+  IsForSale: true
+Uncommon Egg
+  ProductId: 3276346509
+  PriceInRobux: 39
+  IsForSale: true
+Basic Sprinkler
+  ProductId: 3265889601
+  PriceInRobux: 79
+  IsForSale: true
+Octobloom Seed
+  ProductId: 3461239818
+  PriceInRobux: 1487
+  IsForSale: true
+Watering Can
+  ProductId: 3260229242
+  PriceInRobux: 39
+  IsForSale: true
+Cleaning Spray
+  ProductId: 3306767043
+  PriceInRobux: 139
+  IsForSale: true
++10 Exotic Zen Seed Pack
+  ProductId: 3338826790
+  PriceInRobux: 999999999
+  IsForSale: true
+Recall Wrench
+  ProductId: 3282918403
+  PriceInRobux: 59
+  IsForSale: true
++10 Premium New Year's Eggs
+  ProductId: 3489363342
+  PriceInRobux: 1249
+  IsForSale: true
+Summer Pack
+  ProductId: 3311112163
+  PriceInRobux: 399
+  IsForSale: true
+Coconut Seed
+  ProductId: 3248744789
+  PriceInRobux: 435
+  IsForSale: true
+Watermelon Seed
+  ProductId: 3248697546
+  PriceInRobux: 195
+  IsForSale: true
++1000 Trade Tokens
+  ProductId: 3460378800
+  PriceInRobux: 1000
+  IsForSale: true
+Trading Ticket
+  ProductId: 3352931398
+  PriceInRobux: 19
+  IsForSale: true
++1 Exotic Enchanted Chest
+  ProductId: 3394224231
+  PriceInRobux: 999999999
+  IsForSale: true
+Pet Cleansing Shard
+  ProductId: 3379245220
+  PriceInRobux: 139
+  IsForSale: true
++1 Exotic Spooky Chest
+  ProductId: 3438653519
+  PriceInRobux: 199
+  IsForSale: true
+Trinity Fruit Seed
+  ProductId: 3445164189
+  PriceInRobux: 1199
+  IsForSale: true
+Magnifying Glass
+  ProductId: 3316261725
+  PriceInRobux: 99
+  IsForSale: true
+Master Sprinkler
+  ProductId: 3267580365
+  PriceInRobux: 199
+  IsForSale: true
+Advanced Sprinkler
+  ProductId: 3265889751
+  PriceInRobux: 99
+  IsForSale: true
+Pineapple Seed
+  ProductId: 3312005774
+  PriceInRobux: 475
+  IsForSale: true
+Burning Bud
+  ProductId: 3316826714
+  PriceInRobux: 915
+  IsForSale: true
+Harvest Tool
+  ProductId: 3286038236
+  PriceInRobux: 149
+  IsForSale: true
+Broccoli Seed
+  ProductId: 3388363071
+  PriceInRobux: 768
+  IsForSale: true
+Eggsnapper Seed
+  ProductId: 3568823262
+  PriceInRobux: 1599
+  IsForSale: true
++1 Exotic Nutty Chest
+  ProductId: 3420021045
+  PriceInRobux: 199
+  IsForSale: true
+Bonanza Bloom Seed
+  ProductId: 3498980651
+  PriceInRobux: 1799
+  IsForSale: true
+Spirit Sparkle Seed
+  ProductId: 3482982251
+  PriceInRobux: 1999
+  IsForSale: true
+Alien Apple Seed
+  ProductId: 3546475721
+  PriceInRobux: 1700
+  IsForSale: true
++3 Exotic Santa's Surprise Present
+  ProductId: 3472461575
+  PriceInRobux: 625
+  IsForSale: true
+Zebrazinkle Seed
+  ProductId: 3445262332
+  PriceInRobux: 1320
+  IsForSale: true
++10 Exotic Ancient Seed Packs
+  ProductId: 3323657552
+  PriceInRobux: 999999999
+  IsForSale: true
+Medium Treat 
+  ProductId: 3329527365
+  PriceInRobux: 119
+  IsForSale: true
++10 Exotic Summer Seed Pack
+  ProductId: 3311388948
+  PriceInRobux: 999999999
+  IsForSale: true
++1 Iconic Gnome Crate
+  ProductId: 3300962946
+  PriceInRobux: 8000
+  IsForSale: true
+Grape Seed
+  ProductId: 3261068725
+  PriceInRobux: 599
+  IsForSale: true
++10 Exotic Culinarian Chests
+  ProductId: 3362680916
+  PriceInRobux: 999999999
+  IsForSale: true
+Cocomango Seed
+  ProductId: 3388359799
+  PriceInRobux: 939
+  IsForSale: true
+250¢
+  ProductId: 3250137261
+  PriceInRobux: 99
+  IsForSale: true
++1 Festive Container
+  ProductId: 3478031738
+  PriceInRobux: 149
+  IsForSale: true
++10 Premium Springtide Egg
+  ProductId: 3576524860
+  PriceInRobux: 1249
+  IsForSale: true
+Mushroom
+  ProductId: 3273973729
+  PriceInRobux: 249
+  IsForSale: true
+Loquat Seed
+  ProductId: 3312014286
+  PriceInRobux: 629
+  IsForSale: true
++3 Premium Anti Bee Egg
+  ProductId: 3301567955
+  PriceInRobux: 429
+  IsForSale: true
+Firework Fern
+  ProductId: 3490207231
+  PriceInRobux: 1299
+  IsForSale: true
++25000 Trade Tokens
+  ProductId: 3460379831
+  PriceInRobux: 25000
+  IsForSale: true
++1 Exclusive Cosmetic Crate
+  ProductId: 3290672626
+  PriceInRobux: 199
+  IsForSale: true
++3 Artisan Containers
+  ProductId: 3467103688
+  PriceInRobux: 429
+  IsForSale: true
++3 Exotic Skyroot Chests
+  ProductId: 3379038152
+  PriceInRobux: 999999999
+  IsForSale: true
+Friendship Pot
+  ProductId: 3301473650
+  PriceInRobux: 39
+  IsForSale: true
++3 Exotic Buttercup Chests
+  ProductId: 3520430327
+  PriceInRobux: 429
+  IsForSale: true
++3 Exotic Gem Chests
+  ProductId: 3460600737
+  PriceInRobux: 575
+  IsForSale: true
++10 Premium Carnival Eggs
+  ProductId: 3497475844
+  PriceInRobux: 1249
+  IsForSale: true
++3 Premium Primal Egg
+  ProductId: 3330286155
+  PriceInRobux: 99999
+  IsForSale: true
++3 Premium Golden Egg
+  ProductId: 3568827227
+  PriceInRobux: 429
+  IsForSale: true
++50 Premium Winter Eggs
+  ProductId: 3483801743
+  PriceInRobux: 4999
+  IsForSale: true
+Orange Tulip
+  ProductId: 3265927408
+  PriceInRobux: 14
+  IsForSale: true
+Elemental Container
+  ProductId: 3460380235
+  PriceInRobux: 149
+  IsForSale: true
++3 Premium Safari Eggs
+  ProductId: 3444449485
+  PriceInRobux: 9999999
+  IsForSale: true
++3 Premium Fall Eggs
+  ProductId: 3401426985
+  PriceInRobux: 429
+  IsForSale: true
+Dragon Fruit Seed
+  ProductId: 3253012192
+  PriceInRobux: 597
+  IsForSale: true
++10 Super Seed
+  ProductId: 3482200241
+  PriceInRobux: 1699
+  IsForSale: true
++1 Exotic Culinarian Chest
+  ProductId: 3362680911
+  PriceInRobux: 999999999
+  IsForSale: true
++50 Exotic Buttercup Chests
+  ProductId: 3520430331
+  PriceInRobux: 4999
+  IsForSale: true
++25000 Trade Tokens
+  ProductId: 3460379831
+  PriceInRobux: 25000
+  IsForSale: true
++50 Premium Carnival Eggs
+  ProductId: 3497475843
+  PriceInRobux: 4999
+  IsForSale: true
++3 Exotic Gourmet Seed Packs
+  ProductId: 3354839826
+  PriceInRobux: 999999999
+  IsForSale: true
+Apple Seed
+  ProductId: 3248716238
+  PriceInRobux: 375
+  IsForSale: true
++1 Premium New Year's Egg
+  ProductId: 3489363343
+  PriceInRobux: 149
+  IsForSale: true
++3 Exotic Nutty Chests
+  ProductId: 3420021043
+  PriceInRobux: 575
+  IsForSale: true
++10 Premium Golden Egg
+  ProductId: 3568827595
+  PriceInRobux: 1249
+  IsForSale: true
++1 Premium Spooky Egg
+  ProductId: 3427163857
+  PriceInRobux: 999999
+  IsForSale: true
++1 Exotic Sprout Seed Pack
+  ProductId: 3371226353
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Super Seed
+  ProductId: 3482199918
+  PriceInRobux: 575
+  IsForSale: true
+Blueberry Seed
+  ProductId: 3248690960
+  PriceInRobux: 49
+  IsForSale: true
+Open 3 - Exotic Seed Pack
+  ProductId: 3267548052
+  PriceInRobux: 999999999
+  IsForSale: true
+Grandmaster Sprinkler
+  ProductId: 3354130076
+  PriceInRobux: 279
+  IsForSale: true
+Green Apple Seed
+  ProductId: 3312008833
+  PriceInRobux: 399
+  IsForSale: true
++1 Exotic Safari Seed Pack
+  ProductId: 3449810469
+  PriceInRobux: 199
+  IsForSale: true
++1 Premium Springtide Egg
+  ProductId: 3576524674
+  PriceInRobux: 149
+  IsForSale: true
++3 Exotic Sprout Seed Packs
+  ProductId: 3371226360
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Exotic Spooky Chests
+  ProductId: 3438653518
+  PriceInRobux: 575
+  IsForSale: true
+Strawberry Seed
+  ProductId: 3248695947
+  PriceInRobux: 21
+  IsForSale: true
++1 Exotic Corrupt Chest
+  ProductId: 3345819463
+  PriceInRobux: 99999
+  IsForSale: true
++1 Premium Anti Bee Egg
+  ProductId: 3301567958
+  PriceInRobux: 149
+  IsForSale: true
+Season Pass
+  ProductId: 3411693833
+  PriceInRobux: 749
+  IsForSale: true
+5,000¢
+  ProductId: 3250139018
+  PriceInRobux: 895
+  IsForSale: true
+Rainbow Peppermint Vine Seed
+  ProductId: 3482271454
+  PriceInRobux: 4499
+  IsForSale: true
+Purple Cabbage
+  ProductId: 3273005969
+  PriceInRobux: 40900
+  IsForSale: true
++1 Exotic Skyroot Chest
+  ProductId: 3379038157
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Festive Containers
+  ProductId: 3478031853
+  PriceInRobux: 429
+  IsForSale: true
++10 Premium Bird Eggs
+  ProductId: 3512151976
+  PriceInRobux: 1249
+  IsForSale: true
+1 Mythical Egg
+  ProductId: 3286560171
+  PriceInRobux: 119
+  IsForSale: true
++1 Sprout Basket
+  ProductId: 3379593726
+  PriceInRobux: 99999999
+  IsForSale: true
++1 Exotic Flower Seed Pack
+  ProductId: 3295548770
+  PriceInRobux: 999999999
+  IsForSale: true
++1 Premium Fall Egg
+  ProductId: 3401426983
+  PriceInRobux: 149
+  IsForSale: true
++250 Trade Tokens
+  ProductId: 3460378135
+  PriceInRobux: 250
+  IsForSale: true
++5000 Trade Tokens
+  ProductId: 3460379424
+  PriceInRobux: 5000
+  IsForSale: true
+Cauliflower Seed
+  ProductId: 3312007044
+  PriceInRobux: 135
+  IsForSale: true
+10 Bug Eggs
+  ProductId: 3277814625
+  PriceInRobux: 1699
+  IsForSale: true
++10 Exotic Buttercup Chests
+  ProductId: 3520430328
+  PriceInRobux: 1249
+  IsForSale: true
++1 Premium Oasis Egg
+  ProductId: 3317459182
+  PriceInRobux: 99999
+  IsForSale: true
+Sugar Apple Seed
+  ProductId: 3304968889
+  PriceInRobux: 819
+  IsForSale: true
+Exotic Bug Egg
+  ProductId: 3278426597
+  PriceInRobux: 99999
+  IsForSale: true
+Ember Lily Seed
+  ProductId: 3300984139
+  PriceInRobux: 779
+  IsForSale: true
+Brussels Sprout Seed
+  ProductId: 3388360759
+  PriceInRobux: 897
+  IsForSale: true
++3 Exotic Flower Seed Pack
+  ProductId: 3295548782
+  PriceInRobux: 999999999
+  IsForSale: true
++10 Premium Anti Bee Egg
+  ProductId: 3301567960
+  PriceInRobux: 999999999
+  IsForSale: true
++1 Exotic Buttercup Chest
+  ProductId: 3520430329
+  PriceInRobux: 149
+  IsForSale: true
+Level Up Lollipop
+  ProductId: 3329528135
+  PriceInRobux: 79
+  IsForSale: true
+Bamboo Seed
+  ProductId: 3261009117
+  PriceInRobux: 99
+  IsForSale: true
+Daffodil
+  ProductId: 3265927978
+  PriceInRobux: 19
+  IsForSale: true
+Romanesco Seed
+  ProductId: 3372004188
+  PriceInRobux: 987
+  IsForSale: true
++3 Exotic Corrupt Chests
+  ProductId: 3345819470
+  PriceInRobux: 999999999
+  IsForSale: true
++3 Exotic Enchanted Seed Pack
+  ProductId: 3387753634
+  PriceInRobux: 999999999
+  IsForSale: true
+Great Pumpkin Seed
+  ProductId: 3426542757
+  PriceInRobux: 1199
+  IsForSale: true
++3 Elemental Containers
+  ProductId: 3467110142
+  PriceInRobux: 429
+  IsForSale: true
+Twilight Pack
+  ProductId: 3432380384
+  PriceInRobux: 399
+  IsForSale: true
+Pitcher Plant Seed
+  ProductId: 3317730202
+  PriceInRobux: 715
+  IsForSale: true
++3 Exotic Zen Seed Pack
+  ProductId: 3338826791
+  PriceInRobux: 999999999
+  IsForSale: true
++1 Exotic Gourmet Seed Pack
+  ProductId: 3354839803
+  PriceInRobux: 999999999
+  IsForSale: true
++9 SUPER SEED
+  ProductId: 3249981764
+  PriceInRobux: 1599
+  IsForSale: true
++50 Premium New Year's Eggs
+  ProductId: 3489363344
+  PriceInRobux: 4999
+  IsForSale: true
+Open 1 - Exotic Seed Pack
+  ProductId: 3267528421
+  PriceInRobux: 999999999
+  IsForSale: true

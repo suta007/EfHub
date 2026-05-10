@@ -1,0 +1,243 @@
+--[[
+  
+  local ReplicatedStorage = game:GetService("ReplicatedStorage")
+  local DataService = require(ReplicatedStorage.Modules.DataService)
+  local GetData_result = DataService:GetData()
+  local BeeEventData = GetData_result.BeeEventData
+  ShowData(BeeEventData)
+
+]]
+
+[HasReceivedStarterBeeEgg] : true
+[HasReceivedStarterCrop] : true
+[HasSeenPopup] : true
+[HasPlacedFirstBeeEgg] : true
+[HasFirstHatchedBee] : true
+[HasEnabledHoneyGarden] : true
+[BeeInventoryData] : (Table)
+  [{6572ad8c-11d3-4cf0-bdff-d8b926e0c590}] : (Table)
+    [Data] : (Table)
+      [State] : Active
+      [HatchedFrom] : Common Bee Egg
+      [Slot] : 1
+    [BeeName] : Swift Bee
+[HasSubmittedToHoneyMachine] : true
+[HoneyIncubatorData] : (Table)
+  [Running] : false
+  [CurrentSeed] : 
+  [Claimable] : false
+  [Accelerations] : 0
+  [StartTime] : 0
+[HasFirstCompressed] : true
+[HasPurchasedFirstUpgrade] : false
+[BeeSkillTree] : (Table)
+  [BeeSpeed] : 0
+  [BeeSpeed_4] : 0
+  [CompressorSpeed] : 0
+  [BeeCapacity_4] : 0
+  [CompressorSpeed_2] : 0
+  [CompressorCapacity_3] : 0
+  [PollinationAmount] : 0
+  [BeeCapacity_7] : 0
+  [CompressorCapacity_1] : 0
+  [CompressorSpeed_1] : 0
+  [BeeCapacity_3] : 0
+  [PollinationAmount_1] : 0
+  [CompressorCapacity] : 0
+  [BeeCapacity_8] : 0
+  [PollinationAmount_2] : 0
+  [PollinationAmount_3] : 0
+  [CompressorSpeed_3] : 0
+  [PollinationAmount_4] : 0
+  [BeeCapacity_2] : 0
+  [CompressorSpeed_4] : 0
+  [BeeCapacity_1] : 0
+  [BeeSpeed_3] : 0
+  [BeeCapacity_6] : 0
+  [BeeSpeed_1] : 0
+  [CompressorCapacity_2] : 0
+  [BeeCapacity_5] : 0
+  [BeeSpeed_2] : 0
+  [BeeCapacity] : 0
+  [CompressorCapacity_4] : 0
+[HasCollectedHoney] : false
+[HasPurchasedFirstBeeEgg] : false
+[HasSeenBeeCutscene] : true
+
+---------------------------------------------------------
+
+Script initialized successfully.
+[HasReceivedStarterBeeEgg] : true
+[HasReceivedStarterCrop] : true
+[HasSeenPopup] : true
+[HasPlacedFirstBeeEgg] : true
+[HasFirstHatchedBee] : true
+[HasEnabledHoneyGarden] : true
+[BeeInventoryData] : (Table)
+  [{6572ad8c-11d3-4cf0-bdff-d8b926e0c590}] : (Table)
+    [Data] : (Table)
+      [State] : Active
+      [HatchedFrom] : Common Bee Egg
+      [Slot] : 1
+    [BeeName] : Swift Bee
+[HasSubmittedToHoneyMachine] : true
+[HoneyIncubatorData] : (Table)
+  [Running] : false
+  [CurrentSeed] : 
+  [Claimable] : false
+  [Accelerations] : 0
+  [StartTime] : 0
+[HasFirstCompressed] : true
+[HasPurchasedFirstUpgrade] : false
+[BeeSkillTree] : (Table)
+  [BeeSpeed] : 0
+  [BeeSpeed_4] : 0
+  [CompressorSpeed] : 0
+  [BeeCapacity_4] : 0
+  [CompressorSpeed_2] : 0
+  [CompressorCapacity_3] : 0
+  [PollinationAmount] : 0
+  [BeeCapacity_7] : 0
+  [CompressorCapacity_1] : 0
+  [CompressorSpeed_1] : 0
+  [BeeCapacity_3] : 0
+  [PollinationAmount_1] : 0
+  [CompressorCapacity] : 0
+  [BeeCapacity_8] : 0
+  [PollinationAmount_2] : 0
+  [PollinationAmount_3] : 0
+  [CompressorSpeed_3] : 0
+  [PollinationAmount_4] : 0
+  [BeeCapacity_2] : 0
+  [CompressorSpeed_4] : 0
+  [BeeCapacity_1] : 0
+  [BeeSpeed_3] : 0
+  [BeeCapacity_6] : 0
+  [BeeSpeed_1] : 0
+  [CompressorCapacity_2] : 0
+  [BeeCapacity_5] : 0
+  [BeeSpeed_2] : 0
+  [BeeCapacity] : 0
+  [CompressorCapacity_4] : 0
+[HasCollectedHoney] : true
+[HasPurchasedFirstBeeEgg] : false
+[HasSeenBeeCutscene] : true
+
+
+-----------------------------
+Script initialized successfully.
+[HasReceivedStarterBeeEgg] : true
+[HasReceivedStarterCrop] : true
+[HasSeenPopup] : true
+[HasPlacedFirstBeeEgg] : true
+[HasFirstHatchedBee] : true
+[HasEnabledHoneyGarden] : true
+[BeeInventoryData] : (Table)
+  [{6572ad8c-11d3-4cf0-bdff-d8b926e0c590}] : (Table)
+    [Data] : (Table)
+      [State] : Active
+      [HatchedFrom] : Common Bee Egg
+      [Slot] : 1
+    [BeeName] : Swift Bee
+[HasSubmittedToHoneyMachine] : true
+[HoneyIncubatorData] : (Table)
+  [Running] : false
+  [CurrentSeed] : 
+  [Claimable] : false
+  [Accelerations] : 0
+  [StartTime] : 0
+[HasFirstCompressed] : true
+[HasPurchasedFirstUpgrade] : false
+[BeeSkillTree] : (Table)
+  [BeeSpeed] : 0
+  [BeeSpeed_4] : 0
+  [CompressorSpeed] : 0
+  [BeeCapacity_4] : 0
+  [CompressorSpeed_2] : 0
+  [CompressorCapacity_3] : 0
+  [PollinationAmount] : 0
+  [BeeCapacity_7] : 0
+  [CompressorCapacity_1] : 0
+  [CompressorSpeed_1] : 0
+  [BeeCapacity_3] : 0
+  [PollinationAmount_1] : 0
+  [CompressorCapacity] : 0
+  [BeeCapacity_8] : 0
+  [PollinationAmount_2] : 0
+  [PollinationAmount_3] : 0
+  [CompressorSpeed_3] : 0
+  [PollinationAmount_4] : 0
+  [BeeCapacity_2] : 0
+  [CompressorSpeed_4] : 0
+  [BeeCapacity_1] : 0
+  [BeeSpeed_3] : 0
+  [BeeCapacity_6] : 0
+  [BeeSpeed_1] : 0
+  [CompressorCapacity_2] : 0
+  [BeeCapacity_5] : 0
+  [BeeSpeed_2] : 0
+  [BeeCapacity] : 0
+  [CompressorCapacity_4] : 0
+[HasCollectedHoney] : true
+[HasPurchasedFirstBeeEgg] : false
+[HasSeenBeeCutscene] : true
+
+-------------------------------------------
+
+
+Script initialized successfully.
+[HasReceivedStarterBeeEgg] : true
+[HasReceivedStarterCrop] : true
+[HasSeenPopup] : true
+[HasPlacedFirstBeeEgg] : true
+[HasFirstHatchedBee] : true
+[HasEnabledHoneyGarden] : true
+[BeeInventoryData] : (Table)
+  [{6572ad8c-11d3-4cf0-bdff-d8b926e0c590}] : (Table)
+    [Data] : (Table)
+      [State] : Active
+      [HatchedFrom] : Common Bee Egg
+      [Slot] : 1
+    [BeeName] : Swift Bee
+[HasSubmittedToHoneyMachine] : true
+[HoneyIncubatorData] : (Table)
+  [Running] : false
+  [CurrentSeed] : 
+  [Claimable] : false
+  [Accelerations] : 0
+  [StartTime] : 0
+[HasFirstCompressed] : true
+[HasPurchasedFirstUpgrade] : false
+[BeeSkillTree] : (Table)
+  [BeeSpeed] : 0
+  [BeeSpeed_4] : 0
+  [CompressorSpeed] : 0
+  [BeeCapacity_4] : 0
+  [CompressorSpeed_2] : 0
+  [CompressorCapacity_3] : 0
+  [PollinationAmount] : 0
+  [BeeCapacity_7] : 0
+  [CompressorCapacity_1] : 0
+  [CompressorSpeed_1] : 0
+  [BeeCapacity_3] : 0
+  [PollinationAmount_1] : 0
+  [CompressorCapacity] : 0
+  [BeeCapacity_8] : 0
+  [PollinationAmount_2] : 0
+  [PollinationAmount_3] : 0
+  [CompressorSpeed_3] : 0
+  [PollinationAmount_4] : 0
+  [BeeCapacity_2] : 0
+  [CompressorSpeed_4] : 0
+  [BeeCapacity_1] : 0
+  [BeeSpeed_3] : 0
+  [BeeCapacity_6] : 0
+  [BeeSpeed_1] : 0
+  [CompressorCapacity_2] : 0
+  [BeeCapacity_5] : 0
+  [BeeSpeed_2] : 0
+  [BeeCapacity] : 0
+  [CompressorCapacity_4] : 0
+[HasCollectedHoney] : true
+[HasPurchasedFirstBeeEgg] : false
+[HasSeenBeeCutscene] : true

@@ -107,6 +107,12 @@ local function AddLog(message)
 		LogDisplay:SetValue(TempText)
 	end
 end
+
+local function TimeLog(message)
+	local timestamp = os.date("%X")
+	local entry = string.format("[%s] %s", timestamp, message)
+	AddLog(entry)
+end
 ------------------------------------------------------
 -- 6. Test Loop (ทดสอบดูความสวยงาม)
 ------------------------------------------------------
@@ -132,7 +138,40 @@ local function ShowData(tbl, indent)
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DataService = require(ReplicatedStorage.Modules.DataService)
-local GetData_result = DataService:GetData()
-local HoneyMachine2026 = GetData_result.HoneyMachine2026
-ShowData(HoneyMachine2026)
+local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+local DataStream = GameEvents:WaitForChild("DataStream")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+
+local Blacklist = {
+	"SaveSlots",
+	"LastSaveTime",
+	"LastPetsIncubationTime",
+	"LastPetsSaveTime",
+}
+DataStream.OnClientEvent:Connect(function(Type, Profile, Data)
+	if Type ~= "UpdateData" then
+		return
+	end
+	if not string.find(Profile, LocalPlayer.Name) then
+		return
+	end
+	if not Data or type(Data) ~= "table" then
+		return
+	end
+
+	for _, Packet in ipairs(Data) do
+		local Key = Packet[1]
+		local Content = Packet[2]
+
+		for _, BadKey in ipairs(Blacklist) do
+			if string.find(Key:lower(), BadKey:lower()) then
+				return
+			end
+		end
+
+		--if string.find(Key:lower(), "daily") and string.find(Key:lower(), "stocks") then  --daily
+		TimeLog(Key)
+		ShowData(Content, 1)
+		--end
+	end
+end)

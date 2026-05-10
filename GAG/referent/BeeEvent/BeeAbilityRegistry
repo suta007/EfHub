@@ -1,0 +1,63 @@
+--game:GetService("ReplicatedStorage").Data.BeeEvent.BeeAbilityRegistry
+
+Script initialized successfully.
+[ClockworkWindup] : (Table)
+  [Type] : Active
+  [Name] : ClockworkWindup
+  [TargetCount] : 2
+  [Interval] : 30
+  [Duration] : 10
+  [EffectColor] : 0.529412, 0.345098, 0.176471
+  [Effects] : (Table)
+    [Speed] : 20
+[PrincessRoyalBlessing] : (Table)
+  [Effects] : (Table)
+    [PollinationQuality] : 4
+  [Type] : Active
+  [Name] : PrincessRoyalBlessing
+  [EffectColor] : 1, 0.411765, 0.705882
+  [Interval] : 60
+  [Duration] : 15
+  [TargetCount] : 1
+  [TargetMode] : HighestRarity
+[TreasureQualityUpgrade] : (Table)
+  [Value] : 0.1
+  [Type] : PlayerAttribute
+  [Name] : TreasureQualityUpgrade
+  [Attribute] : BeeSwarmPollinatedPlantQualityUpgradeChance
+[PanicMode] : (Table)
+  [Type] : Active
+  [Name] : PanicMode
+  [Interval] : 60
+  [Duration] : 10
+  [EffectColor] : 1, 0.313726, 0.313726
+  [Effects] : (Table)
+    [SpeedMultiplier] : 6
+    [PollinationQualityMultiplier] : 6
+    [PollinationRateMultiplier] : 6
+[BabyHatchBoost] : (Table)
+  [Value] : 1.5
+  [Type] : PlayerAttribute
+  [Name] : BabyHatchBoost
+  [Attribute] : BeeSwarmHatchSpeedMultiplier
+[JesterFoolishBlessing] : (Table)
+  [Effects] : (Table)
+    [PollinationQuality] : 4
+  [Type] : Active
+  [Name] : JesterFoolishBlessing
+  [EffectColor] : 0.313726, 1, 0.470588
+  [Interval] : 60
+  [Duration] : 15
+  [TargetCount] : 1
+  [TargetMode] : LowestRarity
+[IllusionCopy] : (Table)
+  [Type] : Active
+  [Name] : IllusionCopy
+  [Interval] : 60
+  [Duration] : 20
+  [EffectColor] : 0.862745, 0.862745, 1
+[MerchantHoneyCoinBonus] : (Table)
+  [Value] : 1.1
+  [Type] : PlayerAttribute
+  [Name] : MerchantHoneyCoinBonus
+  [Attribute] : BeeSwarmHoneyCoinMultiplier

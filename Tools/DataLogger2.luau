@@ -16,14 +16,17 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
-local allPlayers = Players:GetPlayers()
-local friendTable = {}
-for _, player in ipairs(allPlayers) do
-	if player.Name ~= LocalPlayer.Name then
-		table.insert(friendTable, player.Name)
-	end
-end
+local MarketplaceService = game:GetService("MarketplaceService")
+local productId = 74479628
 
-ShowData(friendTable)
+local infoType = Enum.InfoType.Product
+
+local success, productInfo = pcall(function()
+	return MarketplaceService:GetProductInfo(productId, infoType)
+end)
+
+if success and productInfo then
+	ShowData(productInfo)
+else
+	warn("เกิดข้อผิดพลาด: ไม่สามารถดึงข้อมูลของสินค้า ID " .. tostring(productId) .. " ได้")
+end

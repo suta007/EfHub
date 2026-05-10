@@ -1,0 +1,27 @@
+[13:25:00] ROOT/SeedStocks/Shop/Stocks
+  [Carrot] : (Table)
+    [Stock] : 16
+    [MaxStock] : 16
+  [Strawberry] : (Table)
+    [Stock] : 3
+    [MaxStock] : 3
+  [Broccoli] : (Table)
+    [Stock] : 1
+    [MaxStock] : 1
+  [Buttercup] : (Table)
+    [Stock] : 10
+    [MaxStock] : 10
+  [Tomato] : (Table)
+    [Stock] : 2
+    [MaxStock] : 2
+  [Blueberry] : (Table)
+    [Stock] : 3
+    [MaxStock] : 3
+[13:25:00] ROOT/SeedStocks/Shop/Seed
+  479379215
+[13:25:00] ROOT/SeasonPass/Season 4/Stocks
+  [Season 4 Crate] : (Table)
+    [Stock] : 1
+    [MaxStock] : 1
+[13:25:00] ROOT/SeasonPass/Season 4/ShopItem
+  479379215

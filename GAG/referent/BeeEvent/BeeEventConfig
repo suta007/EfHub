@@ -1,0 +1,68 @@
+--game:GetService("ReplicatedStorage").Data.BeeEvent.BeeEventConfig
+
+
+Script initialized successfully.
+[Test] : (Table)
+  [TotalBees] : 20
+[Pollination] : (Table)
+  [MutationColor] : #ff9500
+  [ArriveDistance] : 5
+  [OrbitSpeed] : 1.5
+  [Tiers] : (Table)
+    [1] : (Table)
+      [QualityExponent] : 0
+      [Name] : Pollinated_Poor
+      [BaseWeight] : 50
+    [2] : (Table)
+      [QualityExponent] : 0.5
+      [Name] : Pollinated_Fair
+      [BaseWeight] : 35
+    [3] : (Table)
+      [QualityExponent] : 1.5
+      [Name] : Pollinated_Good
+      [BaseWeight] : 12
+    [4] : (Table)
+      [QualityExponent] : 2
+      [Name] : Pollinated_Godly
+      [BaseWeight] : 3
+  [RarityThresholds] : (Table)
+    [Transcendent] : 160
+    [Legendary] : 45
+    [Mythical] : 65
+    [Common] : 10
+    [Divine] : 90
+    [Prismatic] : 120
+    [Uncommon] : 18
+    [Rare] : 30
+  [OrbitRadiusPerBee] : 0.5
+  [OrbitRadiusBase] : 2
+  [PollenValueMulipliers] : (Table)
+    [Pollinated_Fair] : 1
+    [Pollinated_Godly] : 2
+    [Pollinated_Good] : 1.5
+    [Pollinated_Poor] : 0.8
+  [OrbitHeight] : 3
+[LOD] : (Table)
+  [Mid] : 150
+  [Far] : 300
+  [Near] : 60
+[Swarm] : (Table)
+  [SearchSize] : 60, 30, 60
+  [SpreadBase] : 6
+  [HeightMin] : 4
+  [BobFrequency] : 3
+  [BobAmplitude] : 0.8
+  [HeightMax] : 8
+  [SpreadPerBee] : 0.05
+[Spawning] : (Table)
+  [SpawnDuration] : 2
+[Nesting] : (Table)
+  [EnterRange] : 25
+  [ExitRange] : 40
+[Simulation] : (Table)
+  [UnreliableHertz] : 10
+  [ClientHertz] : 30
+  [SimulationHertz] : 30
+  [StateHertz] : 20
+[Hatching] : (Table)
+  [TickInterval] : 1
