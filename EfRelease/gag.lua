@@ -652,6 +652,7 @@ end
 end
 end
 end
+f.UnequipTool()
 end)
 end
 
@@ -898,9 +899,9 @@ Daily="SeedStocks/Daily Deals/Stocks",
 Gear="GearStock/Stocks",
 Egg="PetEggStock/Stocks",
 Traveling="TravelingMerchantShopStock/Stocks",
-
-
 Easter="EventShopStock/Easter Seed Shop/Stocks",
+HoneyCoin="EventShopStock/Honey Coin Shop/Stocks",
+HoneySeed="EventShopStock/Honey Seed Shop/Stocks",
 SeasonPass="SeasonPass/"..h.."/Stocks",
 }
 
@@ -979,20 +980,20 @@ Items=h,
 RemoteName="BuyTravelingMerchantShopStock",
 ArgType="NormalMode",
 },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[b.ShopKey.HoneyCoin]={
+Enabled=if g.tgBuyHoneyCoinEnable then g.tgBuyHoneyCoinEnable.Value else false,
+Items=if g.ddBuyHoneyCoin then f(g.ddBuyHoneyCoin.Value)else{},
+RemoteName="BuyEventShopStock",
+ArgType="EventMode",
+EventArg="Honey Coin Shop",
+},
+[b.ShopKey.HoneySeed]={
+Enabled=if g.tgBuyHoneySeedEnable then g.tgBuyHoneySeedEnable.Value else false,
+Items=if g.ddBuyHoneySeed then f(g.ddBuyHoneySeed.Value)else{},
+RemoteName="BuyEventShopStock",
+ArgType="EventMode",
+EventArg="Honey Seed Shop",
+},
 [b.ShopKey.Easter]={
 Enabled=g.tgBuyEasterEnable.Value,
 Items=f(g.ddBuyEaster.Value),
@@ -2198,6 +2199,11 @@ local q=g.EnumToNameCache[o.PetData.MutationType]or"Normal"
 
 if p=="Nightmare"then
 if q=="Nightmare"then
+if n>0 and o.PetData.Level<n then
+
+f.IsMutating=false
+return
+end
 d.UnequipPet(k)
 task.wait(0.5)
 e.Log("🟢 CheckLevel: "..tostring(k).." finished Nightmare")
@@ -3806,7 +3812,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.04-17.45",
+SubTitle="2569.05.10-15.40",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -4084,7 +4090,7 @@ i.ClearReadyCrops()
 end
 h.ToggleTask("AutoHarvest",n,function()
 i.HarvestCrops()
-task.wait(0.1)
+task.wait(0.3)
 end)
 f()
 end,
@@ -6026,677 +6032,92 @@ end
 
 return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b={c=__modImpl()}a.cache.o=b end return b.c end end do local function __modImpl()
 
-local b=game:GetService("ReplicatedStorage")
-
-local c=require(b.Modules.PlantTraitsData::any)
-local d={}
-local e
-local f
-local g
-local h
-local i
-local j=table.clone(c.Traits["EasterSlot"])
-table.insert(j,1,"ALL")
-
-local k
-local l=game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
-
-function d.HarvestCrops()
-local m=e.Options
-if not m.tgEasterHarvestEnable or not m.tgEasterHarvestEnable.Value or e.IsEasterHarvesting then
-return
-end
-if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
-return
-end
-e.IsEasterHarvesting=true
-local n=k.GetPlantsFolder()
-if not n then
-e.IsEasterHarvesting=false
-return
-end
-local o=k.GetSelectedItems(m.ddEasterHarvestPlant.Value)
-local p
-if table.find(o,"ALL")then
-p=j
-else
-p=o
-end
-for q,r in ipairs(n:GetChildren())do
-if not m.tgEasterHarvestEnable.Value or e.IsHuntEgg then
-e.IsEasterHarvesting=false
-return
-end
-local t=r:FindFirstChild("Fruits")
-local u=t and t:GetChildren()or{r}
-
-for v,w in ipairs(u)do
-if w:IsA("Model")and table.find(p,w.Name)then
-
-local x=w:FindFirstChild("ProximityPrompt",true)
-if x and x.Enabled then
-l:WaitForChild("Crops"):WaitForChild("Collect"):FireServer({w})
-task.wait(0.1)
-end
-end
-end
-end
-e.IsEasterHarvesting=false
-
-end
-
-function d.AutoEasterSell()
-local m=e.Options
-if not m.tgEasterSellEnable or not m.tgEasterSellEnable.Value then
-return
-end
-e.IsEasterHarvesting=true
-k.ClickButton(k.SellButton)
-task.wait(0.5)
-l:WaitForChild("EasterEvent"):WaitForChild("EasterSellInventoryRE"):FireServer()
-task.wait(1)
-k.ClickButton(k.GardenButton)
-task.wait(1)
-e.IsEasterHarvesting=false
-end
-
-function d.AutoPacketEaster()
-local m=e.Options
-if not m.tgPacketEasterEnable or not m.tgPacketEasterEnable.Value then
-return
-end
-local n=CFrame.new(-167.165,4.5,1.475)
-
-local o=i.DataService:GetData()
-local p=o.TeamEventData.CandyPackaging
-if p then
-local q=p.LastClaimedTime or 0
-
-local r=(q+1800)-workspace:GetServerTimeNow()
-if r>0 then
-return
-end
-end
-e.IsEasterHarvesting=true
-
-i.Character:PivotTo(n)
-task.wait(0.5)
-e.Log("Send Packet")
-
-l:WaitForChild("TeamEvents"):WaitForChild("CandyPackaging"):WaitForChild("SubmitAllRE"):FireServer()
-task.wait(1)
-
-
-e.IsEasterHarvesting=false
-end
-
-function d.runSell(m)
-g.ToggleTask("AutoEasterSell",m,function()
-local n=e.Options
-local o=n.ipEasterSellDelay and tonumber(n.ipEasterSellDelay.Value)or 600
-local p=n.tgEasterSellFull and n.tgEasterSellFull.Value or false
-local q
-if p then
-q=1
-else
-q=o
-end
-if p then
-if i.InventoryService.IsMaxInventory(i.LocalPlayer)then
-d.AutoPacketEaster()
-task.wait(1)
-d.AutoEasterSell()
-end
-else
-d.AutoEasterSell()
-end
-task.wait(q)
-end)
-end
-
-function d.Initialize(m,n)
-e=m
-local o=e.Options
-
-f=e.Window.QuickSave
-g=e.EfTasks
-h=n
-i=e.sData
-
-
-k=e.Utils
-
-local p=h:AddCollapsibleSection("Eastersell",false)
-
-p:AddButton({
-Title="Clear Selected Plants",
-Callback=function()
-o.ddEasterHarvestPlant:SetValue({ALL=true})
-end,
-})
-
-p:AddDropdown("ddEasterHarvestPlant",{
-Title="Easter Harvest Plant",
-Values=j,
-Multi=true,
-Default={"ALL"},
-Searchable=true,
-Callback=function()
-f()
-end,
-})
-
-p:AddToggle("tgEasterHarvestEnable",{
-Title="Easter Harvest Enable",
-Default=false,
-Callback=function(q)
-g.ToggleTask("AutoEasterHarvest",q,function()
-d.HarvestCrops()
-task.wait(1)
-end)
-f()
-end,
-})
-
-p:AddDivider()
-p:AddToggle("tgPacketEasterEnable",{
-Title="Packet Easter Enable",
-Default=false,
-Callback=function(q)
-f()
-end,
-})
-
-p:AddDivider()
-
-p:AddInput("ipEasterSellDelay",{
-Title="Easter Sell Delay",
-Default=600,
-Numeric=true,
-Finished=true,
-Callback=function()
-f()
-end,
-})
-
-p:AddToggle("tgEasterSellFull",{
-Title="Easter Sell Full",
-Default=false,
-Callback=function()
-f()
-end,
-})
-
-p:AddToggle("tgEasterSellEnable",{
-Title="Easter Sell Enable",
-Default=false,
-Callback=function(q)
-
-d.runSell(q)
-
-f()
-if not q then
-e.IsEasterHarvesting=false
-end
-end,
-})
-end
-
-return d end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
-
-local b=game:GetService("ReplicatedStorage")
-local c=require(b.Modules.DataService::any)
-local d=require(b.Data.EASTER_SeedGiverQuestProgression::any)
-local e=b.GameEvents.SeedPackGiverEvent
-local f=require(b.Modules.PlantTraitsData::any)
-local g=table.clone(f.Traits["EasterSlot"])
-table.insert(g,1,"ALL")
-
-local h={}
-local i
-local j
-local k
-local l
-local m
-local n=CFrame.new(-100.68,5.2,-9.52)
-
-local o,p,q,r,t
-local u
-
-local v=game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
-
-function h.Initialize(w,x)
-i=w
-local y=i.Options
-_=y
-k=i.Window.QuickSave
-j=i.EfTasks
-l=x
-m=i.sData
-u=i.Utils
-
-local z=l:AddCollapsibleSection("Angryplant",false)
-z:AddToggle("tgAngryplantEnable",{
-Title="Angryplant Enable",
-Default=false,
-Callback=function(A)
-j.ToggleTask("AutoAngryplant",A,function()
-h.autoAngryplant()
-task.wait(10)
-end)
-if not A then
-i.IsHuntEgg=false
-i.IsEasterHarvesting=false
-end
-k()
-end,
-})
-
-z:AddToggle("tgAngryPlants",{
-Title="Plants Quest Seed Enable",
-Default=false,
-Callback=function(A)
-k()
-end,
-})
-
-z:AddDropdown("ddFocusPlant",{
-Title="Focus Plant",
-Values=g,
-Multi=true,
-Default={"ALL"},
-Searchable=true,
-Callback=function()
-k()
-end,
-})
-z:AddButton({
-Title="Set Position",
-Callback=function()
-local A=m.Character:GetPivot().Position
-local B=string.format("%.3f, %.3f, %.3f",A.X,A.Y,A.Z)
-y.ipAngryplantPos:SetValue(B)
-k()
-end,
-})
-z:AddInput("ipAngryplantPos",{
-Title="Position",
-Default="",
-Placeholder="X, Y, Z",
-Numeric=false,
-Finished=false,
-Callback=function(A)
-k()
-end,
-})
-
-z:AddParagraph("NextQuest",{
-Title="Next Quest Time",
-Content="Wait for update...",
-})
-end
-local function QuestValue()
-local w=i.Options
-local x=c:GetData().EasterEventData
-local y=x.Progression or 1
-local z=y>#d
-if not z then
-local A=d[y]
-local B=A.PLANT_NAME or nil
-local C=A.WEIGHT or 0
-local D=A.MUTATION or"ALL"
-local E=A.VARIANT or"ALL"
-local F=d[y+1]
-local G=""
-
-
-if F then
-
-local H=tostring(F.PLANT_NAME or"Unknown")
-local I=tonumber(F.WEIGHT)or 0
-local J=tostring(F.MUTATION or"ALL")
-local K=tostring(F.VARIANT or"ALL")
-
-
-G=string.format("Name: %s \n Weight: %.2f kg \n Mutation: %s \n Variant: %s",H,I,J,K)
-else
-
-G="Next Quest: None"
-end
-return B,C,D,E,G
-end
-w.NextQuest:SetValue("Completed")
-return nil,nil,nil,nil
-end
-
-local function CheckQuest(w)
-local x=i.Options
-o,p,q,r,t=QuestValue()
-if not o then
-return
-end
-local y=w:FindFirstChild("Item_String")and w:FindFirstChild("Item_String").Value or w.Name
-local z=w:FindFirstChild("Variant")and w:FindFirstChild("Variant").Value
-local A=w:FindFirstChild("Weight")and w:FindFirstChild("Weight").Value
-
-if y~=o then
-return
-end
-if A<p then
-return
-end
-if q~="ALL"and w:GetAttribute(q)~=true then
-return
-end
-if r~="ALL"and z~=r then
-return
-end
-if t then
-x.NextQuest:SetValue(t)
-end
-return true
-end
-
-function h.autoAngryplant()
-local w=i.Options
-if not w.tgAngryplantEnable.Value or i.IsHuntEgg then
-return
-end
-
-local x=c:GetData().EasterEventData
-if x.Progression>#d then
-i.Log("Auto Claim: Exotic Seed Pack ready!")
-i.IsHuntEgg=true
-task.wait(1)
-i.IsEasterHarvesting=true
-i.sData.Character:PivotTo(n)
-task.wait(0.5)
-e:FireServer("ClaimPremiumPack")
-task.wait(1.5)
-i.Utils.ClickButton(i.Utils.GardenButton)
-task.wait(1)
-i.IsHuntEgg=false
-i.IsEasterHarvesting=false
-return
-end
-
-i.IsHuntEgg=true
-task.wait(1)
-i.IsEasterHarvesting=true
-
-local y=i.sData.Backpack
-local z=false
-for A,B in ipairs(y:GetChildren())do
-if CheckQuest(B)then
-i.sData.Character:PivotTo(n)
-task.wait(0.5)
-i.Utils.EquipTool(B)
-
-
-
-
-task.wait(0.5)
-pcall(function()
-e:FireServer("SubmitHeldPlant")
-end)
-task.wait(0.5)
-i.Utils.ClickButton(i.Utils.GardenButton)
-task.wait(1)
-z=true
-break
-end
-end
-if not z then
-task.spawn(function()
-pcall(h.chkGarden)
-end)
-end
-i.IsHuntEgg=false
-i.IsEasterHarvesting=false
-end
-
-function h.chkGarden()
-local w=i.Options
-local x=false
-local y=u.GetPlantsFolder()
-local z=nil
-for A,B in ipairs(y:GetChildren())do
-local C=B:FindFirstChild("Fruits")
-local D=C and C:GetChildren()or{B}
-
-for E,F in ipairs(D)do
-if F:IsA("Model")and CheckQuest(F)then
-local G=F:FindFirstChild("ProximityPrompt",true)
-if G and G.Enabled then
-x=true
-z=F
-else
-task.wait(10)
-end
-break
-end
-end
-if x then
-local E=v:WaitForChild("Crops",5):WaitForChild("Collect",5)
-if E then
-local F,G=pcall(function()
-E:FireServer({z})
-end)
-if F then
-task.wait(1)
-task.spawn(function()
-h.autoAngryplant()
-end)
-end
-end
-else
-if w.tgAngryPlants.Value then
-if q=="Choc"then
-if h.ChkBackpack("Chocolate Sprinkler")then
-task.spawn(function()
-h.autoPlants()
-end)
-end
-else
-task.spawn(function()
-h.autoPlants()
-end)
-end
-end
-end
-end
-end
-
-function h.autoPlants()
-local w=i.Options
-local x=u.GetSelectedItems(w.ddFocusPlant.Value)
-if not table.find(x,o)then
-if q=="Choc"then
-local y=w.ipSprinklerPosition.Value
-local z=u.ParseVector3(y)
-if z then
-h.autoChoco(z)
-end
-end
-return
-end
-
-local y=m.Backpack
-for z,A in ipairs(y:GetChildren())do
-local B=A:GetAttribute("Seed")
-if B and B==o then
-local C=u.ParseVector3(w.ipAngryplantPos.Value)
-if C then
-u.UnequipTool()
-task.wait(0.1)
-u.EquipTool(A)
-task.wait(0.1)
-m.GameEvents:WaitForChild("Plant_RE"):FireServer(vector.create(C.X,C.Y,C.Z),B)
-task.wait(0.2)
-u.UnequipTool()
-task.wait(0.1)
-if q=="Choc"then
-h.autoChoco(C)
-end
-break
-end
-end
-end
-end
-
-function h.autoChoco(w)
-if h.ChkSprinkle("Chocolate Sprinkler")then
-return
-end
-local x=m.Backpack
-for y,z in ipairs(x:GetChildren())do
-if z:IsA("Tool")and z.Name:match("Chocolate Sprinkler")then
-local A=CFrame.new(w)
-u.EquipTool(z)
-m.SprinklerEvent:FireServer("Create",A)
-task.wait(0.1)
-u.UnequipTool()
-task.wait(5)
-h.autoGrand(w)
-end
-end
-end
-
-function h.autoGrand(w)
-if h.ChkSprinkle("Grandmaster Sprinkler")then
-return
-end
-local x=m.Backpack
-for y,z in ipairs(x:GetChildren())do
-if z:IsA("Tool")and z.Name:match("Grandmaster Sprinkler")then
-local A=CFrame.new(w)
-u.EquipTool(z)
-m.SprinklerEvent:FireServer("Create",A)
-task.wait(0.1)
-u.UnequipTool()
-task.wait(0.1)
-end
-end
-end
-
-function h.ChkSprinkle(w)
-local x=u.GetMyFarm():FindFirstChild("Important")
-local y=x:FindFirstChild("Objects_Physical")
-if not y then
-return
-end
-for z,A in ipairs(y:GetChildren())do
-if A:IsA("Model")and A.Name:match(w)then
-return true
-end
-end
-return false
-end
-
-function h.ChkBackpack(w)
-local x=m.Backpack
-for y,z in ipairs(x:GetChildren())do
-if z:IsA("Tool")and z.Name:match(w)then
-return true
-end
-end
-return false
-end
-
-return h end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
-
 local b={}
 local c
+local d=game:GetService("CollectionService")
+local e
 
-local d=game:GetService("ReplicatedStorage")
-local e=d:WaitForChild("GameEvents")
-local f=e.EasterEvent.TryBuyGoldenEggRE
-local g=require(d.Modules.DataService::any)
-local h=require(d.Modules.EasterEvent.EasterHelper::any)
-local i={}
-for j=0,15 do
-local k=h:GetNextGoldenEggPrice(j)
-table.insert(i,k)
-end
-
-local j=CFrame.new(-55.38,5.6,-14.77)
-
-local k=game:GetService("Players")
-local l=k.LocalPlayer
-local m=l.Character or l.CharacterAdded:Wait()
-
-local n={}
-
-local function BuyGoldenEgg()
-local o=c.Options
-if not o.tgGoldeneggEnable.Value then
+local function HarvestHoneyFruits()
+local f=c.Options
+if not f.tgHarvestHoneyEnable or not f.tgHarvestHoneyEnable.Value then
 return
 end
-c.IsEasterHarvesting=true
-local p=tonumber(o.ddGoldeneggMaxPrice.Value)or 25000
-local q=g:GetData()
-local r=tonumber(q.SpecialCurrency.ChocCoins)
-local t=tonumber(q.EasterEventData.GoldenEgg.BuyAmount)
-local u=tonumber(h:GetNextGoldenEggPrice(t))
-if r>=(u*2)and u<=p then
-m:PivotTo(j)
-task.wait(0.5)
-f:FireServer()
-task.wait(1)
-c.Utils.ClickButton(c.Utils.GardenButton)
-task.wait(1)
-c.IsEasterHarvesting=false
+if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
 return
 end
-c.IsEasterHarvesting=false
-end
 
-local function EventDrive(o:boolean)
-for p,q in pairs(n)do
-q:Disconnect()
+local g=d:GetTagged("CollectPrompt")
+for h,i in ipairs(g)do
+if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
+return
 end
-table.clear(n)
+if i:IsA("ProximityPrompt")and i.Enabled and not i:GetAttribute("Collected")then
+local j=i.Parent and i.Parent.Parent
+if j then
 
-if o then
-local p=g:GetPathSignal("SpecialCurrency/ChocCoins/@")
-if p then
-table.insert(n,p:Connect(BuyGoldenEgg))
+
+e.CollectEvent:FireServer({j})
+task.wait(0.2)
 end
-local q=g:GetPathSignal("EasterEventData/GoldenEgg/@")
-if q then
-table.insert(n,q:Connect(BuyGoldenEgg))
 end
 end
 end
 
-function b.Initialize(o,p)
-c=o
-local q=c.Options
-_=q
-local r=c.Window.QuickSave
-local t=p
-local u=t:AddCollapsibleSection("Golden Egg",false)
-u:AddToggle("tgGoldeneggEnable",{
-Title="Buy Golden Egg Enable",
+local function CompressHoney()
+local f=c.Options
+if not f.tgCompressHoneyEnable or not f.tgCompressHoneyEnable.Value then
+return
+end
+local g=e.DataService:GetData()
+local h=g.HoneyMachine2026
+local i=h.HoneyStored
+local j=h.IsRunning
+if tonumber(i)>0 then
+e.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("CollectHoney")
+task.wait(1)
+end
+if not j then
+e.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("SubmitAll")
+task.wait(1)
+end
+end
+
+function b.Initialize(f,g)
+c=f
+local h=c.Options
+_=h
+local i=c.Window.QuickSave
+local j=g
+e=c.sData
+local k=c.EfTasks
+
+local l=j:AddCollapsibleSection("MainBee",false)
+l:AddToggle("tgHarvestHoneyEnable",{
+Title="Harvest Honey Fruits Enable",
 Default=false,
-Callback=function(v)
-EventDrive(v)
-r()
+Callback=function(m)
+i()
+k.ToggleTask("AutoHarvestHoney",m,function()
+HarvestHoneyFruits()
+task.wait(1)
+end)
 end,
 })
-u:AddDropdown("ddGoldeneggMaxPrice",{
-Title="Max Buy Golden Egg",
-Values=i,
-Default=6,
-Multi=false,
-Searchable=true,
-Callback=function()
-r()
+
+l:AddToggle("tgCompressHoneyEnable",{
+Title="Compress Honey Enable",
+Default=false,
+Callback=function(m)
+i()
+k.ToggleTask("AutoCompressHoney",m,function()
+CompressHoney()
+task.wait(10)
+end)
 end,
 })
 end
 
-return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -6704,434 +6125,98 @@ local d
 local e
 local f
 local g
-local h
 
-local i:Folder?
+function b.Initialize(h,i)
+c=h
+local j=c.Options
+_=j
+local k=c.Window.QuickSave
+local l=i
+e=c.sData
+local m=c.EfTasks
+f=c.Utils
+g=c.Shop
 
-local j="Shovel [Destroy Plants]"
-
-local function getShovelTool()
-local k=g.Backpack
-local l=h.FindToolByName(k,j)
-if l then
-return l
-end
-local m=g.Character
-if m then
-return m:FindFirstChild(j)
-end
-return nil
+local n={"ALL"}
+for o,p in pairs(c.EVENT_DATA["Honey Coin Shop"])do
+table.insert(n,o)
 end
 
-local function ensureEvilFolder():Folder?
-if i and i.Parent then
-return i
-end
-local k=g.GameEvents:FindFirstChild("EvilBunny")or g.GameEvents:WaitForChild("EvilBunny",15)
-if not k then
-return nil
-end
-i=k::Folder
-return i
+local o={"ALL"}
+for p,q in pairs(c.EVENT_DATA["Honey Seed Shop"])do
+table.insert(o,p)
 end
 
-local function findTargetPlants(k:string)
-local l=h.GetPlantsFolder()
-if not l then
-return{}
-end
-local m={}
-for n,o in ipairs(l:GetChildren())do
-if o:IsA("Model")and o.Name==k and o:GetAttribute("Favorited")~=true then
-table.insert(m,o)
-end
-end
-return m
-end
+local p=e.DataService:GetData()
 
-local function shovelPlant(k:Model):boolean
-local l=getShovelTool()
-if not l then
-c.Log("Evil Bunny: ไม่พบพลั่ว (Shovel)","WARN")
-return false
-end
-h.UnequipTool()
-task.wait(0.05)
-h.EquipTool(l)
-g.RemoveItemEvent:FireServer(k)
-task.wait(0.12)
-h.UnequipTool()
-return true
-end
-
-local function findSeedToolForPlant(k:string):Tool?
-for l,m in ipairs(g.Backpack:GetChildren())do
-if m:IsA("Tool")and m:GetAttribute("Seed")==k then
-return m
-end
-end
-local l=g.Character
-if l then
-for m,n in ipairs(l:GetChildren())do
-if n:IsA("Tool")and n:GetAttribute("Seed")==k then
-return n
-end
-end
-end
-return nil
-end
-
-
-local function tryReplantAtOriginalSpot(k:string,l:Vector3)
-if not k or k==""then
-return
-end
-local m=findSeedToolForPlant(k)
-if not m then
-c.Log("Evil Bunny: ไม่มีเมล็ด '"..k.."' ในถุง — ข้ามปลูกทดแทน")
-return
-end
-local n=g.GameEvents:FindFirstChild("Plant_RE")or g.GameEvents:WaitForChild("Plant_RE",8)
-if not n then
-c.Log("Evil Bunny: ไม่พบ Plant_RE — ปลูกทดแทนไม่ได้","WARN")
-return
-end
-h.UnequipTool()
-task.wait(0.06)
-h.EquipTool(m)
-task.wait(0.1)
-local o,p=pcall(function()
-n:FireServer(vector.create(l.X,l.Y,l.Z),k)
-end)
-task.wait(0.12)
-h.UnequipTool()
-if o then
-c.Log("Evil Bunny: ปลูกทดแทนตำแหน่งเดิม — "..k)
-else
-c.Log("Evil Bunny: ปลูกทดแทนล้มเหลว — "..tostring(p),"WARN")
-end
-end
-
-
-local function destroyQuestPlant(k:string):(boolean,string?,Vector3?)
-if not k or k==""or k=="???"then
-c.Log("Evil Bunny: ไม่ได้รับชื่อต้นเป้าหมายจากเซิร์ฟเวอร์","WARN")
-return false,nil,nil
-end
-local l=findTargetPlants(k)
-if#l==0 then
-c.Log("Evil Bunny: ไม่พบต้น '"..k.."' ในสวน (หรือถูก Favorite)","WARN")
-return false,nil,nil
-end
-if#l>1 then
-c.Log("Evil Bunny: พบหลายต้นชื่อ '"..k.."' — จะทำลายต้นแรกที่ไม่ Favorite","WARN")
-end
-local m=l[1]
-local n=m:GetPivot().Position
-if not shovelPlant(m)then
-return false,nil,nil
-end
-task.wait(0.2)
-return true,k,n
-end
-
-local function pollUntilComplete(k,l,m:number):boolean
-local n=os.clock()+m
-while os.clock()<n do
-task.wait(0.35)
-local o,p=pcall(function()
-return k:InvokeServer()
-end)
-if o and type(p)=="table"then
-if p.QuestState=="Complete"then
-local q,r=pcall(function()
-return l:InvokeServer()
-end)
-if q and r then
-c.Log("Evil Bunny: รับรางวัล — "..tostring(r))
-elseif q then
-c.Log("Evil Bunny: รับรางวัลไม่สำเร็จ (เซิร์ฟเวอร์ปฏิเสธ)","WARN")
-end
-return true
-end
-end
-end
-c.Log("Evil Bunny: หมดเวลารอเควสเสร็จ — ลองใหม่รอบถัดไป","WARN")
-return false
-end
-
-function b.autoEvilbunny()
-local k=c.Options
-if not k.tgEvilbunnyEnable.Value or c.IsEvilbunny or c.IsHuntEgg then
-return
-end
-
-local l=ensureEvilFolder()
-if not l then
-c.Log("Evil Bunny: ไม่พบ GameEvents.EvilBunny (อีเวนต์อาจยังไม่เปิด)","WARN")
-task.wait(20)
-return
-end
-
-local m=l:FindFirstChild("EvilBunnyInteract")::RemoteFunction?
-local n=l:FindFirstChild("EvilBunnyGiveQuest")::RemoteFunction?
-local o=l:FindFirstChild("EvilBunnyClaim")::RemoteFunction?
-if not(m and n and o)then
-c.Log("Evil Bunny: Remote ไม่ครบในโฟลเดอร์ EvilBunny","WARN")
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-task.wait(15)
-return
-end
-c.IsEasterHarvesting=true
-task.wait(0.5)
-c.IsEvilbunny=true
-
-local p,q=pcall(function()
-local p,q=pcall(function()
-return m:InvokeServer()
-end)
-if not p or type(q)~="table"then
-c.Log("Evil Bunny: EvilBunnyInteract ล้มเหลว — "..tostring(q),"WARN")
-return
-end
-
-local r=q.QuestState
-
-if r=="Cooldown"then
-local t=tonumber(q.CooldownRemaining)or 60
-c.Log("Evil Bunny: คูลดาวน์ ~"..tostring(math.ceil(t)).." วินาที")
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-task.wait(math.clamp(t,2,3660))
-return
-end
-
-if r=="Complete"then
-local t,u=pcall(function()
-return o:InvokeServer()
-end)
-if t and u then
-c.Log("Evil Bunny: รับรางวัล — "..tostring(u))
-elseif t then
-c.Log("Evil Bunny: ยังรับรางวัลไม่ได้","WARN")
-else
-c.Log("Evil Bunny: EvilBunnyClaim error — "..tostring(u),"WARN")
-end
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-task.wait(1)
-return
-end
-
-if r=="Active"then
-local t=q.TargetPlantName
-if not t then
-local u,v=pcall(function()
-return m:InvokeServer()
-end)
-t=(u and type(v)=="table"and v.TargetPlantName)or nil
-end
-local u,v,w=destroyQuestPlant(tostring(t or""))
-if not u or not v or not w then
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-task.wait(3)
-return
-end
-tryReplantAtOriginalSpot(v,w)
-pollUntilComplete(m,o,45)
-return
-end
-
-
-local t,u=pcall(function()
-return n:InvokeServer()
-end)
-if not t then
-c.Log("Evil Bunny: EvilBunnyGiveQuest error — "..tostring(u),"WARN")
-return
-end
-if not u then
-c.Log("Evil Bunny: ไม่มีต้นที่ใช้เควสได้ — ปลูกต้นอื่นก่อน","WARN")
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-task.wait(12)
-return
-end
-
-local v=type(u)=="string"and u or tostring(u)
-c.Log("Evil Bunny: รับเควส — ทำลาย: "..v)
-task.wait(0.25)
-local w,x,y=destroyQuestPlant(v)
-if not w or not x or not y then
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-task.wait(3)
-return
-end
-tryReplantAtOriginalSpot(x,y)
-pollUntilComplete(m,o,45)
-end)
-
-c.IsEasterHarvesting=false
-c.IsEvilbunny=false
-
-if not p then
-c.Log("Evil Bunny: "..tostring(q),"ERROR")
-end
-end
-
-function b.Initialize(k,l)
-c=k
-local m=c.Options
-_=m
-e=c.Window.QuickSave
-d=c.EfTasks
-f=l
-g=c.sData
-h=c.Utils
-
-local n=f:AddCollapsibleSection("Evilbunny",false)
-n:AddToggle("tgEvilbunnyEnable",{
-Title="Evilbunny Enable",
-Default=false,
-Callback=function(o)
-d.ToggleTask("AutoEvilbunny",o,function()
-b.autoEvilbunny()
-task.wait(4)
-end)
-if not o then
-c.IsEvilbunny=false
-c.IsEasterHarvesting=false
-end
-e()
+local q=l:AddCollapsibleSection("Honey Coin Shop",false)
+q:AddDropdown("ddBuyHoneyCoin",{
+Title="Honey Coin Shop Items",
+Values=n,
+Multi=true,
+Default={},
+Searchable=true,
+Callback=function()
+g.UpdateBuyList()
+k()
 end,
 })
-end
-
-return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
-
-local b={}
-local c=(getfenv()::any).fireproximityprompt
-local d
-local e
-local f
-
-local g=game:GetService("Workspace")
-local h=game:GetService("Players")
-local i=h.LocalPlayer
-
-local j
-local k
-local l=false
-
-function b.autoEggwar()
-local m=d.Options
-if not m.tgEggwarEnable.Value or d.IsHuntEgg then
-return
-end
-local n=j.ParseVector3(m.ipEggwarPos.Value)
-if not n then
-d.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
-return
-end
-d.IsHuntEgg=true
-d.IsEasterHarvesting=true
-local o=CFrame.new(n)
-local p=i.Character
-local q=1
-d.Log("🟣 กำลังเก็บไข่ รอ 10 วินาที")
-task.wait(10)
-
-for r,t in pairs(g:GetChildren())do
-if t.Name=="Model"then
-p:PivotTo(t:GetPivot())
-task.wait(2)
-local u=t:FindFirstChild("ProximityPrompt",true)
-if u then
-c(u)
-task.wait(2)
-p:PivotTo(o)
-task.wait(2)
-d.Log("🟢 เก็บไข่ "..q.." สำเร็จ")
-q=q+1
-end
-end
-task.wait(0.2)
-end
-
-d.Log("🟣 เก็บไข่ครบ "..(q-1).." ใบ")
-d.IsHuntEgg=false
-d.IsEasterHarvesting=false
-l=false
-end
-
-function b.checktime()
-local m=d.Options
-if not m.tgEggwarEnable.Value or d.IsHuntEgg then
-return
-end
-local n=os.date("!*t").min
-if n<3 then
-if not l then
-l=true
-b.autoEggwar()
-end
-else
-l=false
-end
-end
-
-function b.Initialize(m,n)
-d=m
-e=d.Window.QuickSave
-f=n
-j=d.Utils
-k=d.EfTasks
-local o=d.Options
-_=o
-local p=i.Character
-local q=f:AddCollapsibleSection("Eggwar",false)
-q:AddToggle("tgEggwarEnable",{
-Title="Eggwar Event Enable",
-Default=false,
-Callback=function(r)
-e()
-if not r then
-d.IsHuntEgg=false
-d.IsEasterHarvesting=false
-l=false
-end
-k.ToggleTask("AutoEggwar",r,function()
-b.checktime()
-task.wait(5)
-end)
-end,
-})
-
 q:AddButton({
-Title="Set Position",
+Title="Clear Honey Coin Shop Items",
 Callback=function()
-local r=p:GetPivot().Position
-local t=string.format("%.3f, %.3f, %.3f",r.X,r.Y,r.Z)
-o.ipEggwarPos:SetValue(t)
-e()
+j.ddBuyHoneyCoin:SetValue({})
 end,
 })
-q:AddInput("ipEggwarPos",{
-Title="Position",
-Default="",
-Placeholder="X, Y, Z",
-Numeric=false,
-Finished=false,
+q:AddToggle("tgBuyHoneyCoinEnable",{
+Title="Buy Honey Coin Shop Items",
+Default=false,
 Callback=function(r)
-e()
+g.UpdateBuyList()
+k()
+if r then
+local t=p.EventShopStock["Honey Coin Shop"].Stocks
+if not f.IsTableEmpty(t)then
+g.BuyItem(g.ShopKey.HoneyCoin,t)
+end
+end
+end,
+})
+
+local r=l:AddCollapsibleSection("HoneySeed",false)
+r:AddDropdown("ddBuyHoneySeed",{
+Title="Honey Seed Shop Items",
+Values=o,
+Multi=true,
+Default={},
+Searchable=true,
+Callback=function()
+g.UpdateBuyList()
+k()
+end,
+})
+r:AddButton({
+Title="Clear Honey Seed Shop Items",
+Callback=function()
+j.ddBuyHoneySeed:SetValue({})
+end,
+})
+r:AddToggle("tgBuyHoneySeedEnable",{
+Title="Buy Honey Seed Shop Items",
+Default=false,
+Callback=function(t)
+g.UpdateBuyList()
+k()
+if t then
+local u=p.EventShopStock["Honey Seed Shop"].Stocks
+if not f.IsTableEmpty(u)then
+g.BuyItem(g.ShopKey.HoneySeed,u)
+end
+end
 end,
 })
 end
 
-return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7145,18 +6230,12 @@ local function LoadEvents()
 local g={}
 if b().DEV_MODE then
 
-g.Eastersell=c("UI/Tabs/Events/Eastersell")
-g.Angryplant=c("UI/Tabs/Events/Angryplant")
-g.Goldenegg=c("UI/Tabs/Events/Goldenegg")
-g.Evilbunny=c("UI/Tabs/Events/Evilbunny")
-g.Eggwar=c("UI/Tabs/Events/Eggwar")
+g.MainBee=c("UI/Tabs/Events/MainBee")
+g.ShopBee=c("UI/Tabs/Events/ShopBee")
 else
 
-g.Eastersell=a.p()
-g.Angryplant=a.q()
-g.Goldenegg=a.r()
-g.Evilbunny=a.s()
-g.Eggwar=a.t()
+g.MainBee=a.p()
+g.ShopBee=a.q()
 end
 return g
 end
@@ -7170,19 +6249,14 @@ f=e.Tabs
 e.IsEasterHarvesting=false
 e.IsHuntEgg=false
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
-
+e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
 
-i.Eastersell.Initialize(e,f.Events)
-i.Angryplant.Initialize(e,f.Events)
-i.Goldenegg.Initialize(e,f.Events)
-i.Evilbunny.Initialize(e,f.Events)
-i.Eggwar.Initialize(e,f.Events)
-
-
+i.MainBee.Initialize(e,f.Events)
+i.ShopBee.Initialize(e,f.Events)
 end
 
-return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
+return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7272,7 +6346,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end do local function __modImpl()
+return c end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7347,8 +6421,8 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.u()
-e.LogTab=a.v()
+e.EventsTab=a.r()
+e.LogTab=a.s()
 
 
 
@@ -7394,7 +6468,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.w():typeof(__modImpl())local b=a.cache.w if not b then b={c=__modImpl()}a.cache.w=b end return b.c end end end
+return d end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -7424,7 +6498,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.w()
+c=a.t()
 end
 
 
