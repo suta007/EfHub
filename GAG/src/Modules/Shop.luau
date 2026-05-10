@@ -17,9 +17,9 @@ function Shop.Initialize(Registry)
 		Gear = "GearStock/Stocks",
 		Egg = "PetEggStock/Stocks",
 		Traveling = "TravelingMerchantShopStock/Stocks",
-		--Santa = "EventShopStock/Santa's Stash/Stocks",
-		--NewYear = "EventShopStock/New Years Shop/Stocks",
 		Easter = "EventShopStock/Easter Seed Shop/Stocks",
+		HoneyCoin = "EventShopStock/Honey Coin Shop/Stocks",
+		HoneySeed = "EventShopStock/Honey Seed Shop/Stocks",
 		SeasonPass = "SeasonPass/" .. CurrentSeason .. "/Stocks",
 	}
 
@@ -98,20 +98,20 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyTravelingMerchantShopStock",
 			ArgType = "NormalMode",
 		},
-		--[[ 		[Shop.ShopKey.Santa] = {
-			Enabled = Options.tgBuySantaEnable.Value,
-			Items = GetSelectedItems(Options.ddBuySanta.Value),
+		[Shop.ShopKey.HoneyCoin] = {
+			Enabled = Options.tgBuyHoneyCoinEnable.Value,
+			Items = GetSelectedItems(Options.ddBuyHoneyCoin.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
-			EventArg = "Santa's Stash",
+			EventArg = "Honey Coin Shop",
 		},
-		[Shop.ShopKey.NewYear] = {
-			Enabled = Options.tgBuyNewYearEnable.Value,
-			Items = GetSelectedItems(Options.ddBuyNewYear.Value),
+		[Shop.ShopKey.HoneySeed] = {
+			Enabled = Options.tgBuyHoneySeedEnable.Value,
+			Items = GetSelectedItems(Options.ddBuyHoneySeed.Value),
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
-			EventArg = "New Years Shop",
-		}, ]]
+			EventArg = "Honey Seed Shop",
+		},
 		[Shop.ShopKey.Easter] = {
 			Enabled = Options.tgBuyEasterEnable.Value,
 			Items = GetSelectedItems(Options.ddBuyEaster.Value),

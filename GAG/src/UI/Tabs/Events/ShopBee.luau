@@ -3,6 +3,7 @@ local reg
 local Tabs
 local sData
 local Utils
+local Shop
 
 function ShopBee.Initialize(registry, tab)
 	reg = registry
@@ -13,6 +14,7 @@ function ShopBee.Initialize(registry, tab)
 	sData = reg.sData
 	local EfTasks = reg.EfTasks
 	Utils = reg.Utils
+	Shop = reg.Shop
 
 	local HoneyCoinShopData = { "ALL" }
 	for itemName, _itemInfo in pairs(reg.EVENT_DATA["Honey Coin Shop"]) do
@@ -34,11 +36,11 @@ function ShopBee.Initialize(registry, tab)
 		Default = {},
 		Searchable = true,
 		Callback = function()
-			--Shop.UpdateBuyList()
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
-	HoneyCoinSection:AddButton("btnClearHoneyCoin", {
+	HoneyCoinSection:AddButton({
 		Title = "Clear Honey Coin Shop Items",
 		Callback = function()
 			Options.ddBuyHoneyCoin:SetValue({})
@@ -48,12 +50,12 @@ function ShopBee.Initialize(registry, tab)
 		Title = "Buy Honey Coin Shop Items",
 		Default = false,
 		Callback = function(Value)
-			--Shop.UpdateBuyList()
+			Shop.UpdateBuyList()
 			QuickSave()
 			if Value then
 				local HoneyCoinStocks = GetData_result.EventShopStock["Honey Coin Shop"].Stocks
 				if not Utils.IsTableEmpty(HoneyCoinStocks) then
-					--Shop.BuyItem(Shop.ShopKey.HoneyCoin, HoneyCoinStocks)
+					Shop.BuyItem(Shop.ShopKey.HoneyCoin, HoneyCoinStocks)
 				end
 			end
 		end,
@@ -67,11 +69,11 @@ function ShopBee.Initialize(registry, tab)
 		Default = {},
 		Searchable = true,
 		Callback = function()
-			--Shop.UpdateBuyList()
+			Shop.UpdateBuyList()
 			QuickSave()
 		end,
 	})
-	HoneySeedSection:AddButton("btnClearHoneySeed", {
+	HoneySeedSection:AddButton({
 		Title = "Clear Honey Seed Shop Items",
 		Callback = function()
 			Options.ddBuyHoneySeed:SetValue({})
@@ -81,12 +83,12 @@ function ShopBee.Initialize(registry, tab)
 		Title = "Buy Honey Seed Shop Items",
 		Default = false,
 		Callback = function(Value)
-			--Shop.UpdateBuyList()
+			Shop.UpdateBuyList()
 			QuickSave()
 			if Value then
 				local HoneySeedStocks = GetData_result.EventShopStock["Honey Seed Shop"].Stocks
 				if not Utils.IsTableEmpty(HoneySeedStocks) then
-					--Shop.BuyItem(Shop.ShopKey.HoneySeed, HoneySeedStocks)
+					Shop.BuyItem(Shop.ShopKey.HoneySeed, HoneySeedStocks)
 				end
 			end
 		end,
