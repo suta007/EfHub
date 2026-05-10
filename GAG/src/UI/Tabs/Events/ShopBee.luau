@@ -4,6 +4,25 @@ local Tabs
 local sData
 local Utils
 local Shop
+local stockConnection = nil
+
+local function BuyBeeEgg()
+	local Options = reg.Options
+	local GetSelectedItems = reg.Utils.GetSelectedItems
+	local GetData_result = sData.DataService:GetData()
+	local BeeEggStocks = GetData_result.BeeEggShopStock.Stocks
+	if not Utils.IsTableEmpty(BeeEggStocks) then
+		local beeEggList = GetSelectedItems(Options.ddBuyBeeEgg.Value)
+		for EggName, EggInfo in pairs(BeeEggStocks) do
+			if table.find(beeEggList, EggName) then
+				local StockAmount = tonumber(EggInfo.Stock) or 0
+				for _i = 1, StockAmount do
+					sData.GameEvents:WaitForChild("BeeColonyEggShopService"):WaitForChild("BuyBeeEggStock"):InvokeServer(EggName)
+				end
+			end
+		end
+	end
+end
 
 function ShopBee.Initialize(registry, tab)
 	reg = registry
@@ -89,6 +108,46 @@ function ShopBee.Initialize(registry, tab)
 				local HoneySeedStocks = GetData_result.EventShopStock["Honey Seed Shop"].Stocks
 				if not Utils.IsTableEmpty(HoneySeedStocks) then
 					Shop.BuyItem(Shop.ShopKey.HoneySeed, HoneySeedStocks)
+				end
+			end
+		end,
+	})
+
+	local BeeEggShopSection = EventsTab:AddCollapsibleSection("Bee Egg Shop", false)
+	local BeeEggData = { "Common Bee Egg", "Rare Bee Egg", "Mythical Bee Egg" }
+	BeeEggShopSection:AddDropdown("ddBuyBeeEgg", {
+		Title = "Bee Egg Shop Items",
+		Values = BeeEggData,
+		Multi = true,
+		Default = {},
+		--Searchable = true,
+		Callback = function()
+			Shop.UpdateBuyList()
+			QuickSave()
+		end,
+	})
+	BeeEggShopSection:AddButton({
+		Title = "Clear Bee Egg Shop Items",
+		Callback = function()
+			Options.ddBuyBeeEgg:SetValue({})
+		end,
+	})
+	local Signal = sData.DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
+	BeeEggShopSection:AddToggle("tgBuyBeeEggEnable", {
+		Title = "Buy Bee Egg Shop Items",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+			if Value then
+				stockConnection = Signal:Connect(function(_, _StockData)
+					pcall(function()
+						task.spawn(BuyBeeEgg)
+					end)
+				end)
+			else
+				if stockConnection then
+					stockConnection:Disconnect()
+					stockConnection = nil
 				end
 			end
 		end,

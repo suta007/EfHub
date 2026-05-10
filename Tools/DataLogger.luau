@@ -107,6 +107,12 @@ local function AddLog(message)
 		LogDisplay:SetValue(TempText)
 	end
 end
+
+local function TimeLog(message)
+	local timestamp = os.date("%X")
+	local entry = string.format("[%s] %s", timestamp, message)
+	AddLog(entry)
+end
 ------------------------------------------------------
 -- 6. Test Loop (ทดสอบดูความสวยงาม)
 ------------------------------------------------------
@@ -131,11 +137,20 @@ local function ShowData(tbl, indent)
 	end
 end
 
---local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local DataService = require(ReplicatedStorage.Modules.DataService)
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
 --local GetData_result = DataService:GetData()
 --local HoneyMachine2026 = GetData_result.HoneyMachine2026
 --ShowData(HoneyMachine2026)
 
-local data = require(game:GetService("ReplicatedStorage").Data.EventShopData)
-ShowData(data)
+local Signal = DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
+Signal:Connect(function(_, StockData)
+	TimeLog("Bee Egg Stocks : ")
+	ShowData(StockData)
+end)
+
+local Signal2 = DataService:GetPathSignal("BeeEggShopStock/Stocks")
+Signal2:Connect(function(_, StockData2)
+	TimeLog("Bee Egg Stocks 2 : ")
+	ShowData(StockData2)
+end)

@@ -16,17 +16,20 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local MarketplaceService = game:GetService("MarketplaceService")
-local productId = 74479628
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local DataService = require(ReplicatedStorage.Modules.DataService)
+--local GetData_result = DataService:GetData()
+--local HoneyMachine2026 = GetData_result.HoneyMachine2026
+--ShowData(HoneyMachine2026)
 
-local infoType = Enum.InfoType.Product
-
-local success, productInfo = pcall(function()
-	return MarketplaceService:GetProductInfo(productId, infoType)
+local Signal = DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
+Signal:Connect(function(_, StockData)
+	print(os.date("%X"), " Bee Egg Stocks : ")
+	ShowData(StockData)
 end)
 
-if success and productInfo then
-	ShowData(productInfo)
-else
-	warn("เกิดข้อผิดพลาด: ไม่สามารถดึงข้อมูลของสินค้า ID " .. tostring(productId) .. " ได้")
-end
+local Signal2 = DataService:GetPathSignal("BeeEggShopStock/Stocks")
+Signal2:Connect(function(_, StockData2)
+	print(os.date("%X"), " Bee Egg Stocks 2 : ")
+	ShowData(StockData2)
+end)
