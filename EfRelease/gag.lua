@@ -3789,6 +3789,57 @@ end
 end
 end
 end
+
+local G=workspace:WaitForChild("Interaction")
+local H=G.Parent
+local I=game:GetService("Lighting")
+local J="EfFolder"
+function h.HideEvent(K)
+if K then
+local L=I:FindFirstChild(J)
+if not L then
+L=Instance.new("Folder")
+L.Name=J
+L.Parent=I
+end
+G.Parent=L
+else
+G.Parent=H
+end
+end
+
+local K=workspace:FindFirstChild("Farm")
+function h.HideFarm(L)
+local M=I:FindFirstChild(J)
+local N=M and M:FindFirstChild("Farm")
+if L then
+if not M then
+M=Instance.new("Folder")
+M.Name=J
+M.Parent=I
+end
+
+if not N then
+N=Instance.new("Folder")
+N.Name="Farm"
+N.Parent=M
+end
+for O,P in pairs(K:GetChildren())do
+local Q=P.Important.Data.Owner.Value
+
+if Q~=j.MyName then
+P.Parent=N
+end
+end
+else
+if N then
+for O,P in pairs(N:GetChildren())do
+P.Parent=K
+end
+end
+end
+end
+
 return h end function a.i():typeof(__modImpl())local b=a.cache.i if not b then b={c=__modImpl()}a.cache.i=b end return b.c end end do local function __modImpl()
 
 
@@ -3812,7 +3863,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.10-19.25",
+SubTitle="2569.05.11-14.05",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -5928,6 +5979,25 @@ i.Disable3D(n)
 h()
 end,
 })
+m:AddDivider()
+m:AddToggle("tgHideEvent",{
+Title="Hide Event Decorations",
+Default=false,
+Callback=function(n)
+i.HideEvent(n)
+h()
+end,
+})
+
+m:AddDivider()
+m:AddToggle("tgHideFarm",{
+Title="Hide Other Players' Farms",
+Default=false,
+Callback=function(n)
+i.HideFarm(n)
+h()
+end,
+})
 
 local n=g.MiscTab:AddCollapsibleSection("Esp",false)
 n:AddToggle("tgEspCrops",{
@@ -6035,28 +6105,35 @@ return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b
 local b={}
 local c
 local d=game:GetService("CollectionService")
-local e
+local e=game:GetService("ReplicatedStorage")
+local f
+local g=game:GetService("Players")
+local h=g.LocalPlayer
+local i=require(e:WaitForChild("Modules"):WaitForChild("GetFarm")::any)
 
 local function HarvestHoneyFruits()
-local f=c.Options
-if not f.tgHarvestHoneyEnable or not f.tgHarvestHoneyEnable.Value then
+local j=c.Options
+if not j.tgHarvestHoneyEnable or not j.tgHarvestHoneyEnable.Value then
 return
 end
-if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
+if f.InventoryService.IsMaxInventory(f.LocalPlayer)then
 return
 end
-
-local g=d:GetTagged("CollectPrompt")
-for h,i in ipairs(g)do
-if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
+local k=i(h)
+if not k then
 return
 end
-if i:IsA("ProximityPrompt")and i.Enabled and not i:GetAttribute("Collected")then
-local j=i.Parent and i.Parent.Parent
-if j then
+local l=d:GetTagged("CollectPrompt")
+for m,n in ipairs(l)do
+if f.InventoryService.IsMaxInventory(f.LocalPlayer)then
+return
+end
+if n:IsDescendantOf(k)and n:IsA("ProximityPrompt")and n.Enabled and not n:GetAttribute("Collected")then
+local o=n.Parent and n.Parent.Parent
+if o then
 
 
-e.CollectEvent:FireServer({j})
+f.CollectEvent:FireServer({o})
 task.wait(0.2)
 end
 end
@@ -6064,122 +6141,122 @@ end
 end
 
 local function CompressHoney()
-local f=c.Options
-if not f.tgCompressHoneyEnable or not f.tgCompressHoneyEnable.Value then
+local j=c.Options
+if not j.tgCompressHoneyEnable or not j.tgCompressHoneyEnable.Value then
 return
 end
-local g=e.DataService:GetData()
-local h=g.HoneyMachine2026
-local i=h.HoneyStored
-local j=h.IsRunning
-if tonumber(i)>0 then
-e.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("CollectHoney")
+local k=f.DataService:GetData()
+local l=k.HoneyMachine2026
+local m=l.HoneyStored
+local n=l.IsRunning
+if tonumber(m)>0 then
+f.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("CollectHoney")
 task.wait(1)
 end
-if not j then
-e.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("SubmitAll")
+if not n then
+f.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("SubmitAll")
 task.wait(1)
 end
 end
 
 local function KeepPos()
-local f=c.Options
-local g=c.Utils
-if not f.tgKeepPosEnable or not f.tgKeepPosEnable.Value then
+local j=c.Options
+local k=c.Utils
+if not j.tgKeepPosEnable or not j.tgKeepPosEnable.Value then
 return
 end
-local h=f.ipKeepPos.Value
-if h==""then
+local l=j.ipKeepPos.Value
+if l==""then
 c.Log("Please set position.")
 return
 end
-local i=g.ParseVector3(h)
-if not i then
+local m=k.ParseVector3(l)
+if not m then
 c.Log("Invalid position format.")
 return
 end
 
-local j=e.Character
-local k=j.PrimaryPart.Position
-local l=(k-i).Magnitude
-if l>10 then
-j:PivotTo(CFrame.new(i))
+local n=f.Character
+local o=n.PrimaryPart.Position
+local p=(o-m).Magnitude
+if p>10 then
+n:PivotTo(CFrame.new(m))
 end
 end
 
-function b.Initialize(f,g)
-c=f
-local h=c.Options
-_=h
-local i=c.Window.QuickSave
-local j=g
-e=c.sData
-local k=c.EfTasks
+function b.Initialize(j,k)
+c=j
+local l=c.Options
+_=l
+local m=c.Window.QuickSave
+local n=k
+f=c.sData
+local o=c.EfTasks
 
-local l=j:AddCollapsibleSection("MainBee",false)
-l:AddToggle("tgHarvestHoneyEnable",{
+local p=n:AddCollapsibleSection("MainBee",false)
+p:AddToggle("tgHarvestHoneyEnable",{
 Title="Harvest Honey Fruits Enable",
 Default=false,
-Callback=function(m)
-i()
-k.ToggleTask("AutoHarvestHoney",m,function()
+Callback=function(q)
+m()
+o.ToggleTask("AutoHarvestHoney",q,function()
 HarvestHoneyFruits()
 task.wait(1)
 end)
 end,
 })
 
-l:AddToggle("tgCompressHoneyEnable",{
+p:AddToggle("tgCompressHoneyEnable",{
 Title="Compress Honey Enable",
 Default=false,
-Callback=function(m)
-i()
-k.ToggleTask("AutoCompressHoney",m,function()
+Callback=function(q)
+m()
+o.ToggleTask("AutoCompressHoney",q,function()
 CompressHoney()
 task.wait(10)
 end)
 end,
 })
 
-local m=j:AddCollapsibleSection("Keep Position",false)
-m:AddButton({
+local q=n:AddCollapsibleSection("Keep Position",false)
+q:AddButton({
 Title="Set Position",
 Callback=function()
-local n=e.Character:GetPivot().Position
-local o=string.format("%.3f, %.3f, %.3f",n.X,n.Y,n.Z)
-h.ipKeepPos:SetValue(o)
-i()
+local r=f.Character:GetPivot().Position
+local t=string.format("%.3f, %.3f, %.3f",r.X,r.Y,r.Z)
+l.ipKeepPos:SetValue(t)
+m()
 end,
 })
-m:AddInput("ipKeepPos",{
+q:AddInput("ipKeepPos",{
 Title="Position",
 Default="",
 Placeholder="X, Y, Z",
 Numeric=false,
 Finished=false,
 Callback=function()
-i()
+m()
 end,
 })
-m:AddInput("ipKeepPosDelay",{
+q:AddInput("ipKeepPosDelay",{
 Title="Delay Check Time (s)",
 Default=60,
 Numeric=true,
 Finished=true,
 Callback=function()
-i()
+m()
 end,
 })
 
-m:AddToggle("tgKeepPosEnable",{
+q:AddToggle("tgKeepPosEnable",{
 Title="Keep Position Enable",
 Default=false,
-Callback=function(n)
-i()
-k.ToggleTask("AutoKeepPos",n,function()
-local o=tonumber(h.ipKeepPosDelay.Value)or 60
+Callback=function(r)
+m()
+o.ToggleTask("AutoKeepPos",r,function()
+local t=tonumber(l.ipKeepPosDelay.Value)or 60
 KeepPos()
-task.wait(o)
+task.wait(t)
 end)
 end,
 })
