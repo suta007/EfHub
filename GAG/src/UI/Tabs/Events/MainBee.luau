@@ -27,8 +27,6 @@ local function HarvestHoneyFruits()
 		if prompt:IsDescendantOf(myFarm) and prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
 			local cropModel = prompt.Parent and prompt.Parent.Parent
 			if cropModel then
-				--seen[cropModel] = true
-				--table.insert(ReadyCrops, cropModel)
 				sData.CollectEvent:FireServer({ cropModel })
 				task.wait(0.2)
 			end
@@ -97,7 +95,7 @@ function MainBee.Initialize(registry, tab)
 			QuickSave()
 			EfTasks.ToggleTask("AutoHarvestHoney", Value, function()
 				HarvestHoneyFruits()
-				task.wait(1)
+				task.wait(5)
 			end)
 		end,
 	})
