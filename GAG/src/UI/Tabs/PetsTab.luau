@@ -294,7 +294,7 @@ function PetsTab.Initialize(registry)
 	HatchEggSection:AddToggle("tgPlaceEggsEn", {
 		Title = "Enable Auto Place Eggs",
 		Default = false,
-		Callback = function(Value)
+		Callback = function(_Value)
 			Pets.RunHatchSet()
 			QuickSave()
 		end,
@@ -361,7 +361,7 @@ function PetsTab.Initialize(registry)
 	HatchEggSection:AddToggle("tgAutoHatchEn", {
 		Title = "Enable Auto Hatch",
 		Default = false,
-		Callback = function(Value)
+		Callback = function(_Value)
 			Pets.RunHatchSet()
 			QuickSave()
 		end,

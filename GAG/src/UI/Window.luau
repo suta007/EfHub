@@ -126,26 +126,31 @@ function Window.myMenu()
 
 	local ageBreakPos = CFrame.new(-287.182, 5, 168.304)
 
-	local myGUI = Instance.new("ScreenGui", myGUIParent)
+	local myGUI = Instance.new("ScreenGui")
 	myGUI.Name = "EfHubGUI"
 	myGUI.IgnoreGuiInset = true
+	myGUI.Parent = myGUIParent
 
-	local myFrame = Instance.new("Frame", myGUI)
+	local myFrame = Instance.new("Frame")
 	myFrame.Size = UDim2.new(0.4, 0, 0, 100)
 	myFrame.Position = UDim2.new(0.6, 0, 0, 12)
+	myFrame.Parent = myGUI
 
 	myFrame.BackgroundTransparency = 1
 	myFrame.BorderSizePixel = 0
 
-	local lstLayout = Instance.new("UIListLayout", myFrame)
+	local lstLayout = Instance.new("UIListLayout")
+	lstLayout.Parent = myFrame
 	lstLayout.FillDirection = Enum.FillDirection.Horizontal
 	lstLayout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 	lstLayout.VerticalAlignment = Enum.VerticalAlignment.Top
 	lstLayout.SortOrder = Enum.SortOrder.LayoutOrder
 	lstLayout.Padding = UDim.new(0, 8)
 
-	local txtBtn1 = Instance.new("TextButton", myFrame)
-	txtBtn1.Size = UDim2.new(0, 44, 0, 44)
+	local txtBtn1 = Instance.new("TextButton")
+	txtBtn1.Name = "TxtBtn1"
+	txtBtn1.Parent = myFrame
+	txtBtn1.Size = UDim2.fromOffset(44, 44)
 	txtBtn1.Text = "🏠"
 	txtBtn1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	txtBtn1.BorderSizePixel = 0
@@ -153,14 +158,17 @@ function Window.myMenu()
 	txtBtn1.TextXAlignment = Enum.TextXAlignment.Center
 	txtBtn1.TextYAlignment = Enum.TextYAlignment.Center
 	txtBtn1.LayoutOrder = 1
-	local btn1Conner = Instance.new("UICorner", txtBtn1)
+	local btn1Conner = Instance.new("UICorner")
+	btn1Conner.Parent = txtBtn1
 	btn1Conner.CornerRadius = UDim.new(0, 22)
 	txtBtn1.Activated:Connect(function()
 		Character:PivotTo(spawnPoint)
 	end)
 
-	local txtBtn2 = Instance.new("TextButton", myFrame)
-	txtBtn2.Size = UDim2.new(0, 44, 0, 44)
+	local txtBtn2 = Instance.new("TextButton")
+	txtBtn2.Name = "TxtBtn2"
+	txtBtn2.Parent = myFrame
+	txtBtn2.Size = UDim2.fromOffset(44, 44)
 	txtBtn2.Text = "🐙"
 	txtBtn2.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	txtBtn2.BorderSizePixel = 0
@@ -168,15 +176,17 @@ function Window.myMenu()
 	txtBtn2.TextXAlignment = Enum.TextXAlignment.Center
 	txtBtn2.TextYAlignment = Enum.TextYAlignment.Center
 	txtBtn2.LayoutOrder = 2
-	local btn2Conner = Instance.new("UICorner", txtBtn2)
+	local btn2Conner = Instance.new("UICorner")
+	btn2Conner.Parent = txtBtn2
 	btn2Conner.CornerRadius = UDim.new(0, 22)
-
 	txtBtn2.Activated:Connect(function()
 		Character:PivotTo(ageBreakPos)
 	end)
 
-	local txtBtn3 = Instance.new("TextButton", myFrame)
-	txtBtn3.Size = UDim2.new(0, 44, 0, 44)
+	local txtBtn3 = Instance.new("TextButton")
+	txtBtn3.Name = "TxtBtn3"
+	txtBtn3.Parent = myFrame
+	txtBtn3.Size = UDim2.fromOffset(44, 44)
 	txtBtn3.Text = "💎"
 	txtBtn3.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	txtBtn3.BorderSizePixel = 0
@@ -184,7 +194,8 @@ function Window.myMenu()
 	txtBtn3.TextXAlignment = Enum.TextXAlignment.Center
 	txtBtn3.TextYAlignment = Enum.TextYAlignment.Center
 	txtBtn3.LayoutOrder = 3
-	local btn3Conner = Instance.new("UICorner", txtBtn3)
+	local btn3Conner = Instance.new("UICorner")
+	btn3Conner.Parent = txtBtn3
 	btn3Conner.CornerRadius = UDim.new(0, 22)
 	txtBtn3.Activated:Connect(function()
 		local Options = reg.Options
