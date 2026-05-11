@@ -1,7 +1,11 @@
 local MainBee = {}
 local reg
 local CollectionService = game:GetService("CollectionService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local sData
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local GetFarm = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("GetFarm") :: any)
 
 local function HarvestHoneyFruits()
 	local Options = reg.Options
@@ -11,13 +15,16 @@ local function HarvestHoneyFruits()
 	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 		return
 	end
-
+	local myFarm = GetFarm(LocalPlayer)
+	if not myFarm then
+		return
+	end
 	local allPrompts = CollectionService:GetTagged("CollectPrompt")
 	for _, prompt in ipairs(allPrompts) do
 		if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 			return
 		end
-		if prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
+		if prompt:IsDescendantOf(myFarm) and prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
 			local cropModel = prompt.Parent and prompt.Parent.Parent
 			if cropModel then
 				--seen[cropModel] = true
