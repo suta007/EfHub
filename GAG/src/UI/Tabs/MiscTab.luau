@@ -59,6 +59,15 @@ function MiscTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
+	AntiLagSection:AddDivider()
+	AntiLagSection:AddToggle("tgHideEvent", {
+		Title = "Hide Event Decorations",
+		Default = false,
+		Callback = function(Value)
+			Misc.HideEvent(Value)
+			QuickSave()
+		end,
+	})
 
 	local EspSection = Tabs.MiscTab:AddCollapsibleSection("Esp", false)
 	EspSection:AddToggle("tgEspCrops", {

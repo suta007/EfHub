@@ -850,4 +850,23 @@ function Misc.SeasonPassRewards()
 		end
 	end
 end
+
+local eventFolder = workspace:WaitForChild("Interaction")
+local eventParent = eventFolder.Parent
+local Lighting = game:GetService("Lighting")
+local targetFolderName = "EfFolder"
+function Misc.HideEvent(Value)
+	if Value then
+		local hiddenFolder = Lighting:FindFirstChild(targetFolderName)
+		if not hiddenFolder then
+			hiddenFolder = Instance.new("Folder")
+			hiddenFolder.Name = targetFolderName
+			hiddenFolder.Parent = Lighting
+		end
+		eventFolder.Parent = hiddenFolder
+	else
+		eventFolder.Parent = eventParent
+	end
+end
+
 return Misc
