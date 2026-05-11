@@ -69,6 +69,16 @@ function MiscTab.Initialize(Registry)
 		end,
 	})
 
+	AntiLagSection:AddDivider()
+	AntiLagSection:AddToggle("tgHideFarm", {
+		Title = "Hide Other Players' Farms",
+		Default = false,
+		Callback = function(Value)
+			Misc.HideFarm(Value)
+			QuickSave()
+		end,
+	})
+
 	local EspSection = Tabs.MiscTab:AddCollapsibleSection("Esp", false)
 	EspSection:AddToggle("tgEspCrops", {
 		Title = "Esp Crops",

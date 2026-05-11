@@ -869,4 +869,36 @@ function Misc.HideEvent(Value)
 	end
 end
 
+local farmFolder = workspace:FindFirstChild("Farm")
+function Misc.HideFarm(Value)
+	local hiddenFolder = Lighting:FindFirstChild(targetFolderName)
+	local farm2 = hiddenFolder and hiddenFolder:FindFirstChild("Farm")
+	if Value then
+		if not hiddenFolder then
+			hiddenFolder = Instance.new("Folder")
+			hiddenFolder.Name = targetFolderName
+			hiddenFolder.Parent = Lighting
+		end
+
+		if not farm2 then
+			farm2 = Instance.new("Folder")
+			farm2.Name = "Farm"
+			farm2.Parent = hiddenFolder
+		end
+		for _, oFarm in pairs(farmFolder:GetChildren()) do
+			local owner = oFarm.Important.Data.Owner.Value
+
+			if owner ~= sData.MyName then
+				oFarm.Parent = farm2
+			end
+		end
+	else
+		if farm2 then
+			for _, oFarm in pairs(farm2:GetChildren()) do
+				oFarm.Parent = farmFolder
+			end
+		end
+	end
+end
+
 return Misc
