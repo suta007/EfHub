@@ -902,6 +902,7 @@ Traveling="TravelingMerchantShopStock/Stocks",
 Easter="EventShopStock/Easter Seed Shop/Stocks",
 HoneyCoin="EventShopStock/Honey Coin Shop/Stocks",
 HoneySeed="EventShopStock/Honey Seed Shop/Stocks",
+RoyalJelly="EventShopStock/Royal Jelly Shop/Stocks",
 SeasonPass="SeasonPass/"..h.."/Stocks",
 }
 
@@ -994,6 +995,13 @@ RemoteName="BuyEventShopStock",
 ArgType="EventMode",
 EventArg="Honey Seed Shop",
 },
+[b.ShopKey.RoyalJelly]={
+Enabled=if g.tgBuyRoyalJellyEnable then g.tgBuyRoyalJellyEnable.Value else false,
+Items=if g.ddBuyRoyalJelly then f(g.ddBuyRoyalJelly.Value)else{},
+RemoteName="BuyEventShopStock",
+ArgType="EventMode",
+EventArg="Royal Jelly Shop",
+},
 [b.ShopKey.Easter]={
 Enabled=g.tgBuyEasterEnable.Value,
 Items=f(g.ddBuyEaster.Value),
@@ -1001,6 +1009,7 @@ RemoteName="BuyEventShopStock",
 ArgType="EventMode",
 EventArg="Easter Seed Shop",
 },
+
 [b.ShopKey.SeasonPass]={
 Enabled=g.tgBuySeasonPassEnable.Value,
 Items=f(g.ddBuySeasonPass.Value),
@@ -3970,26 +3979,31 @@ end
 
 local q=CFrame.new(-287.182,5,168.304)
 
-local r=Instance.new("ScreenGui",m)
+local r=Instance.new("ScreenGui")
 r.Name="EfHubGUI"
 r.IgnoreGuiInset=true
+r.Parent=m
 
-local t=Instance.new("Frame",r)
+local t=Instance.new("Frame")
 t.Size=UDim2.new(0.4,0,0,100)
 t.Position=UDim2.new(0.6,0,0,12)
+t.Parent=r
 
 t.BackgroundTransparency=1
 t.BorderSizePixel=0
 
-local u=Instance.new("UIListLayout",t)
+local u=Instance.new("UIListLayout")
+u.Parent=t
 u.FillDirection=Enum.FillDirection.Horizontal
 u.HorizontalAlignment=Enum.HorizontalAlignment.Left
 u.VerticalAlignment=Enum.VerticalAlignment.Top
 u.SortOrder=Enum.SortOrder.LayoutOrder
 u.Padding=UDim.new(0,8)
 
-local v=Instance.new("TextButton",t)
-v.Size=UDim2.new(0,44,0,44)
+local v=Instance.new("TextButton")
+v.Name="TxtBtn1"
+v.Parent=t
+v.Size=UDim2.fromOffset(44,44)
 v.Text="🏠"
 v.BackgroundColor3=Color3.fromRGB(0,0,0)
 v.BorderSizePixel=0
@@ -3997,14 +4011,17 @@ v.TextSize=14
 v.TextXAlignment=Enum.TextXAlignment.Center
 v.TextYAlignment=Enum.TextYAlignment.Center
 v.LayoutOrder=1
-local w=Instance.new("UICorner",v)
+local w=Instance.new("UICorner")
+w.Parent=v
 w.CornerRadius=UDim.new(0,22)
 v.Activated:Connect(function()
 l:PivotTo(p)
 end)
 
-local x=Instance.new("TextButton",t)
-x.Size=UDim2.new(0,44,0,44)
+local x=Instance.new("TextButton")
+x.Name="TxtBtn2"
+x.Parent=t
+x.Size=UDim2.fromOffset(44,44)
 x.Text="🐙"
 x.BackgroundColor3=Color3.fromRGB(0,0,0)
 x.BorderSizePixel=0
@@ -4012,15 +4029,17 @@ x.TextSize=14
 x.TextXAlignment=Enum.TextXAlignment.Center
 x.TextYAlignment=Enum.TextYAlignment.Center
 x.LayoutOrder=2
-local y=Instance.new("UICorner",x)
+local y=Instance.new("UICorner")
+y.Parent=x
 y.CornerRadius=UDim.new(0,22)
-
 x.Activated:Connect(function()
 l:PivotTo(q)
 end)
 
-local z=Instance.new("TextButton",t)
-z.Size=UDim2.new(0,44,0,44)
+local z=Instance.new("TextButton")
+z.Name="TxtBtn3"
+z.Parent=t
+z.Size=UDim2.fromOffset(44,44)
 z.Text="💎"
 z.BackgroundColor3=Color3.fromRGB(0,0,0)
 z.BorderSizePixel=0
@@ -4028,7 +4047,8 @@ z.TextSize=14
 z.TextXAlignment=Enum.TextXAlignment.Center
 z.TextYAlignment=Enum.TextYAlignment.Center
 z.LayoutOrder=3
-local A=Instance.new("UICorner",z)
+local A=Instance.new("UICorner")
+A.Parent=z
 A.CornerRadius=UDim.new(0,22)
 z.Activated:Connect(function()
 local B=c.Options
@@ -6131,8 +6151,6 @@ end
 if n:IsDescendantOf(k)and n:IsA("ProximityPrompt")and n.Enabled and not n:GetAttribute("Collected")then
 local o=n.Parent and n.Parent.Parent
 if o then
-
-
 f.CollectEvent:FireServer({o})
 task.wait(0.2)
 end
@@ -6201,7 +6219,7 @@ Callback=function(q)
 m()
 o.ToggleTask("AutoHarvestHoney",q,function()
 HarvestHoneyFruits()
-task.wait(1)
+task.wait(5)
 end)
 end,
 })
@@ -6311,10 +6329,15 @@ for q,r in pairs(c.EVENT_DATA["Honey Seed Shop"])do
 table.insert(p,q)
 end
 
-local q=e.DataService:GetData()
+local q={"ALL"}
+for r,t in pairs(c.EVENT_DATA["Royal Jelly Shop"])do
+table.insert(q,r)
+end
 
-local r=m:AddCollapsibleSection("Honey Coin Shop",false)
-r:AddDropdown("ddBuyHoneyCoin",{
+local r=e.DataService:GetData()
+
+local t=m:AddCollapsibleSection("Honey Coin Shop",false)
+t:AddDropdown("ddBuyHoneyCoin",{
 Title="Honey Coin Shop Items",
 Values=o,
 Multi=true,
@@ -6325,29 +6348,29 @@ g.UpdateBuyList()
 l()
 end,
 })
-r:AddButton({
+t:AddButton({
 Title="Clear Honey Coin Shop Items",
 Callback=function()
 k.ddBuyHoneyCoin:SetValue({})
 end,
 })
-r:AddToggle("tgBuyHoneyCoinEnable",{
+t:AddToggle("tgBuyHoneyCoinEnable",{
 Title="Buy Honey Coin Shop Items",
 Default=false,
-Callback=function(t)
+Callback=function(u)
 g.UpdateBuyList()
 l()
-if t then
-local u=q.EventShopStock["Honey Coin Shop"].Stocks
-if not f.IsTableEmpty(u)then
-g.BuyItem(g.ShopKey.HoneyCoin,u)
+if u then
+local v=r.EventShopStock["Honey Coin Shop"].Stocks
+if not f.IsTableEmpty(v)then
+g.BuyItem(g.ShopKey.HoneyCoin,v)
 end
 end
 end,
 })
 
-local t=m:AddCollapsibleSection("HoneySeed",false)
-t:AddDropdown("ddBuyHoneySeed",{
+local u=m:AddCollapsibleSection("HoneySeed",false)
+u:AddDropdown("ddBuyHoneySeed",{
 Title="Honey Seed Shop Items",
 Values=p,
 Multi=true,
@@ -6358,32 +6381,65 @@ g.UpdateBuyList()
 l()
 end,
 })
-t:AddButton({
+u:AddButton({
 Title="Clear Honey Seed Shop Items",
 Callback=function()
 k.ddBuyHoneySeed:SetValue({})
 end,
 })
-t:AddToggle("tgBuyHoneySeedEnable",{
+u:AddToggle("tgBuyHoneySeedEnable",{
 Title="Buy Honey Seed Shop Items",
 Default=false,
-Callback=function(u)
+Callback=function(v)
 g.UpdateBuyList()
 l()
-if u then
-local v=q.EventShopStock["Honey Seed Shop"].Stocks
-if not f.IsTableEmpty(v)then
-g.BuyItem(g.ShopKey.HoneySeed,v)
+if v then
+local w=r.EventShopStock["Honey Seed Shop"].Stocks
+if not f.IsTableEmpty(w)then
+g.BuyItem(g.ShopKey.HoneySeed,w)
 end
 end
 end,
 })
 
-local u=m:AddCollapsibleSection("Bee Egg Shop",false)
-local v={"Common Bee Egg","Rare Bee Egg","Mythical Bee Egg"}
-u:AddDropdown("ddBuyBeeEgg",{
+local v=m:AddCollapsibleSection("RoyalJelly",false)
+v:AddDropdown("ddBuyRoyalJelly",{
+Title="Royal Jelly Shop Items",
+Values=q,
+Multi=true,
+Default={},
+Searchable=true,
+Callback=function()
+g.UpdateBuyList()
+l()
+end,
+})
+v:AddButton({
+Title="Clear Royal Jelly Shop Items",
+Callback=function()
+k.ddBuyRoyalJelly:SetValue({})
+end,
+})
+v:AddToggle("tgBuyRoyalJellyEnable",{
+Title="Buy Royal Jelly Shop Items",
+Default=false,
+Callback=function(w)
+g.UpdateBuyList()
+l()
+if w then
+local x=r.EventShopStock["Royal Jelly Shop"].Stocks
+if not f.IsTableEmpty(x)then
+g.BuyItem(g.ShopKey.RoyalJelly,x)
+end
+end
+end,
+})
+
+local w=m:AddCollapsibleSection("Bee Egg Shop",false)
+local x={"Common Bee Egg","Rare Bee Egg","Mythical Bee Egg"}
+w:AddDropdown("ddBuyBeeEgg",{
 Title="Bee Egg Shop Items",
-Values=v,
+Values=x,
 Multi=true,
 Default={},
 
@@ -6392,23 +6448,23 @@ g.UpdateBuyList()
 l()
 end,
 })
-u:AddButton({
+w:AddButton({
 Title="Clear Bee Egg Shop Items",
 Callback=function()
 k.ddBuyBeeEgg:SetValue({})
 end,
 })
-local w=e.DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
-u:AddToggle("tgBuyBeeEggEnable",{
+local y=e.DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
+w:AddToggle("tgBuyBeeEggEnable",{
 Title="Buy Bee Egg Shop Items",
 Default=false,
-Callback=function(x)
+Callback=function(z)
 l()
-if x then
+if z then
 pcall(function()
 task.spawn(BuyBeeEgg)
 end)
-h=w:Connect(function(y,z)
+h=y:Connect(function(A,B)
 pcall(function()
 task.spawn(BuyBeeEgg)
 end)
