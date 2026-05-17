@@ -1,0 +1,1089 @@
+Script initialized successfully.
+[Easter Seed Shop] : (Table)
+  [Springtide Egg] : (Table)
+    [LayoutOrder] : 85
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 40000
+    [PurchaseID] : 3577373818
+    [SeedName] : Springtide Egg
+    [StockChance] : 40
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [ItemType] : Egg
+    [FallbackPrice] : 149
+  [Hootsie Roll] : (Table)
+    [LayoutOrder] : 75
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 8000
+    [PurchaseID] : 3569512323
+    [SeedName] : Hootsie Roll
+    [StockChance] : 24
+    [DisplayInShop] : true
+    [Description] : Hootsie Experience: Grants bonus XP/s to all Easter type pets! & Hootsie Effect: Grants bonus XP/s to all pets in your garden!
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [ItemType] : Pet
+    [FallbackPrice] : 559
+  [Easter Eggfruit] : (Table)
+    [LayoutOrder] : 90
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 50000
+    [PurchaseID] : 3564214555
+    [SeedName] : Easter Eggfruit
+    [StockChance] : 60
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 1299
+  [Easter Sugar Melon] : (Table)
+    [LayoutOrder] : 60
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 640
+    [PurchaseID] : 3564213869
+    [SeedName] : Easter Sugar Melon
+    [StockChance] : 8
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 2
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 339
+  [Gummy Bear] : (Table)
+    [LayoutOrder] : 68
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 7500
+    [PurchaseID] : 3569512215
+    [SeedName] : Gummy Bear
+    [StockChance] : 14
+    [DisplayInShop] : true
+    [Description] : Gummy Express: Occasionally applies the Gummy mutation!
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Pet
+    [FallbackPrice] : 479
+  [Easter Liquorice] : (Table)
+    [LayoutOrder] : 45
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 500
+    [PurchaseID] : 3564217298
+    [SeedName] : Easter Liquorice
+    [StockChance] : 5
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 4
+      [2] : 8
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 139
+  [Easter Egg Melon] : (Table)
+    [LayoutOrder] : 72
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 14000
+    [PurchaseID] : 3573196128
+    [SeedName] : Easter Egg Melon
+    [StockChance] : 20
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 549
+  [Easter Sour Lemon] : (Table)
+    [LayoutOrder] : 80
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 18500
+    [PurchaseID] : 3564214398
+    [SeedName] : Easter Sour Lemon
+    [StockChance] : 32
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 799
+  [Beaver] : (Table)
+    [LayoutOrder] : 46
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 2500
+    [PurchaseID] : 3573195752
+    [SeedName] : Beaver
+    [StockChance] : 8
+    [DisplayInShop] : true
+    [Description] : The Wood Works: Occasionally goes to a Woody type fruit in your garden to convert it into a random wooden-based building cosmetic.
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Pet
+    [FallbackPrice] : 419
+  [Easter Candy Carrot] : (Table)
+    [LayoutOrder] : 10
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 10
+    [PurchaseID] : 3564213258
+    [SeedName] : Easter Candy Carrot
+    [StockChance] : 1
+    [DisplayInShop] : true
+    [Description] : Easter has to start somewhere!
+    [StockAmount] : (Table)
+      [1] : 5
+      [2] : 10
+    [SeedRarity] : Common
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 59
+  [Chocolate Sprinkler] : (Table)
+    [LayoutOrder] : 50
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 120
+    [PurchaseID] : 3268187887
+    [SeedName] : Chocolate Sprinkler
+    [StockChance] : 7
+    [DisplayInShop] : true
+    [Description] : Covers plants in chocolate! Lasts 1 minute
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Gear
+    [FallbackPrice] : 199
+  [Easter Chocolate Coconut] : (Table)
+    [LayoutOrder] : 65
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 1200
+    [PurchaseID] : 3568821854
+    [SeedName] : Easter Chocolate Coconut
+    [StockChance] : 14
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 439
+  [Easter Chocolate Berry] : (Table)
+    [LayoutOrder] : 20
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 50
+    [PurchaseID] : 3564213486
+    [SeedName] : Easter Chocolate Berry
+    [StockChance] : 1
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Uncommon
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 139
+  [Easter Gumball] : (Table)
+    [LayoutOrder] : 40
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 350
+    [PurchaseID] : 3564213677
+    [SeedName] : Easter Gumball
+    [StockChance] : 4
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 189
+  [Easter Gummy Cactus] : (Table)
+    [LayoutOrder] : 70
+    [ShowOdds] : true
+    [SpecialCurrencyType] : ChocCoins
+    [Price] : 10000
+    [PurchaseID] : 3564214194
+    [SeedName] : Easter Gummy Cactus
+    [StockChance] : 16
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 499
+[Honey Coin Shop] : (Table)
+  [Hive Crate] : (Table)
+    [LayoutOrder] : 55
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 3000
+    [PurchaseID] : 3588747031
+    [SeedName] : Hive Crate
+    [StockChance] : 8
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 2
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Crate
+    [FallbackPrice] : 179
+  [Professor Bee] : (Table)
+    [LayoutOrder] : 60
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2500
+    [PurchaseID] : 3584075071
+    [SeedName] : Professor Bee
+    [StockChance] : 13
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Pet
+    [FallbackPrice] : 529
+  [Honey Coneflower] : (Table)
+    [LayoutOrder] : 40
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2000
+    [PurchaseID] : 3584074350
+    [SeedName] : Honey Coneflower
+    [StockChance] : 8
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 799
+  [Honey Honey Hollow] : (Table)
+    [LayoutOrder] : 80
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 30000
+    [PurchaseID] : 3593051341
+    [SeedName] : Honey Honey Hollow
+    [StockChance] : 24
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 1299
+  [Honey Honey Daisy] : (Table)
+    [LayoutOrder] : 10
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 25
+    [PurchaseID] : 3584072658
+    [SeedName] : Honey Honey Daisy
+    [StockChance] : 1
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 2
+      [2] : 4
+    [SeedRarity] : Common
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 59
+  [Honey Birds of Paradise] : (Table)
+    [LayoutOrder] : 70
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 10000
+    [PurchaseID] : 3584075352
+    [SeedName] : Honey Birds of Paradise
+    [StockChance] : 16
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 1099
+  [Honey Badger] : (Table)
+    [LayoutOrder] : 65
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 3500
+    [PurchaseID] : 3593103218
+    [SeedName] : Honey Badger
+    [StockChance] : 13
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Pet
+    [FallbackPrice] : 429
+  [Pollen Radar 2026] : (Table)
+    [LayoutOrder] : 35
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 8
+    [PurchaseID] : 3584121396
+    [SeedName] : Pollen Radar 2026
+    [StockChance] : 5
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Gear
+    [FallbackPrice] : 249
+  [Hive Egg] : (Table)
+    [LayoutOrder] : 50
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2500
+    [PurchaseID] : 3584074791
+    [SeedName] : Hive Egg
+    [StockChance] : 8
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 2
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [ItemType] : Egg
+    [FallbackPrice] : 149
+  [Honey Honey Dew] : (Table)
+    [LayoutOrder] : 20
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 150
+    [PurchaseID] : 3584073824
+    [SeedName] : Honey Honey Dew
+    [StockChance] : 3
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Uncommon
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 189
+  [Honey Ambercomb] : (Table)
+    [LayoutOrder] : 30
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2000
+    [PurchaseID] : 3584074033
+    [SeedName] : Honey Ambercomb
+    [StockChance] : 5
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 2
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Seed
+    [FallbackPrice] : 449
+  [Honey Hive Seed Pack] : (Table)
+    [LayoutOrder] : 25
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2500
+    [PurchaseID] : 3588739135
+    [SeedName] : Honey Hive Seed Pack
+    [StockChance] : 3
+    [DisplayInShop] : true
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 2
+      [2] : 3
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [ItemType] : Seed Pack
+    [FallbackPrice] : 449
+[Royal Jelly Shop] : (Table)
+  [Pet Shard RoyalJelly] : (Table)
+    [LayoutOrder] : 40
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 500
+    [PurchaseID] : 3593053446
+    [SeedName] : Pet Shard RoyalJelly
+    [StockChance] : 9
+    [Description] : 
+    [ItemType] : Gear
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 499
+  [Grape Droplet] : (Table)
+    [LayoutOrder] : 20
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 75
+    [PurchaseID] : 3593052141
+    [SeedName] : Grape Droplet
+    [StockChance] : 3
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 2
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 399
+  [Carpenter Bee] : (Table)
+    [LayoutOrder] : 30
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 150
+    [PurchaseID] : 3593053065
+    [SeedName] : Carpenter Bee
+    [StockChance] : 6
+    [Description] : 
+    [ItemType] : Pet
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 399
+  [Royal Jelly Fountain] : (Table)
+    [LayoutOrder] : 50
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 800
+    [PurchaseID] : 3593053634
+    [SeedName] : Royal Jelly Fountain
+    [StockChance] : 12
+    [Description] : 
+    [ItemType] : Cosmetic
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 279
+  [King Bee] : (Table)
+    [LayoutOrder] : 60
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 1200
+    [PurchaseID] : 3593053302
+    [SeedName] : King Bee
+    [StockChance] : 15
+    [Description] : 
+    [ItemType] : Pet
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 819
+  [Pohutukawa] : (Table)
+    [LayoutOrder] : 70
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 2500
+    [PurchaseID] : 3593052869
+    [SeedName] : Pohutukawa
+    [StockChance] : 20
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1599
+  [Pollen Puffball] : (Table)
+    [LayoutOrder] : 10
+    [SpecialCurrencyType] : RoyalJelly
+    [Price] : 25
+    [PurchaseID] : 3593052413
+    [SeedName] : Pollen Puffball
+    [StockChance] : 1
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 2
+      [2] : 4
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 169
+[Honey Seed Shop] : (Table)
+  [Honey Daffodil] : (Table)
+    [LayoutOrder] : 90
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 400
+    [PurchaseID] : 3587181923
+    [SeedName] : Honey Daffodil Seed
+    [StockChance] : 7
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 4
+      [2] : 7
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Pepper] : (Table)
+    [LayoutOrder] : 270
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 225
+    [PurchaseID] : 3587185917
+    [SeedName] : Honey Pepper Seed
+    [StockChance] : 5000
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Alien Apple] : (Table)
+    [LayoutOrder] : 402
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 60000
+    [PurchaseID] : 3587187084
+    [SeedName] : Honey Alien Apple Seed
+    [StockChance] : 1000
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Transcendent
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Watermelon] : (Table)
+    [LayoutOrder] : 100
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 100
+    [PurchaseID] : 3587184502
+    [SeedName] : Honey Watermelon Seed
+    [StockChance] : 20
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 5
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Corn] : (Table)
+    [LayoutOrder] : 80
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 150
+    [PurchaseID] : 3587181853
+    [SeedName] : Honey Corn Seed
+    [StockChance] : 6
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 2
+      [2] : 4
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Zebrazinkle] : (Table)
+    [LayoutOrder] : 390
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 32000
+    [PurchaseID] : 3587186982
+    [SeedName] : Honey Zebrazinkle Seed
+    [StockChance] : 1000
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Transcendent
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Bamboo] : (Table)
+    [LayoutOrder] : 180
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 80
+    [PurchaseID] : 3587185034
+    [SeedName] : Honey Bamboo Seed
+    [StockChance] : 5
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 10
+      [2] : 20
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Giant Pinecone] : (Table)
+    [LayoutOrder] : 350
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 17000
+    [PurchaseID] : 3587186693
+    [SeedName] : Honey Giant Pinecone Seed
+    [StockChance] : 380
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Cactus] : (Table)
+    [LayoutOrder] : 200
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2000
+    [PurchaseID] : 3587185307
+    [SeedName] : Honey Cactus Seed
+    [StockChance] : 30
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 5
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Grape] : (Table)
+    [LayoutOrder] : 250
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 4500
+    [PurchaseID] : 3587185554
+    [SeedName] : Honey Grape Seed
+    [StockChance] : 100
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Tomato] : (Table)
+    [LayoutOrder] : 50
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 100
+    [PurchaseID] : 3587181800
+    [SeedName] : Honey Tomato Seed
+    [StockChance] : 1
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Rare
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Mango] : (Table)
+    [LayoutOrder] : 220
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 3500
+    [PurchaseID] : 3587185489
+    [SeedName] : Honey Mango Seed
+    [StockChance] : 80
+    [GrowthTime] : 2
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Romanesco] : (Table)
+    [LayoutOrder] : 370
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 22000
+    [PurchaseID] : 3587186901
+    [SeedName] : Honey Romanesco Seed
+    [StockChance] : 440
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Elder Strawberry] : (Table)
+    [LayoutOrder] : 360
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 18000
+    [PurchaseID] : 3587186811
+    [SeedName] : Honey Elder Strawberry Seed
+    [StockChance] : 405
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Octobloom] : (Table)
+    [LayoutOrder] : 400
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 38000
+    [PurchaseID] : 3587187038
+    [SeedName] : Honey Octobloom Seed
+    [StockChance] : 1300
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Transcendent
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Strawberry] : (Table)
+    [LayoutOrder] : 20
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 50
+    [PurchaseID] : 3587181503
+    [SeedName] : Honey Strawberry Seed
+    [StockChance] : 1
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 3
+      [2] : 6
+    [SeedRarity] : Common
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Carrot] : (Table)
+    [LayoutOrder] : 10
+    [ItemType] : Seed
+    [Price] : 10
+    [PurchaseID] : 3587181142
+    [SeedName] : Honey Carrot Seed
+    [StockChance] : 1
+    [Description] : 
+    [StockAmount] : (Table)
+      [1] : 5
+      [2] : 25
+    [SeedRarity] : Common
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Buttercup] : (Table)
+    [LayoutOrder] : 40
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 250
+    [PurchaseID] : 3587181747
+    [SeedName] : Honey Buttercup Seed
+    [StockChance] : 3
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 10
+      [2] : 25
+    [SeedRarity] : Uncommon
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Beanstalk] : (Table)
+    [LayoutOrder] : 290
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 335
+    [PurchaseID] : 3587186209
+    [SeedName] : Honey Beanstalk Seed
+    [StockChance] : 9000
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Pumpkin] : (Table)
+    [LayoutOrder] : 160
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 150
+    [PurchaseID] : 3587184561
+    [SeedName] : Honey Pumpkin Seed
+    [StockChance] : 10
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 3
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Mushroom] : (Table)
+    [LayoutOrder] : 260
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 55
+    [PurchaseID] : 3587185870
+    [SeedName] : Honey Mushroom Seed
+    [StockChance] : 1500
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 13
+      [2] : 25
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Blueberry] : (Table)
+    [LayoutOrder] : 30
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 75
+    [PurchaseID] : 3587181634
+    [SeedName] : Honey Blueberry Seed
+    [StockChance] : 1
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 5
+    [SeedRarity] : Uncommon
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Burning Bud] : (Table)
+    [LayoutOrder] : 320
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 16000
+    [PurchaseID] : 3587186371
+    [SeedName] : Honey Burning Bud Seed
+    [StockChance] : 340
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Pollenvine] : (Table)
+    [LayoutOrder] : 410
+    [ShowOdds] : true
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 20000
+    [PurchaseID] : 3587239446
+    [SeedName] : Honey Pollenvine
+    [StockChance] : 700
+    [GrowthTime] : 1
+    [Description] : PLANT ABILITY: Every 10 minutes, mutates a nearby fruit with <font color="#FFA600">Pollinated</font> of a <font color="#90EE90">random</font> quality.
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Transcendent
+    [DisplayInShop] : true
+    [ItemType] : Seed
+    [FallbackPrice] : 0
+  [Honey Ember Lily] : (Table)
+    [LayoutOrder] : 300
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 355
+    [PurchaseID] : 3587186253
+    [SeedName] : Honey Ember Lily Seed
+    [StockChance] : 14000
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Sunflower] : (Table)
+    [LayoutOrder] : 285
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 300
+    [PurchaseID] : 3587186141
+    [SeedName] : Honey Sunflower Seed
+    [StockChance] : 12000
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Apple] : (Table)
+    [LayoutOrder] : 170
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 600
+    [PurchaseID] : 3587184958
+    [SeedName] : Honey Apple Seed
+    [StockChance] : 14
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Legendary
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Cacao] : (Table)
+    [LayoutOrder] : 280
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 255
+    [PurchaseID] : 3587185973
+    [SeedName] : Honey Cacao Seed
+    [StockChance] : 6500
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Divine
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Sugar Apple] : (Table)
+    [LayoutOrder] : 310
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 11000
+    [PurchaseID] : 3587186309
+    [SeedName] : Honey Sugar Apple Seed
+    [StockChance] : 290
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Prismatic
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Dragon Fruit] : (Table)
+    [LayoutOrder] : 210
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 2750
+    [PurchaseID] : 3587185418
+    [SeedName] : Honey Dragon Fruit Seed
+    [StockChance] : 50
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Crimson Thorn] : (Table)
+    [LayoutOrder] : 380
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 26000
+    [PurchaseID] : 3587186941
+    [SeedName] : Honey Crimson Thorn
+    [StockChance] : 777
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Transcendent
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1
+  [Honey Coconut] : (Table)
+    [LayoutOrder] : 190
+    [SpecialCurrencyType] : HoneyCoins
+    [Price] : 1500
+    [PurchaseID] : 3587185259
+    [SeedName] : Honey Coconut Seed
+    [StockChance] : 20
+    [Description] : 
+    [ItemType] : Seed
+    [StockAmount] : (Table)
+      [1] : 1
+      [2] : 1
+    [SeedRarity] : Mythical
+    [Stack] : 1
+    [DisplayInShop] : true
+    [FallbackPrice] : 1

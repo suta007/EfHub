@@ -45,6 +45,11 @@ function ShopBee.Initialize(registry, tab)
 		table.insert(HoneySeedShopData, itemName)
 	end
 
+	local RoyalJellyShopData = { "ALL" }
+	for itemName, _itemInfo in pairs(reg.EVENT_DATA["Royal Jelly Shop"]) do
+		table.insert(RoyalJellyShopData, itemName)
+	end
+
 	local GetData_result = sData.DataService:GetData()
 
 	local HoneyCoinSection = EventsTab:AddCollapsibleSection("Honey Coin Shop", false)
@@ -108,6 +113,39 @@ function ShopBee.Initialize(registry, tab)
 				local HoneySeedStocks = GetData_result.EventShopStock["Honey Seed Shop"].Stocks
 				if not Utils.IsTableEmpty(HoneySeedStocks) then
 					Shop.BuyItem(Shop.ShopKey.HoneySeed, HoneySeedStocks)
+				end
+			end
+		end,
+	})
+
+	local RoyalJellySection = EventsTab:AddCollapsibleSection("RoyalJelly", false)
+	RoyalJellySection:AddDropdown("ddBuyRoyalJelly", {
+		Title = "Royal Jelly Shop Items",
+		Values = RoyalJellyShopData,
+		Multi = true,
+		Default = {},
+		Searchable = true,
+		Callback = function()
+			Shop.UpdateBuyList()
+			QuickSave()
+		end,
+	})
+	RoyalJellySection:AddButton({
+		Title = "Clear Royal Jelly Shop Items",
+		Callback = function()
+			Options.ddBuyRoyalJelly:SetValue({})
+		end,
+	})
+	RoyalJellySection:AddToggle("tgBuyRoyalJellyEnable", {
+		Title = "Buy Royal Jelly Shop Items",
+		Default = false,
+		Callback = function(Value)
+			Shop.UpdateBuyList()
+			QuickSave()
+			if Value then
+				local RoyalJellyStocks = GetData_result.EventShopStock["Royal Jelly Shop"].Stocks
+				if not Utils.IsTableEmpty(RoyalJellyStocks) then
+					Shop.BuyItem(Shop.ShopKey.RoyalJelly, RoyalJellyStocks)
 				end
 			end
 		end,

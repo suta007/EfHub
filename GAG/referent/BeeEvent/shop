@@ -1,0 +1,192 @@
+Script initialized successfully.
+[] : (Table)
+  [Stocks] : (Table)
+  [RestockCost] : 100000
+  [ShopSeed] : 5931176
+  [UnlockedShopItems] : (Table)
+[New Years Shop] : (Table)
+  [Stocks] : (Table)
+    [New Year's Firework] : (Table)
+      [MaxStock] : 15
+      [Stock] : 15
+  [RestockCost] : 0
+  [ShopSeed] : 2946823
+  [UnlockedShopItems] : (Table)
+[Royal Jelly Shop] : (Table)
+  [Stocks] : (Table)
+    [Pet Shard RoyalJelly] : (Table)
+      [Stock] : 1
+      [MaxStock] : 1
+    [Grape Droplet] : (Table)
+      [Stock] : 2
+      [MaxStock] : 2
+    [Pohutukawa] : (Table)
+      [Stock] : 1
+      [MaxStock] : 1
+    [Pollen Puffball] : (Table)
+      [Stock] : 3
+      [MaxStock] : 3
+  [RestockCost] : 0
+  [ShopSeed] : 989548
+  [UnlockedShopItems] : (Table)
+[Honey Coin Shop] : (Table)
+  [Stocks] : (Table)
+    [Honey Honey Daisy] : (Table)
+      [Stock] : 2
+      [MaxStock] : 2
+    [Honey Hive Seed Pack] : (Table)
+      [Stock] : 2
+      [MaxStock] : 2
+    [Honey Birds of Paradise] : (Table)
+      [Stock] : 1
+      [MaxStock] : 1
+    [Hive Crate] : (Table)
+      [Stock] : 1
+      [MaxStock] : 1
+  [RestockCost] : 0
+  [ShopSeed] : 989548
+  [UnlockedShopItems] : (Table)
+[Devilish Decor] : (Table)
+  [Stocks] : (Table)
+    [Pumpkin Set] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Spell Book] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Spooky Crate] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Tombstones] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Ghost Lantern] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Halloween Lights] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Spider Prop] : (Table)
+      [MaxStock] : 2
+      [Stock] : 2
+    [Pumpkin Crate] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+  [RestockCost] : 0
+  [ShopSeed] : 1959651
+  [UnlockedShopItems] : (Table)
+[Spooky Seeds] : (Table)
+  [Stocks] : (Table)
+    [Pumpkin] : (Table)
+      [MaxStock] : 5
+      [Stock] : 5
+    [Candy Cornflower] : (Table)
+      [MaxStock] : 2
+      [Stock] : 2
+    [Spooky Chest] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Bloodred Mushroom] : (Table)
+      [MaxStock] : 4
+      [Stock] : 4
+    [Jack O Lantern] : (Table)
+      [MaxStock] : 2
+      [Stock] : 2
+  [RestockCost] : 0
+  [ShopSeed] : 1959651
+  [UnlockedShopItems] : (Table)
+[Honey Seed Shop] : (Table)
+  [Stocks] : (Table)
+    [Honey Carrot] : (Table)
+      [Stock] : 6
+      [MaxStock] : 6
+    [Honey Blueberry] : (Table)
+      [Stock] : 2
+      [MaxStock] : 2
+    [Honey Tomato] : (Table)
+      [Stock] : 2
+      [MaxStock] : 2
+    [Honey Strawberry] : (Table)
+      [Stock] : 3
+      [MaxStock] : 3
+  [RestockCost] : 0
+  [ShopSeed] : 5931176
+  [UnlockedShopItems] : (Table)
+[Ghosty Gadgets] : (Table)
+  [Stocks] : (Table)
+    [Lich Crystal] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Halloween Radar] : (Table)
+      [MaxStock] : 4
+      [Stock] : 4
+    [Halloween Gear Box] : (Table)
+      [MaxStock] : 2
+      [Stock] : 2
+    [Witch's Broom] : (Table)
+      [MaxStock] : 5
+      [Stock] : 5
+  [RestockCost] : 0
+  [ShopSeed] : 1959651
+  [UnlockedShopItems] : (Table)
+[Easter Seed Shop] : (Table)
+  [Stocks] : (Table)
+    [Easter Eggfruit] : (Table)
+      [Stock] : 1
+      [MaxStock] : 1
+    [Easter Candy Carrot] : (Table)
+      [Stock] : 5
+      [MaxStock] : 5
+    [Easter Chocolate Berry] : (Table)
+      [Stock] : 3
+      [MaxStock] : 3
+  [RestockCost] : 0
+  [ShopSeed] : 5931176
+  [UnlockedShopItems] : (Table)
+[Santa's Stash] : (Table)
+  [Stocks] : (Table)
+    [Christmas Firework] : (Table)
+      [MaxStock] : 14
+      [Stock] : 14
+    [Christmas Radar] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+  [RestockCost] : 0
+  [ShopSeed] : 2946823
+  [UnlockedShopItems] : (Table)
+[Safari Shop] : (Table)
+  [Stocks] : (Table)
+    [Orange Delight] : (Table)
+      [MaxStock] : 4
+      [Stock] : 4
+    [Safari Seed Pack] : (Table)
+      [MaxStock] : 2
+      [Stock] : 2
+    [Zebra Whistle] : (Table)
+      [MaxStock] : 3
+      [Stock] : 3
+    [Hyena] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+  [RestockCost] : 100000
+  [ShopSeed] : 1960160
+  [UnlockedShopItems] : (Table)
+[Creepy Critters] : (Table)
+  [Stocks] : (Table)
+    [Ghost Bear] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+    [Spooky Egg] : (Table)
+      [MaxStock] : 3
+      [Stock] : 3
+    [Pumpkin Rat] : (Table)
+      [MaxStock] : 1
+      [Stock] : 1
+  [RestockCost] : 0
+  [ShopSeed] : 1959651
+  [UnlockedShopItems] : (Table)
+
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+GameEvents.BuyEventShopStock:FireServer("Spooky Egg", "Creepy Critters")
