@@ -37,9 +37,7 @@ local function LoadModules()
 		Registry.MiscTab = EF_REMOTE("UI/Tabs/MiscTab")
 		Registry.EventsTab = EF_REMOTE("UI/Tabs/EventsTab")
 		Registry.LogTab = EF_REMOTE("UI/Tabs/LogTab")
-
-		--Registry.test = EF_REMOTE("Modules/test")
-
+		Registry.TestTab = EF_REMOTE("UI/Tabs/TestTab")
 		--
 		--
 		--
@@ -73,7 +71,7 @@ local function LoadModules()
 		Registry.MiscTab = require("./UI/Tabs/MiscTab.luau")
 		Registry.EventsTab = require("./UI/Tabs/EventsTab.luau")
 		Registry.LogTab = require("./UI/Tabs/LogTab.luau")
-
+		Registry.TestTab = require("./UI/Tabs/TestTab.luau")
 		--
 		--Registry.test = require("./Modules/test.luau")
 		--
@@ -109,6 +107,7 @@ function EfHub.Initialize()
 	Registry.MiscTab.Initialize(Registry)
 
 	Registry.LogTab.Initialize(Registry)
+	Registry.TestTab.Initialize(Registry)
 
 	Registry.Window.Finalize()
 	Registry.Utils.ViewButton()
