@@ -23,14 +23,16 @@ local function PickPets()
 			local petType = pet.PetType
 			if table.find(pickPetType, petType) then
 				local petUUID = pet.UUID
-				sData.PetsServiceEvent:FireServer("UnequipPet", petUUID)
-				task.wait(tonumber(Options.inpPickDelay.Value) or 0.5)
-				sData.PetsServiceEvent:FireServer("EquipPet", petUUID)
-				task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.5)
+				local time = tonumber(Options.inpPickTime.Value)
+				for _i = 1, time do
+					sData.PetsServiceEvent:FireServer("UnequipPet", petUUID)
+					task.wait(tonumber(Options.inpPickDelay.Value) or 0.5)
+					sData.PetsServiceEvent:FireServer("EquipPet", petUUID)
+					task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.5)
+				end
 			end
 		end
 	end
-	task.wait(tonumber(Options.inpPickTime.Value) or 1)
 end
 
 function TestTab.Initialize(registry)
@@ -104,7 +106,7 @@ function TestTab.Initialize(registry)
 							if Options.tgPickPlace.Value then
 								PickPets()
 							end
-							task.wait()
+							task.wait(1)
 						end
 					end)
 				end
