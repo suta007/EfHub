@@ -3,6 +3,8 @@ local TestTab = {}
 local reg
 local sData
 local PickPlaceTask = nil
+local CooldownConnection = nil
+local MyPetCooldowns = {}
 
 local function PickPets()
 	local Options = reg.Options
@@ -19,7 +21,6 @@ local function PickPets()
 		return
 	end
 
-	-- ดึงข้อมูลเฉพาะสัตว์เลี้ยงที่กำลัง "อยู่บนพื้น (Equipped)" เท่านั้น
 	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
 
 	if EquipPets and #EquipPets > 0 then
@@ -27,27 +28,24 @@ local function PickPets()
 			if not Options.tgPickPlace.Value then
 				break
 			end
-
 			if table.find(pickPetType, pet.PetType) then
 				local petUUID = pet.UUID
+				local timeLeft = MyPetCooldowns[petUUID]
+				if timeLeft ~= nil and timeLeft <= 0 then
+					local looptime = tonumber(Options.inpPickTime.Value) or 1
+					for _i = 1, looptime do
+						sData.PetsServiceEvent:FireServer("UnequipPet", petUUID)
+						task.wait(tonumber(Options.inpPickDelay.Value) or 0.2)
 
-				-- 1. สั่งเก็บ (Unequip) สัตว์เลี้ยงที่อยู่บนพื้นก่อน
-				sData.PetsServiceEvent:FireServer("UnequipPet", petUUID)
-
-				-- หน่วงเวลารอเซิร์ฟเวอร์ประมวลผลการเก็บ
-				task.wait(tonumber(Options.inpPickDelay.Value) or 0.2)
-
-				-- 2. สั่งวาง (Equip) กลับลงไปใหม่ เพื่อให้ลูปรอบหน้ายังค้นหาเจอ
-				sData.PetsServiceEvent:FireServer("EquipPet", petUUID)
-
-				-- หน่วงเวลารอเซิร์ฟเวอร์ประมวลผลการวาง (และอาจจะเป็นจังหวะที่สกิลบัคทำงาน)
-				task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.2)
+						sData.PetsServiceEvent:FireServer("EquipPet", petUUID)
+						task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.2)
+					end
+				end
 			end
 		end
 	end
 
-	-- ระยะเวลาพักรอบ ก่อนจะเริ่มดึงข้อมูล EquipPets มาทำซ้ำ
-	task.wait(tonumber(Options.inpPickTime.Value) or 1)
+	task.wait(1)
 end
 
 function TestTab.Initialize(registry)
@@ -115,24 +113,50 @@ function TestTab.Initialize(registry)
 		Default = false,
 		Callback = function(Value)
 			if Value then
+				-- 1. ลงทะเบียน Event ดักฟัง Cooldown
+				if not CooldownConnection then
+					table.clear(MyPetCooldowns) -- ล้างข้อมูลเก่า
+
+					local ReplicatedStorage = game:GetService("ReplicatedStorage")
+					local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+					local PetCooldownsUpdated = GameEvents:WaitForChild("PetCooldownsUpdated")
+
+					CooldownConnection = PetCooldownsUpdated.OnClientEvent:Connect(function(petUUID, cooldownData)
+						-- คำนวณเวลาที่สกิลจะเสร็จ (เวลาปัจจุบัน + เวลา Cooldown)
+						if cooldownData and cooldownData[1].Time then
+							MyPetCooldowns[petUUID] = cooldownData[1].Time
+						end
+					end)
+				end
+
+				-- 2. เริ่ม Task วนลูปทำงาน
 				if not PickPlaceTask then
 					PickPlaceTask = task.spawn(function()
 						while true do
 							if Options.tgPickPlace and Options.tgPickPlace.Value then
 								PickPets()
 							else
-								break -- หยุดลูปเมื่อ Toggle ถูกปิด
+								break
 							end
-							task.wait()
+							task.wait(0.1)
 						end
-						PickPlaceTask = nil -- เคลียร์ค่า Thread เมื่อลูปหยุด
+						PickPlaceTask = nil
 					end)
 				end
 			else
+				-- เมื่อปิด Toggle
 				if PickPlaceTask then
-					task.cancel(PickPlaceTask) -- ใช้ task.cancel() แก้ไขปัญหา Error
+					task.cancel(PickPlaceTask)
 					PickPlaceTask = nil
 				end
+
+				-- ยกเลิกการเชื่อมต่อ Event เพื่อคืนทรัพยากรให้ระบบ
+				if CooldownConnection then
+					CooldownConnection:Disconnect()
+					CooldownConnection = nil
+				end
+
+				table.clear(MyPetCooldowns) -- ล้างกระดาน
 			end
 			QuickSave()
 		end,
