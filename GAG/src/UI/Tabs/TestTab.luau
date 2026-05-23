@@ -11,8 +11,13 @@ local function PickPets()
 		return
 	end
 	local GetSelectedItems = reg.Utils.GetSelectedItems
-	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
+
 	local pickPetType = GetSelectedItems(Options.ddPickPets.Value)
+	if not pickPetType or #pickPetType == 0 then
+		task.wait(tonumber(Options.inpPickTime.Value) or 1)
+		return
+	end
+	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
 	if EquipPets and #EquipPets > 0 then
 		for _, pet in ipairs(EquipPets) do
 			local petType = pet.PetType
@@ -105,7 +110,7 @@ function TestTab.Initialize(registry)
 				end
 			else
 				if PickPlaceTask then
-					PickPlaceTask:Cancel()
+					task.cancel(PickPlaceTask)
 					PickPlaceTask = nil
 				end
 			end
