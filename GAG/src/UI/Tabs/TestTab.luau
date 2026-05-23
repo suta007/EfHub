@@ -7,7 +7,6 @@ local PickPlaceTask = nil
 local function PickPets()
 	local Options = reg.Options
 
-	-- เช็คว่า Toggle เปิดอยู่ไหม ถ้าไม่ให้หยุดทำงานทันที
 	if not Options.tgPickPlace or not Options.tgPickPlace.Value then
 		return
 	end
@@ -15,38 +14,39 @@ local function PickPets()
 	local GetSelectedItems = reg.Utils.GetSelectedItems
 	local pickPetType = GetSelectedItems(Options.ddPickPets.Value)
 
-	-- ถ้ายังไม่ได้เลือกสัตว์เลี้ยงใน Dropdown ให้หน่วงเวลาตาม Pet Timer แล้วข้ามไปเลย (ป้องกันลูปรันรัวจนแลค)
 	if not pickPetType or #pickPetType == 0 then
-		task.wait(tonumber(Options.inpPickTime.Value) or 1)
+		task.wait(1)
 		return
 	end
 
-	-- ดึงข้อมูลสัตว์เลี้ยงที่กำลังติดตั้งอยู่
+	-- ดึงข้อมูลเฉพาะสัตว์เลี้ยงที่กำลัง "อยู่บนพื้น (Equipped)" เท่านั้น
 	local EquipPets = sData.PetUtils:GetPetsSortedByAge(sData.LocalPlayer, 0, true, true)
 
 	if EquipPets and #EquipPets > 0 then
 		for _, pet in ipairs(EquipPets) do
-			-- เช็คเผื่อว่าพี่เอฟกดปิด Toggle กลางคันตอนที่กำลังวนลูปสัตว์เลี้ยงหลายตัว จะได้หยุดทันที
 			if not Options.tgPickPlace.Value then
 				break
 			end
 
-			local petType = pet.PetType
-			if table.find(pickPetType, petType) then
+			if table.find(pickPetType, pet.PetType) then
 				local petUUID = pet.UUID
 
-				-- 1. หน่วงเวลาก่อนเก็บ (Delay To Pick)
-				task.wait(tonumber(Options.inpPickDelay.Value) or 0.2)
+				-- 1. สั่งเก็บ (Unequip) สัตว์เลี้ยงที่อยู่บนพื้นก่อน
 				sData.PetsServiceEvent:FireServer("UnequipPet", petUUID)
 
-				-- 2. หน่วงเวลาก่อนวาง (Delay To Place)
-				task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.2)
+				-- หน่วงเวลารอเซิร์ฟเวอร์ประมวลผลการเก็บ
+				task.wait(tonumber(Options.inpPickDelay.Value) or 0.2)
+
+				-- 2. สั่งวาง (Equip) กลับลงไปใหม่ เพื่อให้ลูปรอบหน้ายังค้นหาเจอ
 				sData.PetsServiceEvent:FireServer("EquipPet", petUUID)
+
+				-- หน่วงเวลารอเซิร์ฟเวอร์ประมวลผลการวาง (และอาจจะเป็นจังหวะที่สกิลบัคทำงาน)
+				task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.2)
 			end
 		end
 	end
 
-	-- 3. หน่วงเวลารอบใหญ่ (Pet Timer) ให้สัตว์เลี้ยงทำงานก่อนจะวนลูปรอบใหม่
+	-- ระยะเวลาพักรอบ ก่อนจะเริ่มดึงข้อมูล EquipPets มาทำซ้ำ
 	task.wait(tonumber(Options.inpPickTime.Value) or 1)
 end
 
