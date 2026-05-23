@@ -33,13 +33,15 @@ local function PickPets()
 				local timeLeft = MyPetCooldowns[petUUID]
 				if timeLeft ~= nil and timeLeft <= 0 then
 					local looptime = tonumber(Options.inpPickTime.Value) or 1
-					for _i = 1, looptime do
-						sData.PetsServiceEvent:FireServer("UnequipPet", petUUID)
-						task.wait(tonumber(Options.inpPickDelay.Value) or 0.2)
-
-						sData.PetsServiceEvent:FireServer("EquipPet", petUUID)
-						task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.2)
-					end
+					task.spawn(function()
+						local uuid = petUUID
+						for _i = 1, looptime do
+							task.wait(tonumber(Options.inpPickDelay.Value) or 0.2)
+							sData.PetsServiceEvent:FireServer("UnequipPet", uuid)
+							task.wait(tonumber(Options.inpPlaceDelay.Value) or 0.2)
+							sData.PetsServiceEvent:FireServer("EquipPet", uuid)
+						end
+					end)
 				end
 			end
 		end
