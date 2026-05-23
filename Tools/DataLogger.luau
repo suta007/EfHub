@@ -137,8 +137,15 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
+--local MyPetCooldowns = {}
+local gameEvents = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents")
+gameEvents:WaitForChild("PetCooldownsUpdated").OnClientEvent:Connect(function(petUUID, cooldownData)
+	--MyPetCooldowns[petUUID] = cooldownData
+	TimeLog("PetCooldownsUpdated: " .. tostring(petUUID))
+	TimeLog("cooldownData:")
+	ShowData(cooldownData, 2)
+end)
+
 local DataService = require(ReplicatedStorage.Modules.DataService)
 local GetData_result = DataService:GetData()
 local EventShopStock = GetData_result.EventShopStock
-ShowData(EventShopStock)
