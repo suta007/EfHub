@@ -3872,7 +3872,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.11-14.05",
+SubTitle="2569.05.23-20.50",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6611,6 +6611,174 @@ end
 
 return c end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
+local b={}
+
+local c
+local d
+local e=nil
+local f=nil
+local g={}
+
+local function PickPets()
+local h=c.Options
+
+if not h.tgPickPlace or not h.tgPickPlace.Value then
+return
+end
+
+local i=c.Utils.GetSelectedItems
+local j=i(h.ddPickPets.Value)
+
+if not j or#j==0 then
+task.wait(1)
+return
+end
+
+local k=d.PetUtils:GetPetsSortedByAge(d.LocalPlayer,0,true,true)
+
+if k and#k>0 then
+for l,m in ipairs(k)do
+if not h.tgPickPlace.Value then
+break
+end
+if table.find(j,m.PetType)then
+local n=m.UUID
+local o=g[n]
+if o~=nil and o<=0 then
+
+task.spawn(function()
+local p=n
+while g[p]<=0 do
+task.wait(tonumber(h.inpPickDelay.Value)or 0.2)
+d.PetsServiceEvent:FireServer("UnequipPet",p)
+task.wait(tonumber(h.inpPlaceDelay.Value)or 0.2)
+d.PetsServiceEvent:FireServer("EquipPet",p)
+end
+end)
+end
+end
+end
+end
+task.wait(tonumber(h.inpPickTime.Value))
+end
+
+function b.Initialize(h)
+c=h
+local i=h.Options
+local j=c.Tabs
+local k=c.Interface
+local l=c.Window.QuickSave
+d=c.sData
+
+j.Test=k:AddTab({Title="Test",Icon="axe"})
+
+local m=j.Test:AddCollapsibleSection("Test",false)
+
+m:AddDropdown("ddPickPets",{
+Title="Select Pets type",
+Values=d.PetsDataTable or{},
+Default={},
+Multi=true,
+Searchable=true,
+Callback=function()
+l()
+end,
+})
+
+m:AddButton({
+Title="Clear Select Pets",
+Callback=function()
+i.ddPickPets:SetValue({})
+end,
+})
+
+m:AddInput("inpPickTime",{
+Title="Pet Timer",
+Default=1,
+Numeric=true,
+Finished=true,
+Callback=function()
+l()
+end,
+})
+
+m:AddInput("inpPickDelay",{
+Title="Delay To Pick",
+Default=0.5,
+Numeric=true,
+Finished=true,
+Callback=function()
+l()
+end,
+})
+
+m:AddInput("inpPlaceDelay",{
+Title="Delay To Place",
+Default=0.5,
+Numeric=true,
+Finished=true,
+Callback=function()
+l()
+end,
+})
+
+m:AddToggle("tgPickPlace",{
+Title="Auto Pick Place",
+Default=false,
+Callback=function(n)
+if n then
+
+if not f then
+table.clear(g)
+
+local o=game:GetService("ReplicatedStorage")
+local p=o:WaitForChild("GameEvents")
+local q=p:WaitForChild("PetCooldownsUpdated")
+
+f=q.OnClientEvent:Connect(function(r,t)
+
+if t and t[1].Time then
+g[r]=t[1].Time
+end
+end)
+end
+
+
+if not e then
+e=task.spawn(function()
+while true do
+if i.tgPickPlace and i.tgPickPlace.Value then
+PickPets()
+else
+break
+end
+task.wait(0.1)
+end
+e=nil
+end)
+end
+else
+
+if e then
+task.cancel(e)
+e=nil
+end
+
+
+if f then
+f:Disconnect()
+f=nil
+end
+
+table.clear(g)
+end
+l()
+end,
+})
+end
+
+return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+
 
 
 
@@ -6650,9 +6818,7 @@ e.AutoTab=c("UI/Tabs/AutoTab")
 e.MiscTab=c("UI/Tabs/MiscTab")
 e.EventsTab=c("UI/Tabs/EventsTab")
 e.LogTab=c("UI/Tabs/LogTab")
-
-
-
+e.TestTab=c("UI/Tabs/TestTab")
 
 
 
@@ -6686,7 +6852,7 @@ e.AutoTab=a.n()
 e.MiscTab=a.o()
 e.EventsTab=a.r()
 e.LogTab=a.s()
-
+e.TestTab=a.t()
 
 
 
@@ -6722,6 +6888,7 @@ e.EventsTab.Initialize(e)
 e.MiscTab.Initialize(e)
 
 e.LogTab.Initialize(e)
+e.TestTab.Initialize(e)
 
 e.Window.Finalize()
 e.Utils.ViewButton()
@@ -6731,7 +6898,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end end
+return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -6761,7 +6928,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.t()
+c=a.u()
 end
 
 
