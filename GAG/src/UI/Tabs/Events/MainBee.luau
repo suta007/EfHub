@@ -6,6 +6,73 @@ local sData
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local GetFarm = require(ReplicatedStorage:WaitForChild("Modules"):WaitForChild("GetFarm") :: any)
+local LootChest = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("LootChest")
+local OpenChest = LootChest:WaitForChild("OpenChest")
+local SpawnChestRemote = LootChest:WaitForChild("SpawnChest")
+
+local WaspEggConn = nil
+local OpenChestConn = nil
+
+local function HealBee()
+	local Options = reg.Options
+	local Utils = reg.Utils
+	local posStr = Options.ipHealBeePos.Value
+	if posStr == "" then
+		reg.Log("Please set Heal Bee position.", "WARN")
+		return
+	end
+	local parsedPos = Utils.ParseVector3(posStr)
+	if not parsedPos then
+		reg.Log("Invalid Heal Bee position format.", "ERROR")
+		return
+	end
+	sData.Character:PivotTo(CFrame.new(parsedPos))
+	task.spawn(function()
+		task.wait(120)
+		Options.tgKeepPosEnable:SetValue(true)
+	end)
+end
+
+local function WaspWar(Value)
+	local Options = reg.Options
+	if Value then
+		if not WaspEggConn then
+			WaspEggConn = workspace.ChildAdded:Connect(function(obj)
+				local Character = sData.Character
+				if obj.Name == "WaspEgg" and obj:IsA("Model") and Character then
+					local WaspPos = obj:GetPivot()
+					Character:PivotTo(WaspPos * CFrame.new(2, 5, 2))
+					Options.tgKeepPosEnable:SetValue(false)
+					task.spawn(function()
+						task.wait(180)
+						HealBee()
+					end)
+				end
+			end)
+		end
+		if not OpenChestConn then
+			OpenChestConn = SpawnChestRemote.OnClientEvent:Connect(function(chestId, _chestCFrame, _tier, _autoCollectAt)
+				task.spawn(function()
+					--local Character = sData.Character
+					--if Character then
+					--	Character:PivotTo(chestCFrame * CFrame.new(2, 5, 2))
+					task.wait(0.2)
+					OpenChest:FireServer(chestId)
+					--end
+				end)
+			end)
+		end
+	else
+		if WaspEggConn then
+			WaspEggConn:Disconnect()
+			WaspEggConn = nil
+		end
+		if OpenChestConn then
+			OpenChestConn:Disconnect()
+			OpenChestConn = nil
+		end
+	end
+end
 
 local function HarvestHoneyFruits()
 	local Options = reg.Options
@@ -109,6 +176,34 @@ function MainBee.Initialize(registry, tab)
 				CompressHoney()
 				task.wait(10)
 			end)
+		end,
+	})
+	MainBeeSection:AddDivider()
+	MainBeeSection:AddButton({
+		Title = "Set Heal Bee Position",
+		Callback = function()
+			local Pos = sData.Character:GetPivot().Position
+			local formattedPos = string.format("%.3f, %.3f, %.3f", Pos.X, Pos.Y, Pos.Z)
+			Options.ipHealBeePos:SetValue(formattedPos)
+			QuickSave()
+		end,
+	})
+	MainBeeSection:AddInput("ipHealBeePos", {
+		Title = "Position",
+		Default = "",
+		Placeholder = "X, Y, Z",
+		Numeric = false,
+		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	MainBeeSection:AddToggle("tgWaspWarEnable", {
+		Title = "Wasp War Enable",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+			WaspWar(Value)
 		end,
 	})
 

@@ -1,0 +1,3 @@
+return {
+	["RefreshTime"] = 300
+}

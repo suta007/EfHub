@@ -1,0 +1,575 @@
+--game:GetService("Players").LocalPlayer.PlayerScripts.LootChestController
+
+local v_u_1 = game:GetService("ContentProvider")
+local v_u_2 = game:GetService("Debris")
+local v3 = game:GetService("Players")
+local v_u_4 = game:GetService("ReplicatedStorage")
+local v_u_5 = game:GetService("RunService")
+local v_u_6 = game:GetService("TweenService")
+local v7 = game:GetService("Workspace")
+local v_u_8 = require(v_u_4:WaitForChild("Modules"):WaitForChild("LootChestShared"))
+local v_u_9 = nil
+local v10, v11 = pcall(function()
+	-- upvalues: (copy) v_u_4
+	return require(v_u_4.Modules.TimeHelper)
+end)
+if v10 then
+	v_u_9 = v11
+else
+	warn("[LootChestController] TimeHelper require failed:", v11)
+end
+local v12 = v_u_8.GetRemote("SpawnChest")
+local v_u_13 = v_u_8.GetRemote("OpenChest")
+local v14 = v_u_8.GetRemote("ChestOpened")
+local v_u_15 = v3.LocalPlayer
+local v_u_16 = Instance.new("Animation")
+v_u_16.AnimationId = v_u_8.CHEST_ANIMATION_ID
+local v_u_17 = Instance.new("Animation")
+v_u_17.AnimationId = v_u_8.PLAYER_ANIMATION_ID
+task.spawn(function()
+	-- upvalues: (copy) v_u_1, (copy) v_u_16, (copy) v_u_17
+	pcall(function()
+		-- upvalues: (ref) v_u_1, (ref) v_u_16, (ref) v_u_17
+		v_u_1:PreloadAsync({ v_u_16, v_u_17 })
+	end)
+end)
+local v_u_18 = v7:FindFirstChild(v_u_8.LOCAL_CHEST_FOLDER_NAME)
+if not v_u_18 then
+	v_u_18 = Instance.new("Folder")
+	v_u_18.Name = v_u_8.LOCAL_CHEST_FOLDER_NAME
+	v_u_18.Parent = v7
+end
+local v20, v21 = pcall(function()
+	-- upvalues: (copy) v_u_15
+	local v19 = v_u_15:WaitForChild("PlayerScripts"):WaitForChild("PlayerModule")
+	return require(v19):GetControls()
+end)
+local v_u_22 = v20 and v21 and v21 or nil
+local function v_u_26(p23) -- name: emit_all
+	if p23 then
+		for _, v24 in p23:GetDescendants() do
+			if v24:IsA("ParticleEmitter") then
+				local v25 = v24:GetAttribute("EmitCount")
+				if v25 then
+					v24:Emit(v25)
+				end
+			end
+		end
+	end
+end
+local v_u_27 = Random.new()
+local v_u_28 = script:FindFirstChild("trail")
+local function v_u_31(p29) -- name: resolveRewardModel
+	-- upvalues: (copy) v_u_8
+	if p29.Type == "Currency" then
+		local v30 = v_u_8.CURRENCY_MODEL_NAMES[p29.Value]
+		if v30 then
+			return script:FindFirstChild(v30)
+		else
+			return nil
+		end
+	elseif p29.Type == "Egg" then
+		return v_u_8.GetEggModel(p29.Value)
+	elseif p29.Type == "Seed" then
+		return v_u_8.GetSeedModel(p29.Value)
+	elseif p29.Type == "Seed Pack" then
+		return v_u_8.GetSeedPackModel(p29.Value)
+	elseif p29.Type == "Gear" then
+		return v_u_8.GetEggModel(p29.Value)
+	else
+		return nil
+	end
+end
+local function v_u_35(p32) -- name: prepareDropClone
+	local v33 = p32:Clone()
+	for _, v34 in v33:GetDescendants() do
+		if v34:IsA("BasePart") then
+			v34.Anchored = true
+			v34.CanCollide = false
+			v34.CanQuery = false
+			v34.CanTouch = false
+			v34.Massless = true
+		end
+	end
+	return v33
+end
+local function v_u_65(p36, p_u_37, p_u_38, p_u_39) -- name: lobPiece
+	-- upvalues: (copy) v_u_35, (copy) v_u_28, (copy) v_u_8, (ref) v_u_18, (copy) v_u_27, (copy) v_u_5, (copy) v_u_15
+	local v_u_40 = v_u_35(p36)
+	local v41 = v_u_40.PrimaryPart or v_u_40:FindFirstChildWhichIsA("BasePart")
+	if v41 and v_u_28 then
+		local v42 = v_u_28:Clone()
+		for _, v43 in v42:GetChildren() do
+			v43.Parent = v41
+		end
+		v42:Destroy()
+	end
+	local v_u_44 = v_u_8.DROP_SCALE
+	if v_u_44 ~= 1 then
+		v_u_40:ScaleTo(v_u_44)
+	end
+	v_u_40:PivotTo(CFrame.new(p_u_37))
+	v_u_40.Parent = v_u_18
+	local v45 = v_u_27:NextNumber(-1, 1)
+	local v46 = v_u_27:NextNumber(-1, 1)
+	local v47 = v_u_27
+	local v48 = Vector3.new(v45, v46, v47:NextNumber(-1, 1))
+	local v_u_49 = (v48.Magnitude < 0.05 and Vector3.new(0, 1, 0) or v48).Unit
+	local v_u_50 = v_u_27:NextNumber(1, 3)
+	task.spawn(function()
+		-- upvalues: (copy) p_u_37, (copy) p_u_38, (ref) v_u_5, (copy) v_u_40, (ref) v_u_15, (copy) p_u_39, (ref) v_u_49, (copy) v_u_50, (copy) v_u_44
+		local v51 = p_u_37
+		local v52 = 0
+		while v52 < p_u_38 do
+			v52 = v52 + v_u_5.Heartbeat:Wait()
+			if not v_u_40.Parent then
+				return
+			end
+			local v53 = v52 / p_u_38
+			local v54 = math.clamp(v53, 0, 1)
+			local v55 = v_u_15.Character
+			if v55 then
+				v55 = v55:FindFirstChild("Torso")
+			end
+			v51 = v55 and v55.Position or nil or v51
+			local v56 = p_u_37:Lerp(v51, v54)
+			local v57 = v54 * 3.141592653589793
+			local v58 = math.sin(v57) * p_u_39
+			local v59 = CFrame.fromAxisAngle(v_u_49, v_u_50 * v54 * 3.141592653589793 * 2)
+			v_u_40:PivotTo(CFrame.new(v56 + Vector3.new(0, v58, 0)) * v59)
+		end
+		local v60 = os.clock()
+		while os.clock() - v60 < 0.12 do
+			v_u_5.Heartbeat:Wait()
+			if not v_u_40.Parent then
+				return
+			end
+			local v61 = (os.clock() - v60) / 0.12
+			local v62 = math.clamp(v61, 0, 1)
+			local v63 = v_u_40
+			local v64 = v_u_44 * (1 - v62)
+			v63:ScaleTo((math.max(v64, 0.01)))
+		end
+		v_u_40:Destroy()
+	end)
+end
+local function v_u_86(p66, p67) -- name: spawnRewardDrops
+	-- upvalues: (copy) v_u_31, (copy) v_u_8, (copy) v_u_27, (copy) v_u_65
+	local v68 = p66.PrimaryPart
+	if v68 then
+		local v69 = v68.Position
+		local v70 = 0
+		for _, v71 in p67 do
+			local v_u_72 = v_u_31(v71)
+			if v_u_72 then
+				local v73 = 1
+				local v74
+				if v71.Type == "Currency" then
+					local v75 = v71.Quantity or 1
+					local v76 = v_u_8.DROP_MAX_CURRENCY
+					v74 = math.clamp(v75, 1, v76)
+				else
+					local v77 = v71.Quantity or 1
+					v74 = math.max(1, v77)
+				end
+				for _ = v73, v74 do
+					v70 = v70 + 1
+					local v78 = v_u_27:NextNumber(0, 6.283185307179586)
+					local v79 = v_u_27:NextNumber(0, v_u_8.DROP_SPAWN_RADIUS)
+					local v80 = math.cos(v78) * v79
+					local v81 = v_u_27:NextNumber(0.5, 1.5)
+					local v82 = math.sin(v78) * v79
+					local v_u_83 = v69 + Vector3.new(v80, v81, v82)
+					local v_u_84 = v_u_8.DROP_FLY_TIME + v_u_27:NextNumber(-0.05, 0.08)
+					local v_u_85 = v_u_8.DROP_ARC_HEIGHT + v_u_27:NextNumber(-1, 2)
+					task.delay((v70 - 1) * v_u_8.DROP_STAGGER, function()
+						-- upvalues: (ref) v_u_65, (copy) v_u_72, (copy) v_u_83, (copy) v_u_84, (copy) v_u_85
+						v_u_65(v_u_72, v_u_83, v_u_84, v_u_85)
+					end)
+				end
+			end
+		end
+	end
+end
+local v_u_87 = {}
+local function v_u_93(p88) -- name: fadeOutAndDestroy
+	-- upvalues: (copy) v_u_8, (copy) v_u_6, (copy) v_u_2
+	local v89 = {}
+	for _, v90 in ipairs(p88:GetDescendants()) do
+		if v90:IsA("BasePart") then
+			table.insert(v89, v90)
+			v90.CanCollide = false
+		elseif v90:IsA("Decal") then
+			table.insert(v89, v90)
+		elseif v90:IsA("ParticleEmitter") then
+			v90.Enabled = false
+		end
+	end
+	local v91 = TweenInfo.new(v_u_8.FADE_TIME, Enum.EasingStyle.Linear)
+	for _, v92 in ipairs(v89) do
+		v_u_6
+			:Create(v92, v91, {
+				["Transparency"] = 1,
+			})
+			:Play()
+	end
+	v_u_2:AddItem(p88, v_u_8.FADE_TIME + 0.1)
+end
+local function v_u_136(p_u_94, p_u_95, p96) -- name: playChestOpenSequence
+	-- upvalues: (copy) v_u_6, (copy) v_u_8, (copy) v_u_16, (copy) v_u_86, (copy) v_u_87, (copy) v_u_93, (ref) v_u_22, (copy) v_u_15, (copy) v_u_17, (copy) v_u_13
+	if p_u_95.triggered then
+		return
+	else
+		p_u_95.triggered = true
+		p_u_95.prompt.Enabled = false
+		if p96 then
+			local v106, v107 = pcall(function()
+				-- upvalues: (copy) p_u_95, (ref) v_u_6, (ref) v_u_8, (ref) v_u_16, (ref) v_u_86
+				local v97 = p_u_95.model:FindFirstChild("Circle4", true)
+				if v97 then
+					v97.Enabled = false
+				end
+				local v98 = p_u_95.model:FindFirstChild("LoopShineSound", true)
+				if v98 then
+					v_u_6
+						:Create(v98, TweenInfo.new(v_u_8.FADE_TIME - 0.1, Enum.EasingStyle.Linear), {
+							["Volume"] = 0,
+						})
+						:Play()
+				end
+				local v99 = p_u_95.model:FindFirstChild("ChestOpenSound", true)
+				if v99 then
+					v99:Play()
+				end
+				local v100 = p_u_95.model
+				local v101 = v100:FindFirstChildOfClass("AnimationController") or v100:FindFirstChildWhichIsA("AnimationController", true)
+				local v102
+				if v101 then
+					v102 = v101:FindFirstChildOfClass("Animator")
+				else
+					v102 = nil
+				end
+				local v103
+				if v102 then
+					v103 = v102:LoadAnimation(v_u_16)
+					v103.Looped = false
+					v103:Play()
+				else
+					v103 = nil
+				end
+				local v104 = os.clock()
+				local v105 = v_u_8.DROP_LID_OPEN_TIME - (os.clock() - v104)
+				if v105 > 0 then
+					task.wait(v105)
+				end
+				if p_u_95.physicalDrops and #p_u_95.physicalDrops > 0 then
+					v_u_86(p_u_95.model, p_u_95.physicalDrops)
+				end
+				if v103 and v103.IsPlaying then
+					v103.Stopped:Wait()
+				end
+			end)
+			if not v106 then
+				warn(v107)
+			end
+			v_u_87[p_u_94] = nil
+			v_u_93(p_u_95.model)
+		else
+			local v108 = p_u_95.model:FindFirstChild("ChestOpenSound", true)
+			if v108 then
+				v108:Play()
+			end
+			task.delay(1.2, function()
+				-- upvalues: (copy) p_u_95
+				local v109 = p_u_95.model
+				if v109 then
+					v109 = p_u_95.model:FindFirstChild("ChestCoinsSound", true)
+				end
+				if v109 then
+					v109:Play()
+				end
+			end)
+			if v_u_22 then
+				v_u_22:Disable()
+			end
+			local v110 = v_u_15.Character
+			if v110 then
+				v110 = v110:FindFirstChildOfClass("Humanoid")
+			end
+			if v110 then
+				v110.AutoRotate = false
+			end
+			local _, _ = pcall(function()
+				-- upvalues: (copy) p_u_95, (ref) v_u_8, (ref) v_u_6, (ref) v_u_15, (ref) v_u_16, (ref) v_u_17, (ref) v_u_13, (copy) p_u_94, (ref) v_u_86
+				local v111 = p_u_95.model:FindFirstChild("Circle4", true)
+				if v111 then
+					v111.Enabled = false
+				end
+				local v112 = p_u_95.model:FindFirstChild("LoopShineSound", true)
+				if v112 then
+					v_u_6
+						:Create(v112, TweenInfo.new(v_u_8.FADE_TIME - 0.1, Enum.EasingStyle.Linear), {
+							["Volume"] = 0,
+						})
+						:Play()
+				end
+				local v113 = v_u_15.Character
+				if v113 then
+					v113 = v113:FindFirstChild("HumanoidRootPart")
+				end
+				local v114 = p_u_95.model.PrimaryPart
+				if v113 and v114 then
+					local v115 = v113.Position
+					local v116 = v114.Position
+					local v117 = v116.X
+					local v118 = v115.Y
+					local v119 = v116.Z
+					local v120 = Vector3.new(v117, v118, v119)
+					if (v120 - v115).Magnitude > 0.001 then
+						v113.CFrame = CFrame.lookAt(v115, v120)
+					end
+				end
+				local v121 = os.clock()
+				local v122 = p_u_95.model
+				local v123 = v122:FindFirstChildOfClass("AnimationController") or v122:FindFirstChildWhichIsA("AnimationController", true)
+				local v124
+				if v123 then
+					v124 = v123:FindFirstChildOfClass("Animator")
+				else
+					v124 = nil
+				end
+				local v125 = nil
+				if v124 then
+					v125 = v124:LoadAnimation(v_u_16)
+					v125.Looped = false
+					v125:Play()
+				else
+					warn("chest template is missing AnimationController/Animator")
+				end
+				local v126 = v_u_15.Character
+				local v127
+				if v126 then
+					local v128 = v126:FindFirstChildOfClass("Humanoid")
+					if v128 then
+						v127 = v128:FindFirstChildOfClass("Animator") or v128:WaitForChild("Animator", 2)
+					else
+						v127 = nil
+					end
+				else
+					v127 = nil
+				end
+				if v127 then
+					local v129 = v127:LoadAnimation(v_u_17)
+					v129.Looped = false
+					v129.Priority = Enum.AnimationPriority.Action
+					v129:Play()
+				end
+				v_u_13:FireServer(p_u_94)
+				local v_u_130 = false
+				local v_u_131 = nil
+				v_u_131 = p_u_95.openedSignal.Event:Connect(function()
+					-- upvalues: (ref) v_u_130, (ref) v_u_131
+					v_u_130 = true
+					if v_u_131 then
+						v_u_131:Disconnect()
+						v_u_131 = nil
+					end
+				end)
+				local v132 = v_u_131
+				local v133 = 0
+				while not v_u_130 and v133 < v_u_8.SERVER_ACK_TIMEOUT do
+					v133 = v133 + task.wait()
+				end
+				if v132 then
+					v132:Disconnect()
+				end
+				if not v_u_130 then
+					warn(string.format("server did not ack chest %s within %ds", p_u_94, v_u_8.SERVER_ACK_TIMEOUT))
+				end
+				local v134 = v_u_8.DROP_LID_OPEN_TIME - (os.clock() - v121)
+				if v134 > 0 then
+					task.wait(v134)
+				end
+				if p_u_95.physicalDrops and #p_u_95.physicalDrops > 0 then
+					v_u_86(p_u_95.model, p_u_95.physicalDrops)
+				end
+				if v125 and v125.IsPlaying then
+					v125.Stopped:Wait()
+				end
+			end)
+			if v_u_22 then
+				v_u_22:Enable()
+			end
+			local v135 = v_u_15.Character
+			if v135 then
+				v135 = v135:FindFirstChildOfClass("Humanoid")
+			end
+			if v135 then
+				v135.AutoRotate = true
+			end
+			v_u_87[p_u_94] = nil
+			v_u_93(p_u_95.model)
+		end
+	end
+end
+local function v_u_163(p_u_137, p_u_138, p139, p_u_140) -- name: spawnChest
+	-- upvalues: (copy) v_u_87, (copy) v_u_8, (ref) v_u_18, (copy) v_u_6, (copy) v_u_26, (copy) v_u_4, (ref) v_u_9, (copy) v_u_15, (copy) v_u_136
+	print("[LootChestController] spawnChest | chestId=", p_u_137, "| tier=", p139)
+	if v_u_87[p_u_137] then
+		print("[LootChestController] spawnChest SKIPPED - already exists")
+		return
+	else
+		local v141 = v_u_8.GetTemplate(p139)
+		if v141 then
+			print("[LootChestController] spawnChest template found:", v141.Name)
+			local v_u_142 = v141:Clone()
+			if v_u_142.PrimaryPart then
+				local v143 = v_u_142:FindFirstChild("LoopShineSound", true)
+				if v143 then
+					v143:Play()
+				end
+				local v144 = v_u_142:FindFirstChild("ChestSpawnSound", true)
+				if v144 then
+					v144:Play()
+				end
+				local v145 = v_u_142:FindFirstChild("PromptAttachment") or v_u_142.PrimaryPart
+				local v_u_146 = Instance.new("ProximityPrompt")
+				v_u_146.ActionText = v_u_8.PROMPT_ACTION_TEXT
+				v_u_146.ObjectText = v_u_8.PROMPT_OBJECT_TEXT
+				v_u_146.MaxActivationDistance = v_u_8.PROMPT_MAX_DISTANCE
+				v_u_146.HoldDuration = v_u_8.PROMPT_HOLD_DURATION
+				v_u_146.RequiresLineOfSight = false
+				v_u_146.Style = Enum.ProximityPromptStyle.Custom
+				v_u_146.Parent = v145
+				v_u_146:SetAttribute("Theme", "ShadowedPrompt")
+				local v_u_147 = {
+					["model"] = nil,
+					["prompt"] = nil,
+					["triggered"] = false,
+					["openedSignal"] = nil,
+					["model"] = v_u_142,
+					["prompt"] = v_u_146,
+					["openedSignal"] = Instance.new("BindableEvent"),
+				}
+				v_u_87[p_u_137] = v_u_147
+				local v148 = v_u_8.SPAWN_DROP_HEIGHT
+				local v_u_149 = p_u_138 + Vector3.new(0, v148, 0)
+				v_u_142:PivotTo(v_u_149)
+				v_u_142.Parent = v_u_18
+				v_u_146.Enabled = false
+				local v_u_150 = v_u_142:FindFirstChild("VFX")
+				task.spawn(function()
+					-- upvalues: (ref) v_u_8, (copy) v_u_142, (ref) v_u_87, (copy) p_u_137, (copy) v_u_147, (ref) v_u_6, (copy) v_u_149, (copy) p_u_138, (copy) v_u_146, (copy) v_u_150, (ref) v_u_26, (copy) p_u_140, (ref) v_u_4, (ref) v_u_9
+					local v151 = v_u_8.SPAWN_DROP_TIME
+					task.delay(v151 - 0.15, function()
+						-- upvalues: (ref) v_u_142
+						local v152 = v_u_142:FindFirstChild("ChestImpactSound", true)
+						if v152 then
+							v152:Play()
+						end
+					end)
+					local v153 = 0
+					while v153 < v151 do
+						if v_u_87[p_u_137] ~= v_u_147 then
+							return
+						end
+						local v154 = v_u_6
+						local v155 = v153 / v151
+						v_u_142:PivotTo(v_u_149:Lerp(p_u_138, (v154:GetValue(math.clamp(v155, 0, 1), Enum.EasingStyle.Quad, Enum.EasingDirection.In))))
+						v153 = v153 + task.wait()
+					end
+					v_u_142:PivotTo(p_u_138)
+					v_u_146.Enabled = true
+					if v_u_150 then
+						v_u_26(v_u_150:FindFirstChild("EmitLand"))
+					end
+					if p_u_140 then
+						task.spawn(function()
+							-- upvalues: (ref) v_u_87, (ref) p_u_137, (ref) v_u_147, (ref) p_u_140, (ref) v_u_8, (ref) v_u_4, (ref) v_u_142, (ref) v_u_9
+							local v156 = nil
+							while v_u_87[p_u_137] == v_u_147 and not v_u_147.triggered do
+								local v157 = p_u_140 - workspace:GetServerTimeNow()
+								if v157 <= v_u_8.CHEST_TIMER_SHOW_THRESHOLD then
+									if not v156 then
+										local v158 = v_u_4:FindFirstChild("Assets")
+										if v158 then
+											v158 = v158:FindFirstChild("VFX")
+										end
+										if v158 then
+											v158 = v158:FindFirstChild("WaspTimer")
+										end
+										if v158 then
+											v156 = v158:Clone()
+											v156.Adornee = v_u_142.PrimaryPart
+											v156.Parent = v_u_142
+										end
+									end
+									if v156 then
+										local v159 = v156.TimeLabel
+										local v160 = v_u_9
+										local v161 = math.ceil(v157)
+										v159.Text = v160:GenerateColonFormatFromTime((math.max(0, v161)))
+									end
+								end
+								task.wait(0.5)
+							end
+							if v156 then
+								v156:Destroy()
+							end
+						end)
+					end
+				end)
+				v_u_146.Triggered:Connect(function(p162)
+					-- upvalues: (ref) v_u_15, (ref) v_u_136, (copy) p_u_137, (copy) v_u_147, (copy) v_u_150, (ref) v_u_26
+					if p162 == v_u_15 then
+						task.spawn(v_u_136, p_u_137, v_u_147)
+						task.delay(1.08, function()
+							-- upvalues: (ref) v_u_150, (ref) v_u_26
+							if v_u_150 then
+								v_u_26(v_u_150:FindFirstChild("EmitOpen"))
+							end
+						end)
+					end
+				end)
+			else
+				warn("template has no PrimaryPart; positioning will fail")
+				v_u_142:Destroy()
+			end
+		else
+			print("[LootChestController] spawnChest FAILED - no template for tier=", p139)
+			return
+		end
+	end
+end
+v12.OnClientEvent:Connect(function(p164, p165, p166, p167)
+	-- upvalues: (copy) v_u_163
+	print("[LootChestController] SpawnChest received | chestId=", p164, "| tier=", p166, "| autoCollectAt=", p167)
+	if typeof(p164) == "string" and typeof(p165) == "CFrame" then
+		local v168 = v_u_163
+		if typeof(p166) ~= "number" then
+			p166 = nil
+		end
+		if typeof(p167) ~= "number" then
+			p167 = nil
+		end
+		v168(p164, p165, p166, p167)
+	else
+		print("[LootChestController] SpawnChest REJECTED - bad args | chestId type=", typeof(p164), "| cframe type=", (typeof(p165)))
+	end
+end)
+v14.OnClientEvent:Connect(function(p169, p170)
+	-- upvalues: (copy) v_u_87, (copy) v_u_136
+	if typeof(p169) == "string" then
+		local v171 = v_u_87[p169]
+		if v171 then
+			if typeof(p170) == "table" then
+				v171.physicalDrops = p170
+			end
+			if not v171.triggered then
+				task.spawn(v_u_136, p169, v171, true)
+				return
+			end
+			v171.openedSignal:Fire()
+		end
+	end
+end)

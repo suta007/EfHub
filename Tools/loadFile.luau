@@ -7,10 +7,13 @@ local targets = {
 	--PlayerScripts = LocalPlayer:WaitForChild("PlayerScripts"),
 	--PlayerGui = LocalPlayer:WaitForChild("PlayerGui"),
 	--Workspace = game:GetService("Workspace"),
-	TeamEventControllers = game:GetService("ReplicatedStorage").Modules.TeamEventControllers,
+	--TeamEventControllers = game:GetService("ReplicatedStorage").Modules.TeamEventControllers,
+	--BeeEventV2Controllers = game:GetService("ReplicatedStorage").Modules.BeeEventV2Controllers,
+	BeeEventData = game:GetService("ReplicatedStorage").Data.BeeEvent,
+	BizzyBeeEvent = game:GetService("ReplicatedStorage").GameEvents.BizzyBeeEvent,
 }
 
-local baseFolderName = "GAG_event"
+local baseFolderName = "Bee_event3"
 if not isfolder(baseFolderName) then
 	makefolder(baseFolderName)
 end

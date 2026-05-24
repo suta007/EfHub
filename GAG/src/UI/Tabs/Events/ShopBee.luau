@@ -152,7 +152,7 @@ function ShopBee.Initialize(registry, tab)
 	})
 
 	local BeeEggShopSection = EventsTab:AddCollapsibleSection("Bee Egg Shop", false)
-	local BeeEggData = { "Common Bee Egg", "Rare Bee Egg", "Mythical Bee Egg" }
+	local BeeEggData = { "Common Bee Egg", "Rare Bee Egg", "Mythical Bee Egg", "Transcendent Bee Egg" }
 	BeeEggShopSection:AddDropdown("ddBuyBeeEgg", {
 		Title = "Bee Egg Shop Items",
 		Values = BeeEggData,

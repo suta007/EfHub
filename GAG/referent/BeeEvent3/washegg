@@ -1,0 +1,6 @@
+workspace.WaspEgg
+
+
+	workspace.ChildAdded:Connect(function(p_u_49)
+		-- upvalues: (ref) v_u_7, (ref) v_u_41, (ref) v_u_9, (ref) v_u_8
+		if p_u_49.Name == "WaspEgg" and p_u_49:IsA("Model") then
