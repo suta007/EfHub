@@ -28,7 +28,7 @@ local function HealBee()
 	end
 	sData.Character:PivotTo(CFrame.new(parsedPos))
 	task.spawn(function()
-		task.wait(120)
+		task.wait(tonumber(Options.ipHealBeeTime.Value))
 		Options.tgKeepPosEnable:SetValue(true)
 	end)
 end
@@ -44,7 +44,7 @@ local function WaspWar(Value)
 					Character:PivotTo(WaspPos * CFrame.new(2, 5, 2))
 					Options.tgKeepPosEnable:SetValue(false)
 					task.spawn(function()
-						task.wait(180)
+						task.wait(tonumber(Options.ipWaspWarTime.Value))
 						HealBee()
 					end)
 				end
@@ -194,6 +194,25 @@ function MainBee.Initialize(registry, tab)
 		Placeholder = "X, Y, Z",
 		Numeric = false,
 		Finished = false,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	MainBeeSection:AddInput("ipWaspWarTime", {
+		Title = "Wasp War Time (s)",
+		Default = 90,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	MainBeeSection:AddInput("ipHealBeeTime", {
+		Title = "Heal Bee Time (s)",
+		Default = 120,
+		Numeric = true,
+		Finished = true,
 		Callback = function()
 			QuickSave()
 		end,
