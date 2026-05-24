@@ -3872,7 +3872,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.23-20.50",
+SubTitle="2569.05.24-14.05",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6130,28 +6130,95 @@ local f
 local g=game:GetService("Players")
 local h=g.LocalPlayer
 local i=require(e:WaitForChild("Modules"):WaitForChild("GetFarm")::any)
+local j=e:WaitForChild("Remotes"):WaitForChild("LootChest")
+local k=j:WaitForChild("OpenChest")
+local l=j:WaitForChild("SpawnChest")
+
+local m=nil
+local n=nil
+
+local function HealBee()
+local o=c.Options
+local p=c.Utils
+local q=o.ipHealBeePos.Value
+if q==""then
+c.Log("Please set Heal Bee position.","WARN")
+return
+end
+local r=p.ParseVector3(q)
+if not r then
+c.Log("Invalid Heal Bee position format.","ERROR")
+return
+end
+f.Character:PivotTo(CFrame.new(r))
+task.spawn(function()
+task.wait(tonumber(o.ipHealBeeTime.Value))
+o.tgKeepPosEnable:SetValue(true)
+end)
+end
+
+local function WaspWar(o)
+local p=c.Options
+if o then
+if not m then
+m=workspace.ChildAdded:Connect(function(q)
+local r=f.Character
+if q.Name=="WaspEgg"and q:IsA("Model")and r then
+local t=q:GetPivot()
+r:PivotTo(t*CFrame.new(2,5,2))
+p.tgKeepPosEnable:SetValue(false)
+task.spawn(function()
+task.wait(tonumber(p.ipWaspWarTime.Value))
+HealBee()
+end)
+end
+end)
+end
+if not n then
+n=l.OnClientEvent:Connect(function(q,r,t,u)
+task.spawn(function()
+
+
+
+task.wait(0.2)
+k:FireServer(q)
+
+end)
+end)
+end
+else
+if m then
+m:Disconnect()
+m=nil
+end
+if n then
+n:Disconnect()
+n=nil
+end
+end
+end
 
 local function HarvestHoneyFruits()
-local j=c.Options
-if not j.tgHarvestHoneyEnable or not j.tgHarvestHoneyEnable.Value then
+local o=c.Options
+if not o.tgHarvestHoneyEnable or not o.tgHarvestHoneyEnable.Value then
 return
 end
 if f.InventoryService.IsMaxInventory(f.LocalPlayer)then
 return
 end
-local k=i(h)
-if not k then
+local p=i(h)
+if not p then
 return
 end
-local l=d:GetTagged("CollectPrompt")
-for m,n in ipairs(l)do
+local q=d:GetTagged("CollectPrompt")
+for r,t in ipairs(q)do
 if f.InventoryService.IsMaxInventory(f.LocalPlayer)then
 return
 end
-if n:IsDescendantOf(k)and n:IsA("ProximityPrompt")and n.Enabled and not n:GetAttribute("Collected")then
-local o=n.Parent and n.Parent.Parent
-if o then
-f.CollectEvent:FireServer({o})
+if t:IsDescendantOf(p)and t:IsA("ProximityPrompt")and t.Enabled and not t:GetAttribute("Collected")then
+local u=t.Parent and t.Parent.Parent
+if u then
+f.CollectEvent:FireServer({u})
 task.wait(0.2)
 end
 end
@@ -6159,122 +6226,169 @@ end
 end
 
 local function CompressHoney()
-local j=c.Options
-if not j.tgCompressHoneyEnable or not j.tgCompressHoneyEnable.Value then
+local o=c.Options
+if not o.tgCompressHoneyEnable or not o.tgCompressHoneyEnable.Value then
 return
 end
-local k=f.DataService:GetData()
-local l=k.HoneyMachine2026
-local m=l.HoneyStored
-local n=l.IsRunning
-if tonumber(m)>0 then
+local p=f.DataService:GetData()
+local q=p.HoneyMachine2026
+local r=q.HoneyStored
+local t=q.IsRunning
+if tonumber(r)>0 then
 f.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("CollectHoney")
 task.wait(1)
 end
-if not n then
+if not t then
 f.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("SubmitAll")
 task.wait(1)
 end
 end
 
 local function KeepPos()
-local j=c.Options
-local k=c.Utils
-if not j.tgKeepPosEnable or not j.tgKeepPosEnable.Value then
+local o=c.Options
+local p=c.Utils
+if not o.tgKeepPosEnable or not o.tgKeepPosEnable.Value then
 return
 end
-local l=j.ipKeepPos.Value
-if l==""then
+local q=o.ipKeepPos.Value
+if q==""then
 c.Log("Please set position.")
 return
 end
-local m=k.ParseVector3(l)
-if not m then
+local r=p.ParseVector3(q)
+if not r then
 c.Log("Invalid position format.")
 return
 end
 
-local n=f.Character
-local o=n.PrimaryPart.Position
-local p=(o-m).Magnitude
-if p>10 then
-n:PivotTo(CFrame.new(m))
+local t=f.Character
+local u=t.PrimaryPart.Position
+local v=(u-r).Magnitude
+if v>10 then
+t:PivotTo(CFrame.new(r))
 end
 end
 
-function b.Initialize(j,k)
-c=j
-local l=c.Options
-_=l
-local m=c.Window.QuickSave
-local n=k
+function b.Initialize(o,p)
+c=o
+local q=c.Options
+_=q
+local r=c.Window.QuickSave
+local t=p
 f=c.sData
-local o=c.EfTasks
+local u=c.EfTasks
 
-local p=n:AddCollapsibleSection("MainBee",false)
-p:AddToggle("tgHarvestHoneyEnable",{
+local v=t:AddCollapsibleSection("MainBee",false)
+v:AddToggle("tgHarvestHoneyEnable",{
 Title="Harvest Honey Fruits Enable",
 Default=false,
-Callback=function(q)
-m()
-o.ToggleTask("AutoHarvestHoney",q,function()
+Callback=function(w)
+r()
+u.ToggleTask("AutoHarvestHoney",w,function()
 HarvestHoneyFruits()
 task.wait(5)
 end)
 end,
 })
 
-p:AddToggle("tgCompressHoneyEnable",{
+v:AddToggle("tgCompressHoneyEnable",{
 Title="Compress Honey Enable",
 Default=false,
-Callback=function(q)
-m()
-o.ToggleTask("AutoCompressHoney",q,function()
+Callback=function(w)
+r()
+u.ToggleTask("AutoCompressHoney",w,function()
 CompressHoney()
 task.wait(10)
 end)
 end,
 })
-
-local q=n:AddCollapsibleSection("Keep Position",false)
-q:AddButton({
-Title="Set Position",
+v:AddDivider()
+v:AddButton({
+Title="Set Heal Bee Position",
 Callback=function()
-local r=f.Character:GetPivot().Position
-local t=string.format("%.3f, %.3f, %.3f",r.X,r.Y,r.Z)
-l.ipKeepPos:SetValue(t)
-m()
+local w=f.Character:GetPivot().Position
+local x=string.format("%.3f, %.3f, %.3f",w.X,w.Y,w.Z)
+q.ipHealBeePos:SetValue(x)
+r()
 end,
 })
-q:AddInput("ipKeepPos",{
+v:AddInput("ipHealBeePos",{
 Title="Position",
 Default="",
 Placeholder="X, Y, Z",
 Numeric=false,
 Finished=false,
 Callback=function()
-m()
+r()
 end,
 })
-q:AddInput("ipKeepPosDelay",{
+
+v:AddInput("ipWaspWarTime",{
+Title="Wasp War Time (s)",
+Default=90,
+Numeric=true,
+Finished=true,
+Callback=function()
+r()
+end,
+})
+v:AddInput("ipHealBeeTime",{
+Title="Heal Bee Time (s)",
+Default=120,
+Numeric=true,
+Finished=true,
+Callback=function()
+r()
+end,
+})
+v:AddToggle("tgWaspWarEnable",{
+Title="Wasp War Enable",
+Default=false,
+Callback=function(w)
+r()
+WaspWar(w)
+end,
+})
+
+local w=t:AddCollapsibleSection("Keep Position",false)
+w:AddButton({
+Title="Set Position",
+Callback=function()
+local x=f.Character:GetPivot().Position
+local y=string.format("%.3f, %.3f, %.3f",x.X,x.Y,x.Z)
+q.ipKeepPos:SetValue(y)
+r()
+end,
+})
+w:AddInput("ipKeepPos",{
+Title="Position",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function()
+r()
+end,
+})
+w:AddInput("ipKeepPosDelay",{
 Title="Delay Check Time (s)",
 Default=60,
 Numeric=true,
 Finished=true,
 Callback=function()
-m()
+r()
 end,
 })
 
-q:AddToggle("tgKeepPosEnable",{
+w:AddToggle("tgKeepPosEnable",{
 Title="Keep Position Enable",
 Default=false,
-Callback=function(r)
-m()
-o.ToggleTask("AutoKeepPos",r,function()
-local t=tonumber(l.ipKeepPosDelay.Value)or 60
+Callback=function(x)
+r()
+u.ToggleTask("AutoKeepPos",x,function()
+local y=tonumber(q.ipKeepPosDelay.Value)or 60
 KeepPos()
-task.wait(t)
+task.wait(y)
 end)
 end,
 })
@@ -6436,7 +6550,7 @@ end,
 })
 
 local w=m:AddCollapsibleSection("Bee Egg Shop",false)
-local x={"Common Bee Egg","Rare Bee Egg","Mythical Bee Egg"}
+local x={"Common Bee Egg","Rare Bee Egg","Mythical Bee Egg","Transcendent Bee Egg"}
 w:AddDropdown("ddBuyBeeEgg",{
 Title="Bee Egg Shop Items",
 Values=x,
