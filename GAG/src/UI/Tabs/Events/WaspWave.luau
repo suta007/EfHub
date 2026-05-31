@@ -65,6 +65,7 @@ local function runDungeon()
 			RequestClaim:FireServer()
 			task.wait(1)
 			HealBee()
+			task.wait(10)
 		end
 		return
 	end
