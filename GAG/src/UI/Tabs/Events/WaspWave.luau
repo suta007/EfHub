@@ -63,9 +63,9 @@ local function runDungeon()
 		if IsClaimUiVisible() then
 			reg.Log("[WaspWave] กำลังเคลมรางวัล...", "INFO")
 			RequestClaim:FireServer()
-			task.wait(1)
+			task.wait(26)
 			HealBee()
-			task.wait(10)
+			--task.wait(10)
 		end
 		return
 	end

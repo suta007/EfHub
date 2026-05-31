@@ -33,10 +33,29 @@ local function HealBee()
 		Options.tgWaspWarEnable:SetValue(true)
 	end)
 end
-
+local function CheckWaspEgg()
+	local Options = reg.Options
+	local WaspEgg
+	for _, obj in ipairs(workspace:GetChildren()) do
+		if obj.Name == "WaspEgg" and obj:IsA("Model") then
+			WaspEgg = obj
+			break
+		end
+	end
+	if WaspEgg then
+		local WaspPos = WaspEgg:GetPivot()
+		sData.Character:PivotTo(WaspPos * CFrame.new(2, 5, 2))
+		Options.tgKeepPosEnable:SetValue(false)
+		task.spawn(function()
+			task.wait(tonumber(Options.ipWaspWarTime.Value))
+			HealBee()
+		end)
+	end
+end
 local function WaspWar(Value)
 	local Options = reg.Options
 	if Value then
+		CheckWaspEgg()
 		if not WaspEggConn then
 			WaspEggConn = workspace.ChildAdded:Connect(function(obj)
 				local Character = sData.Character
