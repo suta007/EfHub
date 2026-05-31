@@ -3872,7 +3872,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.24-14.05",
+SubTitle="2569.05.31-18.20",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6154,12 +6154,32 @@ f.Character:PivotTo(CFrame.new(r))
 task.spawn(function()
 task.wait(tonumber(o.ipHealBeeTime.Value))
 o.tgKeepPosEnable:SetValue(true)
+o.tgWaspWarEnable:SetValue(true)
 end)
 end
-
+local function CheckWaspEgg()
+local o=c.Options
+local p
+for q,r in ipairs(workspace:GetChildren())do
+if r.Name=="WaspEgg"and r:IsA("Model")then
+p=r
+break
+end
+end
+if p then
+local q=p:GetPivot()
+f.Character:PivotTo(q*CFrame.new(2,5,2))
+o.tgKeepPosEnable:SetValue(false)
+task.spawn(function()
+task.wait(tonumber(o.ipWaspWarTime.Value))
+HealBee()
+end)
+end
+end
 local function WaspWar(o)
 local p=c.Options
 if o then
+CheckWaspEgg()
 if not m then
 m=workspace.ChildAdded:Connect(function(q)
 local r=f.Character
@@ -6174,23 +6194,25 @@ end)
 end
 end)
 end
-if not n then
-n=l.OnClientEvent:Connect(function(q,r,t,u)
-task.spawn(function()
-
-
-
-task.wait(0.2)
-k:FireServer(q)
-
-end)
-end)
-end
 else
 if m then
 m:Disconnect()
 m=nil
 end
+end
+end
+
+local function ClaimWaspWar(o)
+if o then
+if not n then
+n=l.OnClientEvent:Connect(function(p,q,r,t)
+task.spawn(function()
+task.wait(0.2)
+k:FireServer(p)
+end)
+end)
+end
+else
 if n then
 n:Disconnect()
 n=nil
@@ -6349,6 +6371,14 @@ r()
 WaspWar(w)
 end,
 })
+v:AddToggle("tgClaimEnable",{
+Title="Claim Enable",
+Default=false,
+Callback=function(w)
+r()
+ClaimWaspWar(w)
+end,
+})
 
 local w=t:AddCollapsibleSection("Keep Position",false)
 w:AddButton({
@@ -6395,6 +6425,127 @@ end,
 end
 
 return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+
+local b={}
+local c
+local d
+
+local e=game:GetService("ReplicatedStorage")
+local f=game:GetService("Players")
+local g=f.LocalPlayer
+
+
+local h=e:WaitForChild("GameEvents"):WaitForChild("WaspWaveSurvival")
+local i=h:WaitForChild("RequestStart")
+
+local j=h:WaitForChild("RequestClaim")
+local k=h:WaitForChild("GetState")
+
+local function HealBee()
+local l=c.Options
+local m=c.Utils
+local n=l.ipHealBeePos.Value
+if n==""then
+c.Log("Please set Heal Bee position.","WARN")
+return
+end
+local o=m.ParseVector3(n)
+if not o then
+c.Log("Invalid Heal Bee position format.","ERROR")
+return
+end
+d.Character:PivotTo(CFrame.new(o))
+task.spawn(function()
+task.wait(tonumber(l.ipHealBeeTime.Value))
+l.tgKeepPosEnable:SetValue(true)
+l.tgWaspWarEnable:SetValue(true)
+end)
+end
+
+local function IsClaimUiVisible()
+local l=g:FindFirstChildOfClass("PlayerGui")
+local m=l and l:FindFirstChild("WaspWaveSurvivalUI")
+if m then
+local n=m:FindFirstChild("Victory")
+local o=m:FindFirstChild("WaspWaveConclusionPanel")
+if(n and n.Visible==true)or(o and o.Visible==true)then
+return true
+end
+end
+return false
+end
+
+local function GetCurrentState()
+local l,m=pcall(function()
+return k:InvokeServer()
+end)
+if l and typeof(m)=="table"then
+return m
+end
+return nil
+end
+
+local function runDungeon()
+local l=c.Options
+if g:GetAttribute("InWaspWaveSurvival")==true then
+if IsClaimUiVisible()then
+c.Log("[WaspWave] กำลังเคลมรางวัล...","INFO")
+j:FireServer()
+task.wait(26)
+HealBee()
+
+end
+return
+end
+
+local m=GetCurrentState()
+if not m then
+c.Log("[WaspWave] ไม่สามารถดึงสถานะจากเซิร์ฟเวอร์ได้","WARN")
+return
+end
+
+if m.PortalReady then
+c.Log("[WaspWave] พอร์ทัลพร้อมแล้ว กำลังเข้าดันเจี้ยน...","INFO")
+i:InvokeServer()
+l.tgKeepPosEnable:SetValue(false)
+l.tgWaspWarEnable:SetValue(false)
+task.wait(1)
+return
+end
+
+if m.PortalCanIgnite then
+c.Log("[WaspWave] พอร์ทัลสามารถจุดได้ กำลังจุดพอร์ทัล...","INFO")
+i:InvokeServer()
+task.wait(1)
+return
+end
+end
+
+function b.Initialize(l,m)
+c=l
+local n=c.Options
+_=n
+local o=c.Window.QuickSave
+local p=m
+d=c.sData
+local q=c.EfTasks
+
+local r=p:AddCollapsibleSection("WaspWave",false)
+
+r:AddToggle("tgWaspWaveEnable",{
+Title="Wasp Wave Enable",
+Default=false,
+Callback=function(t)
+o()
+q.ToggleTask("AutoWaspWave",t,function()
+runDungeon()
+task.wait(5)
+end)
+end,
+})
+end
+
+return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -6593,7 +6744,7 @@ end,
 })
 end
 
-return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
+return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6608,11 +6759,13 @@ local g={}
 if b().DEV_MODE then
 
 g.MainBee=c("UI/Tabs/Events/MainBee")
+g.WaspWave=c("UI/Tabs/Events/WaspWave")
 g.ShopBee=c("UI/Tabs/Events/ShopBee")
 else
 
 g.MainBee=a.p()
-g.ShopBee=a.q()
+g.WaspWave=a.q()
+g.ShopBee=a.r()
 end
 return g
 end
@@ -6630,10 +6783,11 @@ e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
 
 i.MainBee.Initialize(e,f.Events)
+i.WaspWave.Initialize(e,f.Events)
 i.ShopBee.Initialize(e,f.Events)
 end
 
-return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+return d end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6723,7 +6877,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+return c end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
 
 local b={}
 
@@ -6891,7 +7045,7 @@ end,
 })
 end
 
-return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return b end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6964,9 +7118,9 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.r()
-e.LogTab=a.s()
-e.TestTab=a.t()
+e.EventsTab=a.s()
+e.LogTab=a.t()
+e.TestTab=a.u()
 
 
 
@@ -7012,7 +7166,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end end
+return d end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -7042,7 +7196,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.u()
+c=a.v()
 end
 
 
