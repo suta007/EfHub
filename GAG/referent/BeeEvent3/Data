@@ -1,0 +1,143 @@
+//จุดไฟแล้ว รอดันเจี้ยนเปิด
+Script initialized successfully.
+[PortalWarmupRemaining] : 530
+[TotalKilled] : 0
+[PortalReady] : false
+[MaxWaves] : 100
+[EventAvailable] : false
+[DefeatLockoutRemaining] : 0
+[StartedAt] : 0
+[MaxWasps] : 0
+[PortalReadyAt] : 1780218323
+[IsParticipant] : false
+[PortalIgnited] : true
+[PortalIgniteCooldownRemaining] : 0
+[Wave] : 0
+[PortalCanIgnite] : false
+[BestWave] : 0
+[CooldownRemaining] : 530
+[Active] : false
+[ActiveWasps] : 0
+[WavesCleared] : 0
+
+
+///////พร้อมเข้าดันเจี้ยน
+
+
+Script initialized successfully.
+[PortalWarmupRemaining] : 0
+[TotalKilled] : 0
+[PortalReady] : true
+[MaxWaves] : 100
+[EventAvailable] : true
+[DefeatLockoutRemaining] : 0
+[StartedAt] : 0
+[MaxWasps] : 0
+[PortalReadyAt] : 1780218323
+[IsParticipant] : false
+[PortalIgnited] : true
+[PortalIgniteCooldownRemaining] : 0
+[Wave] : 0
+[PortalCanIgnite] : false
+[BestWave] : 0
+[CooldownRemaining] : 0
+[Active] : false
+[ActiveWasps] : 0
+[WavesCleared] : 0
+
+
+/// อยู่ใน ดันเจี้ยน
+
+Script initialized successfully.
+[PortalWarmupRemaining] : 0
+[TotalKilled] : 67
+[PortalReady] : false
+[MaxWaves] : 100
+[EventAvailable] : true
+[DefeatLockoutRemaining] : 0
+[StartedAt] : 1780218841.634097
+[MaxWasps] : 6
+[PortalReadyAt] : 0
+[IsParticipant] : true
+[Phase] : Running
+[StartsAt] : 1780218841.617311
+[PortalIgnited] : false
+[PortalIgniteCooldownRemaining] : 0
+[Wave] : 15
+[WavesCleared] : 14
+[BestWave] : 0
+[PortalCanIgnite] : true
+[CooldownRemaining] : 0
+[Active] : true
+[ActiveWasps] : 3
+
+//////////// พร้อมเคลม
+
+Script initialized successfully.
+[PortalWarmupRemaining] : 0
+[TotalKilled] : 74
+[PortalReady] : false
+[MaxWaves] : 100
+[EventAvailable] : true
+[DefeatLockoutRemaining] : 0
+[StartedAt] : 1780218841.634097
+[MaxWasps] : 6
+[PortalReadyAt] : 0
+[IsParticipant] : true
+[Phase] : Running
+[StartsAt] : 1780218841.617311
+[PortalIgnited] : false
+[PortalIgniteCooldownRemaining] : 0
+[Wave] : 16
+[WavesCleared] : 15
+[BestWave] : 15
+[PortalCanIgnite] : true
+[CooldownRemaining] : 0
+[Active] : true
+[ActiveWasps] : 2
+
+
+///รอจุดไฟ
+Script initialized successfully.
+[PortalWarmupRemaining] : 0
+[TotalKilled] : 0
+[PortalReady] : false
+[MaxWaves] : 100
+[EventAvailable] : true
+[DefeatLockoutRemaining] : 2499
+[StartedAt] : 0
+[MaxWasps] : 0
+[PortalReadyAt] : 0
+[IsParticipant] : false
+[PortalIgnited] : false
+[PortalIgniteCooldownRemaining] : 0
+[Wave] : 0
+[PortalCanIgnite] : true
+[BestWave] : 15
+[CooldownRemaining] : 0
+[Active] : false
+[ActiveWasps] : 0
+[WavesCleared] : 0
+
+
+//พร้อมจุด
+Script initialized successfully.
+[PortalWarmupRemaining] : 0
+[TotalKilled] : 0
+[PortalReady] : false
+[MaxWaves] : 100
+[EventAvailable] : true
+[DefeatLockoutRemaining] : 0
+[StartedAt] : 0
+[MaxWasps] : 0
+[PortalReadyAt] : 0
+[IsParticipant] : false
+[PortalIgnited] : false
+[PortalIgniteCooldownRemaining] : 0
+[Wave] : 0
+[PortalCanIgnite] : true
+[BestWave] : 15
+[CooldownRemaining] : 0
+[Active] : false
+[ActiveWasps] : 0
+[WavesCleared] : 0

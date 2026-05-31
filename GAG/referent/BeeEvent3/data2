@@ -1,0 +1,227 @@
+Script initialized successfully.
+[HasReceivedStarterCrop] : true
+[HasSeenPopup] : true
+[HasPlacedFirstBeeEgg] : true
+[HasFirstHatchedBee] : true
+[BeeSkillTree] : (Table)
+  [BeeSpeed] : 4
+  [BeeSpeed_4] : 1
+  [CompressorCapacity_4] : 1
+  [BeeCapacity_4] : 3
+  [CompressorSpeed_2] : 1
+  [BeeSpeed_3] : 1
+  [PollinationAmount] : 4
+  [BeeCapacity_7] : 2
+  [CompressorSpeed_1] : 1
+  [CompressorSpeed] : 4
+  [BeeCapacity_3] : 3
+  [PollinationAmount_1] : 1
+  [CompressorCapacity] : 4
+  [BeeCapacity_8] : 2
+  [PollinationAmount_2] : 1
+  [PollinationAmount_3] : 1
+  [CompressorSpeed_3] : 1
+  [PollinationAmount_4] : 1
+  [CompressorCapacity_1] : 1
+  [BeeCapacity_2] : 3
+  [BeeCapacity_1] : 1
+  [CompressorSpeed_4] : 1
+  [BeeCapacity_6] : 3
+  [BeeSpeed_1] : 1
+  [CompressorCapacity_2] : 1
+  [BeeCapacity_5] : 3
+  [BeeSpeed_2] : 1
+  [BeeCapacity] : 8
+  [CompressorCapacity_3] : 1
+[HasCollectedHoney] : true
+[HasSeenBeeCutscene] : true
+[HasSubmittedToHoneyMachine] : true
+[HasPurchasedFirstUpgrade] : true
+[BeeInventoryData] : (Table)
+  [{7ce7331d-9ac2-4793-bc88-b334caed6995}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 13
+    [BeeName] : Turbo Bee
+  [{f7188f17-f27c-4cc8-ac41-8ef89db74e8e}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 16
+    [BeeName] : Royal Bee
+  [{a4b8acef-4b10-470d-813b-39b2a97dbc51}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 18
+    [BeeName] : Turbo Bee
+  [{ddd592c0-274e-4f63-8879-43411ecf7203}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 1
+    [BeeName] : Turbo Bee
+  [{befaee54-f13f-4c7c-8739-1a8a23629139}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 21
+    [BeeName] : Royal Bee
+  [{f2726131-7b84-4c42-8aa1-ea875349b186}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 5
+    [BeeName] : Princess Bee
+  [{1b8711fd-c7b9-4517-bf3b-dac9526ab200}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 12
+    [BeeName] : Turbo Bee
+  [{7241faeb-d794-47a5-818e-b804c6179d98}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 8
+    [BeeName] : Treasure Bee
+  [{8f281399-fcb7-4685-b265-c616d405c07e}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 7
+    [BeeName] : Royal Bee
+  [{31a9a3ad-5d64-4b24-9450-ac3f63b21345}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 2
+    [BeeName] : Turbo Bee
+  [{b69fb4ce-266a-4887-8740-801bec153973}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Transcendent Bee Egg
+      [State] : ReadyToHatch
+      [Slot] : 10
+    [BeeName] : Chaos Bee
+  [{384762f3-b5c9-4dfb-ad61-0dff8040622e}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 4
+    [BeeName] : Turbo Bee
+  [{12903b83-da4b-4b78-9332-c37699125cf6}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 20
+    [BeeName] : Royal Bee
+  [{ece3e54e-d83c-4b8c-92ce-8d059b545a66}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 19
+    [BeeName] : Turbo Bee
+  [{ffafd0b2-efdd-44c7-aab2-efb2cb5afbb9}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 6
+    [BeeName] : Treasure Bee
+  [{a3c0bb87-d130-4614-b5b2-64d602695ade}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 17
+    [BeeName] : Princess Bee
+  [{d230e1c5-13fe-4c97-ae65-7d2a0b9f9086}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Transcendent Bee Egg
+      [State] : ReadyToHatch
+      [Slot] : 9
+    [BeeName] : Chrono Bee
+  [{9548aed9-f308-4b80-8a4b-9498202a9f82}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 15
+    [BeeName] : Royal Bee
+  [{30da2ad4-50a2-40ce-9a21-b208fd54bff9}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Mythical Bee Egg
+      [State] : Active
+      [Slot] : 11
+    [BeeName] : Treasure Bee
+  [{44289262-2b51-4a07-8ae6-35a75730b1e1}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Transcendent Bee Egg
+      [State] : Active
+      [Slot] : 14
+    [BeeName] : Necromancer Bee
+  [{c96ff8bd-ca13-4128-818b-717d2dbdfc28}] : (Table)
+    [Data] : (Table)
+      [HatchedFrom] : Transcendent Bee Egg
+      [State] : ReadyToHatch
+      [Slot] : 3
+    [BeeName] : Chrono Bee
+[CombatSkillTree] : (Table)
+  [MoreHealth] : 5
+  [RespawnSpeed] : 3
+  [MoreHealth_3] : 1
+  [Lifesteal] : 3
+  [MoreHealth_1] : 1
+  [Looting] : 3
+  [Damage] : 5
+  [Lifesteal_1] : 1
+  [Damage_5] : 1
+  [Damage_2] : 1
+  [LifestealAbility] : 1
+  [CriticalChance_4] : 1
+  [Looting_1] : 1
+  [Damage_3] : 1
+  [CriticalChance_3] : 1
+  [MoreHealth_5] : 1
+  [RespawnSpeed_3] : 1
+  [CriticalChance_2] : 1
+  [CriticalChance] : 5
+  [LootingAbility] : 1
+  [MoreHealth_2] : 1
+  [MoreHealth_4] : 1
+  [RespawnSpeed_2] : 1
+  [Damage_1] : 1
+  [Lifesteal_2] : 1
+  [Looting_3] : 1
+  [Looting_2] : 1
+  [CriticalChanceAbility] : 1
+  [DamageAbility] : 1
+  [MoreHealthAbility] : 1
+  [CriticalChance_5] : 1
+  [RespawnSpeed_1] : 1
+  [CriticalChance_1] : 1
+  [RespawnSpeedAbility] : 1
+  [Lifesteal_3] : 1
+  [Damage_4] : 1
+[HoneyIncubatorData] : (Table)
+  [Running] : false
+  [StartTime] : 1779595849
+  [Claimable] : true
+  [Accelerations] : 0
+  [CurrentSeed] : Honey Hive Petal
+[HasReceivedStarterBeeEgg] : true
+[HasFirstCompressed] : true
+[HasSeenPopupPart2] : true
+[HasEnabledHoneyGarden] : true
+[HasPurchasedFirstBeeEgg] : true
+[WaspWaveSurvival] : (Table)
+  [LastStartedAt] : 0
+  [TotalWavesCleared] : 0
+  [DefeatLockoutUntil] : 0
+  [LastPortalIgnitedAt] : 0
+  [BestWave] : 0
+  [TotalRuns] : 0
+
+
+  game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("WaspWaveSurvival"):WaitForChild("GetState"):InvokeServer()
+
+
+game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("WaspWaveSurvival"):WaitForChild("RequestStart"):InvokeServer()

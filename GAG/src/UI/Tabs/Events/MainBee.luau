@@ -30,6 +30,7 @@ local function HealBee()
 	task.spawn(function()
 		task.wait(tonumber(Options.ipHealBeeTime.Value))
 		Options.tgKeepPosEnable:SetValue(true)
+		Options.tgWaspWarEnable:SetValue(true)
 	end)
 end
 
@@ -50,23 +51,25 @@ local function WaspWar(Value)
 				end
 			end)
 		end
-		if not OpenChestConn then
-			OpenChestConn = SpawnChestRemote.OnClientEvent:Connect(function(chestId, _chestCFrame, _tier, _autoCollectAt)
-				task.spawn(function()
-					--local Character = sData.Character
-					--if Character then
-					--	Character:PivotTo(chestCFrame * CFrame.new(2, 5, 2))
-					task.wait(0.2)
-					OpenChest:FireServer(chestId)
-					--end
-				end)
-			end)
-		end
 	else
 		if WaspEggConn then
 			WaspEggConn:Disconnect()
 			WaspEggConn = nil
 		end
+	end
+end
+
+local function ClaimWaspWar(Value)
+	if Value then
+		if not OpenChestConn then
+			OpenChestConn = SpawnChestRemote.OnClientEvent:Connect(function(chestId, _chestCFrame, _tier, _autoCollectAt)
+				task.spawn(function()
+					task.wait(0.2)
+					OpenChest:FireServer(chestId)
+				end)
+			end)
+		end
+	else
 		if OpenChestConn then
 			OpenChestConn:Disconnect()
 			OpenChestConn = nil
@@ -223,6 +226,14 @@ function MainBee.Initialize(registry, tab)
 		Callback = function(Value)
 			QuickSave()
 			WaspWar(Value)
+		end,
+	})
+	MainBeeSection:AddToggle("tgClaimEnable", {
+		Title = "Claim Enable",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+			ClaimWaspWar(Value)
 		end,
 	})
 

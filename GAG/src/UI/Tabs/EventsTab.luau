@@ -11,10 +11,12 @@ local function LoadEvents()
 	if getgenv().DEV_MODE then
 		--Events.Egghunt = EF_REMOTE("UI/Tabs/Events/Egghunt")
 		Events.MainBee = EF_REMOTE("UI/Tabs/Events/MainBee")
+		Events.WaspWave = EF_REMOTE("UI/Tabs/Events/WaspWave")
 		Events.ShopBee = EF_REMOTE("UI/Tabs/Events/ShopBee")
 	else
 		--Events.Egghunt = require("./Events/Egghunt.luau")
 		Events.MainBee = require("./Events/MainBee.luau")
+		Events.WaspWave = require("./Events/WaspWave.luau")
 		Events.ShopBee = require("./Events/ShopBee.luau")
 	end
 	return Events
@@ -33,6 +35,7 @@ function EventsTab.Initialize(registry)
 	local Events = LoadEvents()
 	--Events.Egghunt.Initialize(reg, Tabs.Events)
 	Events.MainBee.Initialize(reg, Tabs.Events)
+	Events.WaspWave.Initialize(reg, Tabs.Events)
 	Events.ShopBee.Initialize(reg, Tabs.Events)
 end
 

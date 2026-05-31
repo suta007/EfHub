@@ -1,0 +1,2757 @@
+-- game:GetService("ReplicatedStorage").Modules.BeeEventV2Controllers.WaspWaveSurvivalController
+local v1 = game:GetService("ReplicatedStorage")
+local v_u_2 = game:GetService("UserInputService")
+local v_u_3 = game:GetService("TweenService")
+local v_u_4 = game:GetService("SoundService")
+local v_u_5 = game:GetService("RunService")
+local v6 = game:GetService("Players")
+local v_u_7 = require(v1.Modules.BeeEventV2Controllers.BeeColonyStateController)
+local v_u_8 = require(v1.Modules.ConfirmationPromptController)
+local v_u_9 = require(v1.Modules.CreateTagHandler)
+local v_u_10 = require(v1.Data.BeeEvent.BeeRegistry)
+local v_u_11 = require(v1.Modules.Notification)
+local v_u_12 = require(v1.Modules.TimeHelper)
+local v_u_13 = require(v1.Modules.Trove)
+local v_u_14 = require(v1.Modules.GameConfigController)
+local v_u_15 = require(v1.Modules.GiveServiceCommon)
+local v_u_16 = require(v1.Data.BeeEvent.WaspWaveSurvivalConfig)
+local v_u_17 = require(v1.Modules.Spring)
+local v_u_18 = require(v1.Data.SoundData)
+local v_u_19 = require(v1.Modules.UIComponents.ItemInfoHover)
+local v_u_20 = require(v1.Modules.CommaFormatNumber)
+local v_u_21 = game:GetService("MarketplaceService")
+local v_u_22 = require(v1.Data.DevProductIds).SkipWaspDungeonIgnition.PurchaseID
+local v_u_23 = require(v1.Modules.SaveSlotControllers.SaveSlotController)
+local v_u_24 = require(v1.Types.SlotServiceTypes)
+local v_u_25 = require(v1.Modules.Settings.SettingsService)
+local v26 = v1.GameEvents:WaitForChild("WaspWaveSurvival")
+local v_u_27 = v26:WaitForChild("RequestStart")
+local v_u_28 = v26:WaitForChild("RequestExit")
+local v_u_29 = v26:WaitForChild("RequestClaim")
+local v_u_30 = v26:WaitForChild("GetState")
+local v_u_31 = v26:WaitForChild("StateChanged")
+local v_u_32 = {
+	["States"] = {}
+}
+local v_u_33 = v6.LocalPlayer
+local v_u_34 = v_u_33:WaitForChild("PlayerGui")
+local v_u_35 = v_u_34:WaitForChild("WaspWaveSurvivalUI")
+local v_u_36 = v_u_35.RunProgress.Wave.CurrentWave
+local v_u_37 = v_u_35.RunProgress.Main.RemainingWaves
+local v_u_38 = v_u_35.RunProgress.Main.Bar.Content
+local v_u_39 = v_u_35:FindFirstChild("Victory")
+local v40 = nil
+local v41 = nil
+local v_u_42 = nil
+local v_u_43 = {}
+local v_u_44 = nil
+local v_u_45 = false
+local v_u_46, v47
+if v_u_39 then
+	v_u_39.Visible = false
+	v_u_46 = v_u_39:FindFirstChild("Rewards")
+	if v_u_46 then
+		v_u_46 = v_u_46:FindFirstChild("Rewards")
+	end
+	if not (v_u_46 and v_u_46:IsA("Frame")) then
+		v_u_46 = v40
+	end
+	v47 = v_u_39:FindFirstChild("ClaimButton")
+	if v47 then
+		v47 = v47:FindFirstChild("SENSOR")
+	end
+	if v47 then
+		if not v47:IsA("GuiObject") then
+			v47 = v41
+		end
+	else
+		v47 = v41
+	end
+	if v_u_46 then
+		for _, v48 in v_u_46:GetChildren() do
+			if v48.Name == "RewardTemplate" and v48:IsA("Frame") then
+				v_u_42 = v_u_42 or v48:Clone()
+				v48:Destroy()
+			end
+		end
+	end
+else
+	v_u_46 = v40
+	v47 = v41
+end
+if v47 then
+	local function v49() -- name: onClaim
+		-- upvalues: (copy) v_u_39, (copy) v_u_28
+		if v_u_39 then
+			v_u_39.Visible = false
+		end
+		v_u_28:FireServer()
+	end
+	if v47:IsA("GuiButton") then
+		v47.Activated:Connect(v49)
+	else
+		v47.InputBegan:Connect(function(p50)
+			-- upvalues: (copy) v_u_39, (copy) v_u_28
+			if p50.UserInputType == Enum.UserInputType.MouseButton1 or p50.UserInputType == Enum.UserInputType.Touch then
+				if v_u_39 then
+					v_u_39.Visible = false
+				end
+				v_u_28:FireServer()
+			end
+		end)
+	end
+end
+local v_u_51 = v_u_35.WaveProgress
+local v_u_52 = v_u_51.Main.RemainingWasps
+local v_u_53 = v_u_51.Main.Bar
+local v_u_54 = {
+	["Teleport_UI"] = true,
+	["Hud_UI"] = true
+}
+local v_u_55 = {}
+local function v_u_60(p56) -- name: SetRunGameplayUIHidden
+	-- upvalues: (copy) v_u_54, (copy) v_u_34, (copy) v_u_55
+	for v57 in v_u_54 do
+		local v58 = v_u_34:FindFirstChild(v57)
+		if v58 and v58:IsA("ScreenGui") then
+			if p56 then
+				if v_u_55[v58] == nil then
+					v_u_55[v58] = v58.Enabled
+				end
+				v58.Enabled = false
+			else
+				local v59 = v_u_55[v58]
+				if v59 ~= nil then
+					v58.Enabled = v59
+				end
+				v_u_55[v58] = nil
+			end
+		end
+	end
+end
+local v_u_61 = nil
+local function v_u_65(p62) -- name: SetWaspSurvivalLoopEnabled
+	-- upvalues: (ref) v_u_61, (copy) v_u_18, (copy) v_u_4
+	if p62 then
+		if not v_u_61 then
+			local v63 = v_u_18.Events.Honey2026.WaspSurvival
+			if typeof(v63) ~= "string" or v63 == "" then
+				return
+			end
+			local v64 = Instance.new("Sound")
+			v64.Name = "WaspWaveSurvivalLoop"
+			v64.SoundId = v63
+			v64.Looped = true
+			v64.Volume = 0.5
+			v64.Parent = v_u_4
+			v_u_61 = v64
+		end
+		if v_u_61 and not v_u_61.IsPlaying then
+			v_u_61:Play()
+			return
+		end
+	elseif v_u_61 then
+		v_u_61:Stop()
+		v_u_61:Destroy()
+		v_u_61 = nil
+	end
+end
+local v_u_66 = false
+local v_u_67 = false
+local v_u_68 = nil
+local v_u_69 = nil
+local v_u_70 = nil
+local v_u_71 = nil
+local v_u_72 = nil
+local v_u_73 = nil
+local v_u_74 = nil
+local v_u_75 = nil
+local v_u_76 = nil
+local v_u_77 = nil
+local v_u_78 = {}
+local v_u_79 = nil
+local v_u_80 = nil
+local v_u_81 = nil
+local v_u_82 = 0
+local v_u_83 = false
+local v_u_84 = nil
+local v_u_85 = false
+local v_u_86 = false
+local v_u_87 = nil
+local v_u_88 = nil
+local v_u_89 = 0
+local v_u_90 = nil
+local v_u_91 = {}
+local v_u_92 = {}
+local v_u_93 = nil
+local v_u_94 = nil
+local v_u_95 = nil
+local v_u_96 = nil
+local v_u_97 = false
+local v_u_98 = 0
+local v_u_99 = v_u_16.MaxWaves or 100
+local v_u_100 = 0
+local v_u_101 = 0
+local v_u_102 = nil
+local v_u_103 = 0
+local v_u_104 = 0
+local v_u_105 = 0
+local v_u_106 = true
+local v_u_107 = 0
+local v_u_108 = 0
+local v_u_109 = false
+local v_u_110 = false
+local v_u_111 = 0
+local v_u_112 = 0
+local v_u_113 = {}
+local v_u_114 = nil
+local v_u_115 = nil
+local v_u_116 = true
+local v_u_117 = nil
+local v_u_118 = false
+local v_u_119 = ""
+local v_u_120 = nil
+local function v_u_134(p121) -- name: CondenseRewards
+	local v122 = {}
+	if typeof(p121) ~= "table" then
+		return v122
+	end
+	local v123 = {}
+	for _, v124 in p121 do
+		if typeof(v124) == "table" and (v124.Type ~= nil and v124.Value ~= nil) then
+			local v125 = v124.Type
+			local v126 = tostring(v125)
+			local v127 = v124.Value
+			local v128 = v126 .. "|" .. tostring(v127)
+			local v129 = v124.Quantity
+			local v130 = tonumber(v129) or 1
+			local v131 = v123[v128]
+			if v131 then
+				local v132 = v122[v131]
+				v132.Quantity = v132.Quantity + v130
+			else
+				local v133 = {
+					["Type"] = v124.Type,
+					["Value"] = v124.Value,
+					["Quantity"] = v130
+				}
+				table.insert(v122, v133)
+				v123[v128] = #v122
+			end
+		end
+	end
+	return v122
+end
+local function v_u_139(p135) -- name: EnsureConclusionQuantityLabel
+	local v136 = p135:FindFirstChild("QuantityLabel")
+	if v136 and v136:IsA("TextLabel") then
+		return v136
+	end
+	local v137 = Instance.new("TextLabel")
+	v137.Name = "QuantityLabel"
+	v137.AnchorPoint = Vector2.new(1, 1)
+	v137.Position = UDim2.new(1, 0, 1, 0)
+	v137.Size = UDim2.new(1, 0, 0.3, 0)
+	v137.BackgroundTransparency = 1
+	v137.Text = ""
+	v137.TextScaled = true
+	v137.FontFace = Font.new("rbxasset://fonts/families/ComicNeueAngular.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+	v137.TextColor3 = Color3.fromRGB(255, 255, 255)
+	v137.ZIndex = (p135:IsA("GuiObject") and (p135.ZIndex or 215) or 215) + 10
+	v137.Parent = p135
+	local v138 = Instance.new("UIStroke")
+	v138.Name = "UIStroke"
+	v138.StrokeSizingMode = Enum.StrokeSizingMode.ScaledSize
+	v138.Thickness = 0.06
+	v138.Parent = v137
+	return v137
+end
+local function v_u_161(p140) -- name: PopulateVictoryRewards
+	-- upvalues: (copy) v_u_134, (ref) v_u_46, (ref) v_u_42, (copy) v_u_92, (copy) v_u_15, (copy) v_u_20, (copy) v_u_19
+	local v141 = v_u_134(p140)
+	if v_u_46 and v_u_42 then
+		for _, v142 in v_u_46:GetChildren() do
+			if v142.Name == "RewardTemplate" and v142:IsA("Frame") then
+				local v143 = v142:FindFirstChild("Details")
+				if v143 then
+					v143 = v143:FindFirstChild("Sunrays")
+				end
+				local v144 = v143 and (v143:IsA("ImageLabel") and table.find(v_u_92, v143))
+				if v144 then
+					table.remove(v_u_92, v144)
+				end
+				v142:Destroy()
+			end
+		end
+		for _, v_u_145 in v141 do
+			local v146 = v_u_42:Clone()
+			local v147 = v146:FindFirstChild("Reward")
+			if v147 and v147:IsA("ImageLabel") then
+				local v148, v149 = pcall(function()
+					-- upvalues: (ref) v_u_15, (copy) v_u_145
+					return v_u_15:GetImage(v_u_145)
+				end)
+				v147.Image = v148 and v149 and v149 or ""
+			end
+			local v150 = v146:FindFirstChild("QuantityLabel")
+			if v150 and v150:IsA("TextLabel") then
+				local v151 = v_u_145.Quantity
+				local v152 = tonumber(v151) or 0
+				v150.Text = v152 <= 0 and "" or "x" .. v_u_20(v152)
+			end
+			local v153 = v146:FindFirstChild("Details")
+			if v153 then
+				v153 = v153:FindFirstChild("Sunrays")
+			end
+			if v153 and v153:IsA("ImageLabel") then
+				local v154 = v_u_92
+				table.insert(v154, v153)
+			end
+			v146.Parent = v_u_46
+			local v155 = v_u_145.Type
+			local v156 = tostring(v155)
+			local v157 = v_u_145.Value
+			local v_u_158 = "WaspReward_" .. v156 .. "_" .. tostring(v157)
+			v146:SetAttribute("UUID", v_u_158)
+			local v159, v160 = pcall(function()
+				-- upvalues: (ref) v_u_19, (copy) v_u_158, (copy) v_u_145
+				v_u_19:AddItemFromRewardWithQuantity(v_u_158, v_u_145)
+			end)
+			if not v159 then
+				warn("[WaspWaveSurvival] Victory hover register failed:", v160, v_u_145)
+			end
+		end
+	end
+end
+local function v_u_166(p162) -- name: FormatRemaining
+	if p162 <= 0 then
+		return "Event Ended!"
+	else
+		local v163 = p162 // 86400
+		if v163 >= 1 then
+			return ("Leaving in %d %s!"):format(v163, v163 == 1 and "Day" or "Days")
+		else
+			local v164 = p162 // 3600
+			if v164 >= 1 then
+				return ("Leaving in %d %s!"):format(v164, v164 == 1 and "Hour" or "Hours")
+			else
+				local v165 = p162 // 60
+				if v165 >= 1 then
+					return ("Leaving in %d %s!"):format(v165, v165 == 1 and "Minute" or "Minutes")
+				else
+					return ("Leaving in %d %s!"):format(p162, p162 == 1 and "Second" or "Seconds")
+				end
+			end
+		end
+	end
+end
+local function v_u_168() -- name: FindPortalTimerLabel
+	-- upvalues: (ref) v_u_44
+	if v_u_44 and v_u_44.Parent then
+		return v_u_44
+	end
+	local v167 = workspace:FindFirstChild("Interaction")
+	if v167 then
+		v167 = v167:FindFirstChild("UpdateItems")
+	end
+	if v167 then
+		v167 = v167:FindFirstChild("WaspDungeonPortal")
+	end
+	if v167 then
+		v167 = v167:FindFirstChild("RewardsAttachment")
+	end
+	if v167 then
+		v167 = v167:FindFirstChild("Timer")
+	end
+	if v167 then
+		v167 = v167:FindFirstChild("Label")
+	end
+	if not (v167 and v167:IsA("TextLabel")) then
+		return nil
+	end
+	v_u_44 = v167
+	return v_u_44
+end
+local function v_u_174(p169) -- name: SetPortalTimerText
+	-- upvalues: (copy) v_u_168
+	local v170 = v_u_168()
+	if v170 then
+		local v171 = v170:FindFirstAncestorOfClass("BillboardGui")
+		local v172 = string.match(p169, "\n")
+		if v171 then
+			if v172 then
+				v171.Size = UDim2.fromScale(20, 3.5)
+			else
+				v171.Size = UDim2.fromScale(20, 2)
+			end
+		end
+		v170.Text = p169
+		local v173 = v170:FindFirstChild("TextShadow")
+		if v173 and v173:IsA("TextLabel") then
+			v173.Text = p169
+		end
+	end
+end
+local function v_u_178() -- name: SyncPortalParticles
+	-- upvalues: (ref) v_u_109
+	local v175 = workspace:FindFirstChild("Interaction")
+	if v175 then
+		v175 = v175:FindFirstChild("UpdateItems")
+	end
+	if v175 then
+		v175 = v175:FindFirstChild("WaspDungeonPortal")
+	end
+	if v175 then
+		v175 = v175:FindFirstChild("Portal")
+	end
+	if v175 then
+		local v176 = v_u_109 == true
+		for _, v177 in v175:QueryDescendants("ParticleEmitter") do
+			if typeof(v177) == "Instance" and v177:IsA("ParticleEmitter") then
+				v177.Enabled = v176
+			end
+		end
+	end
+end
+local function v_u_203(p179) -- name: ApplyPortalSnapshot
+	-- upvalues: (ref) v_u_109, (ref) v_u_110, (ref) v_u_111, (ref) v_u_112, (ref) v_u_45, (copy) v_u_11, (copy) v_u_178, (copy) v_u_174, (ref) v_u_66
+	local v180 = v_u_109
+	if v180 then
+		v180 = not v_u_110
+	end
+	if p179.PortalIgnited ~= nil then
+		v_u_109 = p179.PortalIgnited == true
+	end
+	if p179.PortalReady ~= nil then
+		v_u_110 = p179.PortalReady == true
+	end
+	local v181 = p179.PortalWarmupRemaining
+	local v182 = tonumber(v181)
+	if v182 then
+		v_u_111 = math.max(0, v182)
+	end
+	local v183 = p179.PortalIgniteCooldownRemaining
+	local v184 = tonumber(v183)
+	if v184 then
+		v_u_112 = math.max(0, v184)
+	end
+	if v_u_109 and not v_u_110 then
+		v_u_45 = false
+	end
+	if v_u_110 and (v180 and not v_u_45) then
+		v_u_45 = true
+		v_u_11:CreateNotification("The portal is ready. You can enter the dungeon now.")
+	end
+	v_u_178()
+	local v185 = v_u_174
+	local v186
+	if v_u_66 then
+		v186 = "EVENT ENDED"
+	elseif v_u_110 then
+		v186 = "READY"
+	elseif v_u_109 then
+		local v187 = "Portal Opens In:\n"
+		local v188 = v_u_111
+		local v189 = math.floor(v188)
+		local v190 = math.max(0, v189)
+		local v191 = v190 // 3600
+		local v192 = v190 % 3600 // 60
+		local v193 = v190 % 60
+		local v194
+		if v191 > 0 then
+			v194 = string.format("%d:%02d:%02d", v191, v192, v193)
+		else
+			v194 = string.format("%d:%02d", v192, v193)
+		end
+		v186 = v187 .. v194
+	elseif v_u_112 > 0 then
+		local v195 = "Portal Ignition Unlocks In:\n"
+		local v196 = v_u_112
+		local v197 = math.floor(v196)
+		local v198 = math.max(0, v197)
+		local v199 = v198 // 3600
+		local v200 = v198 % 3600 // 60
+		local v201 = v198 % 60
+		local v202
+		if v199 > 0 then
+			v202 = string.format("%d:%02d:%02d", v199, v200, v201)
+		else
+			v202 = string.format("%d:%02d", v200, v201)
+		end
+		v186 = v195 .. v202
+	else
+		v186 = "READY FOR IGNITION"
+	end
+	v185(v186)
+end
+local function v_u_207() -- name: FindParticipateLabel
+	-- upvalues: (ref) v_u_114, (ref) v_u_72
+	if v_u_114 and v_u_114.Parent then
+		return v_u_114
+	end
+	if not v_u_72 then
+		return nil
+	end
+	local v204 = v_u_72:FindFirstChild("Title")
+	if v204 and v204:IsA("TextLabel") then
+		v_u_114 = v204
+		return v_u_114
+	end
+	for _, v205 in ipairs(v_u_72:GetChildren()) do
+		if v205:IsA("TextLabel") then
+			v_u_114 = v205
+			return v_u_114
+		end
+	end
+	for _, v206 in ipairs(v_u_72:GetDescendants()) do
+		if v206:IsA("TextLabel") then
+			v_u_114 = v206
+			return v_u_114
+		end
+	end
+	if not (v_u_72:IsA("TextLabel") or v_u_72:IsA("TextButton")) then
+		return nil
+	end
+	v_u_114 = v_u_72
+	return v_u_114
+end
+local function v_u_215() -- name: CaptureParticipateOriginals
+	-- upvalues: (ref) v_u_118, (ref) v_u_72, (ref) v_u_116, (ref) v_u_117, (copy) v_u_113, (copy) v_u_207, (ref) v_u_115
+	if not v_u_118 and v_u_72 then
+		v_u_118 = true
+		v_u_116 = v_u_72.Active
+		local v208, v209 = pcall(function()
+			-- upvalues: (ref) v_u_72
+			return v_u_72.AutoButtonColor
+		end)
+		if v208 then
+			v_u_117 = v209
+		end
+		local function v212(p210) -- name: snapInst
+			-- upvalues: (ref) v_u_113
+			if not v_u_113[p210] then
+				local v211 = {}
+				if p210:IsA("ImageButton") or p210:IsA("ImageLabel") then
+					v211.ImageColor3 = p210.ImageColor3
+				end
+				if p210:IsA("GuiButton") or p210:IsA("Frame") then
+					v211.BackgroundColor3 = p210.BackgroundColor3
+				end
+				if p210:IsA("TextLabel") or p210:IsA("TextButton") then
+					v211.TextColor3 = p210.TextColor3
+				end
+				if p210:IsA("UIGradient") then
+					v211.GradientColor = p210.Color
+				end
+				if p210:IsA("UIStroke") then
+					v211.StrokeColor = p210.Color
+				end
+				v_u_113[p210] = v211
+			end
+		end
+		v212(v_u_72)
+		for _, v213 in ipairs(v_u_72:GetDescendants()) do
+			v212(v213)
+		end
+		local v214 = v_u_207()
+		if v214 then
+			v_u_115 = v214.Text
+		end
+	end
+end
+local function v_u_217(p216) -- name: DarkenColor
+	return Color3.new(p216.R * 0.4, p216.G * 0.4, p216.B * 0.4)
+end
+local function v_u_225(p218) -- name: DarkenColorSequence
+	-- upvalues: (copy) v_u_217
+	local v219 = {}
+	for _, v220 in ipairs(p218.Keypoints) do
+		local v221 = ColorSequenceKeypoint.new
+		local v222 = v220.Time
+		local v223 = v_u_217
+		local v224 = v220.Value
+		table.insert(v219, v221(v222, v223(v224)))
+	end
+	return ColorSequence.new(v219)
+end
+local function v_u_231() -- name: ApplyParticipateDarkened
+	-- upvalues: (ref) v_u_72, (copy) v_u_113, (copy) v_u_225
+	if v_u_72 then
+		for v226, v227 in v_u_113 do
+			if v226.Parent then
+				if v227.ImageColor3 then
+					local v228 = v227.ImageColor3
+					v226.ImageColor3 = Color3.new(v228.R * 0.4, v228.G * 0.4, v228.B * 0.4)
+				end
+				if v227.BackgroundColor3 then
+					local v229 = v227.BackgroundColor3
+					v226.BackgroundColor3 = Color3.new(v229.R * 0.4, v229.G * 0.4, v229.B * 0.4)
+				end
+				if v227.GradientColor then
+					v226.Color = v_u_225(v227.GradientColor)
+				end
+				if v227.StrokeColor then
+					local v230 = v227.StrokeColor
+					v226.Color = Color3.new(v230.R * 0.4, v230.G * 0.4, v230.B * 0.4)
+				end
+			end
+		end
+		pcall(function()
+			-- upvalues: (ref) v_u_72
+			v_u_72.AutoButtonColor = false
+		end)
+	end
+end
+local function v_u_234() -- name: RestoreParticipateOriginal
+	-- upvalues: (ref) v_u_72, (copy) v_u_113, (ref) v_u_116, (ref) v_u_117
+	if v_u_72 then
+		for v232, v233 in v_u_113 do
+			if v232.Parent then
+				if v233.ImageColor3 then
+					v232.ImageColor3 = v233.ImageColor3
+				end
+				if v233.BackgroundColor3 then
+					v232.BackgroundColor3 = v233.BackgroundColor3
+				end
+				if v233.TextColor3 then
+					v232.TextColor3 = v233.TextColor3
+				end
+				if v233.GradientColor then
+					v232.Color = v233.GradientColor
+				end
+				if v233.StrokeColor then
+					v232.Color = v233.StrokeColor
+				end
+			end
+		end
+		v_u_72.Active = v_u_116
+		if v_u_117 ~= nil then
+			pcall(function()
+				-- upvalues: (ref) v_u_72, (ref) v_u_117
+				v_u_72.AutoButtonColor = v_u_117
+			end)
+		end
+	end
+end
+local function v_u_268() -- name: UpdateParticipateButton
+	-- upvalues: (ref) v_u_66, (ref) v_u_72, (copy) v_u_215, (ref) v_u_108, (copy) v_u_207, (copy) v_u_231, (ref) v_u_119, (ref) v_u_110, (copy) v_u_234, (ref) v_u_109, (ref) v_u_111, (ref) v_u_112
+	if v_u_66 then
+		return
+	elseif v_u_72 then
+		v_u_215()
+		if v_u_108 > 0 then
+			local v235 = v_u_108
+			local v236 = math.floor(v235)
+			local v237 = math.max(0, v236)
+			local v238 = v237 // 3600
+			local v239 = v237 % 3600 // 60
+			local v240 = v237 % 60
+			local v241
+			if v238 > 0 then
+				v241 = string.format("Rejoin in %02d:%02d:%02d", v238, v239, v240)
+			else
+				v241 = string.format("Rejoin in %02d:%02d", v239, v240)
+			end
+			local v242 = v_u_207()
+			if v242 then
+				v242.Text = v241
+				local v243 = v242:FindFirstChild("TextShadow")
+				if v243 and v243:IsA("TextLabel") then
+					v243.Text = v241
+				end
+			end
+			v_u_231()
+			return
+		elseif v_u_119 and not v_u_119.IsBeeSlot then
+			local v244 = v_u_207()
+			if v244 then
+				v244.Text = "Switch to Honey Garden"
+				local v245 = v244:FindFirstChild("TextShadow")
+				if v245 and v245:IsA("TextLabel") then
+					v245.Text = "Switch to Honey Garden"
+				end
+			end
+			v_u_231()
+			return
+		elseif v_u_110 then
+			v_u_234()
+			local v246 = v_u_207()
+			if v246 then
+				v246.Text = "Enter Portal"
+				local v247 = v246:FindFirstChild("TextShadow")
+				if v247 and v247:IsA("TextLabel") then
+					v247.Text = "Enter Portal"
+				end
+			end
+		elseif v_u_109 then
+			local v248 = v_u_111
+			local v249 = math.floor(v248)
+			local v250 = math.max(0, v249)
+			local v251 = v250 // 3600
+			local v252 = v250 % 3600 // 60
+			local v253 = v250 % 60
+			local v254
+			if v251 > 0 then
+				v254 = string.format("Skip - Ignites in %d:%02d:%02d", v251, v252, v253)
+			else
+				v254 = string.format("Skip - Ignites in %d:%02d", v252, v253)
+			end
+			local v255 = v_u_207()
+			if v255 then
+				v255.Text = v254
+				local v256 = v255:FindFirstChild("TextShadow")
+				if v256 and v256:IsA("TextLabel") then
+					v256.Text = v254
+				end
+			end
+			v_u_234()
+			return
+		elseif v_u_112 > 0 then
+			local v257 = v_u_112
+			local v258 = math.floor(v257)
+			local v259 = math.max(0, v258)
+			local v260 = v259 // 3600
+			local v261 = v259 % 3600 // 60
+			local v262 = v259 % 60
+			local v263
+			if v260 > 0 then
+				v263 = string.format("Ignite in %02d:%02d:%02d", v260, v261, v262)
+			else
+				v263 = string.format("Ignite in %02d:%02d", v261, v262)
+			end
+			local v264 = v_u_207()
+			if v264 then
+				v264.Text = v263
+				local v265 = v264:FindFirstChild("TextShadow")
+				if v265 and v265:IsA("TextLabel") then
+					v265.Text = v263
+				end
+			end
+			v_u_231()
+			return
+		else
+			v_u_234()
+			local v266 = v_u_207()
+			if v266 then
+				v266.Text = "Ignite Portal"
+				local v267 = v266:FindFirstChild("TextShadow")
+				if v267 and v267:IsA("TextLabel") then
+					v267.Text = "Ignite Portal"
+				end
+			end
+		end
+	else
+		return
+	end
+end
+local function v_u_273() -- name: HasAnyLiveBee
+	-- upvalues: (copy) v_u_33, (copy) v_u_7
+	local v269 = ("Player_%*"):format(v_u_33.UserId)
+	local v270 = v_u_7.State.BeeStates[v269]
+	if not v270 then
+		return false
+	end
+	for _, v272 in v270 do
+		if v272 then
+			local v272 = v272.Server
+		end
+		if v272 and (v272.Health and (v272.Health > 0 and v272.WaspWaveSurvivalDead ~= true)) then
+			return true
+		end
+	end
+	return false
+end
+local function v_u_279() -- name: AllBeesDead
+	-- upvalues: (copy) v_u_33, (copy) v_u_7
+	local v274 = ("Player_%*"):format(v_u_33.UserId)
+	local v275 = v_u_7.State.BeeStates[v274]
+	if not v275 then
+		return false
+	end
+	local v276 = false
+	for _, v278 in v275 do
+		v276 = true
+		if v278 then
+			local v278 = v278.Server
+		end
+		if v278 and (v278.Health and (v278.Health > 0 and v278.WaspWaveSurvivalDead ~= true)) then
+			return false
+		end
+	end
+	return v276
+end
+local function v_u_283(p280) -- name: IsBeeAtFullHealth
+	-- upvalues: (copy) v_u_10, (copy) v_u_33
+	if p280 then
+		p280 = p280.Server
+	end
+	if not p280 then
+		return false
+	end
+	local v281 = v_u_10[p280.BeeName]
+	if not (v281 and v281.Stats) then
+		return false
+	end
+	local v282 = v281.Stats.MaxHealth
+	if p280.Player == ("Player_%*"):format(v_u_33.UserId) then
+		v282 = v282 + (v_u_33:GetAttribute("BeeHealthBonus") or 0)
+	end
+	return v282 <= (p280.Health or 0)
+end
+local v_u_284 = false
+local v_u_285 = false
+local function v_u_288() -- name: SetupParticipateHoverGrow
+	-- upvalues: (ref) v_u_285, (ref) v_u_72, (copy) v_u_3
+	if not v_u_285 and v_u_72 then
+		v_u_285 = true
+		local v_u_286 = v_u_72:FindFirstChild("ParticipateHoverScale")
+		if not v_u_286 then
+			v_u_286 = Instance.new("UIScale")
+			v_u_286.Name = "ParticipateHoverScale"
+			v_u_286.Scale = 1
+			v_u_286.Parent = v_u_72
+		end
+		local v_u_287 = TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+		v_u_72.MouseEnter:Connect(function()
+			-- upvalues: (ref) v_u_3, (ref) v_u_286, (copy) v_u_287
+			v_u_3:Create(v_u_286, v_u_287, {
+				["Scale"] = 1.06
+			}):Play()
+		end)
+		v_u_72.MouseLeave:Connect(function()
+			-- upvalues: (ref) v_u_3, (ref) v_u_286, (copy) v_u_287
+			v_u_3:Create(v_u_286, v_u_287, {
+				["Scale"] = 1
+			}):Play()
+		end)
+	end
+end
+local function v_u_293() -- name: FetchEventScheduleFromServer
+	-- upvalues: (copy) v_u_30, (copy) v_u_203, (ref) v_u_108, (copy) v_u_268
+	local v289, v290 = pcall(function()
+		-- upvalues: (ref) v_u_30
+		return v_u_30:InvokeServer()
+	end)
+	if not v289 or typeof(v290) ~= "table" then
+		return false
+	end
+	v_u_203(v290)
+	local v291 = v290.DefeatLockoutRemaining
+	local v292 = tonumber(v291)
+	if v292 then
+		v_u_108 = math.max(0, v292)
+	end
+	v_u_268()
+	return true
+end
+local function v_u_340() -- name: UpdateWaspWaveSurvivalUI
+	-- upvalues: (copy) v_u_33, (copy) v_u_35, (copy) v_u_51, (copy) v_u_37, (ref) v_u_99, (copy) v_u_36, (copy) v_u_52, (copy) v_u_17, (copy) v_u_53, (copy) v_u_38, (ref) v_u_81, (ref) v_u_102, (ref) v_u_103, (ref) v_u_98, (ref) v_u_105, (ref) v_u_104
+	local v294 = v_u_33:GetAttribute("InWaspWaveSurvival") == true
+	v_u_35.Enabled = v294
+	if v294 then
+		local v295 = v_u_35:FindFirstChild("RunProgress")
+		if v_u_81 == nil then
+			if v295 and (v295:IsA("GuiObject") and not v295.Visible) then
+				v295.Visible = true
+			end
+			local v296 = false
+			if v_u_102 == "Preparing" and v_u_103 > 0 then
+				local v297 = v_u_103 - workspace:GetServerTimeNow()
+				local v298 = math.ceil(v297)
+				local v299 = math.max(0, v298)
+				if v299 > 0 then
+					v296 = true
+					local v300 = v_u_36
+					local v301 = ("Starting in %*..."):format(v299)
+					if v300 then
+						v300.Text = v301
+						local v302 = v300:FindFirstChild("TextShadow")
+						if v302 and v302:IsA("TextLabel") then
+							v302.Text = v301
+						end
+					end
+				else
+					local v303 = v_u_36
+					local v304 = v_u_98
+					local v305 = ("Wave %*"):format((math.max(1, v304)))
+					if v303 then
+						v303.Text = v305
+						local v306 = v303:FindFirstChild("TextShadow")
+						if v306 and v306:IsA("TextLabel") then
+							v306.Text = v305
+						end
+					end
+				end
+			else
+				local v307 = v_u_36
+				local v308 = v_u_98
+				local v309 = ("Wave %*"):format((math.max(1, v308)))
+				if v307 then
+					v307.Text = v309
+					local v310 = v307:FindFirstChild("TextShadow")
+					if v310 and v310:IsA("TextLabel") then
+						v310.Text = v309
+					end
+				end
+			end
+			v_u_51.Visible = not v296
+			local v311 = v_u_99 - v_u_98
+			local v312 = math.max(0, v311)
+			local v313 = v_u_37
+			local v314 = math.floor(v312)
+			local v315 = math.max(0, v314)
+			local v316 = ("%* %* Remaining"):format(v315, v315 == 1 and "Wave" or "Waves")
+			if v313 then
+				v313.Text = v316
+				local v317 = v313:FindFirstChild("TextShadow")
+				if v317 and v317:IsA("TextLabel") then
+					v317.Text = v316
+				end
+			end
+			local v318
+			if v_u_99 > 0 then
+				local v319 = v_u_98 / v_u_99
+				v318 = math.clamp(v319, 0, 1)
+			else
+				v318 = 0
+			end
+			v_u_17.target(v_u_38, 1, 3, {
+				["Size"] = UDim2.fromScale(v318, 1)
+			})
+			local v320 = v_u_99 <= 0 and 1 or v312 / v_u_99
+			local v321 = math.clamp(v320, 0, 1) * 0.3333333333333333
+			v_u_38.BackgroundColor3 = Color3.fromHSV(v321, 0.95, 0.82)
+			local v322 = v_u_105
+			local v323 = math.max(0, v322)
+			local v324 = v_u_104
+			local v325 = math.clamp(v324, 0, v323)
+			local v326 = v_u_52
+			local v327 = ("%*/%* Wasps Left"):format(v325, v323)
+			if v326 then
+				v326.Text = v327
+				local v328 = v326:FindFirstChild("TextShadow")
+				if v328 and v328:IsA("TextLabel") then
+					v328.Text = v327
+				end
+			end
+			local v329 = v323 <= 0 and 0 or v325 / v323
+			v_u_17.target(v_u_53, 1, 3, {
+				["Size"] = UDim2.fromScale(v329, v_u_53.Size.Y.Scale)
+			})
+		else
+			v_u_51.Visible = false
+			if v295 and v295:IsA("GuiObject") then
+				v295.Visible = false
+			end
+		end
+	else
+		v_u_51.Visible = false
+		local v330 = v_u_37
+		local v331 = v_u_99
+		local v332 = math.floor(v331)
+		local v333 = math.max(0, v332)
+		local v334 = ("%* %* Remaining"):format(v333, v333 == 1 and "Wave" or "Waves")
+		if v330 then
+			v330.Text = v334
+			local v335 = v330:FindFirstChild("TextShadow")
+			if v335 and v335:IsA("TextLabel") then
+				v335.Text = v334
+			end
+		end
+		local v336 = v_u_36
+		if v336 then
+			v336.Text = "Wave 0"
+			local v337 = v336:FindFirstChild("TextShadow")
+			if v337 and v337:IsA("TextLabel") then
+				v337.Text = "Wave 0"
+			end
+		end
+		local v338 = v_u_52
+		if v338 then
+			v338.Text = "0/0 Wasps Left"
+			local v339 = v338:FindFirstChild("TextShadow")
+			if v339 and v339:IsA("TextLabel") then
+				v339.Text = "0/0 Wasps Left"
+			end
+		end
+		v_u_17.target(v_u_53, 1, 3, {
+			["Size"] = UDim2.fromScale(0, v_u_53.Size.Y.Scale)
+		})
+		v_u_17.target(v_u_38, 1, 3, {
+			["Size"] = UDim2.fromScale(0, 1)
+		})
+		return
+	end
+end
+local function v_u_364() -- name: UpdateStatsDisplay
+	-- upvalues: (ref) v_u_97, (ref) v_u_95, (ref) v_u_98, (ref) v_u_99, (ref) v_u_96, (ref) v_u_100, (ref) v_u_94, (ref) v_u_101
+	if v_u_97 then
+		local v341 = v_u_95
+		local v342 = string.format("%d/%d", v_u_98, v_u_99)
+		if v341 then
+			v341.Text = v342
+			local v343 = v341:FindFirstChild("TextShadow")
+			if v343 and v343:IsA("TextLabel") then
+				v343.Text = v342
+			end
+		end
+		local v344 = v_u_96
+		local v345 = v_u_100
+		local v346 = tostring(v345)
+		if v344 then
+			v344.Text = v346
+			local v347 = v344:FindFirstChild("TextShadow")
+			if v347 and v347:IsA("TextLabel") then
+				v347.Text = v346
+			end
+		end
+		local v348 = v_u_94
+		local v349 = not v_u_97 and 0 or (v_u_101 <= 0 and 0 or workspace:GetServerTimeNow() - v_u_101)
+		local v350 = math.floor(v349)
+		local v351 = math.max(0, v350)
+		local v352 = v351 // 3600
+		local v353 = v351 % 3600 // 60
+		local v354 = v351 % 60
+		local v355
+		if v352 > 0 then
+			v355 = string.format("%02d:%02d:%02d", v352, v353, v354)
+		else
+			v355 = string.format("%02d:%02d", v353, v354)
+		end
+		if not v348 then
+			return
+		end
+		v348.Text = v355
+		local v356 = v348:FindFirstChild("TextShadow")
+		if v356 and v356:IsA("TextLabel") then
+			v356.Text = v355
+			return
+		end
+	else
+		local v357 = v_u_95
+		local v358 = string.format("0/%d", v_u_99)
+		if v357 then
+			v357.Text = v358
+			local v359 = v357:FindFirstChild("TextShadow")
+			if v359 and v359:IsA("TextLabel") then
+				v359.Text = v358
+			end
+		end
+		local v360 = v_u_96
+		if v360 then
+			v360.Text = "0"
+			local v361 = v360:FindFirstChild("TextShadow")
+			if v361 and v361:IsA("TextLabel") then
+				v361.Text = "0"
+			end
+		end
+		local v362 = v_u_94
+		if not v362 then
+			return
+		end
+		v362.Text = "00:00"
+		local v363 = v362:FindFirstChild("TextShadow")
+		if v363 and v363:IsA("TextLabel") then
+			v363.Text = "00:00"
+		end
+	end
+end
+local function v_u_366(p365) -- name: ApplyRunStateSnapshot
+	-- upvalues: (ref) v_u_99, (ref) v_u_97, (ref) v_u_98, (ref) v_u_100, (ref) v_u_101, (ref) v_u_102, (ref) v_u_103, (ref) v_u_104, (ref) v_u_105, (copy) v_u_364, (copy) v_u_340
+	if p365 then
+		if p365.MaxWaves then
+			v_u_99 = p365.MaxWaves
+		end
+		if p365.Active then
+			v_u_97 = true
+			v_u_98 = p365.Wave or 0
+			v_u_100 = p365.TotalKilled or 0
+			v_u_101 = p365.StartedAt or 0
+			v_u_102 = p365.Phase or v_u_102
+			v_u_103 = p365.StartsAt or 0
+			v_u_104 = p365.ActiveWasps or 0
+			v_u_105 = p365.MaxWasps or 0
+		else
+			v_u_97 = false
+			v_u_98 = 0
+			v_u_100 = 0
+			v_u_101 = 0
+			v_u_102 = nil
+			v_u_103 = 0
+			v_u_104 = 0
+			v_u_105 = 0
+		end
+		v_u_364()
+		v_u_340()
+	end
+end
+local function v_u_367() -- name: CloseParticipation
+	-- upvalues: (ref) v_u_69
+	if v_u_69 then
+		v_u_69.Visible = false
+	end
+end
+local function v_u_370() -- name: OpenParticipation
+	-- upvalues: (ref) v_u_66, (copy) v_u_14, (ref) v_u_69, (ref) v_u_68, (copy) v_u_268
+	if v_u_66 then
+		local v368 = warn
+		local v369 = v_u_14:GetConfig("WaspWaveSurvival_EndsAtUnix")
+		v368("[WaspWaveSurvival] OpenParticipation no-op: Locked = true (endsAt=", tonumber(v369) or 0, "now=", os.time(), ")")
+		return
+	elseif v_u_69 then
+		if v_u_68 then
+			v_u_68.Enabled = true
+		end
+		v_u_69.Visible = true
+		v_u_268()
+	else
+		warn("[WaspWaveSurvival] OpenParticipation no-op: Participation = nil")
+	end
+end
+local function v_u_391() -- name: LockUI
+	-- upvalues: (ref) v_u_66, (ref) v_u_70, (ref) v_u_71, (copy) v_u_174, (ref) v_u_110, (ref) v_u_109, (ref) v_u_111, (ref) v_u_112, (ref) v_u_72, (copy) v_u_32
+	if not v_u_66 then
+		v_u_66 = true
+		if v_u_70 then
+			v_u_70.Text = "Event Ended!"
+		end
+		if v_u_71 then
+			v_u_71.Text = "Event Ended!"
+		end
+		local v371 = v_u_174
+		local v372
+		if v_u_66 then
+			v372 = "EVENT ENDED"
+		elseif v_u_110 then
+			v372 = "READY"
+		elseif v_u_109 then
+			local v373 = "Portal Opens In:\n"
+			local v374 = v_u_111
+			local v375 = math.floor(v374)
+			local v376 = math.max(0, v375)
+			local v377 = v376 // 3600
+			local v378 = v376 % 3600 // 60
+			local v379 = v376 % 60
+			local v380
+			if v377 > 0 then
+				v380 = string.format("%d:%02d:%02d", v377, v378, v379)
+			else
+				v380 = string.format("%d:%02d", v378, v379)
+			end
+			v372 = v373 .. v380
+		elseif v_u_112 > 0 then
+			local v381 = "Portal Ignition Unlocks In:\n"
+			local v382 = v_u_112
+			local v383 = math.floor(v382)
+			local v384 = math.max(0, v383)
+			local v385 = v384 // 3600
+			local v386 = v384 % 3600 // 60
+			local v387 = v384 % 60
+			local v388
+			if v385 > 0 then
+				v388 = string.format("%d:%02d:%02d", v385, v386, v387)
+			else
+				v388 = string.format("%d:%02d", v386, v387)
+			end
+			v372 = v381 .. v388
+		else
+			v372 = "READY FOR IGNITION"
+		end
+		v371(v372)
+		if v_u_72 then
+			if v_u_72:IsA("GuiButton") then
+				v_u_72.AutoButtonColor = false
+			end
+			v_u_72.Active = false
+		end
+		for v389 in v_u_32.States do
+			local v390 = v389:FindFirstChildOfClass("ProximityPrompt")
+			if v390 then
+				v390.Enabled = false
+			end
+		end
+	end
+end
+local function v_u_478() -- name: TryStart
+	-- upvalues: (ref) v_u_66, (ref) v_u_67, (copy) v_u_27, (ref) v_u_120, (copy) v_u_25, (copy) v_u_11, (ref) v_u_109, (ref) v_u_110, (ref) v_u_45, (ref) v_u_111, (copy) v_u_178, (copy) v_u_174, (ref) v_u_112, (copy) v_u_60, (copy) v_u_35, (ref) v_u_69, (ref) v_u_106, (ref) v_u_107, (copy) v_u_268, (copy) v_u_12, (ref) v_u_108, (copy) v_u_391
+	if v_u_66 or v_u_67 then
+		return
+	else
+		v_u_67 = true
+		local v392, v393 = pcall(function()
+			-- upvalues: (ref) v_u_27
+			return v_u_27:InvokeServer()
+		end)
+		v_u_67 = false
+		if v392 then
+			if typeof(v393) == "table" then
+				if v393.Success then
+					v_u_109 = false
+					v_u_110 = false
+					v_u_45 = false
+					v_u_111 = 0
+					v_u_178()
+					local v394 = v_u_174
+					local v395
+					if v_u_66 then
+						v395 = "EVENT ENDED"
+					elseif v_u_110 then
+						v395 = "READY"
+					elseif v_u_109 then
+						local v396 = "Portal Opens In:\n"
+						local v397 = v_u_111
+						local v398 = math.floor(v397)
+						local v399 = math.max(0, v398)
+						local v400 = v399 // 3600
+						local v401 = v399 % 3600 // 60
+						local v402 = v399 % 60
+						local v403
+						if v400 > 0 then
+							v403 = string.format("%d:%02d:%02d", v400, v401, v402)
+						else
+							v403 = string.format("%d:%02d", v401, v402)
+						end
+						v395 = v396 .. v403
+					elseif v_u_112 > 0 then
+						local v404 = "Portal Ignition Unlocks In:\n"
+						local v405 = v_u_112
+						local v406 = math.floor(v405)
+						local v407 = math.max(0, v406)
+						local v408 = v407 // 3600
+						local v409 = v407 % 3600 // 60
+						local v410 = v407 % 60
+						local v411
+						if v408 > 0 then
+							v411 = string.format("%d:%02d:%02d", v408, v409, v410)
+						else
+							v411 = string.format("%d:%02d", v409, v410)
+						end
+						v395 = v404 .. v411
+					else
+						v395 = "READY FOR IGNITION"
+					end
+					v394(v395)
+					v_u_60(true)
+					v_u_35.Enabled = true
+					if v_u_69 then
+						v_u_69.Visible = false
+					end
+					return
+				else
+					if v_u_120 ~= nil then
+						v_u_25:SetSetting("BeeColonyFollowPlayer", v_u_120)
+						v_u_120 = nil
+					end
+					if v393.Code == "Unavailable" then
+						v_u_106 = false
+						local v412 = v393.AvailableIn
+						local v413 = tonumber(v412)
+						if v413 then
+							v_u_107 = math.max(0, v413)
+						end
+						v_u_268()
+						v_u_11:CreateNotification((("Wasp Wave Survival opens in %*."):format((v_u_12:GenerateColonFormatFromTime(v393.AvailableIn)))))
+						return
+					elseif v393.Code == "DefeatedLockout" then
+						local v414 = v393.LockoutRemaining
+						local v415 = tonumber(v414)
+						if v415 then
+							v_u_108 = math.max(0, v415)
+						end
+						v_u_268()
+						v_u_11:CreateNotification((("You were defeated. You can rejoin when Wasp Wave Survival reopens in %*."):format((v_u_12:GenerateColonFormatFromTime(v_u_108)))))
+						return
+					elseif v393.Code == "PortalIgnited" then
+						v_u_109 = true
+						v_u_110 = false
+						v_u_45 = false
+						local v416 = v393.WarmupRemaining
+						local v417 = tonumber(v416) or 0
+						v_u_111 = math.max(0, v417)
+						v_u_112 = 0
+						v_u_268()
+						v_u_178()
+						local v418 = v_u_174
+						local v419
+						if v_u_66 then
+							v419 = "EVENT ENDED"
+						elseif v_u_110 then
+							v419 = "READY"
+						elseif v_u_109 then
+							local v420 = "Portal Opens In:\n"
+							local v421 = v_u_111
+							local v422 = math.floor(v421)
+							local v423 = math.max(0, v422)
+							local v424 = v423 // 3600
+							local v425 = v423 % 3600 // 60
+							local v426 = v423 % 60
+							local v427
+							if v424 > 0 then
+								v427 = string.format("%d:%02d:%02d", v424, v425, v426)
+							else
+								v427 = string.format("%d:%02d", v425, v426)
+							end
+							v419 = v420 .. v427
+						elseif v_u_112 > 0 then
+							local v428 = "Portal Ignition Unlocks In:\n"
+							local v429 = v_u_112
+							local v430 = math.floor(v429)
+							local v431 = math.max(0, v430)
+							local v432 = v431 // 3600
+							local v433 = v431 % 3600 // 60
+							local v434 = v431 % 60
+							local v435
+							if v432 > 0 then
+								v435 = string.format("%d:%02d:%02d", v432, v433, v434)
+							else
+								v435 = string.format("%d:%02d", v433, v434)
+							end
+							v419 = v428 .. v435
+						else
+							v419 = "READY FOR IGNITION"
+						end
+						v418(v419)
+						v_u_11:CreateNotification((("Portal ignited. Come back in %* to enter."):format((v_u_12:GenerateColonFormatFromTime(v_u_111)))))
+						return
+					elseif v393.Code == "PortalWarmingUp" then
+						v_u_109 = true
+						v_u_110 = false
+						v_u_45 = false
+						local v436 = v393.WarmupRemaining
+						local v437 = tonumber(v436) or 0
+						v_u_111 = math.max(0, v437)
+						v_u_268()
+						v_u_178()
+						local v438 = v_u_174
+						local v439
+						if v_u_66 then
+							v439 = "EVENT ENDED"
+						elseif v_u_110 then
+							v439 = "READY"
+						elseif v_u_109 then
+							local v440 = "Portal Opens In:\n"
+							local v441 = v_u_111
+							local v442 = math.floor(v441)
+							local v443 = math.max(0, v442)
+							local v444 = v443 // 3600
+							local v445 = v443 % 3600 // 60
+							local v446 = v443 % 60
+							local v447
+							if v444 > 0 then
+								v447 = string.format("%d:%02d:%02d", v444, v445, v446)
+							else
+								v447 = string.format("%d:%02d", v445, v446)
+							end
+							v439 = v440 .. v447
+						elseif v_u_112 > 0 then
+							local v448 = "Portal Ignition Unlocks In:\n"
+							local v449 = v_u_112
+							local v450 = math.floor(v449)
+							local v451 = math.max(0, v450)
+							local v452 = v451 // 3600
+							local v453 = v451 % 3600 // 60
+							local v454 = v451 % 60
+							local v455
+							if v452 > 0 then
+								v455 = string.format("%d:%02d:%02d", v452, v453, v454)
+							else
+								v455 = string.format("%d:%02d", v453, v454)
+							end
+							v439 = v448 .. v455
+						else
+							v439 = "READY FOR IGNITION"
+						end
+						v438(v439)
+						v_u_11:CreateNotification((("The portal is warming up. Come back in %*."):format((v_u_12:GenerateColonFormatFromTime(v_u_111)))))
+						return
+					elseif v393.Code == "PortalIgniteCooldown" then
+						v_u_109 = false
+						v_u_110 = false
+						v_u_45 = false
+						v_u_111 = 0
+						local v456 = v393.IgniteCooldownRemaining
+						local v457 = tonumber(v456) or 0
+						v_u_112 = math.max(0, v457)
+						v_u_268()
+						v_u_178()
+						local v458 = v_u_174
+						local v459
+						if v_u_66 then
+							v459 = "EVENT ENDED"
+						elseif v_u_110 then
+							v459 = "READY"
+						elseif v_u_109 then
+							local v460 = "Portal Opens In:\n"
+							local v461 = v_u_111
+							local v462 = math.floor(v461)
+							local v463 = math.max(0, v462)
+							local v464 = v463 // 3600
+							local v465 = v463 % 3600 // 60
+							local v466 = v463 % 60
+							local v467
+							if v464 > 0 then
+								v467 = string.format("%d:%02d:%02d", v464, v465, v466)
+							else
+								v467 = string.format("%d:%02d", v465, v466)
+							end
+							v459 = v460 .. v467
+						elseif v_u_112 > 0 then
+							local v468 = "Portal Ignition Unlocks In:\n"
+							local v469 = v_u_112
+							local v470 = math.floor(v469)
+							local v471 = math.max(0, v470)
+							local v472 = v471 // 3600
+							local v473 = v471 % 3600 // 60
+							local v474 = v471 % 60
+							local v475
+							if v472 > 0 then
+								v475 = string.format("%d:%02d:%02d", v472, v473, v474)
+							else
+								v475 = string.format("%d:%02d", v473, v474)
+							end
+							v459 = v468 .. v475
+						else
+							v459 = "READY FOR IGNITION"
+						end
+						v458(v459)
+						v_u_11:CreateNotification((("You can ignite the portal again in %*."):format((v_u_12:GenerateColonFormatFromTime(v_u_112)))))
+						return
+					elseif v393.Code == "NotBeeFarmSlot" then
+						v_u_11:CreateNotification("You need to be on your Bee Farm Slot to start Wasp Wave Survival.")
+					elseif v393.Code == "AlreadyInRun" then
+						v_u_11:CreateNotification("You are already in Wasp Wave Survival.")
+						if v_u_69 then
+							v_u_69.Visible = false
+							return
+						end
+					elseif v393.Code == "EventEnded" then
+						v_u_11:CreateNotification("Wasp Wave Survival has ended.")
+						v_u_391()
+						if v_u_69 then
+							v_u_69.Visible = false
+							return
+						end
+					else
+						warn("Wasp Wave Survival failed:", v393.Code, v393)
+						local v476 = v_u_11
+						local v477 = v393.Code
+						v476:CreateNotification((("Could not start Wasp Wave Survival. Reason: %*"):format((tostring(v477)))))
+					end
+				end
+			else
+				if v_u_120 ~= nil then
+					v_u_25:SetSetting("BeeColonyFollowPlayer", v_u_120)
+					v_u_120 = nil
+				end
+				warn("Wasp Wave Survival RequestStart returned non-table result; server may be initializing")
+				v_u_11:CreateNotification("Wasp Wave Survival isn\'t ready yet. Try again in a moment.")
+				return
+			end
+		else
+			if v_u_120 ~= nil then
+				v_u_25:SetSetting("BeeColonyFollowPlayer", v_u_120)
+				v_u_120 = nil
+			end
+			warn("Wasp Wave Survival RequestStart errored:", v393)
+			return
+		end
+	end
+end
+local function v_u_492() -- name: OnParticipateClicked
+	-- upvalues: (ref) v_u_66, (ref) v_u_108, (ref) v_u_284, (ref) v_u_72, (copy) v_u_3, (copy) v_u_11, (copy) v_u_12, (ref) v_u_119, (copy) v_u_24, (copy) v_u_23, (ref) v_u_109, (ref) v_u_110, (copy) v_u_21, (copy) v_u_33, (copy) v_u_22, (ref) v_u_112, (copy) v_u_478, (copy) v_u_7, (copy) v_u_283, (ref) v_u_86, (copy) v_u_8, (ref) v_u_120, (copy) v_u_25
+	if v_u_66 then
+		return
+	end
+	if v_u_108 > 0 then
+		if not v_u_284 and (v_u_72 and v_u_72.Parent) then
+			v_u_284 = true
+			local v_u_479 = v_u_72.Rotation
+			task.spawn(function()
+				-- upvalues: (ref) v_u_3, (ref) v_u_72, (copy) v_u_479, (ref) v_u_284
+				for _, v480 in ipairs({
+					7,
+					-7,
+					7,
+					-7,
+					3.5,
+					-3.5,
+					0
+				}) do
+					v_u_3:Create(v_u_72, TweenInfo.new(0.04, Enum.EasingStyle.Linear), {
+						["Rotation"] = v_u_479 + v480
+					}):Play()
+					task.wait(0.04)
+				end
+				v_u_72.Rotation = v_u_479
+				v_u_284 = false
+			end)
+		end
+		v_u_11:CreateNotification((("You were defeated. You can rejoin when Wasp Wave Survival reopens in %*."):format((v_u_12:GenerateColonFormatFromTime(v_u_108)))))
+		return
+	end
+	if v_u_119 and v_u_119.IsBeeSlot then
+		if v_u_109 and not v_u_110 then
+			pcall(function()
+				-- upvalues: (ref) v_u_21, (ref) v_u_33, (ref) v_u_22
+				v_u_21:PromptProductPurchase(v_u_33, v_u_22)
+			end)
+			return
+		end
+		if v_u_112 > 0 and not v_u_110 then
+			if not v_u_284 and (v_u_72 and v_u_72.Parent) then
+				v_u_284 = true
+				local v_u_481 = v_u_72.Rotation
+				task.spawn(function()
+					-- upvalues: (ref) v_u_3, (ref) v_u_72, (copy) v_u_481, (ref) v_u_284
+					for _, v482 in ipairs({
+						7,
+						-7,
+						7,
+						-7,
+						3.5,
+						-3.5,
+						0
+					}) do
+						v_u_3:Create(v_u_72, TweenInfo.new(0.04, Enum.EasingStyle.Linear), {
+							["Rotation"] = v_u_481 + v482
+						}):Play()
+						task.wait(0.04)
+					end
+					v_u_72.Rotation = v_u_481
+					v_u_284 = false
+				end)
+			end
+			v_u_11:CreateNotification((("You can ignite the portal again in %*."):format((v_u_12:GenerateColonFormatFromTime(v_u_112)))))
+			return
+		end
+		if not v_u_110 then
+			v_u_478()
+			return
+		end
+		local v483 = ("Player_%*"):format(v_u_33.UserId)
+		local v484 = v_u_7.State.BeeStates[v483]
+		local v485
+		if v484 then
+			for _, v486 in v484 do
+				if not v_u_283(v486) then
+					v485 = true
+					goto l43
+				end
+			end
+			v485 = false
+			goto l43
+		else
+			v485 = false
+			::l43::
+			if v485 then
+				if not v_u_86 then
+					v_u_86 = true
+					v_u_8:Open({
+						["Title"] = "Bees Not at Full Health",
+						["Header"] = "Some of your bees aren\'t at full health.",
+						["Middle"] = "Are you sure you want to enter the dungeon?",
+						["Footer"] = "They may not survive the wasp waves."
+					}, {
+						["ConfirmCallback"] = function() -- name: ConfirmCallback
+							-- upvalues: (ref) v_u_86, (ref) v_u_120, (ref) v_u_25, (ref) v_u_478
+							v_u_86 = false
+							if v_u_120 == nil then
+								v_u_120 = v_u_25:GetSetting("BeeColonyFollowPlayer")
+							end
+							v_u_25:SetSetting("BeeColonyFollowPlayer", true)
+							v_u_478()
+						end,
+						["RejectCallback"] = function() -- name: RejectCallback
+							-- upvalues: (ref) v_u_86
+							v_u_86 = false
+						end
+					})
+				end
+			else
+				if v_u_120 == nil then
+					v_u_120 = v_u_25:GetSetting("BeeColonyFollowPlayer")
+				end
+				v_u_25:SetSetting("BeeColonyFollowPlayer", true)
+				v_u_478()
+				return
+			end
+		end
+	end
+	for v489, v488 in v_u_24.SpecialSlotEntries do
+		if v488.DataFlag == "IsBeeSlot" then
+			goto l16
+		end
+	end
+	local v489 = nil
+	::l16::
+	if v489 then
+		if v_u_23:IsSpecialSlotOptedIn(v489) then
+			v_u_23:ChangeSlots(v489)
+		else
+			v_u_23:OptInToSpecialSlot(v489)
+		end
+		v_u_11:CreateNotification("Switching to your Honey Garden...")
+	else
+		if not v_u_284 and (v_u_72 and v_u_72.Parent) then
+			v_u_284 = true
+			local v_u_490 = v_u_72.Rotation
+			task.spawn(function()
+				-- upvalues: (ref) v_u_3, (ref) v_u_72, (copy) v_u_490, (ref) v_u_284
+				for _, v491 in ipairs({
+					7,
+					-7,
+					7,
+					-7,
+					3.5,
+					-3.5,
+					0
+				}) do
+					v_u_3:Create(v_u_72, TweenInfo.new(0.04, Enum.EasingStyle.Linear), {
+						["Rotation"] = v_u_490 + v491
+					}):Play()
+					task.wait(0.04)
+				end
+				v_u_72.Rotation = v_u_490
+				v_u_284 = false
+			end)
+		end
+		v_u_11:CreateNotification("Switch to your Honey Garden. You need your bees to help you fight.")
+	end
+end
+local function v_u_508() -- name: BuildRewardPool
+	-- upvalues: (copy) v_u_16
+	local v493 = {}
+	local v494 = {}
+	local v495 = v_u_16.Rewards
+	if not v495 then
+		return v493
+	end
+	if v495.Guaranteed then
+		for _, v496 in v495.Guaranteed do
+			if v496.Rewards then
+				for _, v497 in v496.Rewards do
+					if v497 then
+						if v497.Type then
+							local v498 = v497.Type
+							local v499 = tostring(v498)
+							local v500 = v497.Value
+							local v501 = v499 .. "|" .. tostring(v500)
+							if not v494[v501] then
+								v494[v501] = true
+								table.insert(v493, v497)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	if v495.ChaseItems then
+		for _, v502 in v495.ChaseItems do
+			local v503 = v502.Reward
+			if v503 then
+				if v503.Type then
+					local v504 = v503.Type
+					local v505 = tostring(v504)
+					local v506 = v503.Value
+					local v507 = v505 .. "|" .. tostring(v506)
+					if not v494[v507] then
+						v494[v507] = true
+						table.insert(v493, v503)
+					end
+				end
+			end
+		end
+	end
+	return v493
+end
+local function v_u_514(p509, p_u_510) -- name: PaintSlot
+	-- upvalues: (copy) v_u_15
+	if p_u_510 then
+		local v511, v512 = pcall(function()
+			-- upvalues: (ref) v_u_15, (copy) p_u_510
+			return v_u_15:GetImage(p_u_510)
+		end)
+		p509.Image = v511 and v512 and v512 or ""
+		local v513 = p509.Parent
+		if v513 then
+			v513:SetAttribute("UUID", (("%*_%*"):format(p_u_510.Type, p_u_510.Value)))
+		end
+	else
+		p509.Image = ""
+		return
+	end
+end
+local function v_u_522(p515, p516, p517) -- name: TweenImageTransparency
+	-- upvalues: (copy) v_u_5
+	local v518 = p515.ImageTransparency
+	local v519 = 0
+	while v519 < p517 do
+		v519 = v519 + v_u_5.RenderStepped:Wait()
+		local v520 = v519 / p517
+		local v521 = math.min(v520, 1)
+		p515.ImageTransparency = v518 + (p516 - v518) * v521
+	end
+	p515.ImageTransparency = p516
+end
+local function v_u_525(p523, p524) -- name: AnimateSlotSwap
+	-- upvalues: (copy) v_u_522, (copy) v_u_514
+	v_u_522(p523, 1, 0.25)
+	v_u_514(p523, p524)
+	v_u_522(p523, 0, 0.25)
+end
+local function v_u_538() -- name: StartRewardRotator
+	-- upvalues: (copy) v_u_508, (ref) v_u_87, (copy) v_u_19, (copy) v_u_91, (copy) v_u_514, (copy) v_u_525
+	local v_u_526 = v_u_508()
+	v_u_87 = v_u_526
+	v_u_19:AddRewardTable(v_u_526)
+	local v_u_527 = #v_u_91
+	if v_u_527 == 0 then
+		return
+	elseif #v_u_526 == 0 then
+		for _, v528 in v_u_91 do
+			local v529 = v528.Parent
+			if v529 and v529:IsA("GuiObject") then
+				v529.Visible = false
+			end
+		end
+		return
+	else
+		local v530 = #v_u_526
+		local v531 = math.min(v_u_527, v530)
+		for v532 = 1, v_u_527 do
+			local v533 = v_u_91[v532].Parent
+			if v532 <= v531 then
+				if v533 and v533:IsA("GuiObject") then
+					v533.Visible = true
+				end
+				v_u_514(v_u_91[v532], v_u_526[v532])
+			elseif v533 and v533:IsA("GuiObject") then
+				v533.Visible = false
+			end
+		end
+		if #v_u_526 > v_u_527 then
+			task.spawn(function()
+				-- upvalues: (copy) v_u_526, (copy) v_u_527, (ref) v_u_91, (ref) v_u_525
+				local v534 = 0
+				while true do
+					task.wait(8)
+					v534 = (v534 + #v_u_526 - 1) % #v_u_526
+					for v535 = 1, v_u_527 do
+						local v536 = v_u_91[v535]
+						local v537 = v_u_526[(v534 + v535 - 1) % #v_u_526 + 1]
+						task.delay((v535 - 1) * 0.1, v_u_525, v536, v537)
+					end
+				end
+			end)
+		end
+	end
+end
+local function v_u_542(p539, p_u_540) -- name: ConnectClick
+	if p539:IsA("GuiButton") then
+		p539.Activated:Connect(p_u_540)
+	else
+		p539.InputBegan:Connect(function(p541)
+			-- upvalues: (copy) p_u_540
+			if p541.UserInputType == Enum.UserInputType.MouseButton1 or p541.UserInputType == Enum.UserInputType.Touch then
+				p_u_540()
+			end
+		end)
+	end
+end
+function v_u_32.Start() -- name: Start
+	-- upvalues: (copy) v_u_33, (copy) v_u_60, (copy) v_u_35, (copy) v_u_65, (copy) v_u_340, (ref) v_u_69, (copy) v_u_7, (copy) v_u_34, (ref) v_u_68, (ref) v_u_70, (ref) v_u_71, (ref) v_u_72, (ref) v_u_73, (ref) v_u_94, (ref) v_u_95, (ref) v_u_96, (copy) v_u_91, (copy) v_u_92, (copy) v_u_538, (ref) v_u_93, (copy) v_u_5, (copy) v_u_51, (ref) v_u_74, (copy) v_u_3, (copy) v_u_542, (ref) v_u_97, (ref) v_u_81, (copy) v_u_273, (ref) v_u_85, (copy) v_u_8, (copy) v_u_28, (ref) v_u_90, (ref) v_u_88, (ref) v_u_83, (copy) v_u_29, (ref) v_u_43, (ref) v_u_84, (copy) v_u_11, (ref) v_u_120, (copy) v_u_25, (ref) v_u_89, (ref) v_u_75, (ref) v_u_76, (ref) v_u_77, (copy) v_u_78, (ref) v_u_79, (ref) v_u_80, (ref) v_u_82, (ref) v_u_87, (copy) v_u_508, (copy) v_u_514, (copy) v_u_139, (copy) v_u_20, (copy) v_u_19, (copy) v_u_279, (ref) v_u_98, (copy) v_u_39, (copy) v_u_32, (copy) v_u_492, (copy) v_u_367, (copy) v_u_288, (copy) v_u_14, (copy) v_u_391, (copy) v_u_166, (copy) v_u_30, (copy) v_u_366, (copy) v_u_203, (ref) v_u_108, (copy) v_u_268, (copy) v_u_364, (ref) v_u_119, (copy) v_u_23, (copy) v_u_21, (copy) v_u_22, (ref) v_u_111, (ref) v_u_110, (ref) v_u_45, (copy) v_u_31, (ref) v_u_99, (ref) v_u_102, (ref) v_u_103, (ref) v_u_101, (ref) v_u_104, (ref) v_u_105, (copy) v_u_161, (copy) v_u_134, (ref) v_u_109, (ref) v_u_112, (copy) v_u_174, (ref) v_u_66, (copy) v_u_293, (copy) v_u_9, (copy) v_u_13, (copy) v_u_370, (copy) v_u_2, (copy) v_u_478
+	local v543 = v_u_33:GetAttribute("InWaspWaveSurvival") == true
+	v_u_33:SetAttribute("NormalMusicSuppressed", v543)
+	v_u_60(v543)
+	v_u_35.Enabled = v543
+	v_u_65(v543)
+	local v_u_544 = v_u_33:GetAttribute("InWaspWaveSurvival") == true
+	v_u_33:GetAttributeChangedSignal("InWaspWaveSurvival"):Connect(function()
+		-- upvalues: (ref) v_u_33, (ref) v_u_544, (ref) v_u_60, (ref) v_u_35, (ref) v_u_65, (ref) v_u_340, (ref) v_u_69, (ref) v_u_7
+		local v545 = v_u_33:GetAttribute("InWaspWaveSurvival") == true
+		local v546 = v_u_544
+		if v546 then
+			v546 = not v545
+		end
+		v_u_544 = v545
+		local v547 = v_u_33:GetAttribute("InWaspWaveSurvival") == true
+		v_u_33:SetAttribute("NormalMusicSuppressed", v547)
+		v_u_60(v547)
+		v_u_35.Enabled = v547
+		v_u_65(v547)
+		v_u_340()
+		if v545 then
+			if v_u_69 then
+				v_u_69.Visible = false
+				return
+			end
+		elseif v546 then
+			task.wait(0.5)
+			v_u_7:ForceReloadLocalPlayerBeeModels()
+		end
+	end)
+	local v548 = v_u_34:WaitForChild("BizzyBeeWaspDungeon_UI", 10)
+	if v548 then
+		v_u_68 = v548
+		v_u_69 = v548:WaitForChild("Participation")
+		local v549 = v_u_69:WaitForChild("Main")
+		v_u_70 = v549:WaitForChild("Timer")
+		v_u_71 = v_u_70:FindFirstChild("TextShadow")
+		v_u_72 = v_u_69:WaitForChild("ParticipateButton")
+		v_u_73 = v_u_69:WaitForChild("Header"):WaitForChild("Close")
+		local v550 = v549:FindFirstChild("EventDetails")
+		local v551
+		if v550 then
+			v551 = v550:FindFirstChild("InfoList")
+		else
+			v551 = v550
+		end
+		if v551 then
+			local v552 = v551:FindFirstChild("TimePassed")
+			if v552 then
+				v552 = v552:FindFirstChild("Title")
+			end
+			if not (v552 and (v552:IsA("TextLabel") and v552)) then
+				v552 = nil
+			end
+			v_u_94 = v552
+			local v553 = v551:FindFirstChild("Waves")
+			if v553 then
+				v553 = v553:FindFirstChild("Title")
+			end
+			if not (v553 and (v553:IsA("TextLabel") and v553)) then
+				v553 = nil
+			end
+			v_u_95 = v553
+			local v554 = v551:FindFirstChild("TotalKilled")
+			if v554 then
+				v554 = v554:FindFirstChild("Title")
+			end
+			if not (v554 and (v554:IsA("TextLabel") and v554)) then
+				v554 = nil
+			end
+			v_u_96 = v554
+		end
+		if v550 then
+			v550 = v550:FindFirstChild("Rewards")
+		end
+		if v550 then
+			for v555 = 1, 3 do
+				local v556 = v550:FindFirstChild("RewardTemplate" .. v555)
+				v556 = v556
+				local v557
+				if v556 then
+					v557 = v556:FindFirstChild("Reward")
+				else
+					v557 = v556
+				end
+				if v557 and v557:IsA("ImageLabel") then
+					local v558 = v_u_91
+					table.insert(v558, v557)
+				end
+				local v559 = v556
+				if v559 then
+					v559 = v556:FindFirstChild("Details")
+				end
+				if v559 then
+					v559 = v559:FindFirstChild("Sunrays")
+				end
+				if v559 and v559:IsA("ImageLabel") then
+					local v560 = v_u_92
+					table.insert(v560, v559)
+				end
+			end
+			v_u_538()
+		end
+		local v561 = v_u_69:FindFirstChild("Details")
+		if v561 then
+			v561 = v_u_69.Details:FindFirstChild("Characters")
+		end
+		local v562
+		if v561 then
+			v562 = v561:FindFirstChild("CharacterDetails")
+		else
+			v562 = v561
+		end
+		if v562 then
+			for _, v563 in { "Sunrays1", "Sunrays2" } do
+				local v564 = v562:FindFirstChild(v563)
+				if v564 and v564:IsA("ImageLabel") then
+					local v565 = v_u_92
+					table.insert(v565, v564)
+				end
+			end
+		end
+		if v561 then
+			v561 = v561:FindFirstChild("PrimarySubject")
+		end
+		if v561 and v561:IsA("ImageLabel") then
+			v_u_93 = v561
+		end
+		if #v_u_92 ~= 0 then
+			v_u_5.RenderStepped:Connect(function(p566)
+				-- upvalues: (ref) v_u_92
+				local v567 = 30 * p566
+				for _, v568 in v_u_92 do
+					v568.Rotation = (v568.Rotation + v567) % 360
+				end
+			end)
+		end
+		if v_u_93 then
+			local v_u_569 = 0
+			v_u_5.RenderStepped:Connect(function(p570)
+				-- upvalues: (ref) v_u_569, (ref) v_u_93
+				v_u_569 = v_u_569 + p570
+				local v571 = v_u_569 * 2 * 3.141592653589793 / 2
+				local v572 = math.sin(v571) * 0.04000000000000001 + 0.19
+				v_u_93.Position = UDim2.new(0.04, 0, v572, 0)
+			end)
+		end
+		local function v_u_573() end
+		local v574 = v_u_34:FindFirstChild("Top_Notification") or v_u_34:WaitForChild("Top_Notification", 5)
+		if v574 then
+			local v_u_575 = v574:FindFirstChild("Frame") or v574:WaitForChild("Frame", 5)
+			if v_u_575 and v_u_575:IsA("GuiObject") then
+				local v_u_576 = v_u_575.Position
+				local v_u_577 = UDim2.new(0.5, 0, 0.25, 0)
+				v_u_573 = function()
+					-- upvalues: (ref) v_u_51, (copy) v_u_575, (copy) v_u_577, (copy) v_u_576
+					if v_u_51.Visible then
+						v_u_575.Position = v_u_577
+					else
+						v_u_575.Position = v_u_576
+					end
+				end
+			end
+		end
+		local function v_u_585() -- name: fireAutoTrigger
+			-- upvalues: (ref) v_u_97, (ref) v_u_81, (ref) v_u_83, (ref) v_u_29, (ref) v_u_43, (ref) v_u_84, (ref) v_u_11, (ref) v_u_120, (ref) v_u_25, (ref) v_u_28
+			if v_u_97 and v_u_81 ~= nil then
+				if not v_u_83 then
+					v_u_29:FireServer()
+				end
+				local v578
+				if v_u_81 == "Victory" then
+					v578 = v_u_43
+				else
+					v578 = v_u_84
+				end
+				if v578 and #v578 > 0 then
+					local v579 = {}
+					for _, v580 in ipairs(v578) do
+						local v581 = v580.Quantity
+						local v582 = tonumber(v581) or 1
+						local v583 = v580.Value or (v580.Type or "Reward")
+						local v584 = tostring(v583)
+						if v582 > 1 then
+							v584 = ("%*x %*"):format(v582, v584)
+						end
+						table.insert(v579, v584)
+					end
+					v_u_11:CreateNotification((("Auto-claimed: %*"):format((table.concat(v579, ", ")))))
+				else
+					v_u_11:CreateNotification("Auto-claimed your rewards and left the dungeon!")
+				end
+				if v_u_120 ~= nil then
+					v_u_25:SetSetting("BeeColonyFollowPlayer", v_u_120)
+					v_u_120 = nil
+				end
+				v_u_28:FireServer()
+			end
+		end
+		local function v615() -- name: BuildConclusionPanel
+			-- upvalues: (ref) v_u_75, (ref) v_u_35, (ref) v_u_76, (ref) v_u_77, (ref) v_u_78, (ref) v_u_92, (ref) v_u_79, (ref) v_u_80, (ref) v_u_3, (ref) v_u_542, (ref) v_u_97, (ref) v_u_81, (ref) v_u_120, (ref) v_u_25, (ref) v_u_28, (ref) v_u_88, (ref) v_u_90, (ref) v_u_89, (ref) v_u_5, (copy) v_u_585
+			if v_u_75 then
+				return
+			else
+				local v_u_586 = v_u_35:FindFirstChild("WaspWaveConclusionPanel")
+				if v_u_586 and v_u_586:IsA("Frame") then
+					v_u_586.Visible = false
+					local v587 = v_u_586:FindFirstChild("Header")
+					if v587 and v587:IsA("TextLabel") then
+						v_u_76 = v587
+						local v588 = v587:FindFirstChild("TextShadow")
+						if v588 and v588:IsA("TextLabel") then
+							v_u_77 = v588
+						end
+					end
+					local v589 = v_u_586:FindFirstChild("RewardsRow")
+					if v589 then
+						for v590 = 1, 3 do
+							local v591 = v589:FindFirstChild("RewardBox" .. v590)
+							if v591 and v591:IsA("Frame") then
+								v591.Size = UDim2.new(0.3333333333333333, -8, 1, 0)
+								local v592 = v591:FindFirstChildOfClass("UIAspectRatioConstraint")
+								if v592 then
+									v592.AspectType = Enum.AspectType.ScaleWithParentSize
+								end
+								local v593 = v_u_78
+								table.insert(v593, v591)
+								local v594 = v_u_92
+								local v595 = v591.Details.Sunrays
+								table.insert(v594, v595)
+							end
+						end
+					end
+					local v596 = v_u_586:FindFirstChild("ClaimButton")
+					if v596 then
+						v_u_79 = v596
+						local v597 = v596:FindFirstChild("Title")
+						if v597 and v597:IsA("TextLabel") then
+							v_u_80 = v597
+						end
+						local v_u_598 = v596:FindFirstChild("ClaimHoverScale")
+						if v_u_598 and v_u_598:IsA("UIScale") then
+							local v_u_599 = TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+							v596.MouseEnter:Connect(function()
+								-- upvalues: (ref) v_u_3, (copy) v_u_598, (copy) v_u_599
+								v_u_3:Create(v_u_598, v_u_599, {
+									["Scale"] = 1.05
+								}):Play()
+							end)
+							v596.MouseLeave:Connect(function()
+								-- upvalues: (ref) v_u_3, (copy) v_u_598, (copy) v_u_599
+								v_u_3:Create(v_u_598, v_u_599, {
+									["Scale"] = 1
+								}):Play()
+							end)
+						end
+						v_u_542(v596.SENSOR, function()
+							-- upvalues: (ref) v_u_97, (ref) v_u_81, (ref) v_u_120, (ref) v_u_25, (ref) v_u_28
+							if v_u_97 then
+								if v_u_81 ~= nil then
+									if v_u_120 ~= nil then
+										v_u_25:SetSetting("BeeColonyFollowPlayer", v_u_120)
+										v_u_120 = nil
+									end
+									v_u_28:FireServer()
+								end
+							else
+								return
+							end
+						end)
+					end
+					local v_u_600 = v_u_586:FindFirstChild("EntryScale")
+					local v601 = v_u_586:FindFirstChild("AutoClaimTimer")
+					if not v601 then
+						v601 = Instance.new("TextLabel")
+						v601.Name = "AutoClaimTimer"
+						v601.AnchorPoint = Vector2.new(0.5, 0.5)
+						v601.Position = UDim2.new(0.5, 0, 0.7, 0)
+						v601.Size = UDim2.new(0.6, 0, 0.06, 0)
+						v601.BackgroundTransparency = 1
+						v601.Text = ""
+						v601.TextColor3 = Color3.fromRGB(255, 235, 130)
+						v601.TextScaled = true
+						v601.Font = Enum.Font.GothamBold
+						v601.Visible = false
+						local v602 = Instance.new("UIStroke")
+						v602.Thickness = 2
+						v602.Color = Color3.fromRGB(0, 0, 0)
+						v602.Parent = v601
+						v601.Parent = v_u_586
+					end
+					v_u_88 = v601
+					local function v603() -- name: bumpAutoClaim end
+					v_u_586.MouseEnter:Connect(v603)
+					v_u_586.MouseMoved:Connect(v603)
+					v_u_586.InputBegan:Connect(v603)
+					if v_u_79 then
+						v_u_79.MouseEnter:Connect(v603)
+						v_u_79.MouseMoved:Connect(v603)
+					end
+					if v_u_600 and v_u_600:IsA("UIScale") then
+						local v_u_604 = nil
+						v_u_586:GetPropertyChangedSignal("Visible"):Connect(function()
+							-- upvalues: (copy) v_u_586, (copy) v_u_600, (ref) v_u_604, (ref) v_u_3, (ref) v_u_88, (ref) v_u_90, (ref) v_u_89, (ref) v_u_5, (ref) v_u_585
+							if v_u_586.Visible then
+								v_u_600.Scale = 0.4
+								if v_u_604 then
+									v_u_604:Cancel()
+								end
+								v_u_604 = v_u_3:Create(v_u_600, TweenInfo.new(0.45, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+									["Scale"] = 1
+								})
+								v_u_604:Play()
+								local v_u_605 = v_u_586
+								v_u_88 = v_u_605:FindFirstChild("AutoClaimTimer") or v_u_88
+								if not v_u_90 then
+									v_u_89 = os.clock()
+									v_u_90 = v_u_5.Heartbeat:Connect(function()
+										-- upvalues: (copy) v_u_605, (ref) v_u_90, (ref) v_u_88, (ref) v_u_89, (ref) v_u_585
+										if v_u_605.Visible then
+											local v606 = os.clock() - v_u_89
+											if v606 >= 30 then
+												v_u_89 = os.clock()
+												if v_u_88 then
+													v_u_88.Visible = false
+												end
+												v_u_585()
+											elseif v_u_88 then
+												local v607 = 30 - v606
+												local v608 = math.ceil(v607)
+												local v609 = math.max(0, v608)
+												v_u_88.Text = string.format("Auto Claiming & Exiting Dungeon in %d %s", v609, v609 == 1 and "Second" or "Seconds")
+												v_u_88.Visible = true
+											end
+										else
+											if v_u_90 then
+												v_u_90:Disconnect()
+												v_u_90 = nil
+											end
+											if v_u_88 then
+												v_u_88.Visible = false
+											end
+											return
+										end
+									end)
+								end
+							else
+								if v_u_604 then
+									v_u_604:Cancel()
+								end
+								v_u_600.Scale = 0.4
+								if v_u_90 then
+									v_u_90:Disconnect()
+									v_u_90 = nil
+								end
+								if v_u_88 then
+									v_u_88.Visible = false
+								end
+								return
+							end
+						end)
+					else
+						v_u_586:GetPropertyChangedSignal("Visible"):Connect(function()
+							-- upvalues: (copy) v_u_586, (ref) v_u_88, (ref) v_u_90, (ref) v_u_89, (ref) v_u_5, (ref) v_u_585
+							if v_u_586.Visible then
+								local v_u_610 = v_u_586
+								v_u_88 = v_u_610:FindFirstChild("AutoClaimTimer") or v_u_88
+								if not v_u_90 then
+									v_u_89 = os.clock()
+									v_u_90 = v_u_5.Heartbeat:Connect(function()
+										-- upvalues: (copy) v_u_610, (ref) v_u_90, (ref) v_u_88, (ref) v_u_89, (ref) v_u_585
+										if v_u_610.Visible then
+											local v611 = os.clock() - v_u_89
+											if v611 >= 30 then
+												v_u_89 = os.clock()
+												if v_u_88 then
+													v_u_88.Visible = false
+												end
+												v_u_585()
+											elseif v_u_88 then
+												local v612 = 30 - v611
+												local v613 = math.ceil(v612)
+												local v614 = math.max(0, v613)
+												v_u_88.Text = string.format("Auto Claiming & Exiting Dungeon in %d %s", v614, v614 == 1 and "Second" or "Seconds")
+												v_u_88.Visible = true
+											end
+										else
+											if v_u_90 then
+												v_u_90:Disconnect()
+												v_u_90 = nil
+											end
+											if v_u_88 then
+												v_u_88.Visible = false
+											end
+											return
+										end
+									end)
+								end
+							else
+								if v_u_90 then
+									v_u_90:Disconnect()
+									v_u_90 = nil
+								end
+								if v_u_88 then
+									v_u_88.Visible = false
+								end
+								return
+							end
+						end)
+					end
+					v_u_75 = v_u_586
+				else
+					warn("[WaspWaveSurvivalController] WaspWaveConclusionPanel not found under WaspWaveSurvivalUI; conclusion UI disabled")
+				end
+			end
+		end
+		local function v_u_632() -- name: UpdateConclusionPanel
+			-- upvalues: (ref) v_u_75, (ref) v_u_76, (ref) v_u_82, (ref) v_u_77, (ref) v_u_84, (ref) v_u_87, (ref) v_u_508, (ref) v_u_78, (ref) v_u_514, (ref) v_u_139, (ref) v_u_20, (ref) v_u_19, (ref) v_u_80
+			if v_u_75 then
+				if v_u_76 then
+					local v616 = ("You made it to wave %*"):format(v_u_82)
+					v_u_76.Text = v616
+					v_u_76.TextColor3 = Color3.fromRGB(230, 40, 40)
+					if v_u_77 then
+						v_u_77.Text = v616
+					end
+				end
+				local v617 = v_u_84
+				local v618 = v617 ~= nil
+				if not v617 then
+					v617 = v_u_87 or v_u_508()
+					v_u_87 = v617
+				end
+				for v619, v620 in ipairs(v_u_78) do
+					local v_u_621 = v617[v619]
+					local v622 = v620:FindFirstChild("Reward")
+					if v622 and v622:IsA("ImageLabel") then
+						v_u_514(v622, v_u_621)
+					end
+					v620.Visible = v_u_621 ~= nil
+					local v623 = v_u_139(v620)
+					if v_u_621 and v618 then
+						local v624 = v_u_621.Quantity
+						local v625 = tonumber(v624) or 0
+						v623.Text = v625 <= 0 and "" or "x" .. v_u_20(v625)
+						local v626 = v_u_621.Type
+						local v627 = tostring(v626)
+						local v628 = v_u_621.Value
+						local v_u_629 = "WaspReward_" .. v627 .. "_" .. tostring(v628)
+						v620:SetAttribute("UUID", v_u_629)
+						local v630, v631 = pcall(function()
+							-- upvalues: (ref) v_u_19, (copy) v_u_629, (copy) v_u_621
+							v_u_19:AddItemFromRewardWithQuantity(v_u_629, v_u_621)
+						end)
+						if not v630 then
+							warn("[WaspWaveSurvival] Conclusion hover register failed:", v631, v_u_621)
+						end
+					else
+						v623.Text = ""
+					end
+				end
+				if v_u_80 then
+					v_u_80.Text = "Claim Rewards"
+				end
+			end
+		end
+		local function v_u_638() -- name: SyncExitDungeonUI
+			-- upvalues: (ref) v_u_33, (ref) v_u_81, (ref) v_u_279, (ref) v_u_82, (ref) v_u_98, (ref) v_u_83, (ref) v_u_89, (ref) v_u_340, (ref) v_u_84, (ref) v_u_74, (ref) v_u_75, (copy) v_u_632, (ref) v_u_39
+			local v633 = v_u_33:GetAttribute("InWaspWaveSurvival") == true
+			if v633 and (v_u_81 == nil and v_u_279()) then
+				v_u_81 = "Defeated"
+				v_u_82 = v_u_98
+				v_u_83 = false
+				v_u_89 = os.clock()
+				v_u_340()
+			end
+			if not v633 and v_u_81 ~= nil then
+				v_u_81 = nil
+				v_u_82 = 0
+				v_u_83 = false
+				v_u_84 = nil
+			end
+			if v_u_74 then
+				local v634 = v_u_74
+				local v635
+				if v633 then
+					v635 = v_u_81 == nil
+				else
+					v635 = v633
+				end
+				v634.Visible = v635
+			end
+			if v_u_75 then
+				local v636
+				if v633 then
+					if v_u_81 == nil then
+						v636 = false
+					else
+						v636 = v_u_81 ~= "Victory"
+					end
+				else
+					v636 = v633
+				end
+				if v636 then
+					v_u_632()
+				end
+				v_u_75.Visible = v636
+			end
+			if v_u_39 then
+				local v637 = v_u_39
+				if v633 then
+					v633 = v_u_81 == "Victory"
+				end
+				v637.Visible = v633
+			end
+		end
+		(function() -- name: BuildExitDungeonButton
+			-- upvalues: (ref) v_u_74, (ref) v_u_72, (ref) v_u_35, (ref) v_u_3, (ref) v_u_542, (ref) v_u_97, (ref) v_u_81, (ref) v_u_273, (ref) v_u_85, (ref) v_u_8, (ref) v_u_28
+			if not v_u_74 and v_u_72 then
+				local v_u_639 = v_u_72:Clone()
+				v_u_639.Name = "ExitDungeonButton"
+				v_u_639.AnchorPoint = Vector2.new(0.5, 0.5)
+				v_u_639.Position = UDim2.new(0.94, 0, 0.5, 0)
+				v_u_639.Size = UDim2.new(0.1, 0, 0.045, 0)
+				v_u_639.Rotation = 0
+				v_u_639.Visible = false
+				pcall(function()
+					-- upvalues: (copy) v_u_639
+					v_u_639.Active = true
+				end)
+				pcall(function()
+					-- upvalues: (copy) v_u_639
+					v_u_639.AutoButtonColor = true
+				end)
+				pcall(function()
+					-- upvalues: (copy) v_u_639
+					v_u_639.BackgroundColor3 = Color3.fromRGB(220, 55, 55)
+				end)
+				local v640 = ColorSequence.new({ ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 110, 110)), ColorSequenceKeypoint.new(1, Color3.fromRGB(170, 35, 35)) })
+				for _, v641 in ipairs(v_u_639:GetChildren()) do
+					if v641:IsA("UIGradient") then
+						v641.Color = v640
+					elseif v641:IsA("UIStroke") then
+						v641.Color = Color3.fromRGB(110, 20, 20)
+					end
+				end
+				local v642 = v_u_639:FindFirstChild("Title")
+				if v642 and v642:IsA("TextLabel") then
+					v642.Text = "Exit Dungeon"
+					v642.TextColor3 = Color3.fromRGB(255, 255, 255)
+					local v643 = v642:FindFirstChildOfClass("UIStroke")
+					if v643 then
+						local v644 = v643.Thickness
+						v643.Thickness = math.max(v644, 3)
+						v643.Color = Color3.fromRGB(0, 0, 0)
+					end
+					local v645 = v642:FindFirstChild("TextShadow")
+					if v645 and v645:IsA("TextLabel") then
+						v645.Text = "Exit Dungeon"
+					end
+				end
+				local v646 = v_u_639:FindFirstChild("ParticipateHoverScale")
+				if v646 then
+					v646:Destroy()
+				end
+				v_u_639.Parent = v_u_35
+				v_u_74 = v_u_639
+				local v_u_647 = Instance.new("UIScale")
+				v_u_647.Name = "ExitHoverScale"
+				v_u_647.Scale = 1
+				v_u_647.Parent = v_u_639
+				local v_u_648 = TweenInfo.new(0.14, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+				v_u_639.MouseEnter:Connect(function()
+					-- upvalues: (ref) v_u_3, (copy) v_u_647, (copy) v_u_648
+					v_u_3:Create(v_u_647, v_u_648, {
+						["Scale"] = 1.1
+					}):Play()
+				end)
+				v_u_639.MouseLeave:Connect(function()
+					-- upvalues: (ref) v_u_3, (copy) v_u_647, (copy) v_u_648
+					v_u_3:Create(v_u_647, v_u_648, {
+						["Scale"] = 1
+					}):Play()
+				end)
+				v_u_542(v_u_639, function()
+					-- upvalues: (ref) v_u_97, (ref) v_u_81, (ref) v_u_273, (ref) v_u_85, (ref) v_u_8, (ref) v_u_28
+					if v_u_97 then
+						if v_u_81 == nil then
+							if v_u_273() then
+								if not v_u_85 then
+									v_u_85 = true
+									v_u_8:Open({
+										["Title"] = "Exit Dungeon",
+										["Header"] = "Are you sure you want to leave the dungeon?",
+										["Middle"] = "You\'ll forfeit your progress in this run.",
+										["Footer"] = ""
+									}, {
+										["ConfirmCallback"] = function() -- name: ConfirmCallback
+											-- upvalues: (ref) v_u_85, (ref) v_u_28
+											v_u_85 = false
+											v_u_28:FireServer()
+										end,
+										["RejectCallback"] = function() -- name: RejectCallback
+											-- upvalues: (ref) v_u_85
+											v_u_85 = false
+										end
+									})
+								end
+							else
+								return
+							end
+						else
+							return
+						end
+					else
+						return
+					end
+				end)
+			end
+		end)()
+		v615()
+		if v_u_39 then
+			v_u_39:GetPropertyChangedSignal("Visible"):Connect(function()
+				-- upvalues: (ref) v_u_39, (ref) v_u_88, (ref) v_u_90, (ref) v_u_89, (ref) v_u_5, (copy) v_u_585
+				if v_u_39.Visible then
+					local v_u_649 = v_u_39
+					v_u_88 = v_u_649:FindFirstChild("AutoClaimTimer") or v_u_88
+					if not v_u_90 then
+						v_u_89 = os.clock()
+						v_u_90 = v_u_5.Heartbeat:Connect(function()
+							-- upvalues: (copy) v_u_649, (ref) v_u_90, (ref) v_u_88, (ref) v_u_89, (ref) v_u_585
+							if v_u_649.Visible then
+								local v650 = os.clock() - v_u_89
+								if v650 >= 30 then
+									v_u_89 = os.clock()
+									if v_u_88 then
+										v_u_88.Visible = false
+									end
+									v_u_585()
+								elseif v_u_88 then
+									local v651 = 30 - v650
+									local v652 = math.ceil(v651)
+									local v653 = math.max(0, v652)
+									v_u_88.Text = string.format("Auto Claiming & Exiting Dungeon in %d %s", v653, v653 == 1 and "Second" or "Seconds")
+									v_u_88.Visible = true
+								end
+							else
+								if v_u_90 then
+									v_u_90:Disconnect()
+									v_u_90 = nil
+								end
+								if v_u_88 then
+									v_u_88.Visible = false
+								end
+								return
+							end
+						end)
+					end
+				else
+					if v_u_90 then
+						v_u_90:Disconnect()
+						v_u_90 = nil
+					end
+					if v_u_88 then
+						v_u_88.Visible = false
+					end
+					return
+				end
+			end)
+		end
+		v_u_51:GetPropertyChangedSignal("Visible"):Connect(function()
+			-- upvalues: (ref) v_u_573, (copy) v_u_638
+			v_u_573()
+			v_u_638()
+		end)
+		v_u_573()
+		v_u_638()
+		v_u_7.OnBeeStateUpdate:Connect(function(p654)
+			-- upvalues: (ref) v_u_33, (copy) v_u_638
+			if p654 == ("Player_%*"):format(v_u_33.UserId) then
+				v_u_638()
+			end
+		end)
+		v_u_32._SyncConclusionUI = v_u_638
+		v_u_69.Visible = false
+		v_u_542(v_u_72, v_u_492)
+		v_u_542(v_u_73, v_u_367)
+		v_u_288()
+		local v655 = v_u_14:GetConfig("WaspWaveSurvival_EndsAtUnix")
+		local v656 = tonumber(v655) or 0
+		if v656 > 0 and v656 <= os.time() then
+			v_u_391()
+		end
+		task.spawn(function()
+			-- upvalues: (ref) v_u_14, (ref) v_u_166, (ref) v_u_70, (ref) v_u_71, (ref) v_u_391
+			while true do
+				local v657 = v_u_14:GetConfig("WaspWaveSurvival_EndsAtUnix")
+				local v658 = tonumber(v657) or 0
+				local v659 = v658 - os.time()
+				local v660 = v_u_166(v659)
+				if v_u_70 then
+					v_u_70.Text = v660
+				end
+				if v_u_71 then
+					v_u_71.Text = v660
+				end
+				if v658 > 0 and v659 <= 0 then
+					v_u_391()
+				end
+				task.wait(1)
+			end
+		end)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_30, (ref) v_u_366, (ref) v_u_203, (ref) v_u_108, (ref) v_u_268, (ref) v_u_364
+			local v661, v662 = pcall(function()
+				-- upvalues: (ref) v_u_30
+				return v_u_30:InvokeServer()
+			end)
+			if v661 and v662 then
+				v_u_366(v662)
+				v_u_203(v662)
+				local v663 = v662.DefeatLockoutRemaining
+				local v664 = tonumber(v663)
+				if v664 then
+					v_u_108 = math.max(0, v664)
+				end
+				v_u_268()
+			else
+				v_u_364()
+			end
+		end)
+		v_u_119 = v_u_23:GetCurrentSaveSlot()
+		v_u_23:GetSaveSlotChangeSignal():Connect(function()
+			-- upvalues: (ref) v_u_119, (ref) v_u_23
+			v_u_119 = v_u_23:GetCurrentSaveSlot()
+		end)
+		v_u_21.PromptProductPurchaseFinished:Connect(function(p665, p666, p667)
+			-- upvalues: (ref) v_u_33, (ref) v_u_22, (ref) v_u_111, (ref) v_u_110, (ref) v_u_268, (ref) v_u_45, (ref) v_u_11
+			if p665 == v_u_33.UserId then
+				if p666 == v_u_22 then
+					if p667 then
+						v_u_111 = 0
+						v_u_110 = true
+						v_u_268()
+						if not v_u_45 then
+							v_u_45 = true
+							v_u_11:CreateNotification("The portal is ready. You can enter the dungeon now.")
+						end
+					else
+						return
+					end
+				else
+					return
+				end
+			else
+				return
+			end
+		end)
+		v_u_31.OnClientEvent:Connect(function(p668)
+			-- upvalues: (ref) v_u_99, (ref) v_u_366, (ref) v_u_97, (ref) v_u_102, (ref) v_u_103, (ref) v_u_98, (ref) v_u_101, (ref) v_u_104, (ref) v_u_105, (ref) v_u_89, (ref) v_u_81, (ref) v_u_82, (ref) v_u_83, (ref) v_u_43, (ref) v_u_161, (ref) v_u_32, (ref) v_u_84, (ref) v_u_134, (ref) v_u_120, (ref) v_u_25, (ref) v_u_108, (ref) v_u_268, (ref) v_u_364, (ref) v_u_340
+			if typeof(p668) == "table" then
+				if p668.MaxWaves then
+					v_u_99 = p668.MaxWaves
+				end
+				if p668.Type == "RunStateUpdate" then
+					v_u_366(p668)
+				else
+					if p668.Type == "Preparing" then
+						v_u_97 = true
+						v_u_102 = "Preparing"
+						v_u_103 = p668.StartsAt or workspace:GetServerTimeNow() + (p668.StartDelay or 0)
+						v_u_98 = p668.Wave or 0
+						v_u_101 = 0
+						v_u_104 = 0
+						v_u_105 = 0
+					elseif p668.Type == "Started" then
+						v_u_97 = true
+						v_u_102 = "Running"
+						v_u_103 = 0
+						v_u_101 = p668.StartedAt or workspace:GetServerTimeNow()
+						v_u_98 = p668.Wave or v_u_98
+						v_u_104 = p668.ActiveWasps or 0
+						v_u_105 = p668.MaxWasps or 0
+					elseif p668.Type == "WaveStarted" then
+						v_u_97 = true
+						v_u_102 = "Running"
+						v_u_98 = p668.Wave or v_u_98
+						v_u_103 = 0
+						v_u_104 = p668.ActiveWasps or 0
+						v_u_105 = p668.MaxWasps or v_u_105
+					elseif p668.Type == "WaveCleared" then
+						v_u_104 = 0
+						v_u_105 = p668.MaxWasps or v_u_105
+					elseif p668.Type == "RunVictory" then
+						v_u_89 = os.clock()
+						if v_u_81 == nil then
+							v_u_81 = "Victory"
+							v_u_82 = p668.WavesCleared or v_u_99
+							v_u_83 = false
+						end
+						v_u_43 = p668.GrantedRewards or {}
+						v_u_161(v_u_43)
+						if v_u_32._SyncConclusionUI then
+							v_u_32._SyncConclusionUI()
+						end
+					elseif p668.Type == "Claimed" then
+						v_u_83 = true
+						v_u_84 = v_u_134(p668.GrantedRewards or {})
+						v_u_89 = os.clock()
+						if v_u_32._SyncConclusionUI then
+							v_u_32._SyncConclusionUI()
+						end
+					elseif p668.Type == "Ended" then
+						if v_u_120 ~= nil then
+							v_u_25:SetSetting("BeeColonyFollowPlayer", v_u_120)
+							v_u_120 = nil
+						end
+						v_u_97 = false
+						v_u_102 = nil
+						v_u_103 = 0
+						v_u_104 = 0
+						v_u_105 = 0
+						local v669 = p668.DefeatLockoutRemaining
+						local v670 = tonumber(v669)
+						if v670 then
+							v_u_108 = math.max(0, v670)
+							v_u_268()
+						end
+						if p668.GrantedRewards and #p668.GrantedRewards > 0 then
+							v_u_84 = v_u_134(p668.GrantedRewards)
+							if v_u_32._SyncConclusionUI then
+								v_u_32._SyncConclusionUI()
+							end
+						end
+					end
+					v_u_364()
+					v_u_340()
+				end
+			else
+				return
+			end
+		end)
+		task.spawn(function()
+			-- upvalues: (ref) v_u_364, (ref) v_u_340, (ref) v_u_109, (ref) v_u_110, (ref) v_u_111, (ref) v_u_45, (ref) v_u_11, (ref) v_u_112, (ref) v_u_174, (ref) v_u_66, (ref) v_u_108, (ref) v_u_268, (ref) v_u_293, (copy) v_u_638
+			local v671 = 0
+			while true do
+				v_u_364()
+				v_u_340()
+				local v672 = v_u_109
+				if v672 then
+					v672 = not v_u_110
+				end
+				local v673 = false
+				if v_u_109 and not v_u_110 then
+					local v674 = v_u_111 - 1
+					v_u_111 = math.max(0, v674)
+					if v_u_111 <= 0 then
+						v_u_110 = true
+						if v672 and not v_u_45 then
+							v_u_45 = true
+							v_u_11:CreateNotification("The portal is ready. You can enter the dungeon now.")
+							v673 = v672
+						else
+							v673 = v672
+						end
+					end
+				elseif not v_u_109 and v_u_112 > 0 then
+					local v675 = v_u_112 - 1
+					v_u_112 = math.max(0, v675)
+				end
+				local v676 = v_u_174
+				local v677
+				if v_u_66 then
+					v677 = "EVENT ENDED"
+				elseif v_u_110 then
+					v677 = "READY"
+				elseif v_u_109 then
+					local v678 = "Portal Opens In:\n"
+					local v679 = v_u_111
+					local v680 = math.floor(v679)
+					local v681 = math.max(0, v680)
+					local v682 = v681 // 3600
+					local v683 = v681 % 3600 // 60
+					local v684 = v681 % 60
+					local v685
+					if v682 > 0 then
+						v685 = string.format("%d:%02d:%02d", v682, v683, v684)
+					else
+						v685 = string.format("%d:%02d", v683, v684)
+					end
+					v677 = v678 .. v685
+				elseif v_u_112 > 0 then
+					local v686 = "Portal Ignition Unlocks In:\n"
+					local v687 = v_u_112
+					local v688 = math.floor(v687)
+					local v689 = math.max(0, v688)
+					local v690 = v689 // 3600
+					local v691 = v689 % 3600 // 60
+					local v692 = v689 % 60
+					local v693
+					if v690 > 0 then
+						v693 = string.format("%d:%02d:%02d", v690, v691, v692)
+					else
+						v693 = string.format("%d:%02d", v691, v692)
+					end
+					v677 = v686 .. v693
+				else
+					v677 = "READY FOR IGNITION"
+				end
+				v676(v677)
+				if v_u_108 > 0 then
+					local v694 = v_u_108 - 1
+					v_u_108 = math.max(0, v694)
+					v_u_268()
+				end
+				v671 = v671 + 1
+				if v671 >= 8 or v673 then
+					task.spawn(function()
+						-- upvalues: (ref) v_u_293, (ref) v_u_268
+						v_u_293()
+						v_u_268()
+					end)
+					v671 = 0
+				end
+				v_u_268()
+				v_u_638()
+				task.wait(1)
+			end
+		end)
+		v_u_9({
+			["Tag"] = "WaspWaveDebug",
+			["OnInstanceAdded"] = nil,
+			["OnInstanceRemoved"] = nil,
+			["OnInstanceAdded"] = function(p_u_695) -- name: OnInstanceAdded
+				-- upvalues: (ref) v_u_13, (ref) v_u_32, (ref) v_u_66, (ref) v_u_370
+				local v696 = v_u_13.new()
+				v696:Add(function()
+					-- upvalues: (ref) v_u_32, (copy) p_u_695
+					v_u_32.States[p_u_695] = nil
+				end)
+				v_u_32.States[p_u_695] = v696
+				local v697 = v696:Add(Instance.new("ProximityPrompt"))
+				v697.RequiresLineOfSight = false
+				v697.Style = Enum.ProximityPromptStyle.Custom
+				v697.ActionText = "Enter"
+				v697.ObjectText = "Wasp Dungeon"
+				v697.Parent = p_u_695
+				if v_u_66 then
+					v697.Enabled = false
+				end
+				local v_u_698 = v696:Add(Instance.new("Sound"))
+				v_u_698.SoundId = "rbxassetid://75916878082729"
+				v_u_698.Looped = true
+				v_u_698.RollOffMaxDistance = 80
+				v_u_698.RollOffMinDistance = 15
+				v_u_698.RollOffMode = Enum.RollOffMode.InverseTapered
+				v_u_698.Parent = p_u_695
+				v696:Add(p_u_695.AncestryChanged:Connect(function()
+					-- upvalues: (copy) p_u_695, (copy) v_u_698
+					if p_u_695:IsDescendantOf(workspace) then
+						v_u_698:Play()
+					else
+						v_u_698:Stop()
+					end
+				end))
+				v697.Triggered:Connect(function()
+					-- upvalues: (ref) v_u_370
+					warn("[WaspWaveSurvival] Prompt triggered -> OpenParticipation")
+					v_u_370()
+				end)
+			end,
+			["OnInstanceRemoved"] = function(p699) -- name: OnInstanceRemoved
+				-- upvalues: (ref) v_u_32
+				if v_u_32.States[p699] then
+					v_u_32.States[p699]:Clean()
+				end
+			end
+		})
+		if v_u_33.Name == "Luaappp" or v_u_33.Name == "DaburuDoragon" then
+			v_u_2.InputBegan:Connect(function(p700, p701)
+				-- upvalues: (ref) v_u_478
+				if not p701 then
+					if p700.KeyCode == Enum.KeyCode.C then
+						v_u_478()
+					end
+				end
+			end)
+		end
+	else
+		warn("BizzyBeeWaspDungeon_UI not found; WaspWaveSurvivalController aborting")
+	end
+end
+task.spawn(v_u_32.Start)
+return v_u_32
