@@ -1,6 +1,7 @@
 local SummerFire = {}
 local reg
 local sData
+local Utils
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Modules = ReplicatedStorage:WaitForChild("Modules")
@@ -58,6 +59,7 @@ local function GetRecipeUUID(recipes)
 			local uuid = getCosmeticUUID(GetData_result, recipe["Value"])
 			if uuid then
 				table.insert(UUIDs, "Cosmetic:" .. uuid)
+				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
 			else
 				return nil
 			end
@@ -69,6 +71,7 @@ local function GetRecipeUUID(recipes)
 			if uuid then
 				table.insert(UUIDs, uuid)
 			else
+				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
 				return nil
 			end
 		end
@@ -122,16 +125,77 @@ local function startCraft()
 	end
 end
 
+local function BurnFruit()
+	local Options = reg.Options
+	if not Options.tgAutoBurn or not Options.tgAutoBurn.Value then
+		return
+	end
+	local GetSelectedItems = Utils.GetSelectedItems
+	local ddBurnFruit = GetSelectedItems(Options.ddBurnFruit.Value)
+	local Backpack = sData.LocalPlayer.Backpack
+	for _, item in ipairs(Backpack:GetChildren()) do
+		local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
+		if (table.find(ddBurnFruit, "ALL") or table.find(ddBurnFruit, ItemName)) and not item:GetAttribute("d") then
+			Utils.EquipTool(item)
+			task.wait(0.1)
+			--sData.GameEvents.Sell_Item:FireServer()
+			sData.GameEvents.SummerFire.Submit:FireServer()
+			return
+		end
+	end
+end
+
 function SummerFire.Initialize(registry, tab)
 	reg = registry
 	local Options = reg.Options
 	local QuickSave = reg.Window.QuickSave
 	local EventsTab = tab
 	sData = reg.sData
+	Utils = reg.Utils
 	local EfTasks = reg.EfTasks
 
-	local SummerFireSection = EventsTab:AddCollapsibleSection("SummerFire Craft", false)
+	local BurnSection = EventsTab:AddCollapsibleSection("SummerFire Burn", false)
 
+	BurnSection:AddDropdown("ddBurnFruit", {
+		Title = "Select Fruit for burn",
+		Values = sData.SeedDataTable,
+		Multi = true,
+		Default = {},
+		Searchable = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+
+	BurnSection:AddButton({
+		Title = "Clear Selected Fruit for burn",
+		Callback = function()
+			Options.ddBurnFruit:SetValue({})
+		end,
+	})
+
+	BurnSection:AddInput("ipDelayBurn", {
+		Title = "Delay (s)",
+		Default = 1,
+		Numeric = true,
+		Finished = true,
+		Callback = function()
+			QuickSave()
+		end,
+	})
+	BurnSection:AddToggle("tgAutoBurn", {
+		Title = "Auto Burn",
+		Default = false,
+		Callback = function(Value)
+			QuickSave()
+			EfTasks.ToggleTask("AutoBurn", Value, function()
+				BurnFruit()
+				task.wait(tonumber(Options.ipDelayBurn.Value) or 1)
+			end)
+		end,
+	})
+
+	local SummerFireSection = EventsTab:AddCollapsibleSection("SummerFire Craft", false)
 	SummerFireSection:AddInput("ipWaitTime", {
 		Title = "Wait Time (s)",
 		Default = 30,

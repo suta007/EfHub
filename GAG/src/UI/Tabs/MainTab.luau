@@ -292,7 +292,7 @@ function MainTab.Initialize(reg)
 		Multi = true,
 		Default = { "ALL" },
 		Searchable = true,
-		Callback = function(_Value)
+		Callback = function()
 			QuickSave()
 		end,
 	})

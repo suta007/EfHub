@@ -119,6 +119,14 @@ end
 AddLog("Script initialized successfully.")
 task.wait(0.5)
 
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Modules = ReplicatedStorage:WaitForChild("Modules")
+local SummerEventControllers = Modules:WaitForChild("SummerEventControllers")
+local SummerCraftingController = SummerEventControllers:WaitForChild("SummerCraftingController")
+local SummerCraftingConfig = require(SummerCraftingController.SummerCraftingConfig)
+
+local Craftables = SummerCraftingConfig.Craftables
+
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
 	local spacing = string.rep("  ", lclIndent)
@@ -136,6 +144,17 @@ local function ShowData(tbl, indent)
 		AddLog(spacing .. tostring(tbl))
 	end
 end
+
+local CraftList = {}
+
+for _i, data in pairs(Craftables) do
+	if data.Result and data.Result.Value then
+		if type(data.Result.Value) == "string" then
+			table.insert(CraftList, data.Result.Value)
+		end
+	end
+end
+ShowData(CraftList)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Modules = ReplicatedStorage:WaitForChild("Modules")
