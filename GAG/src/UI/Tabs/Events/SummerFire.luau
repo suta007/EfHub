@@ -130,7 +130,7 @@ local function BurnFruit()
 	if not Options.tgAutoBurn or not Options.tgAutoBurn.Value then
 		return
 	end
-	if tonumber(workspace:GetAttribute("EmberCount")) >= 80000 then
+	if tonumber(workspace:GetAttribute("EmberCount")) >= 60000 then
 		return
 	end
 	local GetSelectedItems = Utils.GetSelectedItems

@@ -218,6 +218,9 @@ function Main.HarvestCrops()
 		return
 	end
 	Utils.RunWithFlag("IsHarvesting", "HarvestCrops", function()
+		if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+			return
+		end
 		if Utils.IsTableEmpty(ReadyCrops) then
 			Main.GetAllReadyCrops2()
 			if Utils.IsTableEmpty(ReadyCrops) then
