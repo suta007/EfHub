@@ -143,8 +143,8 @@ function SummerFire.Initialize(registry, tab)
 	})
 	SummerFireSection:AddDropdown("ddTargetCraft", {
 		Title = "Target Craft",
-		Default = "",
-		Options = CraftList,
+		--Default = "",
+		Values = CraftList,
 		Searchable = true,
 		Callback = function()
 			QuickSave()
