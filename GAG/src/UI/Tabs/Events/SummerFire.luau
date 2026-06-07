@@ -130,12 +130,15 @@ local function BurnFruit()
 	if not Options.tgAutoBurn or not Options.tgAutoBurn.Value then
 		return
 	end
+	if tonumber(workspace:GetAttribute("EmberCount")) >= tonumber(workspace:GetAttribute("EmberCountMax")) then
+		return
+	end
 	local GetSelectedItems = Utils.GetSelectedItems
 	local ddBurnFruit = GetSelectedItems(Options.ddBurnFruit.Value)
 	local Backpack = sData.LocalPlayer.Backpack
 	for _, item in ipairs(Backpack:GetChildren()) do
 		local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
-		if (table.find(ddBurnFruit, "ALL") or table.find(ddBurnFruit, ItemName)) and not item:GetAttribute("d") then
+		if not item:GetAttribute("d") and item:HasTag("FruitTool") and (table.find(ddBurnFruit, "ALL") or table.find(ddBurnFruit, ItemName)) then
 			Utils.EquipTool(item)
 			task.wait(0.1)
 			--sData.GameEvents.Sell_Item:FireServer()
