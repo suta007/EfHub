@@ -762,6 +762,9 @@ if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
 return
 end
 f.RunWithFlag("IsHarvesting","HarvestCrops",function()
+if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
+return
+end
 if f.IsTableEmpty(h)then
 b.GetAllReadyCrops2()
 if f.IsTableEmpty(h)then
@@ -3872,7 +3875,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.05.31-18.20",
+SubTitle="2569.06.7-18.55",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -3907,7 +3910,8 @@ j.ResetOnSpawn=false
 k.Name="ToggleButton"
 k.Parent=j
 k.BackgroundColor3=Color3.fromRGB(100,20,20)
-k.Position=UDim2.new(0,10,0.10,0)
+
+k.Position=UDim2.fromOffset(10,10)
 k.Size=UDim2.fromOffset(50,50)
 k.Text="GAG"
 k.TextColor3=Color3.fromRGB(255,255,255)
@@ -4352,7 +4356,7 @@ Values=j.SeedDataTable,
 Multi=true,
 Default={"ALL"},
 Searchable=true,
-Callback=function(p)
+Callback=function()
 f()
 end,
 })
@@ -6124,6 +6128,244 @@ return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b
 
 local b={}
 local c
+local d
+local e
+
+local f=game:GetService("ReplicatedStorage")
+local g=f:WaitForChild("Modules")
+local h=g:WaitForChild("SummerEventControllers")
+local i=h:WaitForChild("SummerCraftingController")
+local j=require(i.SummerCraftingConfig)
+
+local k=j.Craftables
+local l=require(g.DataService)
+
+local m=f:WaitForChild("GameEvents"):WaitForChild("SummerCraftingService")
+local n=m:WaitForChild("StartCraft")
+local o=m:WaitForChild("ClaimCraft")
+
+local p={}
+local q={}
+
+for r,t in pairs(k)do
+if t.Result and t.Result.Value then
+if type(t.Result.Value)=="string"then
+table.insert(q,t.Result.Value)
+end
+end
+end
+
+local function getInvUUID(r,t)
+local u=r.InventoryData or{}
+for v,w in pairs(u)do
+if w.ItemType==t or(w.ItemData.EggName and w.ItemData.EggName==t)or(w.ItemData.ItemName and w.ItemData.ItemName==t)then
+print(t," UUID : ",v)
+return v
+end
+end
+return nil
+end
+
+local function getCosmeticUUID(r,t)
+local u=r.CosmeticData and r.CosmeticData.Inventory or{}
+for v,w in pairs(u)do
+if w.Name==t then
+return v
+end
+end
+return nil
+end
+
+local function GetRecipeUUID(r)
+local t={}
+if type(r)~="table"then
+return nil
+end
+local u=l:GetData()
+for v,w in pairs(r)do
+if w["Type"]=="Cosmetic"then
+local x=getCosmeticUUID(u,w["Value"])
+if x then
+table.insert(t,"Cosmetic:"..x)
+c.Log("Missing ingredient: "..w["Value"],"WARN")
+else
+return nil
+end
+elseif w["Type"]=="Pet"then
+
+return nil
+elseif w["Type"]~="Currency"then
+local x=getInvUUID(u,w["Value"])
+if x then
+table.insert(t,x)
+else
+c.Log("Missing ingredient: "..w["Value"],"WARN")
+return nil
+end
+end
+end
+return t
+end
+
+local function claimCraft()
+table.clear(p)
+local r=l:GetData()
+local t=r.SummerCraftingEventData
+for u,v in pairs(t)do
+if u=="Slots"then
+if typeof(v)=="table"then
+for w,x in pairs(v)do
+if typeof(x)~="table"then
+print("Slot :"..w.." is empty")
+table.insert(p,w)
+elseif tonumber(x.RemainingTime)<=0 then
+o:FireServer(w)
+table.insert(p,w)
+end
+end
+end
+end
+end
+end
+
+local function startCraft()
+local r=c.Options
+if not r.ddTargetCraft or not r.ddTargetCraft.Value or r.ddTargetCraft.Value==""then
+return
+end
+local t=r.ddTargetCraft.Value
+local u={}
+for v,w in pairs(k)do
+if w.Result and w.Result.Value then
+u[w.Tier]=(u[w.Tier]or 0)+1
+
+if w.Result.Value==t then
+local x=string.format("%d:%d:%s",w.Tier,u[w.Tier],w.Result.Value)
+local y=GetRecipeUUID(w.Recipe)
+if y then
+local z={x,y}
+n:FireServer(unpack(z))
+else
+print("Missing ingredient(s)")
+end
+end
+end
+end
+end
+
+local function BurnFruit()
+local r=c.Options
+if not r.tgAutoBurn or not r.tgAutoBurn.Value then
+return
+end
+if tonumber(workspace:GetAttribute("EmberCount"))>=80000 then
+return
+end
+local t=e.GetSelectedItems
+local u=t(r.ddBurnFruit.Value)
+local v=d.LocalPlayer.Backpack
+for w,x in ipairs(v:GetChildren())do
+local y=x:FindFirstChild("Item_String")and x:FindFirstChild("Item_String").Value
+if not x:GetAttribute("d")and x:HasTag("FruitTool")and(table.find(u,"ALL")or table.find(u,y))then
+e.EquipTool(x)
+task.wait(0.1)
+
+d.GameEvents.SummerFire.Submit:FireServer()
+return
+end
+end
+end
+
+function b.Initialize(r,t)
+c=r
+local u=c.Options
+local v=c.Window.QuickSave
+local w=t
+d=c.sData
+e=c.Utils
+local x=c.EfTasks
+
+local y=w:AddCollapsibleSection("SummerFire Burn",false)
+
+y:AddDropdown("ddBurnFruit",{
+Title="Select Fruit for burn",
+Values=d.SeedDataTable,
+Multi=true,
+Default={},
+Searchable=true,
+Callback=function()
+v()
+end,
+})
+
+y:AddButton({
+Title="Clear Selected Fruit for burn",
+Callback=function()
+u.ddBurnFruit:SetValue({})
+end,
+})
+
+y:AddInput("ipDelayBurn",{
+Title="Delay (s)",
+Default=1,
+Numeric=true,
+Finished=true,
+Callback=function()
+v()
+end,
+})
+y:AddToggle("tgAutoBurn",{
+Title="Auto Burn",
+Default=false,
+Callback=function(z)
+v()
+x.ToggleTask("AutoBurn",z,function()
+BurnFruit()
+task.wait(tonumber(u.ipDelayBurn.Value)or 1)
+end)
+end,
+})
+
+local z=w:AddCollapsibleSection("SummerFire Craft",false)
+z:AddInput("ipWaitTime",{
+Title="Wait Time (s)",
+Default=30,
+Numeric=true,
+Finished=true,
+Callback=function()
+v()
+end,
+})
+z:AddDropdown("ddTargetCraft",{
+Title="Target Craft",
+
+Values=q,
+Searchable=true,
+Callback=function()
+v()
+end,
+})
+z:AddToggle("tgAutoCraft",{
+Title="Auto Craft",
+Default=false,
+Callback=function(A)
+v()
+x.ToggleTask("AutoCraft",A,function()
+claimCraft()
+task.wait(1)
+for B=1,#p do
+startCraft()
+task.wait(0.5)
+end
+task.wait(tonumber(u.ipWaitTime.Value)or 10)
+end)
+end,
+})
+end
+return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+
+local b={}
+local c
 local d=game:GetService("CollectionService")
 local e=game:GetService("ReplicatedStorage")
 local f
@@ -6424,7 +6666,7 @@ end,
 })
 end
 
-return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -6545,7 +6787,7 @@ end,
 })
 end
 
-return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
+return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 local b={}
 local c
@@ -6744,7 +6986,7 @@ end,
 })
 end
 
-return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6758,14 +7000,16 @@ local function LoadEvents()
 local g={}
 if b().DEV_MODE then
 
+g.SummerFire=c("UI/Tabs/Events/SummerFire")
 g.MainBee=c("UI/Tabs/Events/MainBee")
 g.WaspWave=c("UI/Tabs/Events/WaspWave")
 g.ShopBee=c("UI/Tabs/Events/ShopBee")
 else
 
-g.MainBee=a.p()
-g.WaspWave=a.q()
-g.ShopBee=a.r()
+g.SummerFire=a.p()
+g.MainBee=a.q()
+g.WaspWave=a.r()
+g.ShopBee=a.s()
 end
 return g
 end
@@ -6782,12 +7026,13 @@ f.Events=h:AddTab({Title="Events",Icon="calendar"})
 e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
 
+i.SummerFire.Initialize(e,f.Events)
 i.MainBee.Initialize(e,f.Events)
 i.WaspWave.Initialize(e,f.Events)
 i.ShopBee.Initialize(e,f.Events)
 end
 
-return d end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+return d end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6877,7 +7122,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return c end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
 
 local b={}
 
@@ -7045,7 +7290,7 @@ end,
 })
 end
 
-return b end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
+return b end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7118,9 +7363,9 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.s()
-e.LogTab=a.t()
-e.TestTab=a.u()
+e.EventsTab=a.t()
+e.LogTab=a.u()
+e.TestTab=a.v()
 
 
 
@@ -7166,7 +7411,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end end
+return d end function a.w():typeof(__modImpl())local b=a.cache.w if not b then b={c=__modImpl()}a.cache.w=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -7196,7 +7441,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.v()
+c=a.w()
 end
 
 
