@@ -1,0 +1,103 @@
+--game:GetService("Players").LocalPlayer.PlayerScripts.SummerFireSounds
+
+local v1 = game:GetService("Players")
+local v2 = game:GetService("ReplicatedStorage")
+local v3 = game:GetService("SoundService")
+local v_u_4 = game:GetService("TweenService")
+local v_u_5 = require(v2.Modules.PlaySound)
+local v_u_6 = require(v2.Modules.DataService)
+local v_u_7 = require(v2.Modules.GameConfigController)
+local v_u_8 = v_u_7:GetConfig("SummerFireConfig")
+local v_u_9 = v1.LocalPlayer
+local v_u_10 = v_u_8.WORKSPACE_ATTRIBUTE
+local v11 = v_u_8.MAX_TIERS
+local v_u_12 = tonumber(v11) or 5
+workspace:GetAttributeChangedSignal("SummerFireConfig"):Connect(function()
+	-- upvalues: (ref) v_u_8, (copy) v_u_7, (ref) v_u_12
+	v_u_8 = v_u_7:GetConfig("SummerFireConfig")
+	local v13 = v_u_8.MAX_TIERS
+	v_u_12 = tonumber(v13) or 5
+end)
+local v_u_14 = nil
+local v15 = workspace
+local v_u_16 = tonumber(v15:GetAttribute(v_u_10)) or 0
+workspace:GetAttributeChangedSignal(v_u_10):Connect(function()
+	-- upvalues: (copy) v_u_10, (ref) v_u_16, (ref) v_u_12, (copy) v_u_5
+	local v17 = workspace
+	local v18 = v_u_10
+	local v19 = tonumber(v17:GetAttribute(v18)) or 0
+	if v_u_16 < v_u_12 and v_u_12 <= v19 then
+		v_u_5("rbxassetid://140427688499544")
+	end
+	v_u_16 = v19
+end)
+local v_u_20 = Instance.new("Sound")
+v_u_20.Name = "SummerFireLoop"
+v_u_20.SoundId = "rbxassetid://118598341135405"
+v_u_20.Volume = 0.25
+v_u_20.Looped = true
+v_u_20.Parent = v3
+local function v_u_28() -- name: anyCraftProgressing
+	-- upvalues: (copy) v_u_6
+	local v21 = v_u_6:GetData()
+	if v21 then
+		v21 = v21.SummerCraftingEventData
+	end
+	if v21 then
+		v21 = v21.Slots
+	end
+	if type(v21) ~= "table" then
+		return false
+	end
+	for _, v22 in v21 do
+		if type(v22) == "table" then
+			local v23 = v22.RemainingTime
+			local v24 = tonumber(v23)
+			local v25
+			if v24 == nil then
+				local v26 = v22.EndTime
+				local v27 = (tonumber(v26) or 0) - os.time()
+				v25 = math.max(0, v27)
+			else
+				v25 = math.max(0, v24)
+			end
+			if v25 > 0 then
+				return true
+			end
+		end
+	end
+	return false
+end
+local function v_u_29() -- name: refreshLoop
+	-- upvalues: (copy) v_u_9, (copy) v_u_28, (ref) v_u_14, (copy) v_u_20, (copy) v_u_4
+	if v_u_9:GetAttribute("OnFire") == true and true or v_u_28() then
+		if v_u_14 then
+			v_u_14:Cancel()
+			v_u_14 = nil
+		end
+		if not v_u_20.IsPlaying then
+			v_u_20.Volume = 0.25
+			v_u_20:Play()
+			return
+		end
+	elseif v_u_20.IsPlaying and not v_u_14 then
+		v_u_14 = v_u_4:Create(v_u_20, TweenInfo.new(2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+			["Volume"] = 0,
+		})
+		v_u_14.Completed:Once(function()
+			-- upvalues: (ref) v_u_20, (ref) v_u_14
+			v_u_20:Stop()
+			v_u_20.Volume = 0.25
+			v_u_14 = nil
+		end)
+		v_u_14:Play()
+	end
+end
+v_u_9:GetAttributeChangedSignal("OnFire"):Connect(v_u_29)
+task.spawn(function()
+	-- upvalues: (copy) v_u_29
+	while true do
+		v_u_29()
+		task.wait(0.5)
+	end
+end)

@@ -1,0 +1,280 @@
+--game:GetService("ReplicatedStorage").Modules.SummerFireController
+
+local v1 = {}
+local v2 = game:GetService("ReplicatedStorage")
+local v_u_3 = game:GetService("TweenService")
+local v4 = game:GetService("Players")
+local v_u_5 = require(v2.Modules.GuiController)
+local v_u_6 = require(v2.Modules.InventoryService)
+local v_u_7 = require(v2.Data.EnumRegistry.InventoryServiceEnums)
+local v_u_8 = require(v2.Modules.CalculatePlantValue)
+local v_u_9 = require(v2.Calculate_Weight)
+local v_u_10 = require(v2.Modules.MutationHandler)
+local v_u_11 = require(v2.Modules.GameConfigController)
+local v_u_12 = v_u_11:GetConfig("SummerFireConfig")
+workspace:GetAttributeChangedSignal("SummerFireConfig"):Connect(function()
+	-- upvalues: (ref) v_u_12, (copy) v_u_11
+	v_u_12 = v_u_11:GetConfig("SummerFireConfig")
+end)
+local v_u_13 = require(v2.Modules.ConfirmationPromptController)
+local v_u_14 = require(v2.Comma_Module)
+local v_u_15 = require(v2.Modules.Notification)
+require(v2.Modules.NPCDialogueController)
+require(v2.Modules.EventShopUIController)
+local v_u_16 = require(v2.Data.SeedData)
+local v_u_17 = require(v2.Modules.PlantTraitsData)
+require(v2.Modules.NPCDialogueController)
+require(v2.Top_Text)
+require(v2.Modules.TeamEventControllers.UserInterface.TeamEventQuestsUIController)
+local v_u_18 = v4.LocalPlayer
+local v_u_19 = v_u_18.PlayerGui
+local v_u_20 = TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
+local v_u_21 = game:GetService("CollectionService"):GetTagged("SummerFireBillboard")[1]
+local v_u_22 = v2.GameEvents.SummerFire.Submit
+local v_u_23 = false
+local v_u_24 = nil
+local v_u_25 = nil
+local v_u_26 = nil
+local v_u_27 = workspace:GetAttribute(v_u_12.WORKSPACE_EMBER_COUNT) or 0
+local v_u_28 = workspace:GetAttribute(v_u_12.WORKSPACE_EMBER_COUNT_MAX) or 10
+local function v_u_48(p29) -- name: GetCurrentToolValue
+	-- upvalues: (copy) v_u_18, (copy) v_u_7, (copy) v_u_15, (ref) v_u_12, (copy) v_u_6, (copy) v_u_17, (copy) v_u_16, (copy) v_u_10, (copy) v_u_9, (copy) v_u_8
+	if not v_u_18.Character then
+		return
+	end
+	local v30 = nil
+	for _, v31 in v_u_18.Character:GetChildren() do
+		if v31:IsA("Tool") and (v31:HasTag("FruitTool") and v31:GetAttribute(v_u_7.ITEM_UUID)) then
+			v30 = v31
+			break
+		end
+	end
+	if v30 then
+		local v32 = v_u_6:GetToolData(v30)
+		if v32 then
+			local v33 = v32.ItemData
+			if v33 then
+				local v34 = v33.ItemName
+				if v_u_17.Honey[v34] == true then
+					v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.NO_HONEY)
+				else
+					local v35 = v_u_16[v33.ItemName]
+					if v35 then
+						local v36 = v_u_10:CalcValueMultiFromMuts(v_u_10:ExtractMutationsFromString(v33.MutationString))
+						local v37 = v33.WeightMultiplier or 1
+						local v38, _ = v_u_9.Calculate_Weight(v33.Seed, v33.ItemName)
+						local v39 = v_u_8
+						local v40 = {
+							["name"] = v33.ItemName,
+							["variant"] = v33.Variant,
+							["weight"] = v38 * v37,
+						}
+						local v41 = 10 + v36
+						v40.mutationMultiplier = math.log10(v41)
+						v40.fruitVersion = v33.FruitVersion
+						local v42 = v39(v40) * (v_u_12.PLANT_MULTIPLIERS_RARITY[v35.SeedRarity] or v_u_12.PLANT_MULTIPLIERS_RARITY.FallBack)
+						local v43 = math.max(v42, 0)
+						local v44 = v_u_12.MAX_EMBERS_PER_SUBMISSION[v35.SeedRarity] or v_u_12.MAX_EMBERS_PER_SUBMISSION.FallBack
+						local v45 = v43 + 1
+						local v46 = math.log10(v45) * v_u_12.EMBER_LOG_SCALE
+						local v47 = math.ceil(v46)
+						return math.min(v47, v44), v33.ItemName, v30
+					end
+					if p29 then
+						v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.ERROR_NO_SEED)
+					end
+				end
+			else
+				if p29 then
+					v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.ERROR)
+				end
+				return
+			end
+		else
+			if p29 then
+				v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.ERROR)
+			end
+			return
+		end
+	else
+		if p29 then
+			v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.NO_PLANT)
+		end
+		return
+	end
+end
+local function v_u_65() -- name: CheckCurrentTool
+	-- upvalues: (ref) v_u_23, (copy) v_u_21, (copy) v_u_48, (ref) v_u_12, (ref) v_u_27, (copy) v_u_14
+	if v_u_23 == false then
+		v_u_21.Enabled = false
+		return
+	else
+		local v49, v50 = v_u_48()
+		if v49 == nil then
+			v_u_21.Enabled = false
+		else
+			local v51 = workspace:GetAttribute(v_u_12.WORKSPACE_ATTRIBUTE) or 0
+			local v52
+			if v_u_12.MAX_TIERS <= v51 then
+				local v53 = v_u_12.HARD_CAP - v_u_27
+				local v54 = math.max(v53, 0)
+				v52 = math.min(v49, v54)
+			else
+				local v55 = v51 + 1
+				local v56 = v_u_12.MAX_TIERS
+				local v57 = math.min(v55, v56)
+				if v_u_12.MAX_TIERS <= v57 then
+					local v58 = v_u_12.HARD_CAP - v_u_27
+					local v59 = math.max(v58, 0)
+					v52 = math.min(v49, v59)
+				else
+					local v60 = v_u_12.COSTS[v57] or 0
+					local v61 = ((v_u_12.COSTS[v57 + 1] or v60) - v60) * v_u_12.PASSED_TIER_PERCENT
+					local v62 = v60 + math.floor(v61) - v_u_27
+					local v63 = math.max(v62, 0)
+					v52 = math.min(v49, v63)
+				end
+			end
+			local v64 = v_u_14.Comma(v52)
+			v_u_21.PlantName.Text = v50
+			v_u_21.PlantValue.Text = v_u_12.MESSAGE_ENUMS.CLIENT_SUBMIT_MESSAGE:gsub("SUBMIT_AMOUNT", (tostring(v64)))
+			v_u_21.Enabled = true
+		end
+	end
+end
+workspace:GetAttributeChangedSignal(v_u_12.WORKSPACE_EMBER_COUNT):Connect(function()
+	-- upvalues: (ref) v_u_27, (ref) v_u_12, (copy) v_u_65
+	v_u_27 = workspace:GetAttribute(v_u_12.WORKSPACE_EMBER_COUNT)
+	v_u_65()
+end)
+workspace:GetAttributeChangedSignal(v_u_12.WORKSPACE_EMBER_COUNT_MAX):Connect(function()
+	-- upvalues: (ref) v_u_28, (ref) v_u_12, (copy) v_u_65
+	v_u_28 = workspace:GetAttribute(v_u_12.WORKSPACE_EMBER_COUNT_MAX)
+	v_u_65()
+end)
+local v_u_66 = nil
+local v_u_67 = nil
+function v1.Start() -- name: Start
+	-- upvalues: (ref) v_u_67, (copy) v_u_48, (ref) v_u_12, (copy) v_u_22, (copy) v_u_18, (copy) v_u_7, (copy) v_u_15, (copy) v_u_13, (ref) v_u_23, (copy) v_u_65, (copy) v_u_5, (copy) v_u_19, (ref) v_u_66, (copy) v_u_20, (copy) v_u_3, (ref) v_u_24, (ref) v_u_25, (ref) v_u_26
+	for _, v68 in game:GetService("CollectionService"):GetTagged("SummerFirePrompt") do
+		if v68:GetAttribute("Type") == "Submit" then
+			v68.Triggered:Connect(function()
+				-- upvalues: (ref) v_u_67, (ref) v_u_48, (ref) v_u_12, (ref) v_u_22, (ref) v_u_18, (ref) v_u_7, (ref) v_u_15, (ref) v_u_13
+				v_u_67 = nil
+				local v69, v70, v71 = v_u_48(true)
+				if v69 == nil then
+					return
+				elseif v69 < v_u_12.HARD_CAP then
+					v_u_22:FireServer()
+				else
+					v_u_67 = v71
+					v_u_13:Open({
+						["Title"] = v_u_12.MESSAGE_ENUMS.CONFIRM_PROMPT_TOP,
+						["Header"] = v_u_12.MESSAGE_ENUMS.CONFIRM:gsub("PLANT_NAME", (tostring(v70))),
+						["Middle"] = ("%*"):format(v70),
+					}, {
+						["ConfirmCallback"] = function() -- name: confirm
+							-- upvalues: (ref) v_u_18, (ref) v_u_7, (ref) v_u_15, (ref) v_u_12, (ref) v_u_67, (ref) v_u_22
+							local v72 = nil
+							for _, v73 in v_u_18.Character:GetChildren() do
+								if v73:IsA("Tool") and (v73:HasTag("FruitTool") and v73:GetAttribute(v_u_7.ITEM_UUID)) then
+									v72 = v73
+									break
+								end
+							end
+							if v72 then
+								if v72 == v_u_67 then
+									v_u_22:FireServer()
+								else
+									v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.SWITCHED_CONFIRM)
+								end
+							else
+								v_u_15:CreateNotification(v_u_12.MESSAGE_ENUMS.NO_PLANT)
+								return
+							end
+						end,
+					})
+				end
+			end)
+			v68.PromptShown:Connect(function()
+				-- upvalues: (ref) v_u_23, (ref) v_u_65
+				v_u_23 = true
+				v_u_65()
+			end)
+			v68.PromptHidden:Connect(function()
+				-- upvalues: (ref) v_u_23, (ref) v_u_65
+				v_u_23 = false
+				v_u_65()
+			end)
+		elseif v68:GetAttribute("Type") == "UI" then
+			local v_u_74 = v68.Parent.Parent
+			v68.Triggered:Connect(function()
+				-- upvalues: (ref) v_u_5, (ref) v_u_19, (ref) v_u_66, (ref) v_u_20, (ref) v_u_3
+				v_u_5:Open(v_u_19:WaitForChild("SummerCrafting"))
+				if v_u_66 then
+					game.Debris:AddItem(v_u_66, v_u_20.Time)
+					v_u_3
+						:Create(v_u_66, v_u_20, {
+							["OutlineTransparency"] = 1,
+						})
+						:Play()
+				end
+			end)
+			v68.PromptShown:Connect(function()
+				-- upvalues: (ref) v_u_66, (copy) v_u_74, (ref) v_u_3, (ref) v_u_20
+				v_u_66 = Instance.new("Highlight")
+				v_u_66.DepthMode = Enum.HighlightDepthMode.Occluded
+				v_u_66.FillTransparency = 1
+				v_u_66.OutlineTransparency = 1
+				v_u_66.Adornee = v_u_74
+				v_u_66.Parent = v_u_74
+				v_u_3
+					:Create(v_u_66, v_u_20, {
+						["OutlineTransparency"] = 0,
+					})
+					:Play()
+			end)
+			v68.PromptHidden:Connect(function()
+				-- upvalues: (ref) v_u_66, (ref) v_u_20, (ref) v_u_3
+				if v_u_66 then
+					game.Debris:AddItem(v_u_66, v_u_20.Time)
+					v_u_3
+						:Create(v_u_66, v_u_20, {
+							["OutlineTransparency"] = 1,
+						})
+						:Play()
+				end
+			end)
+		end
+	end
+	local function v78(p75) -- name: SetupCharacter
+		-- upvalues: (ref) v_u_24, (ref) v_u_25, (ref) v_u_65
+		if v_u_24 then
+			v_u_24:Disconnect()
+			v_u_24 = nil
+		end
+		if v_u_25 then
+			v_u_25:Disconnect()
+			v_u_25 = nil
+		end
+		v_u_65()
+		v_u_24 = p75.ChildAdded:Connect(function(p76)
+			-- upvalues: (ref) v_u_65
+			if p76:IsA("Tool") then
+				v_u_65()
+			end
+		end)
+		v_u_25 = p75.ChildRemoved:Connect(function(p77)
+			-- upvalues: (ref) v_u_65
+			if p77:IsA("Tool") then
+				v_u_65()
+			end
+		end)
+	end
+	v_u_26 = v_u_18.CharacterAdded:Connect(v78)
+	if v_u_18.Character then
+		v78(v_u_18.Character)
+	end
+end
+task.spawn(v1.Start)
+return v1

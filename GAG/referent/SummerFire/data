@@ -1,0 +1,69 @@
+workspace.Interaction.UpdateItems.SummerFire.CraftingBench.Crafting
+
+workspace.CraftingTables.EventCraftingWorkBench:GetChildren()[3]:GetChildren()[4].CraftingProximityPrompt
+
+game:GetService("ReplicatedStorage").GameEvents.SummerCraftingService.ClaimCraft
+
+game:GetService("ReplicatedStorage").GameEvents.SummerCraftingService.SkipCraft
+
+game:GetService("ReplicatedStorage").GameEvents.SummerCraftingService.StartCraft
+
+SummerCraftingEventData
+SummerFireEventData
+
+local args = {
+	"5:5:Campfire Egg",
+	{
+		{
+			"{bbbd79a8-02cd-4fc2-9869-3e35f11a2500}"
+		},
+		{
+			"{a99dc0ca-bdfe-4b68-8592-d3404744fd64}"
+		}
+	}
+}
+
+
+
+local args = {
+	"5:2:Paradise Egg",
+	{
+		{
+			"{c97b490e-a6b5-46c7-8cff-6898303db9f5}"
+		},
+		{
+			"{d1a3455b-a89d-4b79-b6a1-2ecd6f3dcae7}"
+		},
+		{
+			"Cosmetic:6scVa"
+		}
+	}
+}
+game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("SummerCraftingService"):WaitForChild("StartCraft"):FireServer(unpack(args))
+
+
+game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("SummerCraftingService"):WaitForChild("StartCraft"):FireServer(unpack(args))
+
+{bbbd79a8-02cd-4fc2-9869-3e35f11a2500}
+
+
+game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("SaveSlotService"):WaitForChild("RememberUnlockage"):FireServer()
+
+
+
+if v354 == "Fruit" then
+    local v348 = v_u_20:GetData().InventoryData or {}
+elseif v354 == "Pet" then
+    local v376 = v_u_20:GetData().PetsData
+elseif v354 == "Cosmetic" then
+    local v401 = v_u_20:GetData().CosmeticData
+elseif v354 == "Gear" or v354 == "Egg" then
+    local v348 = v_u_20:GetData().InventoryData or {}
+    
+    
+    
+    ["Type"] = "Seed",
+    ["Type"] = "Egg",
+    ["Type"] = "Gear",
+    ["Type"] = "Fruit",
+    ["Type"] = "Cosmetic",

@@ -137,13 +137,36 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local result = game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("WaspWaveSurvival"):WaitForChild("GetState"):InvokeServer()
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Modules = ReplicatedStorage:WaitForChild("Modules")
+local SummerEventControllers = Modules:WaitForChild("SummerEventControllers")
+local SummerCraftingController = SummerEventControllers:WaitForChild("SummerCraftingController")
+local SummerCraftingConfig = require(SummerCraftingController.SummerCraftingConfig)
 
-if result then
-	ShowData(result)
-end
+local Craftables = SummerCraftingConfig.Craftables
+local DataService = require(ReplicatedStorage.Modules.DataService)
 
-local DataService = require(game:GetService("ReplicatedStorage").Modules.DataService)
 local GetData_result = DataService:GetData()
-local BeeEventData = GetData_result.BeeEventData
-ShowData(BeeEventData)
+local SummerCraftingEventData = GetData_result.SummerCraftingEventData
+
+--ShowData(SummerCraftingEventData)
+local emptySlot = {}
+
+for index, values in pairs(SummerCraftingEventData) do
+	if index == "Slots" then
+		if typeof(values) == "table" then
+			for i, data in pairs(values) do
+				if typeof(data) ~= "table" then
+					AddLog("Slot :" .. i .. " is empty")
+					table.insert(emptySlot, i)
+				elseif tonumber(data.RemainingTime) <= 0 then
+					ReplicatedStorage.GameEvents.SummerCraftingService.ClaimCraft:FireServer(i)
+					table.insert(emptySlot, i)
+				end
+			end
+		end
+	end
+end
+local numEmptySlots = #emptySlot
+AddLog("Number of empty slots: " .. numEmptySlots)
+--ShowData(emptySlot)

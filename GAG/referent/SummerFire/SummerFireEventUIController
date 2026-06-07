@@ -1,0 +1,200 @@
+--game:GetService("ReplicatedStorage").Modules.SummerFireEventUIController
+local v1 = game:GetService("Players")
+local v2 = game:GetService("ReplicatedStorage")
+local v_u_3 = game:GetService("RunService")
+local v_u_4 = require(v2.Modules.GuiController)
+local v_u_5 = require(v2.Modules.UpdateService)
+local v_u_6 = require(v2.Modules.DataService)
+local v_u_7 = require(v2.Modules.SetupButton)
+local v_u_8 = require(v2.Modules.UIComponents.ItemInfoHover)
+local v9 = require(v2.Modules.GiveServiceCommon.RewardDataTypes)
+local v_u_10 = v2:WaitForChild("GameEvents"):WaitForChild("SummerFire"):WaitForChild("SummerFirePopupSeenRE")
+local v_u_11 = v1.LocalPlayer
+local v12 = v_u_11.PlayerGui
+local v_u_13 = v12:WaitForChild("BackpackGui")
+local v_u_14 = v12:WaitForChild("SummerFireEventUI")
+local v_u_15 = v_u_14:WaitForChild("SummerFireEvent")
+local v_u_16 = v_u_15.Acknowledge
+local v_u_17 = {
+	v9.EggReward({
+		["Value"] = "Campfire Egg",
+		["Quantity"] = 1,
+		["Type"] = "Egg",
+	}),
+	v9.PetReward({
+		["Value"] = "Fire Wisp",
+		["Quantity"] = 1,
+		["Type"] = "Pet",
+	}),
+	v9.GearReward({
+		["Value"] = "Gold Lollipop",
+		["Quantity"] = 1,
+		["Type"] = "Gear",
+	}),
+	v9.SeedReward({
+		["Value"] = "Pitcher Plant",
+		["Quantity"] = 1,
+		["Type"] = "Seed",
+	}),
+	v9.SeedReward({
+		["Value"] = "Hearth Reed",
+		["Quantity"] = 1,
+		["Type"] = "Seed",
+	}),
+}
+local v_u_18 = {}
+local v_u_19 = false
+local v_u_20 = false
+local v_u_21 = false
+v_u_14:GetPropertyChangedSignal("Enabled"):Connect(function() -- name: ToggleBackpack
+	-- upvalues: (copy) v_u_13, (copy) v_u_14
+	v_u_13.Enabled = not v_u_14.Enabled
+end)
+function v_u_18.Open(_) -- name: Open
+	-- upvalues: (copy) v_u_13, (copy) v_u_4, (copy) v_u_14
+	v_u_13.Enabled = false
+	v_u_4:Open(v_u_14)
+end
+function v_u_18.Close(_) -- name: Close
+	-- upvalues: (copy) v_u_4, (copy) v_u_14, (copy) v_u_13
+	v_u_4:Close(v_u_14)
+	v_u_13.Enabled = true
+end
+local function v_u_28() -- name: TryOpenAfterUpdate
+	-- upvalues: (ref) v_u_19, (copy) v_u_5, (ref) v_u_20, (copy) v_u_6, (copy) v_u_11, (copy) v_u_18
+	if v_u_19 then
+		return
+	elseif v_u_5:IsUpdateDone() then
+		local v22
+		if v_u_20 then
+			v22 = true
+		else
+			local v23 = v_u_6:GetData()
+			if typeof(v23) == "table" then
+				local v24 = v23.SummerFireEventData
+				if typeof(v24) == "table" then
+					v22 = v24.HasSeenPopup == true
+				else
+					v22 = false
+				end
+			else
+				v22 = false
+			end
+		end
+		if v22 then
+			return
+		elseif not v_u_11:GetAttribute("InTutorial") then
+			v_u_19 = true
+			task.spawn(function()
+				-- upvalues: (ref) v_u_20, (ref) v_u_6, (ref) v_u_11, (ref) v_u_19, (ref) v_u_18
+				task.wait(3)
+				while workspace.CurrentCamera and workspace.CurrentCamera.CameraType == Enum.CameraType.Scriptable do
+					task.wait(1)
+				end
+				task.wait(1)
+				local v25
+				if v_u_20 then
+					v25 = true
+				else
+					local v26 = v_u_6:GetData()
+					if typeof(v26) == "table" then
+						local v27 = v26.SummerFireEventData
+						if typeof(v27) == "table" then
+							v25 = v27.HasSeenPopup == true
+						else
+							v25 = false
+						end
+					else
+						v25 = false
+					end
+				end
+				if v25 then
+					return
+				elseif v_u_11:GetAttribute("InTutorial") then
+					v_u_19 = false
+				else
+					v_u_18:Open()
+				end
+			end)
+		end
+	else
+		return
+	end
+end
+function v_u_18.Start(_) -- name: Start
+	-- upvalues: (copy) v_u_4, (copy) v_u_14, (copy) v_u_3, (copy) v_u_15, (ref) v_u_20, (copy) v_u_6, (ref) v_u_21, (copy) v_u_10, (copy) v_u_18, (copy) v_u_7, (copy) v_u_16, (copy) v_u_5, (copy) v_u_28, (copy) v_u_11, (copy) v_u_8, (copy) v_u_17
+	v_u_4:UsePopupAnims(v_u_14)
+	v_u_3.RenderStepped:Connect(function(p29)
+		-- upvalues: (ref) v_u_15
+		for v30 = 1, 5 do
+			local v31 = v_u_15.Main.Rewards.Main["RewardTemplate" .. v30].Sunrays
+			v31.Rotation = v31.Rotation + 20 * p29
+		end
+	end)
+	v_u_15.Header.Close.Activated:Connect(function()
+		-- upvalues: (ref) v_u_20, (ref) v_u_6, (ref) v_u_21, (ref) v_u_10, (ref) v_u_18
+		v_u_20 = true
+		local v32 = v_u_6:GetData()
+		if typeof(v32) == "table" then
+			local v33 = v32.SummerFireEventData
+			if typeof(v33) ~= "table" then
+				v32.SummerFireEventData = {
+					["HasSeenPopup"] = false,
+				}
+			end
+			v32.SummerFireEventData.HasSeenPopup = true
+		end
+		if not v_u_21 then
+			v_u_21 = true
+			v_u_10:FireServer()
+		end
+		v_u_18:Close()
+	end)
+	v_u_7({
+		["instance"] = nil,
+		["legacy"] = true,
+		["instance"] = v_u_16,
+	})
+	v_u_16.SENSOR.Activated:Connect(function()
+		-- upvalues: (ref) v_u_20, (ref) v_u_6, (ref) v_u_21, (ref) v_u_10, (ref) v_u_18
+		v_u_20 = true
+		local v34 = v_u_6:GetData()
+		if typeof(v34) == "table" then
+			local v35 = v34.SummerFireEventData
+			if typeof(v35) ~= "table" then
+				v34.SummerFireEventData = {
+					["HasSeenPopup"] = false,
+				}
+			end
+			v34.SummerFireEventData.HasSeenPopup = true
+		end
+		if not v_u_21 then
+			v_u_21 = true
+			v_u_10:FireServer()
+		end
+		v_u_18:Close()
+	end)
+	v_u_5.OnUpdated:Connect(function()
+		-- upvalues: (ref) v_u_28
+		v_u_28()
+	end)
+	v_u_28()
+	v_u_11:GetAttributeChangedSignal("InTutorial"):Connect(function()
+		-- upvalues: (ref) v_u_11, (ref) v_u_28
+		if not v_u_11:GetAttribute("InTutorial") then
+			task.wait(3)
+			v_u_28()
+		end
+	end)
+	v_u_8:AddRewardTable("SummerEventUI", v_u_17)
+	local v36 = v_u_15.Main.Rewards.Main:QueryDescendants("Frame")
+	table.sort(v36, function(p37, p38)
+		return p37.LayoutOrder < p38.LayoutOrder
+	end)
+	for v39, v40 in v_u_17 do
+		local v41 = ("SummerEventUI_%*_%*"):format(v40.Type, v40.Value)
+		v36[v39]:SetAttribute("UUID", v41)
+	end
+end
+task.spawn(v_u_18.Start, v_u_18)
+return v_u_18

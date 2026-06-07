@@ -1,0 +1,69 @@
+Script initialized successfully.
+[Slots] : (Table)
+  [1] : (Table)
+    [CraftKey] : 5:5:Campfire Egg
+    [Duration] : 9000
+    [LastUpdateTime] : 1780812865.749265
+    [Index] : 5
+    [CraftInstanceId] : 604bcacf-3712-47a3-919a-25ede06bfbb3
+    [Paused] : false
+    [BaseDuration] : 9000
+    [StartTime] : 1780812387.528528
+    [RemainingTime] : 6608.896315097809
+    [Result] : (Table)
+      [Value] : Campfire Egg
+      [Type] : Egg
+      [Quantity] : 1
+    [Tier] : 5
+  [2] : (Table)
+    [CraftKey] : 5:2:Paradise Egg
+    [Duration] : 9000
+    [LastUpdateTime] : 1780812865.749266
+    [Index] : 2
+    [CraftInstanceId] : 3ad29232-9cfc-48ea-8144-5e266d819757
+    [Paused] : false
+    [BaseDuration] : 9000
+    [StartTime] : 1780812330.930495
+    [RemainingTime] : 6325.906145572662
+    [Result] : (Table)
+      [Value] : Paradise Egg
+      [Type] : Egg
+      [Quantity] : 1
+    [Tier] : 5
+  [3] : (Table)
+    [CraftKey] : 5:2:Paradise Egg
+    [Duration] : 9000
+    [LastUpdateTime] : 1780812865.749268
+    [Index] : 2
+    [CraftInstanceId] : e2274461-9140-4064-a40f-bff39b953da8
+    [Paused] : false
+    [BaseDuration] : 9000
+    [StartTime] : 1780811799.083924
+    [RemainingTime] : 3666.6732800006866
+    [Result] : (Table)
+      [Value] : Paradise Egg
+      [Type] : Egg
+      [Quantity] : 1
+    [Tier] : 5
+    
+    
+    
+    Script initialized successfully.
+[Slots] : (Table)
+  [1] : (Table)
+    [CraftKey] : 1:1:Firepit Flower
+    [Duration] : 60
+    [LastUpdateTime] : 1780815397.102454
+    [Index] : 1
+    [CraftInstanceId] : a7556f8e-9e46-4762-be61-55cfc78a3d3b
+    [Paused] : false
+    [BaseDuration] : 60
+    [StartTime] : 1780815358.873401
+    [RemainingTime] : 0
+    [Result] : (Table)
+      [Value] : Firepit Flower
+      [Type] : Seed
+      [Quantity] : 1
+    [Tier] : 1
+  [2] : false
+  [3] : false

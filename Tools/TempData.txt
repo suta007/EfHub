@@ -1,479 +1,130 @@
-Script initialized successfully.
-[20:11:28] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:28] cooldownData:
-    [1] : (Table)
-      [Time] : 33
-      [Passive] : Jumbo Blessing
-    [2] : (Table)
-      [Time] : 55
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 7
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 496
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 2
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 450
-      [Passive] : Gilded Choc Everchanting Spring
-[20:11:29] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 9
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 495
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 4
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 495
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 1187
-      [Passive] : Friendly Frier
-[20:11:29] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 495
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 495
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 496
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Jumbo Blessing
-    [2] : (Table)
-      [Time] : 55
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 1047
-      [Passive] : Friendly Frier
-[20:11:29] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Jumbo Blessing
-    [2] : (Table)
-      [Time] : 54
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:29] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:29] cooldownData:
-    [1] : (Table)
-      [Time] : 1
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 311
-      [Passive] : Gilded Choc Everchanting Spring
-[20:11:30] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:30] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 495
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:30] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:30] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 494
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:30] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:30] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 494
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:30] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:30] cooldownData:
-    [1] : (Table)
-      [Time] : 1046
-      [Passive] : Friendly Frier
-[20:11:30] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:30] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Jumbo Blessing
-    [2] : (Table)
-      [Time] : 53
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:30] PetCooldownsUpdated: {14053841-c8ad-4da9-9468-2a574b170500}
-[20:11:30] cooldownData:
-    [1] : (Table)
-      [Time] : 15
-      [Passive] : Utter Beauty
-[20:11:31] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 494
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:31] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 310
-      [Passive] : Gilded Choc Everchanting Spring
-[20:11:31] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 53
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 609
-      [Passive] : Jumbo Blessing
-[20:11:31] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 493
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:31] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 493
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:31] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 492
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:31] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 53
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 608
-      [Passive] : Jumbo Blessing
-[20:11:31] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 1045
-      [Passive] : Friendly Frier
-[20:11:31] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:31] cooldownData:
-    [1] : (Table)
-      [Time] : 52
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 608
-      [Passive] : Jumbo Blessing
-[20:11:32] PetCooldownsUpdated: {14053841-c8ad-4da9-9468-2a574b170500}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 14
-      [Passive] : Utter Beauty
-[20:11:32] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 493
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:32] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 309
-      [Passive] : Gilded Choc Everchanting Spring
-[20:11:32] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 309
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 507
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:32] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 492
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:32] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 1044
-      [Passive] : Friendly Frier
-[20:11:32] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 491
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:32] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:32] cooldownData:
-    [1] : (Table)
-      [Time] : 51
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 607
-      [Passive] : Jumbo Blessing
-[20:11:33] PetCooldownsUpdated: {14053841-c8ad-4da9-9468-2a574b170500}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 13
-      [Passive] : Utter Beauty
-[20:11:33] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 492
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:33] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 308
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 506
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:33] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 491
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:33] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 490
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:33] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 490
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:33] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 1043
-      [Passive] : Friendly Frier
-[20:11:33] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:33] cooldownData:
-    [1] : (Table)
-      [Time] : 50
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 606
-      [Passive] : Jumbo Blessing
-[20:11:34] PetCooldownsUpdated: {14053841-c8ad-4da9-9468-2a574b170500}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 12
-      [Passive] : Utter Beauty
-[20:11:34] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 491
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:34] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 307
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 505
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:34] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 489
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:34] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 489
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:34] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 1042
-      [Passive] : Friendly Frier
-[20:11:34] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:34] cooldownData:
-    [1] : (Table)
-      [Time] : 49
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 605
-      [Passive] : Jumbo Blessing
-[20:11:35] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:35] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 15
-      [Passive] : Utter Beauty
-[20:11:35] PetCooldownsUpdated: {14053841-c8ad-4da9-9468-2a574b170500}
-[20:11:35] cooldownData:
-    [1] : (Table)
-      [Time] : 11
-      [Passive] : Utter Beauty
-[20:11:35] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:35] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 490
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:35] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:35] cooldownData:
-    [1] : (Table)
-      [Time] : 306
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 504
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:35] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:35] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 488
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:35] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:35] cooldownData:
-    [1] : (Table)
-      [Time] : 305
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 503
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:36] PetCooldownsUpdated: {c3ea0810-0ecb-4c25-b6a7-de188b677eae}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 14
-      [Passive] : Utter Beauty
-[20:11:36] PetCooldownsUpdated: {93464dc5-b3e7-4ea2-9a56-c2fd6f96cfa6}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 1041
-      [Passive] : Friendly Frier
-[20:11:36] PetCooldownsUpdated: {306d55bd-2ffd-4d03-8744-e5be2a571360}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 48
-      [Passive] : Everchanted Pet Mutation Bonus
-    [2] : (Table)
-      [Time] : 604
-      [Passive] : Jumbo Blessing
-[20:11:36] PetCooldownsUpdated: {14053841-c8ad-4da9-9468-2a574b170500}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 10
-      [Passive] : Utter Beauty
-[20:11:36] PetCooldownsUpdated: {9cf7a10e-84cb-4d52-bceb-6f8b1faf52c2}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 489
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:36] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 305
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 502
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:36] PetCooldownsUpdated: {cf2fecee-dcca-4e01-bea7-0a3562d91443}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 304
-      [Passive] : Gilded Choc Everchanting Spring
-    [2] : (Table)
-      [Time] : 502
-      [Passive] : Everchanted Pet Mutation Bonus
-[20:11:36] PetCooldownsUpdated: {407b1380-bbb8-4385-bce0-df83af574ca3}
-[20:11:36] cooldownData:
-    [1] : (Table)
-      [Time] : 0
-      [Passive] : Mimicry
-    [2] : (Table)
-      [Time] : 487
-      [Passive] : Everchanted Pet Mutation Bonus
+PlayedGuaranteedLuckyHarvest : false
+ZenTree : table: 0x7781165577e7d39e
+ArbitraryFTUEData : table: 0x54975a9b74db8c8e
+Transactions : table: 0x5fe1e71f4b90fa3e
+UnlockedEventShopItems : table: 0xdc7c97495436b77e
+HarvestReaper : table: 0x4e4c72d00f380cee
+PetEggStock : table: 0xababd72d010577ae
+PetsData : table: 0xce9b2ebbe9eb94ce
+TradeHistory : table: 0xbacb3140f4a8092e
+GardenCoinShopStats : table: 0x77c2f064c55ca8fe
+GardenLevel : table: 0x98f2eb3e520674ae
+DinoMachine : table: 0x8be017d21651c68e
+DinoQuests : table: 0xdffb6b3102358c9e
+CropMastery : table: 0x98baa82bc8c0774e
+PlayerGiftCooldown : table: 0xb6ba43f4537422be
+RebirthData : table: 0xb1fe55a7478226ae
+InventorySortData : table: 0xe8fa983606362e6e
+InfinitePack_AdRewards2 : table: 0x1532f5ac67e3868e
+TotalRobuxSpent : 0
+PetAgeBreakMachine : table: 0x114d66a7a80dbbbe
+BoothHistory : table: 0x755d35dc20f022de
+BeanStalk : table: 0xedc8c672ac598a6e
+Gamepasses : table: 0xb31a6329c2a3035e
+InfinitePack : table: 0x7f8b309bf4006aae
+CookingPot : table: 0xb3356f981977076e
+HoneyMachine : table: 0x115e49d173cca70e
+QuestContainers : table: 0x2456142c31d5c3ce
+SummerCraftingEventData : table: 0xdd92cc889d5c5d1e
+Achievements : table: 0xd702d4fc6be2ad5e
+BurntPlants : 0
+BoxingMachineData : table: 0x373badd37bc4fafe
+TotalCropsValueSold : 239359716169
+HalloweenMarket : table: 0x1cade5b67e38fdbe
+ToyCodeCooldown : 0
+InventoryData : table: 0x4754ac4ab554694e
+TradeData : table: 0x9999be8fc5ca0b6e
+CosmeticData : table: 0x22e05b5e5719993e
+PetMutationMachine : table: 0xa89c66eec4292f7e
+InfinitePack_AdRewards1 : table: 0xbe446b92c161620e
+HungryBirdsEvent : table: 0xf7f6401faa2c352e
+EventShopStock : table: 0x976af387a34a0ffe
+TendablePlants : table: 0x47bf04b84f65154e
+SeasonPass : table: 0xbbccdd9c63293c3e
+PlayedEggTutorial : false
+TraderEventData : table: 0x5c1874e6f6a6d00e
+FairyEvent : table: 0xadb403a257dbfa0e
+WitchesBrew : table: 0x676a4a1809efaaae
+AdRewardsWateringCanProgress : table: 0x1cecb038584ff92e
+PunnishmentData : table: 0xfb4e222d9b6a73ce
+ClaimedCodes : table: 0xe4bb89b3f90afa3e
+ExtraBackpackSize : 50
+SeedStocks : table: 0xfcbc85def9c4015e
+AwardedBadges : table: 0x8de80d3806a4f24e
+NPCPoints : table: 0x0f86a013214ffcbe
+SmithingEventData : table: 0x23e0a93f4fd7ba7e
+NewYearsEvent : table: 0x5c41578b6a7927de
+JellyCrafting : table: 0x1334506f82668bde
+TradeBoothSkinData : table: 0xb72928c0a51e97ce
+LastPetsIncubationTime : 1780812572
+SpecialCurrency : table: 0x5e78e06fcf37166e
+FairyQuests : table: 0x5b0f6859ed88a8ae
+GearUseData : table: 0x6c429a8843e89eee
+Backpack : table: 0x23ccb988636bdcde
+LevelData : table: 0x1975351f0296bace
+DiggingData : table: 0x067cc40b6865ddde
+GardenGuide : table: 0x2d911353e861921e
+HoneyMachine2026 : table: 0x5d01e8f2aef4171e
+TeamEventData : table: 0xa4db929a3eaf39fe
+Pity : table: 0x632d2dd47759eebe
+FenceSkinData : table: 0xadab254309a9597e
+EventInfinitePack : table: 0x0800615f38c78a6e
+SummerFireEventData : table: 0xd5ed338b88f60f3e
+CosmeticStock : table: 0xe2d548aae42a5f6e
+GiftHatchEggAttempts : 0
+UnlockedRecipes : table: 0xc0df17a6d65dc28e
+ValentinesEvent : table: 0x8f2314863857482e
+AdminQuests : table: 0x23748ab16c3c6aee
+KitchenStormEventData : table: 0xed377a2230872bae
+ShopTabData : table: 0x40a8641b749c28ee
+GardenCoinShopStock : table: 0x9159e8dc5ba45c9e
+ExpansionsData : table: 0xb716867561b1aaee
+BeeEventData : table: 0xe32746816741745e
+FoodConnoisseurEventData : table: 0x19bf06c4b816324e
+PermanentGears : table: 0x5d97b98747110a6e
+Sheckles : 17291940743789650000
+Settings : table: 0xe69119efe1ac096e
+DefaultSettingsAlreadySet : table: 0x4024e146fddf534e
+BadgeData : table: 0x2a52d7deddab423e
+ChipmunkEvent : table: 0x3ee7340255dce6de
+ItemGiftHistory : table: 0x2ff14cdcd6a12bbe
+CosmeticNotice : 10
+UpgraderMigrations : table: 0x5d9fffb1578866be
+SeasonPassDailyQuests : table: 0x3ad1185bf9d1234e
+SavedObjects : table: 0x459f4c052c03735e
+Gifts : table: 0x676a616d0af826ee
+TravelingMerchantShopStock : table: 0xc6271a13b227435e
+SaveSlots : table: 0x55f4428f62c381ce
+TravelingHoneyMerchant : table: 0xe4cffb757f62b8ee
+CropsSold : 2367332
+InfGrowPlants : table: 0x6aa2a4320a45d66e
+EasterEventData : table: 0x7d85d8f902f933ce
+GearStock : table: 0x2293beeb5f25971e
+CookingKit : table: 0x148c54e59466d21e
+GiveawayData : table: 0x6ad3c76772c37a3e
+GardenGames : table: 0x7972c5f2d9a1a2de
+SafariEvent : table: 0x5cd811ad5230438e
+LastPetsSaveTime : 1780812572
+CraftingData : table: 0x590e4d9f5d0d66ee
+LastPlayedSeasonPass : Season 5
+LastSaveTime : 1780812572
+BlackButtercupEvent : table: 0xb784afacb9afabee
+DailyQuests : table: 0x27c5f23adbe1337e
+Migrated : table: 0xac9e8eec379630ce
+CandyBlossomCraftingProgress : table: 0x1637326d9e3ee8ae
+OldRebirthData : table: 0xc025a51eecbbf1de
+GardenLikes : table: 0xe6d2e60a94a71d9e
+RaccoonSteals : table: 0xedd4667643e929ee
+ChristmasEvent : table: 0x389fcb541939887e
+BeeEggShopStock : table: 0xb94ae70f911f9fae
+TotalTokensSpent : 0
+RepeatedTutorial : true
+FallMarket : table: 0xc190e31e2a8569be
+ButtercupEvent : table: 0xba315245d928f62e
+DeadTree : table: 0x7dd2732841afb5fe
+FirstTimeUser : false
+StarterPack : table: 0x6d1b99c50599ac1e
+Fertilizer : table: 0xcda313bd96aa22de
+ZenEventData : table: 0x13366cb11805d61e
+DailyEgg : table: 0xed3bb47c8d020cfe
+NewPlayersServers : table: 0xb0b68448a459fbbe

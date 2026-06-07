@@ -1,0 +1,2479 @@
+-- game:GetService("ReplicatedStorage").Modules.SummerEventControllers.SummerCraftingController
+
+local v_u_1 = game:GetService("ReplicatedStorage")
+local v_u_2 = game:GetService("UserInputService")
+local v_u_3 = game:GetService("TweenService")
+local v_u_4 = game:GetService("RunService")
+local v5 = game:GetService("Players")
+local v_u_6 = require(v_u_1.Modules.SeedPackOddsController)
+local v_u_7 = require(v_u_1.Modules.PetEggOddsController)
+local v_u_8 = require(v_u_1.Modules.CosmeticCrateOddsController)
+local v_u_9 = require(v_u_1.Data.EnumRegistry.InventoryServiceEnums)
+local v_u_10 = require(v_u_1.Modules.ItemDescriptionFinder)
+local v_u_11 = require(v_u_1.Modules.GameConfigController)
+local v_u_12 = v_u_11:GetConfig("SummerFireConfig")
+local v_u_13 = require(v_u_1.Modules.UIComponents.ItemInfoHover)
+local v_u_14 = require(v_u_1.Modules.CalculatePlantValue)
+local v_u_15 = require(v_u_1.Modules.ItemRarityFinder)
+local v_u_16 = require(v_u_1.Modules.MarketController)
+local v_u_17 = require(v_u_1.Modules.MutationHandler)
+local v_u_18 = require(v_u_1.Modules.ItemImageFinder)
+local v_u_19 = require(v_u_1.Modules.GuiController)
+require(v_u_1.Modules.Notification)
+local v_u_20 = require(v_u_1.Modules.DataService)
+local v_u_21 = require(v_u_1.Calculate_Weight)
+local v_u_22 = require(v_u_1.Data.VariantColors)
+local v_u_23 = require(v_u_1.Modules.ConfirmationPromptController)
+local v_u_24 = require(v_u_1.Modules.SetupButton)
+local v_u_25 = require(v_u_1.Modules.NumberUtil)
+local v_u_26 = require(v_u_1.Modules.Shime)
+local v_u_27 = v_u_11:GetConfig("SummerCraftingConfig")
+local v_u_28 = require(v_u_1.Modules.TimeHelper)
+local v_u_29 = require(v_u_1.Modules.PlaySound)
+local v_u_30 = require(v_u_1.Modules.Spring)
+local v_u_31 = require(v_u_1.Modules.Chalk)
+local function v32() -- name: RefetchSummerConfigs
+	-- upvalues: (ref) v_u_12, (copy) v_u_11, (ref) v_u_27
+	v_u_12 = v_u_11:GetConfig("SummerFireConfig")
+	v_u_27 = v_u_11:GetConfig("SummerCraftingConfig")
+end
+workspace:GetAttributeChangedSignal("SummerFireConfig"):Connect(v32)
+workspace:GetAttributeChangedSignal("SummerCraftingConfig"):Connect(v32)
+local v_u_33 = {
+	["Open"] = "rbxassetid://135863675900042",
+	["Close"] = "rbxassetid://80268833036765",
+	["Hover"] = "rbxassetid://72189990667457",
+	["Click"] = "rbxassetid://138819210811808",
+	["StartCraft"] = "rbxassetid://132025912670429",
+	["Claim"] = "rbxassetid://83163622219903",
+}
+local v_u_34 = v5.LocalPlayer
+local v_u_35 = v_u_34:WaitForChild("PlayerGui")
+local v_u_36 = v_u_35:WaitForChild("SummerCrafting")
+local v_u_37 = v_u_36.Crafting.Main.Campfire.Campfire.CampfireSprite
+local v_u_38 = {
+	0,
+	256,
+	512,
+	768,
+}
+local v_u_39 = 0
+local v_u_40 = 1
+local v_u_41 = 0
+local v_u_42 = Color3.fromRGB(0, 255, 21)
+local v_u_43 = Color3.fromRGB(191, 107, 70)
+local v44 = {}
+local function v_u_52(p45, p46, p47) -- name: BuildResultHoverData
+	-- upvalues: (copy) v_u_10, (copy) v_u_15
+	local v48
+	if p45 == "Campfire Egg" then
+		v48 = "Forged in the heart of the campfire - the ONLY egg that can hatch the ULTRA-rare Fire Wisp."
+	else
+		v48 = v_u_10(p45, p46)
+		local v49
+		if p46 == "Seed" then
+			v49 = ("%* Seed"):format(p45)
+		else
+			v49 = p45
+		end
+		if not v48 or #v48 <= 0 then
+			v48 = ("A summer-crafted %*."):format(v49)
+		end
+		if #v48 < 60 then
+			v48 = ("%* A coveted treasure forged at the Summer Campfire, prized by gardeners all season long."):format(v48)
+		end
+	end
+	local v50 = {
+		["DisplayName"] = nil,
+		["Description"] = nil,
+		["ItemImage"] = nil,
+		["Properties"] = nil,
+		["DescriptionOnly"] = true,
+	}
+	local v51
+	if p46 == "Seed" then
+		v51 = ("%* Seed"):format(p45)
+	else
+		v51 = p45
+	end
+	v50.DisplayName = v51
+	v50.Description = v48
+	v50.ItemImage = p47
+	v50.Properties = {
+		["Rarity"] = v_u_15(p45, p46),
+	}
+	return v50
+end
+local function v_u_55(p53) -- name: SetupCampfireEggText
+	-- upvalues: (copy) v_u_3
+	local v54 = Instance.new("UIGradient")
+	v54.Name = "CampfireEggWave"
+	v54.Color = ColorSequence.new({ ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 240, 130)), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(255, 140, 40)), ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 70, 30)) })
+	v54.Offset = Vector2.new(-0.35, 0)
+	v54.Parent = p53
+	v_u_3
+		:Create(v54, TweenInfo.new(1.6, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+			["Offset"] = Vector2.new(0.35, 0),
+		})
+		:Play()
+end
+local function v_u_66(p56) -- name: SetupCampfireEggFrame
+	-- upvalues: (copy) v_u_55, (copy) v_u_4
+	v_u_55(p56.Inner.ItemName)
+	local v_u_57 = p56.Inner.Craft.Sunrays
+	v_u_57.Visible = true
+	v_u_4.RenderStepped:Connect(function(p58)
+		-- upvalues: (copy) v_u_57
+		local v59 = v_u_57
+		v59.Rotation = v59.Rotation + 20 * p58
+	end)
+	local v_u_60 = p56.Inner.SpecialImage
+	v_u_60.Visible = true
+	local v_u_61 = p56.Inner.SpecialImageShadow
+	v_u_61.Visible = true
+	local v_u_62 = 0
+	v_u_4.RenderStepped:Connect(function(p63)
+		-- upvalues: (ref) v_u_62, (copy) v_u_60, (copy) v_u_61
+		v_u_62 = v_u_62 + p63
+		local v64 = v_u_62 * 2.2
+		local v65 = math.sin(v64) * 7
+		v_u_60.Rotation = v65
+		v_u_61.Rotation = v65
+	end)
+	p56.Inner.InletTexture.Size = UDim2.fromScale(1, 0.8)
+	p56.Inner.ClipsDescendants = false
+end
+local function v_u_69(p67) -- name: AddEggGlow
+	-- upvalues: (copy) v_u_3
+	local v68 = Instance.new("UIStroke")
+	v68.Name = "EggGlow"
+	v68.Color = Color3.fromRGB(255, 190, 70)
+	v68.Thickness = 2.5
+	v68.Transparency = 0.2
+	v68.Parent = p67
+	v_u_3
+		:Create(v68, TweenInfo.new(0.9, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+			["Transparency"] = 0.75,
+		})
+		:Play()
+end
+local function v_u_79(p70, p71) -- name: FitSlots
+	local v72 = #p70
+	if v72 == 0 then
+		return
+	else
+		local v73 = p70[1].Size.X.Scale
+		if v73 <= 0 then
+			return
+		else
+			local v74 = not p71 and 0 or p71.Padding.Scale
+			if v72 * v73 + (v72 - 1) * v74 > 1 then
+				local v75 = (1 - (v72 - 1) * v74) / (v72 * v73)
+				local v76 = math.clamp(v75, 0, 1)
+				for _, v77 in p70 do
+					local v78 = v77.Size
+					v77.Size = UDim2.new(v78.X.Scale * v76, v78.X.Offset * v76, v78.Y.Scale * v76, v78.Y.Offset * v76)
+				end
+			end
+		end
+	end
+end
+local function v_u_84(p80, p81) -- name: SetCampfireSpriteState
+	-- upvalues: (ref) v_u_39, (ref) v_u_40, (ref) v_u_41, (copy) v_u_37
+	local v82, v83
+	if p81 then
+		v82 = true
+		v83 = 768
+	elseif p80 <= 0 then
+		v82 = false
+		v83 = 0
+	elseif p80 <= 5 then
+		v82 = true
+		v83 = 256
+	else
+		v82 = true
+		v83 = 512
+	end
+	if v82 then
+		if v_u_39 ~= v83 then
+			v_u_39 = v83
+			v_u_40 = 1
+			v_u_41 = 0
+			v_u_37.ImageRectOffset = Vector2.new(0, v83)
+		end
+	else
+		v_u_39 = 0
+		v_u_40 = 1
+		v_u_41 = 0
+		v_u_37.ImageRectOffset = Vector2.new(0, 0)
+	end
+end
+function v44.Start() -- name: Start
+	-- upvalues: (copy) v_u_34, (copy) v_u_2, (copy) v_u_19, (copy) v_u_36, (copy) v_u_3, (ref) v_u_12, (copy) v_u_30, (ref) v_u_27, (copy) v_u_18, (copy) v_u_28, (copy) v_u_20, (copy) v_u_24, (copy) v_u_1, (copy) v_u_29, (copy) v_u_35, (copy) v_u_16, (copy) v_u_21, (copy) v_u_9, (copy) v_u_17, (copy) v_u_14, (copy) v_u_22, (copy) v_u_10, (copy) v_u_15, (copy) v_u_13, (copy) v_u_25, (copy) v_u_33, (copy) v_u_23, (copy) v_u_7, (copy) v_u_8, (copy) v_u_6, (copy) v_u_66, (copy) v_u_26, (copy) v_u_69, (copy) v_u_52, (copy) v_u_79, (copy) v_u_42, (copy) v_u_43, (copy) v_u_31, (copy) v_u_4, (copy) v_u_84, (ref) v_u_39, (ref) v_u_41, (ref) v_u_40, (copy) v_u_38, (copy) v_u_37
+	if v_u_34.Name == "Luaappp" then
+		v_u_2.InputBegan:Connect(function(p85, p86)
+			-- upvalues: (ref) v_u_19, (ref) v_u_36
+			if not p86 then
+				if p85.KeyCode == Enum.KeyCode.X then
+					v_u_19:Toggle(v_u_36)
+				end
+			end
+		end)
+	end
+	v_u_3
+		:Create(v_u_36.Crafting.Main.Crafting.Craft.Icon, TweenInfo.new(1.25, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+			["Position"] = v_u_36.Crafting.Main.Crafting.Craft.Icon.Position + UDim2.fromOffset(0, -10),
+		})
+		:Play()
+	local v_u_87 = {}
+	local v_u_88 = {}
+	local v_u_89 = v_u_36.Crafting.Main.Clipper.Scroller
+	local v90 = v_u_89.CraftableTemplate
+	v90.Parent = nil
+	local v91 = v90.Inner.Requirements.RecipeItemTemplate
+	v91.Parent = nil
+	local v_u_92 = v_u_36.Crafting.Main.Crafting.Requirements.RequirementTemplate
+	v_u_92.Parent = nil
+	local v93 = v_u_89.TierTemplate
+	v93.Parent = nil
+	local v94 = v_u_89.Separator.TierProgressTemplate
+	v94.Parent = nil
+	local v_u_95 = nil
+	local v_u_96 = nil
+	local v_u_97 = nil
+	local v_u_98 = {}
+	local v_u_99 = {}
+	local function v_u_100() -- name: ClearDisplayedCraft
+		-- upvalues: (ref) v_u_95, (ref) v_u_96, (ref) v_u_97, (ref) v_u_98, (ref) v_u_99, (ref) v_u_36
+		v_u_95 = nil
+		v_u_96 = nil
+		v_u_97 = nil
+		v_u_98 = {}
+		v_u_99 = {}
+		v_u_36.Crafting.Main.Crafting.Visible = false
+		v_u_36.Crafting.Main.Campfire.Visible = true
+	end
+	local v101 = v_u_36.Crafting.Main.Campfire.Crafting
+	local v_u_102 = { v101.Craft1, v101.Craft2, v101.Craft3 }
+	local v_u_103 = { 0, 3, 4 }
+	local function v_u_122(p104, p105) -- name: SetSlotEmpty
+		-- upvalues: (ref) v_u_12, (copy) v_u_103, (ref) v_u_30
+		local v106 = p104:FindFirstChild("Duration")
+		if v106 and v106:IsA("GuiObject") then
+			v106.Visible = false
+		end
+		local v107 = p104:FindFirstChild("Shadow")
+		if v107 and v107:IsA("GuiObject") then
+			v107.Visible = false
+		end
+		local v108 = p104:FindFirstChild("Icon")
+		if v108 and v108:IsA("GuiObject") then
+			v108.Visible = false
+		end
+		local v109 = p104:FindFirstChild("TimeLeft")
+		if v109 and v109:IsA("GuiObject") then
+			v109.Visible = false
+		end
+		local v110 = p104:FindFirstChild("Skip")
+		if v110 and v110:IsA("GuiObject") then
+			v110.Visible = false
+		end
+		local v111 = workspace
+		local v112 = v_u_12.WORKSPACE_ATTRIBUTE
+		local v113 = tonumber(v111:GetAttribute(v112)) or 0
+		if workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true then
+			v113 = v_u_12.MAX_TIERS
+		end
+		local v114 = (v_u_103[p105] or 1) <= v113
+		local v115 = not v114
+		local v116 = p104:FindFirstChild("TierName")
+		if v116 and v116:IsA("GuiObject") then
+			v116.Visible = v115
+		end
+		local v117 = p104:FindFirstChild("TierValue")
+		if v117 and v117:IsA("GuiObject") then
+			v117.Visible = true
+		end
+		local v118 = p104:FindFirstChild("TierValue")
+		if v118 and v118:IsA("TextLabel") then
+			if v114 then
+				v118.Text = "EMPTY"
+				p104:RemoveTag("TextHoverTag")
+			else
+				local v119 = v_u_103[p105] or 1
+				v118.Text = v119 or (({
+					"I",
+					"II",
+					"III",
+					"IV",
+					"V",
+					"VI",
+					"VII",
+					"VIII",
+					"IX",
+					"X",
+				})[v119] or tostring(v119))
+				p104:AddTag("TextHoverTag")
+			end
+			p104:SetAttribute("HoverText", (("This Slot will be unlocked when your Campfire reaches Tier %*"):format(v_u_103[p105] or 1)))
+		end
+		local v120 = p104:FindFirstChild("Duration")
+		if v120 then
+			local v121 = v120:FindFirstChild("Filler")
+			if v121 and v121:IsA("GuiObject") then
+				v_u_30.target(v121, 1, 4, {
+					["Size"] = UDim2.fromScale(0, 1),
+				})
+			end
+		end
+	end
+	local function v_u_137(p123, p124) -- name: SyncLocalSlotState
+		-- upvalues: (copy) v_u_88
+		if type(p124) == "table" then
+			local v125 = p124.RemainingTime
+			local v126 = tonumber(v125)
+			local v127
+			if v126 == nil then
+				local v128 = p124.EndTime
+				local v129 = (tonumber(v128) or 0) - workspace:GetServerTimeNow()
+				v127 = math.max(0, v129)
+			else
+				v127 = math.max(0, v126)
+			end
+			local v130 = p124.LastUpdateTime
+			local v131 = tonumber(v130) or workspace:GetServerTimeNow()
+			local v132 = p124.CraftInstanceId or ("%*:%*"):format(p124.CraftKey, p124.StartTime or "")
+			local v133 = tostring(v132)
+			local v134 = p124.CraftKey
+			local v135 = v_u_88[p123]
+			if v135 and v135.CraftInstanceKey == v133 then
+				v135.ServerRemainingTime = v127
+				v135.ServerLastUpdateTime = v131
+				return v135
+			else
+				local v136 = {
+					["CraftInstanceKey"] = nil,
+					["CraftKey"] = nil,
+					["ServerRemainingTime"] = nil,
+					["ServerLastUpdateTime"] = nil,
+					["LastDisplayedRemainingTime"] = nil,
+					["CraftInstanceKey"] = v133,
+					["CraftKey"] = v134,
+					["ServerRemainingTime"] = v127,
+					["ServerLastUpdateTime"] = v131,
+				}
+				v_u_88[p123] = v136
+				return v136
+			end
+		else
+			v_u_88[p123] = nil
+			return nil
+		end
+	end
+	local function v_u_157(p138, p139) -- name: GetDisplayedRemainingTime
+		-- upvalues: (copy) v_u_137, (ref) v_u_12, (ref) v_u_27
+		local v140 = v_u_137(p138, p139)
+		if not v140 then
+			return 0
+		end
+		local v141
+		if type(p139) == "table" then
+			local v142 = workspace
+			local v143 = v_u_12.WORKSPACE_ATTRIBUTE
+			local v144 = tonumber(v142:GetAttribute(v143)) or 0
+			if workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true then
+				v144 = v_u_12.MAX_TIERS
+			end
+			local v145 = p139.Tier
+			local v146 = tonumber(v145) or 0
+			v141 = p139.Paused == true and true or (v144 <= 0 and true or v146 > 0 and v144 < v146)
+		else
+			v141 = false
+		end
+		if v141 then
+			v140.LastDisplayedRemainingTime = v140.ServerRemainingTime
+			return v140.ServerRemainingTime
+		end
+		local v147 = workspace
+		local v148 = v_u_12.WORKSPACE_ATTRIBUTE
+		local v149 = tonumber(v147:GetAttribute(v148)) or 0
+		if workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true then
+			v149 = v_u_12.MAX_TIERS
+		end
+		local v150
+		if v149 <= 0 then
+			v150 = 1
+		else
+			local v151 = v149 * v_u_27.BoostPerTier / 100
+			v150 = math.max(1, v151)
+		end
+		local v152 = workspace:GetServerTimeNow() - v140.ServerLastUpdateTime
+		local v153 = math.max(0, v152)
+		local v154 = v140.ServerRemainingTime - v153 * v150
+		local v155 = math.max(0, v154)
+		if v140.LastDisplayedRemainingTime ~= nil then
+			local v156 = v140.LastDisplayedRemainingTime
+			v155 = math.min(v156, v155)
+		end
+		v140.LastDisplayedRemainingTime = v155
+		return v155
+	end
+	local function v_u_189(p158, p159, p160) -- name: SetSlotCrafting
+		-- upvalues: (copy) v_u_157, (ref) v_u_18, (ref) v_u_12, (ref) v_u_28, (ref) v_u_30
+		local v161 = p159:FindFirstChild("Duration")
+		if v161 and v161:IsA("GuiObject") then
+			v161.Visible = true
+		end
+		local v162 = p159:FindFirstChild("Shadow")
+		if v162 and v162:IsA("GuiObject") then
+			v162.Visible = true
+		end
+		local v163 = p159:FindFirstChild("Icon")
+		if v163 and v163:IsA("GuiObject") then
+			v163.Visible = true
+		end
+		local v164 = p159:FindFirstChild("TimeLeft")
+		if v164 and v164:IsA("GuiObject") then
+			v164.Visible = true
+		end
+		local v165 = p159:FindFirstChild("Skip")
+		if v165 and v165:IsA("GuiObject") then
+			v165.Visible = true
+		end
+		local v166 = p159:FindFirstChild("TierName")
+		if v166 and v166:IsA("GuiObject") then
+			v166.Visible = false
+		end
+		local v167 = p159:FindFirstChild("TierValue")
+		if v167 and v167:IsA("GuiObject") then
+			v167.Visible = false
+		end
+		local v168 = p160.Result
+		local v169 = v_u_157(p158, p160)
+		local v170 = 1
+		local v171 = p160.BaseDuration
+		local v172 = tonumber(v171)
+		if not v172 then
+			local v173 = p160.Duration
+			v172 = tonumber(v173)
+			if not v172 then
+				local v174 = p160.RemainingTime
+				v172 = tonumber(v174) or 1
+			end
+		end
+		local v175 = v169 / math.max(v170, v172)
+		local v176 = 1 - math.clamp(v175, 0, 1)
+		local v177 = p159:FindFirstChild("Icon")
+		if v177 and (v177:IsA("ImageLabel") and type(v168) == "table") then
+			v177.Image = v_u_18(v168.Value, v168.Type)
+		end
+		local v178 = p159:FindFirstChild("TimeLeft")
+		if v178 and v178:IsA("TextLabel") then
+			v178.RichText = true
+			local v179
+			if type(p160) == "table" then
+				local v180 = workspace
+				local v181 = v_u_12.WORKSPACE_ATTRIBUTE
+				local v182 = tonumber(v180:GetAttribute(v181)) or 0
+				if workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true then
+					v182 = v_u_12.MAX_TIERS
+				end
+				local v183 = p160.Tier
+				local v184 = tonumber(v183) or 0
+				v179 = (p160.Paused == true or v182 <= 0) and true or v184 > 0 and v182 < v184
+			else
+				v179 = false
+			end
+			if v179 then
+				local v185 = p160.Tier
+				local v186 = tonumber(v185) or 1
+				v178.Text = ('<font color="#FF2727"><b>PAUSED: TIER %*</b></font>'):format(v186 or (({
+					"I",
+					"II",
+					"III",
+					"IV",
+					"V",
+					"VI",
+					"VII",
+					"VIII",
+					"IX",
+					"X",
+				})[v186] or tostring(v186)))
+			else
+				v178.Text = v_u_28:GenerateColonFormatFromTime((math.ceil(v169)))
+			end
+		end
+		local v187 = p159:FindFirstChild("Duration")
+		if v187 then
+			local v188 = v187:FindFirstChild("Filler")
+			if v188 and v188:IsA("GuiObject") then
+				v_u_30.target(v188, 1, 4, {
+					["Size"] = UDim2.fromScale(v176, 1),
+				})
+			end
+		end
+	end
+	local function v_u_202(p190, p191) -- name: SetSlotReady
+		-- upvalues: (ref) v_u_18
+		local v192 = p190:FindFirstChild("Duration")
+		if v192 and v192:IsA("GuiObject") then
+			v192.Visible = false
+		end
+		local v193 = p190:FindFirstChild("Shadow")
+		if v193 and v193:IsA("GuiObject") then
+			v193.Visible = false
+		end
+		local v194 = p190:FindFirstChild("Icon")
+		if v194 and v194:IsA("GuiObject") then
+			v194.Visible = true
+		end
+		local v195 = p190:FindFirstChild("TimeLeft")
+		if v195 and v195:IsA("GuiObject") then
+			v195.Visible = true
+		end
+		local v196 = p190:FindFirstChild("Skip")
+		if v196 and v196:IsA("GuiObject") then
+			v196.Visible = false
+		end
+		local v197 = p190:FindFirstChild("TierName")
+		if v197 and v197:IsA("GuiObject") then
+			v197.Visible = false
+		end
+		local v198 = p190:FindFirstChild("TierValue")
+		if v198 and v198:IsA("GuiObject") then
+			v198.Visible = false
+		end
+		local v199 = p191.Result
+		local v200 = p190:FindFirstChild("Icon")
+		if v200 and (v200:IsA("ImageLabel") and type(v199) == "table") then
+			v200.Image = v_u_18(v199.Value, v199.Type)
+		end
+		local v201 = p190:FindFirstChild("TimeLeft")
+		if v201 and v201:IsA("TextLabel") then
+			v201.RichText = true
+			v201.Text = "CLAIM!"
+		end
+	end
+	local function v_u_206(p203, p204) -- name: UpdateCraftingSlot
+		-- upvalues: (copy) v_u_102, (copy) v_u_88, (copy) v_u_122, (copy) v_u_157, (copy) v_u_202, (copy) v_u_189
+		local v205 = v_u_102[p203]
+		if v205 then
+			if type(p204) == "table" then
+				if v_u_157(p203, p204) <= 0 then
+					v_u_202(v205, p204)
+				else
+					v_u_189(p203, v205, p204)
+				end
+			else
+				v_u_88[p203] = nil
+				v_u_122(v205, p203)
+				return
+			end
+		else
+			return
+		end
+	end
+	local function v_u_210() -- name: UpdateCraftingSlots
+		-- upvalues: (ref) v_u_20, (copy) v_u_206, (ref) v_u_96, (copy) v_u_100
+		local v207 = v_u_20:GetData().SummerCraftingEventData
+		if v207 then
+			v207 = v207.Slots
+		end
+		for v208 = 1, 3 do
+			local v209
+			if v207 then
+				v209 = v207[v208]
+			else
+				v209 = v207
+			end
+			v_u_206(v208, v209)
+			if v_u_96 and (type(v209) == "table" and v209.CraftKey == v_u_96) then
+				v_u_100()
+			end
+		end
+	end
+	local v_u_211 = v_u_96
+	local v_u_212 = v_u_98
+	local v_u_213 = v_u_99
+	local v_u_214 = v_u_95
+	local v_u_215 = v_u_97
+	local v_u_216 = {}
+	local v_u_217 = nil
+	local v_u_218 = false
+	for v_u_219, v_u_220 in v_u_102 do
+		local v221 = v_u_220:FindFirstChild("SENSOR")
+		if v221 and v221:IsA("TextButton") then
+			v_u_24({
+				["instance"] = nil,
+				["scale"] = nil,
+				["legacy"] = true,
+				["offset"] = 0.125,
+				["onclick"] = nil,
+				["instance"] = v221,
+				["scale"] = v_u_220.Icon.UIScale,
+				["onclick"] = function() -- name: onclick
+					-- upvalues: (copy) v_u_220, (ref) v_u_20, (copy) v_u_219, (copy) v_u_157, (ref) v_u_1, (copy) v_u_216, (ref) v_u_29, (ref) v_u_35, (ref) v_u_3
+					local v222 = v_u_220:FindFirstChild("Icon")
+					local v223 = v222 and v222:IsA("ImageLabel") and (v222.Image or "") or ""
+					local v224, v225, v_u_226, v_u_227
+					if v222 then
+						v224 = v222.AbsolutePosition.X + v222.AbsoluteSize.X / 2
+						v225 = v222.AbsolutePosition.Y + v222.AbsoluteSize.Y / 2
+						v_u_226 = v222.AbsoluteSize.X
+						v_u_227 = v222.AbsoluteSize.Y
+					else
+						v_u_226 = 0
+						v_u_227 = 0
+						v224 = 0
+						v225 = 0
+					end
+					local v228 = v_u_20:GetData()
+					if v228 then
+						v228 = v228.SummerCraftingEventData
+					end
+					local v229 = v228 and v228.Slots
+					if v229 then
+						v229 = v228.Slots[v_u_219]
+					end
+					local v230
+					if type(v229) == "table" then
+						v230 = v_u_157(v_u_219, v229) > 0
+					else
+						v230 = false
+					end
+					if v230 then
+						v_u_1.GameEvents.SummerCraftingService.SkipCraft:FireServer(v_u_219)
+					else
+						local v231
+						if type(v229) == "table" then
+							v231 = v_u_157(v_u_219, v229) <= 0
+						else
+							v231 = false
+						end
+						if v231 then
+							if v_u_216[v_u_219] then
+								return
+							end
+							v_u_216[v_u_219] = true
+							task.delay(1, function()
+								-- upvalues: (ref) v_u_216, (ref) v_u_219
+								v_u_216[v_u_219] = nil
+							end)
+						end
+						v_u_1.GameEvents.SummerCraftingService.ClaimCraft:FireServer(v_u_219)
+						if v231 then
+							v_u_29("rbxassetid://83163622219903")
+						end
+						if v231 and (v222 and v223 ~= "") then
+							local v232 = v_u_35:FindFirstChild("SummerCraftingFX")
+							if not v232 then
+								v232 = Instance.new("ScreenGui")
+								v232.Name = "SummerCraftingFX"
+								v232.ResetOnSpawn = false
+								v232.IgnoreGuiInset = true
+								v232.DisplayOrder = 5000
+								v232.Parent = v_u_35
+							end
+							local v233 = workspace.CurrentCamera
+							local v_u_234 = v233 and (v233.ViewportSize.X or 1920) or 1920
+							local v_u_235 = v233 and v233.ViewportSize.Y or 1080
+							local v_u_236 = Instance.new("ImageLabel")
+							v_u_236.BackgroundTransparency = 1
+							v_u_236.Image = v223
+							v_u_236.AnchorPoint = Vector2.new(0.5, 0.5)
+							v_u_236.Size = UDim2.fromOffset(v_u_226, v_u_227)
+							v_u_236.Position = UDim2.fromOffset(v224, v225)
+							v_u_236.ZIndex = 50
+							v_u_236.Parent = v232
+							local v237 = v_u_3:Create(v_u_236, TweenInfo.new(0.16, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+								["Size"] = UDim2.fromOffset(v_u_226 * 1.5, v_u_227 * 1.5),
+								["Position"] = UDim2.fromOffset(v224, v225 - 35),
+							})
+							v237:Play()
+							v237.Completed:Connect(function()
+								-- upvalues: (ref) v_u_3, (copy) v_u_236, (copy) v_u_234, (copy) v_u_235, (ref) v_u_226, (ref) v_u_227
+								local v238 = v_u_3:Create(v_u_236, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
+									["Position"] = nil,
+									["Size"] = nil,
+									["ImageTransparency"] = 1,
+									["Rotation"] = 20,
+									["Position"] = UDim2.fromOffset(v_u_234 / 2, v_u_235 - 30),
+									["Size"] = UDim2.fromOffset(v_u_226 * 0.55, v_u_227 * 0.55),
+								})
+								v238:Play()
+								v238.Completed:Connect(function()
+									-- upvalues: (ref) v_u_236
+									v_u_236:Destroy()
+								end)
+							end)
+						end
+					end
+				end,
+			})
+		end
+		v_u_122(v_u_220, v_u_219)
+	end
+	v_u_19:UsePopupAnims(v_u_36)
+	local v239 = v_u_19:GetStateForGui(v_u_36)
+	local v_u_240 = true
+	v239.Visible:Observe(function(p241)
+		-- upvalues: (ref) v_u_30, (ref) v_u_36, (copy) v_u_100, (ref) v_u_240, (ref) v_u_29
+		if p241 then
+			v_u_30.target(v_u_36.Crafting, 0.6, 4, {
+				["Position"] = UDim2.fromScale(0.5, 0.5),
+			})
+			v_u_100()
+			if not v_u_240 then
+				v_u_29("rbxassetid://135863675900042")
+			end
+		else
+			v_u_30.stop(v_u_36.Crafting, "Position")
+			v_u_36.Crafting.Position = UDim2.fromScale(0.5, 0.55)
+			if not v_u_240 then
+				v_u_29("rbxassetid://80268833036765")
+			end
+		end
+		v_u_240 = false
+	end)
+	v_u_36.Crafting.Header.Close.Activated:Connect(function()
+		-- upvalues: (ref) v_u_19, (ref) v_u_36
+		v_u_19:Close(v_u_36)
+	end)
+	local function v243(p242) -- name: hookButtonSounds
+		-- upvalues: (ref) v_u_29
+		if p242:IsA("GuiButton") then
+			if not p242:GetAttribute("_CraftSoundHooked") then
+				p242:SetAttribute("_CraftSoundHooked", true)
+				p242.MouseEnter:Connect(function()
+					-- upvalues: (ref) v_u_29
+					v_u_29("rbxassetid://72189990667457")
+				end)
+				p242.Activated:Connect(function()
+					-- upvalues: (ref) v_u_29
+					v_u_29("rbxassetid://138819210811808")
+				end)
+			end
+		else
+			return
+		end
+	end
+	for _, v244 in v_u_36:GetDescendants() do
+		v243(v244)
+	end
+	v_u_36.DescendantAdded:Connect(v243)
+	local v_u_245 = 0
+	local v_u_246 = 0
+	local v_u_247 = v_u_36.Crafting.Main.Crafting.ButtonHolder.CRAFT.SENSOR.Rotation
+	local v_u_248 = v_u_36.Crafting.Main.Crafting.Tier.TierName.TextColor3
+	local v_u_249 = Color3.fromRGB(255, 39, 39)
+	local function v_u_266() -- name: GetCraftBlockReason
+		-- upvalues: (ref) v_u_214, (ref) v_u_12, (ref) v_u_20, (copy) v_u_103, (ref) v_u_213
+		local v250 = string.match
+		local v251 = v_u_214 or ""
+		local v252 = tonumber(v250(v251, "^(%d+):")) or 0
+		if v252 > 0 then
+			local v253 = workspace
+			local v254 = v_u_12.WORKSPACE_ATTRIBUTE
+			local v255 = tonumber(v253:GetAttribute(v254)) or 0
+			if workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true then
+				v255 = v_u_12.MAX_TIERS
+			end
+			if v255 < v252 then
+				return ("TIER %* REQUIRED"):format(v252)
+			end
+		end
+		local v256 = v_u_20:GetData()
+		local v257 = v256.SummerCraftingEventData
+		if v257 then
+			v257 = v256.SummerCraftingEventData.Slots
+		end
+		local v258 = false
+		for v259 = 1, 3 do
+			local v260 = workspace
+			local v261 = v_u_12.WORKSPACE_ATTRIBUTE
+			local v262 = tonumber(v260:GetAttribute(v261)) or 0
+			if workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true then
+				v262 = v_u_12.MAX_TIERS
+			end
+			if (v_u_103[v259] or 1) <= v262 then
+				local v263
+				if v257 then
+					v263 = v257[v259]
+				else
+					v263 = v257
+				end
+				if type(v263) ~= "table" then
+					v258 = true
+					break
+				end
+			end
+		end
+		if not v258 then
+			return "ALL SLOTS BUSY"
+		end
+		for _, v264 in v_u_213 do
+			if v264.Selectable then
+				local v265 = v264.Choices
+				if v265 then
+					v265 = v264.Choices[v264.ChoiceIndex]
+				end
+				if (v265 and v265.Owned or 0) < (v264.RequiredAmount or 0) then
+					return "NOT ENOUGH ITEMS"
+				end
+			end
+		end
+		return nil
+	end
+	local function v_u_270() -- name: ShakeCraftButton
+		-- upvalues: (ref) v_u_36, (ref) v_u_245, (ref) v_u_3, (copy) v_u_247
+		local v267 = v_u_36.Crafting.Main.Crafting.ButtonHolder.CRAFT.SENSOR
+		v_u_245 = v_u_245 + 1
+		local v268 = v_u_245
+		for _, v269 in
+			{
+				7,
+				-6,
+				5,
+				-4,
+				3,
+				-2,
+				1,
+				0,
+			}
+		do
+			if v_u_245 ~= v268 then
+				return
+			end
+			v_u_3
+				:Create(v267, TweenInfo.new(0.04, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+					["Rotation"] = v_u_247 + v269,
+				})
+				:Play()
+			task.wait(0.04)
+		end
+		if v_u_245 == v268 then
+			v267.Rotation = v_u_247
+		end
+	end
+	v_u_24({
+		["instance"] = nil,
+		["scale"] = nil,
+		["legacy"] = true,
+		["offset"] = 0.05,
+		["onclick"] = nil,
+		["instance"] = v_u_36.Crafting.Main.Crafting.ButtonHolder.CRAFT.SENSOR,
+		["scale"] = v_u_36.Crafting.Main.Crafting.ButtonHolder.CRAFT.SENSOR.UIScale,
+		["onclick"] = function() -- name: onclick
+			-- upvalues: (ref) v_u_214, (copy) v_u_266, (copy) v_u_270, (ref) v_u_36, (ref) v_u_246, (copy) v_u_249, (copy) v_u_248, (ref) v_u_217
+			if v_u_214 then
+				local v271 = v_u_266()
+				if v271 then
+					task.spawn(v_u_270)
+					local v_u_272 = v_u_36.Crafting.Main.Crafting.Tier.TierName
+					v_u_246 = v_u_246 + 1
+					local v_u_273 = v_u_246
+					v_u_272.Text = v271
+					v_u_272.TextColor3 = v_u_249
+					task.delay(1.25, function()
+						-- upvalues: (ref) v_u_246, (copy) v_u_273, (copy) v_u_272, (ref) v_u_248, (ref) v_u_214
+						if v_u_246 == v_u_273 then
+							v_u_272.TextColor3 = v_u_248
+							local v274 = string.match
+							local v275 = v_u_214 or ""
+							local v276 = tonumber(v274(v275, "^(%d+):"))
+							if v276 then
+								v_u_272.Text = ("Campfire %*"):format(v276 or (({
+									"I",
+									"II",
+									"III",
+									"IV",
+									"V",
+									"VI",
+									"VII",
+									"VIII",
+									"IX",
+									"X",
+								})[v276] or tostring(v276)))
+							end
+						end
+					end)
+				else
+					v_u_217()
+				end
+			else
+				return
+			end
+		end,
+	})
+	v_u_24({
+		["instance"] = nil,
+		["scale"] = nil,
+		["legacy"] = true,
+		["offset"] = 0.05,
+		["onclick"] = nil,
+		["instance"] = v_u_36.Crafting.Main.Crafting.ButtonHolder.BUY.SENSOR,
+		["scale"] = v_u_36.Crafting.Main.Crafting.ButtonHolder.BUY.SENSOR.UIScale,
+		["onclick"] = function() -- name: onclick
+			-- upvalues: (ref) v_u_215, (ref) v_u_16
+			if not v_u_215 then
+				return warn("No ProductId for currently displayed craft.")
+			end
+			v_u_16:PromptPurchase(v_u_215, Enum.InfoType.Product)
+		end,
+	})
+	local v_u_277 = v_u_246
+	local v278 = {
+		["Result"] = "table",
+		["Recipe"] = "table",
+		["Tier"] = "number",
+	}
+	local v279 = {}
+	for v280, v281 in v_u_27.Craftables do
+		local v282 = false
+		for v283, v284 in v278 do
+			local v285 = v281[v283]
+			if typeof(v285) ~= v284 then
+				local v286 = warn
+				local v287 = v281[v283]
+				v286((("SummerCraftingConfig: Entry #%* has invalid %* (Expected %*, got %*). Skipping..."):format(v280, v283, v284, (typeof(v287)))))
+				v282 = true
+			end
+		end
+		if not v282 then
+			if not v279[v281.Tier] then
+				v279[v281.Tier] = {}
+			end
+			local v288 = v279[v281.Tier]
+			local v289 = {
+				["Result"] = v281.Result,
+			}
+			local v290 = v281.Amount
+			v289.Amount = tonumber(v290) or 1
+			v289.Recipe = v281.Recipe
+			local v291 = v281.Description
+			local v292
+			if typeof(v291) == "string" then
+				v292 = v281.Description
+			else
+				v292 = nil
+			end
+			v289.Description = v292
+			v289.ProductId = v281.ProductId
+			table.insert(v288, v289)
+		end
+	end
+	local v293 = 1
+	local v294 = v293
+	local v295 = {}
+	for v296 in v279 do
+		table.insert(v295, v296)
+	end
+	table.sort(v295)
+	local v_u_297 = Color3.fromRGB(255, 39, 39)
+	local v_u_298 = Color3.fromRGB(0, 255, 0)
+	local function v_u_307(p299) -- name: FormatCompactNumber
+		local v300 = tonumber(p299) or 0
+		local v301 = math.abs(v300)
+		for _, v302 in
+			{
+				{
+					["Value"] = 1000000000000,
+					["Suffix"] = "T",
+				},
+				{
+					["Value"] = 1000000000,
+					["Suffix"] = "B",
+				},
+				{
+					["Value"] = 1000000,
+					["Suffix"] = "M",
+				},
+				{
+					["Value"] = 1000,
+					["Suffix"] = "K",
+				},
+			}
+		do
+			if v302.Value <= v301 then
+				local v303 = v300 / v302.Value
+				local v304 = math.abs(v303) * 10
+				local v305 = math.floor(v304) / 10
+				if v303 < 0 then
+					v305 = v305 * -1
+				end
+				return ("%*%*"):format(tostring(v305):gsub("%.0$", ""), v302.Suffix)
+			end
+		end
+		local v306 = math.floor(v300)
+		return tostring(v306)
+	end
+	local function v_u_316(p308, p309) -- name: DoesClientEntryMatchRequirement
+		if type(p308) == "table" then
+			local v310 = p308.ItemData
+			if type(v310) == "table" then
+				local v311 = p309.Type or ""
+				local v312 = tostring(v311)
+				local v313 = (v312 == "Pet Egg" or (v312 == "PetEgg" or v312 == "Egg")) and "Egg" or v312
+				local v314 = p309.Value or ""
+				local v315 = tostring(v314)
+				if v313 == "Fruit" then
+					if p308.ItemType == "Holdable" or p308.ItemType == "Fruit" then
+						if v310.IsFavorite then
+							return false
+						else
+							return (v310.ItemName == v315 or (v310.SeedName == v315 or (v310.FruitName == v315 or (v310.GearName == v315 or (v310.Name == v315 or v310.Type == v315))))) and true or v310.Seed == v315
+						end
+					else
+						return false
+					end
+				elseif v313 == "Seed" then
+					if p308.ItemType == "Seed" then
+						if (v310.ItemName == v315 or (v310.SeedName == v315 or (v310.FruitName == v315 or (v310.GearName == v315 or (v310.Name == v315 or v310.Type == v315))))) and true or v310.Seed == v315 then
+							return not p309.Variant and true or (v310.Variant or v310.VariantName or (v310.SeedVariant or "Normal")) == p309.Variant
+						else
+							return false
+						end
+					else
+						return false
+					end
+				elseif v313 == "Gear" then
+					return (p308.ItemType == v315 or (v310.ItemName == v315 or (v310.SeedName == v315 or (v310.FruitName == v315 or (v310.GearName == v315 or (v310.Name == v315 or v310.Type == v315)))))) and true or v310.Seed == v315
+				elseif v313 == "Egg" then
+					if p308.ItemType == "PetEgg" or (p308.ItemType == "Pet Egg" or (p308.ItemType == "Egg" or (p308.ItemType == "BeeEgg" or p308.ItemType == "Bee Egg"))) then
+						return (v310.ItemName == v315 or (v310.SeedName == v315 or (v310.FruitName == v315 or (v310.GearName == v315 or (v310.Name == v315 or v310.Type == v315))))) and true
+							or v310.Seed == v315
+							or ((v310.EggName == v315 or (v310.PetEggName == v315 or v310.PetEggType == v315)) and true or v310.BeeEggType == v315)
+					else
+						return false
+					end
+				else
+					return false
+				end
+			else
+				return false
+			end
+		else
+			return false
+		end
+	end
+	local function v_u_318(p317) -- name: EscapeRichText
+		return tostring(p317):gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub('"', "&quot;"):gsub("'", "&apos;")
+	end
+	local function v_u_335(p319, p320) -- name: GetClientInventoryRequirementAmount
+		-- upvalues: (copy) v_u_316
+		if type(p319) ~= "table" then
+			return 0
+		end
+		if not v_u_316(p319, p320) then
+			return 0
+		end
+		local v321 = p320.Type or ""
+		local v322 = tostring(v321)
+		local v323 = (v322 == "Pet Egg" or (v322 == "PetEgg" or v322 == "Egg")) and "Egg" or v322
+		local v324 = p319.ItemData
+		if v323 == "Gear" then
+			local v325
+			if v324 then
+				v325 = v324.Uses
+			else
+				v325 = v324
+			end
+			local v326 = tonumber(v325)
+			if v326 then
+				local v327 = math.floor(v326)
+				return math.max(0, v327)
+			end
+			if v324 then
+				v324 = v324.Quantity
+			end
+			local v328 = tonumber(v324)
+			if not v328 then
+				return 1
+			end
+			local v329 = math.floor(v328)
+			return math.max(0, v329)
+		end
+		if v323 ~= "Seed" and v323 ~= "Egg" then
+			return 1
+		end
+		local v330
+		if v324 then
+			v330 = v324.Quantity
+		else
+			v330 = v324
+		end
+		local v331 = tonumber(v330)
+		if v331 then
+			local v332 = math.floor(v331)
+			return math.max(0, v332)
+		end
+		if v324 then
+			v324 = v324.Uses
+		end
+		local v333 = tonumber(v324)
+		if not v333 then
+			return 1
+		end
+		local v334 = math.floor(v333)
+		return math.max(0, v334)
+	end
+	local function v_u_346(p336) -- name: GetPlantEntryValue
+		-- upvalues: (ref) v_u_9, (ref) v_u_21, (ref) v_u_17, (ref) v_u_14
+		local v337 = p336.ItemName or (p336.SeedName or p336.FruitName) or (p336.GearName or p336.Name or (p336.Type or p336.Seed))
+		if not v337 then
+			return 0
+		end
+		local v338 = p336.Variant or p336.VariantName or (p336.SeedVariant or "Normal")
+		local v339 = p336.FruitVersion or (p336[v_u_9.FruitVersion] or 0)
+		local v340 = p336.Weight
+		local v341 = tonumber(v340)
+		if not v341 then
+			local v342
+			if p336.Seed and p336.ItemName then
+				local v343 = v_u_21.Calculate_Weight(p336.Seed, p336.ItemName)
+				v342 = tonumber(v343) or 1
+			else
+				v342 = 1
+			end
+			local v344 = p336.WeightMultiplier
+			v341 = v342 * (tonumber(v344) or 1)
+		end
+		local v345 = p336.MutationString or ""
+		return v_u_14({
+			["name"] = v337,
+			["variant"] = v338,
+			["weight"] = v341,
+			["mutationMultiplier"] = not (v_u_17.ExtractMutationsFromString and v_u_17.CalcValueMultiFromMuts) and 1 or v_u_17:CalcValueMultiFromMuts(v_u_17:ExtractMutationsFromString(v345)),
+			["fruitVersion"] = v339,
+		})
+	end
+	local function v_u_442(p347) -- name: BuildRequirementChoices
+		-- upvalues: (ref) v_u_20, (copy) v_u_316, (ref) v_u_21, (copy) v_u_346, (copy) v_u_335
+		local v348 = v_u_20:GetData().InventoryData or {}
+		local v349 = p347.Quantity
+		local v350 = tonumber(v349) or 1
+		local v351 = math.max(1, v350)
+		local v352 = p347.Type or ""
+		local v353 = tostring(v352)
+		local v354 = (v353 == "Pet Egg" or (v353 == "PetEgg" or v353 == "Egg")) and "Egg" or v353
+		if v354 == "Fruit" then
+			local v355 = {}
+			for v356, v357 in v348 do
+				if v_u_316(v357, p347) then
+					local v358 = v357.ItemData
+					local v359 = v358.Variant or v358.VariantName or (v358.SeedVariant or "Normal")
+					local v360 = v358.Weight
+					local v361 = tonumber(v360)
+					if not v361 then
+						local v362
+						if v358.Seed and v358.ItemName then
+							local v363 = v_u_21.Calculate_Weight(v358.Seed, v358.ItemName)
+							v362 = tonumber(v363) or 1
+						else
+							v362 = 1
+						end
+						local v364 = v358.WeightMultiplier
+						v361 = v362 * (tonumber(v364) or 1)
+					end
+					local v365 = {
+						["UUID"] = v356,
+						["Variant"] = v359,
+						["Weight"] = v361,
+						["Value"] = v_u_346(v358),
+					}
+					table.insert(v355, v365)
+				end
+			end
+			table.sort(v355, function(p366, p367)
+				if p366.Value == p367.Value then
+					return p366.Weight < p367.Weight
+				else
+					return p366.Value < p367.Value
+				end
+			end)
+			local v368 = #v355
+			local v369 = {}
+			for _, v370 in v355 do
+				local v371 = { v370.UUID }
+				local v372 = {
+					[v370.UUID] = true,
+				}
+				for _, v373 in v355 do
+					if v351 <= #v371 then
+						break
+					end
+					if not v372[v373.UUID] then
+						v372[v373.UUID] = true
+						local v374 = v373.UUID
+						table.insert(v371, v374)
+					end
+				end
+				local v375 = {
+					["Variant"] = nil,
+					["Weight"] = nil,
+					["Owned"] = nil,
+					["UUIDs"] = nil,
+					["LowestValue"] = nil,
+					["IsPlantChoice"] = true,
+					["Variant"] = v370.Variant,
+					["Weight"] = v370.Weight,
+					["Owned"] = v368,
+					["UUIDs"] = v371,
+					["LowestValue"] = v370.Value,
+				}
+				table.insert(v369, v375)
+			end
+			return v369
+		elseif v354 == "Pet" then
+			local v376 = v_u_20:GetData().PetsData
+			local v377
+			if type(v376) == "table" then
+				v377 = v376.PetInventory
+				if type(v377) == "table" then
+					local v378 = v377.Data
+					if type(v378) ~= "table" then
+						v377 = nil
+					end
+				else
+					v377 = nil
+				end
+			else
+				v377 = nil
+			end
+			local v379 = {}
+			if v377 then
+				for v380, v381 in v377.Data do
+					if v381.IsFavorite ~= true and (v381.Favorite ~= true and v381.Locked ~= true) and v381.IsLocked ~= true then
+						local v382 = p347.Value or ""
+						local v383 = tostring(v382)
+						if (v381.PetName == v383 or (v381.Name == v383 or v381.Type == v383)) and true or v381.ItemName == v383 then
+							local v384 = v381.Level
+							local v385 = tonumber(v384)
+							if not v385 then
+								local v386 = v381.PetLevel
+								v385 = tonumber(v386) or 1
+							end
+							local v387 = v381.BaseWeight
+							local v388 = tonumber(v387)
+							if not v388 then
+								local v389 = v381.Weight
+								v388 = tonumber(v389) or 0
+							end
+							local v390 = {
+								["UUID"] = v380,
+								["Token"] = ("Pet:%*"):format(v380),
+								["Level"] = v385,
+								["Weight"] = v388,
+							}
+							table.insert(v379, v390)
+						end
+					end
+				end
+			end
+			table.sort(v379, function(p391, p392)
+				if p391.Level == p392.Level then
+					return p391.Weight < p392.Weight
+				else
+					return p391.Level < p392.Level
+				end
+			end)
+			local v393 = #v379
+			local v394 = {}
+			for _, v395 in v379 do
+				local v396 = { v395.Token }
+				local v397 = {
+					[v395.Token] = true,
+				}
+				for _, v398 in v379 do
+					if v351 <= #v396 then
+						break
+					end
+					if not v397[v398.Token] then
+						v397[v398.Token] = true
+						local v399 = v398.Token
+						table.insert(v396, v399)
+					end
+				end
+				local v400 = {
+					["Owned"] = nil,
+					["UUIDs"] = nil,
+					["IsPetChoice"] = true,
+					["LabelRichText"] = nil,
+					["Owned"] = v393,
+					["UUIDs"] = v396,
+					["LabelRichText"] = ("Lvl %*"):format(v395.Level),
+				}
+				table.insert(v394, v400)
+			end
+			return v394
+		elseif v354 == "Cosmetic" then
+			local v401 = v_u_20:GetData().CosmeticData
+			local v402
+			if type(v401) == "table" then
+				v402 = v401.Inventory
+				if type(v402) ~= "table" then
+					v402 = nil
+				end
+			else
+				v402 = nil
+			end
+			local v403 = {}
+			if v402 then
+				for v404, v405 in v402 do
+					local v406 = p347.Value or ""
+					local v407 = tostring(v406)
+					local v408
+					if type(v405) == "table" then
+						v408 = (v405.Name == v407 or v405.CosmeticName == v407) and true or v405.ItemName == v407
+					else
+						v408 = false
+					end
+					if v408 then
+						local v409 = {
+							["UUID"] = v404,
+							["Token"] = ("Cosmetic:%*"):format(v404),
+						}
+						table.insert(v403, v409)
+					end
+				end
+			end
+			local v410 = #v403
+			if v410 <= 0 then
+				return {}
+			end
+			local v411 = {}
+			for _, v412 in v403 do
+				if v351 <= 0 then
+					break
+				end
+				local v413 = v412.Token
+				table.insert(v411, v413)
+				v351 = v351 - 1
+			end
+			return {
+				{
+					["Owned"] = nil,
+					["UUIDs"] = nil,
+					["IsSimpleChoice"] = true,
+					["Owned"] = v410,
+					["UUIDs"] = v411,
+				},
+			}
+		elseif v354 == "Gear" or v354 == "Egg" then
+			local v414 = 0
+			local v415 = {}
+			for v416, v417 in v348 do
+				if v_u_316(v417, p347) then
+					local v418 = v_u_335(v417, p347)
+					if v418 > 0 then
+						v414 = v414 + v418
+						table.insert(v415, {
+							["UUID"] = v416,
+							["Amount"] = v418,
+						})
+					end
+				end
+			end
+			local v419 = {}
+			for _, v420 in v415 do
+				if v351 <= 0 then
+					break
+				end
+				local v421 = v420.UUID
+				table.insert(v419, v421)
+				v351 = v351 - v420.Amount
+			end
+			return v414 <= 0 and {} or {
+				{
+					["Owned"] = nil,
+					["UUIDs"] = nil,
+					["IsSimpleChoice"] = true,
+					["Owned"] = v414,
+					["UUIDs"] = v419,
+				},
+			}
+		else
+			local v422 = {}
+			for v423, v424 in v348 do
+				if v_u_316(v424, p347) then
+					local v425 = v424.ItemData
+					local v426 = v425.Variant or v425.VariantName or (v425.SeedVariant or "Normal")
+					local v427 = v_u_335(v424, p347)
+					if v427 > 0 then
+						v422[v426] = v422[v426] or {
+							["Variant"] = nil,
+							["Items"] = nil,
+							["Owned"] = 0,
+							["LowestValue"] = (1 / 0),
+							["Variant"] = v426,
+							["Items"] = {},
+						}
+						local v428 = v422[v426].Items
+						table.insert(v428, {
+							["UUID"] = nil,
+							["Amount"] = nil,
+							["Value"] = 0,
+							["UUID"] = v423,
+							["Amount"] = v427,
+						})
+						local v429 = v422[v426]
+						v429.Owned = v429.Owned + v427
+						v422[v426].LowestValue = 0
+					end
+				end
+			end
+			local v430 = {}
+			for _, v431 in v422 do
+				local v432 = v351
+				local v433 = {}
+				for _, v434 in v431.Items do
+					if v351 <= 0 then
+						break
+					end
+					local v435 = v434.UUID
+					table.insert(v433, v435)
+					v351 = v351 - v434.Amount
+				end
+				local v436 = {
+					["Variant"] = nil,
+					["Owned"] = nil,
+					["UUIDs"] = nil,
+					["LowestValue"] = nil,
+					["IsPlantChoice"] = false,
+					["Variant"] = v431.Variant,
+					["Owned"] = v431.Owned,
+					["UUIDs"] = v433,
+					["LowestValue"] = v431.LowestValue,
+				}
+				table.insert(v430, v436)
+				v351 = v432
+			end
+			table.sort(v430, function(p437, p438)
+				local v439 = p437.Variant
+				local v440 = tostring(v439)
+				local v441 = p438.Variant
+				return v440 < tostring(v441)
+			end)
+			return v430
+		end
+	end
+	local function v_u_450(p443, p444) -- name: SetRequirementVariantLabel
+		-- upvalues: (ref) v_u_22, (copy) v_u_318
+		p443.RichText = true
+		if p444 then
+			if p444.LabelRichText then
+				p443.RichText = true
+				p443.Size = UDim2.fromScale(1, 0.35)
+				p443.Text = p444.LabelRichText
+				return
+			elseif p444.IsSimpleChoice then
+				p443.RichText = true
+				p443.Text = ""
+				p443.Size = UDim2.fromScale(1, 0.35)
+				return
+			else
+				local v445 = p444.Variant or "Normal"
+				local v446 = v445 ~= "Normal"
+				local v447
+				if v446 then
+					v447 = UDim2.fromScale(1, 0.5)
+				else
+					v447 = UDim2.fromScale(1, 0.35)
+				end
+				p443.Size = v447
+				if p444.IsPlantChoice then
+					local v448 = p444.Weight or 0
+					local v449 = string.format("%.2fkg", tonumber(v448) or 0)
+					if v446 then
+						p443.Text = ('<font color="%*">%*</font><br/>%*'):format(v_u_22:GetHex(v445) or "#FFFFFF", v_u_318(v445), (v_u_318(v449)))
+					else
+						p443.Text = v449
+					end
+				elseif v446 then
+					p443.Text = ('<font color="%*">%*</font>'):format(v_u_22:GetHex(v445) or "#FFFFFF", (v_u_318(v445)))
+				else
+					p443.Text = ""
+				end
+			end
+		else
+			p443.Text = ""
+			p443.Size = UDim2.fromScale(1, 0.35)
+			return
+		end
+	end
+	local function v_u_487(p451) -- name: UpdateRequirementFrameFromState
+		-- upvalues: (copy) v_u_307, (ref) v_u_212, (copy) v_u_450, (copy) v_u_298, (copy) v_u_297, (ref) v_u_20, (ref) v_u_10, (ref) v_u_18, (ref) v_u_15, (ref) v_u_13, (ref) v_u_25
+		local v_u_452 = p451.Frame
+		local v453 = p451.Requirement
+		local v_u_454 = p451.RequiredAmount
+		local v455 = v_u_452:FindFirstChild("Next")
+		local v456 = v_u_452:FindFirstChild("Previous")
+		local v457 = v_u_452:FindFirstChild("Quantity")
+		local v458 = v_u_452:FindFirstChild("Variant")
+		if p451.Selectable then
+			local v459 = p451.Choices
+			local v_u_460 = v459[p451.ChoiceIndex]
+			local v461 = #v459 > 1
+			if v455 and v455:IsA("GuiObject") then
+				v455.Visible = v461
+			end
+			if v456 and v456:IsA("GuiObject") then
+				v456.Visible = v461
+			end
+			if v458 and v458:IsA("TextLabel") then
+				local v462
+				if v_u_460 then
+					v462 = v_u_460.IsSimpleChoice
+				else
+					v462 = v_u_460
+				end
+				v458.Visible = not v462
+				v_u_450(v458, v_u_460)
+			end
+			local v463 = v_u_460 and (v_u_460.Owned or 0) or 0
+			local v464 = v_u_454 <= v463
+			if v457 and v457:IsA("TextLabel") then
+				if v464 then
+					v457.Text = ("%*/%*"):format(v_u_454, v_u_454)
+					v457.TextColor3 = v_u_298
+				else
+					v457.Text = ("%*/%*"):format(v463, v_u_454)
+					v457.TextColor3 = v_u_297
+				end
+			end
+			task.spawn(function()
+				-- upvalues: (copy) v_u_460, (ref) v_u_20, (ref) v_u_10, (ref) v_u_18, (ref) v_u_15, (ref) v_u_13, (ref) v_u_25, (copy) v_u_454, (copy) v_u_452
+				if v_u_460 and (v_u_460.UUIDs and v_u_460.UUIDs[1]) then
+					local v465 = v_u_460.UUIDs[1]
+					local v466 = tostring(v465)
+					if v466:sub(1, 4) == "Pet:" then
+						return
+					elseif v466:sub(1, 9) == "Cosmetic:" then
+						return
+					else
+						local v467 = v_u_20:GetData()
+						if v467 then
+							local v468 = v467.InventoryData
+							if v468 then
+								v468 = v468[v466]
+							end
+							if v468 then
+								local v469 = v468.ItemData
+								if type(v469) == "table" then
+									local v470 = v468.ItemData
+									local v471 = v468.ItemType
+									local v472 = v470.ItemName or (v470.SeedName or v470.FruitName) or (v470.GearName or v470.Name or (v470.Type or v470.Seed))
+									if v472 then
+										local v473 = v_u_10(v472, v471)
+										local v474 = v_u_18(v472, v471)
+										local v475 = v_u_15(v472, v471)
+										local v476 = v470.MutationString
+										local v477 = (type(v476) ~= "string" or #v476 <= 0) and {} or string.split(v476, ", ")
+										local v478 = #v477 > 0
+										local v479 = v471 == "Pet"
+										if type(v473) ~= "string" or #v473 <= 0 then
+											v473 = ("An interesting %*."):format(v472)
+										end
+										local v480 = v_u_13
+										local v481 = {
+											["DisplayName"] = nil,
+											["Description"] = nil,
+											["ItemImage"] = nil,
+											["Properties"] = nil,
+											["DetailsOnly"] = true,
+											["DisplayName"] = ("%*"):format(v472),
+											["Description"] = v473,
+											["ItemImage"] = v474,
+										}
+										local v482 = {
+											["Rarity"] = v475,
+										}
+										local v483
+										if v479 and v478 then
+											v483 = v477
+										else
+											v483 = nil
+										end
+										v482.PetMutation = v483
+										if v479 or not v478 then
+											v477 = nil
+										end
+										v482.PlantMutations = v477
+										v482.Weight = v_u_460.Weight and ("%*kg"):format((v_u_25.RoundToDP(v_u_460.Weight, 2))) or nil
+										v482.Variant = v_u_460.Variant
+										v482.Quantity = ("%*x"):format(v_u_454)
+										v481.Properties = v482
+										v480:AddItemToData(v466, v481)
+										v_u_452:SetAttribute("UUID", v466)
+									end
+								end
+							end
+						end
+					end
+				else
+					return
+				end
+			end)
+			v_u_212[p451.RequirementIndex] = v_u_460 and v_u_460.UUIDs or {}
+		else
+			if v455 and v455:IsA("GuiObject") then
+				v455.Visible = false
+			end
+			if v456 and v456:IsA("GuiObject") then
+				v456.Visible = false
+			end
+			if v458 and v458:IsA("GuiObject") then
+				v458.Visible = false
+			end
+			if v457 and v457:IsA("TextLabel") then
+				local v484 = v453.Type or ""
+				local v485 = tostring(v484)
+				local v486
+				if ((v485 == "Pet Egg" or (v485 == "PetEgg" or v485 == "Egg")) and "Egg" or v485) == "Currency" then
+					v486 = v_u_307(v_u_454)
+				else
+					v486 = ("x%*"):format(v_u_454)
+				end
+				v457.Text = v486
+				v457.TextColor3 = Color3.fromRGB(255, 255, 255)
+			end
+			v_u_212[p451.RequirementIndex] = nil
+		end
+	end
+	local function v_u_493(p488) -- name: RefreshRequirementState
+		-- upvalues: (copy) v_u_487, (ref) v_u_36, (copy) v_u_442
+		if not p488.Selectable then
+			v_u_487(p488)
+			return
+		end
+		if not (p488.Frame and p488.Frame:IsDescendantOf(v_u_36)) then
+			return
+		end
+		local v489 = p488.Choices
+		if v489 then
+			v489 = p488.Choices[p488.ChoiceIndex]
+		end
+		local v490 = v489 and v489.UUIDs
+		if v490 then
+			v490 = v489.UUIDs[1]
+		end
+		p488.Choices = v_u_442(p488.Requirement)
+		p488.ChoiceIndex = 1
+		if v490 then
+			for v491, v492 in p488.Choices do
+				if v492.UUIDs and v492.UUIDs[1] == v490 then
+					p488.ChoiceIndex = v491
+					break
+				end
+			end
+		end
+		v_u_487(p488)
+	end
+	local function v_u_503(p494) -- name: GetChoiceMutations
+		-- upvalues: (ref) v_u_20
+		if p494 and (p494.UUIDs and p494.UUIDs[1]) then
+			local v495 = p494.UUIDs[1]
+			local v496 = tostring(v495)
+			local v497
+			if v496:sub(1, 4) == "Pet:" then
+				local v498 = v_u_20:GetData().PetsData
+				local v499
+				if type(v498) == "table" then
+					v499 = v498.PetInventory
+					if type(v499) == "table" then
+						local v500 = v499.Data
+						if type(v500) ~= "table" then
+							v499 = nil
+						end
+					else
+						v499 = nil
+					end
+				else
+					v499 = nil
+				end
+				v497 = v499 and v499.Data
+				if v497 then
+					v497 = v499.Data[v496:sub(5)]
+				end
+				if v497 then
+					v497 = v497.MutationString or v497.Mutation
+				end
+			else
+				if v496:sub(1, 9) == "Cosmetic:" then
+					return nil
+				end
+				local v501 = v_u_20:GetData()
+				local v502 = v501 and v501.InventoryData
+				if v502 then
+					v502 = v501.InventoryData[v496]
+				end
+				v497 = v502 and v502.ItemData
+				if v497 then
+					v497 = v502.ItemData.MutationString
+				end
+			end
+			if type(v497) == "string" and #v497 > 0 then
+				return string.split(v497, ", ")
+			else
+				return nil
+			end
+		else
+			return nil
+		end
+	end
+	local function v_u_522() -- name: BuildCraftConsumptionSummary
+		-- upvalues: (ref) v_u_213, (copy) v_u_307, (ref) v_u_22, (ref) v_u_25, (copy) v_u_503
+		local v504 = {}
+		local v505 = {}
+		local v506 = false
+		for v507 in v_u_213 do
+			table.insert(v504, v507)
+		end
+		table.sort(v504)
+		for _, v508 in v504 do
+			local v509 = v_u_213[v508]
+			local v510 = v509.Requirement
+			local v511 = v509.RequiredAmount
+			if not v511 then
+				local v512 = v510.Quantity
+				local v513 = tonumber(v512) or 1
+				v511 = math.max(1, v513)
+			end
+			local v514 = v510.Value
+			if v510.Type == "Seed" then
+				v514 = ("%* Seed"):format(v514)
+			end
+			if v510.Type == "Currency" then
+				local v515 = ("%* %*"):format(v_u_307(v511), v514)
+				table.insert(v505, v515)
+			elseif v509.Selectable then
+				local v516 = v509.Choices
+				if v516 then
+					v516 = v509.Choices[v509.ChoiceIndex]
+				end
+				local v517 = ""
+				if v516 then
+					v506 = #v509.Choices > 1 and true or v506
+					local v518 = v516.Variant
+					if v518 and (v518 ~= "Normal" and not v516.IsSimpleChoice) then
+						v517 = v517 .. (' \194\183 <font color="%*">%*</font>'):format(v_u_22:GetHex(v518) or "#FFFFFF", v518)
+						v506 = true
+					end
+					if v516.Weight and v516.Weight > 0 then
+						v517 = v517 .. (" \194\183 %*kg"):format((v_u_25.RoundToDP(v516.Weight, 2)))
+					end
+					if v516.IsPetChoice and v516.LabelRichText then
+						v517 = v517 .. (" \194\183 %*"):format(v516.LabelRichText)
+					end
+					local v519 = v_u_503(v516)
+					if v519 and #v519 > 0 then
+						v517 = v517 .. (' \194\183 <font color="#FF9500">%*</font>'):format((table.concat(v519, ", ")))
+						v506 = true
+					end
+				end
+				local v520 = ("%*x %*%*"):format(v511, v514, v517)
+				table.insert(v505, v520)
+			else
+				local v521 = ("%*x %*"):format(v511, v514)
+				table.insert(v505, v521)
+			end
+		end
+		return v506, v505
+	end
+	local function v_u_523() -- name: FireStartCraft
+		-- upvalues: (ref) v_u_211, (ref) v_u_214, (ref) v_u_1, (ref) v_u_212, (ref) v_u_29
+		v_u_211 = v_u_214
+		v_u_1.GameEvents.SummerCraftingService.StartCraft:FireServer(v_u_214, v_u_212)
+		v_u_29("rbxassetid://132025912670429")
+	end
+	local function _()
+		-- upvalues: (copy) v_u_522, (ref) v_u_211, (ref) v_u_214, (ref) v_u_1, (ref) v_u_212, (ref) v_u_29, (ref) v_u_33, (ref) v_u_23, (copy) v_u_523
+		local v524, v525 = v_u_522()
+		if v524 then
+			v_u_23:Open({
+				["Title"] = "Confirm Craft",
+				["Header"] = nil,
+				["Middle"] = nil,
+				["Footer"] = "These exact items will be used up.",
+				["ConfirmText"] = "Craft",
+				["RejectText"] = "Cancel",
+				["Header"] = ("Craft %*?"):format(v_u_214 and string.match(v_u_214, "^%d+:%d+:(.+)$") or "this item"),
+				["Middle"] = table.concat(v525, ", "),
+			}, {
+				["ConfirmCallback"] = v_u_523,
+			})
+		else
+			v_u_211 = v_u_214
+			v_u_1.GameEvents.SummerCraftingService.StartCraft:FireServer(v_u_214, v_u_212)
+			v_u_29(v_u_33.StartCraft)
+		end
+	end
+	local function v527() -- name: QueueRequirementRefresh
+		-- upvalues: (ref) v_u_218, (ref) v_u_36, (ref) v_u_213, (copy) v_u_493
+		if not v_u_218 then
+			v_u_218 = true
+			task.defer(function()
+				-- upvalues: (ref) v_u_218, (ref) v_u_36, (ref) v_u_213, (ref) v_u_493
+				v_u_218 = false
+				if v_u_36.Crafting.Main.Crafting.Visible then
+					for _, v526 in v_u_213 do
+						v_u_493(v526)
+					end
+				end
+			end)
+		end
+	end
+	local function v_u_541(p528, p529, p530) -- name: SetupRequirementFrame
+		-- upvalues: (ref) v_u_18, (copy) v_u_442, (copy) v_u_487, (ref) v_u_213, (ref) v_u_36
+		p528.RequirementImage.Image = v_u_18(p530.Value, p530.Type)
+		local v531 = p530.Quantity
+		local v532 = tonumber(v531) or 1
+		local v_u_533 = {
+			["Frame"] = nil,
+			["Requirement"] = nil,
+			["RequirementIndex"] = nil,
+			["RequiredAmount"] = nil,
+			["Selectable"] = nil,
+			["Choices"] = nil,
+			["ChoiceIndex"] = 1,
+			["Frame"] = p528,
+			["Requirement"] = p530,
+			["RequirementIndex"] = p529,
+			["RequiredAmount"] = math.max(1, v532),
+		}
+		local v534 = p530.Type or ""
+		local v535 = tostring(v534)
+		local v536 = (v535 == "Pet Egg" or (v535 == "PetEgg" or v535 == "Egg")) and "Egg" or v535
+		v_u_533.Selectable = (v536 == "Fruit" or (v536 == "Seed" or (v536 == "Pet" or (v536 == "Gear" or v536 == "Egg")))) and true or v536 == "Cosmetic"
+		v_u_533.Choices = {}
+		if v_u_533.Selectable then
+			v_u_533.Choices = v_u_442(p530)
+		end
+		local v537 = p528:FindFirstChild("Next")
+		local v538 = p528:FindFirstChild("Previous")
+		if v537 and v537:IsA("TextButton") then
+			v537.Activated:Connect(function()
+				-- upvalues: (copy) v_u_533, (ref) v_u_487
+				if #v_u_533.Choices > 0 then
+					local v539 = v_u_533
+					v539.ChoiceIndex = v539.ChoiceIndex + 1
+					if v_u_533.ChoiceIndex > #v_u_533.Choices then
+						v_u_533.ChoiceIndex = 1
+					end
+					v_u_487(v_u_533)
+				end
+			end)
+		end
+		if v538 and v538:IsA("TextButton") then
+			v538.Activated:Connect(function()
+				-- upvalues: (copy) v_u_533, (ref) v_u_487
+				if #v_u_533.Choices > 0 then
+					local v540 = v_u_533
+					v540.ChoiceIndex = v540.ChoiceIndex - 1
+					if v_u_533.ChoiceIndex < 1 then
+						v_u_533.ChoiceIndex = #v_u_533.Choices
+					end
+					v_u_487(v_u_533)
+				end
+			end)
+		end
+		v_u_213[p529] = v_u_533
+		v_u_487(v_u_533)
+		p528.Parent = v_u_36.Crafting.Main.Crafting.Requirements
+	end
+	local v_u_542 = v_u_36.Crafting.Main.Crafting.Craft.OddsButton
+	v_u_542.Activated:Connect(function()
+		-- upvalues: (copy) v_u_542, (ref) v_u_7, (ref) v_u_36, (ref) v_u_8, (ref) v_u_6
+		local v543 = v_u_542:GetAttribute("ItemType")
+		local v544 = v_u_542:GetAttribute("ItemValue")
+		if v543 and v544 then
+			if v543 == "Egg" then
+				v_u_7:Open(v544, v_u_36)
+				return
+			elseif v543 == "Crate" then
+				v_u_8:Open(v544, v_u_36)
+			elseif v543 == "SeedPack" then
+				v_u_6:Open(v544, v_u_36)
+			end
+		else
+			warn("Missing ItemType and ItemValue attributes on button.")
+			return
+		end
+	end)
+	local v_u_545 = v_u_36.Crafting.Main.Crafting.Craft.InfoButton
+	local v546 = 0
+	for _, v547 in v295 do
+		v546 = v546 + #v279[v547]
+	end
+	local v548 = 0
+	for _, v_u_549 in v295 do
+		local v550 = v279[v_u_549]
+		local v551 = v93:Clone()
+		v293 = v294 + 1
+		v551.LayoutOrder = v294
+		v551.Name = ("Tier%*"):format(v_u_549)
+		v551.TierName.Text = ("Tier %*"):format(v_u_549 or (({
+			"I",
+			"II",
+			"III",
+			"IV",
+			"V",
+			"VI",
+			"VII",
+			"VIII",
+			"IX",
+			"X",
+		})[v_u_549] or tostring(v_u_549)))
+		v551.Dot.Container.Label.Text = ("%*."):format(v_u_549)
+		v551.Parent = v_u_89
+		local v552 = v94:Clone()
+		v552.Name = ("TierProgress%*"):format(v_u_549)
+		v552.Position = UDim2.fromScale(0.05, 0)
+		v552.Size = UDim2.fromScale(0.032, 0)
+		v552.Filler.Size = UDim2.fromScale(1, 0)
+		local v553 = v293
+		v293 = v293 + 1
+		v552.LayoutOrder = v553
+		v552.Parent = v_u_89.Separator
+		v294 = v293
+		for v_u_554, v_u_555 in v550 do
+			local v_u_556 = v_u_555.Result.Value
+			local v_u_557 = v_u_18(v_u_555.Result.Value, v_u_555.Result.Type)
+			local v558 = v90:Clone()
+			v558.Name = ("%*:%*"):format(v_u_554, v_u_556)
+			local v559 = v_u_555.Result.Value == "Campfire Egg"
+			local v560 = v558.Inner.ItemName
+			local v561 = v_u_555.Result.Value
+			if v_u_555.Result.Type == "Seed" then
+				v561 = ("%* Seed"):format(v561)
+			end
+			v560.Text = v561
+			if v559 then
+				v_u_66(v558)
+			end
+			v558.Inner.ItemDescription.Text = v_u_555.Description or ""
+			v558.Inner.Craft.Icon.Image = v_u_557
+			local v562
+			if v559 then
+				v562 = v546 - 1
+			else
+				local v563 = v548 + 1
+				v562 = v548
+				v548 = v563
+			end
+			local v564 = v_u_26.new
+			local v565 = v558.Inner.Craft.Icon
+			local v566 = Enum.EasingStyle.Quad
+			local v567 = Enum.EasingDirection.InOut
+			local v568 = v546 * 0.18 - 0.7
+			local v_u_569 = v564(v565, 0.7, v566, v567, -1, false, (math.max(0, v568)))
+			task.delay(v562 * 0.18, function()
+				-- upvalues: (copy) v_u_569
+				v_u_569:Play()
+			end)
+			if v559 then
+				v_u_69(v558.Inner.Craft)
+			end
+			local v570 = ("SummerFire_%*_%*"):format(v_u_555.Result.Type, v_u_555.Result.Value)
+			v_u_13:AddItemToData(v570, (v_u_52(v_u_555.Result.Value, v_u_555.Result.Type, v_u_557)))
+			v558.Inner.Craft.Icon:AddTag("ItemInfoHoverTag")
+			v558.Inner.Craft.Icon:SetAttribute("UUID", v570)
+			local v571
+			if v559 then
+				v571 = v294
+				v294 = 1000000
+			else
+				v293 = v294 + 1
+				v571 = v293
+			end
+			v558.LayoutOrder = v294
+			v558.Parent = v_u_89
+			v_u_24({
+				["instance"] = nil,
+				["scale"] = nil,
+				["offset"] = 0.05,
+				["legacy"] = true,
+				["onclick"] = nil,
+				["instance"] = v558.Inner.SENSOR,
+				["scale"] = v558.Inner.UIScale,
+				["onclick"] = function() -- name: onclick
+					-- upvalues: (copy) v_u_549, (copy) v_u_554, (copy) v_u_556, (ref) v_u_214, (ref) v_u_36, (ref) v_u_215, (copy) v_u_555, (ref) v_u_277, (copy) v_u_248, (copy) v_u_557, (copy) v_u_542, (copy) v_u_545, (ref) v_u_13, (ref) v_u_10, (ref) v_u_15, (ref) v_u_52, (ref) v_u_212, (ref) v_u_213, (copy) v_u_92, (copy) v_u_541, (ref) v_u_18, (copy) v_u_307, (ref) v_u_79
+					local v572 = ("%*:%*:%*"):format(v_u_549, v_u_554, v_u_556)
+					if v_u_214 == v572 and v_u_36.Crafting.Main.Crafting.Visible then
+						v_u_214 = nil
+						v_u_36.Crafting.Main.Campfire.Visible = true
+						v_u_36.Crafting.Main.Crafting.Visible = false
+					else
+						v_u_214 = v572
+						local v573 = v_u_555.ProductId
+						v_u_215 = tonumber(v573)
+						v_u_277 = v_u_277 + 1
+						v_u_36.Crafting.Main.Crafting.Tier.TierName.TextColor3 = v_u_248
+						local v574 = v_u_36.Crafting.Main.Crafting.Craft.ItemName
+						local v575 = v_u_555.Result.Value
+						if v_u_555.Result.Type == "Seed" then
+							v575 = ("%* Seed"):format(v575)
+						end
+						v574.Text = v575
+						local v576 = v_u_549
+						v_u_36.Crafting.Main.Crafting.Tier.TierName.Text = ("Campfire %*"):format(v576 or (({
+							"I",
+							"II",
+							"III",
+							"IV",
+							"V",
+							"VI",
+							"VII",
+							"VIII",
+							"IX",
+							"X",
+						})[v576] or tostring(v576)))
+						v_u_36.Crafting.Main.Crafting.Craft.Icon.Image = v_u_557
+						v_u_542.Visible = (v_u_555.Result.Type == "Egg" or v_u_555.Result.Type == "SeedPack") and true or v_u_555.Result.Type == "Crate"
+						v_u_542:SetAttribute("ItemValue", v_u_555.Result.Value)
+						v_u_542:SetAttribute("ItemType", v_u_555.Result.Type)
+						v_u_545.Visible = v_u_555.Result.Type == "Gear"
+						local v577 = v_u_545:GetAttribute("UUID")
+						if v577 then
+							v_u_13:RemoveItemFromData(v577)
+						end
+						local v578 = ("SummerFire_%*_%*"):format(v_u_555.Result.Type, v_u_555.Result.Value)
+						v_u_13:AddItemToData(v578, {
+							["DisplayName"] = nil,
+							["Description"] = nil,
+							["ItemImage"] = nil,
+							["Properties"] = nil,
+							["DescriptionOnly"] = true,
+							["DisplayName"] = v_u_556,
+							["Description"] = v_u_10(v_u_555.Result.Value, v_u_555.Result.Type),
+							["ItemImage"] = v_u_557,
+							["Properties"] = {
+								["Rarity"] = v_u_15(v_u_555.Result.Value, v_u_555.Result.Type),
+							},
+						})
+						v_u_545:SetAttribute("UUID", v578)
+						v_u_13:AddItemToData(v578, (v_u_52(v_u_555.Result.Value, v_u_555.Result.Type, v_u_557)))
+						local v579 = v_u_36.Crafting.Main.Crafting.Craft.Icon
+						v579:AddTag("ItemInfoHoverTag")
+						v579:SetAttribute("UUID", v578)
+						local v580 = v_u_36.Crafting.Main.Crafting.ButtonHolder
+						v580.CRAFT.Visible = true
+						v580.BUY.Visible = v_u_555.ProductId ~= nil
+						v580.BUY.SENSOR.Label:SetAttribute("ProductId", v_u_555.ProductId)
+						v580.BUY.SENSOR.Label[("%*Tag"):format(v_u_555.ProductId and "Add" or "Remove")](v580.BUY.SENSOR.Label, "PriceLabel")
+						for _, v581 in v_u_36.Crafting.Main.Crafting.Requirements:QueryDescendants("> Frame") do
+							v581:Destroy()
+						end
+						v_u_212 = {}
+						v_u_213 = {}
+						local v582 = {}
+						for v583, v584 in v_u_555.Recipe do
+							local v585 = v_u_92:Clone()
+							v_u_541(v585, v583, v584)
+							table.insert(v582, v585)
+							v_u_18(v584.Value, v584.Type)
+							v_u_15(v584.Value, v584.Type)
+							v_u_10(v584.Value, v584.Type)
+							local v586 = v584.Type
+							local v587 = v584.Value
+							local v588 = v584.Quantity
+							local v589 = ("%*_REQ_%*_%*_%*_%*"):format(v572, v583, v586, v587, tonumber(v588) or 1)
+							local v590 = v_u_18(v584.Value, v584.Type)
+							local v591 = v_u_15(v584.Value, v584.Type)
+							local v592 = v_u_10(v584.Value, v584.Type)
+							local v593
+							if v584.Type == "Seed" then
+								v593 = ("%* Seed"):format(v584.Value)
+							else
+								v593 = ("%*"):format(v584.Value)
+							end
+							local v594 = v_u_13
+							local v595 = {
+								["DisplayName"] = nil,
+								["Description"] = nil,
+								["ItemImage"] = nil,
+								["Properties"] = nil,
+								["DetailsOnly"] = true,
+								["DisplayName"] = v593,
+							}
+							if #v592 <= 0 then
+								v592 = ("An interesting %*."):format(v584.Value)
+							end
+							v595.Description = v592
+							v595.ItemImage = v590
+							local v596 = {
+								["Rarity"] = v591,
+							}
+							local v597 = v584.Quantity
+							local v598 = tonumber(v597) or 1
+							local v599 = v584.Type or ""
+							local v600 = tostring(v599)
+							local v601
+							if ((v600 == "Pet Egg" or (v600 == "PetEgg" or v600 == "Egg")) and "Egg" or v600) == "Currency" then
+								v601 = v_u_307(v598)
+							else
+								v601 = ("x%*"):format(v598)
+							end
+							v596.Quantity = v601
+							v595.Properties = v596
+							v594:AddItemToData(v589, v595)
+							v585:AddTag("ItemInfoHoverTag")
+							if not v585:GetAttribute("UUID") then
+								v585:SetAttribute("UUID", v589)
+							end
+						end
+						v_u_79(v582, v_u_36.Crafting.Main.Crafting.Requirements:FindFirstChildOfClass("UIListLayout"))
+						v_u_36.Crafting.Main.Campfire.Visible = false
+						v_u_36.Crafting.Main.Crafting.Visible = true
+					end
+				end,
+			})
+			for v602, v603 in v_u_555.Recipe do
+				local v604 = v_u_18(v603.Value, v603.Type)
+				local v605 = v_u_15(v603.Value, v603.Type)
+				local v606 = v_u_10(v603.Value, v603.Type)
+				local v607 = v603.Type == "Fruit" and true or v603.Type == "Pet"
+				local v608 = v91:Clone()
+				v608.RequirementImage.Image = v604
+				local v609 = v608.Quantity
+				local v610 = v603.Quantity
+				local v611 = tonumber(v610) or 1
+				local v612 = v603.Type or ""
+				local v613 = tostring(v612)
+				local v614
+				if ((v613 == "Pet Egg" or (v613 == "PetEgg" or v613 == "Egg")) and "Egg" or v613) == "Currency" then
+					v614 = v_u_307(v611)
+				else
+					v614 = ("x%*"):format(v611)
+				end
+				v609.Text = v614
+				v608.Parent = v558.Inner.Requirements
+				local v615 = ("%*:%*:%*"):format(v_u_549, v_u_554, v_u_556)
+				local v616 = v603.Type
+				local v617 = v603.Value
+				local v618 = v603.Quantity
+				local v619 = ("%*_REQ_%*_%*_%*_%*"):format(v615, v602, v616, v617, tonumber(v618) or 1)
+				local v620
+				if v603.Type == "Seed" then
+					v620 = ("%* Seed"):format(v603.Value)
+				else
+					v620 = ("%*"):format(v603.Value)
+				end
+				local v621 = v_u_13
+				local v622 = {
+					["DisplayName"] = nil,
+					["Description"] = nil,
+					["ItemImage"] = nil,
+					["Properties"] = nil,
+					["DetailsOnly"] = true,
+					["DisplayName"] = v620,
+				}
+				if #v606 <= 0 then
+					v606 = ("An interesting %*."):format(v603.Value)
+				end
+				v622.Description = v606
+				v622.ItemImage = v604
+				local v623 = {
+					["Rarity"] = v605,
+				}
+				local v624 = v603.Quantity
+				local v625 = tonumber(v624) or 1
+				local v626 = v603.Type or ""
+				local v627 = tostring(v626)
+				local v628
+				if ((v627 == "Pet Egg" or (v627 == "PetEgg" or v627 == "Egg")) and "Egg" or v627) == "Currency" then
+					v628 = v_u_307(v625)
+				else
+					v628 = ("x%*"):format(v625)
+				end
+				v623.Quantity = v628
+				v623.Mutations = v607 and "Any" or nil
+				v623.Weight = v607 and "Any" or nil
+				v622.Properties = v623
+				v621:AddItemToData(v619, v622)
+				v608:AddTag("ItemInfoHoverTag")
+				v608:SetAttribute("UUID", v619)
+			end
+			v294 = v571
+		end
+		table.insert(v_u_87, {
+			["Tier"] = v_u_549,
+			["TierFrame"] = v551,
+			["ProgressFrame"] = v552,
+		})
+	end
+	local function v_u_640() -- name: GetCampfireProgress
+		-- upvalues: (ref) v_u_12
+		local v629 = workspace
+		local v630 = v_u_12.WORKSPACE_ATTRIBUTE
+		local v631 = tonumber(v629:GetAttribute(v630)) or 0
+		local v632 = workspace
+		local v633 = v_u_12.WORKSPACE_EMBER_COUNT
+		local v634 = tonumber(v632:GetAttribute(v633)) or 0
+		local v635 = workspace
+		local v636 = v_u_12.WORKSPACE_EMBER_COUNT_MAX
+		local v637 = tonumber(v635:GetAttribute(v636)) or 0
+		local v638
+		if v637 > 0 then
+			local v639 = v634 / v637
+			v638 = math.clamp(v639, 0, 1)
+		else
+			v638 = 0
+		end
+		return v631, v638
+	end
+	local function v_u_651(p641, p642) -- name: UpdateTierTemplateStates
+		-- upvalues: (ref) v_u_12, (copy) v_u_87, (ref) v_u_42, (ref) v_u_43, (ref) v_u_31
+		local v643
+		if p642 then
+			v643 = v_u_12.MAX_TIERS
+		else
+			v643 = p641
+		end
+		for _, v644 in v_u_87 do
+			local v645 = v644.Tier <= v643
+			local v646 = v644.Tier == p641
+			local v647 = v644.Tier
+			local v648 = ("Tier %*"):format(v647 or (({
+				"I",
+				"II",
+				"III",
+				"IV",
+				"V",
+				"VI",
+				"VII",
+				"VIII",
+				"IX",
+				"X",
+			})[v647] or tostring(v647)))
+			local v649 = v644.TierFrame.Dot.Container
+			local v650
+			if v645 then
+				v650 = v_u_42
+			else
+				v650 = v_u_43
+			end
+			v649.BackgroundColor3 = v650
+			if v645 then
+				if v646 then
+					v644.TierFrame.TierName.Text = ('%* <font color="#FFC24B">[CURRENT]</font>'):format(v648)
+				else
+					v644.TierFrame.TierName.Text = v648
+				end
+			else
+				v644.TierFrame.TierName.Text = ("%* %*"):format(v648, (v_u_31.red("[LOCKED]")))
+			end
+		end
+	end
+	local function v_u_669() -- name: updateTierProgressFrames
+		-- upvalues: (copy) v_u_640, (copy) v_u_87, (copy) v_u_89, (ref) v_u_30
+		local v652, v653 = v_u_640()
+		for v654, v655 in v_u_87 do
+			local v656 = v_u_87[v654 + 1]
+			if v656 then
+				v655.ProgressFrame.Visible = true
+				local v657 = v655.TierFrame.Dot.Container
+				local v658 = v657.AbsolutePosition.Y - v_u_89.AbsolutePosition.Y + v_u_89.CanvasPosition.Y + v657.AbsoluteSize.Y / 2
+				local v659 = v656.TierFrame.Dot.Container
+				local v660 = v659.AbsolutePosition.Y - v_u_89.AbsolutePosition.Y + v_u_89.CanvasPosition.Y + v659.AbsoluteSize.Y / 2
+				local v661 = v655.ProgressFrame.Position.X
+				local v662 = v655.ProgressFrame.Size.X
+				v655.ProgressFrame.Position = UDim2.new(v661.Scale, v661.Offset, 0, v658)
+				local v663 = v655.ProgressFrame
+				local v664 = UDim2.new
+				local v665 = v662.Scale
+				local v666 = v662.Offset
+				local v667 = v660 - v658
+				v663.Size = v664(v665, v666, 0, (math.max(0, v667)))
+				local v668 = 0
+				if v655.Tier < v652 then
+					v668 = 1
+				elseif v652 == v655.Tier then
+					v668 = v653
+				end
+				v_u_30.target(v655.ProgressFrame.Filler, 1, 4, {
+					["Size"] = UDim2.fromScale(1, v668),
+				})
+			else
+				v655.ProgressFrame.Visible = false
+			end
+		end
+	end
+	local function v670() -- name: QueueUpdate
+		-- upvalues: (ref) v_u_4, (copy) v_u_669
+		task.defer(function()
+			-- upvalues: (ref) v_u_4, (ref) v_u_669
+			v_u_4.Heartbeat:Wait()
+			v_u_669()
+		end)
+	end
+	task.defer(function()
+		-- upvalues: (ref) v_u_4, (copy) v_u_669
+		v_u_4.Heartbeat:Wait()
+		v_u_669()
+	end)
+	v_u_89.UIListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(v670)
+	v_u_89:GetPropertyChangedSignal("AbsoluteSize"):Connect(v670)
+	v_u_89:GetPropertyChangedSignal("CanvasPosition"):Connect(v670)
+	local v_u_671 = v_u_36.Crafting.Main.Campfire.SpeedBonus.Value
+	local v_u_672 = v_u_671:FindFirstChildOfClass("UIStroke")
+	local v_u_673 = Color3.fromRGB(50, 255, 17)
+	local v674 = Color3.fromRGB(150, 255, 120)
+	local v_u_675 = Color3.fromRGB(105, 117, 110)
+	local v_u_676 = v_u_672 and (v_u_672.Transparency or 0) or 0
+	local v_u_677 = v_u_3:Create(v_u_671, TweenInfo.new(0.45, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {
+		["TextColor3"] = v674,
+	})
+	local v_u_678
+	if v_u_672 then
+		local v679 = v_u_3
+		local v680 = TweenInfo.new(0.45, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true)
+		local v681 = {}
+		local v682 = v_u_676 + 0.35
+		v681.Transparency = math.clamp(v682, 0, 1)
+		v_u_678 = v679:Create(v_u_672, v680, v681)
+	else
+		v_u_678 = v_u_672
+	end
+	local v_u_683 = false
+	local function v693() -- name: ComputeCampfireState
+		-- upvalues: (ref) v_u_12, (ref) v_u_84, (copy) v_u_651, (ref) v_u_36, (ref) v_u_27, (ref) v_u_683, (copy) v_u_671, (copy) v_u_673, (copy) v_u_677, (copy) v_u_678, (copy) v_u_675, (copy) v_u_672, (copy) v_u_676, (ref) v_u_4, (copy) v_u_669, (copy) v_u_210
+		local v684 = workspace
+		local v685 = v_u_12.WORKSPACE_ATTRIBUTE
+		local v686 = tonumber(v684:GetAttribute(v685)) or 0
+		local v687 = workspace:GetAttribute(v_u_12.WORKSPACE_SUPER_ATTRIBUTE) == true
+		v_u_84(v686, v687)
+		v_u_651(v686, v687)
+		local v688
+		if v687 then
+			v688 = v_u_12.MAX_TIERS
+		else
+			v688 = v686
+		end
+		v_u_36.Crafting.Header.Title.Text = v688 <= 0 and "Campfire Workshop"
+			or ("Tier %* - Campfire Workshop"):format(v688 or (({
+				"I",
+				"II",
+				"III",
+				"IV",
+				"V",
+				"VI",
+				"VII",
+				"VIII",
+				"IX",
+				"X",
+			})[v688] or tostring(v688)))
+		local v689 = v_u_36.Crafting.Main.Campfire.Campfire
+		if v686 <= 0 then
+			v689.TierName.Text = "Inactive"
+		else
+			v689.TierName.Text = v687 and "Super Fire" or ("Tier %*"):format(v686 or (({
+				"I",
+				"II",
+				"III",
+				"IV",
+				"V",
+				"VI",
+				"VII",
+				"VIII",
+				"IX",
+				"X",
+			})[v686] or tostring(v686)))
+		end
+		local v690
+		if v686 <= 0 then
+			v690 = 0
+		else
+			local v691
+			if v687 then
+				v691 = v_u_12.MAX_TIERS
+			else
+				v691 = v686
+			end
+			v690 = v691 * v_u_27.BoostPerTier
+		end
+		if v690 > 0 then
+			v_u_36.Crafting.Main.Campfire.SpeedBonus.Value.Text = ("%*%%"):format(v690)
+			if v_u_683 ~= true then
+				v_u_683 = true
+				v_u_671.TextColor3 = v_u_673
+				v_u_677:Play()
+				if v_u_678 then
+					v_u_678:Play()
+				end
+			end
+			local v692 = ("Your crafting speed is boosted by %*%%, by the Tier %* Campfire"):format(v690, v686 or (({
+				"I",
+				"II",
+				"III",
+				"IV",
+				"V",
+				"VI",
+				"VII",
+				"VIII",
+				"IX",
+				"X",
+			})[v686] or tostring(v686)))
+			v_u_36.Crafting.Main.Campfire.SpeedBonus:SetAttribute("HoverText", v692)
+		else
+			v_u_36.Crafting.Main.Campfire.SpeedBonus.Value.Text = "Light it up!"
+			if v_u_683 ~= false then
+				v_u_683 = false
+				v_u_677:Cancel()
+				v_u_671.TextColor3 = v_u_675
+				if v_u_678 then
+					v_u_678:Cancel()
+					v_u_672.Transparency = v_u_676
+				end
+			end
+			v_u_36.Crafting.Main.Campfire.SpeedBonus:SetAttribute("HoverText", "Light the campfire to get a crafting speed boost!")
+		end
+		task.defer(function()
+			-- upvalues: (ref) v_u_4, (ref) v_u_669
+			v_u_4.Heartbeat:Wait()
+			v_u_669()
+		end)
+		v_u_210()
+	end
+	workspace:GetAttributeChangedSignal(v_u_12.WORKSPACE_ATTRIBUTE):Connect(v693)
+	workspace:GetAttributeChangedSignal(v_u_12.WORKSPACE_SUPER_ATTRIBUTE):Connect(v693)
+	workspace:GetAttributeChangedSignal(v_u_12.WORKSPACE_EMBER_COUNT):Connect(v693)
+	workspace:GetAttributeChangedSignal(v_u_12.WORKSPACE_EMBER_COUNT_MAX):Connect(v693)
+	v_u_4.Heartbeat:Connect(function(p694)
+		-- upvalues: (copy) v_u_210, (ref) v_u_39, (ref) v_u_41, (ref) v_u_40, (ref) v_u_38, (ref) v_u_37
+		v_u_210()
+		if v_u_39 ~= 0 then
+			v_u_41 = v_u_41 + p694
+			while v_u_41 >= 0.125 do
+				v_u_41 = v_u_41 - 0.125
+				v_u_40 = v_u_40 + 1
+				if v_u_40 > #v_u_38 then
+					v_u_40 = 1
+				end
+			end
+			local v695 = v_u_38[v_u_40]
+			v_u_37.ImageRectOffset = Vector2.new(v695, v_u_39)
+		end
+	end)
+	v693()
+	v_u_210()
+	v_u_20:GetPathSignal("InventoryData"):Connect(v527)
+	v_u_20:GetPathSignal("PetsData/PetInventory/Data"):Connect(v527)
+	v_u_20:GetPathSignal("CosmeticData/Inventory"):Connect(function()
+		-- upvalues: (ref) v_u_218, (ref) v_u_36, (ref) v_u_213, (copy) v_u_493
+		if not v_u_218 then
+			v_u_218 = true
+			task.defer(function()
+				-- upvalues: (ref) v_u_218, (ref) v_u_36, (ref) v_u_213, (ref) v_u_493
+				v_u_218 = false
+				if v_u_36.Crafting.Main.Crafting.Visible then
+					for _, v696 in v_u_213 do
+						v_u_493(v696)
+					end
+				end
+			end)
+		end
+	end)
+end
+task.spawn(v44.Start)
+return v44
