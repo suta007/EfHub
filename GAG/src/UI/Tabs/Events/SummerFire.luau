@@ -2,16 +2,16 @@ local SummerFire = {}
 local reg
 local sData
 
---local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local Modules = ReplicatedStorage:WaitForChild("Modules")
-local SummerEventControllers = sData.Modules:WaitForChild("SummerEventControllers")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Modules = ReplicatedStorage:WaitForChild("Modules")
+local SummerEventControllers = Modules:WaitForChild("SummerEventControllers")
 local SummerCraftingController = SummerEventControllers:WaitForChild("SummerCraftingController")
 local SummerCraftingConfig = require(SummerCraftingController.SummerCraftingConfig)
 
 local Craftables = SummerCraftingConfig.Craftables
-local DataService = require(sData.Modules.DataService)
+local DataService = require(Modules.DataService)
 
-local SummerCraftingService = sData.GameEvents:WaitForChild("SummerCraftingService")
+local SummerCraftingService = ReplicatedStorage:WaitForChild("GameEvents"):WaitForChild("SummerCraftingService")
 local StartCraftRemote = SummerCraftingService:WaitForChild("StartCraft")
 local ClaimCraftRemote = SummerCraftingService:WaitForChild("ClaimCraft")
 
