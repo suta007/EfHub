@@ -630,7 +630,7 @@ function Auto.CraftSeed()
 
 		task.wait(0.5)
 
-		for attempt = 1, 3 do
+		for attempt = 1, 5 do
 			if not Options.tgCraftSeedEnable.Value then
 				return
 			end
