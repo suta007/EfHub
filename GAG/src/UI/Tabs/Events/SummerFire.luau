@@ -30,9 +30,16 @@ end
 local function getInvUUID(GetData, Name)
 	local inventory = GetData.InventoryData or {}
 	for uuid, value in pairs(inventory) do
-		if value.ItemType == Name or (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
-			--print(Name, " UUID : ", uuid)
+		-- เช็ค ItemType ก่อน
+		if value.ItemType == Name then
 			return uuid
+		end
+
+		-- ถ้า ItemType ไม่ตรง เช็คว่ามี ItemData ไหม ค่อยเข้าไปเทียบชื่อ
+		if value.ItemData then
+			if (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
+				return uuid
+			end
 		end
 	end
 	return nil
