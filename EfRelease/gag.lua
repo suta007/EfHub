@@ -1497,12 +1497,21 @@ end
 return 0
 end
 
-local function getInvUUID(g,h)
-local i=g.InventoryData or{}
-for j,k in pairs(i)do
-if k.ItemType==h or(k.ItemData.EggName and k.ItemData.EggName==h)or(k.ItemData.ItemName and k.ItemData.ItemName==h)then
-print(h," UUID : ",j)
-return j
+local function getInvUUID(g,h,i)
+local j=g.InventoryData or{}
+for k,l in pairs(j)do
+
+if l.ItemType==h then
+return k
+end
+
+
+if l.ItemData then
+if(l.ItemData.EggName and l.ItemData.EggName==h)or(l.ItemData.ItemName and l.ItemData.ItemName==h)then
+if l.ItemType==i then
+return k
+end
+end
 end
 end
 return nil
@@ -1556,56 +1565,54 @@ return
 end
 end
 
-
-
-
-
-
-
-
+local q=GetRequiredItemsCount(l,e.GearEventData)
+if q==0 then
+c.Log("🟡 No Recipe Found")
+return
+end
 
 pcall(function()
 e.CraftingEvent:FireServer("SetRecipe",h,i,l)
 end)
 task.wait(0.5)
 
-for q,r in pairs(e.GearEventData)do
-if q==l then
-for s,t in ipairs(r.Inputs)do
-local u=t.ItemData.ItemName
-local v=t.ItemType
-local w=nil
-if v=="Cosmetic"then
-w=getCosmeticUUID(m,u)
-if not w then
-c.Log("Missing ingredient: "..u,"WARN")
+for r,s in pairs(e.GearEventData)do
+if r==l then
+for t,u in ipairs(s.Inputs)do
+local v=u.ItemData.ItemName
+local w=u.ItemType
+local x=nil
+if w=="Cosmetic"then
+x=getCosmeticUUID(m,v)
+if not x or x==""then
+c.Log("🟡 Missing ingredient: "..tostring(v))
 return nil
 end
-elseif v=="Pet"then
+elseif w=="Pet"then
 
 return nil
-elseif v~="Currency"then
-w=getInvUUID(m,u)
-if not w then
-c.Log("Missing ingredient: "..u,"WARN")
+elseif w~="Currency"then
+x=getInvUUID(m,v,w)
+if not x or x==""then
+c.Log("🟡 Missing ingredient: "..tostring(v))
 return nil
 end
 end
 
-if w then
-local x={
+if x then
+local y={
 "InputItem",
 h,
 i,
-s,
+t,
 {
-ItemType=v,
+ItemType=w,
 ItemData={
-UUID=w,
+UUID=x,
 },
 },
 }
-e.CraftingEvent:FireServer(unpack(x))
+e.CraftingEvent:FireServer(unpack(y))
 end
 end
 end
@@ -1655,7 +1662,7 @@ e.CraftingEvent:FireServer("Craft",h,i)
 c.Log("ของครบถ้วน สั่ง Craft -> "..l)
 end)
 
-task.wait(1.5)
+task.wait(5)
 return
 end)
 end
@@ -1700,11 +1707,11 @@ return
 end
 end
 
-
-
-
-
-
+local q=GetRequiredItemsCount(l,e.SeedEventData)
+if q==0 then
+c.Log("🟡 No Recipe Found")
+return
+end
 
 
 
@@ -1714,48 +1721,49 @@ end)
 
 task.wait(0.5)
 
-for q,r in pairs(e.SeedEventData)do
-if q==l then
-for s,t in ipairs(r.Inputs)do
-local u=t.ItemData.ItemName
-local v=t.ItemType
-local w=nil
-if v=="Cosmetic"then
-w=getCosmeticUUID(m,u)
-if not w then
-c.Log("Missing ingredient: "..u,"WARN")
+for r,s in pairs(e.SeedEventData)do
+if r==l then
+for t,u in ipairs(s.Inputs)do
+local v=u.ItemData.ItemName
+local w=u.ItemType
+local x=nil
+if w=="Cosmetic"then
+x=getCosmeticUUID(m,v)or nil
+if not x or x==""then
+c.Log("🟡 Missing ingredient: "..tostring(v))
 return nil
 end
-elseif v=="Pet"then
+elseif w=="Pet"then
 
 return nil
-elseif v~="Currency"then
-w=getInvUUID(m,u)
-if not w then
-c.Log("Missing ingredient: "..u,"WARN")
+elseif w~="Currency"then
+x=getInvUUID(m,v)or nil
+if not x or x==""then
+c.Log("🟡 Missing ingredient: "..tostring(v))
 return nil
 end
 end
 
-if w then
-local x={
+if x then
+local y={
 "InputItem",
 h,
 i,
-s,
+t,
 {
-ItemType=v,
+ItemType=w,
 ItemData={
-UUID=w,
+UUID=x,
 },
 },
 }
-e.CraftingEvent:FireServer(unpack(x))
+e.CraftingEvent:FireServer(unpack(y))
 end
 end
 end
 end
 task.wait(0.5)
+
 
 
 
@@ -1801,7 +1809,7 @@ e.CraftingEvent:FireServer("Craft",h,i)
 c.Log("ของครบถ้วน สั่ง Craft -> "..l)
 end)
 
-task.wait(1.5)
+task.wait(5)
 return
 end)
 end
@@ -3984,7 +3992,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.06.17-18.55",
+SubTitle="2569.06.17-22.35",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6264,12 +6272,21 @@ end
 end
 end
 
-local function getInvUUID(r,t)
-local u=r.InventoryData or{}
-for v,w in pairs(u)do
-if w.ItemType==t or(w.ItemData.EggName and w.ItemData.EggName==t)or(w.ItemData.ItemName and w.ItemData.ItemName==t)then
-print(t," UUID : ",v)
-return v
+local function getInvUUID(r,t,u)
+local v=r.InventoryData or{}
+for w,x in pairs(v)do
+
+if x.ItemType==t then
+return w
+end
+
+
+if x.ItemData then
+if(x.ItemData.EggName and x.ItemData.EggName==t)or(x.ItemData.ItemName and x.ItemData.ItemName==t)then
+if x.ItemType==u then
+return w
+end
+end
 end
 end
 return nil
@@ -6304,7 +6321,7 @@ elseif w["Type"]=="Pet"then
 
 return nil
 elseif w["Type"]~="Currency"then
-local x=getInvUUID(u,w["Value"])
+local x=getInvUUID(u,w["Value"],w["Type"])
 if x then
 table.insert(t,x)
 else
