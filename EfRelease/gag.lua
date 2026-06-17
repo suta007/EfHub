@@ -6291,9 +6291,9 @@ return w
 end
 
 if x.ItemData.ItemName and x.ItemData.ItemName==t then
-if x.ItemType==u then
+
 return w
-end
+
 end
 end
 end
