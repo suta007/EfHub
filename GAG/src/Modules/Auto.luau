@@ -489,7 +489,7 @@ function Auto.CraftGear()
 		end)
 		task.wait(0.5)
 
-		for attempt = 1, 3 do
+		for attempt = 1, 5 do
 			if not Options.tgCraftGearEnable.Value then
 				return
 			end
@@ -550,12 +550,12 @@ function Auto.CraftGear()
 				isReadyToCraft = true
 				break
 			else
-				reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3", inputCount, requiredCount, attempt))
-				task.wait(1)
+				reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/5", inputCount, requiredCount, attempt))
+				task.wait(5)
 			end
 		end
 
-		-- ถ้า 3 รอบแล้วของไม่พอ ปิดระบบ
+		-- ถ้า 5 รอบแล้วของไม่พอ ปิดระบบ
 		if not isReadyToCraft then
 			reg.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
 			if Options.tgCraftGearEnable then
@@ -573,6 +573,7 @@ function Auto.CraftGear()
 		end)
 
 		task.wait(1.5)
+		return
 	end)
 end
 
@@ -692,7 +693,7 @@ function Auto.CraftSeed()
 				break
 			else
 				reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3", inputCount, requiredCount, attempt))
-				task.wait(3)
+				task.wait(5)
 			end
 		end
 
@@ -714,6 +715,7 @@ function Auto.CraftSeed()
 		end)
 
 		task.wait(1.5)
+		return
 	end)
 end
 
