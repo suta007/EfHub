@@ -476,13 +476,11 @@ function Auto.CraftGear()
 			end
 		end
 
-		--local requiredCount = GetRequiredItemsCount(targetGear, sData.GearEventData)
-		--if requiredCount == 0 then
-		--	reg.Log("🟡 No Recipe Found")
-		--	return
-		--end
-
-		--local isReadyToCraft = false
+		local requiredCount = GetRequiredItemsCount(targetGear, sData.GearEventData)
+		if requiredCount == 0 then
+			reg.Log("🟡 No Recipe Found")
+			return
+		end
 
 		pcall(function()
 			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetGear)
@@ -567,6 +565,16 @@ function Auto.CraftGear()
 			return
 		end
 ]]
+
+		local updatedDataResult = sData.DataService:GetData()
+		local updatedBenchData = updatedDataResult.CraftingData.GlobalCraftingObjectData[TARGET_BENCH_ID].MachineData[TARGET_MACHINE_TYPE]
+		local currentInputItems = updatedBenchData.InputItems
+		local inputCount = currentInputItems and #currentInputItems or 0
+
+		if inputCount < requiredCount then
+			reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d)", inputCount, requiredCount))
+			return
+		end
 		-- ====================================================
 		-- 🔴 ข้อ 3: ของครบ สั่ง Craft
 		-- ====================================================
@@ -620,11 +628,11 @@ function Auto.CraftSeed()
 			end
 		end
 
-		---local requiredCount = GetRequiredItemsCount(targetSeed, sData.SeedEventData)
-		--if requiredCount == 0 then
-		--	reg.Log("🟡 No Recipe Found")
-		--	return
-		--end
+		local requiredCount = GetRequiredItemsCount(targetSeed, sData.SeedEventData)
+		if requiredCount == 0 then
+			reg.Log("🟡 No Recipe Found")
+			return
+		end
 
 		--local isReadyToCraft = false
 
@@ -713,6 +721,16 @@ function Auto.CraftSeed()
 		end
 
 ]]
+
+		local updatedDataResult = sData.DataService:GetData()
+		local updatedBenchData = updatedDataResult.CraftingData.GlobalCraftingObjectData[TARGET_BENCH_ID].MachineData[TARGET_MACHINE_TYPE]
+		local currentInputItems = updatedBenchData.InputItems
+		local inputCount = currentInputItems and #currentInputItems or 0
+
+		if inputCount < requiredCount then
+			reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d)", inputCount, requiredCount))
+			return
+		end
 		-- ====================================================
 		-- 🔴 ข้อ 3: ของครบ สั่ง Craft
 		-- ====================================================

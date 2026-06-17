@@ -64,6 +64,6 @@ end
 
 task.spawn(function()
 	while task.wait(1) do
-		SummerBear()
+		pcall(SummerBear)
 	end
 end)
