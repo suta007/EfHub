@@ -1507,7 +1507,11 @@ end
 
 
 if l.ItemData then
-if(l.ItemData.EggName and l.ItemData.EggName==h)or(l.ItemData.ItemName and l.ItemData.ItemName==h)then
+if l.ItemData.EggName and l.ItemData.EggName==h then
+return k
+end
+
+if l.ItemData.ItemName and l.ItemData.ItemName==h then
 if l.ItemType==i then
 return k
 end
@@ -6282,7 +6286,11 @@ end
 
 
 if x.ItemData then
-if(x.ItemData.EggName and x.ItemData.EggName==t)or(x.ItemData.ItemName and x.ItemData.ItemName==t)then
+if x.ItemData.EggName and x.ItemData.EggName==t then
+return w
+end
+
+if x.ItemData.ItemName and x.ItemData.ItemName==t then
 if x.ItemType==u then
 return w
 end
