@@ -1497,87 +1497,146 @@ end
 return 0
 end
 
+local function getInvUUID(g,h)
+local i=g.InventoryData or{}
+for j,k in pairs(i)do
+if k.ItemType==h or(k.ItemData.EggName and k.ItemData.EggName==h)or(k.ItemData.ItemName and k.ItemData.ItemName==h)then
+print(h," UUID : ",j)
+return j
+end
+end
+return nil
+end
+
+local function getCosmeticUUID(g,h)
+local i=g.CosmeticData and g.CosmeticData.Inventory or{}
+for j,k in pairs(i)do
+if k.Name==h then
+return j
+end
+end
+return nil
+end
+
 function b.CraftGear()
 local g=c.Options
 if not g.tgCraftGearEnable or not g.tgCraftGearEnable.Value or d.CraftGearRunning then
 return
 end
 
-local h=game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
+local h=game:GetService("Workspace"):WaitForChild("NPCS"):WaitForChild("CraftingTables"):WaitForChild("EventCraftingWorkBench")
 local i="GearEventWorkbench"
 local j="Workbench-1"
 local k=1
-local l=require(e.Modules.CraftingStationHandler)
-
 f.RunWithFlag("CraftGearRunning","CraftGear",function()
-local m=g.ddCraftGear.Value
-if not m or m==""then
+local l=g.ddCraftGear.Value
+if not l or l==""then
 c.Log("🟡 No Gear Selected")
 return
 end
-local n=e.DataService:GetData()
-local o=n.CraftingData.GlobalCraftingObjectData
-local p=o[j].MachineData[i]
+local m=e.DataService:GetData()
+local n=m.CraftingData.GlobalCraftingObjectData
+local o=n[j].MachineData[i]
 
-if not p then
+if not o then
 c.Log("🟡 No Bench Data")
 return
 end
-local q=p.CraftingItems
-
-if q and q[k]then
-if q[k].IsDone==false then
+local p=o.CraftingItems
+if p and p[k]then
+if p[k].IsDone==false then
 return
-elseif q[k].IsDone==true then
+elseif p[k].IsDone==true then
 pcall(function()
 e.CraftingEvent:FireServer("Claim",h,i,k)
-c.Log("Claim "..tostring(q[k].RecipeId))
+c.Log("Claim "..tostring(p[k].RecipeId))
 end)
 task.wait(1.5)
 
 end
 end
 
-local r=GetRequiredItemsCount(m,e.GearEventData)
-if r==0 then
+local q=GetRequiredItemsCount(l,e.GearEventData)
+if q==0 then
 c.Log("🟡 No Recipe Found")
 return
 end
 
-local s=false
+local r=false
 
 pcall(function()
-e.CraftingEvent:FireServer("SetRecipe",h,i,m)
+e.CraftingEvent:FireServer("SetRecipe",h,i,l)
 end)
 task.wait(0.5)
 
-for t=1,3 do
+for s=1,3 do
 if not g.tgCraftGearEnable.Value then
 return
 end
 
-pcall(function()
-l:SubmitAllRequiredItems(h)
-end)
+
+
+for t,u in pairs(e.GearEventData)do
+if t==l then
+for v,w in ipairs(u.Inputs)do
+local x=w.ItemData.ItemName
+local y=w.ItemType
+local z=nil
+if y=="Cosmetic"then
+z=getCosmeticUUID(m,x)
+if not z then
+c.Log("Missing ingredient: "..x,"WARN")
+return nil
+end
+elseif y=="Pet"then
+
+return nil
+elseif y~="Currency"then
+z=getInvUUID(m,x)
+if not z then
+c.Log("Missing ingredient: "..x,"WARN")
+return nil
+end
+end
+
+if z then
+local A={
+"InputItem",
+h,
+i,
+v,
+{
+ItemType=y,
+ItemData={
+UUID=z,
+},
+},
+}
+e.CraftingEvent:FireServer(unpack(A))
+end
+end
+end
+end
+
 task.wait(0.5)
 
 
-local u=e.DataService:GetData()
-local v=u.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
-local w=v.InputItems
-local x=w and#w or 0
+local t=e.DataService:GetData()
+local u=t.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
+local v=u.InputItems
+local w=v and#v or 0
 
-if x==r then
-s=true
+if w==q then
+r=true
 break
 else
-c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",x,r,t))
+c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",w,q,s))
 task.wait(1)
 end
 end
 
 
-if not s then
+if not r then
 c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
 if g.tgCraftGearEnable then
 g.tgCraftGearEnable:SetValue(false)
@@ -1590,7 +1649,7 @@ end
 
 pcall(function()
 e.CraftingEvent:FireServer("Craft",h,i)
-c.Log("ของครบถ้วน สั่ง Craft -> "..m)
+c.Log("ของครบถ้วน สั่ง Craft -> "..l)
 end)
 
 task.wait(1.5)
@@ -1603,81 +1662,122 @@ if not g.tgCraftSeedEnable or not g.tgCraftSeedEnable.Value or d.CraftSeedRunnin
 return
 end
 
-local h=game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("SeedEventCraftingWorkBench")
+local h=game:GetService("Workspace"):WaitForChild("NPCS"):WaitForChild("CraftingTables"):WaitForChild("SeedEventCraftingWorkBench")
 local i="SeedEventWorkbench"
 local j="SeedEventWorkbench"
 local k=1
-local l=require(e.Modules.CraftingStationHandler)
 
 f.RunWithFlag("CraftSeedRunning","CraftSeed",function()
-local m=g.ddCraftSeed.Value
-if not m or m==""then
+local l=g.ddCraftSeed.Value
+if not l or l==""then
 c.Log("🟡 No Seed Selected")
 return
 end
-local n=e.DataService:GetData()
-local o=n.CraftingData.GlobalCraftingObjectData
-local p=o[j].MachineData[i]
+local m=e.DataService:GetData()
+local n=m.CraftingData.GlobalCraftingObjectData
+local o=n[j].MachineData[i]
 
-if not p then
+if not o then
 c.Log("🟡 No Bench Data")
 return
 end
-local q=p.CraftingItems
+local p=o.CraftingItems
 
-if q and q[k]then
-if q[k].IsDone==false then
+if p and p[k]then
+if p[k].IsDone==false then
 return
-elseif q[k].IsDone==true then
+elseif p[k].IsDone==true then
 pcall(function()
 e.CraftingEvent:FireServer("Claim",h,i,k)
-c.Log("Claim "..tostring(q[k].RecipeId))
+c.Log("Claim "..tostring(p[k].RecipeId))
 end)
 task.wait(1.5)
 
 end
 end
 
-local r=GetRequiredItemsCount(m,e.SeedEventData)
-if r==0 then
+local q=GetRequiredItemsCount(l,e.SeedEventData)
+if q==0 then
 c.Log("🟡 No Recipe Found")
 return
 end
 
-local s=false
+local r=false
 
 pcall(function()
-e.CraftingEvent:FireServer("SetRecipe",h,i,m)
+e.CraftingEvent:FireServer("SetRecipe",h,i,l)
 end)
+
 task.wait(0.5)
 
-for t=1,3 do
+for s=1,3 do
 if not g.tgCraftSeedEnable.Value then
 return
 end
 
-pcall(function()
-l:SubmitAllRequiredItems(h)
-end)
+
+
+
+for t,u in pairs(e.SeedEventData)do
+if t==l then
+for v,w in ipairs(u.Inputs)do
+local x=w.ItemData.ItemName
+local y=w.ItemType
+local z=nil
+if y=="Cosmetic"then
+z=getCosmeticUUID(m,x)
+if not z then
+c.Log("Missing ingredient: "..x,"WARN")
+return nil
+end
+elseif y=="Pet"then
+
+return nil
+elseif y~="Currency"then
+z=getInvUUID(m,x)
+if not z then
+c.Log("Missing ingredient: "..x,"WARN")
+return nil
+end
+end
+
+if z then
+local A={
+"InputItem",
+h,
+i,
+v,
+{
+ItemType=y,
+ItemData={
+UUID=z,
+},
+},
+}
+e.CraftingEvent:FireServer(unpack(A))
+end
+end
+end
+end
 task.wait(0.5)
 
 
-local u=e.DataService:GetData()
-local v=u.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
-local w=v.InputItems
-local x=w and#w or 0
+local t=e.DataService:GetData()
+local u=t.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
+local v=u.InputItems
+local w=v and#v or 0
 
-if x==r then
-s=true
+if w==q then
+r=true
 break
 else
-c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",x,r,t))
+c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",w,q,s))
 task.wait(1)
 end
 end
 
 
-if not s then
+if not r then
 c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
 if g.tgCraftSeedEnable then
 g.tgCraftSeedEnable:SetValue(false)
@@ -1690,7 +1790,7 @@ end
 
 pcall(function()
 e.CraftingEvent:FireServer("Craft",h,i)
-c.Log("ของครบถ้วน สั่ง Craft -> "..m)
+c.Log("ของครบถ้วน สั่ง Craft -> "..l)
 end)
 
 task.wait(1.5)
@@ -3875,7 +3975,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.06.7-18.55",
+SubTitle="2569.06.17-13.40",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6187,8 +6287,8 @@ if w["Type"]=="Cosmetic"then
 local x=getCosmeticUUID(u,w["Value"])
 if x then
 table.insert(t,"Cosmetic:"..x)
-c.Log("Missing ingredient: "..w["Value"],"WARN")
 else
+c.Log("Missing ingredient: "..w["Value"],"WARN")
 return nil
 end
 elseif w["Type"]=="Pet"then
