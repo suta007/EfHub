@@ -495,7 +495,7 @@ function Auto.CraftGear()
 					local uuid = nil
 					if RecipeItemType == "Cosmetic" then
 						uuid = getCosmeticUUID(GetData_result, ItemName)
-						if not uuid or uuid == nil then
+						if uuid == nil then
 							reg.Log("Missing ingredient: " .. ItemName, "WARN")
 							return nil
 						end
@@ -504,7 +504,7 @@ function Auto.CraftGear()
 						return nil
 					elseif RecipeItemType ~= "Currency" then
 						uuid = getInvUUID(GetData_result, ItemName)
-						if not uuid or uuid == nil then
+						if uuid == nil then
 							reg.Log("Missing ingredient: " .. ItemName, "WARN")
 							return nil
 						end

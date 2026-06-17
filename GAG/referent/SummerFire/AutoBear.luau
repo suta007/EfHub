@@ -42,12 +42,12 @@ local function SummerBear()
 				local ItemWeight = item:FindFirstChild("Weight") and item:FindFirstChild("Weight").Value
 				if ItemWeight < requiredWeight then
 					print("Weight to less : ", ItemWeight, " < ", requiredWeight)
-					task.wait(1)
+					task.wait(5)
 					continue
 				end
 				if requiredMutation ~= "Normal" and not item:GetAttribute(requiredMutation) then
 					print("Mutation not found : ", requiredMutation)
-					task.wait(1)
+					task.wait(5)
 					continue
 				end
 				MoveToBear()
