@@ -119,14 +119,6 @@ end
 AddLog("Script initialized successfully.")
 task.wait(0.5)
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Modules = ReplicatedStorage:WaitForChild("Modules")
-local SummerEventControllers = Modules:WaitForChild("SummerEventControllers")
-local SummerCraftingController = SummerEventControllers:WaitForChild("SummerCraftingController")
-local SummerCraftingConfig = require(SummerCraftingController.SummerCraftingConfig)
-
-local Craftables = SummerCraftingConfig.Craftables
-
 local function ShowData(tbl, indent)
 	local lclIndent = indent or 0
 	local spacing = string.rep("  ", lclIndent)
@@ -145,27 +137,19 @@ local function ShowData(tbl, indent)
 	end
 end
 
-local CraftList = {}
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RecipeRegistry = require(ReplicatedStorage.Data.CraftingData.CraftingRecipeRegistry)
+local GearEventData = RecipeRegistry.RecipiesSortedByMachineType.GearEventWorkbench
+local target = "Gold Ingot"
 
-for _i, data in pairs(Craftables) do
-	if data.Result and data.Result.Value then
-		if type(data.Result.Value) == "string" then
-			table.insert(CraftList, data.Result.Value)
+for key, value in pairs(GearEventData) do
+	if key == target then
+		for _i, input in ipairs(value.Inputs) do
+			local ItemName = input.ItemData.ItemName
+			local ItemType = input.ItemType
+			AddLog(string.format("ItemType: %s , ItemName: %s", ItemType, ItemName))
 		end
+		--ShowData(value.Inputs)
+		return
 	end
 end
-ShowData(CraftList)
-
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local Modules = ReplicatedStorage:WaitForChild("Modules")
---local SummerEventControllers = Modules:WaitForChild("SummerEventControllers")
---local SummerCraftingController = SummerEventControllers:WaitForChild("SummerCraftingController")
---local SummerCraftingConfig = require(SummerCraftingController.SummerCraftingConfig)
-
---local Craftables = SummerCraftingConfig.Craftables
-local DataService = require(ReplicatedStorage.Modules.DataService)
-
-local GetData_result = DataService:GetData()
---local SummerCraftingEventData = GetData_result.SummerCraftingEventData
-local SummerFireEventData = GetData_result.SummerFireEventData
-ShowData(SummerFireEventData)

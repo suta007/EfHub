@@ -59,8 +59,8 @@ local function GetRecipeUUID(recipes)
 			local uuid = getCosmeticUUID(GetData_result, recipe["Value"])
 			if uuid then
 				table.insert(UUIDs, "Cosmetic:" .. uuid)
-				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
 			else
+				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
 				return nil
 			end
 		elseif recipe["Type"] == "Pet" then
