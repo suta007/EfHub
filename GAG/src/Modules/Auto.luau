@@ -510,72 +510,68 @@ function Auto.CraftGear()
 			end
 		end
 
-		--local requiredCount = GetRequiredItemsCount(targetGear, sData.GearEventData)
-		--if requiredCount == 0 then
-		--reg.Log("🟡 No Recipe Found")
-		--return
-		--end
+		local requiredCount = GetRequiredItemsCount(targetGear, sData.GearEventData)
+		if requiredCount == 0 then
+			reg.Log("🟡 No Recipe Found")
+			return
+		end
 
-		--local isReadyToCraft = false
+		local isReadyToCraft = false
 
 		pcall(function()
 			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetGear)
 		end)
 		task.wait(0.5)
 
-		for key, value in pairs(sData.GearEventData) do
-			if key == targetGear then
-				for i, input in ipairs(value.Inputs) do
-					local ItemName = input.ItemData.ItemName
-					local RecipeItemType = input.ItemType
-					local uuid = nil
-					if RecipeItemType == "Cosmetic" then
-						uuid = getCosmeticUUID(GetData_result, ItemName)
-						if not uuid then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
-							return nil
-						end
-					elseif RecipeItemType == "Pet" then
-						--do not thing
-						return nil
-					elseif RecipeItemType ~= "Currency" then
-						uuid = getInvUUID(GetData_result, ItemName)
-						if not uuid then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
-							return nil
-						end
-					end
-
-					if uuid then
-						local args = {
-							"InputItem",
-							TARGET_BENCH_INSTANCE,
-							TARGET_MACHINE_TYPE,
-							i,
-							{
-								ItemType = RecipeItemType,
-								ItemData = {
-									UUID = uuid,
-								},
-							},
-						}
-						sData.CraftingEvent:FireServer(unpack(args))
-					end
-				end
-				--ShowData(value.Inputs)
-				--return
-			end
-		end
-		task.wait(1)
-		--[[
 		for attempt = 1, 3 do
 			if not Options.tgCraftGearEnable.Value then
 				return
 			end
 
-			pcall(function()
-				CraftingStationHandler:SubmitAllRequiredItems(TARGET_BENCH_INSTANCE)
-			end)
+			--pcall(function()
+			--CraftingStationHandler:SubmitAllRequiredItems(TARGET_BENCH_INSTANCE)
+			for key, value in pairs(sData.GearEventData) do
+				if key == targetGear then
+					for i, input in ipairs(value.Inputs) do
+						local ItemName = input.ItemData.ItemName
+						local RecipeItemType = input.ItemType
+						local uuid = nil
+						if RecipeItemType == "Cosmetic" then
+							uuid = getCosmeticUUID(GetData_result, ItemName)
+							if not uuid then
+								reg.Log("Missing ingredient: " .. ItemName, "WARN")
+								return nil
+							end
+						elseif RecipeItemType == "Pet" then
+							--do not thing
+							return nil
+						elseif RecipeItemType ~= "Currency" then
+							uuid = getInvUUID(GetData_result, ItemName)
+							if not uuid then
+								reg.Log("Missing ingredient: " .. ItemName, "WARN")
+								return nil
+							end
+						end
+
+						if uuid then
+							local args = {
+								"InputItem",
+								TARGET_BENCH_INSTANCE,
+								TARGET_MACHINE_TYPE,
+								i,
+								{
+									ItemType = RecipeItemType,
+									ItemData = {
+										UUID = uuid,
+									},
+								},
+							}
+							sData.CraftingEvent:FireServer(unpack(args))
+						end
+					end
+				end
+			end
+			--end)
 			task.wait(0.5)
 
 			-- ดึง Data ใหม่มาเช็ค InputItems
@@ -601,7 +597,7 @@ function Auto.CraftGear()
 			end
 			return
 		end
-]]
+
 		-- ====================================================
 		-- 🔴 ข้อ 3: ของครบ สั่ง Craft
 		-- ====================================================
