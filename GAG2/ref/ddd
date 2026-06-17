@@ -1,0 +1,154 @@
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+📥 [รับจาก Server] Remote: RemoteEvent
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: RemoteEvent.FireServer
+🚀 [ส่งออก] Remote: MenuState.FireServer
+🚀 [ส่งออก] Remote: Accept.FireServer
+➡️[1] : 
+  ➡️[LocalPlayer]:
+    ➡️[JoinData]:
+    ➡️[NetworkPing] : 39.99999910593033 (number)
+  ➡️[GuiService]:
+    ➡️[PreferredTransparency] : 1 (number)
+    ➡️[GuiInsetTopLeft] : 0, 58 (Vector2)
+    ➡️[IsModalDialog] : false (boolean)
+    ➡️[GuiInsetBotRight] : 0, 0 (Vector2)
+    ➡️[ReducedMotionEnabled] : true (boolean)
+    ➡️[AutoSelectGuiEnabled] : true (boolean)
+    ➡️[GuiNavigationEnabled] : true (boolean)
+    ➡️[IsTenFootInterface] : false (boolean)
+    ➡️[MenuIsOpen] : true (boolean)
+    ➡️[TouchControlsEnabled] : true (boolean)
+    ➡️[CoreGuiNavigationEnabled] : true (boolean)
+  ➡️[UserSettings]:
+    ➡️[GameSettings]:
+      ➡️[TouchMovementMode] : Enum.TouchMovementMode.Default (EnumItem)
+      ➡️[RotationType] : Enum.RotationType.MovementRelative (EnumItem)
+      ➡️[ComputerMovementMode] : Enum.ComputerMovementMode.Default (EnumItem)
+      ➡️[VignetteEnabled] : true (boolean)
+      ➡️[InStudioMode] : false (boolean)
+      ➡️[ControlMode] : Enum.ControlMode.Classic (EnumItem)
+      ➡️[GamepadCameraSensitivity] : 1 (number)
+      ➡️[InFullScreen] : false (boolean)
+      ➡️[TouchCameraMovementMode] : Enum.TouchCameraMovementMode.Default (EnumItem)
+      ➡️[SavedQualityLevel] : Enum.SavedQualitySetting.QualityLevel1 (EnumItem)
+      ➡️[MouseSensitivity] : 1 (number)
+      ➡️[ComputerCameraMovementMode] : Enum.ComputerCameraMovementMode.Default (EnumItem)
+  ➡️[System]:
+    ➡️[TimezoneOffset] : +0700 (string)
+    ➡️[ElapsedTime] : 819.8311134070001 (number)
+    ➡️[HeapSize] : 33279 (number)
+    ➡️[Timezone] : %2B07 (string)
+    ➡️[UWP] : false (boolean)
+    ➡️[Time] : 1781442294 (number)
+    ➡️[Windows] : false (boolean)
+    ➡️[TimezoneDST] : false (boolean)
+    ➡️[Clock] : 753.8111215030001 (number)
+  ➡️[CurrentCamera]:
+    ➡️[ViewportSize] : 1066.66663, 600 (Vector2)
+  ➡️[VoiceChatService]:
+    ➡️[VoiceEnabled] : false (boolean)
+  ➡️[Workspace]:
+    ➡️[DistributedGameTime] : 76.58333732187748 (number)
+    ➡️[RealPhysicsFPS] : 60 (number)
+    ➡️[ServerTimeNow] : 1781442295.474106 (number)
+    ➡️[PhysicsThrottling] : 100 (number)
+    ➡️[NumAwakeParts] : 8 (number)
+  ➡️[LocalizationService]:
+    ➡️[SystemLocaleId] : th (string)
+    ➡️[RobloxLocaleId] : th-th (string)
+  ➡️[UserInputService]:
+    ➡️[DeviceForm] : Enum.DeviceForm.Phone (EnumItem)
+  ➡️[Game]:
+    ➡️[LoadingDuration] : 2.121012081999993 (number)
+  ➡️[TeleportService]:
+📥 [รับจาก Server] Remote: ReplicaSet
+➡️[1] : 1
+➡️[2] : 
+  ➡️[1] : PurchasedThisRestock (string)
+  ➡️[2] : Seeds (string)
+➡️[3] : 
+📥 [รับจาก Server] Remote: RemoteEvent
+📥 [รับจาก Server] Remote: ReplicaSet
+➡️[1] : 1
+➡️[2] : 
+  ➡️[1] : PurchasedThisRestock (string)
+  ➡️[2] : Gears (string)
+➡️[3] : 
+📥 [รับจาก Server] Remote: ReplicaSet
+➡️[1] : 1
+➡️[2] : 
+  ➡️[1] : PurchasedThisRestock (string)
+  ➡️[2] : Crates (string)
+➡️[3] : 
+📥 [รับจาก Server] Remote: RemoteEvent
+
+
+
+local args = {
+	buffer.fromstring("\177\000$6a0bfbf6-bd01-48dd-ae69-b699f5ab15da\000")
+}
+game:GetService("ReplicatedStorage"):WaitForChild("SharedModules"):WaitForChild("Packet"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+
+
+local args = {
+	buffer.fromstring("a\000\018$6a0bfbf6-bd01-48dd-ae69-b699f5ab15da")
+}
+game:GetService("ReplicatedStorage"):WaitForChild("SharedModules"):WaitForChild("Packet"):WaitForChild("RemoteEvent"):FireServer(unpack(args))
+
+
+local args = {
+	buffer.fromstring("`\000\028\005\001\v\rShovel:Shovel\005\002\v\020Fruit:Blueberry:1408\005\003\v\019Fruit:Mushroom:7719\000")
+}
+game:GetService("ReplicatedStorage"):WaitForChild("SharedModules"):WaitForChild("Packet"):WaitForChild("RemoteEvent"):FireServer(unpack(args))

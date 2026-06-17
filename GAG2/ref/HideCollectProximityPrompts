@@ -1,0 +1,60 @@
+--game:GetService("CoreGui").InExperienceInterventionApp.LayerCollectorChildRef.HideCollectProximityPrompts
+
+local v_u_1 = game.Players.LocalPlayer:WaitForChild("HideCollectProximityPrompts")
+local v2 = game:GetService("CollectionService")
+local v_u_3 = {}
+local v_u_4 = {}
+for _, v_u_5 in v2:GetTagged("HarvestPrompt") do
+	v_u_3[v_u_5] = true
+	if v_u_1.Value == true then
+		v_u_5.Enabled = false
+	end
+	v_u_5.Destroying:Once(function()
+		-- upvalues: (copy) v_u_3, (copy) v_u_5
+		v_u_3[v_u_5] = nil
+	end)
+end
+for _, v_u_6 in v2:GetTagged("StealPrompt") do
+	v_u_4[v_u_6] = true
+	if v_u_1.Value == true then
+		v_u_6.Enabled = false
+	end
+	v_u_6.Destroying:Once(function()
+		-- upvalues: (copy) v_u_4, (copy) v_u_6
+		v_u_4[v_u_6] = nil
+	end)
+end
+v2:GetInstanceAddedSignal("HarvestPrompt"):Connect(function(p_u_7)
+	-- upvalues: (copy) v_u_3, (copy) v_u_1
+	local v_u_8 = v_u_3
+	v_u_8[p_u_7] = true
+	if v_u_1.Value == true then
+		p_u_7.Enabled = false
+	end
+	p_u_7.Destroying:Once(function()
+		-- upvalues: (copy) v_u_8, (copy) p_u_7
+		v_u_8[p_u_7] = nil
+	end)
+end)
+v2:GetInstanceAddedSignal("StealPrompt"):Connect(function(p_u_9)
+	-- upvalues: (copy) v_u_4, (copy) v_u_1
+	local v_u_10 = v_u_4
+	v_u_10[p_u_9] = true
+	if v_u_1.Value == true then
+		p_u_9.Enabled = false
+	end
+	p_u_9.Destroying:Once(function()
+		-- upvalues: (copy) v_u_10, (copy) p_u_9
+		v_u_10[p_u_9] = nil
+	end)
+end)
+v_u_1:GetPropertyChangedSignal("Value"):Connect(function()
+	-- upvalues: (copy) v_u_1, (copy) v_u_3, (copy) v_u_4
+	local v11 = v_u_1.Value
+	for v12 in v_u_3 do
+		v12.Enabled = not v11
+	end
+	for v13 in v_u_4 do
+		v13.Enabled = not v11
+	end
+end)

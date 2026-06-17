@@ -1,0 +1,326 @@
+--game:GetService("Players").LocalPlayer.PlayerScripts.Controllers.HarvestPromptLabelController
+
+local v1 = {
+	["StartOrder"] = 11
+}
+local v_u_2 = game:GetService("ProximityPromptService")
+local v3 = game:GetService("ReplicatedStorage"):WaitForChild("SharedModules")
+local v_u_4 = require(v3:WaitForChild("SeedData"))
+local v_u_5 = require(v3:WaitForChild("RarityVisuals"))
+local v_u_6 = require(v3:WaitForChild("MutationData"))
+local v_u_7 = require(v3:WaitForChild("WeightFormat"))
+local v_u_8 = nil
+local v_u_9 = UDim2.fromOffset(220, 64)
+local v_u_10 = Vector2.new(0, -1)
+local v_u_11 = Font.new("rbxasset://fonts/families/ComicNeueAngular.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+local v_u_12 = Color3.fromRGB(0, 0, 0)
+local v_u_13 = Color3.new(1, 1, 1)
+local v_u_14 = Color3.new(1, 1, 1)
+local v_u_15 = {}
+local v_u_16 = {}
+local v_u_17 = {}
+local function v_u_25(p18) -- name: color3ToHex
+	local v19 = string.format
+	local v20 = p18.R * 255 + 0.5
+	local v21 = math.floor(v20)
+	local v22 = p18.G * 255 + 0.5
+	local v23 = math.floor(v22)
+	local v24 = p18.B * 255 + 0.5
+	return v19("#%02X%02X%02X", v21, v23, (math.floor(v24)))
+end
+local function v_u_30(p26) -- name: splitMutations
+	if type(p26) ~= "string" or p26 == "" then
+		return {}
+	end
+	local v27 = {}
+	for v28 in string.gmatch(p26, "[^%+%,]+") do
+		local v29 = string.gsub(v28, "^%s*(.-)%s*$", "%1")
+		if v29 ~= "" then
+			table.insert(v27, v29)
+		end
+	end
+	return v27
+end
+local function v_u_46(p31) -- name: buildMutationsRichText
+	-- upvalues: (copy) v_u_25, (copy) v_u_13, (copy) v_u_16, (copy) v_u_6
+	local v32 = string.format("<font color=\"%s\"> + </font>", v_u_25(v_u_13))
+	local v33 = {}
+	for _, v34 in p31 do
+		local v35 = v_u_16[v34]
+		if not v35 then
+			v35 = Color3.new(1, 1, 1)
+			local v36 = v_u_6.GetMutation(v34)
+			if v36 and v36.Gradient then
+				local v37 = v36.Gradient.Color.Keypoints
+				if v37[1] then
+					v35 = v37[1].Value
+				end
+			end
+			v_u_16[v34] = v35
+		end
+		local v38 = string.format
+		local v39 = v35.R * 255 + 0.5
+		local v40 = math.floor(v39)
+		local v41 = v35.G * 255 + 0.5
+		local v42 = math.floor(v41)
+		local v43 = v35.B * 255 + 0.5
+		local v44 = v38("#%02X%02X%02X", v40, v42, (math.floor(v43)))
+		local v45 = string.format
+		table.insert(v33, v45("<font color=\"%s\">%s</font>", v44, v34))
+	end
+	return table.concat(v33, v32)
+end
+local function v_u_50(p47) -- name: findFruitModel
+	local v48 = p47.Parent
+	if not (v48 and v48:IsA("BasePart")) then
+		return nil, nil
+	end
+	local v49 = v48.Parent
+	while v49 do
+		if v49:IsA("Model") then
+			return v49, v48
+		end
+		v49 = v49.Parent
+	end
+	return nil, nil
+end
+local function v_u_89(p51) -- name: refreshContent
+	-- upvalues: (copy) v_u_15, (copy) v_u_30, (ref) v_u_8, (copy) v_u_14, (copy) v_u_7, (copy) v_u_6, (copy) v_u_5, (copy) v_u_46
+	local v52 = p51.fruit
+	local v53 = v52:GetAttribute("CorePartName")
+	local v54 = v52:GetAttribute("SeedName")
+	if type(v53) ~= "string" or v53 == "" then
+		v53 = (type(v54) ~= "string" or v54 == "") and "?" or v54
+	end
+	local v55 = v_u_15[v53]
+	local v56
+	if v55 then
+		local v57 = v55.Rarity
+		v56 = type(v57) ~= "string" and "Common" or v55.Rarity
+	else
+		v56 = "Common"
+	end
+	local v58 = p51.nameLabel:FindFirstChildOfClass("UIGradient")
+	if v58 then
+		v58:Destroy()
+	end
+	local v59 = v_u_30(v52:GetAttribute("Mutation"))
+	local v60 = ""
+	local v61
+	if v_u_8 then
+		v61 = v_u_8:CalculateFruitWeight(v52)
+		if not v61 and v_u_8.CalculatePlantWeight then
+			v61 = v_u_8:CalculatePlantWeight(v52)
+		end
+	else
+		v61 = nil
+	end
+	if v61 then
+		local v62 = string.format
+		local v63 = v_u_14
+		local v64 = string.format
+		local v65 = v63.R * 255 + 0.5
+		local v66 = math.floor(v65)
+		local v67 = v63.G * 255 + 0.5
+		local v68 = math.floor(v67)
+		local v69 = v63.B * 255 + 0.5
+		v60 = v62(" <font color=\"%s\">\226\154\150\239\184\143 %s</font>", v64("#%02X%02X%02X", v66, v68, (math.floor(v69))), v_u_7.FormatGrams(v61))
+	end
+	if #v59 == 1 then
+		local v70 = v_u_6.GetMutation(v59[1])
+		if v70 and v70.Gradient then
+			p51.nameLabel.TextColor3 = v_u_14
+			p51.nameLabel.Text = v53 .. v60
+			v70.Gradient:Clone().Parent = p51.nameLabel
+		else
+			p51.nameLabel.TextColor3 = v_u_14
+			local v71 = p51.nameLabel
+			local v72 = string.format
+			local v73 = v_u_5.GetStaticColor(v56)
+			local v74 = string.format
+			local v75 = v73.R * 255 + 0.5
+			local v76 = math.floor(v75)
+			local v77 = v73.G * 255 + 0.5
+			local v78 = math.floor(v77)
+			local v79 = v73.B * 255 + 0.5
+			v71.Text = v72("<font color=\"%s\">%s</font>%s", v74("#%02X%02X%02X", v76, v78, (math.floor(v79))), v53, v60)
+		end
+	else
+		p51.nameLabel.TextColor3 = v_u_14
+		local v80 = p51.nameLabel
+		local v81 = string.format
+		local v82 = v_u_5.GetStaticColor(v56)
+		local v83 = string.format
+		local v84 = v82.R * 255 + 0.5
+		local v85 = math.floor(v84)
+		local v86 = v82.G * 255 + 0.5
+		local v87 = math.floor(v86)
+		local v88 = v82.B * 255 + 0.5
+		v80.Text = v81("<font color=\"%s\">%s</font>%s", v83("#%02X%02X%02X", v85, v87, (math.floor(v88))), v53, v60)
+	end
+	if #v59 == 0 then
+		p51.mutationsLabel.Text = ""
+		p51.mutationsLabel.Visible = false
+	else
+		p51.mutationsLabel.Text = v_u_46(v59)
+		p51.mutationsLabel.Visible = true
+	end
+end
+local function v_u_98(p90) -- name: buildBillboard
+	-- upvalues: (copy) v_u_10, (copy) v_u_9, (copy) v_u_11, (copy) v_u_12
+	local v91 = Instance.new("BillboardGui")
+	v91.Name = "HarvestPromptLabel"
+	v91.AlwaysOnTop = true
+	v91.LightInfluence = 0
+	v91.ClipsDescendants = false
+	v91.MaxDistance = 80
+	v91.SizeOffset = v_u_10
+	v91.Adornee = p90
+	v91.Size = v_u_9
+	v91.Parent = p90
+	local v92 = Instance.new("Frame")
+	v92.BackgroundTransparency = 1
+	v92.BorderSizePixel = 0
+	v92.AnchorPoint = Vector2.new(0.5, 0.5)
+	v92.Position = UDim2.fromScale(0.5, 0.5)
+	v92.Size = UDim2.fromScale(1, 1)
+	v92.Parent = v91
+	local v93 = Instance.new("UIListLayout")
+	v93.FillDirection = Enum.FillDirection.Vertical
+	v93.HorizontalAlignment = Enum.HorizontalAlignment.Center
+	v93.VerticalAlignment = Enum.VerticalAlignment.Center
+	v93.Padding = UDim.new(0, 2)
+	v93.SortOrder = Enum.SortOrder.LayoutOrder
+	v93.Parent = v92
+	local v94 = Instance.new("TextLabel")
+	v94.RichText = true
+	v94.Name = "Name"
+	v94.BackgroundTransparency = 1
+	v94.BorderSizePixel = 0
+	v94.FontFace = v_u_11
+	v94.LayoutOrder = 1
+	v94.Size = UDim2.new(1, 0, 0.55, 0)
+	v94.Text = ""
+	v94.TextColor3 = Color3.new(1, 1, 1)
+	v94.TextScaled = true
+	v94.TextSize = 24
+	v94.TextWrapped = true
+	v94.TextXAlignment = Enum.TextXAlignment.Center
+	v94.TextYAlignment = Enum.TextYAlignment.Center
+	v94.Parent = v92
+	local v95 = Instance.new("UIStroke")
+	v95.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	v95.Color = v_u_12
+	v95.LineJoinMode = Enum.LineJoinMode.Round
+	v95.Thickness = 2
+	v95.Parent = v94
+	local v96 = Instance.new("TextLabel")
+	v96.Name = "Mutations"
+	v96.BackgroundTransparency = 1
+	v96.BorderSizePixel = 0
+	v96.FontFace = v_u_11
+	v96.LayoutOrder = 2
+	v96.Size = UDim2.new(1, 0, 0.4, 0)
+	v96.RichText = true
+	v96.Text = ""
+	v96.TextColor3 = Color3.new(1, 1, 1)
+	v96.TextScaled = true
+	v96.TextSize = 20
+	v96.TextWrapped = true
+	v96.TextXAlignment = Enum.TextXAlignment.Center
+	v96.TextYAlignment = Enum.TextYAlignment.Center
+	v96.Visible = false
+	v96.Parent = v92
+	local v97 = Instance.new("UIStroke")
+	v97.ApplyStrokeMode = Enum.ApplyStrokeMode.Contextual
+	v97.Color = v_u_12
+	v97.LineJoinMode = Enum.LineJoinMode.Round
+	v97.Thickness = 2
+	v97.Parent = v96
+	return v91, v94, v96
+end
+local function v_u_101(p99) -- name: teardownEntry
+	-- upvalues: (copy) v_u_17
+	local v100 = v_u_17[p99]
+	if v100 then
+		v_u_17[p99] = nil
+		if v100.mutationConn then
+			v100.mutationConn:Disconnect()
+		end
+		if v100.promptAncestryConn then
+			v100.promptAncestryConn:Disconnect()
+		end
+		if v100.fruitAncestryConn then
+			v100.fruitAncestryConn:Disconnect()
+		end
+		if v100.billboard then
+			v100.billboard:Destroy()
+		end
+	end
+end
+local function v_u_111(p_u_102) -- name: handlePromptShown
+	-- upvalues: (copy) v_u_17, (copy) v_u_50, (copy) v_u_98, (copy) v_u_89, (copy) v_u_101
+	if v_u_17[p_u_102] then
+		return
+	else
+		local v103, v104 = v_u_50(p_u_102)
+		if v103 and v104 then
+			local v105, v106, v107 = v_u_98(v104)
+			local v_u_108 = {
+				["billboard"] = v105,
+				["nameLabel"] = v106,
+				["mutationsLabel"] = v107,
+				["adornee"] = v104,
+				["fruit"] = v103
+			}
+			v_u_17[p_u_102] = v_u_108
+			v_u_89(v_u_108)
+			v_u_108.mutationConn = v103:GetAttributeChangedSignal("Mutation"):Connect(function()
+				-- upvalues: (ref) v_u_17, (copy) p_u_102, (copy) v_u_108, (ref) v_u_89
+				if v_u_17[p_u_102] == v_u_108 then
+					v_u_89(v_u_108)
+				end
+			end)
+			v_u_108.promptAncestryConn = p_u_102.AncestryChanged:Connect(function(_, p109)
+				-- upvalues: (ref) v_u_101, (copy) p_u_102
+				if not p109 then
+					v_u_101(p_u_102)
+				end
+			end)
+			v_u_108.fruitAncestryConn = v103.AncestryChanged:Connect(function(_, p110)
+				-- upvalues: (ref) v_u_101, (copy) p_u_102
+				if not p110 then
+					v_u_101(p_u_102)
+				end
+			end)
+		end
+	end
+end
+function v1.Init(_) -- name: Init
+	-- upvalues: (copy) v_u_4, (copy) v_u_15
+	for _, v112 in v_u_4 do
+		if type(v112) == "table" then
+			local v113 = v112.SeedName
+			if type(v113) == "string" then
+				v_u_15[v112.SeedName] = v112
+			end
+		end
+	end
+end
+function v1.Start(_) -- name: Start
+	-- upvalues: (ref) v_u_8, (copy) v_u_2, (copy) v_u_111, (copy) v_u_101
+	v_u_8 = require(script.Parent.FruitVisualizerController)
+	v_u_2.PromptShown:Connect(function(p114)
+		-- upvalues: (ref) v_u_111
+		if p114:HasTag("HarvestPrompt") then
+			v_u_111(p114)
+		end
+	end)
+	v_u_2.PromptHidden:Connect(function(p115)
+		-- upvalues: (ref) v_u_101
+		if p115:HasTag("HarvestPrompt") then
+			v_u_101(p115)
+		end
+	end)
+end
+return v1

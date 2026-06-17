@@ -1,0 +1,89 @@
+-- [[ Grow a Garden v2 - Auto Harvest Script (Updated for v2 Networking) ]]
+
+local Players = game:GetService("Players")
+local CollectionService = game:GetService("CollectionService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LocalPlayer = Players.LocalPlayer
+
+-- === CONFIGURATION (ตั้งค่า) ===
+local Config = {
+    Enabled = true,                -- เปิด/ปิดการทำงาน
+    ScanDelay = 0.3,              -- วินาทีที่จะสแกนหาพืชใหม่ๆ
+    Method = "Remote",            -- ตัวเลือก: "Proximity" (จำลองกดปุ่ม/ปลอดภัยมาก) หรือ "Remote" (ยิงเน็ตเวิร์กโดยตรง/เร็วสุด)
+    IgnoreFavorited = true,        -- ข้ามพืชที่ถูกปักหมุดไว้เป็นของโปรด (Favorited)
+}
+
+-- โหลดโมดูลระบบเน็ตเวิร์กจากตัวเกมจริง
+local SharedModules = ReplicatedStorage:WaitForChild("SharedModules")
+local Networking = require(SharedModules:WaitForChild("Networking"))
+
+-- ฟังก์ชันดึงข้อมูล Uuid และ Anchor Index
+local function getHarvestParams(prompt)
+    if not (prompt and prompt.Parent) then return nil end
+    local parent = prompt.Parent
+    if parent:IsA("BasePart") then
+        parent = parent.Parent
+    end
+    if not (parent and parent:IsA("Model")) then return nil end
+    
+    -- ตรวจสอบความเป็นเจ้าของแปลง
+    local ownerId = parent:GetAttribute("OwnerUserId")
+    if not ownerId and parent.Parent and parent.Parent:IsA("Model") then
+        ownerId = parent.Parent:GetAttribute("OwnerUserId")
+    end
+    if ownerId ~= LocalPlayer.UserId then
+        return nil
+    end
+
+    -- ตรวจสอบพืชที่กด Favorite ไว้
+    if Config.IgnoreFavorited then
+        if parent:GetAttribute("Favorited") or (parent.Parent and parent.Parent:GetAttribute("Favorited")) then
+            return nil
+        end
+    end
+
+    -- แยกรูปแบบ parameter ของพืชทั่วไปและผลไม้บนกิ่ง
+    if parent:GetAttribute("HarvestablePlant") == true then
+        local uuid = parent:GetAttribute("Uuid")
+        if uuid then
+            return uuid, ""
+        end
+    end
+    
+    local grandParent = parent.Parent
+    if not (grandParent and grandParent:IsA("Model")) then return nil end
+    
+    local uuid = grandParent:GetAttribute("Uuid")
+    local anchorIndex = parent:GetAttribute("GrowthAnchorIndex")
+    if uuid then
+        return uuid, anchorIndex or ""
+    end
+    return nil
+end
+
+task.spawn(function()
+    while Config.Enabled do
+        -- ค้นหา Prompt ทั้งหมดที่มีแท็ก HarvestPrompt
+        for _, prompt in ipairs(CollectionService:GetTagged("HarvestPrompt")) do
+            if prompt:IsA("ProximityPrompt") and prompt.Enabled then
+                local uuid, anchorIndex = getHarvestParams(prompt)
+                if uuid then
+                    if Config.Method == "Remote" then
+                        -- วิธีส่งข้อมูลตรงหาเซิร์ฟเวอร์ด้วยโมดูลจริงของเกม
+                        task.spawn(function()
+                            Networking.Garden.CollectFruit:Fire(uuid, anchorIndex)
+                        end)
+                    elseif Config.Method == "Proximity" and fireproximityprompt then
+                        -- วิธีจำลองการกดปุ่ม (ปลอดภัยสูง)
+                        task.spawn(function()
+                            fireproximityprompt(prompt, 0)
+                        end)
+                    end
+                end
+            end
+        end
+        task.wait(Config.ScanDelay)
+    end
+end)
+
+print("Auto Harvest (v2) เริ่มทำงานแล้ว! วิธี: " .. Config.Method)

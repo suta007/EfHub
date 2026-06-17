@@ -1,0 +1,734 @@
+--game:GetService("Players").LocalPlayer.PlayerScripts.Controllers.HarvestPromptController
+
+local v1 = {}
+local v_u_2 = game:GetService("CollectionService")
+local v_u_3 = game:GetService("ProximityPromptService")
+local v_u_4 = game:GetService("ReplicatedStorage")
+local v_u_5 = game:GetService("UserInputService")
+local v6 = game:GetService("Players")
+local v_u_7 = game:GetService("RunService")
+local v_u_8 = require(game.Players.LocalPlayer.PlayerScripts.Controllers.DevProductController)
+local v_u_9 = nil
+local v_u_10 = v6.LocalPlayer
+local v11 = v_u_10:WaitForChild("PlayerGui")
+local v12 = v11:WaitForChild("HoldToCollect")
+local v13 = v12:WaitForChild("Collect")
+local v14 = v11:WaitForChild("HoldToSteal")
+local v15 = v14:WaitForChild("Collect")
+local v_u_16 = {}
+local v_u_17 = {}
+local v_u_18 = nil
+local v_u_19 = nil
+local v_u_20 = nil
+local v_u_21 = 0
+local function v_u_23(p_u_22) -- name: triggerPromptProgrammatically
+	p_u_22:InputHoldBegin()
+	if p_u_22.HoldDuration > 0 then
+		task.delay(p_u_22.HoldDuration + 0.05, function()
+			-- upvalues: (copy) p_u_22
+			if p_u_22 and p_u_22:IsDescendantOf(workspace) then
+				p_u_22:InputHoldEnd()
+			end
+		end)
+	else
+		p_u_22:InputHoldEnd()
+	end
+end
+local v_u_29 = {
+	{
+		["name"] = "Harvest",
+		["tag"] = "HarvestPrompt",
+		["ui"] = nil,
+		["button"] = nil,
+		["visible"] = nil,
+		["queue"] = nil,
+		["holding"] = false,
+		["pressing"] = false,
+		["activateOnTrigger"] = true,
+		["perform"] = nil,
+		["ui"] = v12,
+		["button"] = v13,
+		["visible"] = {},
+		["queue"] = {},
+		["perform"] = function(_, _, p24, p25) -- name: perform
+			-- upvalues: (ref) v_u_9
+			v_u_9.Garden.CollectFruit:Fire(p24, p25 or "")
+		end
+	},
+	{
+		["name"] = "Steal",
+		["tag"] = "StealPrompt",
+		["ui"] = nil,
+		["button"] = nil,
+		["visible"] = nil,
+		["queue"] = nil,
+		["holding"] = false,
+		["pressing"] = false,
+		["activateOnTrigger"] = false,
+		["gate"] = nil,
+		["perform"] = nil,
+		["ui"] = v14,
+		["button"] = v15,
+		["visible"] = {},
+		["queue"] = {},
+		["gate"] = function() -- name: isNight
+			-- upvalues: (copy) v_u_4
+			local v26 = v_u_4:FindFirstChild("Night")
+			local v27
+			if v26 == nil then
+				v27 = false
+			else
+				v27 = v26.Value == true
+			end
+			return v27
+		end,
+		["perform"] = function(p28, _, _, _) -- name: perform
+			-- upvalues: (copy) v_u_23
+			v_u_23(p28)
+		end
+	}
+}
+local function v_u_47(p30, p31) -- name: getClosestPointOnPart
+	local v32 = p30.CFrame:PointToObjectSpace(p31)
+	local v33 = p30.Size * 0.5
+	local v34 = v32.X
+	local v35 = -v33.X
+	local v36 = v33.X
+	local v37 = math.clamp(v34, v35, v36)
+	local v38 = v32.Y
+	local v39 = -v33.Y
+	local v40 = v33.Y
+	local v41 = math.clamp(v38, v39, v40)
+	local v42 = v32.Z
+	local v43 = -v33.Z
+	local v44 = v33.Z
+	local v45 = math.clamp(v42, v43, v44)
+	local v46 = Vector3.new(v37, v41, v45)
+	return p30.CFrame:PointToWorldSpace(v46)
+end
+local function v_u_56(p48, p49) -- name: getBestPromptPosition
+	-- upvalues: (copy) v_u_47
+	local v50 = (1 / 0)
+	local v51 = nil
+	for _, v52 in p48 do
+		if v52.Parent then
+			local v53 = v_u_47(v52, p49)
+			local v54 = (p49 - v53).Magnitude
+			if v54 < v50 then
+				v51 = v53
+				v50 = v54
+			end
+		end
+	end
+	if not v51 then
+		return nil
+	end
+	local v55 = p49 - v51
+	return v51 + (v55.Magnitude < 0.0001 and Vector3.new(0, 1, 0) or v55.Unit) * 0.75
+end
+local function v_u_60(p57) -- name: rebuildHarvestPartCache
+	local v58 = {}
+	for _, v59 in p57:GetDescendants() do
+		if v59:IsA("BasePart") and v59.Name ~= "HarvestPart" then
+			table.insert(v58, v59)
+		end
+	end
+	return v58
+end
+local function v_u_65(p61) -- name: getOrCreateModelHarvestPart
+	local v62 = p61:FindFirstChild("HarvestPart")
+	if v62 and v62:IsA("BasePart") then
+		return v62
+	end
+	local v63 = p61.PrimaryPart or p61:FindFirstChildWhichIsA("BasePart")
+	if not v63 then
+		return nil
+	end
+	local v64 = Instance.new("Part")
+	v64.Name = "HarvestPart"
+	v64.Size = Vector3.new(1, 1, 1)
+	v64.Transparency = 1
+	v64.Anchored = true
+	v64.CanCollide = false
+	v64.CanTouch = false
+	v64.CanQuery = false
+	v64.CFrame = v63.CFrame
+	v64.Parent = p61
+	return v64
+end
+local function v_u_68(p66) -- name: applyHighlightToModel
+	-- upvalues: (ref) v_u_19, (ref) v_u_18
+	if v_u_19 ~= p66 or not (v_u_18 and v_u_18.Parent) then
+		if v_u_18 then
+			v_u_18:Destroy()
+			v_u_18 = nil
+		end
+		v_u_19 = nil
+		local v67 = Instance.new("Highlight")
+		v67.Name = "ActiveHarvestHighlight"
+		v67.Adornee = p66
+		v67.FillColor = Color3.fromRGB(255, 224, 94)
+		v67.OutlineColor = Color3.fromRGB(255, 255, 255)
+		v67.FillTransparency = 1
+		v67.OutlineTransparency = 0.5
+		v67.DepthMode = Enum.HighlightDepthMode.Occluded
+		v67.Parent = p66
+		v_u_18 = v67
+		v_u_19 = p66
+	end
+end
+local function v_u_81() -- name: updateActivePromptHighlight
+	-- upvalues: (copy) v_u_10, (ref) v_u_18, (ref) v_u_19, (copy) v_u_16, (copy) v_u_68
+	local v69 = v_u_10.Character
+	local v70
+	if v69 then
+		local v71 = v69:FindFirstChild("HumanoidRootPart")
+		if v71 then
+			v70 = v71.Position
+		else
+			v70 = nil
+		end
+	else
+		v70 = nil
+	end
+	if v70 then
+		local v72 = (1 / 0)
+		local v73 = nil
+		for v74 in v_u_16 do
+			if v74:IsDescendantOf(workspace) and v74.Enabled then
+				local v75 = v74.Parent
+				local v76
+				if v75 then
+					v76 = v75:FindFirstAncestorWhichIsA("Model")
+				else
+					v76 = nil
+				end
+				if v76 then
+					local _, v77 = v76:GetBoundingBox()
+					local v78 = (v70 - v76:GetPivot().Position).Magnitude - v77.Magnitude * 0.5
+					if v78 < v72 then
+						v73 = v74
+						v72 = v78
+					end
+				end
+			end
+		end
+		if v73 then
+			local v79 = v73.Parent
+			local v80
+			if v79 then
+				v80 = v79:FindFirstAncestorWhichIsA("Model")
+			else
+				v80 = nil
+			end
+			if v80 then
+				v_u_68(v80)
+			else
+				if v_u_18 then
+					v_u_18:Destroy()
+					v_u_18 = nil
+				end
+				v_u_19 = nil
+			end
+		else
+			if v_u_18 then
+				v_u_18:Destroy()
+				v_u_18 = nil
+			end
+			v_u_19 = nil
+			return
+		end
+	else
+		if v_u_18 then
+			v_u_18:Destroy()
+			v_u_18 = nil
+		end
+		v_u_19 = nil
+		return
+	end
+end
+local function v_u_92(p_u_82) -- name: trackSmartPrompt
+	-- upvalues: (copy) v_u_17, (copy) v_u_65, (copy) v_u_60, (copy) v_u_16, (copy) v_u_29, (copy) v_u_81, (ref) v_u_20
+	if v_u_17[p_u_82] then
+		return
+	elseif p_u_82:IsDescendantOf(workspace) then
+		local v83 = p_u_82.Parent
+		local v_u_84
+		if v83 then
+			v_u_84 = v83:FindFirstAncestorWhichIsA("Model")
+		else
+			v_u_84 = nil
+		end
+		local v85 = p_u_82.Parent
+		if v_u_84 and (v85 and v85:IsA("BasePart")) then
+			p_u_82.MaxActivationDistance = 10
+			local v86
+			if v85.Name == "HarvestPart" then
+				v86 = v85
+			else
+				v86 = v_u_65(v_u_84)
+				if v86 then
+					p_u_82.Parent = v86
+				else
+					v86 = v85
+				end
+			end
+			local v_u_87 = {
+				["model"] = nil,
+				["part"] = nil,
+				["parts"] = nil,
+				["boundingRadius"] = nil,
+				["needsSnap"] = true,
+				["model"] = v_u_84,
+				["part"] = v86,
+				["parts"] = v_u_60(v_u_84),
+				["boundingRadius"] = select(2, v_u_84:GetBoundingBox()).Magnitude * 0.5
+			}
+			local function v89(p88) -- name: refreshParts
+				-- upvalues: (copy) v_u_87, (ref) v_u_60, (copy) v_u_84
+				if not p88 or p88:IsA("BasePart") then
+					v_u_87.parts = v_u_60(v_u_84)
+					v_u_87.boundingRadius = select(2, v_u_84:GetBoundingBox()).Magnitude * 0.5
+				end
+			end
+			v_u_87.partsConn = v_u_84.DescendantAdded:Connect(v89)
+			v_u_87.partsRemovedConn = v_u_84.DescendantRemoving:Connect(v89)
+			v_u_17[p_u_82] = v_u_87
+			p_u_82.Destroying:Once(function()
+				-- upvalues: (ref) v_u_17, (copy) p_u_82, (ref) v_u_16, (ref) v_u_29, (ref) v_u_81, (ref) v_u_20
+				local v90 = v_u_17[p_u_82]
+				if v90 then
+					if v90.partsConn then
+						v90.partsConn:Disconnect()
+					end
+					if v90.partsRemovedConn then
+						v90.partsRemovedConn:Disconnect()
+					end
+				end
+				v_u_17[p_u_82] = nil
+				v_u_16[p_u_82] = nil
+				for _, v91 in v_u_29 do
+					v91.visible[p_u_82] = nil
+				end
+				v_u_81()
+				v_u_20()
+			end)
+		end
+	else
+		return
+	end
+end
+local function v_u_107(p93) -- name: updateSmartPromptPositions
+	-- upvalues: (copy) v_u_10, (copy) v_u_17, (copy) v_u_56
+	local v94 = v_u_10.Character
+	local v95
+	if v94 then
+		local v96 = v94:FindFirstChild("HumanoidRootPart")
+		if v96 then
+			v95 = v96.Position
+		else
+			v95 = nil
+		end
+	else
+		v95 = nil
+	end
+	if v95 then
+		local v97 = p93 * 18
+		local v98 = math.clamp(v97, 0, 1)
+		for v99, v100 in v_u_17 do
+			if v99:IsDescendantOf(workspace) then
+				local v101 = v100.model
+				local v102 = v100.part
+				if v101 and (v101:IsDescendantOf(workspace) and (v102 and v102.Parent)) then
+					local v103 = v101:GetPivot().Position
+					local v104 = v99.MaxActivationDistance + 8
+					if math.max(24, v104) >= (v103 - v95).Magnitude - (v100.boundingRadius or 0) then
+						local v105 = v_u_56(v100.parts, v95)
+						if v105 then
+							if v100.needsSnap then
+								v102.CFrame = CFrame.new(v105)
+								v100.needsSnap = false
+							else
+								local v106 = v102.Position:Lerp(v105, v98)
+								v102.CFrame = CFrame.new(v106)
+							end
+						end
+					end
+				else
+					if v100.partsConn then
+						v100.partsConn:Disconnect()
+					end
+					if v100.partsRemovedConn then
+						v100.partsRemovedConn:Disconnect()
+					end
+					v_u_17[v99] = nil
+				end
+			else
+				if v100.partsConn then
+					v100.partsConn:Disconnect()
+				end
+				if v100.partsRemovedConn then
+					v100.partsRemovedConn:Disconnect()
+				end
+				v_u_17[v99] = nil
+			end
+		end
+	end
+end
+local function v_u_113(p108)
+	-- upvalues: (copy) v_u_5
+	local v109 = v_u_5.TouchEnabled
+	if v109 then
+		v109 = not v_u_5.KeyboardEnabled
+	end
+	if not v109 then
+		p108.ui.Enabled = false
+		return
+	end
+	p108.ui.Enabled = true
+	if p108.gate and not p108.gate() then
+		p108.button.Visible = false
+		return
+	end
+	if p108.pressing then
+		p108.button.Visible = true
+		return
+	end
+	local v110 = false
+	for v111 in p108.visible do
+		if v111:IsDescendantOf(workspace) and v111.Enabled then
+			local v112 = v111:HasTag("StealPrompt")
+			if v112 then
+				v112 = v111.HoldDuration > 0
+			end
+			if not v112 then
+				v110 = true
+				break
+			end
+		end
+	end
+	p108.button.Visible = v110
+end
+v_u_20 = function()
+	-- upvalues: (copy) v_u_29, (ref) v_u_113
+	for _, v114 in v_u_29 do
+		v_u_113(v114)
+	end
+end
+local function v_u_124(p115, p_u_116) -- name: activatePrompt
+	if p115.gate and not p115.gate() then
+		return false
+	end
+	if not p_u_116:IsDescendantOf(workspace) then
+		return false
+	end
+	if not p_u_116.Enabled then
+		return false
+	end
+	if p_u_116:GetAttribute("Collected") then
+		return false
+	end
+	local v117 = p_u_116:HasTag("StealPrompt")
+	if v117 then
+		v117 = p_u_116.HoldDuration > 0
+	end
+	if v117 then
+		return false
+	end
+	local v118 = p_u_116.Parent
+	if not v118 then
+		return false
+	end
+	local v119 = v118:FindFirstAncestorWhichIsA("Model")
+	if not v119 then
+		return false
+	end
+	local v120 = v119:GetAttribute("PlantId")
+	local v121 = v119:GetAttribute("FruitId")
+	if p115.activateOnTrigger and not v120 then
+		return false
+	end
+	p_u_116:SetAttribute("Collected", true)
+	local v122 = p_u_116.HoldDuration + 0.1
+	local v123 = math.max(0.09, v122)
+	task.delay(v123, function()
+		-- upvalues: (copy) p_u_116
+		if p_u_116 and p_u_116:IsDescendantOf(workspace) then
+			p_u_116:SetAttribute("Collected", nil)
+		end
+	end)
+	p115.perform(p_u_116, v119, v120, v121)
+	return true
+end
+local function v_u_135(p_u_125) -- name: runHoldLoop
+	-- upvalues: (copy) v_u_3, (copy) v_u_124
+	if not p_u_125.holding then
+		p_u_125.holding = true
+		for v126 in p_u_125.visible do
+			if not table.find(p_u_125.queue, v126) then
+				local v127 = p_u_125.queue
+				table.insert(v127, v126)
+			end
+		end
+		local v131 = v_u_3.PromptShown:Connect(function(p128)
+			-- upvalues: (copy) p_u_125
+			if p128:HasTag(p_u_125.tag) then
+				local v129 = p_u_125
+				if not table.find(v129.queue, p128) then
+					local v130 = v129.queue
+					table.insert(v130, p128)
+				end
+			end
+		end)
+		while p_u_125.holding do
+			if #p_u_125.queue == 0 then
+				for v132 in p_u_125.visible do
+					if not table.find(p_u_125.queue, v132) then
+						local v133 = p_u_125.queue
+						table.insert(v133, v132)
+					end
+				end
+			end
+			local v134
+			if #p_u_125.queue == 0 then
+				v134 = nil
+			else
+				v134 = table.remove(p_u_125.queue, 1)
+			end
+			if v134 then
+				v_u_124(p_u_125, v134)
+			end
+			task.wait(0.1)
+		end
+		v131:Disconnect()
+		table.clear(p_u_125.queue)
+	end
+end
+local function v_u_137() -- name: stopAllHoldLoops
+	-- upvalues: (copy) v_u_29, (ref) v_u_113
+	for _, v136 in v_u_29 do
+		v136.holding = false
+		v136.pressing = false
+		v_u_113(v136)
+	end
+end
+local function v_u_142(p138) -- name: beginKeyboardHoldWatch
+	-- upvalues: (copy) v_u_5, (copy) v_u_135
+	local v_u_139 = false
+	local v_u_140 = nil
+	v_u_140 = v_u_5.InputEnded:Connect(function(p141)
+		-- upvalues: (ref) v_u_140, (ref) v_u_139
+		if p141.KeyCode == Enum.KeyCode.E or p141.KeyCode == Enum.KeyCode.ButtonX then
+			v_u_140:Disconnect()
+			v_u_139 = true
+		end
+	end)
+	task.wait(0.5)
+	if not v_u_139 then
+		v_u_140:Disconnect()
+		v_u_135(p138)
+	end
+end
+local function v_u_148(p_u_143) -- name: bindChannelButton
+	-- upvalues: (ref) v_u_113, (copy) v_u_124, (copy) v_u_135
+	if p_u_143.button:IsA("GuiButton") then
+		p_u_143.button.MouseButton1Down:Connect(function()
+			-- upvalues: (copy) p_u_143, (ref) v_u_113, (ref) v_u_124, (ref) v_u_135
+			p_u_143.pressing = true
+			v_u_113(p_u_143)
+			for v144 in p_u_143.visible do
+				v_u_124(p_u_143, v144)
+			end
+			local v_u_145 = false
+			local v146 = p_u_143.button.MouseButton1Up:Once(function()
+				-- upvalues: (ref) v_u_145
+				v_u_145 = true
+			end)
+			task.wait(0.5)
+			if v146.Connected then
+				v146:Disconnect()
+			end
+			if not v_u_145 then
+				v_u_135(p_u_143)
+			end
+		end)
+		p_u_143.button.MouseButton1Up:Connect(function()
+			-- upvalues: (copy) p_u_143, (ref) v_u_113
+			local v147 = p_u_143
+			v147.holding = false
+			v147.pressing = false
+			v_u_113(v147)
+		end)
+	end
+end
+function v1.Init(_) -- name: Init
+	-- upvalues: (ref) v_u_9, (copy) v_u_4, (ref) v_u_20, (copy) v_u_2, (copy) v_u_92, (copy) v_u_3, (copy) v_u_16, (copy) v_u_81, (copy) v_u_29, (ref) v_u_113, (copy) v_u_148, (copy) v_u_124, (copy) v_u_5, (copy) v_u_142, (copy) v_u_8, (copy) v_u_137, (copy) v_u_10, (copy) v_u_7, (copy) v_u_107, (ref) v_u_21
+	v_u_9 = require(v_u_4:WaitForChild("SharedModules"):WaitForChild("Networking"))
+	v_u_20()
+	task.spawn(function()
+		-- upvalues: (ref) v_u_4, (ref) v_u_20
+		local v149 = v_u_4:WaitForChild("Night", 10)
+		if v149 then
+			v149.Changed:Connect(v_u_20)
+		end
+	end)
+	for _, v150 in { "HarvestPrompt", "StealPrompt", "GrowPrompt" } do
+		for _, v151 in v_u_2:GetTagged(v150) do
+			if v151:IsA("ProximityPrompt") then
+				v_u_92(v151)
+			end
+		end
+		v_u_2:GetInstanceAddedSignal(v150):Connect(function(p152)
+			-- upvalues: (ref) v_u_92
+			if p152:IsA("ProximityPrompt") then
+				v_u_92(p152)
+			end
+		end)
+	end
+	v_u_3.PromptShown:Connect(function(p153)
+		-- upvalues: (ref) v_u_92, (ref) v_u_16, (ref) v_u_81, (ref) v_u_29, (ref) v_u_113
+		if p153:HasTag("HarvestPrompt") or (p153:HasTag("StealPrompt") or p153:HasTag("GrowPrompt")) then
+			v_u_92(p153)
+			v_u_16[p153] = true
+			v_u_81()
+		end
+		for _, v155 in v_u_29 do
+			if p153:HasTag(v155.tag) then
+				::l9::
+				if v155 then
+					v155.visible[p153] = true
+					v_u_113(v155)
+				end
+				return
+			end
+		end
+		local v155 = nil
+		goto l9
+	end)
+	v_u_3.PromptHidden:Connect(function(p156)
+		-- upvalues: (ref) v_u_29, (ref) v_u_113, (ref) v_u_16, (ref) v_u_81
+		for _, v158 in v_u_29 do
+			if p156:HasTag(v158.tag) then
+				goto l4
+			end
+		end
+		local v158 = nil
+		::l4::
+		if v158 then
+			v158.visible[p156] = nil
+			v_u_113(v158)
+		end
+		if p156:HasTag("HarvestPrompt") or (p156:HasTag("StealPrompt") or p156:HasTag("GrowPrompt")) then
+			v_u_16[p156] = nil
+			v_u_81()
+		end
+	end)
+	for _, v159 in v_u_29 do
+		v_u_148(v159)
+	end
+	v_u_3.PromptTriggered:Connect(function(p160)
+		-- upvalues: (ref) v_u_29, (ref) v_u_124
+		for _, v162 in v_u_29 do
+			if p160:HasTag(v162.tag) then
+				goto l4
+			end
+		end
+		local v162 = nil
+		::l4::
+		if v162 and v162.activateOnTrigger then
+			v_u_124(v162, p160)
+		end
+	end)
+	v_u_3.PromptTriggered:Connect(function(p163)
+		-- upvalues: (ref) v_u_29, (ref) v_u_5, (ref) v_u_142
+		for _, v165 in v_u_29 do
+			if p163:HasTag(v165.tag) then
+				goto l4
+			end
+		end
+		local v165 = nil
+		::l4::
+		if v165 then
+			if v_u_5:IsKeyDown(Enum.KeyCode.E) or v_u_5:IsGamepadButtonDown(Enum.UserInputType.Gamepad1, Enum.KeyCode.ButtonX) then
+				v_u_142(v165)
+			end
+		else
+			return
+		end
+	end)
+	v_u_3.PromptTriggered:Connect(function(p166)
+		-- upvalues: (ref) v_u_9, (ref) v_u_8
+		if p166:HasTag("GrowPrompt") then
+			local v167 = p166.Parent
+			local v168
+			if v167 then
+				v168 = v167:FindFirstAncestorWhichIsA("Model")
+			else
+				v168 = nil
+			end
+			if not v168 then
+				return
+			end
+			local v169 = v168:GetAttribute("PlantId")
+			if not v169 then
+				return
+			end
+			v_u_9.GrowPlant:Fire(v169)
+			v_u_8:PromptPurchase("Standalone:Grow Plant:1")
+		end
+	end)
+	v_u_5.InputBegan:Connect(function(p170, _)
+		-- upvalues: (ref) v_u_29, (ref) v_u_142
+		if p170.KeyCode == Enum.KeyCode.E or p170.KeyCode == Enum.KeyCode.ButtonX then
+			for _, v171 in v_u_29 do
+				if next(v171.visible) ~= nil then
+					task.spawn(v_u_142, v171)
+				end
+			end
+		end
+	end)
+	v_u_5.InputEnded:Connect(function(p172)
+		-- upvalues: (ref) v_u_29, (ref) v_u_113
+		if p172.KeyCode == Enum.KeyCode.E or p172.KeyCode == Enum.KeyCode.ButtonX then
+			for _, v173 in v_u_29 do
+				v173.holding = false
+				v173.pressing = false
+				v_u_113(v173)
+			end
+		end
+	end)
+	v_u_5.InputEnded:Connect(function(p174)
+		-- upvalues: (ref) v_u_29, (ref) v_u_113
+		if p174.UserInputType == Enum.UserInputType.Touch then
+			for _, v175 in v_u_29 do
+				v175.holding = false
+				v175.pressing = false
+				v_u_113(v175)
+			end
+		end
+	end)
+	v_u_5.WindowFocusReleased:Connect(v_u_137)
+	v_u_81()
+	v_u_20()
+	v_u_10.CharacterAdded:Connect(function()
+		-- upvalues: (ref) v_u_81, (ref) v_u_20
+		task.defer(function()
+			-- upvalues: (ref) v_u_81, (ref) v_u_20
+			v_u_81()
+			v_u_20()
+		end)
+	end)
+	v_u_7.Heartbeat:Connect(function(p176)
+		-- upvalues: (ref) v_u_107, (ref) v_u_21, (ref) v_u_81
+		debug.profilebegin("Controllers/HarvestPromptController/Heartbeat")
+		v_u_107(p176)
+		v_u_21 = v_u_21 + 1
+		if v_u_21 >= 3 then
+			v_u_21 = 0
+			v_u_81()
+		end
+		debug.profileend()
+	end)
+end
+function v1.Start(_) -- name: Start end
+return v1

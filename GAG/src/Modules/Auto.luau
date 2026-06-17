@@ -679,7 +679,7 @@ function Auto.CraftSeed()
 					end
 				end
 			end
-			task.wait(0.5)
+			task.wait(1)
 
 			-- ดึง Data ใหม่มาเช็ค InputItems
 			local updatedDataResult = sData.DataService:GetData()
