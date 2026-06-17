@@ -471,8 +471,8 @@ function Auto.CraftGear()
 					sData.CraftingEvent:FireServer("Claim", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, CRAFT_INDEX)
 					reg.Log("Claim " .. tostring(craftingItems[CRAFT_INDEX].RecipeId))
 				end)
-				task.wait(1.5)
-				--return
+				task.wait(2)
+				return
 			end
 		end
 
@@ -612,8 +612,8 @@ function Auto.CraftSeed()
 					sData.CraftingEvent:FireServer("Claim", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, CRAFT_INDEX)
 					reg.Log("Claim " .. tostring(craftingItems[CRAFT_INDEX].RecipeId))
 				end)
-				task.wait(1.5)
-				--return
+				task.wait(2)
+				return
 			end
 		end
 
