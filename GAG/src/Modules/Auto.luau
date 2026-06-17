@@ -625,50 +625,10 @@ function Auto.CraftSeed()
 
 		local isReadyToCraft = false
 
-		---pcall(function()
-		--	sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
-		--end)
-		for key, value in pairs(sData.SeedEventData) do
-			if key == targetSeed then
-				for i, input in ipairs(value.Inputs) do
-					local ItemName = input.ItemData.ItemName
-					local RecipeItemType = input.ItemType
-					local uuid = nil
-					if RecipeItemType == "Cosmetic" then
-						uuid = getCosmeticUUID(GetData_result, ItemName)
-						if not uuid then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
-							return nil
-						end
-					elseif RecipeItemType == "Pet" then
-						--do not thing
-						return nil
-					elseif RecipeItemType ~= "Currency" then
-						uuid = getInvUUID(GetData_result, ItemName)
-						if not uuid then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
-							return nil
-						end
-					end
+		pcall(function()
+			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
+		end)
 
-					if uuid then
-						local args = {
-							"InputItem",
-							TARGET_BENCH_INSTANCE,
-							TARGET_MACHINE_TYPE,
-							i,
-							{
-								ItemType = RecipeItemType,
-								ItemData = {
-									UUID = uuid,
-								},
-							},
-						}
-						sData.CraftingEvent:FireServer(unpack(args))
-					end
-				end
-			end
-		end
 		task.wait(0.5)
 
 		for attempt = 1, 3 do
@@ -676,9 +636,50 @@ function Auto.CraftSeed()
 				return
 			end
 
-			pcall(function()
-				CraftingStationHandler:SubmitAllRequiredItems(TARGET_BENCH_INSTANCE)
-			end)
+			--pcall(function()
+			--	CraftingStationHandler:SubmitAllRequiredItems(TARGET_BENCH_INSTANCE)
+			--end)
+			for key, value in pairs(sData.SeedEventData) do
+				if key == targetSeed then
+					for i, input in ipairs(value.Inputs) do
+						local ItemName = input.ItemData.ItemName
+						local RecipeItemType = input.ItemType
+						local uuid = nil
+						if RecipeItemType == "Cosmetic" then
+							uuid = getCosmeticUUID(GetData_result, ItemName)
+							if not uuid then
+								reg.Log("Missing ingredient: " .. ItemName, "WARN")
+								return nil
+							end
+						elseif RecipeItemType == "Pet" then
+							--do not thing
+							return nil
+						elseif RecipeItemType ~= "Currency" then
+							uuid = getInvUUID(GetData_result, ItemName)
+							if not uuid then
+								reg.Log("Missing ingredient: " .. ItemName, "WARN")
+								return nil
+							end
+						end
+
+						if uuid then
+							local args = {
+								"InputItem",
+								TARGET_BENCH_INSTANCE,
+								TARGET_MACHINE_TYPE,
+								i,
+								{
+									ItemType = RecipeItemType,
+									ItemData = {
+										UUID = uuid,
+									},
+								},
+							}
+							sData.CraftingEvent:FireServer(unpack(args))
+						end
+					end
+				end
+			end
 			task.wait(0.5)
 
 			-- ดึง Data ใหม่มาเช็ค InputItems
