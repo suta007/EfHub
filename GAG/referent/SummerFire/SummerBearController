@@ -1,0 +1,203 @@
+--game:GetService("ReplicatedStorage").Modules.SummerBearController
+--[[
+Roblox : Grow a Garden (Client Script Decompiled Version)
+]]
+
+local v1 = {}
+local v2 = game:GetService("ReplicatedStorage")
+game:GetService("TweenService")
+local v3 = game:GetService("Players")
+require(v2.Modules.GuiController)
+local v_u_4 = require(v2.Modules.InventoryService)
+local v_u_5 = require(v2.Data.EnumRegistry.InventoryServiceEnums)
+require(v2.Modules.CalculatePlantValue)
+local v_u_6 = require(v2.Calculate_Weight)
+local v_u_7 = require(v2.Modules.MutationHandler)
+local v_u_8 = require(v2.Modules.Chalk)
+local v_u_9 = v_u_7:GetMutations()
+local v_u_10 = require(v2.Modules.GameConfigController)
+local v_u_11 = v_u_10:GetConfig("SummerBearConfig")
+workspace:GetAttributeChangedSignal("SummerBearConfig"):Connect(function()
+	-- upvalues: (ref) v_u_11, (copy) v_u_10
+	v_u_11 = v_u_10:GetConfig("SummerBearConfig")
+end)
+local v_u_12 = require(v2.Modules.DataService)
+require(v2.Modules.ConfirmationPromptController)
+require(v2.Comma_Module)
+require(v2.Modules.Notification)
+require(v2.Modules.NPCDialogueController)
+local v_u_13 = require(v2.Data.SeedPackData).Packs
+local v_u_14 = require(v2.Data.SeedData)
+local v_u_15 = require(v2.Modules.PlantTraitsData)
+local v_u_16 = v3.LocalPlayer
+local _ = v_u_16.PlayerGui
+local v_u_17 = game:GetService("CollectionService"):GetTagged("SummerBearBillboard")[1]
+local v_u_18 = game:GetService("CollectionService"):GetTagged("SummerBearModel")[1]
+local v_u_19 = v_u_18:WaitForChild("Target")
+local v_u_20 = v_u_18:WaitForChild("TotalBillboard")
+local v_u_21 = nil
+local v_u_22 = nil
+local v_u_23 = nil
+local function v_u_26(p24) -- name: GetMutationColor
+	-- upvalues: (copy) v_u_9
+	local v25 = v_u_9[p24]
+	if v25 then
+		if v25.Color then
+			return v25.Color
+		else
+			return Color3.fromRGB(255, 255, 255)
+		end
+	else
+		return Color3.fromRGB(255, 255, 255)
+	end
+end
+local function v_u_31(p27) -- name: AdjustRewards
+	-- upvalues: (ref) v_u_11, (copy) v_u_13, (copy) v_u_18, (copy) v_u_20
+	local v28 = #v_u_11.REWARDS
+	local v29 = p27 + 1
+	local v30 = math.clamp(v29, 1, v28)
+	local _ = v_u_13[v_u_11.REWARDS[v30].Value]
+	v_u_18.BarSurface.BarBG.Fill.Size = UDim2.new(p27 / v28, 0, 1, 0)
+	v_u_18.BarSurface.BarBG.TextLabel.Text = tostring(p27) .. "/" .. tostring(v28)
+	v_u_20.Frame.BestTemplate.Inner.RewardNameText.Text = tostring(p27) .. "/" .. tostring(v28)
+end
+function v1.Start() -- name: Start
+	-- upvalues: (copy) v_u_12, (ref) v_u_11, (copy) v_u_8, (copy) v_u_26, (copy) v_u_19, (copy) v_u_31, (copy) v_u_16, (copy) v_u_5, (copy) v_u_4, (copy) v_u_14, (copy) v_u_6, (copy) v_u_7, (copy) v_u_15, (copy) v_u_17, (ref) v_u_21, (ref) v_u_22, (ref) v_u_23
+	local v_u_32 = v_u_12:GetData()
+	local function v_u_52() -- name: GetCurrentToolValue
+		-- upvalues: (copy) v_u_32, (ref) v_u_11, (ref) v_u_8, (ref) v_u_26, (ref) v_u_19, (ref) v_u_31, (ref) v_u_16, (ref) v_u_5, (ref) v_u_4, (ref) v_u_14, (ref) v_u_6, (ref) v_u_7, (ref) v_u_15
+		local v33 = v_u_32.SummerFireEventData.CurrentLevel or 0
+		local v34 = workspace:GetAttribute(v_u_11.WORKSPACE_TRAIT_NAME)
+		local v35 = v33 + 1
+		local v36 = #v_u_11.WEIGHTS
+		local v37 = math.clamp(v35, 1, v36)
+		local v38 = v_u_11.WEIGHTS[v37]
+		local v39 = v_u_11.MUTATION_LIST[v37]
+		local v40 = string.lower(v39) == "normal" and "" or (", %*"):format((v_u_8.color(v_u_26(v39))(v39)))
+		v_u_19.ImageLabel.Mutation.Text = ("%*kg+%*"):format(tostring(v38), v40)
+		v_u_31(v33)
+		if not v_u_16.Character then
+			return false, "Error loading your character!"
+		end
+		local v41 = nil
+		for _, v42 in v_u_16.Character:GetChildren() do
+			if v42:IsA("Tool") and (v42:HasTag("FruitTool") and v42:GetAttribute(v_u_5.ITEM_UUID)) then
+				v41 = v42
+				break
+			end
+		end
+		if not v41 then
+			return false, v_u_11.MESSAGE_ENUMS.NO_PLANT
+		end
+		local v43 = v_u_4:GetToolData(v41)
+		if not v43 then
+			return false, v_u_11.MESSAGE_ENUMS.ERROR
+		end
+		local v44 = v43.ItemData
+		if not v44 then
+			return false, v_u_11.MESSAGE_ENUMS.ERROR
+		end
+		if not v_u_14[v44.ItemName] then
+			return false, v_u_11.MESSAGE_ENUMS.ERROR_NO_SEED
+		end
+		local v45 = v44.WeightMultiplier or 1
+		local v46, _ = v_u_6.Calculate_Weight(v44.Seed, v44.ItemName)
+		local v47 = v46 * v45
+		local v48 = false
+		for _, v49 in v_u_7:ExtractMutationsFromString(v44.MutationString) do
+			if v49.Name == v39 then
+				v48 = true
+				break
+			end
+		end
+		local v50 = v39 == "Normal" and true or v48
+		local v51 = v44.ItemName
+		if v_u_15.HasTrait(v51, v34) then
+			if v50 then
+				if v47 < v38 then
+					return false, v_u_11.MESSAGE_ENUMS.WRONG_PLANT_ALL3:gsub("TRAIT_NAME", (tostring(v34))):gsub("MUTATION_NAME", (tostring(v39))):gsub("REQUIRED_KG", (tostring(v38))):gsub("MY_KG", (tostring(v47)))
+				else
+					return true
+				end
+			else
+				return false, v_u_11.MESSAGE_ENUMS.WRONG_PLANT_ALL2:gsub("TRAIT_NAME", (tostring(v34))):gsub("MUTATION_NAME", (tostring(v39))):gsub("REQUIRED_KG", (tostring(v38))):gsub("MY_KG", (tostring(v47)))
+			end
+		else
+			return false, v_u_11.MESSAGE_ENUMS.WRONG_PLANT_ALL1:gsub("TRAIT_NAME", (tostring(v34))):gsub("MUTATION_NAME", (tostring(v39))):gsub("REQUIRED_KG", (tostring(v38))):gsub("MY_KG", (tostring(v47)))
+		end
+	end
+	local v53, v54 = v_u_52()
+	if v53 == false then
+		v_u_17.Container.ClientText.Text = v54
+	else
+		v_u_17.Container.ClientText.Text = v_u_11.MESSAGE_ENUMS.BLANK_SUBMIT_CLIENT
+	end
+	v_u_12:GetPathSignal("SummerFireEventData/CurrentLevel"):Connect(function()
+		-- upvalues: (copy) v_u_52, (ref) v_u_17, (ref) v_u_11
+		local v55, v56 = v_u_52()
+		if v55 == false then
+			v_u_17.Container.ClientText.Text = v56
+		else
+			v_u_17.Container.ClientText.Text = v_u_11.MESSAGE_ENUMS.BLANK_SUBMIT_CLIENT
+		end
+	end)
+	workspace:GetAttributeChangedSignal(v_u_11.WORKSPACE_TRAIT_NAME):Connect(function()
+		-- upvalues: (copy) v_u_52, (ref) v_u_17, (ref) v_u_11
+		local v57, v58 = v_u_52()
+		if v57 == false then
+	end)
+	workspace:GetAttributeChangedSignal(v_u_11.WORKSPACE_TRAIT_NAME):Connect(function()
+		-- upvalues: (copy) v_u_52, (ref) v_u_17, (ref) v_u_11
+		local v57, v58 = v_u_52()
+		if v57 == false then
+			v_u_17.Container.ClientText.Text = v58
+		else
+			v_u_17.Container.ClientText.Text = v_u_11.MESSAGE_ENUMS.BLANK_SUBMIT_CLIENT
+		end
+	end)
+	local function v68(p59) -- name: SetupCharacter
+		-- upvalues: (ref) v_u_21, (ref) v_u_22, (copy) v_u_52, (ref) v_u_17, (ref) v_u_11
+		if v_u_21 then
+			v_u_21:Disconnect()
+			v_u_21 = nil
+		end
+		if v_u_22 then
+			v_u_22:Disconnect()
+			v_u_22 = nil
+		end
+		local v60, v61 = v_u_52()
+		if v60 == false then
+			v_u_17.Container.ClientText.Text = v61
+		else
+			v_u_17.Container.ClientText.Text = v_u_11.MESSAGE_ENUMS.BLANK_SUBMIT_CLIENT
+		end
+		v_u_21 = p59.ChildAdded:Connect(function(p62)
+			-- upvalues: (ref) v_u_52, (ref) v_u_17, (ref) v_u_11
+			if p62:IsA("Tool") then
+				local v63, v64 = v_u_52()
+				if v63 == false then
+					v_u_17.Container.ClientText.Text = v64
+					return
+				end
+				v_u_17.Container.ClientText.Text = v_u_11.MESSAGE_ENUMS.BLANK_SUBMIT_CLIENT
+			end
+		end)
+		v_u_22 = p59.ChildRemoved:Connect(function(p65)
+			-- upvalues: (ref) v_u_52, (ref) v_u_17, (ref) v_u_11
+			if p65:IsA("Tool") then
+				local v66, v67 = v_u_52()
+				if v66 == false then
+					v_u_17.Container.ClientText.Text = v67
+					return
+				end
+				v_u_17.Container.ClientText.Text = v_u_11.MESSAGE_ENUMS.BLANK_SUBMIT_CLIENT
+			end
+		end)
+	end
+	v_u_23 = v_u_16.CharacterAdded:Connect(v68)
+	if v_u_16.Character then
+		v68(v_u_16.Character)
+	end
+end
+task.spawn(v1.Start)
+return v1

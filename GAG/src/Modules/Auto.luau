@@ -575,7 +575,7 @@ function Auto.CraftGear()
 			reg.Log("ของครบถ้วน สั่ง Craft -> " .. targetGear)
 		end)
 
-		task.wait(1.5)
+		task.wait(5)
 		return
 	end)
 end
@@ -721,7 +721,7 @@ function Auto.CraftSeed()
 			reg.Log("ของครบถ้วน สั่ง Craft -> " .. targetSeed)
 		end)
 
-		task.wait(1.5)
+		task.wait(5)
 		return
 	end)
 end

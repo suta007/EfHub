@@ -1,0 +1,162 @@
+--workspace.Interaction.UpdateItems.SummerBear.Bearnaby.RootPart.ProximityPrompt.SummerBear
+
+
+game:GetService("TweenService")
+local v1 = game:GetService("ReplicatedStorage")
+local v2 = game:GetService("Players")
+TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out, 0, false, 0)
+local v_u_3 = v1.GameEvents.SummerFire
+local v_u_4 = script.Parent.Parent.Parent
+local v5 = script.Parent
+local v6 = require(v1.Modules.NPCDialogueController)
+local v_u_7 = require(v1.Top_Text)
+local v_u_8 = require(v1.Modules.GameConfigController)
+local v_u_9 = v_u_8:GetConfig("SummerBearConfig")
+workspace:GetAttributeChangedSignal("SummerBearConfig"):Connect(function()
+	-- upvalues: (ref) v_u_9, (copy) v_u_8
+	v_u_9 = v_u_8:GetConfig("SummerBearConfig")
+end)
+local v_u_10 = require(v1.Modules.InventoryService)
+local v_u_11 = require(v1.Data.EnumRegistry.InventoryServiceEnums)
+local v_u_12 = require(v1.Modules.MutationHandler)
+local v_u_13 = require(v1.Modules.PlantTraitsData)
+local v_u_14 = require(v1.Calculate_Weight)
+local v_u_15 = require(v1.Modules.DataService)
+local v_u_16 = require(v1.Data.SeedData)
+local v_u_17 = v2.LocalPlayer
+local v18 = {
+	"Who are you?",
+	"Take this plant!",
+	"Find a plant for me!",
+	"Show me Seed Pack Info",
+	"Nevermind"
+}
+local function v_u_29(p19, _, _, p20, p21, p22) -- name: MeetsRequirements
+	-- upvalues: (copy) v_u_11, (copy) v_u_10, (copy) v_u_16, (copy) v_u_13, (copy) v_u_12, (copy) v_u_14
+	if not p19:IsA("Tool") then
+		return false
+	end
+	if not p19:HasTag("FruitTool") then
+		return false
+	end
+	if not p19:GetAttribute(v_u_11.ITEM_UUID) then
+		return false
+	end
+	if p19:GetAttribute(v_u_11.Favorite) then
+		return false
+	end
+	local v23 = v_u_10:GetToolData(p19)
+	if not v23 then
+		return false
+	end
+	local v24 = v23.ItemData
+	if not v24 then
+		return false
+	end
+	if not v_u_16[v24.ItemName] then
+		return false
+	end
+	if not v_u_13.HasTrait(v24.ItemName, p20) then
+		return false
+	end
+	local v25 = false
+	for _, v26 in v_u_12:ExtractMutationsFromString(v24.MutationString) do
+		if v26.Name == p22 then
+			v25 = true
+			break
+		end
+	end
+	if p22 ~= "Normal" and not v25 then
+		return false
+	end
+	local v27 = v24.WeightMultiplier or 1
+	local v28, _ = v_u_14.Calculate_Weight(v24.Seed, v24.ItemName)
+	return v28 * v27 >= p21
+end
+local function v_u_44() -- name: AutoEquip
+	-- upvalues: (copy) v_u_17, (copy) v_u_15, (ref) v_u_9, (copy) v_u_29, (copy) v_u_7, (copy) v_u_4
+	local v30 = v_u_17.Character
+	if v30 then
+		local v31 = v30:FindFirstChildOfClass("Humanoid")
+		if v31 then
+			local v32 = {}
+			for _, v33 in v_u_17.Backpack:GetChildren() do
+				table.insert(v32, v33)
+			end
+			for _, v34 in v30:GetChildren() do
+				if v34:IsA("Tool") then
+					table.insert(v32, v34)
+				end
+			end
+			local v35 = v_u_15:GetData()
+			local v36 = v35.SummerFireEventData.CurrentLevel or 0
+			local v37 = workspace:GetAttribute(v_u_9.WORKSPACE_TRAIT_NAME)
+			local v38 = v36 + 1
+			local v39 = #v_u_9.WEIGHTS
+			local v40 = math.clamp(v38, 1, v39)
+			local v41 = v_u_9.WEIGHTS[v40]
+			local v42 = v_u_9.MUTATION_LIST[v40]
+			for _, v43 in v32 do
+				if v_u_29(v43, v35, v36, v37, v41, v42) then
+					v31:EquipTool(v43)
+					v_u_7.NpcText(v_u_4, v_u_9.MESSAGE_ENUMS.AUTO_EQUIPPED, true)
+					task.wait(1)
+					return
+				end
+			end
+			v_u_7.NpcText(v_u_4, v_u_9.MESSAGE_ENUMS.NO_PLANT_FOUND, true)
+			task.wait(2)
+		end
+	else
+		return
+	end
+end
+local v_u_45 = require(v1.Modules.CampfireUIController)
+local v_u_46 = require(v1.Modules.GuiController)
+v6:Start({
+	["ProximityPrompt"] = nil,
+	["SpeakingNPC"] = nil,
+	["PromptList"] = nil,
+	["OperationMap"] = nil,
+	["IntroLines"] = nil,
+	["ExitLine"] = nil,
+	["RootPart"] = nil,
+	["DeactivationDistance"] = 20,
+	["OnDialogueStarted"] = nil,
+	["OnDialogueEnded"] = nil,
+	["ProximityPrompt"] = v5,
+	["SpeakingNPC"] = v_u_4,
+	["PromptList"] = v18,
+	["OperationMap"] = {
+		[v18[1]] = function()
+			-- upvalues: (ref) v_u_9, (copy) v_u_7, (copy) v_u_4
+			for v47 = 1, #v_u_9.MESSAGE_QUESTION do
+				local v48 = v_u_9.MESSAGE_QUESTION[v47]
+				v_u_7.NpcText(v_u_4, v48[2], true)
+				task.wait(v48[1])
+			end
+		end,
+		[v18[2]] = function()
+			-- upvalues: (copy) v_u_3
+			v_u_3.SubmitBear:FireServer()
+		end,
+		[v18[3]] = function()
+			-- upvalues: (copy) v_u_44
+			v_u_44()
+		end,
+		[v18[4]] = function()
+			-- upvalues: (copy) v_u_46, (copy) v_u_17, (copy) v_u_45
+			v_u_46:Open(v_u_17:WaitForChild("PlayerGui"):WaitForChild("CampfireReward_UI"))
+			v_u_45:DisplayBasicSackUI()
+		end,
+		[v18[5]] = function()
+			-- upvalues: (copy) v_u_7, (copy) v_u_4, (ref) v_u_9
+			v_u_7.NpcText(v_u_4, v_u_9.GOODBYE, true)
+		end
+	},
+	["IntroLines"] = { v_u_9.INTRO },
+	["ExitLine"] = v_u_9.EXIT_LINE,
+	["RootPart"] = v5.Parent,
+	["OnDialogueStarted"] = function() -- name: OnDialogueStarted end,
+	["OnDialogueEnded"] = function() -- name: OnDialogueEnded end
+})

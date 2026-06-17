@@ -138,18 +138,12 @@ local function ShowData(tbl, indent)
 end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local RecipeRegistry = require(ReplicatedStorage.Data.CraftingData.CraftingRecipeRegistry)
-local GearEventData = RecipeRegistry.RecipiesSortedByMachineType.GearEventWorkbench
-local target = "Gold Ingot"
+--local DataService = require(ReplicatedStorage.Modules.DataService)
+--local data = DataService:GetData()
 
-for key, value in pairs(GearEventData) do
-	if key == target then
-		for _i, input in ipairs(value.Inputs) do
-			local ItemName = input.ItemData.ItemName
-			local ItemType = input.ItemType
-			AddLog(string.format("ItemType: %s , ItemName: %s", ItemType, ItemName))
-		end
-		--ShowData(value.Inputs)
-		return
-	end
-end
+--local SummerFireEventData = data.SummerFireEventData
+--ShowData(SummerFireEventData)
+
+local GameConfigController = require(ReplicatedStorage.Modules.GameConfigController)
+local SummerBearConfig = GameConfigController:GetConfig("SummerBearConfig")
+ShowData(SummerBearConfig)
