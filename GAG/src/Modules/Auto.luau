@@ -586,7 +586,6 @@ function Auto.CraftSeed()
 	local TARGET_MACHINE_TYPE = "SeedEventWorkbench"
 	local TARGET_BENCH_ID = "SeedEventWorkbench"
 	local CRAFT_INDEX = 1
-	local CraftingStationHandler = require(sData.Modules.CraftingStationHandler)
 
 	Utils.RunWithFlag("CraftSeedRunning", "CraftSeed", function()
 		local targetSeed = Options.ddCraftSeed.Value
@@ -626,7 +625,7 @@ function Auto.CraftSeed()
 		local isReadyToCraft = false
 
 		pcall(function()
-			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
+			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetSeed)
 		end)
 
 		task.wait(0.5)
