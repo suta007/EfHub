@@ -42,9 +42,9 @@ local function getInvUUID(GetData, Name, iType)
 			end
 
 			if value.ItemData.ItemName and value.ItemData.ItemName == Name then
-				if value.ItemType == iType then
-					return uuid
-				end
+				--if value.ItemType == iType then
+				return uuid
+				--end
 			end
 		end
 	end
