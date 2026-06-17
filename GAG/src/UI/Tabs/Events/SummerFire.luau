@@ -31,7 +31,7 @@ local function getInvUUID(GetData, Name)
 	local inventory = GetData.InventoryData or {}
 	for uuid, value in pairs(inventory) do
 		if value.ItemType == Name or (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
-			print(Name, " UUID : ", uuid)
+			--print(Name, " UUID : ", uuid)
 			return uuid
 		end
 	end
