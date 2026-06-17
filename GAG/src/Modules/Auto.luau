@@ -479,9 +479,10 @@ function Auto.CraftGear()
 	local TARGET_MACHINE_TYPE = "GearEventWorkbench"
 	local TARGET_BENCH_ID = "Workbench-1"
 	local CRAFT_INDEX = 1
-
+	reg.Log("Craft Enabled")
 	Utils.RunWithFlag("CraftGearRunning", "CraftGear", function()
 		local targetGear = Options.ddCraftGear.Value
+		reg.Log("Run with flag")
 		if not targetGear or targetGear == "" then
 			reg.Log("🟡 No Gear Selected")
 			return
@@ -495,7 +496,7 @@ function Auto.CraftGear()
 			return
 		end
 		local craftingItems = benchData.CraftingItems
-
+		reg.Log("Crafting Items : ", craftingItems)
 		if craftingItems and craftingItems[CRAFT_INDEX] then
 			if craftingItems[CRAFT_INDEX].IsDone == false then
 				return
@@ -508,6 +509,19 @@ function Auto.CraftGear()
 				--return
 			end
 		end
+
+		--local requiredCount = GetRequiredItemsCount(targetGear, sData.GearEventData)
+		--if requiredCount == 0 then
+		--reg.Log("🟡 No Recipe Found")
+		--return
+		--end
+
+		--local isReadyToCraft = false
+
+		pcall(function()
+			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetGear)
+		end)
+		task.wait(0.5)
 
 		for key, value in pairs(sData.GearEventData) do
 			if key == targetGear then
@@ -552,19 +566,6 @@ function Auto.CraftGear()
 				return
 			end
 		end
-
-		--local requiredCount = GetRequiredItemsCount(targetGear, sData.GearEventData)
-		--if requiredCount == 0 then
-		--reg.Log("🟡 No Recipe Found")
-		--return
-		--end
-
-		--local isReadyToCraft = false
-
-		pcall(function()
-			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetGear)
-		end)
-		task.wait(0.5)
 		--[[
 		for attempt = 1, 3 do
 			if not Options.tgCraftGearEnable.Value then
