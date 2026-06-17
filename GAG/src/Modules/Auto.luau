@@ -421,7 +421,7 @@ local function getInvUUID(GetData, Name)
 	local inventory = GetData.InventoryData or {}
 	for uuid, value in pairs(inventory) do
 		if value.ItemType == Name or (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
-			print(Name, " UUID : ", uuid)
+			--print(Name, " UUID : ", uuid)
 			return uuid
 		end
 	end
@@ -495,7 +495,7 @@ function Auto.CraftGear()
 					local uuid = nil
 					if RecipeItemType == "Cosmetic" then
 						uuid = getCosmeticUUID(GetData_result, ItemName)
-						if uuid == nil then
+						if not uuid or uuid == "" then
 							reg.Log("🟡 Missing ingredient: " .. tostring(ItemName))
 							return nil
 						end
@@ -504,7 +504,7 @@ function Auto.CraftGear()
 						return nil
 					elseif RecipeItemType ~= "Currency" then
 						uuid = getInvUUID(GetData_result, ItemName)
-						if uuid == nil then
+						if not uuid or uuid == "" then
 							reg.Log("🟡 Missing ingredient: " .. tostring(ItemName))
 							return nil
 						end
@@ -650,7 +650,7 @@ function Auto.CraftSeed()
 					local uuid = nil
 					if RecipeItemType == "Cosmetic" then
 						uuid = getCosmeticUUID(GetData_result, ItemName) or nil
-						if uuid == nil then
+						if not uuid or uuid == "" then
 							reg.Log("🟡 Missing ingredient: " .. tostring(ItemName))
 							return nil
 						end
@@ -659,7 +659,7 @@ function Auto.CraftSeed()
 						return nil
 					elseif RecipeItemType ~= "Currency" then
 						uuid = getInvUUID(GetData_result, ItemName) or nil
-						if uuid == nil then
+						if not uuid or uuid == "" then
 							reg.Log("🟡 Missing ingredient: " .. tostring(ItemName))
 							return nil
 						end
