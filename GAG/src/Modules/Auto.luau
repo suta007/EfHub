@@ -496,7 +496,7 @@ function Auto.CraftGear()
 					if RecipeItemType == "Cosmetic" then
 						uuid = getCosmeticUUID(GetData_result, ItemName)
 						if uuid == nil then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
+							reg.Log("Missing ingredient: " .. tostring(ItemName), "WARN")
 							return nil
 						end
 					elseif RecipeItemType == "Pet" then
@@ -505,7 +505,7 @@ function Auto.CraftGear()
 					elseif RecipeItemType ~= "Currency" then
 						uuid = getInvUUID(GetData_result, ItemName)
 						if uuid == nil then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
+							reg.Log("Missing ingredient: " .. tostring(ItemName), "WARN")
 							return nil
 						end
 					end
@@ -650,8 +650,8 @@ function Auto.CraftSeed()
 					local uuid = nil
 					if RecipeItemType == "Cosmetic" then
 						uuid = getCosmeticUUID(GetData_result, ItemName) or nil
-						if not uuid or uuid == nil then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
+						if uuid == nil then
+							reg.Log("Missing ingredient: " .. tostring(ItemName), "WARN")
 							return nil
 						end
 					elseif RecipeItemType == "Pet" then
@@ -659,8 +659,8 @@ function Auto.CraftSeed()
 						return nil
 					elseif RecipeItemType ~= "Currency" then
 						uuid = getInvUUID(GetData_result, ItemName) or nil
-						if not uuid or uuid == nil then
-							reg.Log("Missing ingredient: " .. ItemName, "WARN")
+						if uuid == nil then
+							reg.Log("Missing ingredient: " .. tostring(ItemName), "WARN")
 							return nil
 						end
 					end
