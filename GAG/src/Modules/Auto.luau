@@ -572,16 +572,6 @@ function Auto.CraftGear()
 			return
 		end
 ]]
-
-		local updatedDataResult = sData.DataService:GetData()
-		local updatedBenchData = updatedDataResult.CraftingData.GlobalCraftingObjectData[TARGET_BENCH_ID].MachineData[TARGET_MACHINE_TYPE]
-		local currentInputItems = updatedBenchData.InputItems
-		local inputCount = currentInputItems and #currentInputItems or 0
-
-		if inputCount < requiredCount then
-			reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d)", inputCount, requiredCount))
-			return
-		end
 		-- ====================================================
 		-- 🔴 ข้อ 3: ของครบ สั่ง Craft
 		-- ====================================================
@@ -729,15 +719,6 @@ function Auto.CraftSeed()
 
 ]]
 
-		local updatedDataResult = sData.DataService:GetData()
-		local updatedBenchData = updatedDataResult.CraftingData.GlobalCraftingObjectData[TARGET_BENCH_ID].MachineData[TARGET_MACHINE_TYPE]
-		local currentInputItems = updatedBenchData.InputItems
-		local inputCount = currentInputItems and #currentInputItems or 0
-
-		if inputCount < requiredCount then
-			reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d)", inputCount, requiredCount))
-			return
-		end
 		-- ====================================================
 		-- 🔴 ข้อ 3: ของครบ สั่ง Craft
 		-- ====================================================
