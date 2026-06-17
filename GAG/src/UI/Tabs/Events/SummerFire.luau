@@ -27,7 +27,7 @@ for _i, data in pairs(Craftables) do
 	end
 end
 
-local function getInvUUID(GetData, Name)
+local function getInvUUID(GetData, Name, iType)
 	local inventory = GetData.InventoryData or {}
 	for uuid, value in pairs(inventory) do
 		-- เช็ค ItemType ก่อน
@@ -38,7 +38,9 @@ local function getInvUUID(GetData, Name)
 		-- ถ้า ItemType ไม่ตรง เช็คว่ามี ItemData ไหม ค่อยเข้าไปเทียบชื่อ
 		if value.ItemData then
 			if (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
-				return uuid
+				if value.ItemType == iType then
+					return uuid
+				end
 			end
 		end
 	end
@@ -74,7 +76,7 @@ local function GetRecipeUUID(recipes)
 			--do not thing
 			return nil
 		elseif recipe["Type"] ~= "Currency" then
-			local uuid = getInvUUID(GetData_result, recipe["Value"])
+			local uuid = getInvUUID(GetData_result, recipe["Value"], recipe["Type"])
 			if uuid then
 				table.insert(UUIDs, uuid)
 			else

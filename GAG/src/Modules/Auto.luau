@@ -513,7 +513,6 @@ function Auto.CraftGear()
 						return nil
 					elseif RecipeItemType ~= "Currency" then
 						uuid = getInvUUID(GetData_result, ItemName, RecipeItemType)
-						reg.Log("Debug: Ingredient: " .. tostring(ItemName) .. " UUID: " .. tostring(uuid))
 						if not uuid or uuid == "" then
 							reg.Log("🟡 Missing ingredient: " .. tostring(ItemName))
 							return nil
