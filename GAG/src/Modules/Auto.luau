@@ -438,37 +438,6 @@ local function getCosmeticUUID(GetData, cosmeticName)
 	return nil
 end
 
-local function GetRecipeUUID(recipes)
-	local UUIDs = {}
-	if type(recipes) ~= "table" then
-		return nil
-	end
-	local GetData_result = sData.DataService:GetData()
-	for _i, recipe in pairs(recipes) do
-		if recipe["Type"] == "Cosmetic" then
-			local uuid = getCosmeticUUID(GetData_result, recipe["Value"])
-			if uuid then
-				table.insert(UUIDs, "Cosmetic:" .. uuid)
-				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
-			else
-				return nil
-			end
-		elseif recipe["Type"] == "Pet" then
-			--do not thing
-			return nil
-		elseif recipe["Type"] ~= "Currency" then
-			local uuid = getInvUUID(GetData_result, recipe["Value"])
-			if uuid then
-				table.insert(UUIDs, uuid)
-			else
-				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
-				return nil
-			end
-		end
-	end
-	return UUIDs
-end
-
 function Auto.CraftGear()
 	local Options = reg.Options
 	if not Options.tgCraftGearEnable or not Options.tgCraftGearEnable.Value or fVar.CraftGearRunning then
@@ -479,10 +448,8 @@ function Auto.CraftGear()
 	local TARGET_MACHINE_TYPE = "GearEventWorkbench"
 	local TARGET_BENCH_ID = "Workbench-1"
 	local CRAFT_INDEX = 1
-	reg.Log("Craft Enabled")
 	Utils.RunWithFlag("CraftGearRunning", "CraftGear", function()
 		local targetGear = Options.ddCraftGear.Value
-		reg.Log("Run with flag")
 		if not targetGear or targetGear == "" then
 			reg.Log("🟡 No Gear Selected")
 			return
@@ -496,7 +463,6 @@ function Auto.CraftGear()
 			return
 		end
 		local craftingItems = benchData.CraftingItems
-		reg.Log("Crafting Items : ", craftingItems)
 		if craftingItems and craftingItems[CRAFT_INDEX] then
 			if craftingItems[CRAFT_INDEX].IsDone == false then
 				return
@@ -616,15 +582,15 @@ function Auto.CraftSeed()
 		return
 	end
 	--SeedEventCraftingWorkBench
-	local TARGET_BENCH_INSTANCE = game:GetService("Workspace"):WaitForChild("CraftingTables"):WaitForChild("SeedEventCraftingWorkBench")
+	local TARGET_BENCH_INSTANCE = game:GetService("Workspace"):WaitForChild("NPCS"):WaitForChild("CraftingTables"):WaitForChild("SeedEventCraftingWorkBench")
 	local TARGET_MACHINE_TYPE = "SeedEventWorkbench"
 	local TARGET_BENCH_ID = "SeedEventWorkbench"
 	local CRAFT_INDEX = 1
 	local CraftingStationHandler = require(sData.Modules.CraftingStationHandler)
 
 	Utils.RunWithFlag("CraftSeedRunning", "CraftSeed", function()
-		local targetRecipe = Options.ddCraftSeed.Value
-		if not targetRecipe or targetRecipe == "" then
+		local targetSeed = Options.ddCraftSeed.Value
+		if not targetSeed or targetSeed == "" then
 			reg.Log("🟡 No Seed Selected")
 			return
 		end
@@ -651,7 +617,7 @@ function Auto.CraftSeed()
 			end
 		end
 
-		local requiredCount = GetRequiredItemsCount(targetRecipe, sData.SeedEventData)
+		local requiredCount = GetRequiredItemsCount(targetSeed, sData.SeedEventData)
 		if requiredCount == 0 then
 			reg.Log("🟡 No Recipe Found")
 			return
@@ -659,9 +625,50 @@ function Auto.CraftSeed()
 
 		local isReadyToCraft = false
 
-		pcall(function()
-			sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
-		end)
+		---pcall(function()
+		--	sData.CraftingEvent:FireServer("SetRecipe", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE, targetRecipe)
+		--end)
+		for key, value in pairs(sData.SeedEventData) do
+			if key == targetSeed then
+				for i, input in ipairs(value.Inputs) do
+					local ItemName = input.ItemData.ItemName
+					local RecipeItemType = input.ItemType
+					local uuid = nil
+					if RecipeItemType == "Cosmetic" then
+						uuid = getCosmeticUUID(GetData_result, ItemName)
+						if not uuid then
+							reg.Log("Missing ingredient: " .. ItemName, "WARN")
+							return nil
+						end
+					elseif RecipeItemType == "Pet" then
+						--do not thing
+						return nil
+					elseif RecipeItemType ~= "Currency" then
+						uuid = getInvUUID(GetData_result, ItemName)
+						if not uuid then
+							reg.Log("Missing ingredient: " .. ItemName, "WARN")
+							return nil
+						end
+					end
+
+					if uuid then
+						local args = {
+							"InputItem",
+							TARGET_BENCH_INSTANCE,
+							TARGET_MACHINE_TYPE,
+							i,
+							{
+								ItemType = RecipeItemType,
+								ItemData = {
+									UUID = uuid,
+								},
+							},
+						}
+						sData.CraftingEvent:FireServer(unpack(args))
+					end
+				end
+			end
+		end
 		task.wait(0.5)
 
 		for attempt = 1, 3 do
@@ -703,7 +710,7 @@ function Auto.CraftSeed()
 		-- ====================================================
 		pcall(function()
 			sData.CraftingEvent:FireServer("Craft", TARGET_BENCH_INSTANCE, TARGET_MACHINE_TYPE)
-			reg.Log("ของครบถ้วน สั่ง Craft -> " .. targetRecipe)
+			reg.Log("ของครบถ้วน สั่ง Craft -> " .. targetSeed)
 		end)
 
 		task.wait(1.5)
