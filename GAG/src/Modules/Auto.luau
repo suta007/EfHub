@@ -417,7 +417,7 @@ local function GetRequiredItemsCount(targetItemName: string, CraftingData: { [an
 	return 0
 end
 
-local function getInvUUID(GetData, Name)
+local function getInvUUID(GetData, Name, iType)
 	local inventory = GetData.InventoryData or {}
 	for uuid, value in pairs(inventory) do
 		-- เช็ค ItemType ก่อน
@@ -428,7 +428,9 @@ local function getInvUUID(GetData, Name)
 		-- ถ้า ItemType ไม่ตรง เช็คว่ามี ItemData ไหม ค่อยเข้าไปเทียบชื่อ
 		if value.ItemData then
 			if (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
-				return uuid
+				if value.ItemType == iType then
+					return uuid
+				end
 			end
 		end
 	end
@@ -510,7 +512,7 @@ function Auto.CraftGear()
 						--do not thing
 						return nil
 					elseif RecipeItemType ~= "Currency" then
-						uuid = getInvUUID(GetData_result, ItemName)
+						uuid = getInvUUID(GetData_result, ItemName, RecipeItemType)
 						reg.Log("Debug: Ingredient: " .. tostring(ItemName) .. " UUID: " .. tostring(uuid))
 						if not uuid or uuid == "" then
 							reg.Log("🟡 Missing ingredient: " .. tostring(ItemName))
