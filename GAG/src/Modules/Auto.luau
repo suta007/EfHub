@@ -563,9 +563,10 @@ function Auto.CraftGear()
 					end
 				end
 				--ShowData(value.Inputs)
-				return
+				--return
 			end
 		end
+		task.wait(1)
 		--[[
 		for attempt = 1, 3 do
 			if not Options.tgCraftGearEnable.Value then
