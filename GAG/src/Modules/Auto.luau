@@ -679,7 +679,7 @@ function Auto.CraftSeed()
 					end
 				end
 			end
-			task.wait(1)
+			task.wait(0.5)
 
 			-- ดึง Data ใหม่มาเช็ค InputItems
 			local updatedDataResult = sData.DataService:GetData()
@@ -692,7 +692,7 @@ function Auto.CraftSeed()
 				break
 			else
 				reg.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3", inputCount, requiredCount, attempt))
-				task.wait(1)
+				task.wait(3)
 			end
 		end
 
