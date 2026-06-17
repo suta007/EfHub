@@ -1551,98 +1551,101 @@ pcall(function()
 e.CraftingEvent:FireServer("Claim",h,i,k)
 c.Log("Claim "..tostring(p[k].RecipeId))
 end)
-task.wait(1.5)
-
-end
-end
-
-local q=GetRequiredItemsCount(l,e.GearEventData)
-if q==0 then
-c.Log("🟡 No Recipe Found")
+task.wait(2)
 return
 end
+end
 
-local r=false
+
+
+
+
+
+
+
 
 pcall(function()
 e.CraftingEvent:FireServer("SetRecipe",h,i,l)
 end)
 task.wait(0.5)
 
-for s=1,3 do
-if not g.tgCraftGearEnable.Value then
-return
-end
-
-
-
-for t,u in pairs(e.GearEventData)do
-if t==l then
-for v,w in ipairs(u.Inputs)do
-local x=w.ItemData.ItemName
-local y=w.ItemType
-local z=nil
-if y=="Cosmetic"then
-z=getCosmeticUUID(m,x)
-if not z then
-c.Log("Missing ingredient: "..x,"WARN")
+for q,r in pairs(e.GearEventData)do
+if q==l then
+for s,t in ipairs(r.Inputs)do
+local u=t.ItemData.ItemName
+local v=t.ItemType
+local w=nil
+if v=="Cosmetic"then
+w=getCosmeticUUID(m,u)
+if not w then
+c.Log("Missing ingredient: "..u,"WARN")
 return nil
 end
-elseif y=="Pet"then
+elseif v=="Pet"then
 
 return nil
-elseif y~="Currency"then
-z=getInvUUID(m,x)
-if not z then
-c.Log("Missing ingredient: "..x,"WARN")
+elseif v~="Currency"then
+w=getInvUUID(m,u)
+if not w then
+c.Log("Missing ingredient: "..u,"WARN")
 return nil
 end
 end
 
-if z then
-local A={
+if w then
+local x={
 "InputItem",
 h,
 i,
-v,
+s,
 {
-ItemType=y,
+ItemType=v,
 ItemData={
-UUID=z,
+UUID=w,
 },
 },
 }
-e.CraftingEvent:FireServer(unpack(A))
+e.CraftingEvent:FireServer(unpack(x))
 end
 end
 end
 end
-
 task.wait(0.5)
 
 
-local t=e.DataService:GetData()
-local u=t.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
-local v=u.InputItems
-local w=v and#v or 0
-
-if w==q then
-r=true
-break
-else
-c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",w,q,s))
-task.wait(1)
-end
-end
 
 
-if not r then
-c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
-if g.tgCraftGearEnable then
-g.tgCraftGearEnable:SetValue(false)
-end
-return
-end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1653,6 +1656,7 @@ c.Log("ของครบถ้วน สั่ง Craft -> "..l)
 end)
 
 task.wait(1.5)
+return
 end)
 end
 
@@ -1691,18 +1695,18 @@ pcall(function()
 e.CraftingEvent:FireServer("Claim",h,i,k)
 c.Log("Claim "..tostring(p[k].RecipeId))
 end)
-task.wait(1.5)
-
-end
-end
-
-local q=GetRequiredItemsCount(l,e.SeedEventData)
-if q==0 then
-c.Log("🟡 No Recipe Found")
+task.wait(2)
 return
 end
+end
 
-local r=false
+
+
+
+
+
+
+
 
 pcall(function()
 e.CraftingEvent:FireServer("SetRecipe",h,i,l)
@@ -1710,51 +1714,43 @@ end)
 
 task.wait(0.5)
 
-for s=1,3 do
-if not g.tgCraftSeedEnable.Value then
-return
-end
-
-
-
-
-for t,u in pairs(e.SeedEventData)do
-if t==l then
-for v,w in ipairs(u.Inputs)do
-local x=w.ItemData.ItemName
-local y=w.ItemType
-local z=nil
-if y=="Cosmetic"then
-z=getCosmeticUUID(m,x)
-if not z then
-c.Log("Missing ingredient: "..x,"WARN")
+for q,r in pairs(e.SeedEventData)do
+if q==l then
+for s,t in ipairs(r.Inputs)do
+local u=t.ItemData.ItemName
+local v=t.ItemType
+local w=nil
+if v=="Cosmetic"then
+w=getCosmeticUUID(m,u)
+if not w then
+c.Log("Missing ingredient: "..u,"WARN")
 return nil
 end
-elseif y=="Pet"then
+elseif v=="Pet"then
 
 return nil
-elseif y~="Currency"then
-z=getInvUUID(m,x)
-if not z then
-c.Log("Missing ingredient: "..x,"WARN")
+elseif v~="Currency"then
+w=getInvUUID(m,u)
+if not w then
+c.Log("Missing ingredient: "..u,"WARN")
 return nil
 end
 end
 
-if z then
-local A={
+if w then
+local x={
 "InputItem",
 h,
 i,
-v,
+s,
 {
-ItemType=y,
+ItemType=v,
 ItemData={
-UUID=z,
+UUID=w,
 },
 },
 }
-e.CraftingEvent:FireServer(unpack(A))
+e.CraftingEvent:FireServer(unpack(x))
 end
 end
 end
@@ -1762,28 +1758,40 @@ end
 task.wait(0.5)
 
 
-local t=e.DataService:GetData()
-local u=t.CraftingData.GlobalCraftingObjectData[j].MachineData[i]
-local v=u.InputItems
-local w=v and#v or 0
-
-if w==q then
-r=true
-break
-else
-c.Log(string.format("ของไม่ครบ (มี %d / ต้องการ %d) ลองใหม่รอบที่ %d/3",w,q,s))
-task.wait(1)
-end
-end
 
 
-if not r then
-c.Log("แจ้งเตือน! ของไม่พอ ปิดการทำงาน Auto Craft")
-if g.tgCraftSeedEnable then
-g.tgCraftSeedEnable:SetValue(false)
-end
-return
-end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1794,6 +1802,7 @@ c.Log("ของครบถ้วน สั่ง Craft -> "..l)
 end)
 
 task.wait(1.5)
+return
 end)
 end
 
@@ -3975,7 +3984,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.06.17-13.40",
+SubTitle="2569.06.17-18.55",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
