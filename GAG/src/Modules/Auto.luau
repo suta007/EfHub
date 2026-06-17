@@ -427,7 +427,11 @@ local function getInvUUID(GetData, Name, iType)
 
 		-- ถ้า ItemType ไม่ตรง เช็คว่ามี ItemData ไหม ค่อยเข้าไปเทียบชื่อ
 		if value.ItemData then
-			if (value.ItemData.EggName and value.ItemData.EggName == Name) or (value.ItemData.ItemName and value.ItemData.ItemName == Name) then
+			if value.ItemData.EggName and value.ItemData.EggName == Name then
+				return uuid
+			end
+
+			if value.ItemData.ItemName and value.ItemData.ItemName == Name then
 				if value.ItemType == iType then
 					return uuid
 				end
