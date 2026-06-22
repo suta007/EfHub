@@ -427,6 +427,7 @@ function Pets.FindFarmPet()
 	local petType = GetSelectedItems(Options.ddMutantPetType.Value) --table
 	local targetMutant = GetSelectedItems(Options.ddTargetMutant.Value) --table
 	local Loadout = tonumber(Options.ddLevelLoadout.Value)
+	local TargetAge = tonumber(Options.inpMutantTargetAge.Value) or 500
 	Pets.SwapPetLoadout(Loadout)
 	local blacklistMutant = {}
 	if Method == "Nightmare" then
@@ -454,10 +455,10 @@ function Pets.FindFarmPet()
 			if table.find(blacklistMutant, petMutant) then
 				continue
 			end
-			if Method == "Elephant" and tonumber(pet.PetData.BaseWeight) >= 3.5 and tonumber(pet.PetData.Level) >= 100 then
+			if Method == "Elephant" and tonumber(pet.PetData.BaseWeight) >= 3.5 and tonumber(pet.PetData.Level) >= TargetAge then
 				continue
 			end
-			if Method == "Level" and tonumber(pet.PetData.Level) >= 100 then
+			if Method == "Level" and tonumber(pet.PetData.Level) >= TargetAge then
 				continue
 			end
 			return pet.UUID, pet.PetType
@@ -495,7 +496,7 @@ function Pets.TargetPetLevelCheck()
 		return
 	end
 
-	local TargetAge = tonumber(Options.inpMutantTargetAge.Value) or 100
+	local TargetAge = tonumber(Options.inpMutantTargetAge.Value) or 500
 	local TargetPet = Pets.RawData(MutantUUID)
 	if not TargetPet or not TargetPet.PetData then
 		-- หากดึงไม่เจอ ให้รีเซ็ตแล้วไปหาใหม่
