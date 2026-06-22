@@ -2249,56 +2249,57 @@ local o=m.tgFavoritePet.Value::boolean
 local p=i(m.ddMutantPetType.Value)
 local q=i(m.ddTargetMutant.Value)
 local r=tonumber(m.ddLevelLoadout.Value)
+local s=tonumber(m.inpMutantTargetAge.Value)or 500
 d.SwapPetLoadout(r)
-local s={}
+local t={}
 if n=="Nightmare"then
-s={"Nightmare"}
+t={"Nightmare"}
 elseif n=="Mutation"then
-s=q
+t=q
 elseif n=="Level"then
-s={"NONE"}
+t={"NONE"}
 elseif n=="Venom"then
-s={"Venom"}
+t={"Venom"}
 elseif n=="Everchanted"then
-s={"Everchanted"}
+t={"Everchanted"}
 end
 
-local function checkPet(t)
-for u,v in ipairs(t)do
-if not table.find(p,v.PetType)then
+local function checkPet(u)
+for v,w in ipairs(u)do
+if not table.find(p,w.PetType)then
 continue
 end
-local w=v.PetData.IsFavorite or false
-if o~=w then
+local x=w.PetData.IsFavorite or false
+if o~=x then
 continue
 end
-local x=g.EnumToNameCache[v.PetData.MutationType]or"Normal"
-if table.find(s,x)then
+local y=g.EnumToNameCache[w.PetData.MutationType]or"Normal"
+if table.find(t,y)then
 continue
 end
-if n=="Elephant"and tonumber(v.PetData.BaseWeight)>=3.5 and tonumber(v.PetData.Level)>=100 then
+if n=="Elephant"and tonumber(w.PetData.BaseWeight)>=3.5 and tonumber(w.PetData.Level)>=s then
 continue
 end
-if n=="Level"and tonumber(v.PetData.Level)>=100 then
+if n=="Level"and tonumber(w.PetData.Level)>=s then
 continue
 end
-return v.UUID,v.PetType
+return w.UUID,w.PetType
 end
 return nil,nil
 end
 task.wait(tonumber(m.LoadOutDelay.Value)or 8)
-local t=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
-if t then
-local u,v=checkPet(t)
-if u then
-return u,v,true
-end
-end
-local u=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,false)
+local u=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,true)
 if u then
 local v,w=checkPet(u)
 if v then
-return v,w,false
+return v,w,true
+end
+end
+local v=g.PetUtils:GetPetsSortedByAge(g.LocalPlayer,0,true,false)
+if v then
+local w,x=checkPet(v)
+if w then
+return w,x,false
 end
 end
 return nil,nil,nil
@@ -2317,7 +2318,7 @@ d.FarmLevel()
 return
 end
 
-local n=tonumber(m.inpMutantTargetAge.Value)or 100
+local n=tonumber(m.inpMutantTargetAge.Value)or 500
 local o=d.RawData(k)
 if not o or not o.PetData then
 
