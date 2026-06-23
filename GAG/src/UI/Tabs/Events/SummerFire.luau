@@ -61,6 +61,31 @@ local function getCosmeticUUID(GetData, cosmeticName)
 	return nil
 end
 
+local function getPetUUID(GetData, petName)
+	local petInventory = GetData.PetsData and GetData.PetsData.PetInventory
+	if type(petInventory) ~= "table" then
+		return nil
+	end
+	for _, tData in pairs(petInventory) do
+		if type(tData) ~= "table" then
+			continue
+		end
+		for _, pet in pairs(tData) do
+			if type(pet) ~= "table" then
+				continue
+			end
+			local petType = pet.PetType
+			if not petType then
+				continue
+			end
+			local petLevel = tonumber(pet.PetData.Level)
+			if petType == petName and petLevel <= 20 and pet.PetData.IsFavorite ~= true then
+				return pet.UUID
+			end
+		end
+	end
+	return nil
+end
 local function GetRecipeUUID(recipes)
 	local UUIDs = {}
 	if type(recipes) ~= "table" then
@@ -77,8 +102,13 @@ local function GetRecipeUUID(recipes)
 				return nil
 			end
 		elseif recipe["Type"] == "Pet" then
-			--do not thing
-			return nil
+			local uuid = getPetUUID(GetData_result, recipe["Value"])
+			if uuid then
+				table.insert(UUIDs, uuid)
+			else
+				reg.Log("Missing ingredient: " .. recipe["Value"], "WARN")
+				return nil
+			end
 		elseif recipe["Type"] ~= "Currency" then
 			local uuid = getInvUUID(GetData_result, recipe["Value"], recipe["Type"])
 			if uuid then
