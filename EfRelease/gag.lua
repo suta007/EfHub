@@ -3997,7 +3997,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.06.17-22.35",
+SubTitle="2569.06.23-08.45",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6311,6 +6311,31 @@ end
 return nil
 end
 
+local function getPetUUID(r,t)
+local u=r.PetsData and r.PetsData.PetInventory
+if type(u)~="table"then
+return nil
+end
+for v,w in pairs(u)do
+if type(w)~="table"then
+continue
+end
+for x,y in pairs(w)do
+if type(y)~="table"then
+continue
+end
+local z=y.PetType
+if not z then
+continue
+end
+local A=tonumber(y.PetData.Level)
+if z==t and A<=20 and y.PetData.IsFavorite~=true then
+return y.UUID
+end
+end
+end
+return nil
+end
 local function GetRecipeUUID(r)
 local t={}
 if type(r)~="table"then
@@ -6327,8 +6352,13 @@ c.Log("Missing ingredient: "..w["Value"],"WARN")
 return nil
 end
 elseif w["Type"]=="Pet"then
-
+local x=getPetUUID(u,w["Value"])
+if x then
+table.insert(t,x)
+else
+c.Log("Missing ingredient: "..w["Value"],"WARN")
 return nil
+end
 elseif w["Type"]~="Currency"then
 local x=getInvUUID(u,w["Value"],w["Type"])
 if x then
