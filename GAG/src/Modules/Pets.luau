@@ -438,6 +438,8 @@ function Pets.FindFarmPet()
 		blacklistMutant = { "NONE" }
 	elseif Method == "Venom" then
 		blacklistMutant = { "Venom" }
+	elseif Method == "Ember" then
+		blacklistMutant = { "Ember" }
 	elseif Method == "Everchanted" then
 		blacklistMutant = { "Everchanted" }
 	end
@@ -535,6 +537,18 @@ function Pets.TargetPetLevelCheck()
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Venom")
+			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			Pets.MakePetFavorite(MutantUUID)
+			MutantUUID = nil
+			fVar.IsMutating = false
+			Pets.FarmLevel()
+			return
+		end
+	elseif Method == "Ember" then
+		if petMutant == "Ember" then
+			Pets.UnequipPet(MutantUUID)
+			task.wait(0.5)
+			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Ember")
 			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 			Pets.MakePetFavorite(MutantUUID)
 			MutantUUID = nil
