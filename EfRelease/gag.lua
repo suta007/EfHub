@@ -2260,6 +2260,8 @@ elseif n=="Level"then
 t={"NONE"}
 elseif n=="Venom"then
 t={"Venom"}
+elseif n=="Ember"then
+t={"Ember"}
 elseif n=="Everchanted"then
 t={"Everchanted"}
 end
@@ -2357,6 +2359,18 @@ if q=="Venom"then
 d.UnequipPet(k)
 task.wait(0.5)
 e.Log("🟢 CheckLevel: "..tostring(k).." finished Venom")
+e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+d.MakePetFavorite(k)
+k=nil
+f.IsMutating=false
+d.FarmLevel()
+return
+end
+elseif p=="Ember"then
+if q=="Ember"then
+d.UnequipPet(k)
+task.wait(0.5)
+e.Log("🟢 CheckLevel: "..tostring(k).." finished Ember")
 e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 d.MakePetFavorite(k)
 k=nil
@@ -5075,7 +5089,7 @@ end,
 
 o:AddDropdown("ddMutantMethod",{
 Title="Select Mutant Method",
-Values={"None","Nightmare","Mutation","Level","Elephant","Venom","Everchanted"},
+Values={"None","Nightmare","Mutation","Level","Elephant","Ember","Venom","Everchanted"},
 Default="None",
 Callback=function()
 i()
