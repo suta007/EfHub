@@ -319,7 +319,7 @@ function ShopTab.Initialize(Registry)
 		end,
 	})
 ]]
-
+--[[
 	local SeasonPassSection = Tabs.Shop:AddCollapsibleSection("Season Pass", false)
 	SeasonPassSection:AddToggle("tgBuySeasonPassEnable", {
 		Title = "Buy Season Pass",
@@ -348,7 +348,7 @@ function ShopTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
-
+]]
 	fVar.UIShopLoaded = true
 end
 
