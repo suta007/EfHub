@@ -128,12 +128,12 @@ function Shop.UpdateBuyList()
 		--	EventArg = "Easter Seed Shop",
 		--},
 
-		[Shop.ShopKey.SeasonPass] = {
-			Enabled = Options.tgBuySeasonPassEnable.Value,
-			Items = GetSelectedItems(Options.ddBuySeasonPass.Value),
-			RemoteName = "SeasonPass.BuySeasonPassStock",
-			ArgType = "NormalMode",
-		},
+		--[Shop.ShopKey.SeasonPass] = {
+		--	Enabled = Options.tgBuySeasonPassEnable.Value,
+		--	Items = GetSelectedItems(Options.ddBuySeasonPass.Value),
+		--	RemoteName = "SeasonPass.BuySeasonPassStock",
+		--	ArgType = "NormalMode",
+		--},
 	}
 end
 
