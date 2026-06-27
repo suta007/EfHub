@@ -290,7 +290,7 @@ function ShopTab.Initialize(Registry)
 	})
 	BuyEventSection:AddDivider()
 } ]]
-	-- [[ Auto Buy Easter Shop Items ]]
+	-- [[ Auto Buy Easter Shop Items 
 	BuyEventSection:AddToggle("tgBuyEasterEnable", {
 		Title = "Buy Easter Shop Items",
 		Default = false,
@@ -318,6 +318,7 @@ function ShopTab.Initialize(Registry)
 			QuickSave()
 		end,
 	})
+]]
 
 	local SeasonPassSection = Tabs.Shop:AddCollapsibleSection("Season Pass", false)
 	SeasonPassSection:AddToggle("tgBuySeasonPassEnable", {
