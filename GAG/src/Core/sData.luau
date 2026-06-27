@@ -36,12 +36,12 @@ sData.PetBoostService = sData.GameEvents:WaitForChild("PetBoostService")
 sData.ClaimSeasonPassRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassReward")
 sData.ClaimSeasonPassInfRewardRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassInfReward")
 
-sData.ClaimSeasonPassQuestRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassQuest")
-sData.BuySeasonPassStockRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("BuySeasonPassStock")
+--sData.ClaimSeasonPassQuestRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("ClaimSeasonPassQuest")
+--sData.BuySeasonPassStockRemote = sData.GameEvents:WaitForChild("SeasonPass"):WaitForChild("BuySeasonPassStock")
 
-sData.SeasonPassData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
-sData.SeasonPassUtils = require(sData.Modules:WaitForChild("SeasonPass"):WaitForChild("SeasonPassUtils") :: any)
-sData.SeasonPassStaticData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData") :: any)
+--sData.SeasonPassData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassData") :: any)
+--sData.SeasonPassUtils = require(sData.Modules:WaitForChild("SeasonPass"):WaitForChild("SeasonPassUtils") :: any)
+--sData.SeasonPassStaticData = require(sData.Data:WaitForChild("SeasonPass"):WaitForChild("SeasonPassStaticData") :: any)
 
 sData.PetServices = sData.Modules:WaitForChild("PetServices") :: any
 sData.ActivePetsService = require(sData.PetServices.ActivePetsService)
@@ -150,13 +150,13 @@ end
 sData.NewYearShopTable = { "ALL" }
 for itemName, _itemInfo in pairs(EVENT_DATA["New Years Shop"]) do
 	table.insert(sData.NewYearShopTable, itemName)
-end ]]
+end 
 
 sData.EasterShopTable = { "ALL" }
 for itemName, _itemInfo in pairs(EVENT_DATA["Easter Seed Shop"]) do
 	table.insert(sData.EasterShopTable, itemName)
 end
-
+]]
 local SEED_PACK_DATA = require(sData.Data:WaitForChild("SeedPackData") :: any)
 sData.SeedPackTable = { "ALL" }
 for _, info in pairs(SEED_PACK_DATA.Packs) do
@@ -166,7 +166,7 @@ for _, info in pairs(SEED_PACK_DATA.Packs) do
 end
 
 --["ShopItems"] = require(v1.Data.SeasonPass.SeasonPassData).ShopItems
-
+--[[
 local SEASON_PASS_SHOP_DATA = sData.SeasonPassData.ShopItems
 sData.SeasonPassShopTable = { "ALL" }
 sData.SeasonPassPriceTable = {}
@@ -174,7 +174,7 @@ for itemName, itemInfo in pairs(SEASON_PASS_SHOP_DATA) do
 	table.insert(sData.SeasonPassShopTable, itemName)
 	sData.SeasonPassPriceTable[itemName] = itemInfo.Price
 end
-
+]]
 local PET_EGG_DATA = require(sData.Data:WaitForChild("PetRegistry"):WaitForChild("PetEggs"))
 sData.EggDataTable = { "ALL" }
 for eggName, _eggInfo in pairs(PET_EGG_DATA) do
