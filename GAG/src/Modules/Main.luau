@@ -247,15 +247,14 @@ function Main.HarvestCrops2()
 		return
 	end
 	Utils.RunWithFlag("IsHarvesting", "HarvestCrops", function()
-		if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
-			return
-		end
-
 		local config = Main.GetHarvestVar()
 		local allPrompts = CollectionService:GetTagged("CollectPrompt")
 
 		for _, prompt in ipairs(allPrompts) do
-			if not Options.tgHarvestEnable.Value or fVar.IsHarvesting then
+			if not Options.tgHarvestEnable.Value then
+				return
+			end
+			if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
 				return
 			end
 			if prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
