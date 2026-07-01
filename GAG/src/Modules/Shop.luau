@@ -17,10 +17,10 @@ function Shop.Initialize(Registry)
 		Gear = "GearStock/Stocks",
 		Egg = "PetEggStock/Stocks",
 		Traveling = "TravelingMerchantShopStock/Stocks",
-		--Easter = "EventShopStock/Easter Seed Shop/Stocks",
-		--HoneyCoin = "EventShopStock/Honey Coin Shop/Stocks",
-		--HoneySeed = "EventShopStock/Honey Seed Shop/Stocks",
-		--RoyalJelly = "EventShopStock/Royal Jelly Shop/Stocks",
+		Easter = "EventShopStock/Easter Seed Shop/Stocks",
+		HoneyCoin = "EventShopStock/Honey Coin Shop/Stocks",
+		HoneySeed = "EventShopStock/Honey Seed Shop/Stocks",
+		RoyalJelly = "EventShopStock/Royal Jelly Shop/Stocks",
 		SeasonPass = "SeasonPass/" .. CurrentSeason .. "/Stocks",
 	}
 
