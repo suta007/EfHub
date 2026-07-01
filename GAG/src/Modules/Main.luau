@@ -238,6 +238,37 @@ function Main.HarvestCrops()
 	end)
 end
 
+function Main.HarvestCrops2()
+	local Options = reg.Options
+	if not Options.tgHarvestEnable.Value or fVar.IsHarvesting then
+		return
+	end
+	if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+		return
+	end
+	Utils.RunWithFlag("IsHarvesting", "HarvestCrops", function()
+		if sData.InventoryService.IsMaxInventory(sData.LocalPlayer) then
+			return
+		end
+
+		local config = Main.GetHarvestVar()
+		local allPrompts = CollectionService:GetTagged("CollectPrompt")
+
+		for _, prompt in ipairs(allPrompts) do
+			if not Options.tgHarvestEnable.Value or fVar.IsHarvesting then
+				return
+			end
+			if prompt:IsA("ProximityPrompt") and prompt.Enabled and not prompt:GetAttribute("Collected") then
+				local cropModel = prompt.Parent and prompt.Parent.Parent
+				if cropModel and Main.CheckCrops(cropModel, config) then
+					sData.CollectEvent:FireServer({ cropModel })
+					task.wait(0.1)
+				end
+			end
+		end
+	end)
+end
+
 function Main.GetSellVar()
 	local Options = reg.Options
 	local GetSelectedItems = Utils.GetSelectedItems
