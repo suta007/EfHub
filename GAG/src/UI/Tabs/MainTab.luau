@@ -100,7 +100,7 @@ function MainTab.Initialize(reg)
 				Main.ClearReadyCrops()
 			end
 			EfTasks.ToggleTask("AutoHarvest", Value, function()
-				Main.HarvestCrops()
+				Main.HarvestCrops2()
 				task.wait(0.15)
 			end)
 			QuickSave()
