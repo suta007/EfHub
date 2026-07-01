@@ -766,7 +766,9 @@ if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
 return
 end
 if f.IsTableEmpty(h)then
-b.GetAllReadyCrops2()
+
+b.GetAllReadyCrops()
+
 if f.IsTableEmpty(h)then
 return
 end
@@ -776,6 +778,36 @@ local j=b.GetHarvestVar()
 local k=table.remove(h,1)
 if k and b.CheckCrops(k,j)then
 e.CollectEvent:FireServer({k})
+end
+end)
+end
+
+function b.HarvestCrops2()
+local i=d.Options
+if not i.tgHarvestEnable.Value or g.IsHarvesting then
+return
+end
+if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
+return
+end
+f.RunWithFlag("IsHarvesting","HarvestCrops",function()
+local j=b.GetHarvestVar()
+local k=c:GetTagged("CollectPrompt")
+
+for l,m in ipairs(k)do
+if not i.tgHarvestEnable.Value then
+return
+end
+if e.InventoryService.IsMaxInventory(e.LocalPlayer)then
+return
+end
+if m:IsA("ProximityPrompt")and m.Enabled and not m:GetAttribute("Collected")then
+local n=m.Parent and m.Parent.Parent
+if n and b.CheckCrops(n,j)then
+e.CollectEvent:FireServer({n})
+task.wait(0.1)
+end
+end
 end
 end)
 end
@@ -4011,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.06.23-08.45",
+SubTitle="2569.07.01-18.30",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -4300,8 +4332,8 @@ g.IsHarvesting=false
 i.ClearReadyCrops()
 end
 h.ToggleTask("AutoHarvest",n,function()
-i.HarvestCrops()
-task.wait(0.3)
+i.HarvestCrops2()
+task.wait(0.15)
 end)
 f()
 end,
@@ -6545,431 +6577,6 @@ return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b
 
 local b={}
 local c
-local d=game:GetService("CollectionService")
-local e=game:GetService("ReplicatedStorage")
-local f
-local g=game:GetService("Players")
-local h=g.LocalPlayer
-local i=require(e:WaitForChild("Modules"):WaitForChild("GetFarm")::any)
-local j=e:WaitForChild("Remotes"):WaitForChild("LootChest")
-local k=j:WaitForChild("OpenChest")
-local l=j:WaitForChild("SpawnChest")
-
-local m=nil
-local n=nil
-
-local function HealBee()
-local o=c.Options
-local p=c.Utils
-local q=o.ipHealBeePos.Value
-if q==""then
-c.Log("Please set Heal Bee position.","WARN")
-return
-end
-local r=p.ParseVector3(q)
-if not r then
-c.Log("Invalid Heal Bee position format.","ERROR")
-return
-end
-f.Character:PivotTo(CFrame.new(r))
-task.spawn(function()
-task.wait(tonumber(o.ipHealBeeTime.Value))
-o.tgKeepPosEnable:SetValue(true)
-o.tgWaspWarEnable:SetValue(true)
-end)
-end
-local function CheckWaspEgg()
-local o=c.Options
-local p
-for q,r in ipairs(workspace:GetChildren())do
-if r.Name=="WaspEgg"and r:IsA("Model")then
-p=r
-break
-end
-end
-if p then
-local q=p:GetPivot()
-f.Character:PivotTo(q*CFrame.new(2,5,2))
-o.tgKeepPosEnable:SetValue(false)
-task.spawn(function()
-task.wait(tonumber(o.ipWaspWarTime.Value))
-HealBee()
-end)
-end
-end
-local function WaspWar(o)
-local p=c.Options
-if o then
-CheckWaspEgg()
-if not m then
-m=workspace.ChildAdded:Connect(function(q)
-local r=f.Character
-if q.Name=="WaspEgg"and q:IsA("Model")and r then
-local t=q:GetPivot()
-r:PivotTo(t*CFrame.new(2,5,2))
-p.tgKeepPosEnable:SetValue(false)
-task.spawn(function()
-task.wait(tonumber(p.ipWaspWarTime.Value))
-HealBee()
-end)
-end
-end)
-end
-else
-if m then
-m:Disconnect()
-m=nil
-end
-end
-end
-
-local function ClaimWaspWar(o)
-if o then
-if not n then
-n=l.OnClientEvent:Connect(function(p,q,r,t)
-task.spawn(function()
-task.wait(0.2)
-k:FireServer(p)
-end)
-end)
-end
-else
-if n then
-n:Disconnect()
-n=nil
-end
-end
-end
-
-local function HarvestHoneyFruits()
-local o=c.Options
-if not o.tgHarvestHoneyEnable or not o.tgHarvestHoneyEnable.Value then
-return
-end
-if f.InventoryService.IsMaxInventory(f.LocalPlayer)then
-return
-end
-local p=i(h)
-if not p then
-return
-end
-local q=d:GetTagged("CollectPrompt")
-for r,t in ipairs(q)do
-if f.InventoryService.IsMaxInventory(f.LocalPlayer)then
-return
-end
-if t:IsDescendantOf(p)and t:IsA("ProximityPrompt")and t.Enabled and not t:GetAttribute("Collected")then
-local u=t.Parent and t.Parent.Parent
-if u then
-f.CollectEvent:FireServer({u})
-task.wait(0.2)
-end
-end
-end
-end
-
-local function CompressHoney()
-local o=c.Options
-if not o.tgCompressHoneyEnable or not o.tgCompressHoneyEnable.Value then
-return
-end
-local p=f.DataService:GetData()
-local q=p.HoneyMachine2026
-local r=q.HoneyStored
-local t=q.IsRunning
-if tonumber(r)>0 then
-f.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("CollectHoney")
-task.wait(1)
-end
-if not t then
-f.GameEvents:WaitForChild("HoneyMachine2026Service_RE"):FireServer("SubmitAll")
-task.wait(1)
-end
-end
-
-local function KeepPos()
-local o=c.Options
-local p=c.Utils
-if not o.tgKeepPosEnable or not o.tgKeepPosEnable.Value then
-return
-end
-local q=o.ipKeepPos.Value
-if q==""then
-c.Log("Please set position.")
-return
-end
-local r=p.ParseVector3(q)
-if not r then
-c.Log("Invalid position format.")
-return
-end
-
-local t=f.Character
-local u=t.PrimaryPart.Position
-local v=(u-r).Magnitude
-if v>10 then
-t:PivotTo(CFrame.new(r))
-end
-end
-
-function b.Initialize(o,p)
-c=o
-local q=c.Options
-_=q
-local r=c.Window.QuickSave
-local t=p
-f=c.sData
-local u=c.EfTasks
-
-local v=t:AddCollapsibleSection("MainBee",false)
-v:AddToggle("tgHarvestHoneyEnable",{
-Title="Harvest Honey Fruits Enable",
-Default=false,
-Callback=function(w)
-r()
-u.ToggleTask("AutoHarvestHoney",w,function()
-HarvestHoneyFruits()
-task.wait(5)
-end)
-end,
-})
-
-v:AddToggle("tgCompressHoneyEnable",{
-Title="Compress Honey Enable",
-Default=false,
-Callback=function(w)
-r()
-u.ToggleTask("AutoCompressHoney",w,function()
-CompressHoney()
-task.wait(10)
-end)
-end,
-})
-v:AddDivider()
-v:AddButton({
-Title="Set Heal Bee Position",
-Callback=function()
-local w=f.Character:GetPivot().Position
-local x=string.format("%.3f, %.3f, %.3f",w.X,w.Y,w.Z)
-q.ipHealBeePos:SetValue(x)
-r()
-end,
-})
-v:AddInput("ipHealBeePos",{
-Title="Position",
-Default="",
-Placeholder="X, Y, Z",
-Numeric=false,
-Finished=false,
-Callback=function()
-r()
-end,
-})
-
-v:AddInput("ipWaspWarTime",{
-Title="Wasp War Time (s)",
-Default=90,
-Numeric=true,
-Finished=true,
-Callback=function()
-r()
-end,
-})
-v:AddInput("ipHealBeeTime",{
-Title="Heal Bee Time (s)",
-Default=120,
-Numeric=true,
-Finished=true,
-Callback=function()
-r()
-end,
-})
-v:AddToggle("tgWaspWarEnable",{
-Title="Wasp War Enable",
-Default=false,
-Callback=function(w)
-r()
-WaspWar(w)
-end,
-})
-v:AddToggle("tgClaimEnable",{
-Title="Claim Enable",
-Default=false,
-Callback=function(w)
-r()
-ClaimWaspWar(w)
-end,
-})
-
-local w=t:AddCollapsibleSection("Keep Position",false)
-w:AddButton({
-Title="Set Position",
-Callback=function()
-local x=f.Character:GetPivot().Position
-local y=string.format("%.3f, %.3f, %.3f",x.X,x.Y,x.Z)
-q.ipKeepPos:SetValue(y)
-r()
-end,
-})
-w:AddInput("ipKeepPos",{
-Title="Position",
-Default="",
-Placeholder="X, Y, Z",
-Numeric=false,
-Finished=false,
-Callback=function()
-r()
-end,
-})
-w:AddInput("ipKeepPosDelay",{
-Title="Delay Check Time (s)",
-Default=60,
-Numeric=true,
-Finished=true,
-Callback=function()
-r()
-end,
-})
-
-w:AddToggle("tgKeepPosEnable",{
-Title="Keep Position Enable",
-Default=false,
-Callback=function(x)
-r()
-u.ToggleTask("AutoKeepPos",x,function()
-local y=tonumber(q.ipKeepPosDelay.Value)or 60
-KeepPos()
-task.wait(y)
-end)
-end,
-})
-end
-
-return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
-
-local b={}
-local c
-local d
-
-local e=game:GetService("ReplicatedStorage")
-local f=game:GetService("Players")
-local g=f.LocalPlayer
-
-
-local h=e:WaitForChild("GameEvents"):WaitForChild("WaspWaveSurvival")
-local i=h:WaitForChild("RequestStart")
-
-local j=h:WaitForChild("RequestClaim")
-local k=h:WaitForChild("GetState")
-
-local function HealBee()
-local l=c.Options
-local m=c.Utils
-local n=l.ipHealBeePos.Value
-if n==""then
-c.Log("Please set Heal Bee position.","WARN")
-return
-end
-local o=m.ParseVector3(n)
-if not o then
-c.Log("Invalid Heal Bee position format.","ERROR")
-return
-end
-d.Character:PivotTo(CFrame.new(o))
-task.spawn(function()
-task.wait(tonumber(l.ipHealBeeTime.Value))
-l.tgKeepPosEnable:SetValue(true)
-l.tgWaspWarEnable:SetValue(true)
-end)
-end
-
-local function IsClaimUiVisible()
-local l=g:FindFirstChildOfClass("PlayerGui")
-local m=l and l:FindFirstChild("WaspWaveSurvivalUI")
-if m then
-local n=m:FindFirstChild("Victory")
-local o=m:FindFirstChild("WaspWaveConclusionPanel")
-if(n and n.Visible==true)or(o and o.Visible==true)then
-return true
-end
-end
-return false
-end
-
-local function GetCurrentState()
-local l,m=pcall(function()
-return k:InvokeServer()
-end)
-if l and typeof(m)=="table"then
-return m
-end
-return nil
-end
-
-local function runDungeon()
-local l=c.Options
-if g:GetAttribute("InWaspWaveSurvival")==true then
-if IsClaimUiVisible()then
-c.Log("[WaspWave] กำลังเคลมรางวัล...","INFO")
-j:FireServer()
-task.wait(26)
-HealBee()
-
-end
-return
-end
-
-local m=GetCurrentState()
-if not m then
-c.Log("[WaspWave] ไม่สามารถดึงสถานะจากเซิร์ฟเวอร์ได้","WARN")
-return
-end
-
-if m.PortalReady then
-c.Log("[WaspWave] พอร์ทัลพร้อมแล้ว กำลังเข้าดันเจี้ยน...","INFO")
-i:InvokeServer()
-l.tgKeepPosEnable:SetValue(false)
-l.tgWaspWarEnable:SetValue(false)
-task.wait(1)
-return
-end
-
-if m.PortalCanIgnite then
-c.Log("[WaspWave] พอร์ทัลสามารถจุดได้ กำลังจุดพอร์ทัล...","INFO")
-i:InvokeServer()
-task.wait(1)
-return
-end
-end
-
-function b.Initialize(l,m)
-c=l
-local n=c.Options
-_=n
-local o=c.Window.QuickSave
-local p=m
-d=c.sData
-local q=c.EfTasks
-
-local r=p:AddCollapsibleSection("WaspWave",false)
-
-r:AddToggle("tgWaspWaveEnable",{
-Title="Wasp Wave Enable",
-Default=false,
-Callback=function(t)
-o()
-q.ToggleTask("AutoWaspWave",t,function()
-runDungeon()
-task.wait(5)
-end)
-end,
-})
-end
-
-return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
-
-local b={}
-local c
 local d
 local e
 local f
@@ -7165,7 +6772,7 @@ end,
 })
 end
 
-return b end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7180,15 +6787,15 @@ local g={}
 if b().DEV_MODE then
 
 g.SummerFire=c("UI/Tabs/Events/SummerFire")
-g.MainBee=c("UI/Tabs/Events/MainBee")
-g.WaspWave=c("UI/Tabs/Events/WaspWave")
+
+
 g.ShopBee=c("UI/Tabs/Events/ShopBee")
 else
 
 g.SummerFire=a.p()
-g.MainBee=a.q()
-g.WaspWave=a.r()
-g.ShopBee=a.s()
+
+
+g.ShopBee=a.q()
 end
 return g
 end
@@ -7199,19 +6806,19 @@ local h=e.Interface
 f=e.Tabs
 
 
-e.IsEasterHarvesting=false
-e.IsHuntEgg=false
+
+
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
 e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
 
 i.SummerFire.Initialize(e,f.Events)
-i.MainBee.Initialize(e,f.Events)
-i.WaspWave.Initialize(e,f.Events)
+
+
 i.ShopBee.Initialize(e,f.Events)
 end
 
-return d end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7301,7 +6908,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
+return c end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
 local b={}
 
@@ -7469,7 +7076,7 @@ end,
 })
 end
 
-return b end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end do local function __modImpl()
+return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7542,9 +7149,9 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.t()
-e.LogTab=a.u()
-e.TestTab=a.v()
+e.EventsTab=a.r()
+e.LogTab=a.s()
+e.TestTab=a.t()
 
 
 
@@ -7590,7 +7197,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.w():typeof(__modImpl())local b=a.cache.w if not b then b={c=__modImpl()}a.cache.w=b end return b.c end end end
+return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -7620,7 +7227,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.w()
+c=a.u()
 end
 
 
