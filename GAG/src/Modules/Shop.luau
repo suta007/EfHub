@@ -99,41 +99,41 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyTravelingMerchantShopStock",
 			ArgType = "NormalMode",
 		},
-		--[Shop.ShopKey.HoneyCoin] = {
-		--	Enabled = if Options.tgBuyHoneyCoinEnable then Options.tgBuyHoneyCoinEnable.Value else false,
-		--	Items = if Options.ddBuyHoneyCoin then GetSelectedItems(Options.ddBuyHoneyCoin.Value) else {},
-		--	RemoteName = "BuyEventShopStock",
-		--	ArgType = "EventMode",
-		--	EventArg = "Honey Coin Shop",
-		--},
-		--[Shop.ShopKey.HoneySeed] = {
-		--	Enabled = if Options.tgBuyHoneySeedEnable then Options.tgBuyHoneySeedEnable.Value else false,
-		--	Items = if Options.ddBuyHoneySeed then GetSelectedItems(Options.ddBuyHoneySeed.Value) else {},
-		--	RemoteName = "BuyEventShopStock",
-		--	ArgType = "EventMode",
-		--	EventArg = "Honey Seed Shop",
-		--},
-		--[Shop.ShopKey.RoyalJelly] = {
-		--	Enabled = if Options.tgBuyRoyalJellyEnable then Options.tgBuyRoyalJellyEnable.Value else false,
-		--	Items = if Options.ddBuyRoyalJelly then GetSelectedItems(Options.ddBuyRoyalJelly.Value) else {},
-		--	RemoteName = "BuyEventShopStock",
-		--	ArgType = "EventMode",
-		--	EventArg = "Royal Jelly Shop",
-		--},
-		--[Shop.ShopKey.Easter] = {
-		--	Enabled = Options.tgBuyEasterEnable.Value,
-		--	Items = GetSelectedItems(Options.ddBuyEaster.Value),
-		--	RemoteName = "BuyEventShopStock",
-		---	ArgType = "EventMode",
-		--	EventArg = "Easter Seed Shop",
-		--},
+		[Shop.ShopKey.HoneyCoin] = {
+			Enabled = if Options.tgBuyHoneyCoinEnable then Options.tgBuyHoneyCoinEnable.Value else false,
+			Items = if Options.ddBuyHoneyCoin then GetSelectedItems(Options.ddBuyHoneyCoin.Value) else {},
+			RemoteName = "BuyEventShopStock",
+			ArgType = "EventMode",
+			EventArg = "Honey Coin Shop",
+		},
+		[Shop.ShopKey.HoneySeed] = {
+			Enabled = if Options.tgBuyHoneySeedEnable then Options.tgBuyHoneySeedEnable.Value else false,
+			Items = if Options.ddBuyHoneySeed then GetSelectedItems(Options.ddBuyHoneySeed.Value) else {},
+			RemoteName = "BuyEventShopStock",
+			ArgType = "EventMode",
+			EventArg = "Honey Seed Shop",
+		},
+		[Shop.ShopKey.RoyalJelly] = {
+			Enabled = if Options.tgBuyRoyalJellyEnable then Options.tgBuyRoyalJellyEnable.Value else false,
+			Items = if Options.ddBuyRoyalJelly then GetSelectedItems(Options.ddBuyRoyalJelly.Value) else {},
+			RemoteName = "BuyEventShopStock",
+			ArgType = "EventMode",
+			EventArg = "Royal Jelly Shop",
+		},
+		[Shop.ShopKey.Easter] = {
+			Enabled = Options.tgBuyEasterEnable.Value,
+			Items = GetSelectedItems(Options.ddBuyEaster.Value),
+			RemoteName = "BuyEventShopStock",
+			ArgType = "EventMode",
+			EventArg = "Easter Seed Shop",
+		},
 
-		--[Shop.ShopKey.SeasonPass] = {
-		--	Enabled = Options.tgBuySeasonPassEnable.Value,
-		--	Items = GetSelectedItems(Options.ddBuySeasonPass.Value),
-		--	RemoteName = "SeasonPass.BuySeasonPassStock",
-		--	ArgType = "NormalMode",
-		--},
+		[Shop.ShopKey.SeasonPass] = {
+			Enabled = Options.tgBuySeasonPassEnable.Value,
+			Items = GetSelectedItems(Options.ddBuySeasonPass.Value),
+			RemoteName = "SeasonPass.BuySeasonPassStock",
+			ArgType = "NormalMode",
+		},
 	}
 end
 
