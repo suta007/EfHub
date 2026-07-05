@@ -934,10 +934,10 @@ Daily="SeedStocks/Daily Deals/Stocks",
 Gear="GearStock/Stocks",
 Egg="PetEggStock/Stocks",
 Traveling="TravelingMerchantShopStock/Stocks",
-Easter="EventShopStock/Easter Seed Shop/Stocks",
-HoneyCoin="EventShopStock/Honey Coin Shop/Stocks",
-HoneySeed="EventShopStock/Honey Seed Shop/Stocks",
-RoyalJelly="EventShopStock/Royal Jelly Shop/Stocks",
+
+
+
+
 SeasonPass="SeasonPass/"..h.."/Stocks",
 }
 
@@ -1016,34 +1016,34 @@ Items=h,
 RemoteName="BuyTravelingMerchantShopStock",
 ArgType="NormalMode",
 },
-[b.ShopKey.HoneyCoin]={
-Enabled=if g.tgBuyHoneyCoinEnable then g.tgBuyHoneyCoinEnable.Value else false,
-Items=if g.ddBuyHoneyCoin then f(g.ddBuyHoneyCoin.Value)else{},
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="Honey Coin Shop",
-},
-[b.ShopKey.HoneySeed]={
-Enabled=if g.tgBuyHoneySeedEnable then g.tgBuyHoneySeedEnable.Value else false,
-Items=if g.ddBuyHoneySeed then f(g.ddBuyHoneySeed.Value)else{},
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="Honey Seed Shop",
-},
-[b.ShopKey.RoyalJelly]={
-Enabled=if g.tgBuyRoyalJellyEnable then g.tgBuyRoyalJellyEnable.Value else false,
-Items=if g.ddBuyRoyalJelly then f(g.ddBuyRoyalJelly.Value)else{},
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="Royal Jelly Shop",
-},
-[b.ShopKey.Easter]={
-Enabled=g.tgBuyEasterEnable.Value,
-Items=f(g.ddBuyEaster.Value),
-RemoteName="BuyEventShopStock",
-ArgType="EventMode",
-EventArg="Easter Seed Shop",
-},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [b.ShopKey.SeasonPass]={
 Enabled=g.tgBuySeasonPassEnable.Value,
@@ -4043,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.01-18.30",
+SubTitle="2569.07.05-09.11",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -4849,113 +4849,23 @@ end,
 })
 end
 
-
-local u=f.Shop:AddCollapsibleSection("Events Shop",false)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-u:AddToggle("tgBuyEasterEnable",{
-Title="Buy Easter Shop Items",
+local u=f.Shop:AddCollapsibleSection("Season Pass",false)
+u:AddToggle("tgBuySeasonPassEnable",{
+Title="Buy Season Pass",
 Default=false,
 Callback=function(v)
 j.UpdateBuyList()
 h()
 if v then
 local w=i.DataService:GetData()
-local x=w.EventShopStock["Easter Seed Shop"].Stocks
+local x=w.SeasonPass[i.SeasonPassData.CurrentSeason].Stocks
 if not l.IsTableEmpty(x)then
-j.BuyItem(j.ShopKey.Easter,x)
+j.BuyItem(j.ShopKey.SeasonPass,x)
 end
 end
 end,
 })
-u:AddDropdown("ddBuyEaster",{
-Title="Easter Shop Items",
-Description="Select items to buy",
-Values=i.EasterShopTable,
-Multi=true,
-Default={"ALL"},
-Searchable=true,
-Callback=function()
-j.UpdateBuyList()
-h()
-end,
-})
-
-local v=f.Shop:AddCollapsibleSection("Season Pass",false)
-v:AddToggle("tgBuySeasonPassEnable",{
-Title="Buy Season Pass",
-Default=false,
-Callback=function(w)
-j.UpdateBuyList()
-h()
-if w then
-local x=i.DataService:GetData()
-local y=x.SeasonPass[i.SeasonPassData.CurrentSeason].Stocks
-if not l.IsTableEmpty(y)then
-j.BuyItem(j.ShopKey.SeasonPass,y)
-end
-end
-end,
-})
-v:AddDropdown("ddBuySeasonPass",{
+u:AddDropdown("ddBuySeasonPass",{
 Title="Season Pass",
 Description="Select items to buy",
 Values=i.SeasonPassShopTable,
@@ -6132,6 +6042,19 @@ Callback=function()
 end,
 })
 
+l:AddButton({
+Title="Check Coin",
+Callback=function()
+local m=j.DataService:GetData()
+
+local n=m.SpecialCurrency
+c.Log("🪙 Coin Data")
+for o,p in pairs(n)do
+c.Log(o.." : "..p)
+end
+end,
+})
+
 local m=g.MiscTab:AddCollapsibleSection("AntiLag",false)
 m:AddToggle("tgAntiLag",{
 Title="AntiLag",
@@ -6298,474 +6221,177 @@ local b={}
 local c
 local d
 local e
-
-local f=game:GetService("ReplicatedStorage")
-local g=f:WaitForChild("Modules")
-local h=g:WaitForChild("SummerEventControllers")
-local i=h:WaitForChild("SummerCraftingController")
-local j=require(i.SummerCraftingConfig)
-
-local k=j.Craftables
-local l=require(g.DataService)
-
-local m=f:WaitForChild("GameEvents"):WaitForChild("SummerCraftingService")
-local n=m:WaitForChild("StartCraft")
-local o=m:WaitForChild("ClaimCraft")
-
-local p={}
-local q={}
-
-for r,t in pairs(k)do
-if t.Result and t.Result.Value then
-if type(t.Result.Value)=="string"then
-table.insert(q,t.Result.Value)
+local f={}
+local g=game:GetService("ReplicatedStorage")
+local h=g:WaitForChild("GameEvents")
+local i=h.BuyEventShopStock
+local function buyEventItems(j,k)
+local l="ddBuy"..j
+local m="tgBuy"..j
+local n=c.Options
+if not n[m]or not n[m].Value then
+return
 end
-end
+if not n[l].Value then
+return
 end
 
-local function getInvUUID(r,t,u)
-local v=r.InventoryData or{}
-for w,x in pairs(v)do
-
-if x.ItemType==t then
-return w
+local o=c.Utils.GetSelectedItems
+local p=o(n[l].Value)
+if not p or#p==0 then
+return
 end
 
-
-if x.ItemData then
-if x.ItemData.EggName and x.ItemData.EggName==t then
-return w
-end
-
-if x.ItemData.ItemName and x.ItemData.ItemName==t then
-
-return w
-
-end
-end
-end
-return nil
-end
-
-local function getCosmeticUUID(r,t)
-local u=r.CosmeticData and r.CosmeticData.Inventory or{}
-for v,w in pairs(u)do
-if w.Name==t then
-return v
-end
-end
-return nil
-end
-
-local function getPetUUID(r,t)
-local u=r.PetsData and r.PetsData.PetInventory
-if type(u)~="table"then
-return nil
-end
-for v,w in pairs(u)do
-if type(w)~="table"then
+for q,r in pairs(k)do
+local t=q
+local u=tonumber(r.Stock)or 0
+if not table.find(p,"ALL")and not table.find(p,t)then
 continue
 end
-for x,y in pairs(w)do
-if type(y)~="table"then
-continue
-end
-local z=y.PetType
-if not z then
-continue
-end
-local A=tonumber(y.PetData.Level)
-if z==t and A<=20 and y.PetData.IsFavorite~=true then
-return y.UUID
-end
-end
-end
-return nil
-end
-local function GetRecipeUUID(r)
-local t={}
-if type(r)~="table"then
-return nil
-end
-local u=l:GetData()
-for v,w in pairs(r)do
-if w["Type"]=="Cosmetic"then
-local x=getCosmeticUUID(u,w["Value"])
-if x then
-table.insert(t,"Cosmetic:"..x)
-else
-c.Log("Missing ingredient: "..w["Value"],"WARN")
-return nil
-end
-elseif w["Type"]=="Pet"then
-local x=getPetUUID(u,w["Value"])
-if x then
-table.insert(t,x)
-else
-c.Log("Missing ingredient: "..w["Value"],"WARN")
-return nil
-end
-elseif w["Type"]~="Currency"then
-local x=getInvUUID(u,w["Value"],w["Type"])
-if x then
-table.insert(t,x)
-else
-c.Log("Missing ingredient: "..w["Value"],"WARN")
-return nil
-end
-end
-end
-return t
-end
 
-local function claimCraft()
-table.clear(p)
-local r=l:GetData()
-local t=r.SummerCraftingEventData
-for u,v in pairs(t)do
-if u=="Slots"then
-if typeof(v)=="table"then
-for w,x in pairs(v)do
-if typeof(x)~="table"then
-print("Slot :"..w.." is empty")
-table.insert(p,w)
-elseif tonumber(x.RemainingTime)<=0 then
-o:FireServer(w)
-table.insert(p,w)
-end
-end
+if u>0 then
+for v=1,u do
+i:FireServer(t,j)
+task.wait()
 end
 end
 end
 end
 
-local function startCraft()
-local r=c.Options
-if not r.ddTargetCraft or not r.ddTargetCraft.Value or r.ddTargetCraft.Value==""then
-return
-end
-local t=r.ddTargetCraft.Value
-local u={}
-for v,w in pairs(k)do
-if w.Result and w.Result.Value then
-u[w.Tier]=(u[w.Tier]or 0)+1
-
-if w.Result.Value==t then
-local x=string.format("%d:%d:%s",w.Tier,u[w.Tier],w.Result.Value)
-local y=GetRecipeUUID(w.Recipe)
-if y then
-local z={x,y}
-n:FireServer(unpack(z))
-else
-print("Missing ingredient(s)")
-end
-end
-end
-end
-end
-
-local function BurnFruit()
-local r=c.Options
-if not r.tgAutoBurn or not r.tgAutoBurn.Value then
-return
-end
-if tonumber(workspace:GetAttribute("EmberCount"))>=80000 then
-return
-end
-local t=e.GetSelectedItems
-local u=t(r.ddBurnFruit.Value)
-local v=d.LocalPlayer.Backpack
-for w,x in ipairs(v:GetChildren())do
-local y=x:FindFirstChild("Item_String")and x:FindFirstChild("Item_String").Value
-if not x:GetAttribute("d")and x:HasTag("FruitTool")and(table.find(u,"ALL")or table.find(u,y))then
-e.EquipTool(x)
-task.wait(0.1)
-
-d.GameEvents.SummerFire.Submit:FireServer()
-return
-end
-end
-end
-
-function b.Initialize(r,t)
-c=r
-local u=c.Options
-local v=c.Window.QuickSave
-local w=t
+function b.Initialize(j,k)
+c=j
+local l=c.Options
+_=l
+local m=c.Window.QuickSave
+local n=k
 d=c.sData
 e=c.Utils
-local x=c.EfTasks
 
-local y=w:AddCollapsibleSection("SummerFire Burn",false)
+local o=d.DataService:GetData()
+local p=require(game:GetService("ReplicatedStorage").Data.EventShopData)
 
-y:AddDropdown("ddBurnFruit",{
-Title="Select Fruit for burn",
-Values=d.SeedDataTable,
+local q={}
+for r,t in pairs(p)do
+f[r]={"ALL"}
+for u,v in pairs(t)do
+table.insert(f[r],u)
+end
+q[r]=n:AddCollapsibleSection(r,false)
+local u="ddBuy"..r
+local v="tgBuy"..r
+q[r]:AddDropdown(u,{
+Title=r.." Items",
+Values=f[r],
 Multi=true,
 Default={},
 Searchable=true,
 Callback=function()
-v()
+m()
 end,
 })
-
-y:AddButton({
-Title="Clear Selected Fruit for burn",
+q[r]:AddButton({
+Title="Clear "..r.." Items",
 Callback=function()
-u.ddBurnFruit:SetValue({})
+l[u]:SetValue({})
 end,
 })
-
-y:AddInput("ipDelayBurn",{
-Title="Delay (s)",
-Default=1,
-Numeric=true,
-Finished=true,
-Callback=function()
-v()
-end,
-})
-y:AddToggle("tgAutoBurn",{
-Title="Auto Burn",
+q[r]:AddToggle(v,{
+Title="Buy "..r.." Items",
 Default=false,
-Callback=function(z)
-v()
-x.ToggleTask("AutoBurn",z,function()
-BurnFruit()
-task.wait(tonumber(u.ipDelayBurn.Value)or 1)
-end)
+Callback=function(w)
+m()
+if w then
+local x=o.EventShopStock[r].Stocks
+if not e.IsTableEmpty(x)then
+buyEventItems(r,x)
+end
+end
 end,
 })
 
-local z=w:AddCollapsibleSection("SummerFire Craft",false)
-z:AddInput("ipWaitTime",{
-Title="Wait Time (s)",
-Default=30,
-Numeric=true,
-Finished=true,
-Callback=function()
-v()
-end,
-})
-z:AddDropdown("ddTargetCraft",{
-Title="Target Craft",
-
-Values=q,
-Searchable=true,
-Callback=function()
-v()
-end,
-})
-z:AddToggle("tgAutoCraft",{
-Title="Auto Craft",
-Default=false,
-Callback=function(A)
-v()
-x.ToggleTask("AutoCraft",A,function()
-claimCraft()
-task.wait(1)
-for B=1,#p do
-startCraft()
+local w="EventShopStock/"..r.."/Stocks"
+local x=d.DataService:GetPathSignal(w.."/@")
+local y=d.DataService:GetPathSignal(w)
+x:Connect(function(z,A)
+if type(A)=="table"then
+task.spawn(function()
 task.wait(0.5)
-end
-task.wait(tonumber(u.ipWaitTime.Value)or 10)
+buyEventItems(r,A)
 end)
-end,
-})
 end
+end)
+y:Connect(function(z,A)
+if type(A)=="table"then
+task.spawn(function()
+task.wait(0.5)
+buyEventItems(r,A)
+end)
+end
+end)
+end
+end
+
 return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+
 
 local b={}
 local c
 local d
 local e
-local f
-local g
-local h=nil
+local f=game:GetService("Workspace")
 
-local function BuyBeeEgg()
-local i=c.Options
-local j=c.Utils.GetSelectedItems
-local k=e.DataService:GetData()
-local l=k.BeeEggShopStock.Stocks
-if not f.IsTableEmpty(l)then
-local m=j(i.ddBuyBeeEgg.Value)
-for n,o in pairs(l)do
-if table.find(m,n)then
-local p=tonumber(o.Stock)or 0
-for q=1,p do
-e.GameEvents:WaitForChild("BeeColonyEggShopService"):WaitForChild("BuyBeeEggStock"):InvokeServer(n)
-end
-end
-end
-end
-end
+local g=game:GetService("ReplicatedStorage")
+local h=require(g.Modules.PlantTraitsData)
+local i=h.Traits.Summer
 
-function b.Initialize(i,j)
-c=i
-local k=c.Options
-_=k
-local l=c.Window.QuickSave
-local m=j
-e=c.sData
-local n=c.EfTasks
-f=c.Utils
-g=c.Shop
+local j=g:WaitForChild("GameEvents")
+local k=j:WaitForChild("SummerHarvestRemoteEvent")
+local l=nil
 
-local o={"ALL"}
-for p,q in pairs(c.EVENT_DATA["Honey Coin Shop"])do
-table.insert(o,p)
+local function SummitSummer()
+local m=c.Options
+if not m.tgSummerHarvestEnable or not m.tgSummerHarvestEnable.Value then
+return
 end
-
-local p={"ALL"}
-for q,r in pairs(c.EVENT_DATA["Honey Seed Shop"])do
-table.insert(p,q)
+local n=f:GetAttribute("SummerHarvest")
+if not n then
+return
 end
-
-local q={"ALL"}
-for r,t in pairs(c.EVENT_DATA["Royal Jelly Shop"])do
-table.insert(q,r)
+local o=d.LocalPlayer.Backpack
+for p,q in ipairs(o:GetChildren())do
+local r=q:FindFirstChild("Item_String")and q:FindFirstChild("Item_String").Value
+if not q:GetAttribute("d")and q:HasTag("FruitTool")and table.find(i,r)then
+e.EquipTool(q)
+task.wait(0.1)
+k:FireServer("SubmitHeldPlant")
+task.wait(1)
+return
 end
+end
+end
+function b.Initialize(m,n)
+c=m
+local o=c.Options
+_=o
+local p=c.Window.QuickSave
+local q=n
+e=c.Utils
+d=c.sData
 
-local r=e.DataService:GetData()
-
-local t=m:AddCollapsibleSection("Honey Coin Shop",false)
-t:AddDropdown("ddBuyHoneyCoin",{
-Title="Honey Coin Shop Items",
-Values=o,
-Multi=true,
-Default={},
-Searchable=true,
-Callback=function()
-g.UpdateBuyList()
-l()
-end,
-})
-t:AddButton({
-Title="Clear Honey Coin Shop Items",
-Callback=function()
-k.ddBuyHoneyCoin:SetValue({})
-end,
-})
-t:AddToggle("tgBuyHoneyCoinEnable",{
-Title="Buy Honey Coin Shop Items",
+local r=q:AddCollapsibleSection("SummerHarvest",false)
+r:AddToggle("tgSummerHarvestEnable",{
+Title="Enable",
 Default=false,
-Callback=function(u)
-g.UpdateBuyList()
-l()
-if u then
-local v=r.EventShopStock["Honey Coin Shop"].Stocks
-if not f.IsTableEmpty(v)then
-g.BuyItem(g.ShopKey.HoneyCoin,v)
-end
-end
-end,
-})
-
-local u=m:AddCollapsibleSection("HoneySeed",false)
-u:AddDropdown("ddBuyHoneySeed",{
-Title="Honey Seed Shop Items",
-Values=p,
-Multi=true,
-Default={},
-Searchable=true,
-Callback=function()
-g.UpdateBuyList()
-l()
-end,
-})
-u:AddButton({
-Title="Clear Honey Seed Shop Items",
-Callback=function()
-k.ddBuyHoneySeed:SetValue({})
-end,
-})
-u:AddToggle("tgBuyHoneySeedEnable",{
-Title="Buy Honey Seed Shop Items",
-Default=false,
-Callback=function(v)
-g.UpdateBuyList()
-l()
-if v then
-local w=r.EventShopStock["Honey Seed Shop"].Stocks
-if not f.IsTableEmpty(w)then
-g.BuyItem(g.ShopKey.HoneySeed,w)
-end
-end
-end,
-})
-
-local v=m:AddCollapsibleSection("RoyalJelly",false)
-v:AddDropdown("ddBuyRoyalJelly",{
-Title="Royal Jelly Shop Items",
-Values=q,
-Multi=true,
-Default={},
-Searchable=true,
-Callback=function()
-g.UpdateBuyList()
-l()
-end,
-})
-v:AddButton({
-Title="Clear Royal Jelly Shop Items",
-Callback=function()
-k.ddBuyRoyalJelly:SetValue({})
-end,
-})
-v:AddToggle("tgBuyRoyalJellyEnable",{
-Title="Buy Royal Jelly Shop Items",
-Default=false,
-Callback=function(w)
-g.UpdateBuyList()
-l()
-if w then
-local x=r.EventShopStock["Royal Jelly Shop"].Stocks
-if not f.IsTableEmpty(x)then
-g.BuyItem(g.ShopKey.RoyalJelly,x)
-end
-end
-end,
-})
-
-local w=m:AddCollapsibleSection("Bee Egg Shop",false)
-local x={"Common Bee Egg","Rare Bee Egg","Mythical Bee Egg","Transcendent Bee Egg"}
-w:AddDropdown("ddBuyBeeEgg",{
-Title="Bee Egg Shop Items",
-Values=x,
-Multi=true,
-Default={},
-
-Callback=function()
-g.UpdateBuyList()
-l()
-end,
-})
-w:AddButton({
-Title="Clear Bee Egg Shop Items",
-Callback=function()
-k.ddBuyBeeEgg:SetValue({})
-end,
-})
-local y=e.DataService:GetPathSignal("BeeEggShopStock/Stocks/@")
-w:AddToggle("tgBuyBeeEggEnable",{
-Title="Buy Bee Egg Shop Items",
-Default=false,
-Callback=function(z)
-l()
-if z then
-pcall(function()
-task.spawn(BuyBeeEgg)
-end)
-h=y:Connect(function(A,B)
-pcall(function()
-task.spawn(BuyBeeEgg)
-end)
+Callback=function(t)
+p()
+if t then
+l=f:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
+SummitSummer()
 end)
 else
-if h then
-h:Disconnect()
-h=nil
+if l then
+l:Disconnect()
+l=nil
 end
 end
 end,
@@ -6785,17 +6411,11 @@ local f
 local function LoadEvents()
 local g={}
 if b().DEV_MODE then
-
-g.SummerFire=c("UI/Tabs/Events/SummerFire")
-
-
-g.ShopBee=c("UI/Tabs/Events/ShopBee")
+g.EventShop=c("UI/Tabs/Events/EventShop")
+g.Summer=c("UI/Tabs/Events/SummerHarvest")
 else
-
-g.SummerFire=a.p()
-
-
-g.ShopBee=a.q()
+g.EventShop=a.p()
+g.Summer=a.q()
 end
 return g
 end
@@ -6804,18 +6424,11 @@ function d.Initialize(g)
 e=g
 local h=e.Interface
 f=e.Tabs
-
-
-
-
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
 e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
-
-i.SummerFire.Initialize(e,f.Events)
-
-
-i.ShopBee.Initialize(e,f.Events)
+i.EventShop.Initialize(e,f.Events)
+i.Summer.Initialize(e,f.Events)
 end
 
 return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
