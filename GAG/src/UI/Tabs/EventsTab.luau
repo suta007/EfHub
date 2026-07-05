@@ -9,17 +9,9 @@ local Tabs
 local function LoadEvents()
 	local Events = {}
 	if getgenv().DEV_MODE then
-		--Events.Egghunt = EF_REMOTE("UI/Tabs/Events/Egghunt")
-		Events.SummerFire = EF_REMOTE("UI/Tabs/Events/SummerFire")
-		--Events.MainBee = EF_REMOTE("UI/Tabs/Events/MainBee")
-		--Events.WaspWave = EF_REMOTE("UI/Tabs/Events/WaspWave")
-		Events.ShopBee = EF_REMOTE("UI/Tabs/Events/ShopBee")
+		Events.EventShop = EF_REMOTE("UI/Tabs/Events/EventShop")
 	else
-		--Events.Egghunt = require("./Events/Egghunt.luau")
-		Events.SummerFire = require("./Events/SummerFire.luau")
-		--Events.MainBee = require("./Events/MainBee.luau")
-		--Events.WaspWave = require("./Events/WaspWave.luau")
-		Events.ShopBee = require("./Events/ShopBee.luau")
+		Events.EventShop = require("./Events/EventShop.luau")
 	end
 	return Events
 end
@@ -28,18 +20,10 @@ function EventsTab.Initialize(registry)
 	reg = registry
 	local Interface = reg.Interface
 	Tabs = reg.Tabs
-	--local Options = reg.Options
-	--local QuickSave = reg.Window.QuickSave
-	--reg.IsEasterHarvesting = false
-	--reg.IsHuntEgg = false
 	Tabs.Events = Interface:AddTab({ Title = "Events", Icon = "calendar" })
 	reg.EVENT_DATA = require(reg.sData.Data:WaitForChild("EventShopData") :: any)
 	local Events = LoadEvents()
-	--Events.Egghunt.Initialize(reg, Tabs.Events)
-	Events.SummerFire.Initialize(reg, Tabs.Events)
-	--Events.MainBee.Initialize(reg, Tabs.Events)
-	--Events.WaspWave.Initialize(reg, Tabs.Events)
-	Events.ShopBee.Initialize(reg, Tabs.Events)
+	Events.EventShop.Initialize(reg, Tabs.Events)
 end
 
 return EventsTab

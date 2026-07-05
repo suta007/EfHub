@@ -137,13 +137,19 @@ local function ShowData(tbl, indent)
 	end
 end
 
+--[[
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
---local DataService = require(ReplicatedStorage.Modules.DataService)
---local data = DataService:GetData()
+local DataService = require(ReplicatedStorage.Modules.DataService)
+local data = DataService:GetData()
 
---local SummerFireEventData = data.SummerFireEventData
---ShowData(SummerFireEventData)
+local EventShopStock = data.EventShopStock
+ShowData(EventShopStock)
+]]
 
-local GameConfigController = require(ReplicatedStorage.Modules.GameConfigController)
-local SummerBearConfig = GameConfigController:GetConfig("SummerBearConfig")
-ShowData(SummerBearConfig)
+local EventShopStock = require(game:GetService("ReplicatedStorage").Data.EventShopData)
+for ShopName, ShopInfo in pairs(EventShopStock) do
+	AddLog(tostring(ShopName))
+	for itemName, _itemInfo in pairs(ShopInfo) do
+		AddLog("-" .. tostring(itemName))
+	end
+end

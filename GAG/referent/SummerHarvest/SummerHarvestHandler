@@ -1,0 +1,284 @@
+--game:GetService("ReplicatedStorage").Modules.SummerHarvest.SummerHarvestHandler
+local v1 = {}
+local v2 = game:GetService("ReplicatedStorage")
+local v3 = game:GetService("CollectionService")
+local v_u_4 = game:GetService("Players").LocalPlayer.PlayerGui:WaitForChild("SummerRewards_UI")
+local v5 = v2:WaitForChild("GameEvents")
+local v_u_6 = v5.SummerHarvestRemoteEvent
+local v7 = v5.SummerHarvestRewardRemoteEvent
+local v8 = v5.SummerHarvestSubmitRemoteEvent
+local v_u_9 = require(v2.Modules.CountDictionary)
+local v_u_10 = require(v2.Modules.GameConfigController)
+local v_u_11 = require(v2.Modules.ItemImageFinder)
+local v_u_12 = require(v2.Modules.UIComponents.ItemInfoHover)
+local v_u_13 = require(v2.Modules.ItemNameFinder)
+local v_u_14 = require(v2.Modules.SeedPackOddsController)
+local v_u_15 = require(v2.Modules.CosmeticCrateOddsController)
+local v_u_16 = require(v2.Modules.PetEggOddsController)
+local v_u_17 = v_u_10:GetConfig("SummerHarvestConfig")
+workspace:GetAttributeChangedSignal("SummerHarvestConfig"):Connect(function()
+	-- upvalues: (ref) v_u_17, (copy) v_u_10
+	v_u_17 = v_u_10:GetConfig("SummerHarvestConfig")
+end)
+local v_u_18 = require(v2.Modules.GuiController)
+require(v2.Comma_Module)
+local v_u_19 = v3:GetTagged("SummerHarvestModel")[1]
+local v_u_20 = v_u_19:WaitForChild("RewardSign")
+local v_u_21 = v_u_20:WaitForChild("RewardCycle"):WaitForChild("Attachment"):WaitForChild("BillboardGui"):WaitForChild("RewardFrame")
+local v_u_22 = v_u_21:WaitForChild("ITEM_IMAGE")
+local v_u_23 = v_u_21:WaitForChild("Title")
+local v_u_24 = v_u_19:WaitForChild("ChangesMade")
+local v25 = v3:GetTagged("SummerHarvestCart")
+local v_u_26 = game:GetService("ContentProvider")
+local v_u_27 = {}
+local v_u_28 = 0
+local v_u_32 = {
+	["Crate"] = function(p29)
+		-- upvalues: (copy) v_u_15, (copy) v_u_4
+		v_u_15:Open(p29, v_u_4)
+	end,
+	["Seed Pack"] = function(p30)
+		-- upvalues: (copy) v_u_14, (copy) v_u_4
+		v_u_14:Open(p30, v_u_4)
+	end,
+	["Egg"] = function(p31)
+		-- upvalues: (copy) v_u_16, (copy) v_u_4
+		v_u_16:Open(p31, v_u_4)
+	end,
+}
+if #v25 < 0 then
+	error("SummerHarvestService: Cannot Summer Harvest Cart")
+else
+	local v_u_33 = v25[1]
+	local v_u_34 = v_u_17
+	local v_u_35 = {}
+	for _, v36 in v_u_33:WaitForChild("FruitLoad"):GetDescendants() do
+		if v36:IsA("Model") then
+			v_u_35[v36.Name] = v36
+		end
+	end
+	local v_u_37 = v_u_33:GetPivot()
+	local v_u_38 = Vector3.new(0, 0, 0)
+	for _, v39 in v_u_35 do
+		for _, v40 in v39:GetDescendants() do
+			if v40:IsA("BasePart") or (v40:IsA("ModelPart") or v40:IsA("UnionOperation")) then
+				v40.Transparency = 1
+				v40.CanCollide = false
+			end
+		end
+	end
+	local v_u_41 = false
+	v7.OnClientEvent:Connect(function(p_u_42)
+		-- upvalues: (ref) v_u_41, (copy) v_u_9, (copy) v_u_35, (copy) v_u_20
+		v_u_41 = true
+		task.spawn(function()
+			-- upvalues: (copy) p_u_42, (ref) v_u_9, (ref) v_u_35
+			local v43 = p_u_42 / v_u_9(v_u_35)
+			for v44 = v_u_9(v_u_35), 1, -1 do
+				local v45 = v_u_35[("%*"):format(v44)]
+				if v45 then
+					local v46 = false
+					for _, v47 in v45:GetDescendants() do
+						if (v47:IsA("BasePart") or (v47:IsA("ModelPart") or v47:IsA("UnionOperation"))) and v47.Transparency ~= 1 then
+							v47.Transparency = 1
+							v47.CanCollide = false
+							v46 = true
+						end
+					end
+					if v46 then
+						local v48 = game.Workspace.Terrain.PopEffect:Clone()
+						v48.Parent = workspace.Terrain
+						v48.CFrame = CFrame.new(v45:GetPivot().Position)
+						for _, v49 in v48:GetChildren() do
+							v49:Emit(1)
+						end
+						game.Debris:AddItem(v48, 2)
+						task.wait(v43)
+					end
+				end
+			end
+		end)
+		task.wait(p_u_42)
+		v_u_41 = false
+		local v50 = v_u_20:FindFirstChild("PointTextLabel", true)
+		local v51 = v_u_20:FindFirstChild("RewardTextLabel", true)
+		v50.Text = ("Harvest Points %*"):format(0)
+		v51.Text = "NO REWARDS"
+	end)
+	v8.OnClientEvent:Connect(function(p52)
+		-- upvalues: (copy) v_u_9, (copy) v_u_35, (copy) v_u_20, (ref) v_u_34
+		for v53 = 1, math.floor(p52) do
+			if v_u_9(v_u_35) < v53 then
+				break
+			end
+			local v54 = v_u_35[("%*"):format(v53)]
+			if v54 then
+				for _, v55 in v54:GetDescendants() do
+					if v55:IsA("BasePart") or (v55:IsA("ModelPart") or v55:IsA("UnionOperation")) then
+						v55.Transparency = 0
+						v55.CanCollide = true
+					end
+				end
+			end
+		end
+		local v56 = v_u_20:FindFirstChild("PointTextLabel", true)
+		local v57 = v_u_20:FindFirstChild("RewardTextLabel", true)
+		v56.Text = ("Harvest Points %*"):format((math.floor(p52)))
+		for _, v58 in v_u_34.REWARD_SIGN_THRESHOLDS do
+			if v58.Points <= p52 then
+				v57.Text = v58.Label
+				return
+			end
+		end
+	end)
+	if not workspace:GetAttribute("SummerHarvest") then
+		v_u_24.Parent = script
+	end
+	workspace:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
+		-- upvalues: (copy) v_u_20, (copy) v_u_24, (copy) v_u_19
+		if workspace:GetAttribute("SummerHarvest") then
+			local v59 = v_u_20:FindFirstChild("PointTextLabel", true)
+			local v60 = v_u_20:FindFirstChild("RewardTextLabel", true)
+			v59.Text = ("Harvest Points %*"):format(0)
+			v60.Text = "NO REWARDS"
+			v_u_24.Parent = v_u_19
+		else
+			v_u_24.Parent = script
+		end
+	end)
+	task.spawn(function()
+		-- upvalues: (ref) v_u_41, (ref) v_u_38, (copy) v_u_33, (copy) v_u_37
+		while true do
+			repeat
+				task.wait(0.02)
+			until v_u_41
+			local v61 = 0.1 or 0.2
+			local v62 = math.random(-100, 100) / 100 * v61
+			local v63 = math.random(-100, 100) / 100 * v61
+			v_u_38 = Vector3.new(v62, v63)
+			v_u_33:PivotTo(v_u_37 + v_u_38)
+		end
+	end)
+	local v64 = v3:GetTagged("SummerHarvestCart")
+	if #v64 >= 0 then
+		v64[1]:WaitForChild("PromptPart"):WaitForChild("SummerHarvestProxPrompt").Triggered:Connect(function()
+			-- upvalues: (copy) v_u_6
+			v_u_6:FireServer("SubmitHeldPlant")
+		end)
+		local function v_u_73() -- name: buildRewardPreviewIcons
+			-- upvalues: (copy) v_u_27, (ref) v_u_28, (copy) v_u_22, (ref) v_u_34, (copy) v_u_13, (copy) v_u_11, (copy) v_u_21, (copy) v_u_26
+			for _, v65 in v_u_27 do
+				v65:Destroy()
+			end
+			table.clear(v_u_27)
+			v_u_28 = 0
+			v_u_22.Visible = false
+			for _, v66 in v_u_34.RewardData or {} do
+				local v67 = v66.ItemName
+				local v68 = v66.ItemType
+				local _ = v66.ItemAmount or 1
+				local v69 = v_u_22:Clone()
+				v69.Name = "RewardPreviewIcon"
+				v69.Visible = false
+				v69:SetAttribute("DisplayName", (v_u_13(tostring(v67), v68)))
+				v69:SetAttribute("RewardValue", v67)
+				local v70, v71 = pcall(v_u_11, tostring(v67), v68)
+				if v70 and v71 then
+					v69.Image = v71
+				end
+				v69.Parent = v_u_21
+				local v72 = v_u_27
+				table.insert(v72, v69)
+			end
+			if #v_u_27 > 0 then
+				task.spawn(function()
+					-- upvalues: (ref) v_u_26, (ref) v_u_27
+					pcall(function()
+						-- upvalues: (ref) v_u_26, (ref) v_u_27
+						v_u_26:PreloadAsync(v_u_27)
+					end)
+				end)
+			end
+		end
+		task.spawn(function()
+			-- upvalues: (copy) v_u_73, (copy) v_u_27, (ref) v_u_28, (copy) v_u_23, (ref) v_u_34
+			v_u_73()
+			if #v_u_27 ~= 0 then
+				if v_u_27[v_u_28] then
+					v_u_27[v_u_28].Visible = false
+				end
+				v_u_28 = v_u_28 + 1
+				if v_u_28 > #v_u_27 then
+					v_u_28 = 1
+				end
+				local v74 = v_u_27[v_u_28]
+				v74.Visible = true
+				v_u_23.Text = ("%*"):format((v74:GetAttribute("DisplayName")))
+			end
+			while true do
+				repeat
+					local v75 = task.wait
+					local v76 = v_u_34.REWARD_CYCLE_INTERVAL or 5
+					v75((math.max(v76, 0.1)))
+				until #v_u_27 ~= 0
+				if v_u_27[v_u_28] then
+					v_u_27[v_u_28].Visible = false
+				end
+				v_u_28 = v_u_28 + 1
+				if v_u_28 > #v_u_27 then
+					v_u_28 = 1
+				end
+				local v77 = v_u_27[v_u_28]
+				v77.Visible = true
+				v_u_23.Text = ("%*"):format((v77:GetAttribute("DisplayName")))
+			end
+		end)
+		task.spawn(function()
+			-- upvalues: (copy) v_u_18, (copy) v_u_4, (ref) v_u_34, (copy) v_u_11, (copy) v_u_32, (copy) v_u_12
+			v_u_18:UsePopupAnims(v_u_4)
+			v_u_4.Frame.Exit.EXIT_BUTTON.Activated:Connect(function()
+				-- upvalues: (ref) v_u_18, (ref) v_u_4
+				v_u_18:Close(v_u_4)
+			end)
+			local v78 = v_u_4.Frame.RewardTrack.Holder.RewardScrollingFrame
+			for _, v_u_79 in v_u_34.RewardData do
+				local v_u_80 = v_u_79.ItemName
+				local v_u_81 = v_u_79.ItemType
+				local v82 = v_u_79.ItemAmount or 1
+				if not v78:FindFirstChild((("%*_%*"):format(v_u_81, v_u_80))) then
+					local v83 = v78.UIGridLayout.REWARDTRACK_TEMPLATE:Clone()
+					local v84 = v83.Frame
+					v84.ITEM_IMAGE.Image = v_u_11(v_u_80, v_u_81)
+					v84.PointAmount.Text = ""
+					v84.Count.Text = v82 <= 1 and "" or "+" .. (v_u_79.ItemAmountFacingName or v82)
+					v84.Chance.Text = ""
+					if v_u_32[v_u_79.ItemType] then
+						v84.OddsButton.Activated:Connect(function()
+							-- upvalues: (ref) v_u_32, (copy) v_u_81, (copy) v_u_80
+							if v_u_32[v_u_81] then
+								v_u_32[v_u_81](v_u_80)
+							end
+						end)
+						v84.OddsButton.Visible = true
+					end
+					local v_u_85 = ("SummerHarvestReward_%*_%*_%*"):format(v_u_79.SummerPointsRequired, v_u_79.ItemType, v_u_79.ItemName)
+					pcall(function()
+						-- upvalues: (ref) v_u_12, (copy) v_u_85, (copy) v_u_79
+						v_u_12:AddItemFromRewardWithQuantity(v_u_85, {
+							["Value"] = v_u_79.ItemName,
+							["Type"] = v_u_79.ItemType,
+							["Quantity"] = v_u_79.ItemAmount or 1,
+						})
+					end)
+					v84:SetAttribute("UUID", v_u_85)
+					v84:AddTag("ItemInfoHoverTag")
+					v83.Name = ("%*_%*"):format(v_u_81, v_u_80)
+					v83.LayoutOrder = v_u_79.SummerPointsRequired
+					v83.Parent = v78
+				end
+			end
+		end)
+		return v1
+	end
+	error("SummerHarvestHandler: Cannot Summer Harvest Cart")
+end
