@@ -6,3 +6,4 @@ Script initialized successfully.
   [Day1] : 1272
 [CompletedDays] : (Table)
 
+{"GrandPrize":{"Value":"Lagoon Lily","Quantity":1,"Type":"Seed"},"EventName":"SummerHarvest","TotalDays":7,"DayLength":86400,"DailyRewards":[{"Value":"Coastal Egg","Quantity":3,"Type":"Egg"},{"Value":"Coastal Crate","Quantity":2,"Type":"Crate"},{"Value":"Popsicle Melt","Quantity":1,"Type":"Seed"},{"Value":"Coastal Egg","Quantity":3,"Type":"Egg"},{"Value":"Beach Crate","Quantity":2,"Type":"Crate"},{"Value":"Traveler's Fruit","Quantity":1,"Type":"Seed"},{"Value":"Coastal Egg","Quantity":6,"Type":"Egg"}],"DaysRequiredForGrandPrize":6,"DailyPointGoals":[150000,150000,150000,150000,150000,150000,150000],"TeamSize":4}
