@@ -14,7 +14,13 @@ local SummerHarvestRemoteEvent = GameEvents:WaitForChild("SummerHarvestRemoteEve
 local SummerCheck = nil
 local EventStart = Workspace:GetAttribute("SummerHarvest")
 
+local isSummiting = false
+
 local function SummitSummer()
+	if isSummiting then
+		return
+	end
+
 	local Options = reg.Options
 	if not Options.tgSummerHarvestEnable or not Options.tgSummerHarvestEnable.Value then
 		return
@@ -36,7 +42,7 @@ local function SummitSummer()
 	if Points >= MaxPoint then
 		return
 	end
-
+	isSummiting = true
 	local SubmitDelay = tonumber(Options.inpSubmitDelay and Options.inpSubmitDelay.Value) or 0.5
 	local EquipDelay = tonumber(Options.inpEquipDelay and Options.inpEquipDelay.Value) or 0.1
 
@@ -53,6 +59,7 @@ local function SummitSummer()
 			task.wait(SubmitDelay)
 		end
 	end
+	isSummiting = false
 end
 function Summer.Initialize(registry, tab)
 	reg = registry
