@@ -137,19 +137,13 @@ local function ShowData(tbl, indent)
 	end
 end
 
---[[
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
 local data = DataService:GetData()
 
-local EventShopStock = data.EventShopStock
-ShowData(EventShopStock)
-]]
+local SpecialCurrency = data.SpecialCurrency
+--ShowData(SpecialCurrency)
 
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local PlantTraitsData = require(ReplicatedStorage.Modules.PlantTraitsData)
-local SummerPlants = PlantTraitsData.Traits.Summer
---ShowData(SummerPlants)
-for _i, v in pairs(SummerPlants) do
-	AddLog(v)
+for coin, value in pairs(SpecialCurrency) do
+	AddLog(coin .. ": " .. value)
 end

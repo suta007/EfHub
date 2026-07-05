@@ -20,6 +20,19 @@ function MiscTab.Initialize(Registry)
 		end,
 	})
 
+	MiscSection:AddButton({
+		Title = "Check Coin",
+		Callback = function()
+			local data = sData.DataService:GetData()
+
+			local SpecialCurrency = data.SpecialCurrency
+			reg.Log("🪙 Coin Data")
+			for coin, value in pairs(SpecialCurrency) do
+				reg.Log(coin .. " : " .. value)
+			end
+		end,
+	})
+
 	local AntiLagSection = Tabs.MiscTab:AddCollapsibleSection("AntiLag", false)
 	AntiLagSection:AddToggle("tgAntiLag", {
 		Title = "AntiLag",
