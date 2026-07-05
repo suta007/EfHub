@@ -1,0 +1,455 @@
+--game:GetService("ReplicatedStorage").Modules.SummerEventControllers.SummerHarvestController
+local v1 = game:GetService("ReplicatedStorage")
+local v2 = game:GetService("Players")
+local v_u_3 = game:GetService("UserInputService")
+local v_u_4 = game:GetService("SoundService")
+local v_u_5 = require(v1.Modules.GuiController)
+local v_u_6 = require(v1.Modules.DataService)
+local v_u_7 = require(v1.Modules.ItemImageFinder)
+local v_u_8 = require(v1.Modules.Chalk)
+local v_u_9 = require(v1.Modules.TeamEventControllers.TeamEventController)
+local v_u_10 = require(script.SummerHarvestTeamConfigAccessor)
+local v_u_11 = v2.LocalPlayer
+local v_u_12 = v_u_11:WaitForChild("PlayerGui")
+local v_u_13 = v_u_12:WaitForChild("BackpackGui")
+local v_u_14 = v_u_12:WaitForChild("SummerHarvestUI")
+local v15 = v_u_14:WaitForChild("Progression")
+local v_u_16 = v15.Header
+local v17 = v15.Main
+local v_u_18 = v17.Finale
+local v_u_19 = v_u_18.Bar
+local v_u_20 = v17.ScrollClipper.ScrollingFrame
+local v_u_21 = v_u_20.LevelTemplate
+local v22 = {}
+local v_u_23 = {}
+local v_u_24 = false
+local v_u_25 = nil
+local v_u_26 = nil
+local function v_u_34(p27) -- name: GetTeamCurrentDayTotal
+	-- upvalues: (copy) v_u_9, (copy) v_u_10, (copy) v_u_11, (copy) v_u_6
+	local v28 = v_u_9:GetTeamId(v_u_10.EventName, v_u_11)
+	if v28 then
+		v28 = v_u_9:GetTeamData(v_u_10.EventName, v28)
+	end
+	if v28 then
+		local v29 = v28.members
+		if type(v29) == "table" then
+			local v30 = 0
+			for _, v31 in v28.members do
+				v30 = v30 + (tonumber(v31) or 0)
+			end
+			return v30
+		end
+	end
+	local v32 = v_u_6:GetData()
+	if v32 then
+		v32 = v32.SummerHarvestTeamData
+	end
+	if v32 then
+		v32 = v32.DayPoints
+	end
+	if type(v32) ~= "table" then
+		return 0
+	end
+	local v33 = v32[("Day%*"):format(p27)]
+	return tonumber(v33) or 0
+end
+local function v_u_45(p35, p36) -- name: SetItemReward
+	-- upvalues: (copy) v_u_7
+	if p35 and p36 then
+		local v37 = p35:FindFirstChild("ITEM_IMAGE")
+		if v37 and v37:IsA("ImageLabel") then
+			v37.Image = v_u_7(p36.Value, p36.Type) or v37.Image
+		end
+		local v38 = p35:FindFirstChild("ITEM_NAME")
+		if v38 and v38:IsA("TextLabel") then
+			local v39
+			if p36 then
+				local v40 = p36.Value or "?"
+				v39 = tostring(v40)
+				local v41 = p36.Quantity
+				local v42 = tonumber(v41) or 1
+				if v42 > 1 then
+					v39 = ("%*x %*"):format(v42, v39)
+				end
+			else
+				v39 = ""
+			end
+			v38.Text = v39
+			local v43 = v38:FindFirstChild("ITEM_NAME_SHADOW", true)
+			if v43 and v43:IsA("TextLabel") then
+				v43.Text = v38.Text
+			end
+		end
+		local v44 = p35:FindFirstChild("NewBanner")
+		if v44 and v44:IsA("GuiObject") then
+			v44.Visible = false
+		end
+	end
+end
+local function v_u_50(p46, p47) -- name: SetItemObtained
+	if p46 then
+		local v48 = p46:FindFirstChild("OBTAINED_IMAGE")
+		if v48 and v48:IsA("GuiObject") then
+			v48.Visible = p47
+		end
+		local v49 = p46:FindFirstChild("Cover")
+		if v49 and v49:IsA("GuiObject") then
+			v49.Visible = false
+		end
+	end
+end
+local function v_u_61(p51, p52, p53, p54) -- name: SetBar
+	if p51 then
+		local v55
+		if p53 > 0 then
+			local v56 = p52 / p53
+			v55 = math.clamp(v56, 0, 1)
+		else
+			v55 = 0
+		end
+		local v57 = p51:FindFirstChild("Bar_Actual")
+		if v57 and v57:IsA("GuiObject") then
+			v57.Size = UDim2.fromScale(v55, 1)
+		end
+		local v58 = p54 or ("%* / %*"):format(math.floor(p52), (math.floor(p53)))
+		local v59 = p51:FindFirstChild("PROGRESS")
+		if v59 and v59:IsA("TextLabel") then
+			v59.Text = v58
+		end
+		local v60 = p51:FindFirstChild("PROGRESS_SHADOW")
+		if v60 and v60:IsA("TextLabel") then
+			v60.Text = v58
+		end
+	end
+end
+local v_u_62 = false
+local function v_u_81() -- name: Build
+	-- upvalues: (ref) v_u_62, (copy) v_u_21, (copy) v_u_10, (copy) v_u_8, (copy) v_u_45, (copy) v_u_20, (copy) v_u_23, (copy) v_u_18, (copy) v_u_19, (ref) v_u_25, (ref) v_u_26
+	if not v_u_62 then
+		v_u_62 = true
+		v_u_21.Visible = false
+		for v63 = 1, v_u_10.TotalDays do
+			local v64 = v_u_21:Clone()
+			v64.Name = ("Day%*"):format(v63)
+			v64.LayoutOrder = v63
+			local v65 = v64:FindFirstChild("QuesteIndex")
+			if v65 and v65:IsA("TextLabel") then
+				v65.Text = ("Day %*"):format(v63)
+			end
+			local v66 = v64:FindFirstChild("QuestName")
+			if v66 and v66:IsA("TextLabel") then
+				v66.RichText = true
+				local v67 = v_u_8.bold
+				local v68 = v_u_10.GetDailyPointGoal(v63)
+				local v69 = math.floor(v68)
+				local v70 = v67((tostring(v69):reverse():gsub("(%d%d%d)", "%1,"):reverse():gsub("^,", "")))
+				v66.Text = v_u_8.color("#FFCF5C")((("Earn %* Harvest Points"):format(v70)))
+			end
+			v_u_45(v64:FindFirstChild("ITEM_TEMPLATE"), v_u_10.DailyRewards[v63])
+			v64.Visible = true
+			v64.Parent = v_u_20
+			v_u_23[v63] = v64
+		end
+		local v71 = v_u_18:FindFirstChild("Requirement")
+		if v71 and v71:IsA("TextLabel") then
+			v71.Text = "Complete daily goals to fill the bar and get the Lagoon Lily Seed!"
+		end
+		v_u_45(v_u_18:FindFirstChild("ITEM_TEMPLATE"), v_u_10.GrandPrize)
+		local v72 = v_u_19:FindFirstChild("DividerHolder")
+		if v72 then
+			local v73 = v72:FindFirstChildWhichIsA("UIListLayout")
+			if v73 then
+				v73:Destroy()
+			end
+			local v74 = {}
+			for _, v75 in v72:GetChildren() do
+				if v75:IsA("Frame") then
+					table.insert(v74, v75)
+				end
+			end
+			local v76 = v_u_10.DaysRequiredForGrandPrize
+			for v77, v78 in v74 do
+				if v77 <= v76 - 1 then
+					v78.AnchorPoint = Vector2.new(0.5, 0.5)
+					v78.Position = UDim2.fromScale(v77 / v76, 0.5)
+					v78.BackgroundTransparency = 0.2
+					v78.Visible = true
+				else
+					v78.Visible = false
+				end
+			end
+		end
+		v_u_25 = v_u_19.Position.X.Scale
+		local v79 = v_u_18:FindFirstChild("ITEM_TEMPLATE")
+		local v80 = v_u_18:FindFirstChild("Tick")
+		if v79 and v79:IsA("GuiObject") then
+			v_u_26 = (v79.Position.X.Scale - v79.Size.X.Scale * v79.AnchorPoint.X) / 2
+			if v80 and v80:IsA("GuiObject") then
+				v_u_25 = (v80.Position.X.Scale + v80.Size.X.Scale * (1 - v80.AnchorPoint.X) + (v79.Position.X.Scale - v79.Size.X.Scale * v79.AnchorPoint.X)) / 2
+			end
+		end
+	end
+end
+local function v_u_102(p82) -- name: RenderDay
+	-- upvalues: (copy) v_u_23, (copy) v_u_10, (copy) v_u_6, (copy) v_u_34, (copy) v_u_61, (copy) v_u_50
+	local v83 = v_u_23[p82]
+	if v83 then
+		local v84 = (workspace:GetServerTimeNow() - v_u_10.EventStartTime) / v_u_10.DayLength
+		local v85 = math.floor(v84) + 1
+		local v86 = v_u_6:GetData()
+		if v86 then
+			v86 = v86.SummerHarvestTeamData
+		end
+		if v86 then
+			v86 = v86.CompletedDays
+		end
+		local v87
+		if type(v86) == "table" then
+			v87 = v86[("Day%*"):format(p82)] == true
+		else
+			v87 = false
+		end
+		local v88 = v_u_10.GetDailyPointGoal(p82)
+		local v89
+		if v87 then
+			v89 = v88
+		else
+			v89 = p82 ~= v85 and 0 or v_u_34(p82)
+		end
+		v_u_61(v83:FindFirstChild("Bar"), v89, v88, v87 and "Completed!" or ("%* / %*"):format(math.floor(v89), v88))
+		v_u_50(v83:FindFirstChild("ITEM_TEMPLATE"), v87)
+		local v90 = v83:FindFirstChild("Locked")
+		if v90 and v90:IsA("GuiObject") then
+			local v91 = v85 < p82
+			v90.Visible = v91
+			if v91 then
+				local v92 = v_u_10.EventStartTime + (p82 - 1) * v_u_10.DayLength - workspace:GetServerTimeNow()
+				local v93 = v90:FindFirstChild("TimeLeft")
+				if v93 and v93:IsA("TextLabel") then
+					local v94 = math.floor(v92)
+					local v95 = math.max(0, v94)
+					local v96 = v95 // 86400
+					local v97 = v95 % 86400 // 3600
+					local v98 = v95 % 3600 // 60
+					local v99 = v95 % 60
+					local v100
+					if v96 > 0 then
+						v100 = ("%*d %*h"):format(v96, v97)
+					elseif v97 > 0 then
+						v100 = ("%*h %*m"):format(v97, v98)
+					else
+						v100 = ("%*m %*s"):format(v98, v99)
+					end
+					v93.Text = v100
+				end
+				local v101 = v90:FindFirstChild("UnlockTime")
+				if v101 and v101:IsA("TextLabel") then
+					v101.Text = "Unlocks in"
+				end
+			end
+		end
+	end
+end
+local function v_u_113() -- name: Render
+	-- upvalues: (copy) v_u_10, (copy) v_u_102, (copy) v_u_6, (copy) v_u_61, (copy) v_u_19, (copy) v_u_50, (copy) v_u_18, (ref) v_u_25, (ref) v_u_26
+	for v103 = 1, v_u_10.TotalDays do
+		v_u_102(v103)
+	end
+	local v104 = 0
+	for v105 = 1, v_u_10.TotalDays do
+		local v106 = v_u_6:GetData()
+		if v106 then
+			v106 = v106.SummerHarvestTeamData
+		end
+		if v106 then
+			v106 = v106.CompletedDays
+		end
+		local v107
+		if type(v106) == "table" then
+			v107 = v106[("Day%*"):format(v105)] == true
+		else
+			v107 = false
+		end
+		if v107 then
+			v104 = v104 + 1
+		end
+	end
+	v_u_61(v_u_19, v104, v_u_10.DaysRequiredForGrandPrize, (("%* / %* Days"):format(v104, v_u_10.DaysRequiredForGrandPrize)))
+	local v108 = v_u_6:GetData()
+	if v108 then
+		v108 = v108.SummerHarvestTeamData
+	end
+	local v109
+	if type(v108) == "table" then
+		v109 = v108.GrandPrizeAwarded == true
+	else
+		v109 = false
+	end
+	v_u_50(v_u_18:FindFirstChild("ITEM_TEMPLATE"), v109)
+	local v110 = v_u_18:FindFirstChild("Tick")
+	if v110 and v110:IsA("GuiObject") then
+		v110.Visible = v109
+	end
+	local v111
+	if v109 then
+		v111 = v_u_25
+	else
+		v111 = v_u_26
+	end
+	if v111 then
+		local v112 = v_u_19.Position
+		v_u_19.Position = UDim2.new(v111, v112.X.Offset, v112.Y.Scale, v112.Y.Offset)
+	end
+end
+local v_u_114 = false
+local function v_u_123() -- name: HookGuiController
+	-- upvalues: (ref) v_u_114, (copy) v_u_5, (copy) v_u_14, (copy) v_u_13, (copy) v_u_16, (copy) v_u_4, (copy) v_u_12, (copy) v_u_3, (ref) v_u_24, (copy) v_u_81, (copy) v_u_113
+	if not v_u_114 then
+		v_u_114 = true
+		v_u_5:UsePopupAnims(v_u_14)
+		local v115 = v_u_5:GetStateForGui(v_u_14)
+		v115.ChangeEnabled:Set(true)
+		v115.Visible:Observe(function(p116)
+			-- upvalues: (ref) v_u_13
+			v_u_13.Enabled = not p116
+		end)
+		local v117 = v_u_16:FindFirstChild("Close")
+		if v117 and v117:IsA("GuiButton") then
+			v117.Activated:Connect(function()
+				-- upvalues: (ref) v_u_5, (ref) v_u_14
+				v_u_5:Close(v_u_14)
+			end)
+		end
+		local v118 = v_u_16:FindFirstChild("ViewTeam")
+		if v118 and v118:IsA("GuiButton") then
+			v118.Activated:Connect(function()
+				-- upvalues: (ref) v_u_4, (ref) v_u_12, (ref) v_u_5
+				local v119 = v_u_4:FindFirstChild("Click")
+				if v119 and v119:IsA("Sound") then
+					v119.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+					v119.TimePosition = 0
+					v119.Playing = true
+				end
+				local v120 = v_u_12:FindFirstChild("TeamEventPartyInvite_UI")
+				if v120 and v120:IsA("ScreenGui") then
+					v_u_5:Open(v120)
+				end
+			end)
+			if not v_u_3.TouchEnabled then
+				v118.MouseEnter:Connect(function()
+					-- upvalues: (ref) v_u_4
+					local v121 = v_u_4:FindFirstChild("Hover")
+					if v121 and v121:IsA("Sound") then
+						v121.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+						v121.TimePosition = 0
+						v121.Playing = true
+					end
+				end)
+			end
+		end
+		v115.Visible:Observe(function(p122)
+			-- upvalues: (ref) v_u_24, (ref) v_u_81, (ref) v_u_113
+			v_u_24 = p122
+			if p122 then
+				v_u_81()
+				v_u_113()
+			end
+		end)
+	end
+end
+local v_u_124 = false
+local function v_u_125() -- name: QueueRender
+	-- upvalues: (ref) v_u_124, (copy) v_u_113
+	if not v_u_124 then
+		v_u_124 = true
+		task.defer(function()
+			-- upvalues: (ref) v_u_124, (ref) v_u_113
+			v_u_124 = false
+			v_u_113()
+		end)
+	end
+end
+function v22.Start() -- name: Start
+	-- upvalues: (copy) v_u_81, (copy) v_u_123, (copy) v_u_113, (copy) v_u_125, (copy) v_u_6, (ref) v_u_124, (copy) v_u_9, (ref) v_u_24, (copy) v_u_11, (copy) v_u_3, (copy) v_u_5, (copy) v_u_14
+	v_u_81()
+	v_u_123()
+	v_u_113()
+	local v126 = v_u_125
+	local v_u_127 = "SummerHarvestTeamData"
+	local v128, v129 = pcall(function()
+		-- upvalues: (ref) v_u_6, (copy) v_u_127
+		return v_u_6:GetPathSignal(v_u_127)
+	end)
+	if v128 and v129 then
+		v129:Connect(v126)
+	end
+	local v130 = v_u_125
+	local v_u_131 = "SummerHarvestTeamData/@"
+	local v132, v133 = pcall(function()
+		-- upvalues: (ref) v_u_6, (copy) v_u_131
+		return v_u_6:GetPathSignal(v_u_131)
+	end)
+	if v132 and v133 then
+		v133:Connect(v130)
+	end
+	local v134 = v_u_125
+	local v_u_135 = "SummerHarvestTeamData/DayPoints/@"
+	local v136, v137 = pcall(function()
+		-- upvalues: (ref) v_u_6, (copy) v_u_135
+		return v_u_6:GetPathSignal(v_u_135)
+	end)
+	if v136 and v137 then
+		v137:Connect(v134)
+	end
+	local v138 = v_u_125
+	local v_u_139 = "SummerHarvestTeamData/CompletedDays/@"
+	local v140, v141 = pcall(function()
+		-- upvalues: (ref) v_u_6, (copy) v_u_139
+		return v_u_6:GetPathSignal(v_u_139)
+	end)
+	if v140 and v141 then
+		v141:Connect(v138)
+	end
+	local v142 = v_u_6.Receiver
+	if v142 and v142.GlobalChanged then
+		v142.GlobalChanged:Connect(function(_, _, _, p143)
+			-- upvalues: (ref) v_u_124, (ref) v_u_113
+			if type(p143) == "string" and p143:find("SummerHarvestTeamData", 1, true) == 1 then
+				if v_u_124 then
+					return
+				end
+				v_u_124 = true
+				task.defer(function()
+					-- upvalues: (ref) v_u_124, (ref) v_u_113
+					v_u_124 = false
+					v_u_113()
+				end)
+			end
+		end)
+	end
+	if v_u_9.DataUpdated then
+		v_u_9.DataUpdated:Connect(v_u_125)
+	end
+	task.spawn(function()
+		-- upvalues: (ref) v_u_24, (ref) v_u_113
+		while true do
+			repeat
+				task.wait(1)
+			until v_u_24
+			v_u_113()
+		end
+	end)
+	if v_u_11.Name == "Luaappp" then
+		v_u_3.InputBegan:Connect(function(p144, p145)
+			-- upvalues: (ref) v_u_5, (ref) v_u_14
+			if not p145 then
+				if p144.KeyCode == Enum.KeyCode.Z then
+					v_u_5:Open(v_u_14)
+				end
+			end
+		end)
+	end
+end
+task.spawn(v22.Start)
+return v22

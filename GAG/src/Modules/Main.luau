@@ -223,8 +223,8 @@ function Main.HarvestCrops()
 		end
 		if Utils.IsTableEmpty(ReadyCrops) then
 			--Main.GetAllReadyCrops2()
-			Main.GetAllReadyCrops()
-			--task.wait(0.2)
+			task.spawn(Main.GetAllReadyCrops)
+			task.wait(0.5)
 			if Utils.IsTableEmpty(ReadyCrops) then
 				return
 			end

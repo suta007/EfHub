@@ -139,11 +139,13 @@ end
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
-local data = DataService:GetData()
+local GetData_result = DataService:GetData()
 
-local SpecialCurrency = data.SpecialCurrency
---ShowData(SpecialCurrency)
+local SummerHarvestTeamData = GetData_result.SummerHarvestTeamData
+local DayPoints = SummerHarvestTeamData.DayPoints
 
-for coin, value in pairs(SpecialCurrency) do
-	AddLog(coin .. ": " .. value)
+local Points = 0
+for _, val in pairs(DayPoints) do
+	Points = tonumber(val)
 end
+AddLog("Last Points: " .. Points)
