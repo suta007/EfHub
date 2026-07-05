@@ -146,10 +146,10 @@ local EventShopStock = data.EventShopStock
 ShowData(EventShopStock)
 ]]
 
-local EventShopStock = require(game:GetService("ReplicatedStorage").Data.EventShopData)
-for ShopName, ShopInfo in pairs(EventShopStock) do
-	AddLog(tostring(ShopName))
-	for itemName, _itemInfo in pairs(ShopInfo) do
-		AddLog("-" .. tostring(itemName))
-	end
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local PlantTraitsData = require(ReplicatedStorage.Modules.PlantTraitsData)
+local SummerPlants = PlantTraitsData.Traits.Summer
+--ShowData(SummerPlants)
+for _i, v in pairs(SummerPlants) do
+	AddLog(v)
 end

@@ -2,8 +2,6 @@ local EventShop = {}
 local reg
 local sData
 local Utils
-local Shop
-local stockConnection = nil
 local EventShopData = {}
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
@@ -33,9 +31,7 @@ local function buyEventItems(ShopName, StockData)
 		end
 
 		if StockAmount > 0 then
-			--local Args = { ItemName, ShopName }
 			for _i = 1, StockAmount do
-				--  BuyEventShop:FireServer(unpack(Args))
 				BuyEventShop:FireServer(ItemName, ShopName)
 				task.wait()
 			end
@@ -50,9 +46,7 @@ function EventShop.Initialize(registry, tab)
 	local QuickSave = reg.Window.QuickSave
 	local EventsTab = tab
 	sData = reg.sData
-	--local EfTasks = reg.EfTasks
 	Utils = reg.Utils
-	Shop = reg.Shop
 
 	local GetData_result = sData.DataService:GetData()
 	local EventShopStock = require(game:GetService("ReplicatedStorage").Data.EventShopData)
@@ -99,7 +93,6 @@ function EventShop.Initialize(registry, tab)
 		local BasePath = "EventShopStock/" .. ShopName .. "/Stocks"
 		local Signal = sData.DataService:GetPathSignal(BasePath .. "/@")
 		local Signal2 = sData.DataService:GetPathSignal(BasePath)
-		--local Connection = Signal:Connect(function(Key, StockData)
 		Signal:Connect(function(_, StockData)
 			if type(StockData) == "table" then
 				task.spawn(function()
