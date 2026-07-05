@@ -17,10 +17,10 @@ function Shop.Initialize(Registry)
 		Gear = "GearStock/Stocks",
 		Egg = "PetEggStock/Stocks",
 		Traveling = "TravelingMerchantShopStock/Stocks",
-		Easter = "EventShopStock/Easter Seed Shop/Stocks",
-		HoneyCoin = "EventShopStock/Honey Coin Shop/Stocks",
-		HoneySeed = "EventShopStock/Honey Seed Shop/Stocks",
-		RoyalJelly = "EventShopStock/Royal Jelly Shop/Stocks",
+		--Easter = "EventShopStock/Easter Seed Shop/Stocks",
+		--HoneyCoin = "EventShopStock/Honey Coin Shop/Stocks",
+		--HoneySeed = "EventShopStock/Honey Seed Shop/Stocks",
+		--RoyalJelly = "EventShopStock/Royal Jelly Shop/Stocks",
 		SeasonPass = "SeasonPass/" .. CurrentSeason .. "/Stocks",
 	}
 
@@ -99,7 +99,7 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyTravelingMerchantShopStock",
 			ArgType = "NormalMode",
 		},
-		[Shop.ShopKey.HoneyCoin] = {
+		--[[ 		[Shop.ShopKey.HoneyCoin] = {
 			Enabled = if Options.tgBuyHoneyCoinEnable then Options.tgBuyHoneyCoinEnable.Value else false,
 			Items = if Options.ddBuyHoneyCoin then GetSelectedItems(Options.ddBuyHoneyCoin.Value) else {},
 			RemoteName = "BuyEventShopStock",
@@ -126,7 +126,7 @@ function Shop.UpdateBuyList()
 			RemoteName = "BuyEventShopStock",
 			ArgType = "EventMode",
 			EventArg = "Easter Seed Shop",
-		},
+		}, ]]
 
 		[Shop.ShopKey.SeasonPass] = {
 			Enabled = Options.tgBuySeasonPassEnable.Value,

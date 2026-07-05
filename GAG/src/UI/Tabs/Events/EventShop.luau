@@ -4,24 +4,44 @@ local sData
 local Utils
 local Shop
 local stockConnection = nil
-
---[[ local function BuyBeeEgg()
+local EventShopData = {}
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
+local BuyEventShop = GameEvents.BuyEventShopStock
+local function buyEventItems(ShopName, StockData)
+	local ddName = "ddBuy" .. ShopName
+	local tgName = "tgBuy" .. ShopName
 	local Options = reg.Options
+	if not Options[tgName] or not Options[tgName].Value then
+		return
+	end
+	if not Options[ddName].Value then
+		return
+	end
+
 	local GetSelectedItems = reg.Utils.GetSelectedItems
-	local GetData_result = sData.DataService:GetData()
-	local BeeEggStocks = GetData_result.BeeEggShopStock.Stocks
-	if not Utils.IsTableEmpty(BeeEggStocks) then
-		local beeEggList = GetSelectedItems(Options.ddBuyBeeEgg.Value)
-		for EggName, EggInfo in pairs(BeeEggStocks) do
-			if table.find(beeEggList, EggName) then
-				local StockAmount = tonumber(EggInfo.Stock) or 0
-				for _i = 1, StockAmount do
-					sData.GameEvents:WaitForChild("BeeColonyEggShopService"):WaitForChild("BuyBeeEggStock"):InvokeServer(EggName)
-				end
+	local ItemList = GetSelectedItems(Options[ddName].Value)
+	if not ItemList or #ItemList == 0 then
+		return
+	end
+
+	for itemId, itemInfo in pairs(StockData) do
+		local ItemName = itemId
+		local StockAmount = tonumber(itemInfo.Stock) or 0
+		if not table.find(ItemList, "ALL") and not table.find(ItemList, ItemName) then
+			continue
+		end
+
+		if StockAmount > 0 then
+			--local Args = { ItemName, ShopName }
+			for _i = 1, StockAmount do
+				--  BuyEventShop:FireServer(unpack(Args))
+				BuyEventShop:FireServer(ItemName, ShopName)
+				task.wait()
 			end
 		end
 	end
-end ]]
+end
 
 function EventShop.Initialize(registry, tab)
 	reg = registry
@@ -36,7 +56,7 @@ function EventShop.Initialize(registry, tab)
 
 	local GetData_result = sData.DataService:GetData()
 	local EventShopStock = require(game:GetService("ReplicatedStorage").Data.EventShopData)
-	local EventShopData = {}
+
 	local Section = {}
 	for ShopName, ShopInfo in pairs(EventShopStock) do
 		EventShopData[ShopName] = { "ALL" }
@@ -53,7 +73,6 @@ function EventShop.Initialize(registry, tab)
 			Default = {},
 			Searchable = true,
 			Callback = function()
-				--	Shop.UpdateBuyList()
 				QuickSave()
 			end,
 		})
@@ -67,16 +86,36 @@ function EventShop.Initialize(registry, tab)
 			Title = "Buy " .. ShopName .. " Items",
 			Default = false,
 			Callback = function(Value)
-				--Shop.UpdateBuyList()
 				QuickSave()
 				if Value then
 					local ItemStocks = GetData_result.EventShopStock[ShopName].Stocks
 					if not Utils.IsTableEmpty(ItemStocks) then
-						--	Shop.BuyItem(Shop.ShopKey[ShopName], ItemStocks)
+						buyEventItems(ShopName, ItemStocks)
 					end
 				end
 			end,
 		})
+
+		local BasePath = "EventShopStock/" .. ShopName .. "/Stocks"
+		local Signal = sData.DataService:GetPathSignal(BasePath .. "/@")
+		local Signal2 = sData.DataService:GetPathSignal(BasePath)
+		--local Connection = Signal:Connect(function(Key, StockData)
+		Signal:Connect(function(_, StockData)
+			if type(StockData) == "table" then
+				task.spawn(function()
+					task.wait(0.5)
+					buyEventItems(ShopName, StockData)
+				end)
+			end
+		end)
+		Signal2:Connect(function(_, StockData)
+			if type(StockData) == "table" then
+				task.spawn(function()
+					task.wait(0.5)
+					buyEventItems(ShopName, StockData)
+				end)
+			end
+		end)
 	end
 end
 
