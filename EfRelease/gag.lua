@@ -767,8 +767,8 @@ return
 end
 if f.IsTableEmpty(h)then
 
-b.GetAllReadyCrops()
-
+task.spawn(b.GetAllReadyCrops2)
+task.wait(0.5)
 if f.IsTableEmpty(h)then
 return
 end
@@ -4043,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.05-09.11",
+SubTitle="2569.07.05-11.11",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -4332,7 +4332,7 @@ g.IsHarvesting=false
 i.ClearReadyCrops()
 end
 h.ToggleTask("AutoHarvest",n,function()
-i.HarvestCrops2()
+i.HarvestCrops()
 task.wait(0.15)
 end)
 f()
@@ -6347,46 +6347,126 @@ local i=h.Traits.Summer
 local j=g:WaitForChild("GameEvents")
 local k=j:WaitForChild("SummerHarvestRemoteEvent")
 local l=nil
+local m=f:GetAttribute("SummerHarvest")
+
+local n=false
 
 local function SummitSummer()
-local m=c.Options
-if not m.tgSummerHarvestEnable or not m.tgSummerHarvestEnable.Value then
+if n then
 return
 end
-local n=f:GetAttribute("SummerHarvest")
-if not n then
-return
-end
-local o=d.LocalPlayer.Backpack
-for p,q in ipairs(o:GetChildren())do
-local r=q:FindFirstChild("Item_String")and q:FindFirstChild("Item_String").Value
-if not q:GetAttribute("d")and q:HasTag("FruitTool")and table.find(i,r)then
-e.EquipTool(q)
-task.wait(0.1)
-k:FireServer("SubmitHeldPlant")
-task.wait(1)
-return
-end
-end
-end
-function b.Initialize(m,n)
-c=m
+
 local o=c.Options
-_=o
-local p=c.Window.QuickSave
-local q=n
+if not o.tgSummerHarvestEnable or not o.tgSummerHarvestEnable.Value then
+return
+end
+if not m then
+return
+end
+
+local p=d.DataService:GetData()
+local q=p.SummerHarvestTeamData
+local r=q.DayPoints
+
+local t=0
+for u,v in pairs(r)do
+t=tonumber(v)
+end
+
+local u=tonumber(o.inpMaxPoint and o.inpMaxPoint.Value)or 150000
+if t>=u then
+return
+end
+n=true
+local v=tonumber(o.inpSubmitDelay and o.inpSubmitDelay.Value)or 0.5
+local w=tonumber(o.inpEquipDelay and o.inpEquipDelay.Value)or 0.1
+
+local x=d.LocalPlayer.Backpack
+for y,z in ipairs(x:GetChildren())do
+if not m then
+return
+end
+local A=z:FindFirstChild("Item_String")and z:FindFirstChild("Item_String").Value
+if not z:GetAttribute("d")and z:HasTag("FruitTool")and table.find(i,A)then
+e.EquipTool(z)
+task.wait(w)
+k:FireServer("SubmitHeldPlant")
+task.wait(v)
+end
+end
+n=false
+end
+function b.Initialize(o,p)
+c=o
+local q=c.Options
+_=q
+local r=c.Window.QuickSave
+local t=p
 e=c.Utils
 d=c.sData
+local u=c.EfTasks
 
-local r=q:AddCollapsibleSection("SummerHarvest",false)
-r:AddToggle("tgSummerHarvestEnable",{
+local v=t:AddCollapsibleSection("SummerHarvest",false)
+
+v:AddInput("inpLoopDelay",{
+Title="Loop Delay",
+Default=5,
+Numeric=true,
+Finished=true,
+Callback=function(w)
+if w==""then
+w=5
+end
+r()
+end,
+})
+
+v:AddInput("inpEquipDelay",{
+Title="Equip Delay",
+Default=0.1,
+Numeric=true,
+Finished=true,
+Callback=function(w)
+if w==""then
+w=0.1
+end
+r()
+end,
+})
+v:AddInput("inpSubmitDelay",{
+Title="Submit Delay",
+Default=0.5,
+Numeric=true,
+Finished=true,
+Callback=function(w)
+if w==""then
+w=0.5
+end
+r()
+end,
+})
+
+v:AddInput("inpMaxPoint",{
+Title="Max Point",
+Default=150000,
+Numeric=true,
+Finished=true,
+Callback=function(w)
+if w==""then
+w=150000
+end
+r()
+end,
+})
+
+v:AddToggle("tgSummerHarvestEnable",{
 Title="Enable",
 Default=false,
-Callback=function(t)
-p()
-if t then
+Callback=function(w)
+r()
+if w then
 l=f:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
-SummitSummer()
+m=f:GetAttribute("SummerHarvest")
 end)
 else
 if l then
@@ -6394,6 +6474,12 @@ l:Disconnect()
 l=nil
 end
 end
+
+u.ToggleTask("SummerHarvest",w,function()
+local x=tonumber(q.inpLoopDelay and q.inpLoopDelay.Value)or 5
+SummitSummer()
+task.wait(x)
+end)
 end,
 })
 end
