@@ -49,6 +49,7 @@ local function SummitSummer()
 	local Backpack = sData.LocalPlayer.Backpack
 	for _, item in ipairs(Backpack:GetChildren()) do
 		if not EventStart then
+			isSummiting = false
 			return
 		end
 		local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
