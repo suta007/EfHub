@@ -4043,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.05-11.11",
+SubTitle="2569.07.06-17.40",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6384,6 +6384,7 @@ local w=tonumber(o.inpEquipDelay and o.inpEquipDelay.Value)or 0.1
 local x=d.LocalPlayer.Backpack
 for y,z in ipairs(x:GetChildren())do
 if not m then
+n=false
 return
 end
 local A=z:FindFirstChild("Item_String")and z:FindFirstChild("Item_String").Value
