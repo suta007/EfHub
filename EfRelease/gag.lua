@@ -4043,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.06-17.40",
+SubTitle="2569.07.13-15.50",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6217,6 +6217,279 @@ end
 
 return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b={c=__modImpl()}a.cache.o=b end return b.c end end do local function __modImpl()
 
+
+local b={}
+local c
+local d
+local e
+local f=game:GetService("Workspace")
+
+local g=game:GetService("ReplicatedStorage")
+local h=require(g.Modules.PlantTraitsData)
+local i=h.Traits.Summer
+
+local j=g:WaitForChild("GameEvents")
+local k=j:WaitForChild("SummerHarvestRemoteEvent")
+local l=j:WaitForChild("SamTheClamService_RE")
+
+local m=nil
+local n=f:GetAttribute("SummerHarvest")
+
+local o=false
+
+local function SummitSummer()
+if o then
+return
+end
+
+local p=c.Options
+if not p.tgSummerHarvestEnable or not p.tgSummerHarvestEnable.Value then
+o=false
+return
+end
+if not n then
+o=false
+return
+end
+
+local q=d.DataService:GetData()
+local r=q.SummerHarvestTeamData
+local t=r.DayPoints
+
+local u=0
+for v,w in pairs(t)do
+u=tonumber(w)
+end
+
+local v=tonumber(p.inpMaxPoint and p.inpMaxPoint.Value)or 150000
+if u>=v then
+o=false
+return
+end
+o=true
+local w=tonumber(p.inpSubmitDelay and p.inpSubmitDelay.Value)or 0.5
+local x=tonumber(p.inpEquipDelay and p.inpEquipDelay.Value)or 0.1
+
+local y=d.LocalPlayer.Backpack
+for z,A in ipairs(y:GetChildren())do
+if not n then
+o=false
+return
+end
+local B=A:FindFirstChild("Item_String")and A:FindFirstChild("Item_String").Value
+if not A:GetAttribute("d")and A:HasTag("FruitTool")and table.find(i,B)then
+e.EquipTool(A)
+task.wait(x)
+k:FireServer("SubmitHeldPlant")
+task.wait(w)
+end
+end
+o=false
+end
+
+local function ShelldonSubmit()
+local p=c.Options
+if not p.tgShelldonEnable or not p.tgShelldonEnable.Value then
+return
+end
+if not p.ddShelldonPetType or not p.ddShelldonPetType.Value then
+c.Log("Select Pet Type!!","ERROR")
+return
+end
+local q=d.DataService:GetData()
+local r=q.SamTheClam
+
+local t=r.IsRunning or false
+local u=r.RewardReady or false
+
+if u then
+l:FireServer("ClaimReward")
+task.wait(2)
+q=d.DataService:GetData()
+r=q.SamTheClam
+t=r.IsRunning or false
+end
+
+if not t then
+local v=e.GetSelectedItems(p.ddShelldonPetType.Value)
+
+local w=d.Backpack
+pcall(function()
+d.Humanoid:UnequipTool()
+task.wait(0.1)
+end)
+
+for x,y in pairs(w:GetChildren())do
+if y:GetAttribute("ItemType")=="Pet"and not y:GetAttribute("d")then
+local z=table.find(v,y:GetAttribute("f"))
+if z then
+pcall(function()
+d.Humanoid:EquipTool(y)
+task.wait(1)
+end)
+l:FireServer("SubmitHeldPet")
+task.wait(0.3)
+return
+end
+end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end
+return
+end
+function b.Initialize(p,q)
+c=p
+local r=c.Options
+_=r
+local t=c.Window.QuickSave
+local u=q
+e=c.Utils
+d=c.sData
+local v=c.EfTasks
+
+local w=u:AddCollapsibleSection("SummerHarvest",false)
+
+w:AddInput("inpLoopDelay",{
+Title="Loop Delay",
+Default=5,
+Numeric=true,
+Finished=true,
+Callback=function(x)
+if x==""then
+x=5
+end
+t()
+end,
+})
+
+w:AddInput("inpEquipDelay",{
+Title="Equip Delay",
+Default=0.1,
+Numeric=true,
+Finished=true,
+Callback=function(x)
+if x==""then
+x=0.1
+end
+t()
+end,
+})
+w:AddInput("inpSubmitDelay",{
+Title="Submit Delay",
+Default=0.5,
+Numeric=true,
+Finished=true,
+Callback=function(x)
+if x==""then
+x=0.5
+end
+t()
+end,
+})
+
+w:AddInput("inpMaxPoint",{
+Title="Max Point",
+Default=150000,
+Numeric=true,
+Finished=true,
+Callback=function(x)
+if x==""then
+x=150000
+end
+t()
+end,
+})
+
+w:AddToggle("tgSummerHarvestEnable",{
+Title="Enable",
+Default=false,
+Callback=function(x)
+t()
+if x then
+m=f:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
+n=f:GetAttribute("SummerHarvest")
+end)
+else
+o=false
+n=false
+if m then
+m:Disconnect()
+m=nil
+end
+end
+
+v.ToggleTask("SummerHarvest",x,function()
+local y=tonumber(r.inpLoopDelay and r.inpLoopDelay.Value)or 5
+SummitSummer()
+task.wait(y)
+end)
+end,
+})
+
+local x=u:AddCollapsibleSection("Shelldon",false)
+
+x:AddDropdown("ddShelldonPetType",{
+Title="Select Pet Type",
+Values=d.PetsDataTable or{},
+Default="",
+Multi=true,
+Searchable=true,
+Callback=function()
+t()
+end,
+})
+
+x:AddButton({
+Title="Clear Selected Pet Type",
+Callback=function()
+r.ddShelldonPetType:SetValue({})
+end,
+})
+
+x:AddToggle("tgShelldonEnable",{
+Title="Enable",
+Default=false,
+Callback=function(y)
+t()
+v.ToggleTask("Shelldon",y,function()
+ShelldonSubmit()
+task.wait(10)
+end)
+end,
+})
+end
+
+return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
+
 local b={}
 local c
 local d
@@ -6331,160 +6604,6 @@ end)
 end
 end
 
-return b end function a.p():typeof(__modImpl())local b=a.cache.p if not b then b={c=__modImpl()}a.cache.p=b end return b.c end end do local function __modImpl()
-
-
-local b={}
-local c
-local d
-local e
-local f=game:GetService("Workspace")
-
-local g=game:GetService("ReplicatedStorage")
-local h=require(g.Modules.PlantTraitsData)
-local i=h.Traits.Summer
-
-local j=g:WaitForChild("GameEvents")
-local k=j:WaitForChild("SummerHarvestRemoteEvent")
-local l=nil
-local m=f:GetAttribute("SummerHarvest")
-
-local n=false
-
-local function SummitSummer()
-if n then
-return
-end
-
-local o=c.Options
-if not o.tgSummerHarvestEnable or not o.tgSummerHarvestEnable.Value then
-return
-end
-if not m then
-return
-end
-
-local p=d.DataService:GetData()
-local q=p.SummerHarvestTeamData
-local r=q.DayPoints
-
-local t=0
-for u,v in pairs(r)do
-t=tonumber(v)
-end
-
-local u=tonumber(o.inpMaxPoint and o.inpMaxPoint.Value)or 150000
-if t>=u then
-return
-end
-n=true
-local v=tonumber(o.inpSubmitDelay and o.inpSubmitDelay.Value)or 0.5
-local w=tonumber(o.inpEquipDelay and o.inpEquipDelay.Value)or 0.1
-
-local x=d.LocalPlayer.Backpack
-for y,z in ipairs(x:GetChildren())do
-if not m then
-n=false
-return
-end
-local A=z:FindFirstChild("Item_String")and z:FindFirstChild("Item_String").Value
-if not z:GetAttribute("d")and z:HasTag("FruitTool")and table.find(i,A)then
-e.EquipTool(z)
-task.wait(w)
-k:FireServer("SubmitHeldPlant")
-task.wait(v)
-end
-end
-n=false
-end
-function b.Initialize(o,p)
-c=o
-local q=c.Options
-_=q
-local r=c.Window.QuickSave
-local t=p
-e=c.Utils
-d=c.sData
-local u=c.EfTasks
-
-local v=t:AddCollapsibleSection("SummerHarvest",false)
-
-v:AddInput("inpLoopDelay",{
-Title="Loop Delay",
-Default=5,
-Numeric=true,
-Finished=true,
-Callback=function(w)
-if w==""then
-w=5
-end
-r()
-end,
-})
-
-v:AddInput("inpEquipDelay",{
-Title="Equip Delay",
-Default=0.1,
-Numeric=true,
-Finished=true,
-Callback=function(w)
-if w==""then
-w=0.1
-end
-r()
-end,
-})
-v:AddInput("inpSubmitDelay",{
-Title="Submit Delay",
-Default=0.5,
-Numeric=true,
-Finished=true,
-Callback=function(w)
-if w==""then
-w=0.5
-end
-r()
-end,
-})
-
-v:AddInput("inpMaxPoint",{
-Title="Max Point",
-Default=150000,
-Numeric=true,
-Finished=true,
-Callback=function(w)
-if w==""then
-w=150000
-end
-r()
-end,
-})
-
-v:AddToggle("tgSummerHarvestEnable",{
-Title="Enable",
-Default=false,
-Callback=function(w)
-r()
-if w then
-l=f:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
-m=f:GetAttribute("SummerHarvest")
-end)
-else
-if l then
-l:Disconnect()
-l=nil
-end
-end
-
-u.ToggleTask("SummerHarvest",w,function()
-local x=tonumber(q.inpLoopDelay and q.inpLoopDelay.Value)or 5
-SummitSummer()
-task.wait(x)
-end)
-end,
-})
-end
-
 return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
 
@@ -6498,11 +6617,11 @@ local f
 local function LoadEvents()
 local g={}
 if b().DEV_MODE then
-g.EventShop=c("UI/Tabs/Events/EventShop")
 g.Summer=c("UI/Tabs/Events/SummerHarvest")
+g.EventShop=c("UI/Tabs/Events/EventShop")
 else
-g.EventShop=a.p()
-g.Summer=a.q()
+g.Summer=a.p()
+g.EventShop=a.q()
 end
 return g
 end
@@ -6514,8 +6633,8 @@ f=e.Tabs
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
 e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
-i.EventShop.Initialize(e,f.Events)
 i.Summer.Initialize(e,f.Events)
+i.EventShop.Initialize(e,f.Events)
 end
 
 return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
