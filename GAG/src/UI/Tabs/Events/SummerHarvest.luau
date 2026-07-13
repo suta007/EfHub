@@ -106,7 +106,7 @@ local function ShelldonSubmit()
 				if isSelectedPet then
 					pcall(function()
 						sData.Humanoid:EquipTool(item)
-						task.wait(0.3)
+						task.wait(1)
 					end)
 					SummerHarvestRemoteEvent:FireServer("SubmitHeldPet")
 					return
