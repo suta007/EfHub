@@ -68,7 +68,7 @@ local function SummitSummer()
 	isSummiting = false
 end
 
-local function Shelldon()
+local function ShelldonSubmit()
 	local Options = reg.Options
 	if not Options.tgShelldonEnable or not Options.tgShelldonEnable.Value then
 		return
@@ -91,7 +91,7 @@ local function Shelldon()
 		IsRunning = SamTheClam.IsRunning or false
 	end
 
-	--[[ 	if not IsRunning then
+	if not IsRunning then
 		local ShelldonPetType = Utils.GetSelectedItems(Options.ddShelldonPetType.Value)
 
 		local Backpack = sData.Backpack
@@ -143,7 +143,7 @@ local function Shelldon()
 				end
 			end
 		end ]]
-	--[[end ]]
+	end
 	return
 end
 function Summer.Initialize(registry, tab)
@@ -261,7 +261,7 @@ function Summer.Initialize(registry, tab)
 		Callback = function(Value)
 			QuickSave()
 			EfTasks.ToggleTask("Shelldon", Value, function()
-				Shelldon()
+				ShelldonSubmit()
 				task.wait(10)
 			end)
 		end,

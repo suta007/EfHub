@@ -142,4 +142,9 @@ local DataService = require(ReplicatedStorage.Modules.DataService)
 local GetData_result = DataService:GetData()
 
 local SamTheClam = GetData_result.SamTheClam
-ShowData(SamTheClam)
+local IsRunning = SamTheClam.IsRunning
+
+AddLog(tostring(IsRunning))
+
+local RewardReady = SamTheClam.RewardReady
+AddLog(tostring(RewardReady))
