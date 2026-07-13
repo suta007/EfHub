@@ -9,11 +9,11 @@ local Tabs
 local function LoadEvents()
 	local Events = {}
 	if getgenv().DEV_MODE then
-		Events.EventShop = EF_REMOTE("UI/Tabs/Events/EventShop")
 		Events.Summer = EF_REMOTE("UI/Tabs/Events/SummerHarvest")
+		Events.EventShop = EF_REMOTE("UI/Tabs/Events/EventShop")
 	else
-		Events.EventShop = require("./Events/EventShop.luau")
 		Events.Summer = require("./Events/SummerHarvest.luau")
+		Events.EventShop = require("./Events/EventShop.luau")
 	end
 	return Events
 end
@@ -25,8 +25,8 @@ function EventsTab.Initialize(registry)
 	Tabs.Events = Interface:AddTab({ Title = "Events", Icon = "calendar" })
 	reg.EVENT_DATA = require(reg.sData.Data:WaitForChild("EventShopData") :: any)
 	local Events = LoadEvents()
-	Events.EventShop.Initialize(reg, Tabs.Events)
 	Events.Summer.Initialize(reg, Tabs.Events)
+	Events.EventShop.Initialize(reg, Tabs.Events)
 end
 
 return EventsTab

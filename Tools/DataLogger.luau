@@ -141,11 +141,5 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local DataService = require(ReplicatedStorage.Modules.DataService)
 local GetData_result = DataService:GetData()
 
-local SummerHarvestTeamData = GetData_result.SummerHarvestTeamData
-local DayPoints = SummerHarvestTeamData.DayPoints
-
-local Points = 0
-for _, val in pairs(DayPoints) do
-	Points = tonumber(val)
-end
-AddLog("Last Points: " .. Points)
+local SamTheClam = GetData_result.SamTheClam
+ShowData(SamTheClam)

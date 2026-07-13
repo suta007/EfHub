@@ -1,0 +1,24 @@
+--game:GetService("ReplicatedStorage").Data.SamTheClamData
+
+-- Script Path: game:GetService("ReplicatedStorage").Data.SamTheClamData
+-- Took 0.01s to decompile.
+-- Executor: Delta (1.1.727.1199)
+
+return {
+	["TIME_TO_PROCESS"] = 3600,
+	["EGG_NAME"] = "Coastal Egg",
+	["MIN_EGGS"] = 1,
+	["MAX_EGGS"] = 6,
+	["SUMMER_PET_CHANCE"] = 0.05,
+	["SUMMER_PET_POOL"] = nil,
+	["SUMMER_PET_POOL"] = {
+		{
+			["PetName"] = "Pelican",
+			["Weight"] = 80,
+		},
+		{
+			["PetName"] = "Manta Ray",
+			["Weight"] = 20,
+		},
+	},
+}
