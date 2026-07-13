@@ -240,7 +240,7 @@ function Summer.Initialize(registry, tab)
 		Title = "Select Pet Type",
 		Values = sData.PetsDataTable or {},
 		Default = "",
-		Multi = false,
+		Multi = true,
 		Searchable = true,
 		Callback = function()
 			QuickSave()
