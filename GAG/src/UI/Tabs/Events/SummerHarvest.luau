@@ -91,7 +91,7 @@ local function Shelldon()
 		IsRunning = SamTheClam.IsRunning or false
 	end
 
-	if not IsRunning then
+	--[[ 	if not IsRunning then
 		local ShelldonPetType = Utils.GetSelectedItems(Options.ddShelldonPetType.Value)
 
 		local Backpack = sData.Backpack
@@ -143,7 +143,8 @@ local function Shelldon()
 				end
 			end
 		end ]]
-	end
+	--[[end ]]
+	return
 end
 function Summer.Initialize(registry, tab)
 	reg = registry
