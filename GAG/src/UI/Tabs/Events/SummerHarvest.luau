@@ -109,6 +109,7 @@ local function ShelldonSubmit()
 						task.wait(1)
 					end)
 					SummerHarvestRemoteEvent:FireServer("SubmitHeldPet")
+					task.wait(0.3)
 					return
 				end
 			end
