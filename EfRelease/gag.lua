@@ -4043,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.13-15.50",
+SubTitle="2569.07.13-20.15",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6435,6 +6435,7 @@ Default=false,
 Callback=function(x)
 t()
 if x then
+n=f:GetAttribute("SummerHarvest")
 m=f:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
 n=f:GetAttribute("SummerHarvest")
 end)
