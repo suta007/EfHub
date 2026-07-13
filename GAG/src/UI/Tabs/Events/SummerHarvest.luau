@@ -108,7 +108,7 @@ local function ShelldonSubmit()
 						sData.Humanoid:EquipTool(item)
 						task.wait(1)
 					end)
-					SummerHarvestRemoteEvent:FireServer("SubmitHeldPet")
+					SamTheClamService:FireServer("SubmitHeldPet")
 					task.wait(0.3)
 					return
 				end
