@@ -216,6 +216,7 @@ function Summer.Initialize(registry, tab)
 		Callback = function(Value)
 			QuickSave()
 			if Value then
+				EventStart = Workspace:GetAttribute("SummerHarvest")
 				SummerCheck = Workspace:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
 					EventStart = Workspace:GetAttribute("SummerHarvest")
 				end)
