@@ -36,28 +36,28 @@ if myFarm then
 end
 Character:PivotTo(spawnPoint)
 
+for _, obj in pairs(Workspace:GetChildren()) do
+	if obj.Name == "Model" then
+		print("Find Model")
+		print("warp to " .. obj:GetPivot().Position)
+		Character:PivotTo(obj:GetPivot())
+		task.wait(2)
+		local target = obj:FindFirstChild("ProximityPrompt", true)
+		if target then
+			fireproximityprompt(target)
+			task.wait(2)
+			print("warp to home")
+			Character:PivotTo(spawnPoint)
+			task.wait(2)
+			--reg.Log("🟢 เก็บไข่ " .. count .. " สำเร็จ")
+			--count = count + 1
+		end
+	end
+	task.wait(0.2)
+end
+print("Event Summer Chest Hunt is load")
+
 StartGlobalChestHunt.OnClientEvent:Connect(function()
 	print("Start Chest Hunt Wait 5 s ...")
 	task.wait(5)
-	for _, obj in pairs(Workspace:GetChildren()) do
-		if obj.Name == "Model" then
-			print("Find Model")
-			print("warp to " .. obj:GetPivot().Position)
-			Character:PivotTo(obj:GetPivot())
-			task.wait(2)
-			local target = obj:FindFirstChild("ProximityPrompt", true)
-			if target then
-				fireproximityprompt(target)
-				task.wait(2)
-				print("warp to home")
-				Character:PivotTo(spawnPoint)
-				task.wait(2)
-				--reg.Log("🟢 เก็บไข่ " .. count .. " สำเร็จ")
-				--count = count + 1
-			end
-		end
-		task.wait(0.2)
-	end
 end)
-
-print("Event Summer Chest Hunt is load")
