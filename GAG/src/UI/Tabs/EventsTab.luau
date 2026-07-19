@@ -11,11 +11,11 @@ local function LoadEvents()
 	if getgenv().DEV_MODE then
 		Events.Summer = EF_REMOTE("UI/Tabs/Events/SummerHarvest")
 		Events.EventShop = EF_REMOTE("UI/Tabs/Events/EventShop")
-		Events.Eggwar = EF_REMOTE("UI/Tabs/Events/ChestHunt")
+		Events.ChestHunt = EF_REMOTE("UI/Tabs/Events/ChestHunt")
 	else
 		Events.Summer = require("./Events/SummerHarvest.luau")
 		Events.EventShop = require("./Events/EventShop.luau")
-		Events.Eggwar = require("./Events/ChestHunt.luau")
+		Events.ChestHunt = require("./Events/ChestHunt.luau")
 	end
 	return Events
 end
