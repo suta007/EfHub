@@ -1,0 +1,361 @@
+--game:GetService("ReplicatedStorage").Modules.SummerChestHunt.SummerChestHuntHandler
+
+-- Script Path: game:GetService("ReplicatedStorage").Modules.SummerChestHunt.SummerChestHuntHandler
+-- Took 0.22s to decompile.
+-- Executor: Delta (1.1.727.1199)
+
+local v_u_1 = {}
+local v2 = game:GetService("ReplicatedStorage")
+local v_u_3 = game:GetService("CollectionService")
+local v_u_4 = game:GetService("ContentProvider")
+local v_u_5 = game:GetService("RunService")
+local v_u_6 = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("SummerChestIndex")
+local v_u_7 = require(v2.Modules.GameConfigController)
+local v_u_8 = require(v2.Modules.ItemImageFinder)
+local v_u_9 = require(v2.Modules.ItemNameFinder)
+local v_u_10 = require(v2.Modules.UIComponents.ItemInfoHover)
+local v_u_11 = require(v2.UserGenerated.Strings.FormatAbbreviated)
+local v_u_12 = require(v2.Modules.PetEggOddsController)
+local v_u_13 = require(v2.Modules.SeedPackOddsController)
+local v_u_14 = require(v2.Modules.CosmeticCrateOddsController)
+local v_u_15 = require(v2.Modules.GuiController)
+local v_u_16 = v_u_7:GetConfig("SummerChestHuntConfig")
+local v_u_17 = game:GetService("SoundService").Click
+local v_u_18 = {
+	["Divine"] = "Rainbow",
+	["Golden Chest"] = "Rainbow",
+	["Mythical"] = "Blue",
+}
+local function v_u_35() -- name: GetRewardEntries
+	-- upvalues: (ref) v_u_16
+	local v19 = v_u_16 and v_u_16.GlobalRewards or {}
+	local v20 = v_u_16 and v_u_16.GlobalRewardRarities or {}
+	local v21 = {}
+	for v22, v23 in v19 do
+		local v24 = v20[v22] or (1 / 0)
+		for _, v25 in v23 do
+			if v25.Display ~= nil then
+				local v26 = ("%*_%*"):format(v25.Type, v25.Value)
+				local v27 = v21[v26]
+				if not v27 or v24 < v27.RarityWeight then
+					v21[v26] = {
+						["Value"] = v25.Value,
+						["Type"] = v25.Type,
+						["Quantity"] = v25.Quantity or 1,
+						["Display"] = v25.Display,
+						["Rainbow"] = v25.RainbowInterface,
+						["Rarity"] = v22,
+						["RarityWeight"] = v24,
+					}
+				end
+			end
+		end
+	end
+	local v28 = {}
+	for _, v29 in v21 do
+		table.insert(v28, v29)
+	end
+	table.sort(v28, function(p30, p31)
+		if p30.RarityWeight ~= p31.RarityWeight then
+			return p30.RarityWeight < p31.RarityWeight
+		end
+		local v32 = p30.Display
+		local v33 = tostring(v32)
+		local v34 = p31.Display
+		return v33 < tostring(v34)
+	end)
+	return v28
+end
+local v_u_36 = {}
+local v_u_37 = {}
+local v_u_38 = nil
+local v_u_39 = false
+local function v_u_72() -- name: buildChestIndex
+	-- upvalues: (ref) v_u_16, (copy) v_u_6, (ref) v_u_38, (copy) v_u_36, (copy) v_u_37, (copy) v_u_18, (copy) v_u_17, (copy) v_u_11, (copy) v_u_8, (copy) v_u_13, (copy) v_u_12, (copy) v_u_14, (copy) v_u_10, (ref) v_u_39, (copy) v_u_15, (copy) v_u_5
+	local v40 = v_u_16 and v_u_16.GlobalRewards or {}
+	local v41 = v_u_16 and v_u_16.GlobalRewardRarities or {}
+	local v42 = v_u_16 and v_u_16.TierIcons or {}
+	if next(v40) then
+		local v43 = v_u_6:FindFirstChild("EggIndex")
+		if v43 then
+			local v44 = v43.Main
+			if not v_u_38 then
+				local v45 = v44.ScrollingFrame:FindFirstChild("ItemTemplate")
+				local v46 = v44:FindFirstChild("PageTemplate")
+				local v47
+				if v46 then
+					v47 = v46.ScrollingFrame:FindFirstChild("ItemTemplate")
+				else
+					v47 = v46
+				end
+				if not (v45 and (v46 and v47)) then
+					return
+				end
+				v45.Parent = nil
+				v47.Parent = nil
+				v46.Parent = nil
+				v_u_38 = {
+					["Egg"] = v45,
+					["Reward"] = v47,
+					["Page"] = v46,
+				}
+			end
+			for _, v48 in v44.ScrollingFrame:GetChildren() do
+				if v48:IsA("GuiObject") then
+					v48:Destroy()
+				end
+			end
+			for _, v49 in v44:GetChildren() do
+				if v49:IsA("GuiObject") and v49.Name ~= "ScrollingFrame" then
+					v49:Destroy()
+				end
+			end
+			table.clear(v_u_36)
+			table.clear(v_u_37)
+			local v50 = (1 / 0)
+			local v51 = nil
+			for v_u_52, v53 in v40 do
+				local v54 = (v41[v_u_52] or 0) * (v_u_52 == "Golden Chest" and -1 or 1)
+				if v54 < v50 then
+					v51 = v_u_52
+					v50 = v54
+				end
+				local v55 = v_u_38.Egg:Clone()
+				v55.EggName.Text = v_u_52
+				v55.LayoutOrder = v54
+				if v42[v_u_52] then
+					v55.Icon.Image = v42[v_u_52]
+				end
+				if v_u_18[v_u_52] == "Rainbow" then
+					v_u_36[v55.OuterStroke.UIGradient] = true
+					v55.OuterStroke.UIGradient.Enabled = true
+					v55.OuterStroke.Color = Color3.fromRGB(255, 255, 255)
+					v55.Details.InnerGlow.Visible = false
+					v55.UIGradient.Enabled = true
+					v55.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+				elseif v_u_18[v_u_52] == "Blue" then
+					v55.OuterStroke.Color = Color3.fromRGB(25, 41, 53)
+					v55.Details.InnerGlow.Visible = false
+					v55.Details.Glow.ImageColor3 = Color3.fromRGB(89, 146, 190)
+					v55.BackgroundColor3 = Color3.fromRGB(56, 92, 120)
+					v55.EggName.TextColor3 = Color3.fromRGB(113, 185, 240)
+					v55.EggName.UIStroke.Color = Color3.fromRGB(25, 41, 53)
+				end
+				v55.Parent = v44.ScrollingFrame
+				v55.SENSOR.Activated:Connect(function()
+					-- upvalues: (copy) v_u_52, (ref) v_u_37, (ref) v_u_17
+					local v56 = v_u_52
+					for v57, v58 in v_u_37 do
+						v58.Visible = v56 == v57
+					end
+					v_u_17.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+					v_u_17:Play()
+				end)
+				local v59 = v_u_38.Page:Clone()
+				v59.Title.Text = ("%* Reward%*"):format(v_u_52, #v53 == 1 and "" or "s") .. " options"
+				v59.Name = v_u_52
+				local v60 = 0
+				for _, v_u_61 in v53 do
+					v60 = v60 + 1
+					local v62 = v_u_38.Reward:Clone()
+					v62.EntryName.Text = v_u_61.Display or v_u_61.Value
+					v62.Quantity.Text = (v_u_61.Quantity or 1) > 1 and (("x%*"):format((v_u_11(v_u_61.Quantity))) or "") or ""
+					local v63, v64 = pcall(v_u_8, v_u_61.Value, v_u_61.Type)
+					if v63 and v64 then
+						v62.Icon.Image = v64
+					end
+					local v65
+					if v_u_61.RainbowInterface then
+						v65 = v60 + 999 or v60
+					else
+						v65 = v60
+					end
+					v62.LayoutOrder = v65
+					if v_u_61.RainbowInterface then
+						v_u_36[v62.UIStroke.UIGradient] = true
+						v62.UIStroke.UIGradient.Enabled = true
+						v62.UIStroke.Color = Color3.fromRGB(255, 255, 255)
+						v62.Details.InnerGlow.Visible = false
+						v62.UIGradient.Enabled = true
+						v62.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+					end
+					local v66 = v62.OddsButton
+					if v_u_61.Type == "Seed Pack" then
+						v66.Visible = true
+						v66.Activated:Connect(function()
+							-- upvalues: (ref) v_u_13, (copy) v_u_61, (ref) v_u_6, (ref) v_u_17
+							v_u_13:Open(v_u_61.Value, v_u_6)
+							v_u_17.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+							v_u_17:Play()
+						end)
+					elseif v_u_61.Type == "Egg" then
+						v66.Visible = true
+						v66.Activated:Connect(function()
+							-- upvalues: (ref) v_u_12, (copy) v_u_61, (ref) v_u_6, (ref) v_u_17
+							v_u_12:Open(v_u_61.Value, v_u_6)
+							v_u_17.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+							v_u_17:Play()
+						end)
+					elseif v_u_61.Type == "Crate" then
+						v66.Visible = true
+						v66.Activated:Connect(function()
+							-- upvalues: (ref) v_u_14, (copy) v_u_61, (ref) v_u_6, (ref) v_u_17
+							v_u_14:Open(v_u_61.Value, v_u_6)
+							v_u_17.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+							v_u_17:Play()
+						end)
+					else
+						v66.Visible = false
+					end
+					local v_u_67 = ("SummerChestHuntReward_%*_%*_%*"):format(v_u_52, v_u_61.Type, v_u_61.Value)
+					pcall(function()
+						-- upvalues: (ref) v_u_10, (copy) v_u_67, (copy) v_u_61
+						v_u_10:AddItemFromRewardWithQuantity(v_u_67, {
+							["Value"] = v_u_61.Value,
+							["Type"] = v_u_61.Type,
+							["Quantity"] = v_u_61.Quantity or 1,
+						})
+					end)
+					v62:SetAttribute("UUID", v_u_67)
+					v62:AddTag("ItemInfoHoverTag")
+					v62.Parent = v59.ScrollingFrame
+				end
+				v_u_37[v_u_52] = v59
+				v59.Parent = v44
+			end
+			if v51 then
+				for v68, v69 in v_u_37 do
+					v69.Visible = v51 == v68
+				end
+			end
+			if not v_u_39 then
+				v_u_39 = true
+				v43.Header.Close.Activated:Connect(function()
+					-- upvalues: (ref) v_u_15, (ref) v_u_6, (ref) v_u_17
+					v_u_15:Close(v_u_6)
+					v_u_17.PlaybackSpeed = 1 + math.random(-15, 15) / 100
+					v_u_17:Play()
+				end)
+				v_u_5.Heartbeat:Connect(function(p70)
+					-- upvalues: (ref) v_u_36
+					for v71 in v_u_36 do
+						v71.Rotation = (v71.Rotation + p70 * 30) % 360
+					end
+				end)
+			end
+		end
+	else
+		return
+	end
+end
+local v_u_73 = {}
+local v_u_74 = 0
+local function v97() -- name: startRewardCycle
+	-- upvalues: (copy) v_u_3, (copy) v_u_73, (ref) v_u_74, (copy) v_u_35, (copy) v_u_9, (copy) v_u_8, (copy) v_u_4, (copy) v_u_1, (ref) v_u_16
+	local v75 = v_u_3:GetTagged("SummerChestHuntPlatform")[1]
+	while not v75 do
+		task.wait(1)
+		v75 = v_u_3:GetTagged("SummerChestHuntPlatform")[1]
+	end
+	local v76 = v75:WaitForChild("RewardSign", 30)
+	if not v76 then
+		return
+	end
+	local v_u_77 = v76:WaitForChild("RewardCycle", 30)
+	if v_u_77 then
+		v_u_77 = v_u_77:WaitForChild("Attachment", 30)
+	end
+	if v_u_77 then
+		v_u_77 = v_u_77:WaitForChild("BillboardGui", 30)
+	end
+	if v_u_77 then
+		v_u_77 = v_u_77:WaitForChild("RewardFrame", 30)
+	end
+	if not v_u_77 then
+		return
+	end
+	local v_u_78 = v_u_77:WaitForChild("ITEM_IMAGE")
+	local v79 = v_u_77:WaitForChild("Title")
+	local function v92() -- name: buildPreviewIcons
+		-- upvalues: (ref) v_u_73, (ref) v_u_74, (copy) v_u_78, (ref) v_u_35, (ref) v_u_9, (ref) v_u_8, (copy) v_u_77, (ref) v_u_4
+		for _, v80 in v_u_73 do
+			v80:Destroy()
+		end
+		table.clear(v_u_73)
+		v_u_74 = 0
+		v_u_78.Visible = false
+		for _, v81 in v_u_35() do
+			local v82 = v_u_78:Clone()
+			v82.Name = "RewardPreviewIcon"
+			v82.Visible = false
+			local v83 = v81.Display
+			if not v83 then
+				local v84 = v_u_9
+				local v85 = v81.Value
+				v83 = v84(tostring(v85), v81.Type)
+			end
+			v82:SetAttribute("DisplayName", v83)
+			local v86 = pcall
+			local v87 = v_u_8
+			local v88 = v81.Value
+			local v89, v90 = v86(v87, tostring(v88), v81.Type)
+			if v89 and v90 then
+				v82.Image = v90
+			end
+			v82.Parent = v_u_77
+			local v91 = v_u_73
+			table.insert(v91, v82)
+		end
+		if #v_u_73 > 0 then
+			task.spawn(function()
+				-- upvalues: (ref) v_u_4, (ref) v_u_73
+				pcall(function()
+					-- upvalues: (ref) v_u_4, (ref) v_u_73
+					v_u_4:PreloadAsync(v_u_73)
+				end)
+			end)
+		end
+	end
+	v_u_1._rebuildPreview = v92
+	v92()
+	if #v_u_73 ~= 0 then
+		if v_u_73[v_u_74] then
+			v_u_73[v_u_74].Visible = false
+		end
+		v_u_74 = v_u_74 + 1
+		if v_u_74 > #v_u_73 then
+			v_u_74 = 1
+		end
+		local v93 = v_u_73[v_u_74]
+		v93.Visible = true
+		v79.Text = ("%*"):format((v93:GetAttribute("DisplayName")))
+	end
+	while true do
+		repeat
+			local v94 = task.wait
+			local v95 = v_u_16 and v_u_16.REWARD_CYCLE_INTERVAL or 5
+			v94((math.max(v95, 0.1)))
+		until #v_u_73 ~= 0
+		if v_u_73[v_u_74] then
+			v_u_73[v_u_74].Visible = false
+		end
+		v_u_74 = v_u_74 + 1
+		if v_u_74 > #v_u_73 then
+			v_u_74 = 1
+		end
+		local v96 = v_u_73[v_u_74]
+		v96.Visible = true
+		v79.Text = ("%*"):format((v96:GetAttribute("DisplayName")))
+	end
+end
+workspace:GetAttributeChangedSignal("SummerChestHuntConfig"):Connect(function()
+	-- upvalues: (ref) v_u_16, (copy) v_u_7, (copy) v_u_72, (copy) v_u_1
+	v_u_16 = v_u_7:GetConfig("SummerChestHuntConfig")
+	v_u_72()
+	if v_u_1._rebuildPreview then
+		v_u_1._rebuildPreview()
+	end
+end)
+task.spawn(v_u_72)
+task.spawn(v97)
+return v_u_1

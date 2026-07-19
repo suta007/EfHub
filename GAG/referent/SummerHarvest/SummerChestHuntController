@@ -1,0 +1,261 @@
+--game:GetService("Players").LocalPlayer.PlayerScripts.SummerChestHuntController
+
+-- Script Path: game:GetService("Players").McneilJeffery59.PlayerScripts.SummerChestHuntController
+-- Took 0.04s to decompile.
+-- Executor: Delta (1.1.727.1199)
+
+local v1 = game:GetService("Players")
+local v_u_2 = game:GetService("ReplicatedStorage")
+local v_u_3 = game:GetService("CollectionService")
+local v_u_4 = game:GetService("Debris")
+local v_u_5 = game:GetService("SoundService")
+local v_u_6 = require(game:GetService("ReplicatedStorage").Modules.IsDev)
+local v_u_7 = require(v_u_2.Modules.GameConfigController)
+local v_u_8 = v_u_7:GetConfig("SummerChestHuntConfig")
+local v_u_9 = require(v_u_2.Modules.TimeHelper)
+local v10, v11 = pcall(function()
+	-- upvalues: (copy) v_u_2
+	return require(v_u_2.Modules.IsInTradeWorld)
+end)
+if not (v10 and v11) then
+	local v_u_12 = v1.LocalPlayer
+	local v13 = v_u_12:WaitForChild("PlayerGui")
+	local v14 = v_u_2:WaitForChild("GameEvents"):WaitForChild("SummerChestHunt")
+	local v15 = v14:WaitForChild("PoofEffect")
+	local v16 = v14:WaitForChild("StartGlobalChestHunt")
+	local v17 = v14:WaitForChild("RewardSound")
+	local v18 = v13:WaitForChild("SummerChestHuntUI")
+	local v_u_19 = v18:WaitForChild("GlobalSummerChestHuntInfo")
+	local v_u_20 = v18:WaitForChild("GlobalSummerChestHuntCountdown")
+	local v_u_21 = v_u_19.Text
+	task.spawn(function()
+		-- upvalues: (copy) v_u_2
+		local v22, v23 = pcall(function()
+			-- upvalues: (ref) v_u_2
+			require(v_u_2.Modules.SummerChestHunt.SummerChestHuntHandler)
+		end)
+		if not v22 then
+			warn("SummerChestHuntController: failed to start SummerChestHuntHandler --", v23)
+		end
+	end)
+	local v_u_24 = nil
+	pcall(function()
+		-- upvalues: (ref) v_u_24, (copy) v_u_2
+		v_u_24 = require(v_u_2.Modules.Notification)
+	end)
+	local v_u_25 = 3600
+	local v_u_26 = 1800
+	v15.OnClientEvent:Connect(function(p_u_27) -- name: PoofEffect
+		-- upvalues: (copy) v_u_4
+		local v_u_28 = script:FindFirstChild("Poof")
+		if v_u_28 then
+			return pcall(function()
+				-- upvalues: (copy) v_u_28, (copy) p_u_27, (ref) v_u_4
+				local v29 = v_u_28:Clone()
+				if v29:IsA("BasePart") then
+					v29.Position = p_u_27
+				elseif v29:IsA("Model") and v29.PrimaryPart then
+					v29:PivotTo(CFrame.new(p_u_27))
+				end
+				local v30 = 0
+				for _, v31 in v29:GetDescendants() do
+					if v31:IsA("ParticleEmitter") then
+						if v30 < v31.Lifetime.Max then
+							v30 = v31.Lifetime.Max
+						end
+						v31:Emit(v31:GetAttribute("EmitCount") or 1)
+					end
+				end
+				v29.Parent = workspace
+				v_u_4:AddItem(v29, (math.max(v30, 1)))
+			end)
+		end
+	end)
+	local function v37(p_u_32) -- name: HookCharacter
+		local v_u_33 = nil
+		p_u_32:GetAttributeChangedSignal("SummerChestHunt_CARRYING"):Connect(function()
+			-- upvalues: (copy) p_u_32, (ref) v_u_33
+			local v34 = p_u_32:GetAttribute("SummerChestHunt_CARRYING")
+			local v35 = script:FindFirstChild("Carry")
+			if v35 then
+				if not v_u_33 then
+					local v36 = p_u_32:FindFirstChildOfClass("Humanoid")
+					if v36 then
+						v36 = v36:FindFirstChildOfClass("Animator")
+					end
+					if not v36 then
+						return
+					end
+					v_u_33 = v36:LoadAnimation(v35)
+				end
+				if v34 then
+					v_u_33:Play()
+				else
+					v_u_33:Stop()
+				end
+			else
+				return
+			end
+		end)
+	end
+	if v_u_12.Character then
+		local v_u_38 = v_u_12.Character
+		local v_u_39 = nil
+		v_u_38:GetAttributeChangedSignal("SummerChestHunt_CARRYING"):Connect(function()
+			-- upvalues: (copy) v_u_38, (ref) v_u_39
+			local v40 = v_u_38:GetAttribute("SummerChestHunt_CARRYING")
+			local v41 = script:FindFirstChild("Carry")
+			if v41 then
+				if not v_u_39 then
+					local v42 = v_u_38:FindFirstChildOfClass("Humanoid")
+					if v42 then
+						v42 = v42:FindFirstChildOfClass("Animator")
+					end
+					if not v42 then
+						return
+					end
+					v_u_39 = v42:LoadAnimation(v41)
+				end
+				if v40 then
+					v_u_39:Play()
+				else
+					v_u_39:Stop()
+				end
+			else
+				return
+			end
+		end)
+	end
+	v_u_12.CharacterAdded:Connect(v37)
+	v16.OnClientEvent:Connect(function()
+		-- upvalues: (ref) v_u_24
+		if v_u_24 then
+			pcall(function()
+				-- upvalues: (ref) v_u_24
+				v_u_24:CreateNotification("A Chest Conquest has begun! Carry chests back to your base!")
+			end)
+		end
+	end)
+	v17.OnClientEvent:Connect(function()
+		-- upvalues: (copy) v_u_5
+		local v43 = v_u_5:FindFirstChild("ChestHuntClaim")
+		if v43 then
+			v43:Play()
+		end
+	end)
+	task.spawn(function()
+		-- upvalues: (copy) v_u_19, (copy) v_u_20, (copy) v_u_12, (copy) v_u_21
+		while true do
+			local v44 = workspace:GetAttribute("GlobalChestHuntEndsAt")
+			local v45
+			if typeof(v44) == "number" then
+				v45 = workspace:GetServerTimeNow() < v44
+			else
+				v45 = false
+			end
+			v_u_19.Visible = v45
+			v_u_20.Visible = v45
+			if v45 then
+				local v46 = v_u_12.Character
+				if v46 then
+					v46 = v46:GetAttribute("SummerChestHunt_CARRYING")
+				end
+				v_u_19.Text = v46 and "Return to your Garden to claim a reward!" or v_u_21
+				local v47 = v_u_20
+				local v48 = v44 - workspace:GetServerTimeNow()
+				local v49 = math.floor(v48)
+				local v50 = math.max(v49, 0)
+				local v51
+				if v50 >= 60 then
+					local v52 = string.format
+					local v53 = v50 / 60
+					v51 = v52("%d:%02d until Chest Conquest ends!", math.floor(v53), v50 % 60)
+				else
+					v51 = v50 .. "s until Chest Conquest ends!"
+				end
+				v47.Text = v51
+			end
+			task.wait(0.25)
+		end
+	end)
+	workspace:GetAttributeChangedSignal("SummerChestHuntConfig"):Connect(function()
+		-- upvalues: (ref) v_u_8, (copy) v_u_7, (copy) v_u_6, (ref) v_u_25
+		v_u_8 = v_u_7:GetConfig("SummerChestHuntConfig")
+		if v_u_6() then
+			v_u_25 = 125
+		end
+	end)
+	task.spawn(function()
+		-- upvalues: (ref) v_u_8, (ref) v_u_25, (ref) v_u_26, (copy) v_u_6, (copy) v_u_3, (copy) v_u_9
+		if v_u_8 then
+			local v54 = v_u_8.HUNT_INTERVAL
+			if tonumber(v54) then
+				local v55 = v_u_8.HUNT_INTERVAL
+				v_u_25 = tonumber(v55)
+			end
+			local v56 = v_u_8.HUNT_OFFSET
+			if tonumber(v56) then
+				local v57 = v_u_8.HUNT_OFFSET
+				v_u_26 = tonumber(v57)
+			end
+		end
+		if v_u_6() then
+			v_u_25 = 125
+		end
+		local v58 = v_u_3:GetTagged("SummerChestHuntPlatform")[1]
+		while not v58 do
+			task.wait(1)
+			v58 = v_u_3:GetTagged("SummerChestHuntPlatform")[1]
+		end
+		local v59 = v58:WaitForChild("GlobalHolder", 30)
+		if v59 then
+			local v60 = v59:WaitForChild("BillboardGui", 30)
+			if v60 then
+				v60.Enabled = true
+				local v61 = v60:WaitForChild("Holder", 30)
+				local v62
+				if v61 then
+					v62 = v61:WaitForChild("Title", 30)
+				else
+					v62 = v61
+				end
+				if v61 then
+					v61 = v61:WaitForChild("Timer", 30)
+				end
+				if v61 then
+					local function v70() -- name: FormatGlobalLabel
+						-- upvalues: (ref) v_u_9, (ref) v_u_26, (ref) v_u_25
+						local v63 = workspace:GetAttribute("GlobalChestHuntEndsAt")
+						if typeof(v63) == "number" then
+							local v64 = v63 - workspace:GetServerTimeNow()
+							local v65 = math.floor(v64)
+							local v66 = math.max(v65, 0)
+							if v66 <= 0 then
+								return "Chest Conquest!", "ACTIVE"
+							else
+								return "Chest Conquest Ends In:", v_u_9:GenerateTextFromTime(v66)
+							end
+						else
+							local v67 = workspace:GetServerTimeNow()
+							local v68 = (v67 - v_u_26) / v_u_25
+							local v69 = math.ceil(v68) * v_u_25 + v_u_26 - v67
+							return "Chest Conquest Starts In:", v_u_9:GenerateTextFromTime((math.max(v69, 0)))
+						end
+					end
+					while true do
+						local v71, v72 = v70()
+						v62.Text = v71
+						v61.Text = v72
+						task.wait(1)
+					end
+				else
+					return
+				end
+			else
+				return
+			end
+		else
+			return
+		end
+	end)
+end

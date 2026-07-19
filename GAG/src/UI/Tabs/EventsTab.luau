@@ -11,9 +11,11 @@ local function LoadEvents()
 	if getgenv().DEV_MODE then
 		Events.Summer = EF_REMOTE("UI/Tabs/Events/SummerHarvest")
 		Events.EventShop = EF_REMOTE("UI/Tabs/Events/EventShop")
+		Events.Eggwar = EF_REMOTE("UI/Tabs/Events/Eggwar")
 	else
 		Events.Summer = require("./Events/SummerHarvest.luau")
 		Events.EventShop = require("./Events/EventShop.luau")
+		Events.Eggwar = require("./Events/Eggwar.luau")
 	end
 	return Events
 end
@@ -27,6 +29,7 @@ function EventsTab.Initialize(registry)
 	local Events = LoadEvents()
 	Events.Summer.Initialize(reg, Tabs.Events)
 	Events.EventShop.Initialize(reg, Tabs.Events)
+	Events.Eggwar.Initialize(reg, Tabs.Events)
 end
 
 return EventsTab

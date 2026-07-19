@@ -1,21 +1,26 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local PlantTraitsData = require(ReplicatedStorage.Modules.PlantTraitsData)
-local SummerPlants = PlantTraitsData.Traits.Summer
+local fireproximityprompt = (getfenv() :: any).fireproximityprompt
 
-local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
-local SummerHarvestRemoteEvent = GameEvents:WaitForChild("SummerHarvestRemoteEvent")
-
+local Workspace = game:GetService("Workspace")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Backpack = LocalPlayer.Backpack
-local Character = LocalPlayer.Character
+local character = LocalPlayer.Character
 local Humanoid = Character:WaitForChild("Humanoid")
-for _, item in ipairs(Backpack:GetChildren()) do
-	local ItemName = item:FindFirstChild("Item_String") and item:FindFirstChild("Item_String").Value
-	if not item:GetAttribute("d") and item:HasTag("FruitTool") and table.find(SummerPlants, ItemName) then
-		Humanoid:EquipTool(item)
-		task.wait(0.1)
-		SummerHarvestRemoteEvent:FireServer("SubmitHeldPlant")
-		task.wait(1)
+
+for _, obj in pairs(Workspace:GetChildren()) do
+	if obj.Name == "Model" then
+		character:PivotTo(obj:GetPivot())
+		task.wait(2)
+		local target = obj:FindFirstChild("ProximityPrompt", true)
+		if target then
+			fireproximityprompt(target)
+			task.wait(2)
+			--character:PivotTo(homePos)
+			--task.wait(2)
+			--reg.Log("🟢 เก็บไข่ " .. count .. " สำเร็จ")
+			--count = count + 1
+		end
 	end
+	task.wait(0.2)
 end
