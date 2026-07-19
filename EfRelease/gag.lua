@@ -4043,7 +4043,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.13-20.15",
+SubTitle="2569.07.19-13.35",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6607,6 +6607,153 @@ end
 
 return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
+local b={}
+local c=(getfenv()::any).fireproximityprompt
+local d
+local e
+local f
+local g
+local h
+
+
+
+
+local i=game:GetService("Workspace")
+local j=game:GetService("Players")
+local k=j.LocalPlayer
+local l=false
+local m=false
+local n=k.Character
+
+function b.autoChestHunt()
+local o=d.Options
+if not o.tgChestHuntEnable.Value or m then
+return
+end
+local p=h.ParseVector3(o.ipChestHuntPos.Value)
+if not p then
+d.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
+return
+end
+
+m=true
+local q=CFrame.new(p)
+local r=1
+d.Log("🟣 กำลังล่ากล่อง รอ 3 วินาที")
+task.wait(3)
+
+for t,u in pairs(i:GetChildren())do
+if u.Name=="Model"then
+n:PivotTo(u:GetPivot())
+task.wait(2)
+local v=u:FindFirstChild("ProximityPrompt",true)
+if v then
+c(v)
+task.wait(2)
+n:PivotTo(q)
+task.wait(2)
+d.Log("🟢 ล่ากล่อง "..r.." สำเร็จ")
+r=r+1
+else
+d.Log("🔴 ไม่พบ ProximityPrompt ใน Model")
+end
+end
+task.wait(0.2)
+end
+
+d.Log("🟣 ล่ากล่องได้ "..(r-1).." ใบ")
+m=false
+l=false
+end
+
+function b.checktime()
+local o=d.Options
+if not o.tgChestHuntEnable.Value or m then
+return
+end
+local p=tonumber(o.ipStartChestHuntTime.Value)
+local q=tonumber(o.ipStopChestHuntTime.Value)
+local r=os.date("!*t").min
+if r>=p and r<=q then
+if not l then
+l=true
+b.autoChestHunt()
+end
+else
+l=false
+m=false
+end
+end
+
+function b.Initialize(o,p)
+d=o
+e=d.Window.QuickSave
+f=p
+h=d.Utils
+g=d.EfTasks
+local q=d.Options
+_=q
+
+local r=f:AddCollapsibleSection("ChestHunt",false)
+r:AddToggle("tgChestHuntEnable",{
+Title="ChestHunt Event Enable",
+Default=false,
+Callback=function(t)
+e()
+if not t then
+l=false
+m=false
+end
+g.ToggleTask("AutoEggwar",t,function()
+b.checktime()
+task.wait(5)
+end)
+end,
+})
+
+r:AddInput("ipStartChestHuntTime",{
+Title="Start Time (Minutes)",
+Default=30,
+Numeric=false,
+Finished=false,
+Callback=function(t)
+e()
+end,
+})
+
+r:AddInput("ipStopChestHuntTime",{
+Title="Stop Time (Minutes)",
+Default=33,
+Numeric=false,
+Finished=false,
+Callback=function(t)
+e()
+end,
+})
+
+r:AddButton({
+Title="Set Position",
+Callback=function()
+local t=n:GetPivot().Position
+local u=string.format("%.3f, %.3f, %.3f",t.X,t.Y,t.Z)
+q.ipChestHuntPos:SetValue(u)
+e()
+end,
+})
+r:AddInput("ipChestHuntPos",{
+Title="Position",
+Default="",
+Placeholder="X, Y, Z",
+Numeric=false,
+Finished=false,
+Callback=function(t)
+e()
+end,
+})
+end
+
+return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+
 
 
 local b=(getfenv()::any).getgenv
@@ -6620,9 +6767,11 @@ local g={}
 if b().DEV_MODE then
 g.Summer=c("UI/Tabs/Events/SummerHarvest")
 g.EventShop=c("UI/Tabs/Events/EventShop")
+g.ChestHunt=c("UI/Tabs/Events/ChestHunt")
 else
 g.Summer=a.p()
 g.EventShop=a.q()
+g.ChestHunt=a.r()
 end
 return g
 end
@@ -6636,9 +6785,10 @@ e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
 i.Summer.Initialize(e,f.Events)
 i.EventShop.Initialize(e,f.Events)
+i.ChestHunt.Initialize(e,f.Events)
 end
 
-return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
+return d end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6728,7 +6878,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+return c end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
 
 local b={}
 
@@ -6896,7 +7046,7 @@ end,
 })
 end
 
-return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return b end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6969,9 +7119,9 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.r()
-e.LogTab=a.s()
-e.TestTab=a.t()
+e.EventsTab=a.s()
+e.LogTab=a.t()
+e.TestTab=a.u()
 
 
 
@@ -7017,7 +7167,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end end
+return d end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -7047,7 +7197,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.u()
+c=a.v()
 end
 
 
