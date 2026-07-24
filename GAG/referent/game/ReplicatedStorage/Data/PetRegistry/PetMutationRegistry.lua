@@ -1,673 +1,946 @@
+-- Script Path: game:GetService("ReplicatedStorage").Data.PetRegistry.PetMutationRegistry
+-- Took 0.58s to decompile.
+-- Executor: Delta (1.2.729.840)
+
 local v1 = game:GetService("ReplicatedStorage")
 require(v1.Types.PetTypes)
 local v2 = {
 	["Shocked"] = {
 		["EnumId"] = "a",
-		["Boosts"] = {},
-		["Passives"] = { "Shocked Pet Mutation" },
+		["Boosts"] = nil,
+		["Passives"] = nil,
 		["AvaliableFromMutationMachine"] = true,
 		["Chance"] = 10,
 		["ValueMulti"] = 100,
-		["Color"] = Color3.fromRGB(255, 255, 100)
-	}
-}
-local v3 = {
-	["EnumId"] = "b",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.1
-		}
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Shocked Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 255, 100),
 	},
-	["Passives"] = { "Golden Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 20,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(255, 225, 0)
-}
-v2.Golden = v3
-local v4 = {
-	["EnumId"] = "c",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.2
-		}
-	},
-	["Passives"] = { "Rainbow Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 10,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(4, 175, 236)
-}
-v2.Rainbow = v4
-local v5 = {
-	["EnumId"] = "d",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PET_XP_BOOST",
-			["BoostAmount"] = 0.3
-		}
-	},
-	["Passives"] = { "Shiny Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 100,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(145, 207, 221)
-}
-v2.Shiny = v5
-v2.Windy = {
-	["EnumId"] = "e",
-	["Boosts"] = {},
-	["Passives"] = { "Windy Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 30,
-	["ValueMulti"] = 2,
-	["Color"] = Color3.fromRGB(162, 185, 209)
-}
-v2.Frozen = {
-	["EnumId"] = "f",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Frozen Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 30,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(108, 184, 255)
-}
-local v6 = {
-	["EnumId"] = "g",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PET_XP_BOOST",
-			["BoostAmount"] = 0.5
-		}
-	},
-	["Passives"] = { "Inverted Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 50,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(128, 128, 128)
-}
-v2.Inverted = v6
-v2.Rideable = {
-	["EnumId"] = "h",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = {},
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(255, 255, 255)
-}
-local v7 = {
-	["EnumId"] = "i",
-	["Boosts"] = {
-		{
-			["BoostType"] = "SIZE_MODIFICATION",
-			["BoostAmount"] = 2
-		}
-	},
-	["Passives"] = { "Mega Pet Mutation", "Mega Pet Mutation Bonus" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 20,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(255, 90, 90)
-}
-v2.Mega = v7
-local v8 = {
-	["EnumId"] = "j",
-	["Boosts"] = {
-		{
-			["BoostType"] = "SIZE_MODIFICATION",
-			["BoostAmount"] = -0.9
-		}
-	},
-	["Passives"] = { "Tiny Pet Mutation", "Tiny Pet Mutation Bonus" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 20,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(173, 216, 230)
-}
-v2.Tiny = v8
-v2.IronSkin = {
-	["EnumId"] = "k",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "IronSkin Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(206, 206, 206)
-}
-v2.Radiant = {
-	["EnumId"] = "l",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Radiant Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 10,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(248, 108, 38)
-}
-v2.Normal = {
-	["EnumId"] = "m",
-	["Boosts"] = {},
-	["Passives"] = {},
-	["AvaliableFromMutationMachine"] = false,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(255, 255, 255)
-}
-v2.Ascended = {
-	["EnumId"] = "n",
-	["Boosts"] = {},
-	["Passives"] = { "Ascended Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 1,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(247, 245, 184)
-}
-v2.Tranquil = {
-	["EnumId"] = "o",
-	["Boosts"] = {},
-	["Passives"] = { "Tranquil Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(94, 247, 247)
-}
-v2.Corrupted = {
-	["EnumId"] = "p",
-	["Boosts"] = {},
-	["Passives"] = { "Corrupted Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(176, 23, 26)
-}
-v2.Fried = {
-	["EnumId"] = "q",
-	["Boosts"] = {},
-	["Passives"] = { "Fried Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 15,
-	["Color"] = Color3.fromRGB(170, 99, 0)
-}
-v2.Aromatic = {
-	["EnumId"] = "r",
-	["Boosts"] = {},
-	["Passives"] = { "Aromatic Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(162, 145, 57)
-}
-local v9 = {
-	["EnumId"] = "s",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.05
-		}
-	},
-	["Passives"] = { "Silver Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(222, 222, 222)
-}
-v2.Silver = v9
-local v10 = {
-	["EnumId"] = "t",
-	["Boosts"] = {
-		{
-			["BoostType"] = "SIZE_MODIFICATION",
-			["BoostAmount"] = 1.5
-		}
-	},
-	["Passives"] = { "GiantBean Pet Mutation", "GiantBean Pet Mutation Bonus" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(102, 153, 51)
-}
-v2.GiantBean = v10
-v2.Glimmering = {
-	["EnumId"] = "u",
-	["Boosts"] = {},
-	["Passives"] = { "Glimmering Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(255, 135, 245)
-}
-v2.Luminous = {
-	["EnumId"] = "v",
-	["Boosts"] = {},
-	["Passives"] = { "Luminous Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(85, 170, 255)
-}
-v2.Nutty = {
-	["EnumId"] = "w",
-	["Boosts"] = {},
-	["Passives"] = { "Nutty Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(154, 109, 69)
-}
-v2.Dreadbound = {
-	["EnumId"] = "x",
-	["Boosts"] = {},
-	["Passives"] = { "Dreadbound Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(140, 45, 175)
-}
-local v11 = {
-	["EnumId"] = "y",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PET_XP_BOOST",
-			["BoostAmount"] = 0.6
-		}
-	},
-	["Passives"] = { "Soulflame Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(255, 85, 40)
-}
-v2.Soulflame = v11
-local v12 = {
-	["EnumId"] = "z",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.08
-		}
-	},
-	["Passives"] = { "Spectral Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(90, 200, 255)
-}
-v2.Spectral = v12
-local v13 = {
-	["EnumId"] = "A",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.22
+	["Golden"] = {
+		["EnumId"] = "b",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 20,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.1,
+			},
 		},
-		{
-			["BoostType"] = "SIZE_MODIFICATION",
-			["BoostAmount"] = 1.25
-		}
+		["Passives"] = { "Golden Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 225, 0),
 	},
-	["Passives"] = { "Nightmare Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(255, 0, 100)
-}
-v2.Nightmare = v13
-v2.Tethered = {
-	["EnumId"] = "B",
-	["Boosts"] = {},
-	["Passives"] = { "Tethered Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(210, 171, 136)
-}
-v2.Aurora = {
-	["EnumId"] = "H",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Aurora Pet Mutation" },
-	["AvaliableFromMutationMachine"] = true,
-	["Chance"] = 10,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(165, 105, 255)
-}
-local v14 = {
-	["EnumId"] = "I",
-	["Boosts"] = {
-		{
-			["BoostType"] = "SIZE_MODIFICATION",
-			["BoostAmount"] = 1.8
+	["Rainbow"] = {
+		["EnumId"] = "c",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 10,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.2,
+			},
 		},
-		{
-			["BoostType"] = "PET_XP_BOOST",
-			["BoostAmount"] = 0.5
-		}
+		["Passives"] = { "Rainbow Pet Mutation" },
+		["Color"] = Color3.fromRGB(4, 175, 236),
 	},
-	["Passives"] = { "JUMBO Pet Mutation", "JUMBO Pet Mutation Bonus" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(255, 170, 0)
-}
-v2.JUMBO = v14
-local v15 = {
-	["EnumId"] = "J",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.01
-		}
-	},
-	["Passives"] = { "Oxpecker Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(170, 0, 0)
-}
-v2.Oxpecker = v15
-local v16 = {
-	["EnumId"] = "K",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.03
-		}
-	},
-	["Passives"] = { "Giraffe Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 5,
-	["Color"] = Color3.fromRGB(255, 215, 0)
-}
-v2.Giraffe = v16
-local v17 = {
-	["EnumId"] = "L",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.045
-		}
-	},
-	["Passives"] = { "Rhino Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(211, 211, 211)
-}
-v2.Rhino = v17
-local v18 = {
-	["EnumId"] = "M",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.06
-		}
-	},
-	["Passives"] = { "Crocodile Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 15,
-	["Color"] = Color3.fromRGB(85, 170, 0)
-}
-v2.Crocodile = v18
-local v19 = {
-	["EnumId"] = "N",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.07
-		}
-	},
-	["Passives"] = { "Lion Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 20,
-	["Color"] = Color3.fromRGB(255, 255, 102)
-}
-v2.Lion = v19
-local v20 = {
-	["EnumId"] = "O",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.07
-		}
-	},
-	["Passives"] = { "Forger Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(150, 150, 150)
-}
-v2.Forger = v20
-local v21 = {
-	["EnumId"] = "P",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
-	},
-	["Passives"] = { "HyperHunger Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(255, 255, 0)
-}
-v2.HyperHunger = v21
-v2.Nocturnal = {
-	["EnumId"] = "Q",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Nocturnal Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 15,
-	["Color"] = Color3.fromRGB(85, 85, 255)
-}
-v2.Peppermint = {
-	["EnumId"] = "R",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Peppermint Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 25,
-	["Color"] = Color3.fromRGB(255, 134, 134)
-}
-v2.SpiritSparkle = {
-	["EnumId"] = "SS",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Spirit Sparkle Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 25,
-	["Color"] = Color3.fromRGB(217, 244, 255)
-}
-v2.ChristmasRally = {
-	["EnumId"] = "S",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Christmas Rally Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 10,
-	["Color"] = Color3.fromRGB(0, 200, 0)
-}
-v2.MerryNursery = {
-	["EnumId"] = "T",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Merry Nursery Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 20,
-	["Color"] = Color3.fromRGB(255, 215, 0)
-}
-v2.JollyDecorator = {
-	["EnumId"] = "U",
-	["Boosts"] = {
-		{}
-	},
-	["Passives"] = { "Jolly Decorator Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 50,
-	["Color"] = Color3.fromRGB(200, 0, 0)
-}
-local v22 = {
-	["EnumId"] = "V",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.2
+	["Shiny"] = {
+		["EnumId"] = "d",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 100,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PET_XP_BOOST",
+				["BoostAmount"] = 0.3,
+			},
 		},
-		{
-			["BoostType"] = "SIZE_MODIFICATION",
-			["BoostAmount"] = 1.5
-		}
+		["Passives"] = { "Shiny Pet Mutation" },
+		["Color"] = Color3.fromRGB(145, 207, 221),
 	},
-	["Passives"] = { "Giant Golem Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(120, 180, 255)
-}
-v2.GiantGolem = v22
-v2.Fiery = {
-	["EnumId"] = "W",
-	["Boosts"] = {},
-	["Passives"] = { "Fiery Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(255, 128, 0)
-}
-local v23 = {
-	["EnumId"] = "X",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
+	["Windy"] = {
+		["EnumId"] = "e",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 30,
+		["ValueMulti"] = 2,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Windy Pet Mutation" },
+		["Color"] = Color3.fromRGB(162, 185, 209),
 	},
-	["Passives"] = { "Venom Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(149, 0, 255)
-}
-v2.Venom = v23
-local v24 = {
-	["EnumId"] = "Y",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
+	["Frozen"] = {
+		["EnumId"] = "f",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 30,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Frozen Pet Mutation" },
+		["Color"] = Color3.fromRGB(108, 184, 255),
 	},
-	["Passives"] = { "UFO Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 100,
-	["Color"] = Color3.fromRGB(11, 163, 0)
-}
-v2.UFO = v24
-local v25 = {
-	["EnumId"] = "Z",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
+	["Inverted"] = {
+		["EnumId"] = "g",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 50,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PET_XP_BOOST",
+				["BoostAmount"] = 0.5,
+			},
+		},
+		["Passives"] = { "Inverted Pet Mutation" },
+		["Color"] = Color3.fromRGB(128, 128, 128),
 	},
-	["Passives"] = { "Alienated Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 1,
-	["Color"] = Color3.fromRGB(49, 255, 63)
-}
-v2.Alienated = v25
-local v26 = {
-	["EnumId"] = "@",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.23
-		}
+	["Rideable"] = {
+		["EnumId"] = "h",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = {},
+		["Color"] = Color3.fromRGB(255, 255, 255),
 	},
-	["Passives"] = { "Blossoming Pet Mutation" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 50,
-	["Color"] = Color3.fromRGB(236, 128, 255)
-}
-v2.Blossoming = v26
-local v27 = {
-	["EnumId"] = "EV",
-	["Boosts"] = {
-		{
-			["BoostType"] = "PASSIVE_BOOST",
-			["BoostAmount"] = 0.3
-		}
+	["Mega"] = {
+		["EnumId"] = "i",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 20,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 2,
+			},
+		},
+		["Passives"] = { "Mega Pet Mutation", "Mega Pet Mutation Bonus" },
+		["Color"] = Color3.fromRGB(255, 90, 90),
 	},
-	["Passives"] = { "Everchanted Pet Mutation", "Everchanted Pet Mutation Bonus" },
-	["AvaliableFromMutationMachine"] = false,
-	["Chance"] = 0,
-	["ValueMulti"] = 25,
-	["Color"] = Color3.fromRGB(0, 255, 127)
+	["Tiny"] = {
+		["EnumId"] = "j",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 20,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = -0.9,
+			},
+		},
+		["Passives"] = { "Tiny Pet Mutation", "Tiny Pet Mutation Bonus" },
+		["Color"] = Color3.fromRGB(173, 216, 230),
+	},
+	["IronSkin"] = {
+		["EnumId"] = "k",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "IronSkin Pet Mutation" },
+		["Color"] = Color3.fromRGB(206, 206, 206),
+	},
+	["Radiant"] = {
+		["EnumId"] = "l",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 10,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Radiant Pet Mutation" },
+		["Color"] = Color3.fromRGB(248, 108, 38),
+	},
+	["Normal"] = {
+		["EnumId"] = "m",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = {},
+		["Color"] = Color3.fromRGB(255, 255, 255),
+	},
+	["Ascended"] = {
+		["EnumId"] = "n",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 1,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Ascended Pet Mutation" },
+		["Color"] = Color3.fromRGB(247, 245, 184),
+	},
+	["Tranquil"] = {
+		["EnumId"] = "o",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Tranquil Pet Mutation" },
+		["Color"] = Color3.fromRGB(94, 247, 247),
+	},
+	["Corrupted"] = {
+		["EnumId"] = "p",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Corrupted Pet Mutation" },
+		["Color"] = Color3.fromRGB(176, 23, 26),
+	},
+	["Fried"] = {
+		["EnumId"] = "q",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 15,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Fried Pet Mutation" },
+		["Color"] = Color3.fromRGB(170, 99, 0),
+	},
+	["Aromatic"] = {
+		["EnumId"] = "r",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Aromatic Pet Mutation" },
+		["Color"] = Color3.fromRGB(162, 145, 57),
+	},
+	["Silver"] = {
+		["EnumId"] = "s",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.05,
+			},
+		},
+		["Passives"] = { "Silver Pet Mutation" },
+		["Color"] = Color3.fromRGB(222, 222, 222),
+	},
+	["GiantBean"] = {
+		["EnumId"] = "t",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 1.5,
+			},
+		},
+		["Passives"] = { "GiantBean Pet Mutation", "GiantBean Pet Mutation Bonus" },
+		["Color"] = Color3.fromRGB(102, 153, 51),
+	},
+	["Glimmering"] = {
+		["EnumId"] = "u",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Glimmering Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 135, 245),
+	},
+	["Luminous"] = {
+		["EnumId"] = "v",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Luminous Pet Mutation" },
+		["Color"] = Color3.fromRGB(85, 170, 255),
+	},
+	["Nutty"] = {
+		["EnumId"] = "w",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Nutty Pet Mutation" },
+		["Color"] = Color3.fromRGB(154, 109, 69),
+	},
+	["Dreadbound"] = {
+		["EnumId"] = "x",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Dreadbound Pet Mutation" },
+		["Color"] = Color3.fromRGB(140, 45, 175),
+	},
+	["Soulflame"] = {
+		["EnumId"] = "y",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PET_XP_BOOST",
+				["BoostAmount"] = 0.6,
+			},
+		},
+		["Passives"] = { "Soulflame Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 85, 40),
+	},
+	["Spectral"] = {
+		["EnumId"] = "z",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.08,
+			},
+		},
+		["Passives"] = { "Spectral Pet Mutation" },
+		["Color"] = Color3.fromRGB(90, 200, 255),
+	},
+	["Nightmare"] = {
+		["EnumId"] = "A",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.22,
+			},
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 1.25,
+			},
+		},
+		["Passives"] = { "Nightmare Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 0, 100),
+	},
+	["Tethered"] = {
+		["EnumId"] = "B",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Tethered Pet Mutation" },
+		["Color"] = Color3.fromRGB(210, 171, 136),
+	},
+	["Aurora"] = {
+		["EnumId"] = "H",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = true,
+		["Chance"] = 10,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Aurora Pet Mutation" },
+		["Color"] = Color3.fromRGB(165, 105, 255),
+	},
+	["JUMBO"] = {
+		["EnumId"] = "I",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 1.8,
+			},
+			{
+				["BoostType"] = "PET_XP_BOOST",
+				["BoostAmount"] = 0.5,
+			},
+		},
+		["Passives"] = { "JUMBO Pet Mutation", "JUMBO Pet Mutation Bonus" },
+		["Color"] = Color3.fromRGB(255, 170, 0),
+	},
+	["Oxpecker"] = {
+		["EnumId"] = "J",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.01,
+			},
+		},
+		["Passives"] = { "Oxpecker Pet Mutation" },
+		["Color"] = Color3.fromRGB(170, 0, 0),
+	},
+	["Giraffe"] = {
+		["EnumId"] = "K",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 5,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.03,
+			},
+		},
+		["Passives"] = { "Giraffe Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 215, 0),
+	},
+	["Rhino"] = {
+		["EnumId"] = "L",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.045,
+			},
+		},
+		["Passives"] = { "Rhino Pet Mutation" },
+		["Color"] = Color3.fromRGB(211, 211, 211),
+	},
+	["Crocodile"] = {
+		["EnumId"] = "M",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 15,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.06,
+			},
+		},
+		["Passives"] = { "Crocodile Pet Mutation" },
+		["Color"] = Color3.fromRGB(85, 170, 0),
+	},
+	["Lion"] = {
+		["EnumId"] = "N",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 20,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.07,
+			},
+		},
+		["Passives"] = { "Lion Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 255, 102),
+	},
+	["Forger"] = {
+		["EnumId"] = "O",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.07,
+			},
+		},
+		["Passives"] = { "Forger Pet Mutation" },
+		["Color"] = Color3.fromRGB(150, 150, 150),
+	},
+	["HyperHunger"] = {
+		["EnumId"] = "P",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.3,
+			},
+		},
+		["Passives"] = { "HyperHunger Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 255, 0),
+	},
+	["Nocturnal"] = {
+		["EnumId"] = "Q",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 15,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Nocturnal Pet Mutation" },
+		["Color"] = Color3.fromRGB(85, 85, 255),
+	},
+	["Peppermint"] = {
+		["EnumId"] = "R",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 25,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Peppermint Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 134, 134),
+	},
+	["SpiritSparkle"] = {
+		["EnumId"] = "SS",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 25,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Spirit Sparkle Pet Mutation" },
+		["Color"] = Color3.fromRGB(217, 244, 255),
+	},
+	["ChristmasRally"] = {
+		["EnumId"] = "S",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 10,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Christmas Rally Pet Mutation" },
+		["Color"] = Color3.fromRGB(0, 200, 0),
+	},
+	["MerryNursery"] = {
+		["EnumId"] = "T",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 20,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Merry Nursery Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 215, 0),
+	},
+	["JollyDecorator"] = {
+		["EnumId"] = "U",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 50,
+		["Color"] = nil,
+		["Boosts"] = {
+			{},
+		},
+		["Passives"] = { "Jolly Decorator Pet Mutation" },
+		["Color"] = Color3.fromRGB(200, 0, 0),
+	},
+	["GiantGolem"] = {
+		["EnumId"] = "V",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.2,
+			},
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 1.5,
+			},
+		},
+		["Passives"] = { "Giant Golem Pet Mutation" },
+		["Color"] = Color3.fromRGB(120, 180, 255),
+	},
+	["Fiery"] = {
+		["EnumId"] = "W",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {},
+		["Passives"] = { "Fiery Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 128, 0),
+	},
+	["Venom"] = {
+		["EnumId"] = "X",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.3,
+			},
+		},
+		["Passives"] = { "Venom Pet Mutation" },
+		["Color"] = Color3.fromRGB(149, 0, 255),
+	},
+	["UFO"] = {
+		["EnumId"] = "Y",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.3,
+			},
+		},
+		["Passives"] = { "UFO Pet Mutation" },
+		["Color"] = Color3.fromRGB(11, 163, 0),
+	},
+	["Alienated"] = {
+		["EnumId"] = "Z",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 1,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.3,
+			},
+		},
+		["Passives"] = { "Alienated Pet Mutation" },
+		["Color"] = Color3.fromRGB(49, 255, 63),
+	},
+	["Blossoming"] = {
+		["EnumId"] = "@",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 50,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.23,
+			},
+		},
+		["Passives"] = { "Blossoming Pet Mutation" },
+		["Color"] = Color3.fromRGB(236, 128, 255),
+	},
+	["Everchanted"] = {
+		["EnumId"] = "EV",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 25,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.3,
+			},
+		},
+		["Passives"] = { "Everchanted Pet Mutation", "Everchanted Pet Mutation Bonus" },
+		["Color"] = Color3.fromRGB(0, 255, 127),
+	},
+	["RoyalJelly"] = {
+		["EnumId"] = "RJ",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 25,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.25,
+			},
+		},
+		["Passives"] = { "Royal Jelly Pet Mutation" },
+		["Color"] = Color3.fromRGB(170, 85, 255),
+	},
+	["Ember"] = {
+		["EnumId"] = "EM",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 88,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.32,
+			},
+			{
+				["BoostType"] = "PET_XP_BOOST",
+				["BoostAmount"] = 0.32,
+			},
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 2,
+			},
+		},
+		["Passives"] = { "Ember Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 85, 0),
+	},
+	["Exalted"] = {
+		["EnumId"] = "EX",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 50,
+		["ValueMulti"] = 100,
+		["Color"] = nil,
+		["Level500Only"] = true,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.25,
+			},
+		},
+		["Passives"] = { "Exalted Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 200, 0),
+	},
+	["Iridescent"] = {
+		["EnumId"] = "IR",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 35,
+		["ValueMulti"] = 125,
+		["Color"] = nil,
+		["Level500Only"] = true,
+		["Boosts"] = {
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 1.5,
+			},
+		},
+		["Passives"] = { "Iridescent Pet Mutation" },
+		["Color"] = Color3.fromRGB(170, 170, 255),
+	},
+	["Gigantic"] = {
+		["EnumId"] = "GG",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 12.5,
+		["ValueMulti"] = 150,
+		["Color"] = nil,
+		["Level500Only"] = true,
+		["Boosts"] = {
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 3,
+			},
+		},
+		["Passives"] = { "Gigantic Pet Mutation" },
+		["Color"] = Color3.fromRGB(170, 0, 0),
+	},
+	["Transcendent"] = {
+		["EnumId"] = "TS",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 2.5,
+		["ValueMulti"] = 200,
+		["Color"] = nil,
+		["Level500Only"] = true,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.35,
+			},
+		},
+		["Passives"] = { "Transcendent Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 0, 127),
+	},
+	["Inferno"] = {
+		["EnumId"] = "IN",
+		["Boosts"] = nil,
+		["Passives"] = nil,
+		["AvaliableFromMutationMachine"] = false,
+		["Chance"] = 0,
+		["ValueMulti"] = 50,
+		["Color"] = nil,
+		["Boosts"] = {
+			{
+				["BoostType"] = "PASSIVE_BOOST",
+				["BoostAmount"] = 0.25,
+			},
+			{
+				["BoostType"] = "SIZE_MODIFICATION",
+				["BoostAmount"] = 1.75,
+			},
+		},
+		["Passives"] = { "Inferno Pet Mutation" },
+		["Color"] = Color3.fromRGB(255, 85, 0),
+	},
 }
-v2.Everchanted = v27
-local v_u_28 = nil
-function RollRandomMutation(p29)
-	-- upvalues: (ref) v_u_28
-	local v30 = v_u_28 or 1
-	local v31 = Random.new():NextNumber() * v30
-	local v32 = 0
-	for v33, v34 in p29 do
-		v32 = v32 + v34.Chance
-		if v32 >= v31 then
-			return v33
+function RollRandomMutation(p3) -- name: RollRandomMutation
+	local v4 = 0
+	for _, v5 in p3 do
+		local v6 = v5.Chance
+		if v6 and v6 > 0 then
+			v4 = v4 + v6
+		end
+	end
+	if v4 <= 0 then
+		return nil
+	end
+	local v7 = Random.new():NextNumber() * v4
+	local v8 = 0
+	for v9, v10 in p3 do
+		local v11 = v10.Chance
+		if v11 and v11 > 0 then
+			v8 = v8 + v11
+			if v8 >= v7 then
+				return v9
+			end
 		end
 	end
 	return nil
 end
-local v35 = {}
-local v36 = {}
-local v37 = {}
-for v38, v39 in v2 do
-	v35[v39.EnumId] = v38
-	v36[v38] = v39.EnumId
-	if v39.AvaliableFromMutationMachine then
-		v37[v38] = v39
+local v12 = {}
+local v13 = {}
+local v14 = {}
+local v15 = {}
+for v16, v17 in v2 do
+	v12[v17.EnumId] = v16
+	v13[v16] = v17.EnumId
+	if v17.Level500Only then
+		v14[v16] = v17
+	elseif v17.AvaliableFromMutationMachine then
+		v15[v16] = v17
 	end
 end
-local v40 = 0
-for _, v41 in v37 do
-	v40 = v40 + v41.Chance
-end
-v_u_28 = v40
 return {
-	["PetMutationToEnum"] = v36,
-	["EnumToPetMutation"] = v35,
-	["MachineMutationTypes"] = v37,
+	["PetMutationToEnum"] = v13,
+	["EnumToPetMutation"] = v12,
+	["MachineMutationTypes"] = v15,
+	["Level500MutationTypes"] = v14,
 	["PetMutationRegistry"] = v2,
-	["RollRandomMutation"] = RollRandomMutation
+	["RollRandomMutation"] = RollRandomMutation,
 }
