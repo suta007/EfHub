@@ -457,7 +457,7 @@ function Pets.FindFarmPet()
 			if table.find(blacklistMutant, petMutant) then
 				continue
 			end
-			if Method == "Elephant" and tonumber(pet.PetData.BaseWeight) >= 3.5 and tonumber(pet.PetData.Level) >= TargetAge then
+			if Method == "Elephant" and tonumber(pet.PetData.BaseWeight) >= 3.5 then
 				continue
 			end
 			if Method == "Level" and tonumber(pet.PetData.Level) >= TargetAge then
