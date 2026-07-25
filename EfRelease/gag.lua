@@ -2311,7 +2311,7 @@ local y=g.EnumToNameCache[w.PetData.MutationType]or"Normal"
 if table.find(t,y)then
 continue
 end
-if n=="Elephant"and tonumber(w.PetData.BaseWeight)>=3.5 and tonumber(w.PetData.Level)>=s then
+if n=="Elephant"and tonumber(w.PetData.BaseWeight)>=3.5 then
 continue
 end
 if n=="Level"and tonumber(w.PetData.Level)>=s then
@@ -4069,7 +4069,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.25-09.45",
+SubTitle="2569.07.25-10.35",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
