@@ -555,6 +555,10 @@ function Pets.TargetPetLevelCheck()
 			fVar.IsMutating = false
 			Pets.FarmLevel()
 			return
+		elseif petMutant ~= "Normal" and petMutant ~= "Ember" then
+			Pets.PetShard("Cleansing Pet Shard")
+			fVar.IsMutating = false
+			return
 		end
 	elseif Method == "Everchanted" then
 		if petMutant == "Everchanted" and (TargetPet.PetData.Level >= TargetAge or TargetAge == 0) then
@@ -568,11 +572,23 @@ function Pets.TargetPetLevelCheck()
 			Pets.FarmLevel()
 			return
 		end
-	elseif Method == "Level" or Method == "Elephant" then
+	elseif Method == "Level" then
 		if TargetPet.PetData.Level >= TargetAge then
 			Pets.UnequipPet(MutantUUID)
 			task.wait(0.5)
 			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " finished Level")
+			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+			Pets.MakePetFavorite(MutantUUID)
+			MutantUUID = nil
+			fVar.IsMutating = false
+			Pets.FarmLevel()
+			return
+		end
+	elseif Method == "Elephant" then
+		if tonumber(TargetPet.PetData.BaseWeight) >= 3.5 then
+			Pets.UnequipPet(MutantUUID)
+			task.wait(0.5)
+			reg.Log("🟢 CheckLevel: " .. tostring(MutantUUID) .. " Weight " .. tostring(TargetPet.PetData.BaseWeight) .. " finished!")
 			reg.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 			Pets.MakePetFavorite(MutantUUID)
 			MutantUUID = nil
@@ -720,6 +736,16 @@ function Pets.ClaimMutationPet()
 end
 
 function Pets.CheckMutantReady()
+	local Options = reg.Options
+
+	if not Options.tgMutantEnabled.Value then
+		return
+	end
+
+	local Method = Options.ddMutantMethod.Value :: string
+	if Method ~= "Mutation" then
+		return
+	end
 	local serviceData = sData.DataService:GetData()
 	local machineData = serviceData.PetMutationMachine
 	reg.Log("🔵 CheckMutantReady: " .. tostring(machineData.PetReady))
@@ -970,7 +996,7 @@ local function IsValidSellPet(petData)
 	local sWeight = tonumber(Options.inpSellPetWeight.Value)
 
 	local sPetType = petData.PetType
-	local sBaseWeight = petData.PetData.BaseWeight
+	local sBaseWeight = ((tonumber(petData.PetData.BaseWeight) or 0) * 1.1)
 	local sMutant = petData.PetData.MutationType or "m"
 
 	local sFavorite = petData.PetData.IsFavorite
