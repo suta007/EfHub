@@ -2409,6 +2409,10 @@ k=nil
 f.IsMutating=false
 d.FarmLevel()
 return
+elseif q~="Normal"and q~="Ember"then
+d.PetShard("Cleansing Pet Shard")
+f.IsMutating=false
+return
 end
 elseif p=="Everchanted"then
 if q=="Everchanted"and(o.PetData.Level>=n or n==0)then
@@ -2422,11 +2426,23 @@ f.IsMutating=false
 d.FarmLevel()
 return
 end
-elseif p=="Level"or p=="Elephant"then
+elseif p=="Level"then
 if o.PetData.Level>=n then
 d.UnequipPet(k)
 task.wait(0.5)
 e.Log("🟢 CheckLevel: "..tostring(k).." finished Level")
+e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
+d.MakePetFavorite(k)
+k=nil
+f.IsMutating=false
+d.FarmLevel()
+return
+end
+elseif p=="Elephant"then
+if tonumber(o.PetData.BaseWeight)>=3.5 then
+d.UnequipPet(k)
+task.wait(0.5)
+e.Log("🟢 CheckLevel: "..tostring(k).." Weight "..tostring(o.PetData.BaseWeight).." finished!")
 e.Log("🟣 CheckLevel: Run FarmLevel() to get new Pet")
 d.MakePetFavorite(k)
 k=nil
@@ -2574,19 +2590,29 @@ end
 end
 
 function d.CheckMutantReady()
-local m=g.DataService:GetData()
-local n=m.PetMutationMachine
-e.Log("🔵 CheckMutantReady: "..tostring(n.PetReady))
-if n.PetReady then
-k=n.SubmittedPet.UUID
+local m=e.Options
+
+if not m.tgMutantEnabled.Value then
+return
+end
+
+local n=m.ddMutantMethod.Value::string
+if n~="Mutation"then
+return
+end
+local o=g.DataService:GetData()
+local p=o.PetMutationMachine
+e.Log("🔵 CheckMutantReady: "..tostring(p.PetReady))
+if p.PetReady then
+k=p.SubmittedPet.UUID
 
 e.Log("🟢 CheckMutantReady: Run ClaimMutationPet")
 task.spawn(function()
-local o,p=pcall(function()
+local q,r=pcall(function()
 d.ClaimMutationPet()
 end)
-if not o then
-e.Log("ClaimMutationPet failed: "..tostring(p))
+if not q then
+e.Log("ClaimMutationPet failed: "..tostring(r))
 end
 end)
 return
@@ -2824,7 +2850,7 @@ local p=n.ddSellPetThreshold.Value
 local q=tonumber(n.inpSellPetWeight.Value)
 
 local r=m.PetType
-local s=m.PetData.BaseWeight
+local s=((tonumber(m.PetData.BaseWeight)or 0)*1.1)
 local t=m.PetData.MutationType or"m"
 
 local u=m.PetData.IsFavorite
@@ -4043,7 +4069,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.19-13.35",
+SubTitle="2569.07.25-09.45",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
