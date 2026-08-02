@@ -718,6 +718,18 @@ end
 if i:GetAttribute("Favorited")==true then
 return false
 end
+
+if not table.find(j.bl.crops,"NONE")and table.find(j.bl.crops,m)then
+return false
+end
+if not table.find(j.bl.variant,"NONE")and table.find(j.bl.variant,n)then
+return false
+end
+
+if IsBlockedByBlackMutants(i,j.bl.mutants)then
+return false
+end
+
 if not table.find(j.wl.crops,"ALL")and not table.find(j.wl.crops,m)then
 return false
 end
@@ -737,17 +749,6 @@ local p=tonumber(o)
 if not p or not f.MatchesWeight(p,j.wl.weightCondition,j.wl.weightValue)then
 return false
 end
-end
-
-if not table.find(j.bl.crops,"NONE")and table.find(j.bl.crops,m)then
-return false
-end
-if not table.find(j.bl.variant,"NONE")and table.find(j.bl.variant,n)then
-return false
-end
-
-if IsBlockedByBlackMutants(i,j.bl.mutants)then
-return false
 end
 
 return true
@@ -4069,7 +4070,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.07.25-10.35",
+SubTitle="2569.08.02-21.25",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6247,269 +6248,71 @@ return b end function a.o():typeof(__modImpl())local b=a.cache.o if not b then b
 local b={}
 local c
 local d
-local e
-local f=game:GetService("Workspace")
 
-local g=game:GetService("ReplicatedStorage")
-local h=require(g.Modules.PlantTraitsData)
-local i=h.Traits.Summer
+local e=game:GetService("ReplicatedStorage")
+local f=e:WaitForChild("GameEvents")
+local g=f:WaitForChild("HarvestMoonSell")
 
-local j=g:WaitForChild("GameEvents")
-local k=j:WaitForChild("SummerHarvestRemoteEvent")
-local l=j:WaitForChild("SamTheClamService_RE")
+local h=false
 
-local m=nil
-local n=f:GetAttribute("SummerHarvest")
 
-local o=false
 
-local function SummitSummer()
-if o then
+
+
+local function MoonBeamSell()
+local i=c.Options
+if not i.tgMoonBeamEnable or not i.tgMoonBeamEnable.Value then
 return
 end
-
-local p=c.Options
-if not p.tgSummerHarvestEnable or not p.tgSummerHarvestEnable.Value then
-o=false
+if h then
 return
 end
-if not n then
-o=false
+if not d.InventoryService.IsMaxInventory(d.LocalPlayer)then
 return
 end
-
-local q=d.DataService:GetData()
-local r=q.SummerHarvestTeamData
-local t=r.DayPoints
-
-local u=0
-for v,w in pairs(t)do
-u=tonumber(w)
-end
-
-local v=tonumber(p.inpMaxPoint and p.inpMaxPoint.Value)or 150000
-if u>=v then
-o=false
-return
-end
-o=true
-local w=tonumber(p.inpSubmitDelay and p.inpSubmitDelay.Value)or 0.5
-local x=tonumber(p.inpEquipDelay and p.inpEquipDelay.Value)or 0.1
-
-local y=d.LocalPlayer.Backpack
-for z,A in ipairs(y:GetChildren())do
-if not n then
-o=false
-return
-end
-local B=A:FindFirstChild("Item_String")and A:FindFirstChild("Item_String").Value
-if not A:GetAttribute("d")and A:HasTag("FruitTool")and table.find(i,B)then
-e.EquipTool(A)
-task.wait(x)
-k:FireServer("SubmitHeldPlant")
-task.wait(w)
-end
-end
-o=false
-end
-
-local function ShelldonSubmit()
-local p=c.Options
-if not p.tgShelldonEnable or not p.tgShelldonEnable.Value then
-return
-end
-if not p.ddShelldonPetType or not p.ddShelldonPetType.Value then
-c.Log("Select Pet Type!!","ERROR")
-return
-end
-local q=d.DataService:GetData()
-local r=q.SamTheClam
-
-local t=r.IsRunning or false
-local u=r.RewardReady or false
-
-if u then
-l:FireServer("ClaimReward")
-task.wait(2)
-q=d.DataService:GetData()
-r=q.SamTheClam
-t=r.IsRunning or false
-end
-
-if not t then
-local v=e.GetSelectedItems(p.ddShelldonPetType.Value)
-
-local w=d.Backpack
-pcall(function()
-d.Humanoid:UnequipTool()
-task.wait(0.1)
-end)
-
-for x,y in pairs(w:GetChildren())do
-if y:GetAttribute("ItemType")=="Pet"and not y:GetAttribute("d")then
-local z=table.find(v,y:GetAttribute("f"))
-if z then
-pcall(function()
-d.Humanoid:EquipTool(y)
-task.wait(1)
-end)
-l:FireServer("SubmitHeldPet")
+h=true
+g:FireServer("SellAll")
 task.wait(0.3)
-return
-end
-end
+h=false
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-end
-return
-end
-function b.Initialize(p,q)
-c=p
-local r=c.Options
-_=r
-local t=c.Window.QuickSave
-local u=q
-e=c.Utils
+function b.Initialize(i,j)
+c=i
+local k=c.Options
+_=k
+local l=c.Window.QuickSave
+local m=j
 d=c.sData
-local v=c.EfTasks
+local n=c.EfTasks
 
-local w=u:AddCollapsibleSection("SummerHarvest",false)
+local o=m:AddCollapsibleSection("MoonBeam",false)
 
-w:AddInput("inpLoopDelay",{
-Title="Loop Delay",
-Default=5,
+o:AddInput("inpMoonBeamSellDelay",{
+Title="MoonBeam Sell Delay",
+Default=30,
 Numeric=true,
 Finished=true,
-Callback=function(x)
-if x==""then
-x=5
+Callback=function(p)
+if p==""then
+p=30
 end
-t()
+l()
 end,
 })
 
-w:AddInput("inpEquipDelay",{
-Title="Equip Delay",
-Default=0.1,
-Numeric=true,
-Finished=true,
-Callback=function(x)
-if x==""then
-x=0.1
-end
-t()
-end,
-})
-w:AddInput("inpSubmitDelay",{
-Title="Submit Delay",
-Default=0.5,
-Numeric=true,
-Finished=true,
-Callback=function(x)
-if x==""then
-x=0.5
-end
-t()
-end,
-})
-
-w:AddInput("inpMaxPoint",{
-Title="Max Point",
-Default=150000,
-Numeric=true,
-Finished=true,
-Callback=function(x)
-if x==""then
-x=150000
-end
-t()
-end,
-})
-
-w:AddToggle("tgSummerHarvestEnable",{
-Title="Enable",
+o:AddToggle("tgMoonBeamEnable",{
+Title="MoonBeam Sell Enable",
 Default=false,
-Callback=function(x)
-t()
-if x then
-n=f:GetAttribute("SummerHarvest")
-m=f:GetAttributeChangedSignal("SummerHarvest"):Connect(function()
-n=f:GetAttribute("SummerHarvest")
-end)
-else
-o=false
-n=false
-if m then
-m:Disconnect()
-m=nil
-end
+Callback=function(p)
+l()
+if not p then
+h=false
 end
 
-v.ToggleTask("SummerHarvest",x,function()
-local y=tonumber(r.inpLoopDelay and r.inpLoopDelay.Value)or 5
-SummitSummer()
-task.wait(y)
-end)
-end,
-})
-
-local x=u:AddCollapsibleSection("Shelldon",false)
-
-x:AddDropdown("ddShelldonPetType",{
-Title="Select Pet Type",
-Values=d.PetsDataTable or{},
-Default="",
-Multi=true,
-Searchable=true,
-Callback=function()
-t()
-end,
-})
-
-x:AddButton({
-Title="Clear Selected Pet Type",
-Callback=function()
-r.ddShelldonPetType:SetValue({})
-end,
-})
-
-x:AddToggle("tgShelldonEnable",{
-Title="Enable",
-Default=false,
-Callback=function(y)
-t()
-v.ToggleTask("Shelldon",y,function()
-ShelldonSubmit()
-task.wait(10)
+n.ToggleTask("MoonBeamSell",p,function()
+local q=tonumber(k.inpMoonBeamSellDelay and k.inpMoonBeamSellDelay.Value)or 30
+MoonBeamSell()
+task.wait(q)
 end)
 end,
 })
@@ -6633,153 +6436,6 @@ end
 
 return b end function a.q():typeof(__modImpl())local b=a.cache.q if not b then b={c=__modImpl()}a.cache.q=b end return b.c end end do local function __modImpl()
 
-local b={}
-local c=(getfenv()::any).fireproximityprompt
-local d
-local e
-local f
-local g
-local h
-
-
-
-
-local i=game:GetService("Workspace")
-local j=game:GetService("Players")
-local k=j.LocalPlayer
-local l=false
-local m=false
-local n=k.Character
-
-function b.autoChestHunt()
-local o=d.Options
-if not o.tgChestHuntEnable.Value or m then
-return
-end
-local p=h.ParseVector3(o.ipChestHuntPos.Value)
-if not p then
-d.Log("[Error] พิกัดจุดส่งไข่ไม่ถูกต้อง กรุณาตั้งค่า Position")
-return
-end
-
-m=true
-local q=CFrame.new(p)
-local r=1
-d.Log("🟣 กำลังล่ากล่อง รอ 3 วินาที")
-task.wait(3)
-
-for t,u in pairs(i:GetChildren())do
-if u.Name=="Model"then
-n:PivotTo(u:GetPivot())
-task.wait(2)
-local v=u:FindFirstChild("ProximityPrompt",true)
-if v then
-c(v)
-task.wait(2)
-n:PivotTo(q)
-task.wait(2)
-d.Log("🟢 ล่ากล่อง "..r.." สำเร็จ")
-r=r+1
-else
-d.Log("🔴 ไม่พบ ProximityPrompt ใน Model")
-end
-end
-task.wait(0.2)
-end
-
-d.Log("🟣 ล่ากล่องได้ "..(r-1).." ใบ")
-m=false
-l=false
-end
-
-function b.checktime()
-local o=d.Options
-if not o.tgChestHuntEnable.Value or m then
-return
-end
-local p=tonumber(o.ipStartChestHuntTime.Value)
-local q=tonumber(o.ipStopChestHuntTime.Value)
-local r=os.date("!*t").min
-if r>=p and r<=q then
-if not l then
-l=true
-b.autoChestHunt()
-end
-else
-l=false
-m=false
-end
-end
-
-function b.Initialize(o,p)
-d=o
-e=d.Window.QuickSave
-f=p
-h=d.Utils
-g=d.EfTasks
-local q=d.Options
-_=q
-
-local r=f:AddCollapsibleSection("ChestHunt",false)
-r:AddToggle("tgChestHuntEnable",{
-Title="ChestHunt Event Enable",
-Default=false,
-Callback=function(t)
-e()
-if not t then
-l=false
-m=false
-end
-g.ToggleTask("AutoEggwar",t,function()
-b.checktime()
-task.wait(5)
-end)
-end,
-})
-
-r:AddInput("ipStartChestHuntTime",{
-Title="Start Time (Minutes)",
-Default=30,
-Numeric=false,
-Finished=false,
-Callback=function(t)
-e()
-end,
-})
-
-r:AddInput("ipStopChestHuntTime",{
-Title="Stop Time (Minutes)",
-Default=33,
-Numeric=false,
-Finished=false,
-Callback=function(t)
-e()
-end,
-})
-
-r:AddButton({
-Title="Set Position",
-Callback=function()
-local t=n:GetPivot().Position
-local u=string.format("%.3f, %.3f, %.3f",t.X,t.Y,t.Z)
-q.ipChestHuntPos:SetValue(u)
-e()
-end,
-})
-r:AddInput("ipChestHuntPos",{
-Title="Position",
-Default="",
-Placeholder="X, Y, Z",
-Numeric=false,
-Finished=false,
-Callback=function(t)
-e()
-end,
-})
-end
-
-return b end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
-
 
 
 local b=(getfenv()::any).getgenv
@@ -6791,13 +6447,11 @@ local f
 local function LoadEvents()
 local g={}
 if b().DEV_MODE then
-g.Summer=c("UI/Tabs/Events/SummerHarvest")
+g.MoonBeam=c("UI/Tabs/Events/MoonBeam")
 g.EventShop=c("UI/Tabs/Events/EventShop")
-g.ChestHunt=c("UI/Tabs/Events/ChestHunt")
 else
-g.Summer=a.p()
+g.MoonBeam=a.p()
 g.EventShop=a.q()
-g.ChestHunt=a.r()
 end
 return g
 end
@@ -6809,12 +6463,11 @@ f=e.Tabs
 f.Events=h:AddTab({Title="Events",Icon="calendar"})
 e.EVENT_DATA=require(e.sData.Data:WaitForChild("EventShopData")::any)
 local i=LoadEvents()
-i.Summer.Initialize(e,f.Events)
+i.MoonBeam.Initialize(e,f.Events)
 i.EventShop.Initialize(e,f.Events)
-i.ChestHunt.Initialize(e,f.Events)
 end
 
-return d end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
+return d end function a.r():typeof(__modImpl())local b=a.cache.r if not b then b={c=__modImpl()}a.cache.r=b end return b.c end end do local function __modImpl()
 
 
 
@@ -6904,7 +6557,7 @@ Content="Waiting for system to start...\n",
 })
 end
 
-return c end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
+return c end function a.s():typeof(__modImpl())local b=a.cache.s if not b then b={c=__modImpl()}a.cache.s=b end return b.c end end do local function __modImpl()
 
 local b={}
 
@@ -7072,7 +6725,7 @@ end,
 })
 end
 
-return b end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end do local function __modImpl()
+return b end function a.t():typeof(__modImpl())local b=a.cache.t if not b then b={c=__modImpl()}a.cache.t=b end return b.c end end do local function __modImpl()
 
 
 
@@ -7145,9 +6798,9 @@ e.ShopTab=a.l()
 e.PetsTab=a.m()
 e.AutoTab=a.n()
 e.MiscTab=a.o()
-e.EventsTab=a.s()
-e.LogTab=a.t()
-e.TestTab=a.u()
+e.EventsTab=a.r()
+e.LogTab=a.s()
+e.TestTab=a.t()
 
 
 
@@ -7193,7 +6846,7 @@ e.Window.myMenu()
 return e
 end
 
-return d end function a.v():typeof(__modImpl())local b=a.cache.v if not b then b={c=__modImpl()}a.cache.v=b end return b.c end end end
+return d end function a.u():typeof(__modImpl())local b=a.cache.u if not b then b={c=__modImpl()}a.cache.u=b end return b.c end end end
 
 
 local b=(getfenv()::any).getgenv
@@ -7223,7 +6876,7 @@ b().EF_REMOTE=GetRemote
 
 c=GetRemote("EfHub")
 else
-c=a.v()
+c=a.u()
 end
 
 
