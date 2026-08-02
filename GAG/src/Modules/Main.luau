@@ -174,6 +174,18 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 	if fruit:GetAttribute("Favorited") == true then
 		return false
 	end
+
+	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, fruitName) then
+		return false
+	end
+	if not table.find(config.bl.variant, "NONE") and table.find(config.bl.variant, fruitVariant) then
+		return false
+	end
+
+	if IsBlockedByBlackMutants(fruit, config.bl.mutants) then
+		return false
+	end
+
 	if not table.find(config.wl.crops, "ALL") and not table.find(config.wl.crops, fruitName) then
 		return false
 	end
@@ -193,17 +205,6 @@ function Main.CheckCrops(fruit, config, HarvestMode)
 		if not weight or not Utils.MatchesWeight(weight, config.wl.weightCondition, config.wl.weightValue) then
 			return false
 		end
-	end
-
-	if not table.find(config.bl.crops, "NONE") and table.find(config.bl.crops, fruitName) then
-		return false
-	end
-	if not table.find(config.bl.variant, "NONE") and table.find(config.bl.variant, fruitVariant) then
-		return false
-	end
-
-	if IsBlockedByBlackMutants(fruit, config.bl.mutants) then
-		return false
 	end
 
 	return true
