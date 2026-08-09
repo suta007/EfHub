@@ -4070,7 +4070,7 @@ i.IsLoading=true
 
 i.Interface=e:CreateWindow({
 Title="Grow a Garden",
-SubTitle="2569.08.02-21.25",
+SubTitle="2569.08.09-09.55",
 TabWidth=100,
 Size=UDim2.fromOffset(580,300),
 Resize=false,
@@ -6251,68 +6251,69 @@ local d
 
 local e=game:GetService("ReplicatedStorage")
 local f=e:WaitForChild("GameEvents")
-local g=f:WaitForChild("HarvestMoonSell")
+local g=f:WaitForChild("HarvestMoon")
+local h=g:WaitForChild("HarvestMoonSell")
 
-local h=false
+local i=false
 
 
 
 
 
 local function MoonBeamSell()
-local i=c.Options
-if not i.tgMoonBeamEnable or not i.tgMoonBeamEnable.Value then
+local j=c.Options
+if not j.tgMoonBeamEnable or not j.tgMoonBeamEnable.Value then
 return
 end
-if h then
+if i then
 return
 end
 if not d.InventoryService.IsMaxInventory(d.LocalPlayer)then
 return
 end
-h=true
-g:FireServer("SellAll")
+i=true
+h:FireServer("SellAll")
 task.wait(0.3)
-h=false
+i=false
 end
 
-function b.Initialize(i,j)
-c=i
-local k=c.Options
-_=k
-local l=c.Window.QuickSave
-local m=j
+function b.Initialize(j,k)
+c=j
+local l=c.Options
+_=l
+local m=c.Window.QuickSave
+local n=k
 d=c.sData
-local n=c.EfTasks
+local o=c.EfTasks
 
-local o=m:AddCollapsibleSection("MoonBeam",false)
+local p=n:AddCollapsibleSection("MoonBeam",false)
 
-o:AddInput("inpMoonBeamSellDelay",{
+p:AddInput("inpMoonBeamSellDelay",{
 Title="MoonBeam Sell Delay",
 Default=30,
 Numeric=true,
 Finished=true,
-Callback=function(p)
-if p==""then
-p=30
+Callback=function(q)
+if q==""then
+q=30
 end
-l()
+m()
 end,
 })
 
-o:AddToggle("tgMoonBeamEnable",{
+p:AddToggle("tgMoonBeamEnable",{
 Title="MoonBeam Sell Enable",
 Default=false,
-Callback=function(p)
-l()
-if not p then
-h=false
+Callback=function(q)
+m()
+if not q then
+i=false
 end
 
-n.ToggleTask("MoonBeamSell",p,function()
-local q=tonumber(k.inpMoonBeamSellDelay and k.inpMoonBeamSellDelay.Value)or 30
+o.ToggleTask("MoonBeamSell",q,function()
+local r=tonumber(l.inpMoonBeamSellDelay and l.inpMoonBeamSellDelay.Value)or 30
 MoonBeamSell()
-task.wait(q)
+task.wait(r)
 end)
 end,
 })
