@@ -5,7 +5,8 @@ local sData
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local GameEvents = ReplicatedStorage:WaitForChild("GameEvents")
-local HarvestMoonSell = GameEvents:WaitForChild("HarvestMoonSell")
+local HarvestMoon = GameEvents:WaitForChild("HarvestMoon")
+local HarvestMoonSell = HarvestMoon:WaitForChild("HarvestMoonSell")
 
 local isMoonSelling = false
 
